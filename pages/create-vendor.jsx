@@ -13,6 +13,23 @@ const Create_Vendor = ({ base_url }) => {
     const router = useRouter();
     const onFinish = async (values) => {
 
+
+        const dynamicItems = values.items.map(item => ({
+            name: item.name,
+            phone_number: item.phone_number,
+            email: item.email,
+        }));
+
+        const data = {
+            ...values,
+            // company_name:values.company_name,
+        //     name:values.name,
+        // customer_name:values.customer_name,
+        // project_manager_id:rootData,
+        contact_info:[...dynamicItems]  
+        }
+        console.log(data,'datataaaaaaa');
+
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -20,15 +37,13 @@ const Create_Vendor = ({ base_url }) => {
                 'Content-Type': 'application/json',
             };
             console.log("values === ", values)
-            const data = {
-                ...values,
-            }
+           
             const response = await axios.post(`${base_url}/api/admin/vendors`, data, {
                 headers: headers,
             });
             console.log(response,'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
             message.success(response.data.message)
-            router.push('/vendor')
+            // router.push('/vendor')
             
             // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
             // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
@@ -169,8 +184,8 @@ const Create_Vendor = ({ base_url }) => {
                                                 <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                                     <Form.Item
                                                         {...restField}
-                                                        name={[name, 'itemName']}
-                                                        fieldKey={[fieldKey, 'itemName']}
+                                                        name={[name, 'name']}
+                                                        fieldKey={[fieldKey, 'name']}
                                                         label="Name"
                                                         rules={[{ required: true, message: 'Please enter name' }]}
                                                     >
@@ -179,8 +194,8 @@ const Create_Vendor = ({ base_url }) => {
 
                                                     <Form.Item
                                                         {...restField}
-                                                        name={[name, 'itemEmail']}
-                                                        fieldKey={[fieldKey, 'itemEmail']}
+                                                        name={[name, 'email']}
+                                                        fieldKey={[fieldKey, 'email']}
                                                         label="Email"
                                                         rules={[{ required: true, message: 'Please enter email' }]}
                                                     >
@@ -189,8 +204,8 @@ const Create_Vendor = ({ base_url }) => {
 
                                                     <Form.Item
                                                         {...restField}
-                                                        name={[name, 'itemPhoneNumber']}
-                                                        fieldKey={[fieldKey, 'itemPhoneNumber']}
+                                                        name={[name, 'phone_number']}
+                                                        fieldKey={[fieldKey, 'phone_number']}
                                                         label="Phone Number"
                                                         rules={[{ required: true, message: 'Please enter phone number' }]}
                                                     >

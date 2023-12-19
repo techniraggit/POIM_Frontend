@@ -136,7 +136,6 @@ const Create_po = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/vendors`, { headers: headers });
-                console.log(response, 'vendorssssssssssssssssssssssss');
                 setVendors(response.data.vendors); // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -167,6 +166,17 @@ const Create_po = ({ base_url }) => {
     //     }
     //   console.log(value,'asssssssssssssssss')
     // }
+    const names = vendors.map((vendor) => {
+        return {
+            vendorId: vendor.id,
+            contactName: vendor.vendor_contact[0].name
+        };
+    });
+    
+    const vendorId=(value)=>{
+        console.log(value,'vendoriddddddddddddddddd=================');
+        }
+
 
     return (
         <>
@@ -219,12 +229,12 @@ const Create_po = ({ base_url }) => {
                                             <Form.Item
                                                 label="Purchase Order Number"
                                                 name="poNumber"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please enter Purchase Order Number",
-                                                    },
-                                                ]}
+                                                // rules={[
+                                                //     {
+                                                //         required: true,
+                                                //         message: "Please enter Purchase Order Number",
+                                                //     },
+                                                // ]}
                                             >
                                                 <Input placeholder="00854" />
                                             </Form.Item>
@@ -286,23 +296,22 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please choose PO Type",
+                                                            message: "Please choose Vendor",
                                                         },
                                                     ]}
                                                 >
-                                                    <Select id="single2" class="js-states form-control file-wrap-select">
-                                                        {Array.isArray(vendors) &&
-                                                            vendors.map((vendor) => (
-                                                                <Select.Option key={vendor.id} value={vendor.id}
-                                                                >
-                                                                    {/* {vendor.vendor_contact.map((vendor_contact, index) => (
-                                                                        <Select.Option>{vendor_contact.name}</Select.Option>
-                                                                        //  {vendor_contact.name}
-                                                                        ))} */}
-                                                                    {vendor.company_name}
-                                                                </Select.Option>
-                                                            ))}
-                                                    </Select>
+                                                   <Select
+                                                id="single2"
+                                                className="js-states form-control file-wrap-select"
+                                                onChange={(value) => vendorId(value)}
+                                            >
+                                                {names.map((entry) => (
+                                                    <Select.Option key={entry.vendorId} value={entry.vendorId}>
+                                                        {entry.contactName}
+                                                    </Select.Option>
+                                                ))}
+                                            </Select>
+
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -318,7 +327,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter Company name",
                                                         },
                                                     ]}
                                                 >
@@ -356,7 +365,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter email",
                                                         },
                                                     ]}
                                                 >
@@ -375,7 +384,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter Contact Number",
                                                         },
                                                     ]}
                                                 >
@@ -394,7 +403,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter Address Line 1",
                                                         },
                                                     ]}
                                                 >
@@ -413,7 +422,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter Address Line 2",
                                                         },
                                                     ]}
                                                 >
@@ -432,7 +441,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter State",
                                                         },
                                                     ]}
                                                 >
@@ -451,7 +460,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter Country",
                                                         },
                                                     ]}
                                                 >
@@ -478,7 +487,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please choose PO Type",
+                                                            message: "Please Choose Shipment Type",
                                                         },
                                                     ]}
                                                 >
@@ -501,7 +510,7 @@ const Create_po = ({ base_url }) => {
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "Please choose PO Type",
+                                                                message: "Please choose Project",
                                                             },
                                                         ]}
                                                     >
@@ -532,7 +541,7 @@ const Create_po = ({ base_url }) => {
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "Please choose PO Type",
+                                                                message: "Please choose Delivery Address",
                                                             },
                                                         ]}
                                                     >
@@ -582,7 +591,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter quantity",
                                                         },
                                                     ]}
                                                 >
@@ -601,7 +610,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter unit price",
                                                         },
                                                     ]}
                                                 >
@@ -620,7 +629,7 @@ const Create_po = ({ base_url }) => {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Purchase Order Number",
+                                                            message: "Please enter amount",
                                                         },
                                                     ]}
                                                 >
@@ -640,7 +649,7 @@ const Create_po = ({ base_url }) => {
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "Please enter Purchase Order Number",
+                                                                message: "Please enter description",
                                                             },
                                                         ]}
                                                     >
@@ -658,7 +667,7 @@ const Create_po = ({ base_url }) => {
                                                             rules={[
                                                                 {
                                                                     required: true,
-                                                                    message: "Please choose PO Type",
+                                                                    message: "Please choose site",
                                                                 },
                                                             ]}
                                                         >
@@ -744,7 +753,7 @@ const Create_po = ({ base_url }) => {
                                                             rules={[
                                                                 {
                                                                     required: true,
-                                                                    message: "Please choose PO Type",
+                                                                    message: "Please choose material",
                                                                 },
                                                             ]}
                                                         >
