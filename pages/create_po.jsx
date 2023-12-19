@@ -65,24 +65,15 @@ const Create_po = ({ base_url }) => {
                 }
 
             }
-            // console.log(data,'hereeeee')
-            // return
             const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
                 headers: headers,
             });
             console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
             message.success(response.data.message)
-            // router.push('/vendor')
-
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
         }
         catch (error) {
             console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
         }
-
-
-        // Handle form submission here
         console.log("Received values:", values);
     };
 
@@ -95,7 +86,6 @@ const Create_po = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
-                // console.log(response.data.projects, 'createporesssssssssssssssssssssssssssssssss');
                 setProjects(response.data.projects); // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -144,28 +134,7 @@ const Create_po = ({ base_url }) => {
         fetchVendor();
     }, [])
 
-    // const dsdsdsd=(value)=>{
-    //     const fetchSites = async () => {
-
-    //         try {
-    //             const headers = {
-    //                 Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-    //             }
-    //             const response = await axios.get(`${base_url}/api/admin/project-sites?project_id=d3a379a6-5de7-4e47-8058-fbbba7ea93fc`, { headers: headers });
-    //             console.log(response.data.sites, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    //             const sitesArray = response.data.sites;
-    //             setSiteOptions(sitesArray);
-
-    //         } catch (error) {
-    //             console.error('Error fetching projects:', error);
-    //         }
-    //     };
-
-    //     if (poType === 'Project Related') {
-    //         fetchSites();
-    //     }
-    //   console.log(value,'asssssssssssssssss')
-    // }
+    
     const names = vendors.map((vendor) => {
         return {
             vendorId: vendor.id,
@@ -229,12 +198,7 @@ const Create_po = ({ base_url }) => {
                                             <Form.Item
                                                 label="Purchase Order Number"
                                                 name="poNumber"
-                                                // rules={[
-                                                //     {
-                                                //         required: true,
-                                                //         message: "Please enter Purchase Order Number",
-                                                //     },
-                                                // ]}
+                                               
                                             >
                                                 <Input placeholder="00854" />
                                             </Form.Item>
@@ -266,20 +230,7 @@ const Create_po = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
 
-                                        {/* <div className="left-wrap" id="forspce">
-                                            <Form.Item
-                                                label="Date"
-                                                name="date"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please enter Date",
-                                                    },
-                                                ]}
-                                            >
-                                                <DatePicker style={{ width: "100%" }} placeholder="18 Oct 2023" defaultValue={defaultDate} />
-                                            </Form.Item>
-                                        </div> */}
+                                        
                                     </div>
                                     <div class="linewrap d-flex" id="w-small">
                                         <span class="d-block me-0">To</span>
@@ -333,29 +284,10 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">Email</label>
-                                                <input type="email"> */}
+
                                             </div>
                                         </div>
-                                        {/* <div class="col-lg-4 col-md-6 space-col-spc">
-                                            <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Company Name"
-                                                    for="name"
-                                                    name="companyName"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter Purchase Order Number",
-                                                        },
-                                                    ]}
-                                                ><br />
-                                                    <Input placeholder="00854" />
-                                                </Form.Item>
-
-
-                                            </div>
-                                        </div> */}
+                                       
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
                                                 <Form.Item
@@ -371,8 +303,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">Email</label>
-                                                <input type="email"> */}
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
@@ -390,8 +321,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input type="tel" placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">Contact Number</label>
-                                                <input type="tel"> */}
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
@@ -409,8 +339,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">Address Line 1</label>
-                                                <input type="text"> */}
+                                               
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
@@ -428,8 +357,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">Address Line 2</label>
-                                                <input type="text"> */}
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
@@ -447,8 +375,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">State / Province</label>
-                                                <input type="text"> */}
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
@@ -466,8 +393,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">Country</label>
-                                                <input type="text"> */}
+                                                
                                             </div>
                                         </div>
 
@@ -597,8 +523,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">Quantity</label>
-                                        <input type="text"> */}
+                                              
                                             </div>
                                         </div>
                                         <div class="col-sm-4 space-col-spc">
@@ -616,8 +541,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">Unit Price</label>
-                                                <input type="text"> */}
+                                               
                                             </div>
                                         </div>
                                         <div class="col-sm-4 space-col-spc">
@@ -635,8 +559,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-                                                {/* <label for="name">Amount</label>
-                                                <input type="text"> */}
+                                               
                                             </div>
                                         </div>
                                         <div class="col-sm-12 space-col-spc">
@@ -766,8 +689,7 @@ const Create_po = ({ base_url }) => {
                                                     </div>
                                                 )}
 
-                                                {/* <label for="name">Description</label>
-                                                <input type="text"> */}
+                                               
                                             </div>
                                         </div>
 
@@ -841,11 +763,7 @@ const Create_po = ({ base_url }) => {
 
 
 
-                                        {/* <div class="col-md-12">
-                                            <button class="butt-flex"><i class="fa-solid fa-plus"></i>
-                                                <span class="add-para">Add Another Contact Person</span>
-                                            </button>
-                                        </div> */}
+                                       
                                     </div>
                                     {/* ... (continue adapting your existing code) */}
                                     <div className="po-wrap">

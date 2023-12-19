@@ -51,20 +51,10 @@ const AddUser = ({ base_url }) => {
         message.success(response.data.message);
         router.push('/user-list')
       }
-      // else{
-      //   message.error(response.data.message)
-      // }
-      // const response = await axios.post(`${base_url}/api/admin/users`, data, {
-      //   headers: headers,
-      // });
-      // if(response.)
-      // router.push('/user-list')
     }
     catch (error) {
       message.error(error.response.data.message)
     }
-    // axios.post(`${base_url}/api/accounts/forget-password`)
-    // Handle form submission here
   };
  
   return (
@@ -86,9 +76,6 @@ const AddUser = ({ base_url }) => {
               wrapperCol={{ span: 16 }}
             >
               <div className="row">
-                {/* <div className="Role">
-                  <p>Role</p>
-                </div> */}
                 <Form.Item label="Role" name="role_id" initialValue="select role" className='dropdown vender-input'>
                   <Select >
                     {Array.isArray(roles) &&

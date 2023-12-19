@@ -84,17 +84,6 @@ const PO_list = ({ base_url }) => {
                                                             <td>No vendor contact</td>
                                                         )}
                                                     </td>
-                                                    {/* <td>
-                                                        {purchase.vendor_contact.map((vendor_contact, index) => (
-                                                            <td>{vendor_contact.name}<br /></td>
-                                                        ))}
-                                                    </td> */}
-                                                    {/* <td>{purchase.vendor_contact.map((item) => (
-                                                        <td>{item.name}</td>
-                                                   
-                                                ))}</td>  */}
-                                                    {/* <td>{purchase.status}</td> */}
-
                                                     <td className="td-icon-color">
                                                         <a href="#"><EyeOutlined /></a>
                                                         <a href=""><DeleteOutlined /></a>
@@ -102,83 +91,7 @@ const PO_list = ({ base_url }) => {
                                                     </td>
                                                 </tr>
                                             ))}
-
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>ts123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td>123 654 987</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color">
-                                                <a href="#"><EyeOutlined /></a>
-                                                <i
-                                                    className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        {/* <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Aecom</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Pinnacle Builders</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>ts123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Aecom</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr> */}
+                                        
                                     </tbody>
                                 </table>
                             </div>

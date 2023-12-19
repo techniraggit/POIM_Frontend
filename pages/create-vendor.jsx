@@ -22,10 +22,6 @@ const Create_Vendor = ({ base_url }) => {
 
         const data = {
             ...values,
-            // company_name:values.company_name,
-        //     name:values.name,
-        // customer_name:values.customer_name,
-        // project_manager_id:rootData,
         contact_info:[...dynamicItems]  
         }
         console.log(data,'datataaaaaaa');
@@ -43,10 +39,9 @@ const Create_Vendor = ({ base_url }) => {
             });
             console.log(response,'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
             message.success(response.data.message)
-            // router.push('/vendor')
+            router.push('/vendor')
             
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+           
         }
         catch (error) {
             console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
@@ -89,36 +84,7 @@ const Create_Vendor = ({ base_url }) => {
 
 
 
-                                {/* {contactPersons.map((person, index) => (
-                    <div key={index} className="row">
-                        <Form.Item
-                            label={`Name ${index + 1}`}
-                            name={`contactPersons[${index}].name`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the name!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label={`Email ${index + 1}`}
-                            name={`contactPersons[${index}].email`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the email!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label={`Phone ${index + 1}`}
-                            name={`contactPersons[${index}].phone`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the phone number!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </div>
-                ))} */}
-
-
+                           
                                 <Form.Item
                                     label="Name"
                                     name="name"  // Add a name to link the input to the form values
@@ -227,11 +193,7 @@ const Create_Vendor = ({ base_url }) => {
 
 
 
-                                {/* <Form.Item>
-                                    <button class="butt-flex" ><i class="fa-solid fa-plus"></i>
-                                        <span >Add Another Contact Person</span>
-                                    </button>
-                                </Form.Item> */}
+                               
                                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                                     <button type="submit" className="create-ven-butt">Submit</button>
                                 </Form.Item>

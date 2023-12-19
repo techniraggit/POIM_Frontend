@@ -23,9 +23,7 @@ const Login = ({ base_url }) => {
     if (!email) {
       errors.email = 'Please enter your email address';
     }
-    // if (!forgotEmail) {
-    //   errors.forgotEmail = 'Please enter your email address';
-    // }
+    
 
     if (!password) {
       errors.password = 'Please enter your password';
