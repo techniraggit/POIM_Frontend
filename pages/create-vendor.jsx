@@ -13,6 +13,19 @@ const Create_Vendor = ({ base_url }) => {
     const router = useRouter();
     const onFinish = async (values) => {
 
+
+        const dynamicItems = values.items.map(item => ({
+            name: item.name,
+            phone_number: item.phone_number,
+            email: item.email,
+        }));
+
+        const data = {
+            ...values,
+        contact_info:[...dynamicItems]  
+        }
+        console.log(data,'datataaaaaaa');
+
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -20,9 +33,7 @@ const Create_Vendor = ({ base_url }) => {
                 'Content-Type': 'application/json',
             };
             console.log("values === ", values)
-            const data = {
-                ...values,
-            }
+           
             const response = await axios.post(`${base_url}/api/admin/vendors`, data, {
                 headers: headers,
             });
@@ -30,8 +41,7 @@ const Create_Vendor = ({ base_url }) => {
             message.success(response.data.message)
             router.push('/vendor')
             
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+           
         }
         catch (error) {
             console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
@@ -74,36 +84,7 @@ const Create_Vendor = ({ base_url }) => {
 
 
 
-                                {/* {contactPersons.map((person, index) => (
-                    <div key={index} className="row">
-                        <Form.Item
-                            label={`Name ${index + 1}`}
-                            name={`contactPersons[${index}].name`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the name!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label={`Email ${index + 1}`}
-                            name={`contactPersons[${index}].email`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the email!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label={`Phone ${index + 1}`}
-                            name={`contactPersons[${index}].phone`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the phone number!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </div>
-                ))} */}
-
-
+                           
                                 <Form.Item
                                     label="Name"
                                     name="name"  // Add a name to link the input to the form values
@@ -169,8 +150,8 @@ const Create_Vendor = ({ base_url }) => {
                                                 <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                                     <Form.Item
                                                         {...restField}
-                                                        name={[name, 'itemName']}
-                                                        fieldKey={[fieldKey, 'itemName']}
+                                                        name={[name, 'name']}
+                                                        fieldKey={[fieldKey, 'name']}
                                                         label="Name"
                                                         rules={[{ required: true, message: 'Please enter name' }]}
                                                     >
@@ -179,8 +160,8 @@ const Create_Vendor = ({ base_url }) => {
 
                                                     <Form.Item
                                                         {...restField}
-                                                        name={[name, 'itemEmail']}
-                                                        fieldKey={[fieldKey, 'itemEmail']}
+                                                        name={[name, 'email']}
+                                                        fieldKey={[fieldKey, 'email']}
                                                         label="Email"
                                                         rules={[{ required: true, message: 'Please enter email' }]}
                                                     >
@@ -189,8 +170,8 @@ const Create_Vendor = ({ base_url }) => {
 
                                                     <Form.Item
                                                         {...restField}
-                                                        name={[name, 'itemPhoneNumber']}
-                                                        fieldKey={[fieldKey, 'itemPhoneNumber']}
+                                                        name={[name, 'phone_number']}
+                                                        fieldKey={[fieldKey, 'phone_number']}
                                                         label="Phone Number"
                                                         rules={[{ required: true, message: 'Please enter phone number' }]}
                                                     >
@@ -212,11 +193,7 @@ const Create_Vendor = ({ base_url }) => {
 
 
 
-                                {/* <Form.Item>
-                                    <button class="butt-flex" ><i class="fa-solid fa-plus"></i>
-                                        <span >Add Another Contact Person</span>
-                                    </button>
-                                </Form.Item> */}
+                               
                                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                                     <button type="submit" className="create-ven-butt">Submit</button>
                                 </Form.Item>

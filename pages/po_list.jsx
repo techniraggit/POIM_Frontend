@@ -7,22 +7,22 @@ import axios from 'axios';
 import Link from "next/link";
 const PO_list = ({ base_url }) => {
 
-    const [users, setUsers] = useState([]);
-    // useEffect(() => {
-    //     const fetchroles = async () => {
-    //         try {
-    //             const headers = {
-    //                 Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-    //             }
-    //             const response = await axios.get(`${base_url}/api/admin/users`, { headers: headers });
-    //             console.log(response.data.data, '55555555555555555555555555');
-    //             setUsers(response.data.data); // Assuming the API response is an array of projects
-    //         } catch (error) {
-    //             console.error('Error fetching projects:', error);
-    //         }
-    //     }
-    //     fetchroles();
-    // }, [])
+    const [purchaseOrders, setPurchaseOrders] = useState([]);
+    useEffect(() => {
+        const fetchroles = async () => {
+            try {
+                const headers = {
+                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+                }
+                const response = await axios.get(`${base_url}/api/admin/purchase-order`, { headers: headers });
+                console.log(response.data.purchase_orders, '55555555555555555555555555');
+                setPurchaseOrders(response.data.purchase_orders); // Assuming the API response is an array of projects
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+        }
+        fetchroles();
+    }, [])
 
 
     return (
@@ -66,99 +66,32 @@ const PO_list = ({ base_url }) => {
                                     </thead>
                                     <tbody>
 
-                                        {/* {Array.isArray(users) &&
-                                            users.map((user, index) => (
+                                        {Array.isArray(purchaseOrders) &&
+                                            purchaseOrders.map((purchase, index) => (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
-                                                    <td>{user.first_name}</td>
-                                                    <td className="td-color">{user.last_name}</td>
-                                                    <td>{user.address}</td>
-                                                    <td>{user.email}</td>
-                                                    <td>{user.phone_number}</td>
+                                                    <td>{purchase.po_number}</td>
+                                                    <td className="td-color">{purchase.po_type}</td>
+                                                    <td>{purchase.created_on}</td>
+                                                    <td>{purchase.status}</td>
+                                                    <td>{purchase.status}</td>
+                                                    <td>
+                                                        {purchase.vendor_contact && Array.isArray(purchase.vendor_contact) ? (
+                                                            purchase.vendor_contact.map((vendor_contact, index) => (
+                                                                <td key={index}>{vendor_contact.name}<br /></td>
+                                                            ))
+                                                        ) : (
+                                                            <td>No vendor contact</td>
+                                                        )}
+                                                    </td>
                                                     <td className="td-icon-color">
                                                         <a href="#"><EyeOutlined /></a>
                                                         <a href=""><DeleteOutlined /></a>
                                                         <a href=""><EditOutlined /></a>
                                                     </td>
                                                 </tr>
-                                            ))} */}
-
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>ts123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td>123 654 987</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color">
-                                            <a href="#"><EyeOutlined /></a> 
-                                                <i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        {/* <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Aecom</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Pinnacle Builders</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>ts123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Aecom</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr> */}
+                                            ))}
+                                        
                                     </tbody>
                                 </table>
                             </div>

@@ -10,7 +10,8 @@ import Link from "next/link";
 
 const Vendor = ({ base_url }) => {
     const [projects, setProjects] = useState([]);
-    const [totalProjects,setTotalProjects]=useState(0)
+    // const [addresses,setAddresses]=useState([]);
+    const [totalProjects, setTotalProjects] = useState(0)
     useEffect(() => {
         const fetchroles = async () => {
             try {
@@ -20,6 +21,7 @@ const Vendor = ({ base_url }) => {
                 const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
                 console.log(response.data, '55555555555555555555555555');
                 setProjects(response.data.projects)
+                // setAddresses(response.data.address)
                 setTotalProjects(response.data.total_projects); // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -27,6 +29,14 @@ const Vendor = ({ base_url }) => {
         }
         fetchroles();
     }, [])
+
+    const siteAddress = projects.map((project) => {
+        console.log(project, 'projecttttttttttttttttt');
+        return project.sites.map((site) => {
+            return (site.address)
+        })
+    })
+
     return (
         <>
             <div className="wrapper-main">
@@ -68,20 +78,25 @@ const Vendor = ({ base_url }) => {
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{project.name}</td>
-                                                    {/* <td className="td-color">{vendor.name}</td> */}
-                                                    {/* <td>
-                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
-                                                            <td>{vendor_contact.name}<br /></td>
-                                                        ))}
-                                                    </td> */}
+                                                    
                                                     <td>{project.customer_name}</td>
-                                                    <td>{project.address}</td>
+                                                    {/* <td>{project.address}</td> */}
+                                                    <td>
+                                                        {
+                                                            siteAddress.flat().map((siteAddress) => {
+                                                                return (
+                                                                    <td key={siteAddress} value={siteAddress}
+                                                                    >
+                                                                        {siteAddress}
+                                                                       
+                                                                    </td>)
+                                                            }
 
-                                                    {/* <td>
-                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
-                                                            <td>{vendor_contact.name}<br /></td>
-                                                        ))}
-                                                    </td> */}
+
+                                                            )}
+                                                    </td>
+
+                                                   
                                                     <td className="td-icon-color">
                                                         <a href="#"><EyeOutlined /></a>
                                                         <a href=""><DeleteOutlined /></a>

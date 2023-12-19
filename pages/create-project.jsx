@@ -12,7 +12,6 @@ import axios from 'axios';
 const Create_Vendor = ({ base_url }) => {
     const [managers, setManagers] = useState([]);
     const [rootData, setRootData] = useState('')
-    const[site,setSite]= useState('')
 
 
     // const [formData, setFormData] = useState([]);
@@ -36,6 +35,25 @@ const Create_Vendor = ({ base_url }) => {
     }, [])
 
     const onFinish = async (values) => {
+        const dynamicItems = values.items.map(item => ({
+            name: item.name,
+            address: item.address,
+            state: item.state,
+        }));
+        
+       
+
+        const test = {
+            name:values.name,
+            customer_name:values.customer_name,
+            project_manager_id:rootData,
+            project_sites:[...dynamicItems]      
+        }
+
+        console.log('Final Form Values:', test);
+
+        
+        // return 
 
         try {
             const headers = {
@@ -44,33 +62,15 @@ const Create_Vendor = ({ base_url }) => {
                 'Content-Type': 'application/json',
             };
             console.log("values === ", values)
-            const data = {
-                ...values,
-                project_manager_id:rootData
-            }
-            const siteData={
-                ...values,
-                name:values.name,
-                address:values.address,
-                site:values.site,
-                project_id:site
-            }
-            const response = await axios.post(`${base_url}/api/admin/projects`, data, {
+            
+            const response = await axios.post(`${base_url}/api/admin/projects`, test, {
                 headers: headers,
             });
             console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
-            const result = await axios.post(`${base_url}/api/admin/project-sites`, siteData, {
-                headers: headers,
-            });
-            console.log(result,'kkkkkkkkkkkkkkkkkkkk');
-           
             message.success(response.data.message)
             // setFormData(values.items);
 
-            // router.push('/project')
-
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+            router.push('/project')
         }
         catch (error) {
             console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
@@ -81,7 +81,6 @@ const Create_Vendor = ({ base_url }) => {
     const project = (id) => {
         console.log(id, 'ttttttttttttttttttttttttttt');
         setRootData(id);
-        setSite(id);
     }
 
 
@@ -118,34 +117,6 @@ const Create_Vendor = ({ base_url }) => {
 
 
 
-                                {/* {contactPersons.map((person, index) => (
-                    <div key={index} className="row">
-                        <Form.Item
-                            label={`Name ${index + 1}`}
-                            name={`contactPersons[${index}].name`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the name!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label={`Email ${index + 1}`}
-                            name={`contactPersons[${index}].email`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the email!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label={`Phone ${index + 1}`}
-                            name={`contactPersons[${index}].phone`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the phone number!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </div>
-                ))} */}
 
 
                                 <Form.Item label="Select Maneger" name="role_id" initialValue="" className='dropdown vender-input'>
@@ -160,22 +131,14 @@ const Create_Vendor = ({ base_url }) => {
                                     </Select>
                                 </Form.Item>
                                 <Form.Item
-                                    label="Customer"
+                                    label="Customer Name"
                                     name="customer_name"  // Add a name to link the input to the form values
                                     className="vender-input"
                                     rules={[{ required: true, message: 'Please enter your customer!' }]}
                                 >
                                     <Input />
                                 </Form.Item>
-                                <Form.Item
-                                    label="Address"
-                                    name="address"  // Add a name to link the input to the form values
-                                    className="vender-input"
-                                    rules={[{ required: true, message: 'Please enter your first name!' }]}
-                                >
-                                    <Input />
-                                </Form.Item>
-
+                                
 
 
 
@@ -194,7 +157,7 @@ const Create_Vendor = ({ base_url }) => {
                                                         {...restField}
                                                         name={[name, 'name']}
                                                         fieldKey={[fieldKey, 'itemName']}
-                                                        label="Name"
+                                                        label="Site Name"
                                                         rules={[{ required: true, message: 'Please enter name' }]}
                                                     >
                                                         <Input placeholder="Name" />
@@ -204,7 +167,7 @@ const Create_Vendor = ({ base_url }) => {
                                                         {...restField}
                                                         name={[name, 'address']}
                                                         fieldKey={[fieldKey, 'itemAddress']}
-                                                        label="Address"
+                                                        label="Site Address"
                                                         rules={[{ required: true, message: 'Please enter address' }]}
                                                     >
                                                         <Input placeholder="address" />
@@ -212,12 +175,12 @@ const Create_Vendor = ({ base_url }) => {
 
                                                     <Form.Item
                                                         {...restField}
-                                                        name={[name, 'site']}
+                                                        name={[name, 'state']}
                                                         fieldKey={[fieldKey, 'site']}
                                                         label="Site"
                                                         rules={[{ required: true, message: 'Please enter site' }]}
                                                     >
-                                                        <Input placeholder="site" />
+                                                        <Input placeholder="Site State" />
                                                     </Form.Item>
 
                                                     <MinusCircleOutlined onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
@@ -225,21 +188,12 @@ const Create_Vendor = ({ base_url }) => {
                                             ))}
                                             <Form.Item>
                                                 <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
-                                                <span >Add more site</span>
+                                                    <span >Add site</span>
                                                 </Button>
                                             </Form.Item>
                                         </>
                                     )}
                                 </Form.List>
-
-
-
-
-                                {/* <Form.Item>
-                                    <button class="butt-flex" ><i class="fa-solid fa-plus"></i>
-                                        <span >Add Another Contact Person</span>
-                                    </button>
-                                </Form.Item> */}
                                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                                     <button type="submit" className="create-ven-butt">Submit</button>
                                 </Form.Item>
