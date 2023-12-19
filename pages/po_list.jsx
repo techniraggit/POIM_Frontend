@@ -1,0 +1,174 @@
+import React, { useEffect, useState } from "react";
+import Sidebar from "@/components/sidebar";
+import Header from "@/components/header";
+import { PlusOutlined, EyeOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { getServerSideProps } from "@/components/mainVariable";
+import axios from 'axios';
+import Link from "next/link";
+const PO_list = ({ base_url }) => {
+
+    const [users, setUsers] = useState([]);
+    // useEffect(() => {
+    //     const fetchroles = async () => {
+    //         try {
+    //             const headers = {
+    //                 Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+    //             }
+    //             const response = await axios.get(`${base_url}/api/admin/users`, { headers: headers });
+    //             console.log(response.data.data, '55555555555555555555555555');
+    //             setUsers(response.data.data); // Assuming the API response is an array of projects
+    //         } catch (error) {
+    //             console.error('Error fetching projects:', error);
+    //         }
+    //     }
+    //     fetchroles();
+    // }, [])
+
+
+    return (
+        <>
+            <div className="wrapper-main">
+                <Sidebar />
+                <div className="inner-wrapper">
+                    <Header heading="Purchase Order" />
+
+                    <div className="bottom-wrapp">
+                        <ul className="list-icons">
+                            <li className="me-4">
+                                <Link href="/create_po"><PlusOutlined /></Link>
+                                {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
+                                <span>Create PO</span>
+                            </li>
+                            <li className="me-4">
+                                <span className="text-size mt-0">22</span>
+                                <span>Total POs</span>
+                            </li>
+                        </ul>
+                        <div className="wrapin-form">
+                            <form className="search-vendor">
+                                <input className="vendor-input" placeholder="Search Users" />
+                                <button className="vendor-search-butt">Search</button>
+                            </form>
+                        </div>
+                        <div className="table-wrap vendor-wrap">
+                            <div className="inner-table">
+                                <table id="resizeMe" className="table-hover">
+                                    <thead>
+                                        <tr id="header-row">
+                                            <th className="hedaings-tb">S No.</th>
+                                            <th className="hedaings-tb">PO No.</th>
+                                            <th className="hedaings-tb">Purchase Orser Type</th>
+                                            <th className="hedaings-tb">PO Creation date</th>
+                                            <th className="hedaings-tb">PO Amount</th>
+                                            <th className="hedaings-tb">PO Status</th>
+                                            <th className="hedaings-tb">PO Vendor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {/* {Array.isArray(users) &&
+                                            users.map((user, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{user.first_name}</td>
+                                                    <td className="td-color">{user.last_name}</td>
+                                                    <td>{user.address}</td>
+                                                    <td>{user.email}</td>
+                                                    <td>{user.phone_number}</td>
+                                                    <td className="td-icon-color">
+                                                        <a href="#"><EyeOutlined /></a>
+                                                        <a href=""><DeleteOutlined /></a>
+                                                        <a href=""><EditOutlined /></a>
+                                                    </td>
+                                                </tr>
+                                            ))} */}
+
+                                        <tr>
+                                            <td>#45488</td>
+                                            <td className="td-color">Turner Construction</td>
+                                            <td>#456 - Upper Link, PA</td>
+                                            <td>ts123@gmail.com</td>
+                                            <td>123 654 987</td>
+                                            <td>123 654 987</td>
+                                            <td>123 654 987</td>
+                                            <td className="td-icon-color">
+                                            <a href="#"><EyeOutlined /></a> 
+                                                <i
+                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
+                                        </tr>
+                                        {/* <tr>
+                                            <td>#45488</td>
+                                            <td className="td-color">Aecom</td>
+                                            <td>#456 - Upper Link, PA</td>
+                                            <td>aecom123@gmail.com</td>
+                                            <td>123 654 987</td>
+                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
+                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>#45488</td>
+                                            <td className="td-color">Sam Billings</td>
+                                            <td>#456 - Upper Link, PA</td>
+                                            <td>sam123@gmail.com</td>
+                                            <td>123 654 987</td>
+                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
+                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>#45488</td>
+                                            <td className="td-color">Pinnacle Builders</td>
+                                            <td>#456 - Upper Link, PA</td>
+                                            <td>ts123@gmail.com</td>
+                                            <td>123 654 987</td>
+                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
+                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>#45488</td>
+                                            <td className="td-color">Turner Construction</td>
+                                            <td>#456 - Upper Link, PA</td>
+                                            <td>aecom123@gmail.com</td>
+                                            <td>123 654 987</td>
+                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
+                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>#45488</td>
+                                            <td className="td-color">Aecom</td>
+                                            <td>#456 - Upper Link, PA</td>
+                                            <td>sam123@gmail.com</td>
+                                            <td>123 654 987</td>
+                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
+                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>#45488</td>
+                                            <td className="td-color">Sam Billings</td>
+                                            <td>#456 - Upper Link, PA</td>
+                                            <td>aecom123@gmail.com</td>
+                                            <td>123 654 987</td>
+                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
+                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>#45488</td>
+                                            <td className="td-color">Turner Construction</td>
+                                            <td>#456 - Upper Link, PA</td>
+                                            <td>sam123@gmail.com</td>
+                                            <td>123 654 987</td>
+                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
+                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
+                                        </tr> */}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </>
+    )
+}
+export { getServerSideProps }
+export default PO_list
