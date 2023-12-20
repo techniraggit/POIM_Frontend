@@ -8,6 +8,8 @@ ul {
     padding-left: 0;
     margin-bottom: 0;
 }
+
+
 body {
     background-color: #FAFAFA;
 }
@@ -190,6 +192,7 @@ td {
     color: #112F5C;
 }
 .table-hover tbody tr td {
+    margin-left: 10px;
     color: #112F5C;
     padding: 10px 16px;
 }
@@ -1328,4 +1331,43 @@ button.ant-btn.create-ven-butt:hover {
 /* 20/12/2023 */
 .react-select span.ant-select-arrow {
     inset-inline-end: 17px !important;
+
+/* date 19/12/2023 */
+ul.list-icons li a span {
+    width: 56px;
+    height: 56px;
+    /* margin-bottom: 12px; */
+    /* margin: 0 auto; */
+    background-color: #659CEE;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    border-radius: 20px;
+    padding-top: 19px;
+}
+
+ul.list-icons li a span svg {
+    font-size: 19px;
+    color: #fff;
+
+}
+
+.anticon svg {
+    color: #818B96;
+}
+
+span.text-size {
+    font-size: 23px;
+    color: #fff;
+    background-color: #E6AA69;
+    padding: 11px 14px;
+    border-radius: 16px;
+    width: 75px;
+    text-align: center;
+}
+
+ul.list-icons li {
+    padding: 24px 24px 17px;
+    border-radius: 6px;
+    width: 195px;
 }
