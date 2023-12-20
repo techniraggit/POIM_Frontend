@@ -1259,6 +1259,8 @@ li.react-icon {
     height: 40px;
     border-radius: 26px;
     opacity: 1;
+    border: none;
+    background-color: #fafafa;
 }
 .react-select .ant-select-selector {
     padding: 0 18px !important;
@@ -1322,4 +1324,8 @@ button.ant-btn.create-ven-butt:hover {
 .wrap-number label {
     color: rgb(17, 47, 92, 0.5) !important;
     font-size: 16px !important;
+}
+/* 20/12/2023 */
+.react-select span.ant-select-arrow {
+    inset-inline-end: 17px !important;
 }
