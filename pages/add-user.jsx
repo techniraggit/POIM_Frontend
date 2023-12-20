@@ -68,7 +68,7 @@ const AddUser = ({ base_url }) => {
             <ul className=" create-icons">
               <li className="me-4 icon-text">
                 <i className="fa-solid fa-user me-3 mt-0"></i>
-                <span>Edit User</span>
+                <span>Create New User</span>
               </li>
             </ul>
             <Form onFinish={onFinish} layout="vertical"
@@ -76,6 +76,10 @@ const AddUser = ({ base_url }) => {
               wrapperCol={{ span: 16 }}
             >
               <div className="row">
+                {/* <div className="Role">
+                  <p>Role</p>
+                </div> */}
+                <div className="col-md-4 after-wrap">
                 <Form.Item label="Role" name="role_id" initialValue="select role" className='dropdown vender-input'>
                   <Select >
                     {Array.isArray(roles) &&
@@ -87,6 +91,10 @@ const AddUser = ({ base_url }) => {
                       ))}
                   </Select>
                 </Form.Item>
+                </div>
+                </div>
+                <div className="row">
+                <div className="col-lg-4 col-md-6">
                 <Form.Item
                   label="First Name"
                   name="first_name"
@@ -96,6 +104,8 @@ const AddUser = ({ base_url }) => {
                 >
                   <Input />
                 </Form.Item>
+                </div>
+                <div className="col-lg-4 col-md-6">
                 <Form.Item
                   label="Last Name"
                   name="last_name"  // Add a name to link the input to the form values
@@ -104,6 +114,8 @@ const AddUser = ({ base_url }) => {
                 >
                   <Input />
                 </Form.Item>
+                </div>
+                <div className="col-lg-4 col-md-6">
                 <Form.Item
                   label="Email Address"
                   name="email"  // Add a name to link the input to the form values
@@ -112,6 +124,8 @@ const AddUser = ({ base_url }) => {
                 >
                   <Input />
                 </Form.Item>
+                </div>
+                <div className="col-lg-4 col-md-6">
                 <Form.Item
                   label="Contact Number"
                   name="phone_number"  // Add a name to link the input to the form values
@@ -120,6 +134,8 @@ const AddUser = ({ base_url }) => {
                 >
                   <Input />
                 </Form.Item>
+                </div>
+                <div className="col-lg-4 col-md-6">
                 <Form.Item
                   label="Address"
                   name="address"  // Add a name to link the input to the form values
@@ -128,6 +144,8 @@ const AddUser = ({ base_url }) => {
                 >
                   <Input />
                 </Form.Item>
+                </div>
+                <div className="col-lg-4 col-md-6">
                 <Form.Item
                   label="State / Province"
                   name="state"  // Add a name to link the input to the form values
@@ -136,6 +154,8 @@ const AddUser = ({ base_url }) => {
                 >
                   <Input />
                 </Form.Item>
+                </div>
+                <div className="col-lg-4 col-md-6">
                 <Form.Item
                   label="Country"
                   name="country"  // Add a name to link the input to the form values
@@ -144,9 +164,12 @@ const AddUser = ({ base_url }) => {
                 >
                   <Input />
                 </Form.Item>
+                </div>
+                <div className="col-lg-12 col-md-12">
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                   <button type="submit" className="create-ven-butt">Submit</button>
                 </Form.Item>
+                </div>
               </div>
             </Form>
             

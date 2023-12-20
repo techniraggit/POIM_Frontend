@@ -156,19 +156,19 @@ const Create_po = ({ base_url }) => {
                     <div className="bottom-wrapp">
 
                         <ul class=" create-icons">
-                            <li class="icon-text">
-                                <i class="fa-solid fa-plus me-3 mt-0"></i>
+                            <li class="icon-text react-icon">
+                               <PlusOutlined />
                                 <span>Create New Purchase Order</span>
                             </li>
                         </ul>
                         {/* ... (your existing code) */}
-                        <div className="choose-potype">
+                        <div className="choose-potype round-wrap">
                             <div className="inner-choose">
                                 <Form onFinish={onFinish} className="file-form">
                                     {/* ... (your existing code) */}
                                     <div className="row">
-                                        <div className="col-md-4">
-                                            <div className="selectwrap">
+                                        <div className="col-lg-4 col-md-12">
+                                            <div className="selectwrap react-select">
                                                 <Form.Item
                                                     label="Choose PO Type"
                                                     name="po_type"
@@ -194,7 +194,7 @@ const Create_po = ({ base_url }) => {
                                     </div>
                                     {/* ... (your existing code) */}
                                     <div class="order-choose d-flex">
-                                        <div className="left-wrap">
+                                        <div className="left-wrap wrap-number">
                                             <Form.Item
                                                 label="Purchase Order Number"
                                                 name="poNumber"
@@ -205,7 +205,7 @@ const Create_po = ({ base_url }) => {
                                         </div>
 
 
-                                        <div className="left-wrap" id="forspce">
+                                        <div className="left-wrap wrap-number" id="forspce">
                                             <Form.Item
                                                 label="Date"
                                                 name="poDate"
@@ -237,8 +237,8 @@ const Create_po = ({ base_url }) => {
                                         <hr />
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="selectwrap">
+                                        <div class="col-lg-4 col-md-12">
+                                            <div class="selectwrap react-select">
                                                 <Form.Item
                                                     label="Vendor"
                                                     name="vendor_id"
@@ -404,7 +404,7 @@ const Create_po = ({ base_url }) => {
                                     </div>
                                     <div class="row space-bottom">
                                         <div class="col-md-12  all-wrap-box">
-                                            <div class="selectwrap">
+                                            <div class="selectwrap react-select">
                                                 <Form.Item
                                                     label="Shipment Type"
                                                     name="shipment_type"
@@ -564,7 +564,7 @@ const Create_po = ({ base_url }) => {
                                         </div>
                                         <div class="col-sm-12 space-col-spc">
                                             <div class="wrap-box po-selected">
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-12">
                                                     <Form.Item
                                                         label="Description"
                                                         for="name"
@@ -748,7 +748,7 @@ const Create_po = ({ base_url }) => {
                                                         </Space>
                                                     ))}
                                                     <Form.Item>
-                                                        <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
+                                                        <Button type="dashed" className="add-more-btn" onClick={() => add()} icon={<PlusOutlined />}>
                                                             <span >Add Another Contact Person</span>
                                                         </Button>
                                                     </Form.Item>
