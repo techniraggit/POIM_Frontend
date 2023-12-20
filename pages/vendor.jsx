@@ -5,7 +5,7 @@ import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons'
 import axios from 'axios';
 import { getServerSideProps } from "@/components/mainVariable";
-import { EyeOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { EyeFilled, DeleteFilled , EditFilled } from '@ant-design/icons'
 import Link from "next/link";
 
 const Vendor = ({ base_url }) => {
@@ -32,13 +32,13 @@ const Vendor = ({ base_url }) => {
             <div className="wrapper-main">
                 <Sidebar />
                 <div className="inner-wrapper">
-                    <Header heading="vendor" />
+                    <Header heading="Vendors" />
                     <div className="bottom-wrapp">
                         <ul className="list-icons">
                             <li className="me-4">
-                                <Link href="/create-vendor"><PlusOutlined /></Link>
+                                <Link href="/create-vendor" className="mb-2 d-block"><PlusOutlined /></Link>
                                 {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
-                                <span>Create New Vendor</span>
+                                <div>Create New Vendor</div>
                             </li>
                             <li className="me-4">
                                 <span className="text-size mt-0">{totalVendor}</span>
@@ -60,6 +60,7 @@ const Vendor = ({ base_url }) => {
                                             <th className="hedaings-tb">Company Name</th>
                                             <th className="hedaings-tb">Country</th>
                                             <th className="hedaings-tb">State</th>
+                                            <th className="hedaings-tb">Action</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,9 +74,9 @@ const Vendor = ({ base_url }) => {
                                                     <td>{vendor.state}</td>
 
                                                     <td className="td-icon-color">
-                                                        <a href="#"><EyeOutlined /></a>
-                                                        <a href=""><DeleteOutlined /></a>
-                                                        <a href=""><EditOutlined /></a>
+                                                        <a href="#" className="me-2"><EyeFilled /></a>
+                                                        <a href="" className="me-2"><DeleteFilled /></a>
+                                                        <a href="" className="me-2"><EditFilled /></a>
                                                     </td>
                                                 </tr>
                                             ))}
