@@ -78,7 +78,12 @@ const Vendor = ({ base_url }) => {
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{project.name}</td>
-                                                    
+                                                    {/* <td className="td-color">{vendor.name}</td> */}
+                                                    {/* <td>
+                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
+                                                            <td>{vendor_contact.name}<br /></td>
+                                                        ))}
+                                                    </td> */}
                                                     <td>{project.customer_name}</td>
                                                     {/* <td>{project.address}</td> */}
                                                     <td>
@@ -88,7 +93,11 @@ const Vendor = ({ base_url }) => {
                                                                     <td key={siteAddress} value={siteAddress}
                                                                     >
                                                                         {siteAddress}
-                                                                       
+                                                                        {/* {vendor.vendor_contact.map((vendor_contact, index) => (
+                                                                        <Select.Option>{vendor_contact.name}</Select.Option>
+                                                                        //  {vendor_contact.name}
+                                                                        ))} */}
+                                                                        {/* {vendor.company_name} */}
                                                                     </td>)
                                                             }
 
@@ -96,7 +105,11 @@ const Vendor = ({ base_url }) => {
                                                             )}
                                                     </td>
 
-                                                   
+                                                    {/* <td>
+                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
+                                                            <td>{vendor_contact.name}<br /></td>
+                                                        ))}
+                                                    </td> */}
                                                     <td className="td-icon-color">
                                                         <a href="#"><EyeOutlined /></a>
                                                         <a href=""><DeleteOutlined /></a>

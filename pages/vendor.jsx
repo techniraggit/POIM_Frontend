@@ -68,10 +68,20 @@ const Vendor = ({ base_url }) => {
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{vendor.company_name}</td>
-                                                   
+                                                    {/* <td className="td-color">{vendor.name}</td> */}
+                                                    {/* <td>
+                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
+                                                            <td>{vendor_contact.name}<br /></td>
+                                                        ))}
+                                                    </td> */}
                                                     <td>{vendor.country}</td>
                                                     <td>{vendor.state}</td>
 
+                                                    {/* <td>
+                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
+                                                            <td>{vendor_contact.name}<br /></td>
+                                                        ))}
+                                                    </td> */}
                                                     <td className="td-icon-color">
                                                         <a href="#"><EyeOutlined /></a>
                                                         <a href=""><DeleteOutlined /></a>
