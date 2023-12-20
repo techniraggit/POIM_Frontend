@@ -49,7 +49,6 @@ const PurchaseOrder = () => {
                                         <th className="hedaings-tb">PO Amount</th>
                                         <th className="hedaings-tb">PO Status</th>
                                         <th className="hedaings-tb">PO Vendor</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
