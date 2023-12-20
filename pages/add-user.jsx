@@ -76,13 +76,10 @@ const AddUser = ({ base_url }) => {
               wrapperCol={{ span: 16 }}
             >
               <div className="row">
-<<<<<<< HEAD
                 {/* <div className="Role">
                   <p>Role</p>
                 </div> */}
                 <div className="col-md-4 after-wrap">
-=======
->>>>>>> 2ca6b320cbec4f4ebc4816bd48b833c64843b043
                 <Form.Item label="Role" name="role_id" initialValue="select role" className='dropdown vender-input'>
                   <Select >
                     {Array.isArray(roles) &&
