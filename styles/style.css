@@ -669,7 +669,7 @@ button.butt-flex span {
     padding: 7px 20px 7px 20px;
     background-color: #F6F7F8;
 }
-form#top-btm-space {
+.top-btm-space {
     margin-top: 40px;
     margin-bottom: 60px;
 }
@@ -831,218 +831,6 @@ button.save-btn {
     margin-bottom: 25px;
 }
 /* edit purchase order */
-/* responsive */
-@media (max-width: 1199px){
-table.table-hover {
-    min-width: 910px;
-}
-.inner-table {
-    overflow-x: auto;
-}
-.Purchase-form {
-    justify-content: center;
-    flex-direction: column;
-    gap: 25px;
-    align-items: start;
-}
-}
-@media (max-width: 1024px){
-    th.hedaings-tb {
-        padding: 10px 12px;
-        font-size: 13px;
-    }
-    .aside-dashboard {
-        width: 280px;
-    }
-    .inner-wrapper {
-        width: calc(100% - 280px);
-    }
-    .bottom-wrapp {
-        padding-top: 26px;
-        padding-left: 26px;
-        padding-right: 16px;
-    }
-    .table-hover tbody tr td {
-        padding: 10px 12px;
-        font-size: 14px;
-    }
-}
-@media (min-width: 768px) and (max-width: 991px){
-    .all-wrap-box 
- .selectwrap {
-    width: 100%;
-}
-    .left-wrap input {
-        font-size: 16px;
-    }
-    .select2-container--default .select2-results__option[aria-selected=true] {
-        font-size: 12px;
-    }
-    .select2-container .select2-selection--single {
-        height: 32px;
-        font-size: 13px;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 29px;
-        padding-left: 12px;
-    }
-    .select2-results__option {
-        padding: 3px 3px;
-        /* font-weight: 500; */
-        font-size: 12px;
-    }
-    .select2-results__options {
-        padding: 0 10px;
-    }
-    .linewrap {
-        margin-bottom: 25px;
-        align-items: center;
-    }
-    .select2-container--default.select2-container--open.select2-container--above .select2-selection--single,
-     .select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
-        border-top-left-radius: 30px;
-        border-top-right-radius: 30px;
-    }
-    .order-choose {
-        flex-direction: column;
-    }
-    .linewrap span {
-        font-size: 16px;
-        width: 16%;
-    }
-    div#forspce {
-        margin-left: 0px;
-        margin-top: 20px;
-    }
-    .approve-wrap {
-        flex-direction: column;
-        align-items: start !important;
-        gap: 25px;
-    }
-    .select-main {
-        width: 100%;
-    }
-    select.file-wrap {
-        width: 100%;
-    }
-    .select-wrap {
-        width: 100%;
-    }
-    button.approve-btn {
-        width: 100%;
-    }
-    form#top-btm-space {
-        margin-bottom: 20px;
-    }
-    .po-wrap 
- button.create-ven-butt {
-    margin-top: 10px;
-}
-.wrap-box input {
-    padding: 6px 14px;
-}
-.left-wrap p {
-    font-size: 18px;
-}
-ul.create-icons li i {
-    font-size: 16px;
-    padding: 8px 11px;
-    border-radius: 10px;
-}
-.create-icons span {
-    font-size: 17px;
-}
-.choose-potype {
-    padding: 32px 20px 30px 20px;
-}
-.create-ven-butt {
-    padding: 6px 14px;
-    font-size: 16px;
-    width: 240px;
-}
-    .linewrap span {
-        width: 35%;
-    }
-    ul.list-dboard li a i {
-        font-size: 14px;
-    }
-    .table-wrap {
-        margin-top: 30px;
-        padding: 4px 6px;
-    }
-    th.hedaings-tb {
-        padding: 10px 4px;
-        font-size: 13px;
-    }
-    .table-hover tbody tr td {
-        padding: 10px 4px;
-        font-size: 14px;
-    }
-    .top-wrapp {
-        padding: 14px 46px 14px 46px;
-    }
-    .table-wrap h5 {
-        font-size: 21px;
-        margin-top: 12px;
-        margin-bottom: 18px;
-        margin-left: 16px;
-    }
-    .logo {
-        padding: 10px 20px 10px;
-    }
-    ul.list-dboard li {
-        padding: 10px 20px;
-        background: #fff;
-    }
-    span.db-span {
-        font-size: 14px;
-    }
-    .aside-dashboard {
-        width: 210px;
-    }
-    .inner-wrapper {
-        width: calc(100% - 210px);
-    }
-    .text-wrap h5 {
-        font-size: 21px;
-    }
-    ul.list-icons li i {
-        font-size: 16px;
-        padding: 10px 10px;
-        border-radius: 11px;
-    }
-    ul.list-icons li span {
-        font-size: 14px;
-    }
-    ul.list-icons li {
-        padding: 14px 11px 12px;
-        border-radius: 6px;
-        width: 130px;
-    }
-}
-@media screen and (max-width: 480px) {
-    h4.admin {
-        color: #404040;
-        font-size: 30px;
-        text-transform: capitalize;
-        margin-bottom: 35px;
-        margin-top: 15px;
-    }
-    .logowrap {
-        padding-top: 20px;
-        padding-bottom: 40px;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-    button.submit-btn {
-        font-size: 16px;
-        padding: 8px 12px;
-        margin-top: 50px;
-    }
-}
-
-
-
 
 /*Edit*/
 
@@ -1328,10 +1116,7 @@ button.ant-btn.create-ven-butt:hover {
     color: rgb(17, 47, 92, 0.5) !important;
     font-size: 16px !important;
 }
-/* 20/12/2023 */
-.react-select span.ant-select-arrow {
-    inset-inline-end: 17px !important;
-
+/* 19/12/2023 */
 /* date 19/12/2023 */
 ul.list-icons li a span {
     width: 56px;
@@ -1370,4 +1155,261 @@ ul.list-icons li {
     padding: 24px 24px 17px;
     border-radius: 6px;
     width: 195px;
+}
+/* date 19/12/2023 */
+/* 20/12/2023 */
+.react-select span.ant-select-arrow {
+    inset-inline-end: 17px !important;
+}
+.po-wrap {
+    margin-top: 40px;
+}
+.react-icon 
+ span.anticon   svg {
+    color: #fff;
+}
+.ant-btn:focus-visible, .ant-btn:focus, .ant-btn:active {
+    outline: none !important;
+    outline-offset: none !important;
+    transition: 0.3s ease;
+    box-shadow: none !important;
+}
+.ant-btn-dashed {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.ant-btn-dashed:focus {
+    outline: none !important;
+    outline-offset: none !important;
+    box-shadow: none !important;
+}
+.create-another .ant-space {
+    align-items: end;
+}
+.create-another .ant-space span.anticon.anticon-minus.minus-wrap svg {
+    color: #0d0d0d !important;
+}
+.create-another .ant-space {
+    margin-bottom: 40px !important;
+}
+.list-dboard li:hover {
+    background-color: #f7f8f8;
+}
+.list-dboard li svg {
+    color: #000 !important;
+}
+
+.list-dboard li:hover span.anticon.right-outline, .list-dboard li:active span.anticon.right-outline {
+    transform: rotate(180deg);
+    transition: 0.5s ease;
+}
+/* 20/12/2023 */
+/* responsive */
+@media (max-width: 1199px){
+table.table-hover {
+    min-width: 910px;
+}
+.inner-table {
+    overflow-x: auto;
+}
+.Purchase-form {
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
+    align-items: start;
+}
+}
+@media (max-width: 1024px){
+    th.hedaings-tb {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    .aside-dashboard {
+        width: 280px;
+    }
+    .inner-wrapper {
+        width: calc(100% - 280px);
+    }
+    .bottom-wrapp {
+        padding-top: 26px;
+        padding-left: 26px;
+        padding-right: 16px;
+    }
+    .table-hover tbody tr td {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px){
+    .all-wrap-box 
+ .selectwrap {
+    width: 100%;
+}
+    .left-wrap input {
+        font-size: 16px;
+    }
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        font-size: 12px;
+    }
+    .select2-container .select2-selection--single {
+        height: 32px;
+        font-size: 13px;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 29px;
+        padding-left: 12px;
+    }
+    .select2-results__option {
+        padding: 3px 3px;
+        /* font-weight: 500; */
+        font-size: 12px;
+    }
+    .select2-results__options {
+        padding: 0 10px;
+    }
+    .linewrap {
+        margin-bottom: 25px;
+        align-items: center;
+    }
+    .select2-container--default.select2-container--open.select2-container--above .select2-selection--single,
+     .select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+    }
+    .order-choose {
+        flex-direction: column;
+    }
+    .linewrap span {
+        font-size: 16px;
+        width: 16%;
+    }
+    div#forspce {
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+    .approve-wrap {
+        flex-direction: column;
+        align-items: start !important;
+        gap: 25px;
+    }
+    .select-main {
+        width: 100%;
+    }
+    select.file-wrap {
+        width: 100%;
+    }
+    .select-wrap {
+        width: 100%;
+    }
+    button.approve-btn {
+        width: 100%;
+    }
+    form#top-btm-space {
+        margin-bottom: 20px;
+    }
+    .po-wrap 
+ button.create-ven-butt {
+    margin-top: 10px;
+}
+.wrap-box input {
+    padding: 6px 14px;
+}
+.left-wrap p {
+    font-size: 18px;
+}
+ul.create-icons li i {
+    font-size: 16px;
+    padding: 8px 11px;
+    border-radius: 10px;
+}
+.create-icons span {
+    font-size: 17px;
+}
+.choose-potype {
+    padding: 32px 20px 30px 20px;
+}
+.create-ven-butt {
+    padding: 6px 14px;
+    font-size: 16px;
+    width: 240px;
+}
+    .linewrap span {
+        width: 35%;
+    }
+    ul.list-dboard li a i {
+        font-size: 14px;
+    }
+    .table-wrap {
+        margin-top: 30px;
+        padding: 4px 6px;
+    }
+    th.hedaings-tb {
+        padding: 10px 4px;
+        font-size: 13px;
+    }
+    .table-hover tbody tr td {
+        padding: 10px 4px;
+        font-size: 14px;
+    }
+    .top-wrapp {
+        padding: 14px 46px 14px 46px;
+    }
+    .table-wrap h5 {
+        font-size: 21px;
+        margin-top: 12px;
+        margin-bottom: 18px;
+        margin-left: 16px;
+    }
+    .logo {
+        padding: 10px 20px 10px;
+    }
+    ul.list-dboard li {
+        padding: 10px 20px;
+        background: #fff;
+    }
+    span.db-span {
+        font-size: 14px;
+    }
+    .aside-dashboard {
+        width: 210px;
+    }
+    .inner-wrapper {
+        width: calc(100% - 210px);
+    }
+    .text-wrap h5 {
+        font-size: 21px;
+    }
+    ul.list-icons li i {
+        font-size: 16px;
+        padding: 10px 10px;
+        border-radius: 11px;
+    }
+    ul.list-icons li span {
+        font-size: 14px;
+    }
+    ul.list-icons li {
+        padding: 14px 11px 12px;
+        border-radius: 6px;
+        width: 130px;
+    }
+}
+@media screen and (max-width: 480px) {
+    h4.admin {
+        color: #404040;
+        font-size: 30px;
+        text-transform: capitalize;
+        margin-bottom: 35px;
+        margin-top: 15px;
+    }
+    .logowrap {
+        padding-top: 20px;
+        padding-bottom: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    button.submit-btn {
+        font-size: 16px;
+        padding: 8px 12px;
+        margin-top: 50px;
+    }
 }
