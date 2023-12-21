@@ -29,7 +29,7 @@ const Vendor = ({ base_url }) => {
         fetchroles();
     }, [])
 
-    const siteAddress = projects.map((project) => {
+    const siteAddress = projects ?.map((project) => {
         console.log(project, 'projecttttttttttttttttt');
         return project.sites.map((site) => {
             return (site.address)

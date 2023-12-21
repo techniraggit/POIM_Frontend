@@ -5,9 +5,8 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import axios from 'axios';
 import '../styles/style.css'
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
-
 // import "antd/dist/antd.css";
 
 const { Option } = Select;
@@ -105,8 +104,8 @@ const Create_po = ({ base_url }) => {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             };
 
-            const response = await axios.get(`${base_url}/api/admin/project-sites?project_id=${projectId}`, { headers });
-            console.log(response, 'sitesssssssssssssssssssss');
+            const response = await axios.get(`${base_url}/api/admin/project-sites?project_id=${projectId}`,  { headers });
+            console.log(response,'sitesssssssssssssssssssss');
             const sitesArray = response.data.sites;
             setSiteOptions(sitesArray);
         } catch (error) {
@@ -135,17 +134,17 @@ const Create_po = ({ base_url }) => {
         fetchVendor();
     }, [])
 
-
+    
     const names = vendors.map((vendor) => {
         return {
             vendorId: vendor.id,
             contactName: vendor.vendor_contact[0].name
         };
     });
-
-    const vendorId = (value) => {
-        console.log(value, 'vendoriddddddddddddddddd=================');
-    }
+    
+    const vendorId=(value)=>{
+        console.log(value,'vendoriddddddddddddddddd=================');
+        }
 
 
     return (
@@ -157,19 +156,19 @@ const Create_po = ({ base_url }) => {
                     <div className="bottom-wrapp">
 
                         <ul class=" create-icons">
-                            <li class="icon-text react-icon">
-                                <PlusOutlined />
+                            <li class="icon-text">
+                                <i class="fa-solid fa-plus me-3 mt-0"></i>
                                 <span>Create New Purchase Order</span>
                             </li>
                         </ul>
                         {/* ... (your existing code) */}
-                        <div className="choose-potype round-wrap">
+                        <div className="choose-potype">
                             <div className="inner-choose">
                                 <Form onFinish={onFinish} className="file-form">
                                     {/* ... (your existing code) */}
                                     <div className="row">
-                                        <div className="col-lg-4 col-md-12">
-                                            <div className="selectwrap react-select">
+                                        <div className="col-md-4">
+                                            <div className="selectwrap">
                                                 <Form.Item
                                                     label="Choose PO Type"
                                                     name="po_type"
@@ -195,18 +194,18 @@ const Create_po = ({ base_url }) => {
                                     </div>
                                     {/* ... (your existing code) */}
                                     <div class="order-choose d-flex">
-                                        <div className="left-wrap wrap-number">
+                                        <div className="left-wrap">
                                             <Form.Item
                                                 label="Purchase Order Number"
                                                 name="poNumber"
-
+                                               
                                             >
                                                 <Input placeholder="00854" />
                                             </Form.Item>
                                         </div>
 
 
-                                        <div className="left-wrap wrap-number" id="forspce">
+                                        <div className="left-wrap" id="forspce">
                                             <Form.Item
                                                 label="Date"
                                                 name="poDate"
@@ -231,15 +230,15 @@ const Create_po = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
 
-
+                                        
                                     </div>
                                     <div class="linewrap d-flex" id="w-small">
                                         <span class="d-block me-0">To</span>
                                         <hr />
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-4 col-md-12">
-                                            <div class="selectwrap react-select">
+                                        <div class="col-md-4">
+                                            <div class="selectwrap">
                                                 <Form.Item
                                                     label="Vendor"
                                                     name="vendor_id"
@@ -252,17 +251,17 @@ const Create_po = ({ base_url }) => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Select
-                                                        id="single2"
-                                                        className="js-states form-control file-wrap-select"
-                                                        onChange={(value) => vendorId(value)}
-                                                    >
-                                                        {names.map((entry) => (
-                                                            <Select.Option key={entry.vendorId} value={entry.vendorId}>
-                                                                {entry.contactName}
-                                                            </Select.Option>
-                                                        ))}
-                                                    </Select>
+                                                   <Select
+                                                id="single2"
+                                                className="js-states form-control file-wrap-select"
+                                                onChange={(value) => vendorId(value)}
+                                            >
+                                                {names.map((entry) => (
+                                                    <Select.Option key={entry.vendorId} value={entry.vendorId}>
+                                                        {entry.contactName}
+                                                    </Select.Option>
+                                                ))}
+                                            </Select>
 
                                                 </Form.Item>
                                             </div>
@@ -288,7 +287,7 @@ const Create_po = ({ base_url }) => {
 
                                             </div>
                                         </div>
-
+                                       
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
                                                 <Form.Item
@@ -304,7 +303,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
@@ -322,7 +321,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input type="tel" placeholder="00854" />
                                                 </Form.Item>
-
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
@@ -340,7 +339,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-
+                                               
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
@@ -358,7 +357,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
@@ -376,7 +375,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
@@ -394,7 +393,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-
+                                                
                                             </div>
                                         </div>
 
@@ -405,7 +404,7 @@ const Create_po = ({ base_url }) => {
                                     </div>
                                     <div class="row space-bottom">
                                         <div class="col-md-12  all-wrap-box">
-                                            <div class="selectwrap react-select">
+                                            <div class="selectwrap">
                                                 <Form.Item
                                                     label="Shipment Type"
                                                     name="shipment_type"
@@ -524,7 +523,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-
+                                              
                                             </div>
                                         </div>
                                         <div class="col-sm-4 space-col-spc">
@@ -542,7 +541,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-
+                                               
                                             </div>
                                         </div>
                                         <div class="col-sm-4 space-col-spc">
@@ -560,12 +559,12 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" />
                                                 </Form.Item>
-
+                                               
                                             </div>
                                         </div>
                                         <div class="col-sm-12 space-col-spc">
                                             <div class="wrap-box po-selected">
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-6">
                                                     <Form.Item
                                                         label="Description"
                                                         for="name"
@@ -690,7 +689,7 @@ const Create_po = ({ base_url }) => {
                                                     </div>
                                                 )}
 
-
+                                               
                                             </div>
                                         </div>
 
@@ -700,138 +699,71 @@ const Create_po = ({ base_url }) => {
 
 
 
-                                        <div className="create-another">
-                                            <Form.List name="items">
-                                                {(fields, { add, remove }) => (
-                                                    <>
-                                                        {fields.map(({ key, name, fieldKey, ...restField }) => (
-                                                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                                <div class="wrap-box">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'itemQuantity']}
-                                                                    fieldKey={[fieldKey, 'itemQuantity']}
-                                                                    label="Quantity"
-                                                                    rules={[{ required: true, message: 'Please enter name' }]}
-                                                                >
-                                                                    <Input placeholder="quantity" />
-                                                                </Form.Item>
-                                                                </div>
 
-                                                                <div class="wrap-box">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'itemUnitPrice']}
-                                                                    fieldKey={[fieldKey, 'itemUnitPrice']}
-                                                                    label="Unit Price"
-                                                                    rules={[{ required: true, message: 'Please enter email' }]}
-                                                                >
-                                                                    <Input placeholder="unit price" />
-                                                                </Form.Item>
-                                                                </div>
-                                                                <div class="wrap-box">
+                                        <Form.List name="items">
+                                            {(fields, { add, remove }) => (
+                                                <>
+                                                    {fields.map(({ key, name, fieldKey, ...restField }) => (
+                                                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                                            <Form.Item
+                                                                {...restField}
+                                                                name={[name, 'itemQuantity']}
+                                                                fieldKey={[fieldKey, 'itemQuantity']}
+                                                                label="Quantity"
+                                                                rules={[{ required: true, message: 'Please enter name' }]}
+                                                            >
+                                                                <Input placeholder="quantity" />
+                                                            </Form.Item>
 
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'itemAmount']}
-                                                                    fieldKey={[fieldKey, 'itemAmount']}
-                                                                    label="Amount"
-                                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                                >
-                                                                    <Input placeholder="amount" />
-                                                                </Form.Item>
-                                                                </div>
-                                                                <div class="wrap-box">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'itemDescription']}
-                                                                    fieldKey={[fieldKey, 'itemDescription']}
-                                                                    label="Description"
-                                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                                >
-                                                                    <Input placeholder="description" />
-                                                                </Form.Item>
-                                                                </div>
-                                                                {/* <MinusOutlined /> */}
-                                                                <MinusOutlined  className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-                                                            </Space>
-                                                        ))}
-                                                        <Form.Item>
-                                                            <Button type="dashed" className="add-more-btn" onClick={() => add()} icon={<PlusOutlined />}>
-                                                                <span >Add Another Contact Person</span>
-                                                            </Button>
-                                                        </Form.Item>
+                                                            <Form.Item
+                                                                {...restField}
+                                                                name={[name, 'itemUnitPrice']}
+                                                                fieldKey={[fieldKey, 'itemUnitPrice']}
+                                                                label="Unit Price"
+                                                                rules={[{ required: true, message: 'Please enter email' }]}
+                                                            >
+                                                                <Input placeholder="unit price" />
+                                                            </Form.Item>
+
+                                                            <Form.Item
+                                                                {...restField}
+                                                                name={[name, 'itemAmount']}
+                                                                fieldKey={[fieldKey, 'itemAmount']}
+                                                                label="Amount"
+                                                                rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                            >
+                                                                <Input placeholder="amount" />
+                                                            </Form.Item>
+                                                            <Form.Item
+                                                                {...restField}
+                                                                name={[name, 'itemDescription']}
+                                                                fieldKey={[fieldKey, 'itemDescription']}
+                                                                label="Description"
+                                                                rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                            >
+                                                                <Input placeholder="description" />
+                                                            </Form.Item>
+
+                                                            <MinusCircleOutlined onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                                        </Space>
+                                                    ))}
+                                                    <Form.Item>
+                                                        <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
+                                                            <span >Add Another Contact Person</span>
+                                                        </Button>
+                                                    </Form.Item>
 
 
-                                                    </>
-                                                )}
-                                            </Form.List>
-                                        </div>
+                                                </>
+                                            )}
+                                        </Form.List>
 
 
 
 
 
 
-
-                                    </div>
-                                    <div className="row top-btm-space">
-                                        <div className="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-
-                                                    name='hst_amount'
-                                                    label="HST Amount"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                >
-                                                    <Input placeholder="description" />
-                                                </Form.Item>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-
-                                                    name='total_amount'
-                                                    label="Total Amount"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                >
-                                                    <Input placeholder="description" />
-                                                </Form.Item>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="linewrap d-flex">
-                                        <span class="d-block me-2">By Details</span>
-                                        <hr />
-                                    </div>
-                                    <div className="row">
-                                        <div class="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-
-                                                    name='first_name'
-                                                    label="First Name"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                >
-                                                    <Input placeholder="" />
-                                                </Form.Item>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-
-                                                    name='last_name'
-                                                    label="Last Name"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                >
-                                                    <Input placeholder="" />
-                                                </Form.Item>
-
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                     {/* ... (continue adapting your existing code) */}
                                     <div className="po-wrap">

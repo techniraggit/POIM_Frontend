@@ -80,7 +80,6 @@ const Vendor = ({ base_url }) => {
                                                     </td>
                                                 </tr>
                                             ))}
-
                                     </tbody>
                                 </table>
                             </div>
