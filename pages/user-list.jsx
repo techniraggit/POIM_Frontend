@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
-import { PlusOutlined, EyeOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
 import axios from 'axios';
 import Link from "next/link";
@@ -35,7 +35,7 @@ const User_list = ({ base_url }) => {
                     <div className="bottom-wrapp">
                         <ul className="list-icons">
                             <li className="me-4">
-                                <Link href="/add-user"><PlusOutlined /></Link>
+                                <Link href="/add-user" className="d-block mb-2"><PlusOutlined /></Link>
                                 {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
                                 <span>Create New User</span>
                             </li>
@@ -61,7 +61,7 @@ const User_list = ({ base_url }) => {
                                             <th className="hedaings-tb">Address</th>
                                             <th className="hedaings-tb">Email</th>
                                             <th className="hedaings-tb">Contact No</th>
-                                            <th></th>
+                                            <th className="hedaings-tb">Action</th>                     
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -76,9 +76,9 @@ const User_list = ({ base_url }) => {
                                                     <td>{user.email}</td>
                                                     <td>{user.phone_number}</td>
                                                     <td className="td-icon-color">
-                                                        <a href="#"><EyeOutlined /></a>
-                                                        <a href=""><DeleteOutlined /></a>
-                                                        <a href=""><EditOutlined /></a>
+                                                    <a href="#" className="me-2"><EyeFilled /></a> 
+                                            <a href="#" className="me-2"><DeleteFilled /></a> 
+                                            <a href="#" className="me-2"><EditFilled /></a> 
                                                     </td>
                                                 </tr>
                                             ))}

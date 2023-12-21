@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/style.css'
 import Link from 'next/link';
-
+import { RightOutlined } from '@ant-design/icons';
 
 const Sidebar = () => {
   return (
@@ -16,7 +16,8 @@ const Sidebar = () => {
               <span className="db-span">
                 <i className="fa-solid fa-house arrow-clr me-4"></i>Dashboard
               </span>
-              <i className="fa-solid fa-chevron-left"></i>
+              <RightOutlined className='right-outline' />
+              {/* <i className="fa-solid fa-chevron-left"></i> */}
             </Link>
            
           </li>
@@ -27,7 +28,7 @@ const Sidebar = () => {
                 <img src="/images/user.svg" alt="" className="me-4" />
                 Users
               </span>
-              <i className="fa-solid fa-chevron-right"></i>
+              <RightOutlined className='right-outline' />
             </Link>
             
           </li>
@@ -37,6 +38,7 @@ const Sidebar = () => {
                 <img src="/images/vendors.svg" alt="" className="me-4" />
                 Vendors
               </span>
+              <RightOutlined className='right-outline' />
             </Link>
            
           </li>
@@ -46,7 +48,7 @@ const Sidebar = () => {
                 <img src="/images/Projects.svg" alt="" className="me-4" />
                 Projects
               </span>
-              <i className="fa-solid fa-chevron-right"></i>
+              <RightOutlined className='right-outline' />
           </Link>
             
           </li>
@@ -56,7 +58,7 @@ const Sidebar = () => {
                 <img src="/images/Purchase.svg" alt="" className="me-4" />
                 Purchase Orders
               </span>
-              <i className="fa-solid fa-chevron-right"></i>
+              <RightOutlined className='right-outline' />
             </Link>
            
           </li>
@@ -66,7 +68,7 @@ const Sidebar = () => {
                 <img src="/images/Invoice.svg" alt="" className="me-4" />
                 Invoice
               </span>
-              <i className="fa-solid fa-chevron-right"></i>
+              <RightOutlined className='right-outline' />
             </Link>
             
           </li>
@@ -76,7 +78,7 @@ const Sidebar = () => {
                 <img src="/images/Reports.svg" alt="" className="me-4" />
                 Reports
               </span>
-              <i className="fa-solid fa-chevron-right"></i>
+              <RightOutlined className='right-outline' />
             </Link>
            
           </li>
@@ -86,7 +88,7 @@ const Sidebar = () => {
                 <img src="/images/Settings.svg" alt="" className="me-4" />
                 Settings
               </span>
-              <i className="fa-solid fa-chevron-right"></i>
+              <RightOutlined className='right-outline' />
             </Link>
            
            
