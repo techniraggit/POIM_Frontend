@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import DynamicTitle from '@/components/dynamic-title.jsx';
 import { Form, Input, Button, Select, Space, message } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
@@ -40,7 +40,7 @@ const Create_Vendor = ({ base_url }) => {
             address: item.address,
             state: item.state,
         }));
-        
+
         // Add values from static fields to the beginning of dynamicItems array
         // const finalFormValues = [
         //     {
@@ -52,15 +52,15 @@ const Create_Vendor = ({ base_url }) => {
         // ];
 
         const test = {
-            name:values.name,
-            customer_name:values.customer_name,
-            project_manager_id:rootData,
-            project_sites:[...dynamicItems]      
+            name: values.name,
+            customer_name: values.customer_name,
+            project_manager_id: rootData,
+            project_sites: [...dynamicItems]
         }
 
         console.log('Final Form Values:', test);
 
-        
+
         // return 
 
         try {
@@ -111,191 +111,153 @@ const Create_Vendor = ({ base_url }) => {
                     <Header heading="Project" />
                     <div className="bottom-wrapp">
                         <ul className=" create-icons">
-                            <li className="me-4 icon-text">
+                            <li className="me-0 icon-text">
                                 <i className="fa-solid fa-user me-3 mt-0"></i>
-                                <span>Create Project</span>
+                                <span>Create New Project</span>
                             </li>
                         </ul>
-                        <Form onFinish={onFinish} layout="vertical"
-                            labelCol={{ span: 8 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            <div className="row">
 
-                                <Form.Item
-                                    label="Project Name"
-                                    name="name"
-                                    // Add a name to link the input to the form values
-                                    className="vender-input"
-                                    rules={[{ required: true, message: 'Please enter your project name!' }]}
-                                >
-                                    <Input />
-                                </Form.Item>
+                        <div className="vendor-form-create">
 
-
-
-
-                                {/* {contactPersons.map((person, index) => (
-                    <div key={index} className="row">
-                        <Form.Item
-                            label={`Name ${index + 1}`}
-                            name={`contactPersons[${index}].name`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the name!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label={`Email ${index + 1}`}
-                            name={`contactPersons[${index}].email`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the email!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label={`Phone ${index + 1}`}
-                            name={`contactPersons[${index}].phone`}
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter the phone number!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </div>
-                ))} */}
-
-
-                                <Form.Item label="Select Maneger" name="role_id" initialValue="" className='dropdown vender-input'>
-                                    <Select onChange={(value) => project(value)}>
-                                        {Array.isArray(managers) &&
-                                            managers.map((manager) => (
-                                                <Option key={manager.id} value={manager.id}
-                                                >
-                                                    {manager.first_name}
-                                                </Option>
-                                            ))}
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item
-                                    label="Customer Name"
-                                    name="customer_name"  // Add a name to link the input to the form values
-                                    className="vender-input"
-                                    rules={[{ required: true, message: 'Please enter your customer!' }]}
-                                >
-                                    <Input />
-                                </Form.Item>
-                                {/* <Form.Item
-                                    label="Address"
-                                    name="address"  // Add a name to link the input to the form values
-                                    className="vender-input"
-                                    rules={[{ required: true, message: 'Please enter your first name!' }]}
-                                >
-                                    <Input />
-                                </Form.Item> */}
-
-
-
-
-                                {/* <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                    <Form.Item
-                                        // {...restField}
-                                        name='name'
-                                        // fieldKey={[fieldKey, 'itemName']}
-                                        label="Site Name"
-                                        rules={[{ required: true, message: 'Please enter name' }]}
-                                    >
-                                        <Input placeholder="Name" />
-                                    </Form.Item>
-
-                                    <Form.Item
-                                        // {...restField}
-                                        // name={[name, 'address']}
-                                        name='address'
-                                        // fieldKey={[fieldKey, 'itemAddress']}
-                                        label="Site Address"
-                                        rules={[{ required: true, message: 'Please enter address' }]}
-                                    >
-                                        <Input placeholder="address" />
-                                    </Form.Item>
-
-                                    <Form.Item
-                                        // {...restField}
-                                        // name={[name, 'state']}
-                                        name='state'
-                                        // fieldKey={[fieldKey, 'site']}
-                                        label="Site"
-                                        rules={[{ required: true, message: 'Please enter site' }]}
-                                    >
-                                        <Input placeholder="Site State" />
-                                    </Form.Item>
-
-                                </Space> */}
-
-
-
-
-
-                                <Form.List name="items">
-                                    {(fields, { add, remove }) => (
-                                        <>
-                                            {fields.map(({ key, name, fieldKey, ...restField }) => (
-                                                <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                    <Form.Item
-                                                        {...restField}
-                                                        name={[name, 'name']}
-                                                        fieldKey={[fieldKey, 'itemName']}
-                                                        label="Site Name"
-                                                        rules={[{ required: true, message: 'Please enter name' }]}
-                                                    >
-                                                        <Input placeholder="Name" />
-                                                    </Form.Item>
-
-                                                    <Form.Item
-                                                        {...restField}
-                                                        name={[name, 'address']}
-                                                        fieldKey={[fieldKey, 'itemAddress']}
-                                                        label="Site Address"
-                                                        rules={[{ required: true, message: 'Please enter address' }]}
-                                                    >
-                                                        <Input placeholder="address" />
-                                                    </Form.Item>
-
-                                                    <Form.Item
-                                                        {...restField}
-                                                        name={[name, 'state']}
-                                                        fieldKey={[fieldKey, 'site']}
-                                                        label="Site"
-                                                        rules={[{ required: true, message: 'Please enter site' }]}
-                                                    >
-                                                        <Input placeholder="Site State" />
-                                                    </Form.Item>
-
-                                                    <MinusCircleOutlined onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-                                                </Space>
-                                            ))}
-                                            <Form.Item>
-                                                <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
-                                                    <span >Add site</span>
-                                                </Button>
+                            <Form onFinish={onFinish} layout="vertical"
+                                labelCol={{ span: 8 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                <div className="row">
+                                    <div className="col-lg-4 col-md-12">
+                                        <div className="wrap-box">
+                                            <Form.Item
+                                                label="Project Name"
+                                                name="project_name"
+                                                // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your project name!' }]}
+                                            >
+                                                <Input />
                                             </Form.Item>
-                                        </>
-                                    )}
-                                </Form.List>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-12">
+                                        <div className="wrap-box">
+                                            <Form.Item
+                                                label="Project Number"
+                                                name="number"
+                                                // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your project number!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-4 col-md-12">
+                                        <div className="selectwrap bg-border-select">
+                                            <Form.Item label="Project Maneger" name="project_manager" initialValue="" className="vender-input">
+                                                <Select onChange={(value) => project(value)}>
+                                                    {Array.isArray(managers) &&
+                                                        managers.map((manager) => (
+                                                            <Option key={manager.id} value={manager.id}
+                                                            >
+                                                                {manager.first_name}
+                                                            </Option>
+                                                        ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                </div>
 
 
+                                <div className="row">
+                                    <div className="col-lg-4 col-md-12">
+                                        <div className="wrap-box">
+                                            <Form.Item
+                                                label="Site Address"
+                                                name="site_address"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your site address!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-4 col-md-12">
+                                        <div className="wrap-box">
+                                            <Form.Item
+                                                label="State / Province"
+                                                name="State_Province"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your State Province!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-                                {/* <Form.Item>
-                                    <button class="butt-flex" ><i class="fa-solid fa-plus"></i>
-                                        <span >Add Another Contact Person</span>
-                                    </button>
-                                </Form.Item> */}
-                                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                    <button type="submit" className="create-ven-butt">Submit</button>
-                                </Form.Item>
-                            </div>
-                        </Form>
+                                <div className="create-another">
+                                    <Form.List name="items">
 
+                                        {(fields, { add, remove }) => (
+                                            <>
+                                                {fields.map(({ key, name, fieldKey, ...restField }) => (
+                                                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                                        <div className="wrap-box">
+                                                            <Form.Item
+                                                                {...restField}
+                                                                name={[name, 'name']}
+                                                                fieldKey={[fieldKey, 'itemName']}
+                                                                label="Site Name"
+                                                                rules={[{ required: true, message: 'Please enter name' }]}
+                                                            >
+                                                                <Input placeholder="Name" />
+                                                            </Form.Item>
+                                                        </div>
+
+                                                        <div className="wrap-box">
+                                                            <Form.Item
+                                                                {...restField}
+                                                                name={[name, 'address']}
+                                                                fieldKey={[fieldKey, 'itemAddress']}
+                                                                label="Site Address"
+                                                                rules={[{ required: true, message: 'Please enter address' }]}
+                                                            >
+                                                                <Input placeholder="address" />
+                                                            </Form.Item>
+                                                        </div>
+
+                                                        <div className="wrap-box">
+                                                            <Form.Item
+                                                                {...restField}
+                                                                name={[name, 'state']}
+                                                                fieldKey={[fieldKey, 'site']}
+                                                                label="Site"
+                                                                rules={[{ required: true, message: 'Please enter site' }]}
+                                                            >
+                                                                <Input placeholder="Site State" />
+                                                            </Form.Item>
+                                                        </div>
+                                                        <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                                    </Space>
+                                                ))}
+                                                <Form.Item>
+                                                    <Button className="add-more-btn" type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
+                                                        <span >Add One More Site</span>
+                                                    </Button>
+                                                </Form.Item>
+                                            </>
+                                        )}
+                                    </Form.List>
+                                    </div>
+                                    <Form.Item >
+                                        <button type="submit" className="create-ven-butt">Submit</button>
+                                    </Form.Item>
+                            </Form>
+                        </div>
                     </div>
                 </div>
             </div>

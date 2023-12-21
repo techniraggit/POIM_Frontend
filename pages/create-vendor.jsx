@@ -95,25 +95,13 @@ const Create_Vendor = ({ base_url }) => {
                                                 name="contact_person_name"
                                                 // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your company name!' }]}
+                                                rules={[{ required: true, message: 'Please enter your contact person_name!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>
                                         </div>
                                     </div>
-                                    <div className="col-lg-4 col-md-12">
-                                        <div className="wrap-box">
-                                            <Form.Item
-                                                label="Contact No"
-                                                name="contact_no"
-                                                // Add a name to link the input to the form values
-                                                className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your company name!' }]}
-                                            >
-                                                <Input />
-                                            </Form.Item>
-                                        </div>
-                                    </div>
+                                  
 
                                     <div className="col-lg-4 col-md-12">
                                         <div className="wrap-box">
@@ -122,7 +110,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 name="email_address"
                                                 // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your company name!' }]}
+                                                rules={[{ required: true, message: 'Please enter your email address!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>
@@ -136,7 +124,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 label="State / Province"
                                                 name="state_province"  // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your name!' }]}
+                                                rules={[{ required: true, message: 'Please enter your State / Province!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>
@@ -149,7 +137,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 label="Country"
                                                 name="country"  // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your contact number!' }]}
+                                                rules={[{ required: true, message: 'Please enter your country!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>
@@ -162,7 +150,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 label="Address"
                                                 name="address"  // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your email address!' }]}
+                                                rules={[{ required: true, message: 'Please enter your  address!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>
@@ -176,25 +164,13 @@ const Create_Vendor = ({ base_url }) => {
                                                 label="Contact No"
                                                 name="contact_no"  // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter state!' }]}
+                                                rules={[{ required: true, message: 'Please enter contact no!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>
                                         </div>
                                     </div>
 
-                                    <div className="col-lg-4 col-md-12">
-                                        <div className="wrap-box">
-                                            <Form.Item
-                                                label="Email"
-                                                name="email"  // Add a name to link the input to the form values
-                                                className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your country!' }]}
-                                            >
-                                                <Input />
-                                            </Form.Item>
-                                        </div>
-                                    </div>
 
                                     <div className="col-lg-4 col-md-12">
                                         <div className="wrap-box">
@@ -202,7 +178,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 label="Customer Name"
                                                 name="customer_name"  // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your address!' }]}
+                                                rules={[{ required: true, message: 'Please enter your customer name!' }]}
                                             >
                                                 <Input />
 

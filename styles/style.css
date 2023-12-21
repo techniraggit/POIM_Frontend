@@ -1261,7 +1261,7 @@ button.ant-btn.add-more-btn {
     border-radius: 26px;
     color: #0D0D0D;
     font-weight: 600;
-    padding: 6px 19px !important;
+    padding: 6px 47px !important;
     display: flex;
     align-items: center;
     height: 42px;
@@ -1269,10 +1269,47 @@ button.ant-btn.add-more-btn {
 
 .vendor-form-create {
     margin-top: 20px;
-    padding: 0px 25px 25px 25px;
+    padding: 25px 25px 25px 25px;
     background-color: white;
 }
 
 .vender-input-parent  .ant-col-8 {
     max-width: 100% !important;
+}
+
+
+/* 21 dec */
+.selectwrap.react-select .ant-col {
+    max-width: 100% !important;
+}
+.selectwrap.react-select .ant-form-item {
+    width: 100% !important;
+}
+
+label {
+    width: 100%;
+    color: rgb(17, 47, 92, 0.5) !important;
+    font-size: 16px !important;
+    font-weight: 500;
+    margin-bottom: 7px !important;
+}
+.bg-border-select  .ant-col {
+    max-width: 100% !important;
+}
+
+.ant-select-selector {
+    height: 44px !important;
+}
+.ant-select:hover .ant-select-selector  {
+    border-color: #70707054 !important;
+}
+.ant-select-selector  {
+    border-color: #70707054 !important;
+    box-shadow: none !important;
+}
+span.ant-select-arrow {
+    margin-top: 0px !important;
+}
+button.ant-btn.add-more-btn:hover  span {
+    color: #0D0D0D;
 }
