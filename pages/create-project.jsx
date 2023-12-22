@@ -40,17 +40,6 @@ const Create_Vendor = ({ base_url }) => {
             address: item.address,
             state: item.state,
         }));
-        
-        // Add values from static fields to the beginning of dynamicItems array
-        // const finalFormValues = [
-        //     {
-        //         name: values.name,
-        //         address: values.address,
-        //         state: values.state,
-        //     },
-        //     ...dynamicItems
-        // ];
-
         const test = {
             name:values.name,
             customer_name:values.customer_name,
@@ -263,7 +252,7 @@ const Create_Vendor = ({ base_url }) => {
                                                     <Form.Item
                                                         {...restField}
                                                         name={[name, 'state']}
-                                                        fieldKey={[fieldKey, 'site']}
+                                                        fieldKey={[fieldKey, 'State']}
                                                         label="Site"
                                                         rules={[{ required: true, message: 'Please enter site' }]}
                                                     >

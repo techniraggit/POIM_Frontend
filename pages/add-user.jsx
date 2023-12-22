@@ -46,8 +46,9 @@ const AddUser = ({ base_url }) => {
         const response = await axios.post(`${base_url}/api/admin/users`, data, {
           headers: headers,
         });
-        console.log(response.data.message,'jjjjjjjjjjjjjj');
-        if(response.status==true){
+        console.log(response.status,'jjjjjjjjjjjjjj');
+
+        if(response.status==201){
         message.success(response.data.message);
         router.push('/user-list')
       }

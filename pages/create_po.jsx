@@ -7,12 +7,14 @@ import axios from 'axios';
 import '../styles/style.css'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 // import "antd/dist/antd.css";
 
 const { Option } = Select;
 
 const Create_po = ({ base_url }) => {
     const [form] = Form.useForm();
+    const router = useRouter();
 
     const [shipmentType, setshipmentType] = useState(null);
     const [materialFor, setMaterialFor] = useState('');
@@ -20,28 +22,43 @@ const Create_po = ({ base_url }) => {
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
+    const [vendorId, setVendorId] = useState('');
 
     const [quantity, setQuantity] = useState(0);
-  const [unitPrice, setUnitPrice] = useState(0);
-  const [amount, setAmount] = useState(0);
-
+    const [unitPrice, setUnitPrice] = useState(0);
+    const [amount, setAmount] = useState(0);
+    const [vendorForm, setVendorForm] = useState({
+        company_name: '',
+        email: '',
+        phone: '',
+        address: '',
+        // address2:'',
+        state: '',
+        country: ''
+    })
+    const handleChange = ({ target: { name, value } }) => {
+        setVendorForm({
+            ...vendorForm,
+            [name]: value
+        })
+    }
     // const [shipmentAddress, setShipmentAddress] = useState('1860 Shawson')
 
     const handleQuantityChange = (value) => {
         setQuantity(value);
         updateAmount(value, unitPrice);
-      };
+    };
 
-      const handleUnitPriceChange = (value) => {
+    const handleUnitPriceChange = (value) => {
         setUnitPrice(value);
         updateAmount(quantity, value);
-      };
+    };
 
-      const updateAmount = (quantity, unitPrice) => {
+    const updateAmount = (quantity, unitPrice) => {
         const calculatedAmount = quantity * unitPrice;
         setAmount(calculatedAmount);
         form.setFieldsValue({ Amount: calculatedAmount });
-      };
+    };
 
     const handlePoTypeChange = (value) => {
         console.log(value, 'valueeeeeeeeeeeeeeeeeeeeee');
@@ -49,13 +66,13 @@ const Create_po = ({ base_url }) => {
         setshipmentType(value);
     };
     const onFinish = async (values) => {
-        const dynamicItems = values.items.map(item => ({
+        const dynamicItems = values.items?.map(item => ({
             quantity: item.quantity,
             unit_price: item.unit_price,
             amount: item.Amount,
-            description:item.Description
+            description: item.Description
         }));
-        console.log(dynamicItems,'dynamicccccccccccccc================');
+        console.log(dynamicItems, 'dynamicccccccccccccc================');
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -64,47 +81,50 @@ const Create_po = ({ base_url }) => {
             };
             console.log("values === ", values.items)
             const data = {
-                // ...values,
+                //...values,
 
-                "po_data": {
-                    email: values.email,
-                    phone: values.phone,
-                    state: values.state,
-                    country: values.country,
+                po_data: {
+                    company_name: vendorForm.company_name,
+                    email: vendorForm.email,
+                    phone: vendorForm.phone,
+                    state: vendorForm.state,
+                    country: vendorForm.country,
                     vendor_id: values.vendor_id,
                     po_type: values.po_type,
-                    address1: values.address1,
-                    address2: values.address2
+                    address1: vendorForm.address,
                 },
-                "shipment": {
+                shipment: {
                     HST_Amount: values.HST_Amount,
                     Total_amount: values.Total_amount,
                     shipment_type: values.shipment_type,
                     project_id: values.project_id,
                     shipment_address: 'add'
                 },
-                "shipment_material": {
+                shipment_material: {
                     quantity: values.quantity,
                     unit_price: values.unit_price,
                     Amount: values.Amount,
                     Description: values.Description,
-                    material_for: ' xzxcxbcv',
+                    material_for: values.materialFor,
                     site_id: values.site_id,
                     project_id: values.project_id,
-                    code: 45465,
+                    code: values.code,
                     shipment_address: values.shipment_address
                 }
 
             }
-            console.log(data, 'hereeeee')
+            // console.log(data,  values, 'hereeeee')
             // return
             const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
                 headers: headers,
             });
             console.log(response.data, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
             // setShipmentAddress(response.data.shipment_address)
-            message.success(response.data.message)
-            // router.push('/vendor')
+            if (response.data.status == true) {
+                message.success(response.data.message)
+                router.push('/po_list')
+            }
+
 
             // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
             // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
@@ -147,7 +167,7 @@ const Create_po = ({ base_url }) => {
             };
 
             const response = await axios.get(`${base_url}/api/admin/project-sites?project_id=${projectId}`, { headers });
-            console.log(response, 'sitesssssssssssssssssssss');
+            console.log(response, 'vendorssssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
             const sitesArray = response.data.sites;
             setSiteOptions(sitesArray);
         } catch (error) {
@@ -168,36 +188,70 @@ const Create_po = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/vendors`, { headers: headers });
-                setVendors(response.data.vendors); // Assuming the API response is an array of projects
+                console.log(response.data.vendors, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+                setVendors(response.data.vendors);
+                // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
         }
+        // if(vendorId){
         fetchVendor();
+
+        // }
     }, [])
 
-    // const dsdsdsd=(value)=>{
-    //     const fetchSites = async () => {
 
-    //         try {
-    //             const headers = {
-    //                 Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-    //             }
-    //             const response = await axios.get(`${base_url}/api/admin/project-sites?project_id=d3a379a6-5de7-4e47-8058-fbbba7ea93fc`, { headers: headers });
-    //             console.log(response.data.sites, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    //             const sitesArray = response.data.sites;
-    //             setSiteOptions(sitesArray);
 
-    //         } catch (error) {
-    //             console.error('Error fetching projects:', error);
-    //         }
-    //     };
+    useEffect(() => {
+        const vendorDetails = async () => {
+            try {
+                const headers = {
+                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+                }
+                const response = await axios.get(`${base_url}/api/admin/vendors?vendor_id=${vendorId}`, { headers: headers });
 
-    //     if (poType === 'Project Related') {
-    //         fetchSites();
-    //     }
-    //   console.log(value,'asssssssssssssssss')
-    // }
+
+                // setVendors(response.data.vendors); 
+                console.log(vendorId)
+                if (vendorId && response?.data?.status) {
+                    console.log({
+                        ...vendorForm,
+                        company_name: response.data.vendors_details.company_name,
+                        email: response.data.vendors_details.vendor_contact[0].email,
+                        phone: response.data.vendors_details.vendor_contact[0].phone_number,
+                        address: response.data.vendors_details.address,
+                        state: response.data.vendors_details.state,
+                        country: response.data.vendors_details.country
+                    }, "=======data");
+
+                    setVendorForm({
+                        ...vendorForm,
+                        company_name: response.data.vendors_details.company_name,
+                        email: response.data.vendors_details.vendor_contact[0].email,
+                        phone: response.data.vendors_details.vendor_contact[0].phone_number,
+                        address: response.data.vendors_details.address,
+                        state: response.data.vendors_details.state,
+                        country: response.data.vendors_details.country
+                    })
+                }
+
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+        }
+        if (vendorId) {
+            vendorDetails();
+
+        }
+    }, [vendorId])
+
+    console.log(vendorForm, '3333333333333333333333333');
+
+
+
+
+
     const names = vendors?.map((vendor) => {
         return {
             vendorId: vendor.id,
@@ -205,7 +259,8 @@ const Create_po = ({ base_url }) => {
         };
     });
 
-    const vendorId = (value) => {
+    const handleVendorChange = (value) => {
+        setVendorId(value)
         console.log(value, 'vendoriddddddddddddddddd=================');
     }
 
@@ -247,9 +302,9 @@ const Create_po = ({ base_url }) => {
                                                         class="js-states form-control file-wrap-select bold-select"
                                                     // onChange={handlePoTypeChange}
                                                     >
-                                                        <Option value="Project Related">Material PO</Option>
-                                                        <Option value="Non Project Related">Rental PO</Option>
-                                                        <Option value="Combined">Sub Contractor PO</Option>
+                                                        <Option value="material">Material PO</Option>
+                                                        <Option value="rental">Rental PO</Option>
+                                                        <Option value="subcontractor">Sub Contractor PO</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </div>
@@ -336,7 +391,7 @@ const Create_po = ({ base_url }) => {
                                                     <Select
                                                         id="single2"
                                                         className="js-states form-control file-wrap-select"
-                                                        onChange={(value) => vendorId(value)}
+                                                        onChange={(value) => handleVendorChange(value)}
                                                     >
                                                         {names?.map((entry) => (
                                                             <Select.Option key={entry.vendorId} value={entry.vendorId}>
@@ -353,149 +408,121 @@ const Create_po = ({ base_url }) => {
                                     <div class="row space-raw  btm-space">
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                <Form.Item
+                                                {/* <Form.Item
                                                     label="Company Name"
                                                     for="name"
                                                     name="company_name"
+                                                    // value={vendorForm.company_name}
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter Company name",
+                                                            message: "Please enter company name",
                                                         },
                                                     ]}
+                                                    onChange={handleChange}
                                                 >
-                                                    <Input placeholder="00854" />
-                                                </Form.Item>
-                                                {/* <label for="name">Email</label>
-                                                <input type="email"> */}
-                                            </div>
-                                        </div>
-                                        {/* <div class="col-lg-4 col-md-6 space-col-spc">
-                                            <div class="wrap-box">
-                                                <Form.Item
+                                                    <Input placeholder="00854" value={vendorForm.company_name} />
+                                                </Form.Item> */}
+                                                <label>
+                                                    Company Name
+                                                </label>
+                                                <input
                                                     label="Company Name"
                                                     for="name"
-                                                    name="companyName"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter Purchase Order Number",
-                                                        },
-                                                    ]}
-                                                ><br />
-                                                    <Input placeholder="00854" />
-                                                </Form.Item>
-
-
-                                            </div>
-                                        </div> */}
-                                        <div class="col-lg-4 col-md-6 space-col-spc">
-                                            <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Email"
-                                                    for="name"
-                                                    name="email"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter email",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Input placeholder="00854" />
-                                                </Form.Item>
+                                                    name="company_name"
+                                                    type="text"
+                                                    value={vendorForm.company_name}
+                                                    // rules={[
+                                                    //     {
+                                                    //         required: true,
+                                                    //         message: "Please enter Company name",
+                                                    //     },
+                                                    // ]}
+                                                    onChange={handleChange}
+                                                // onChange=handleChange={}
+                                                />
+                                                {/* <Input value={vendorForm.company_name} placeholder="00854" /> */}
+                                                {/* </input> */}
                                                 {/* <label for="name">Email</label>
                                                 <input type="email"> */}
                                             </div>
                                         </div>
+
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Contact Number"
+                                                <label>
+                                                    Email
+                                                </label>
+                                                <input
+                                                    for="name"
+                                                    name="email"
+                                                    type="text"
+                                                    value={vendorForm.email}
+
+                                                    onChange={handleChange}
+                                                />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 space-col-spc">
+                                            <div class="wrap-box">
+                                                <label>Contact Number</label>
+                                                <input
                                                     for="name"
                                                     name="phone"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter Contact Number",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Input type="tel" placeholder="00854" />
-                                                </Form.Item>
-                                              
+                                                    type="text"
+                                                    value={vendorForm.phone}
+
+                                                    onChange={handleChange}
+                                                />
+
+
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Address Line 1"
+                                                <label>Address</label>
+                                                <input
                                                     for="name"
-                                                    name="address1"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter Address Line 1",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Input placeholder="00854" />
-                                                </Form.Item>
-                                                
+                                                    name="address"
+                                                    type="text"
+                                                    value={vendorForm.address}
+
+                                                    onChange={handleChange}
+                                                />
+
+
                                             </div>
                                         </div>
+
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Address Line 2"
-                                                    for="name"
-                                                    name="address2"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter Address Line 2",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Input placeholder="00854" />
-                                                </Form.Item>
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-6 space-col-spc">
-                                            <div class="wrap-box">
-                                                <Form.Item
-                                                    label="State / Province"
+                                                <label>State / Province</label>
+                                                <input
                                                     for="name"
                                                     name="state"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter State",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Input placeholder="00854" />
-                                                </Form.Item>
-                                               
+                                                    type="text"
+                                                    value={vendorForm.state}
+
+                                                    onChange={handleChange}
+                                                />
+
+
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Country"
+                                                <label>Country</label>
+                                                <input
                                                     for="name"
                                                     name="country"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter Country",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Input placeholder="00854" />
-                                                </Form.Item>
-                                                
+                                                    type="text"
+                                                    value={vendorForm.country}
+
+                                                    onChange={handleChange}
+                                                />
+
+
                                             </div>
                                         </div>
 
@@ -576,36 +603,11 @@ const Create_po = ({ base_url }) => {
 
                                                     >
                                                         <Input readOnly />
-                                                        {/* <Select id="single78" class="js-states form-control file-wrap-select">
-                                                            <Option value="Project Related">Project Related</Option>
-                                                            <Option value="Non Project Related">Non Project Related</Option>
-                                                            <Option value="Combined">Combined</Option>
-                                                        </Select> */}
+
                                                     </Form.Item>
                                                 </div>
                                             )}
-                                            {/* {poType === 'Combined' && (
-                                                <div class="selectwrap">
-                                                <Form.Item
-                                                    label="Project"
-                                                    name="project"
-                                                    for="file"
-                                                    class="same-clr"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please choose PO Type",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Select id="single21" class="js-states form-control file-wrap-select">
-                                                        <Option value="Project Related">Project Related</Option>
-                                                        <Option value="Non Project Related">Non Project Related</Option>
-                                                        <Option value="Combined">Combined</Option>
-                                                    </Select>
-                                                </Form.Item>
-                                            </div>
-                                            )} */}
+
                                         </div>
                                     </div>
                                     <div class="linewrap d-flex">
@@ -628,7 +630,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" onChange={(e) => handleQuantityChange(e.target.value)} />
                                                 </Form.Item>
-                                               
+
                                             </div>
                                         </div>
                                         <div class="col-sm-4 space-col-spc">
@@ -646,7 +648,7 @@ const Create_po = ({ base_url }) => {
                                                 >
                                                     <Input placeholder="00854" onChange={(e) => handleUnitPriceChange(e.target.value)} />
                                                 </Form.Item>
-                                              
+
                                             </div>
                                         </div>
                                         <div class="col-sm-4 space-col-spc">
@@ -662,282 +664,11 @@ const Create_po = ({ base_url }) => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="00854" value={amount} readOnly/>
+                                                    <Input placeholder="00854" value={amount} readOnly />
                                                 </Form.Item>
-                                               
+
                                             </div>
                                         </div>
-                                        {/* <div class="col-sm-12 space-col-spc">
-                                            <div class="wrap-box po-selected">
-                                                <div class="col-sm-6">
-                                                    <Form.Item
-                                                        label="Description"
-                                                        htmlFor="name"
-                                                        name="Description"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please enter description",
-                                                            },
-                                                        ]}
-                                                    >
-                                                        <Input placeholder="00854" />
-                                                    </Form.Item>
-                                                </div>
-
-                                                {shipmentType === 'Project Related' && (
-                                                    <div class="col-sm-6 selectwrap">
-                                                        <Form.Item
-                                                            label="Select Site"
-                                                            name="site_id"
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose site",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select id="single51" class="js-states form-control file-wrap-select">
-                                                                {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) => (
-                                                                        <Select.Option key={site.id} value={site.id}>
-                                                                            {site.name}
-                                                                        </Select.Option>
-                                                                    ))}
-                                                            </Select>
-                                                        </Form.Item>
-                                                    </div>
-                                                )}
-                                                {shipmentType === 'Non Project Related' && (
-
-
-                                                    <div class="col-sm-6 selectwrap">
-                                                        <Form.Item
-                                                            label="Material For"
-                                                            name="materialFor"
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose Material For",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select id="single90"
-                                                                class="js-states form-control file-wrap-select"
-                                                                onChange={(value) => setMaterialFor(value)}
-                                                            >
-                                                                <Option value="inventory">Inventory</Option>
-                                                                <Option value="supplies">Supplies/Expenses</Option>
-                                                               
-                                                            </Select>
-                                                        </Form.Item>
-
-                                                        {materialFor === 'inventory' && (
-                                                            <Form.Item
-                                                                label="Inventory Code"
-                                                                name="inventoryCode"
-                                                                htmlFor="file"
-                                                                className="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please enter Inventory Code",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Input />
-                                                            </Form.Item>
-                                                        )}
-                                                        {materialFor === 'supplies' && (
-                                                            <Form.Item
-                                                                label="GL Code"
-                                                                name="glCode"
-                                                                htmlFor="file"
-                                                                className="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please enter GL Code",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Input />
-                                                            </Form.Item>
-                                                        )}
-                                                    </div>
-                                                )}
-
-                                                {shipmentType === 'Combined' && (
-                                                    <div class="selectwrap">
-                                                        <Form.Item
-                                                            label="Material For"
-                                                            name="materialFor"
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose material",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select id="single67" class="js-states form-control file-wrap-select"
-                                                                onChange={(value) => setMaterialFor(value)}
-                                                            >
-                                                                <Option value="projects">Project </Option>
-                                                                <Option value="inventorys">Inventory</Option>
-                                                                <Option value="expenses">Supplies/Expenses</Option>
-                                                            </Select>
-                                                        </Form.Item>
-                                                        {materialFor === 'projects' && (
-                                                            <>
-                                                                <div class="selectwrap columns-select">
-                                                                    <Form.Item
-                                                                        label="Project"
-                                                                        name="project_id"
-                                                                        htmlFor="file"
-                                                                        class="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please choose Project",
-                                                                            },
-                                                                        ]}
-                                                                    >
-                                                                        <Select id="single406"
-                                                                            class="js-states form-control file-wrap-select"
-                                                                            onChange={(value) => list(value)}
-
-                                                                        >
-                                                                            {Array.isArray(projects) &&
-                                                                                projects.map((project) => (
-                                                                                    <Select.Option key={project.id} value={project.id}
-                                                                                    
-                                                                                    >
-                                                                                        {project.name}
-                                                                                    </Select.Option>
-                                                                                ))}
-                                                                        </Select>
-                                                                    </Form.Item>
-
-                                                                </div>
-                                                                <div class="selectwrap columns-select">
-                                                                    <Form.Item
-                                                                        label="Select Site"
-                                                                        name="site_id"
-                                                                        htmlFor="file"
-                                                                        class="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please choose site",
-                                                                            },
-                                                                        ]}
-                                                                    >
-                                                                        <Select id="single51" class="js-states form-control file-wrap-select">
-                                                                            {Array.isArray(siteOptions) &&
-                                                                                siteOptions.map((site) => (
-                                                                                    <Select.Option key={site.id} value={site.id}>
-                                                                                        {site.name}
-                                                                                    </Select.Option>
-                                                                                ))}
-                                                                        </Select>
-                                                                    </Form.Item>
-                                                                </div>
-
-                                                            </>
-                                                        )}
-                                                        {materialFor === 'inventorys' && (
-                                                            <>
-                                                                <Form.Item
-                                                                    label="Inventory Code"
-                                                                    name="inventoryCode"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter Inventory Code",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Input />
-                                                                </Form.Item>
-                                                                < Form.Item
-                                                                    label="Delivery Address"
-                                                                    name="delivery"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter Inventory Code",
-                                                                        },
-                                                                    ]}
-                                                                    initialValue="1860 Shawson"
-                                                                >
-                                                                    <Input readOnly/>
-
-                                                                </Form.Item>
-                                                            </>
-
-                                                        )}
-                                                        {materialFor === 'expenses' && (
-                                                            <>
-                                                                <Form.Item
-                                                                    label="GL Code"
-                                                                    name="glCode"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter Inventory Code",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Input />
-                                                                </Form.Item>
-                                                                < Form.Item
-                                                                    label="Delivery Address"
-                                                                    name="delivery"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter Inventory Code",
-                                                                        },
-                                                                    ]}
-                                                                    initialValue="1860 Shawson"
-                                                                >
-                                                                    <Input readOnly/>
-
-                                                                </Form.Item>
-                                                            </>
-
-                                                        )}
-
-
-
-                                                    </div>
-
-
-
-                                                )}
-
-                                                
-                                            </div>
-                                        </div> */}
-
-
-
-
-
                                         <div className="row">
                                             <div className="col-md-4">
                                                 <div className="wrap-box">
@@ -1034,137 +765,6 @@ const Create_po = ({ base_url }) => {
                                                                     <Option value="expenses">Supplies/Expenses</Option>
                                                                 </Select>
                                                             </Form.Item>
-                                                            {/* {materialFor === 'projects' && (
-                                                                <>
-                                                                    <div class="selectwrap columns-select">
-                                                                        <Form.Item
-                                                                            label="Project"
-                                                                            name="project_id"
-                                                                            htmlFor="file"
-                                                                            class="same-clr"
-                                                                            rules={[
-                                                                                {
-                                                                                    required: true,
-                                                                                    message: "Please choose Project",
-                                                                                },
-                                                                            ]}
-                                                                        >
-                                                                            <Select id="single406"
-                                                                                class="js-states form-control file-wrap-select"
-                                                                                onChange={(value) => list(value)}
-
-                                                                            >
-                                                                                {Array.isArray(projects) &&
-                                                                                    projects.map((project) => (
-                                                                                        <Select.Option key={project.id} value={project.id}
-
-                                                                                        >
-                                                                                            {project.name}
-                                                                                        </Select.Option>
-                                                                                    ))}
-                                                                            </Select>
-                                                                        </Form.Item>
-
-                                                                    </div>
-                                                                    <div class="selectwrap columns-select">
-                                                                        <Form.Item
-                                                                            label="Select Site"
-                                                                            name="site_id"
-                                                                            htmlFor="file"
-                                                                            class="same-clr"
-                                                                            rules={[
-                                                                                {
-                                                                                    required: true,
-                                                                                    message: "Please choose site",
-                                                                                },
-                                                                            ]}
-                                                                        >
-                                                                            <Select id="single51" class="js-states form-control file-wrap-select">
-                                                                                {Array.isArray(siteOptions) &&
-                                                                                    siteOptions.map((site) => (
-                                                                                        <Select.Option key={site.id} value={site.id}>
-                                                                                            {site.name}
-                                                                                        </Select.Option>
-                                                                                    ))}
-                                                                            </Select>
-                                                                        </Form.Item>
-                                                                    </div>
-
-                                                                </>
-                                                            )} */}
-                                                            {/* {materialFor === 'inventorys' && (
-                                                                <>
-                                                                    <Form.Item
-                                                                        label="Inventory Code"
-                                                                        name="inventoryCode"
-                                                                        htmlFor="file"
-                                                                        className="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please enter Inventory Code",
-                                                                            },
-                                                                        ]}
-                                                                    >
-                                                                        <Input />
-                                                                    </Form.Item>
-                                                                    < Form.Item
-                                                                        label="Delivery Address"
-                                                                        name="delivery"
-                                                                        htmlFor="file"
-                                                                        className="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please enter Inventory Code",
-                                                                            },
-                                                                        ]}
-                                                                        initialValue="1860 Shawson"
-                                                                    >
-                                                                        <Input readOnly />
-
-                                                                    </Form.Item>
-                                                                </>
-
-                                                            )} */}
-                                                            {/* {materialFor === 'expenses' && (
-                                                                <>
-                                                                    <Form.Item
-                                                                        label="GL Code"
-                                                                        name="glCode"
-                                                                        htmlFor="file"
-                                                                        className="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please enter Inventory Code",
-                                                                            },
-                                                                        ]}
-                                                                    >
-                                                                        <Input />
-                                                                    </Form.Item>
-                                                                    < Form.Item
-                                                                        label="Delivery Address"
-                                                                        name="delivery"
-                                                                        htmlFor="file"
-                                                                        className="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please enter Inventory Code",
-                                                                            },
-                                                                        ]}
-                                                                        initialValue="1860 Shawson"
-                                                                    >
-                                                                        <Input readOnly />
-
-                                                                    </Form.Item>
-                                                                </>
-
-                                                            )} */}
-
-
-
                                                         </div>
 
 
@@ -1179,7 +779,7 @@ const Create_po = ({ base_url }) => {
                                                     {materialFor === 'inventory' && (
                                                         <Form.Item
                                                             label="Inventory Code"
-                                                            name="inventoryCode"
+                                                            name="code"
                                                             htmlFor="file"
                                                             className="same-clr"
                                                             rules={[
@@ -1195,7 +795,7 @@ const Create_po = ({ base_url }) => {
                                                     {materialFor === 'supplies' && (
                                                         <Form.Item
                                                             label="GL Code"
-                                                            name="glCode"
+                                                            name="code"
                                                             htmlFor="file"
                                                             className="same-clr"
                                                             rules={[
@@ -1241,30 +841,6 @@ const Create_po = ({ base_url }) => {
                                                                 </Form.Item>
 
                                                             </div>
-                                                            {/* <div class="selectwrap columns-select">
-                                                            <Form.Item
-                                                                label="Select Site"
-                                                                name="site_id"
-                                                                htmlFor="file"
-                                                                class="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please choose site",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Select id="single51" class="js-states form-control file-wrap-select">
-                                                                    {Array.isArray(siteOptions) &&
-                                                                        siteOptions.map((site) => (
-                                                                            <Select.Option key={site.id} value={site.id}>
-                                                                                {site.name}
-                                                                            </Select.Option>
-                                                                        ))}
-                                                                </Select>
-                                                            </Form.Item>
-                                                        </div> */}
-
                                                         </>
                                                     )}
 
@@ -1285,22 +861,7 @@ const Create_po = ({ base_url }) => {
                                                             >
                                                                 <Input />
                                                             </Form.Item>
-                                                            {/* < Form.Item
-                                                                label="Delivery Address"
-                                                                name="delivery"
-                                                                htmlFor="file"
-                                                                className="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please enter Inventory Code",
-                                                                    },
-                                                                ]}
-                                                                initialValue="1860 Shawson"
-                                                            >
-                                                                <Input readOnly />
 
-                                                            </Form.Item> */}
                                                         </>
 
                                                     )}
@@ -1320,186 +881,17 @@ const Create_po = ({ base_url }) => {
                                                             >
                                                                 <Input />
                                                             </Form.Item>
-                                                            {/* < Form.Item
-                                                                        label="Delivery Address"
-                                                                        name="delivery"
-                                                                        htmlFor="file"
-                                                                        className="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please enter Inventory Code",
-                                                                            },
-                                                                        ]}
-                                                                        initialValue="1860 Shawson"
-                                                                    >
-                                                                        <Input readOnly />
 
-                                                                    </Form.Item> */}
                                                         </>
 
                                                     )}
-                                                    {/* {materialFor === 'projects' && (
-                                                                <>
-                                                                    <div class="selectwrap columns-select">
-                                                                        <Form.Item
-                                                                            label="Project"
-                                                                            name="project_id"
-                                                                            htmlFor="file"
-                                                                            class="same-clr"
-                                                                            rules={[
-                                                                                {
-                                                                                    required: true,
-                                                                                    message: "Please choose Project",
-                                                                                },
-                                                                            ]}
-                                                                        >
-                                                                            <Select id="single406"
-                                                                                class="js-states form-control file-wrap-select"
-                                                                                onChange={(value) => list(value)}
 
-                                                                            >
-                                                                                {Array.isArray(projects) &&
-                                                                                    projects.map((project) => (
-                                                                                        <Select.Option key={project.id} value={project.id}
-
-                                                                                        >
-                                                                                            {project.name}
-                                                                                        </Select.Option>
-                                                                                    ))}
-                                                                            </Select>
-                                                                        </Form.Item>
-
-                                                                    </div>
-                                                                    <div class="selectwrap columns-select">
-                                                                        <Form.Item
-                                                                            label="Select Site"
-                                                                            name="site_id"
-                                                                            htmlFor="file"
-                                                                            class="same-clr"
-                                                                            rules={[
-                                                                                {
-                                                                                    required: true,
-                                                                                    message: "Please choose site",
-                                                                                },
-                                                                            ]}
-                                                                        >
-                                                                            <Select id="single51" class="js-states form-control file-wrap-select">
-                                                                                {Array.isArray(siteOptions) &&
-                                                                                    siteOptions.map((site) => (
-                                                                                        <Select.Option key={site.id} value={site.id}>
-                                                                                            {site.name}
-                                                                                        </Select.Option>
-                                                                                    ))}
-                                                                            </Select>
-                                                                        </Form.Item>
-                                                                    </div>
-
-                                                                </>
-                                                            )} */}
-                                                    {/* {shipmentType === 'Non Project Related' && (
-
-
-                                                        <div class="col-sm-6 selectwrap">
-                                                            <Form.Item
-                                                                label="Material For"
-                                                                name="materialFor"
-                                                                htmlFor="file"
-                                                                class="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please choose Material For",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Select id="single90"
-                                                                    class="js-states form-control file-wrap-select"
-                                                                    onChange={(value) => setMaterialFor(value)}
-                                                                >
-                                                                    <Option value="inventory">Inventory</Option>
-                                                                    <Option value="supplies">Supplies/Expenses</Option>
-
-                                                                </Select>
-                                                            </Form.Item>
-
-                                                            {materialFor === 'inventory' && (
-                                                                <Form.Item
-                                                                    label="Inventory Code"
-                                                                    name="inventoryCode"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter Inventory Code",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Input />
-                                                                </Form.Item>
-                                                            )}
-                                                            {materialFor === 'supplies' && (
-                                                                <Form.Item
-                                                                    label="GL Code"
-                                                                    name="glCode"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter GL Code",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Input />
-                                                                </Form.Item>
-                                                            )}
-                                                        </div>
-                                                    )} */}
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="row select-sitee">
-                                            {/* <div className="col-md-4">
-                                                {materialFor === 'projects' && (
-                                                    <>
-                                                        <div class="selectwrap columns-select">
-                                                            <Form.Item
-                                                                label="Project"
-                                                                name="project_id"
-                                                                htmlFor="file"
-                                                                class="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please choose Project",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Select id="single406"
-                                                                    class="js-states form-control file-wrap-select"
-                                                                    onChange={(value) => list(value)}
 
-                                                                >
-                                                                    {Array.isArray(projects) &&
-                                                                        projects.map((project) => (
-                                                                            <Select.Option key={project.id} value={project.id}
-
-                                                                            >
-                                                                                {project.name}
-                                                                            </Select.Option>
-                                                                        ))}
-                                                                </Select>
-                                                            </Form.Item>
-
-                                                        </div>
-                                                       
-
-                                                    </>
-                                                )}
-                                            </div> */}
                                             <div className="col-md-4">
                                                 {materialFor === 'projects' && (
                                                     <div class="selectwrap columns-select">
@@ -1548,103 +940,10 @@ const Create_po = ({ base_url }) => {
                                                 )}
                                                 {materialFor === 'expenses' && (
                                                     <>
-                                                    <div class="wrap-box">
-                                                        < Form.Item
-                                                            label="Delivery Address"
-                                                            name="delivery"
-                                                            htmlFor="file"
-                                                            className="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please enter Inventory Code",
-                                                                },
-                                                            ]}
-                                                            initialValue="1860 Shawson"
-                                                        >
-                                                            <Input readOnly />
-
-                                                        </Form.Item>
-                                                        </div>
-                                                    </>
-
-                                                )}
-
-                                            </div>
-                                        </div>
-                                        {/* <div class="col-sm-12 space-col-spc">
-                                            <div class="wrap-box po-selected">
-                                                <div class="col-sm-6">
-                                                    <Form.Item
-                                                        label="Description"
-                                                        htmlFor="name"
-                                                        name="Description"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please enter description",
-                                                            },
-                                                        ]}
-                                                    >
-                                                        <Input placeholder="00854" />
-                                                    </Form.Item>
-                                                </div>
-
-                                                {shipmentType === 'Project Related' && (
-                                                    <div class="col-sm-6 selectwrap">
-                                                        <Form.Item
-                                                            label="Select Site"
-                                                            name="site_id"
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose site",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select id="single51" class="js-states form-control file-wrap-select">
-                                                                {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) => (
-                                                                        <Select.Option key={site.id} value={site.id}>
-                                                                            {site.name}
-                                                                        </Select.Option>
-                                                                    ))}
-                                                            </Select>
-                                                        </Form.Item>
-                                                    </div>
-                                                )}
-                                                {shipmentType === 'Non Project Related' && (
-
-
-                                                    <div class="col-sm-6 selectwrap">
-                                                        <Form.Item
-                                                            label="Material For"
-                                                            name="materialFor"
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose Material For",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select id="single90"
-                                                                class="js-states form-control file-wrap-select"
-                                                                onChange={(value) => setMaterialFor(value)}
-                                                            >
-                                                                <Option value="inventory">Inventory</Option>
-                                                                <Option value="supplies">Supplies/Expenses</Option>
-
-                                                            </Select>
-                                                        </Form.Item>
-
-                                                        {materialFor === 'inventory' && (
-                                                            <Form.Item
-                                                                label="Inventory Code"
-                                                                name="inventoryCode"
+                                                        <div class="wrap-box">
+                                                            < Form.Item
+                                                                label="Delivery Address"
+                                                                name="delivery"
                                                                 htmlFor="file"
                                                                 className="same-clr"
                                                                 rules={[
@@ -1653,196 +952,18 @@ const Create_po = ({ base_url }) => {
                                                                         message: "Please enter Inventory Code",
                                                                     },
                                                                 ]}
+                                                                initialValue="1860 Shawson"
                                                             >
-                                                                <Input />
+                                                                <Input readOnly />
+
                                                             </Form.Item>
-                                                        )}
-                                                        {materialFor === 'supplies' && (
-                                                            <Form.Item
-                                                                label="GL Code"
-                                                                name="glCode"
-                                                                htmlFor="file"
-                                                                className="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please enter GL Code",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Input />
-                                                            </Form.Item>
-                                                        )}
-                                                    </div>
-                                                )}
-
-                                                {shipmentType === 'Combined' && (
-                                                    <div class="selectwrap">
-                                                        <Form.Item
-                                                            label="Material For"
-                                                            name="materialFor"
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose material",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select id="single67" class="js-states form-control file-wrap-select"
-                                                                onChange={(value) => setMaterialFor(value)}
-                                                            >
-                                                                <Option value="projects">Project </Option>
-                                                                <Option value="inventorys">Inventory</Option>
-                                                                <Option value="expenses">Supplies/Expenses</Option>
-                                                            </Select>
-                                                        </Form.Item>
-                                                        {materialFor === 'projects' && (
-                                                            <>
-                                                                <div class="selectwrap columns-select">
-                                                                    <Form.Item
-                                                                        label="Project"
-                                                                        name="project_id"
-                                                                        htmlFor="file"
-                                                                        class="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please choose Project",
-                                                                            },
-                                                                        ]}
-                                                                    >
-                                                                        <Select id="single406"
-                                                                            class="js-states form-control file-wrap-select"
-                                                                            onChange={(value) => list(value)}
-
-                                                                        >
-                                                                            {Array.isArray(projects) &&
-                                                                                projects.map((project) => (
-                                                                                    <Select.Option key={project.id} value={project.id}
-
-                                                                                    >
-                                                                                        {project.name}
-                                                                                    </Select.Option>
-                                                                                ))}
-                                                                        </Select>
-                                                                    </Form.Item>
-
-                                                                </div>
-                                                                <div class="selectwrap columns-select">
-                                                                    <Form.Item
-                                                                        label="Select Site"
-                                                                        name="site_id"
-                                                                        htmlFor="file"
-                                                                        class="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please choose site",
-                                                                            },
-                                                                        ]}
-                                                                    >
-                                                                        <Select id="single51" class="js-states form-control file-wrap-select">
-                                                                            {Array.isArray(siteOptions) &&
-                                                                                siteOptions.map((site) => (
-                                                                                    <Select.Option key={site.id} value={site.id}>
-                                                                                        {site.name}
-                                                                                    </Select.Option>
-                                                                                ))}
-                                                                        </Select>
-                                                                    </Form.Item>
-                                                                </div>
-
-                                                            </>
-                                                        )}
-                                                        {materialFor === 'inventorys' && (
-                                                            <>
-                                                                <Form.Item
-                                                                    label="Inventory Code"
-                                                                    name="inventoryCode"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter Inventory Code",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Input />
-                                                                </Form.Item>
-                                                                < Form.Item
-                                                                    label="Delivery Address"
-                                                                    name="delivery"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter Inventory Code",
-                                                                        },
-                                                                    ]}
-                                                                    initialValue="1860 Shawson"
-                                                                >
-                                                                    <Input readOnly />
-
-                                                                </Form.Item>
-                                                            </>
-
-                                                        )}
-                                                        {materialFor === 'expenses' && (
-                                                            <>
-                                                                <Form.Item
-                                                                    label="GL Code"
-                                                                    name="glCode"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter Inventory Code",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Input />
-                                                                </Form.Item>
-                                                                < Form.Item
-                                                                    label="Delivery Address"
-                                                                    name="delivery"
-                                                                    htmlFor="file"
-                                                                    className="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter Inventory Code",
-                                                                        },
-                                                                    ]}
-                                                                    initialValue="1860 Shawson"
-                                                                >
-                                                                    <Input readOnly />
-
-                                                                </Form.Item>
-                                                            </>
-
-                                                        )}
-
-
-
-                                                    </div>
-
-
+                                                        </div>
+                                                    </>
 
                                                 )}
-
 
                                             </div>
-                                        </div>  */}
-
-
-
-
-
+                                        </div>
 
 
                                         {/* <div> */}
@@ -1853,8 +974,8 @@ const Create_po = ({ base_url }) => {
                                                         <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                                             <Form.Item
                                                                 {...restField}
-                                                                name={[name, 'itemQuantity']}
-                                                                fieldKey={[fieldKey, 'itemQuantity']}
+                                                                name={[name, 'quantity']}
+                                                                fieldKey={[fieldKey, 'quantity']}
                                                                 label="Quantity"
                                                                 rules={[{ required: true, message: 'Please enter name' }]}
                                                             >
@@ -1863,8 +984,8 @@ const Create_po = ({ base_url }) => {
 
                                                             <Form.Item
                                                                 {...restField}
-                                                                name={[name, 'itemUnitPrice']}
-                                                                fieldKey={[fieldKey, 'itemUnitPrice']}
+                                                                name={[name, 'unit_price']}
+                                                                fieldKey={[fieldKey, 'unit_price']}
                                                                 label="Unit Price"
                                                                 rules={[{ required: true, message: 'Please enter email' }]}
                                                             >
@@ -1873,8 +994,8 @@ const Create_po = ({ base_url }) => {
 
                                                             <Form.Item
                                                                 {...restField}
-                                                                name={[name, 'itemAmount']}
-                                                                fieldKey={[fieldKey, 'itemAmount']}
+                                                                name={[name, 'Amount']}
+                                                                fieldKey={[fieldKey, 'Amount']}
                                                                 label="Amount"
                                                                 rules={[{ required: true, message: 'Please enter phone number' }]}
                                                             >
@@ -1882,8 +1003,8 @@ const Create_po = ({ base_url }) => {
                                                             </Form.Item>
                                                             <Form.Item
                                                                 {...restField}
-                                                                name={[name, 'itemDescription']}
-                                                                fieldKey={[fieldKey, 'itemDescription']}
+                                                                name={[name, 'Description']}
+                                                                fieldKey={[fieldKey, 'Description']}
                                                                 label="Description"
                                                                 rules={[{ required: true, message: 'Please enter phone number' }]}
                                                             >
@@ -1903,18 +1024,7 @@ const Create_po = ({ base_url }) => {
                                                 </>
                                             )}
                                         </Form.List>
-                                        {/* </div> */}
 
-
-
-
-
-
-                                        {/* <div class="col-md-12">
-                                            <button class="butt-flex"><i class="fa-solid fa-plus"></i>
-                                                <span class="add-para">Add Another Contact Person</span>
-                                            </button>
-                                        </div> */}
                                     </div>
 
                                     <div className="row">
@@ -1944,7 +1054,6 @@ const Create_po = ({ base_url }) => {
                                         </div>
 
                                     </div>
-                                    {/* ... (continue adapting your existing code) */}
                                     <div className="po-wrap">
                                         <Form.Item>
                                             <Button type="primary" htmlType="submit" className="create-ven-butt">
