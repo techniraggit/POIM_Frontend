@@ -71,7 +71,7 @@ const PO_list = ({ base_url }) => {
                                             purchaseOrders.map((purchase, index) => (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
-                                                    <td>{purchase.po_number}</td>
+                                                    <td>00584</td>
                                                     <td className="td-color">{purchase.po_type}</td>
                                                     <td>{purchase.created_on}</td>
                                                     <td>{purchase.status}</td>

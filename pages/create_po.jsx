@@ -5,7 +5,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import axios from 'axios';
 import '../styles/style.css'
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 // import "antd/dist/antd.css";
@@ -36,6 +36,11 @@ const Create_po = ({ base_url }) => {
         state: '',
         country: ''
     })
+
+
+    const [items, setItems] = useState([]);
+
+
     const handleChange = ({ target: { name, value } }) => {
         setVendorForm({
             ...vendorForm,
@@ -43,6 +48,60 @@ const Create_po = ({ base_url }) => {
         })
     }
     // const [shipmentAddress, setShipmentAddress] = useState('1860 Shawson')
+
+    
+
+  const calculateAmount = (quantity, unitPrice) => quantity * unitPrice;
+
+  //const thirteenPercent = calculateAmount * 0.13;
+  //console.log(thirteenPercent,'herre>>>>>>>>>>')
+  //form.setFieldsValue({ HST_Amount: thirteenPercent });
+
+const handleQuantityRepeaterChange = (value, index) => {
+  const unitPrice = form.getFieldValue(['items', index, 'unit_price']) || 0;
+  const test_amount = calculateAmount(value, unitPrice);
+  form.setFields([{ name: ['items', index, 'amount'], value: test_amount }]);
+};
+
+const handleUnitPriceRepeaterChange = (value, index) => {
+  const quantity = form.getFieldValue(['items', index, 'quantity']) || 0;
+  const test_amount = calculateAmount(quantity, value);
+   form.setFields([{ name: ['items', index, 'amount'], value: test_amount }]);
+    const totalAmount = getTotalAmount();
+    form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
+    form.setFieldsValue({ Total_amount: totalAmount * 0.13 + totalAmount });
+};
+
+const getTotalAmount = () => {
+    const repeaterLength = form.getFieldValue(['items']) ? form.getFieldValue(['items']).length : 0;
+    let totalAmount = 0;
+  
+    for (let i = 0; i < repeaterLength; i++) {
+      const quantity = form.getFieldValue(['items', i, 'quantity']) || 0;
+      const unitPrice = form.getFieldValue(['items', i, 'unit_price']) || 0;
+      const amount = calculateAmount(quantity, unitPrice);
+      totalAmount += amount;
+    }
+  
+    return totalAmount;
+  };
+
+  
+
+      const handleAddMaterial = () => {
+        // Add a new item to the state
+        setItems([...items, { quantity: 0, unit_price: 0, amount: 0, description: '' }]);
+      };
+    //   const calculateTotalAmount = () => {
+    //     return items.reduce((total, item) => total + (item.quantity * item.unit_price), 0);
+    //   };
+
+
+
+
+
+
+
 
     const handleQuantityChange = (value) => {
         setQuantity(value);
@@ -154,7 +213,7 @@ const Create_po = ({ base_url }) => {
             }
         };
 
-        if (shipmentType === 'Project Related') {
+        if (shipmentType === 'Project Related'|| shipmentType=== 'Combined') {
             fetchProjects();
         }
     }, [shipmentType]);
@@ -176,7 +235,7 @@ const Create_po = ({ base_url }) => {
     };
     const list = (value) => {
         console.log(value, 'asssssssssssssssss');
-        if (shipmentType === 'Project Related') {
+        if (shipmentType === 'Project Related'|| shipmentType=== 'Combined') {
             fetchSites(value);
         }
     };
@@ -296,6 +355,7 @@ const Create_po = ({ base_url }) => {
                                                             required: true,
                                                             message: "Please choose PO Type",
                                                         },
+                                                      
                                                     ]}
                                                 >
                                                     <Select placeholder="Select PO Type" id="single1"
@@ -316,9 +376,10 @@ const Create_po = ({ base_url }) => {
                                             <Form.Item
                                                 label="Purchase Order Number"
                                                 name="poNumber"
+                                                initialValue="00854"
 
                                             >
-                                                <Input placeholder="00854" />
+                                                <Input placeholder="00854" value='00584' readOnly/>
                                             </Form.Item>
                                         </div>
 
@@ -580,6 +641,7 @@ const Create_po = ({ base_url }) => {
                                                                 message: "Please choose Delivery Address",
                                                             },
                                                         ]}
+                                                        initialValue='1860 Shawson'
                                                     >
                                                         <Input readOnly />
 
@@ -644,7 +706,7 @@ const Create_po = ({ base_url }) => {
                                                     ]}
                                                     // onChange={}
                                                 >
-                                                    <Input placeholder="00854"  />
+                                                    <Input placeholder="00854"  readOnly/>
                                                 </Form.Item>
 
                                             </div>
@@ -829,7 +891,7 @@ const Create_po = ({ base_url }) => {
                                                         <>
                                                             <Form.Item
                                                                 label="Inventory Code"
-                                                                name="inventoryCode"
+                                                                name="code"
                                                                 htmlFor="file"
                                                                 className="same-clr"
                                                                 rules={[
@@ -848,7 +910,7 @@ const Create_po = ({ base_url }) => {
                                                     {materialFor === 'expenses' && (                                                  <>
                                                             <Form.Item
                                                                 label="GL Code"
-                                                                name="glCode"
+                                                                name="code"
                                                                 htmlFor="file"
                                                                 className="same-clr"
                                                                 rules={[
@@ -946,63 +1008,68 @@ const Create_po = ({ base_url }) => {
 
 
                                         {/* <div> */}
-                                        <Form.List name="items">
-                                            {(fields, { add, remove }) => (
-                                                <>
-                                                    {fields.map(({ key, name, fieldKey, ...restField }) => (
-                                                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                            <Form.Item
-                                                                {...restField}
-                                                                name={[name, 'quantity']}
-                                                                fieldKey={[fieldKey, 'quantity']}
-                                                                label="Quantity"
-                                                                rules={[{ required: true, message: 'Please enter name' }]}
-                                                            >
-                                                                <Input placeholder="quantity" />
-                                                            </Form.Item>
+                                        <Form.List name="items" initialValue={[]}>
+        {(fields, { add, remove }) => (
+          <>
+            {fields.map(({ key, name, fieldKey, ...restField }, index) => (
+              <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                <Form.Item
+                  {...restField}
+                  name={[name, 'quantity']}
+                  fieldKey={[fieldKey, 'quantity']}
+                  label="Quantity"
+                  rules={[{ required: true, message: 'Please enter quantity' }]}
+                >
+                  <Input
+                    placeholder="Quantity"
+                    onChange={(e) => handleQuantityRepeaterChange(e.target.value, index)}
+                  />
+                </Form.Item>
 
-                                                            <Form.Item
-                                                                {...restField}
-                                                                name={[name, 'unit_price']}
-                                                                fieldKey={[fieldKey, 'unit_price']}
-                                                                label="Unit Price"
-                                                                rules={[{ required: true, message: 'Please enter email' }]}
-                                                            >
-                                                                <Input placeholder="unit price" />
-                                                            </Form.Item>
+                <Form.Item
+                  {...restField}
+                  name={[name, 'unit_price']}
+                  fieldKey={[fieldKey, 'unit_price']}
+                  label="Unit Price"
+                  rules={[{ required: true, message: 'Please enter unit price' }]}
+                >
+                  <Input
+                    placeholder="Unit Price"
+                    onChange={(e) => handleUnitPriceRepeaterChange(e.target.value, index)}
+                  />
+                </Form.Item>
 
-                                                            <Form.Item
-                                                                {...restField}
-                                                                name={[name, 'Amount']}
-                                                                fieldKey={[fieldKey, 'Amount']}
-                                                                label="Amount"
-                                                                rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                            >
-                                                                <Input placeholder="amount" />
-                                                            </Form.Item>
-                                                            <Form.Item
-                                                                {...restField}
-                                                                name={[name, 'Description']}
-                                                                fieldKey={[fieldKey, 'Description']}
-                                                                label="Description"
-                                                                rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                            >
-                                                                <Input placeholder="description" />
-                                                            </Form.Item>
+                <Form.Item
+                  {...restField}
+                  name={[name, 'amount']}
+                  fieldKey={[fieldKey, 'amount']}
+                  label="Amount"
+                  rules={[{ required: true, message: 'Amount is required' }]}
+                >
+                  <Input placeholder="Amount" readOnly />
+                </Form.Item>
 
-                                                            <MinusCircleOutlined onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-                                                        </Space>
-                                                    ))}
-                                                    <Form.Item>
-                                                        <Button type="dashed" className="top-btn-space" onClick={() => add()} icon={<PlusOutlined />}>
-                                                            <span >Add More Material</span>
-                                                        </Button>
-                                                    </Form.Item>
+                <Form.Item
+                  {...restField}
+                  name={[name, 'description']}
+                  fieldKey={[fieldKey, 'description']}
+                  label="Description"
+                  rules={[{ required: true, message: 'Please enter description' }]}
+                >
+                  <Input placeholder="Description" />
+                </Form.Item>
 
-
-                                                </>
-                                            )}
-                                        </Form.List>
+                <MinusCircleOutlined onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+              </Space>
+            ))}
+            <Form.Item>
+              <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
+                Add More Material
+              </Button>
+            </Form.Item>
+          </>
+        )}
+      </Form.List>
 
                                     </div>
                                     <div className="row top-btm-space">
