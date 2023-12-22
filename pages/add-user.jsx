@@ -42,12 +42,13 @@ const AddUser = ({ base_url }) => {
       const data = {
         ...values,
       }
+     
+        const response = await axios.post(`${base_url}/api/admin/users`, data, {
+          headers: headers,
+        });
+        console.log(response.status,'jjjjjjjjjjjjjj');
 
-      const response = await axios.post(`${base_url}/api/admin/users`, data, {
-        headers: headers,
-      });
-      console.log(response.data.message, 'jjjjjjjjjjjjjj');
-      if (response.status == true) {
+        if(response.status==201){
         message.success(response.data.message);
         router.push('/user-list')
       }
@@ -78,7 +79,7 @@ const AddUser = ({ base_url }) => {
             <ul className=" create-icons">
               <li className="me-4 icon-text">
                 <i className="fa-solid fa-user me-3 mt-0"></i>
-                <span>Edit User</span>
+                <span>Create User</span>
               </li>
             </ul>
             <div class="choose-potype round-wrap"><div class="inner-choose">
@@ -158,7 +159,7 @@ const AddUser = ({ base_url }) => {
                       </Form.Item>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-6">
+                  {/* <div className="col-lg-4 col-md-6">
                     <div class="wrap-box">
                       <Form.Item
                         label="Edit Password"
@@ -169,8 +170,8 @@ const AddUser = ({ base_url }) => {
                         <Input />
                       </Form.Item>
                     </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
+                  </div> */}
+                  {/* <div className="col-lg-4 col-md-6">
                     <div class="wrap-box">
                       <Form.Item
                         label="Confirm New Password"
@@ -181,14 +182,14 @@ const AddUser = ({ base_url }) => {
                         <Input />
                       </Form.Item>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-lg-4 col-md-6">
                     <div class="wrap-box">
                       <Form.Item
                         label="Address"
-                        name="country"  // Add a name to link the input to the form values
+                        name="address"  // Add a name to link the input to the form values
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your country!' }]}
+                        rules={[{ required: true, message: 'Please enter your address!' }]}
                       >
                         <Input />
                       </Form.Item>
@@ -198,9 +199,9 @@ const AddUser = ({ base_url }) => {
                     <div class="wrap-box">
                       <Form.Item
                         label="State / Province"
-                        name="country"  // Add a name to link the input to the form values
+                        name="state"  // Add a name to link the input to the form values
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your country!' }]}
+                        rules={[{ required: true, message: 'Please enter your state!' }]}
                       >
                         <Input />
                       </Form.Item>

@@ -14,17 +14,46 @@ const Create_Vendor = ({ base_url }) => {
     const onFinish = async (values) => {
 
 
-        const dynamicItems = values.items.map(item => ({
-            name: item.name,
-            phone_number: item.phone_number,
-            email: item.email,
-        }));
+        // const dynamicItems = values.items.map(item => ({
+        //     name: item.name,
+        //     phone_number: item.phone_number,
+        //     email: item.email,
+        // }));
 
-        const data = {
-            ...values,
-            contact_info: [...dynamicItems]
+        // const data = {
+        //     ...values,
+        //     contact_info: [...dynamicItems]
+        // }
+        // console.log(data, 'datataaaaaaa');
+
+
+        if(values.items){
+            const dynamicItems = values.items.map(item => ({
+                name: item.name,
+                phone_number: item.phone_number,
+                email: item.email,
+            }));
+            var data = {
+                ...values,
+                contact_info: [...dynamicItems]
+            };
         }
-        console.log(data, 'datataaaaaaa');
+        else{
+            var data = {
+                ...values,
+                contact_info: [
+                    {
+                        name: values.name,
+                        phone_number: values.phone_number,
+                        email: values.email,
+                    }
+                   
+                ]
+            };
+        }
+
+        // console.log(data,'hereeeeeeee')
+        // return
 
         try {
             const headers = {
@@ -92,10 +121,23 @@ const Create_Vendor = ({ base_url }) => {
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Contact Person Name"
-                                                name="contact_person_name"
+                                                name="name"
                                                 // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your contact person_name!' }]}
+                                                rules={[{ required: true, message: 'Please enter your company name!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-12">
+                                        <div className="wrap-box">
+                                            <Form.Item
+                                                label="Contact No"
+                                                name="phone_number"
+                                                // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>
@@ -107,7 +149,7 @@ const Create_Vendor = ({ base_url }) => {
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Email Address"
-                                                name="email_address"
+                                                name="email"
                                                 // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your email address!' }]}
@@ -122,7 +164,7 @@ const Create_Vendor = ({ base_url }) => {
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="State / Province"
-                                                name="state_province"  // Add a name to link the input to the form values
+                                                name="state"  // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your State / Province!' }]}
                                             >
@@ -158,7 +200,7 @@ const Create_Vendor = ({ base_url }) => {
                                     </div>
 
 
-                                    <div className="col-lg-4 col-md-12">
+                                    {/* <div className="col-lg-4 col-md-12">
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Contact No"
@@ -169,7 +211,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 <Input />
                                             </Form.Item>
                                         </div>
-                                    </div>
+                                    </div> */}
 
 
                                     <div className="col-lg-4 col-md-12">

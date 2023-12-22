@@ -1139,7 +1139,7 @@ ul.list-icons li a span {
     margin-top: 20px;
     padding: 25px 25px 25px 25px;
     background-color: white;
-
+}
 ul.list-icons li a span svg {
     font-size: 19px;
     color: #fff;
@@ -1269,7 +1269,7 @@ span.ant-select-arrow {
 }
 button.ant-btn.add-more-btn:hover  span {
     color: #0D0D0D;
-=======
+}   
 .react-select .ant-form-item {
     width: 100% !important;
 }
