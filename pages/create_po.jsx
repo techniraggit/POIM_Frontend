@@ -5,7 +5,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import axios from 'axios';
 import '../styles/style.css'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 // import "antd/dist/antd.css";
@@ -56,9 +56,13 @@ const Create_po = ({ base_url }) => {
 
     const updateAmount = (quantity, unitPrice) => {
         const calculatedAmount = quantity * unitPrice;
+        console.log(calculatedAmount,'heree?????????????')
+
         setAmount(calculatedAmount);
         form.setFieldsValue({ Amount: calculatedAmount });
     };
+
+   
 
     const handlePoTypeChange = (value) => {
         console.log(value, 'valueeeeeeeeeeeeeeeeeeeeee');
@@ -79,7 +83,7 @@ const Create_po = ({ base_url }) => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             };
-            console.log("values === ", values.items)
+            console.log("values === ", values)
             const data = {
                 //...values,
 
@@ -132,9 +136,6 @@ const Create_po = ({ base_url }) => {
         catch (error) {
             console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
         }
-
-
-        // Handle form submission here
         console.log("Received values:", values);
     };
 
@@ -147,7 +148,6 @@ const Create_po = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
-                // console.log(response.data.projects, 'createporesssssssssssssssssssssssssssssssss');
                 setProjects(response.data.projects); // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -167,7 +167,7 @@ const Create_po = ({ base_url }) => {
             };
 
             const response = await axios.get(`${base_url}/api/admin/project-sites?project_id=${projectId}`, { headers });
-            console.log(response, 'vendorssssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
             const sitesArray = response.data.sites;
             setSiteOptions(sitesArray);
         } catch (error) {
@@ -274,19 +274,19 @@ const Create_po = ({ base_url }) => {
                     <div className="bottom-wrapp">
 
                         <ul class=" create-icons">
-                            <li class="icon-text">
-                                <i class="fa-solid fa-plus me-3 mt-0"></i>
+                            <li class="icon-text react-icon">
+                                <PlusOutlined />
                                 <span>Create New Purchase Order</span>
                             </li>
                         </ul>
                         {/* ... (your existing code) */}
-                        <div className="choose-potype">
+                        <div className="choose-potype round-wrap">
                             <div className="inner-choose">
-                                <Form form={form} onFinish={onFinish} className="file-form">
+                                <Form onFinish={onFinish} form={form} className="file-form">
                                     {/* ... (your existing code) */}
                                     <div className="row">
-                                        <div className="col-md-4">
-                                            <div className="selectwrap">
+                                        <div className="col-lg-4 col-md-12">
+                                            <div className="selectwrap react-select">
                                                 <Form.Item
                                                     label="Choose PO Type"
                                                     name="po_type"
@@ -312,24 +312,18 @@ const Create_po = ({ base_url }) => {
                                     </div>
                                     {/* ... (your existing code) */}
                                     <div class="order-choose d-flex">
-                                        <div className="left-wrap">
+                                        <div className="left-wrap wrap-number">
                                             <Form.Item
                                                 label="Purchase Order Number"
                                                 name="poNumber"
-                                                // rules={[
-                                                //     {
-                                                //         required: true,
-                                                //         message: "Please enter Purchase Order Number",
-                                                //     },
-                                                // ]}
-                                                initialValue="00854"
+
                                             >
-                                                <Input readOnly />
+                                                <Input placeholder="00854" />
                                             </Form.Item>
                                         </div>
 
 
-                                        <div className="left-wrap" id="forspce">
+                                        <div className="left-wrap wrap-number" id="forspce">
                                             <Form.Item
                                                 label="Date"
                                                 name="poDate"
@@ -354,28 +348,15 @@ const Create_po = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
 
-                                        {/* <div className="left-wrap" id="forspce">
-                                            <Form.Item
-                                                label="Date"
-                                                name="date"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please enter Date",
-                                                    },
-                                                ]}
-                                            >
-                                                <DatePicker style={{ width: "100%" }} placeholder="18 Oct 2023" defaultValue={defaultDate} />
-                                            </Form.Item>
-                                        </div> */}
+
                                     </div>
                                     <div class="linewrap d-flex" id="w-small">
                                         <span class="d-block me-0">To</span>
                                         <hr />
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="selectwrap">
+                                        <div class="col-lg-4 col-md-12">
+                                            <div class="selectwrap react-select">
                                                 <Form.Item
                                                     label="Vendor"
                                                     name="vendor_id"
@@ -393,7 +374,7 @@ const Create_po = ({ base_url }) => {
                                                         className="js-states form-control file-wrap-select"
                                                         onChange={(value) => handleVendorChange(value)}
                                                     >
-                                                        {names?.map((entry) => (
+                                                        {names.map((entry) => (
                                                             <Select.Option key={entry.vendorId} value={entry.vendorId}>
                                                                 {entry.contactName}
                                                             </Select.Option>
@@ -533,11 +514,11 @@ const Create_po = ({ base_url }) => {
                                     </div>
                                     <div class="row space-bottom">
                                         <div class="col-md-12  all-wrap-box">
-                                            <div class="selectwrap">
+                                            <div class="selectwrap react-select">
                                                 <Form.Item
                                                     label="Shipment Type"
                                                     name="shipment_type"
-                                                    htmlFor="file"
+                                                    for="file"
                                                     class="same-clr"
                                                     rules={[
                                                         {
@@ -556,11 +537,11 @@ const Create_po = ({ base_url }) => {
                                                 </Form.Item>
                                             </div>
                                             {shipmentType === 'Project Related' && (
-                                                <div class="selectwrap columns-select">
+                                                <div class="selectwrap columns-select border-selectd">
                                                     <Form.Item
                                                         label="Project"
                                                         name="project_id"
-                                                        htmlFor="file"
+                                                        for="file"
                                                         class="same-clr"
                                                         rules={[
                                                             {
@@ -587,11 +568,11 @@ const Create_po = ({ base_url }) => {
                                                 </div>
                                             )}
                                             {shipmentType === 'Non Project Related' && (
-                                                <div class="selectwrap columns-select">
+                                                <div class="selectwrap columns-select border-selectd">
                                                     <Form.Item
                                                         label="Delivery Address"
-                                                        name="shipment_address"
-                                                        htmlFor="file"
+                                                        name="deliveryAddress"
+                                                        for="file"
                                                         class="same-clr"
                                                         rules={[
                                                             {
@@ -599,8 +580,6 @@ const Create_po = ({ base_url }) => {
                                                                 message: "Please choose Delivery Address",
                                                             },
                                                         ]}
-                                                        initialValue="1860 Shawson"
-
                                                     >
                                                         <Input readOnly />
 
@@ -619,7 +598,7 @@ const Create_po = ({ base_url }) => {
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Quantity"
-                                                    htmlFor="name"
+                                                    for="name"
                                                     name="quantity"
                                                     rules={[
                                                         {
@@ -637,7 +616,7 @@ const Create_po = ({ base_url }) => {
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Unit Price"
-                                                    htmlFor="name"
+                                                    for="name"
                                                     name="unit_price"
                                                     rules={[
                                                         {
@@ -646,7 +625,7 @@ const Create_po = ({ base_url }) => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="00854" onChange={(e) => handleUnitPriceChange(e.target.value)} />
+                                                    <Input placeholder="00854" onChange={(e) => handleUnitPriceChange(e.target.value)}/>
                                                 </Form.Item>
 
                                             </div>
@@ -655,7 +634,7 @@ const Create_po = ({ base_url }) => {
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Amount"
-                                                    htmlFor="name"
+                                                    for="name"
                                                     name="Amount"
                                                     rules={[
                                                         {
@@ -663,18 +642,19 @@ const Create_po = ({ base_url }) => {
                                                             message: "Please enter amount",
                                                         },
                                                     ]}
+                                                    // onChange={}
                                                 >
-                                                    <Input placeholder="00854" value={amount} readOnly />
+                                                    <Input placeholder="00854"  />
                                                 </Form.Item>
 
                                             </div>
                                         </div>
-                                        <div className="row">
-                                            <div className="col-md-4">
-                                                <div className="wrap-box">
+                                        <div class="col-sm-12 space-col-spc">
+                                            <div class="po-selected">
+                                                <div class="col-sm-12 wrap-box ">
                                                     <Form.Item
                                                         label="Description"
-                                                        htmlFor="name"
+                                                        for="name"
                                                         name="Description"
                                                         rules={[
                                                             {
@@ -865,8 +845,7 @@ const Create_po = ({ base_url }) => {
                                                         </>
 
                                                     )}
-                                                    {materialFor === 'expenses' && (
-                                                        <>
+                                                    {materialFor === 'expenses' && (                                                  <>
                                                             <Form.Item
                                                                 label="GL Code"
                                                                 name="glCode"
@@ -875,7 +854,7 @@ const Create_po = ({ base_url }) => {
                                                                 rules={[
                                                                     {
                                                                         required: true,
-                                                                        message: "Please enter Inventory Code",
+                                                                        message: "Please enter GL Code",
                                                                     },
                                                                 ]}
                                                             >
@@ -1026,8 +1005,7 @@ const Create_po = ({ base_url }) => {
                                         </Form.List>
 
                                     </div>
-
-                                    <div className="row">
+                                    <div className="row top-btm-space">
                                         <div className="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
@@ -1052,7 +1030,38 @@ const Create_po = ({ base_url }) => {
                                                 </Form.Item>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="linewrap d-flex">
+                                        <span class="d-block me-2">By Details</span>
+                                        <hr />
+                                    </div>
+                                    <div className="row">
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box">
+                                                <Form.Item
 
+                                                    name='first_name'
+                                                    label="First Name"
+                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                >
+                                                    <Input placeholder="" />
+                                                </Form.Item>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box">
+                                                <Form.Item
+
+                                                    name='last_name'
+                                                    label="Last Name"
+                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                >
+                                                    <Input placeholder="" />
+                                                </Form.Item>
+
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="po-wrap">
                                         <Form.Item>
@@ -1065,8 +1074,8 @@ const Create_po = ({ base_url }) => {
                             </div>
                         </div>
                     </div>
-                </div >
-            </div >
+                </div>
+            </div>
         </>
     );
 };
