@@ -26,7 +26,7 @@ const Create_po = ({ base_url }) => {
 
     const [quantity, setQuantity] = useState(0);
     const [unitPrice, setUnitPrice] = useState(0);
-    const [amount, setAmount] = useState(0);
+    const [real_amount, setAmount] = useState(0);
     const [vendorForm, setVendorForm] = useState({
         company_name: '',
         email: '',
@@ -82,6 +82,13 @@ const getTotalAmount = () => {
       const amount = calculateAmount(quantity, unitPrice);
       totalAmount += amount;
     }
+
+    if(real_amount){
+        totalAmount = totalAmount+real_amount;
+    }
+    else{
+        totalAmount = totalAmount
+    }
   
     return totalAmount;
   };
@@ -119,6 +126,8 @@ const getTotalAmount = () => {
 
         setAmount(calculatedAmount);
         form.setFieldsValue({ Amount: calculatedAmount });
+        form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
+        form.setFieldsValue({ Total_amount: calculatedAmount * 0.13 + calculatedAmount });
     };
 
    
@@ -417,7 +426,7 @@ const getTotalAmount = () => {
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-4 col-md-12">
-                                            <div class="selectwrap react-select">
+                                            <div class="selectwrap react-select" id="vendor-selector">
                                                 <Form.Item
                                                     label="Vendor"
                                                     name="vendor_id"
