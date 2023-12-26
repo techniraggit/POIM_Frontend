@@ -167,8 +167,9 @@ const Create_Vendor = ({ base_url }) => {
                                                 name="state"  // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your State / Province!' }]}
+                                                initialValue='Ontario'
                                             >
-                                                <Input />
+                                                <Input readOnly/>
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -180,8 +181,9 @@ const Create_Vendor = ({ base_url }) => {
                                                 name="country"  // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your country!' }]}
+                                                initialValue='Canada'
                                             >
-                                                <Input />
+                                                <Input readOnly/>
                                             </Form.Item>
                                         </div>
                                     </div>

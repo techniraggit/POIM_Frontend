@@ -8,6 +8,7 @@ import Link from "next/link";
 const PO_list = ({ base_url }) => {
 
     const [purchaseOrders, setPurchaseOrders] = useState([]);
+    const [totalPuchaseOrder,setTotalPurchaseOrder]=useState(0)
     useEffect(() => {
         const fetchroles = async () => {
             try {
@@ -15,8 +16,19 @@ const PO_list = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/purchase-order`, { headers: headers });
-                console.log(response.data.purchase_orders, '55555555555555555555555555');
-                setPurchaseOrders(response.data.purchase_orders); // Assuming the API response is an array of projects
+                // console.log(response.data.purchase_orders[0].material, '55555555555555555555555555@@@@@@@@');
+                setTotalPurchaseOrder(response.data.total_purchase_orders)
+                const formattedPurchaseOrders = response.data.purchase_orders.map(purchase => ({
+                    ...purchase,
+                    created_on: new Date(purchase.created_on).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                    }),
+                }));
+                setPurchaseOrders(formattedPurchaseOrders);
+
+                // setPurchaseOrders(response.data.purchase_orders); // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
@@ -40,7 +52,7 @@ const PO_list = ({ base_url }) => {
                                 <span>Create PO</span>
                             </li>
                             <li className="me-4">
-                                <span className="text-size mt-0 mb-2">22</span>
+                                <span className="text-size mt-0 mb-2">{totalPuchaseOrder}</span>
                                 <span>Total POs</span>
                             </li>
                         </ul>
@@ -66,13 +78,42 @@ const PO_list = ({ base_url }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    {Array.isArray(purchaseOrders) &&
+                                            purchaseOrders.map((purchase, index) => {
+                                                console.log(purchase.material.po.po_type,'purchaseeeeeeeeeeeee');
+                                            }
+                                                
+                                                // <tr key={index}>
+                                                //     <td>{index + 1}</td>
+                                                //     <td>00584</td>
+                                                //     <td className="td-color">{purchase.po_type}</td>
+                                                //     <td>{purchase.created_on}</td>
+                                                //     <td>{purchase.status}</td>
+                                                //     <td>{purchase.status}</td>
+                                                //     <td>
+                                                //         {purchase.vendor_contact && Array.isArray(purchase.vendor_contact) ? (
+                                                //             purchase.vendor_contact.map((vendor_contact, index) => (
+                                                //                 <td key={index}>{vendor_contact.name}<br /></td>
+                                                //             ))
+                                                //         ) : (
+                                                //             <td>No vendor contact</td>
+                                                //         )}
+                                                //     </td>
+                                                //     <td className="td-icon-color">
+                                                //         <a href="#" className="me-1"><EyeFilled /></a>
+                                                //         <a href="" className="me-1"><DeleteFilled /></a>
+                                                //         <a href="" className="me-1"><EditFilled /></a>
+                                                //     </td>
+                                                // </tr>
+                                            )} 
 
-                                        {Array.isArray(purchaseOrders) &&
+                                        {/* {Array.isArray(purchaseOrders) &&
                                             purchaseOrders.map((purchase, index) => (
+                                                
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
-                                                    <td>00584</td>
-                                                    <td className="td-color">{purchase.po_type}</td>
+                                                    <td>{purchase.material.po.po_number}</td>
+                                                    <td className="td-color">{purchase.material.po.po_type}</td>
                                                     <td>{purchase.created_on}</td>
                                                     <td>{purchase.status}</td>
                                                     <td>{purchase.status}</td>
@@ -85,26 +126,15 @@ const PO_list = ({ base_url }) => {
                                                             <td>No vendor contact</td>
                                                         )}
                                                     </td>
-                                                    {/* <td>
-                                                        {purchase.vendor_contact.map((vendor_contact, index) => (
-                                                            <td>{vendor_contact.name}<br /></td>
-                                                        ))}
-                                                    </td> */}
-                                                    {/* <td>{purchase.vendor_contact.map((item) => (
-                                                        <td>{item.name}</td>
-                                                   
-                                                ))}</td>  */}
-                                                    {/* <td>{purchase.status}</td> */}
-
                                                     <td className="td-icon-color">
                                                         <a href="#" className="me-1"><EyeFilled /></a>
                                                         <a href="" className="me-1"><DeleteFilled /></a>
                                                         <a href="" className="me-1"><EditFilled /></a>
                                                     </td>
                                                 </tr>
-                                            ))} 
+                                            ))}  */}
 
-                                        <tr>
+                                        {/* <tr>
                                             <td>#45488</td>
                                             <td className="td-color">Turner Construction</td>
                                             <td>#456 - Upper Link, PA</td>
@@ -120,7 +150,7 @@ const PO_list = ({ base_url }) => {
 
                                                 <i
                                                 className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
+                                        </tr> */}
                                         {/* <tr>
                                             <td>#45488</td>
                                             <td className="td-color">Aecom</td>
