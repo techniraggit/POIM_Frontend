@@ -31,19 +31,7 @@ const Dashboard = () => {
                         <ul className="list-icons">
                             <li className="me-4">
                                 <i className="fa-solid fa-check mb-3"></i>
-                                <span>Create User</span>
-                            </li>
-                            <li className="me-4">
-                                <i className="fa-solid fa-check mb-3"></i>
                                 <span>Create Vendors</span>
-                            </li>
-                            <li className="me-4">
-                                <i className="fa-solid fa-check mb-3"></i>
-                                <span>Create Project</span>
-                            </li>
-                            <li className="me-4">
-                                <i className="fa-solid fa-check mb-3"></i>
-                                <span>Create New Roles</span>
                             </li>
                         </ul>
                         <div className="table-wrap">

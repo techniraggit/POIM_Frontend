@@ -239,9 +239,10 @@ const Create_po = ({ base_url }) => {
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-4 col-md-12">
-                                            <div class="selectwrap react-select">
+                                            <div class="selectwrap react-select" id="vendor-selector">
                                                 <Form.Item
                                                     label="Vendor"
+                                                    // /////////////////////////////////
                                                     name="vendor_id"
                                                     for="file"
                                                     class="same-clr"
@@ -565,7 +566,7 @@ const Create_po = ({ base_url }) => {
                                         </div>
                                         <div class="col-sm-12 space-col-spc">
                                             <div class="po-selected">
-                                                <div class="col-sm-12 wrap-box ">
+                                                <div class="col-sm-4 wrap-box ">
                                                     <Form.Item
                                                         label="Description"
                                                         for="name"
@@ -582,12 +583,12 @@ const Create_po = ({ base_url }) => {
                                                 </div>
 
                                                 {shipmentType === 'Project Related' && (
-                                                    <div class="col-sm-6 selectwrap">
+                                                    <div class="col-sm-8 selectwrap">
                                                         <Form.Item
                                                             label="Select Site"
                                                             name="site_id"
                                                             for="file"
-                                                            class="same-clr"
+                                                            class="same-clr col-sm-4"
                                                             rules={[
                                                                 {
                                                                     required: true,
@@ -595,7 +596,9 @@ const Create_po = ({ base_url }) => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Select id="single51" class="js-states form-control file-wrap-select">
+                                                           
+                                                        </Form.Item>
+                                                        <Select id="single51" class="js-states form-control file-wrap-select col-sm-4">
                                                                 {Array.isArray(siteOptions) &&
                                                                     siteOptions.map((site) => (
                                                                         <Select.Option key={site.id} value={site.id}>
@@ -603,13 +606,10 @@ const Create_po = ({ base_url }) => {
                                                                         </Select.Option>
                                                                     ))}
                                                             </Select>
-                                                        </Form.Item>
                                                     </div>
                                                 )}
                                                 {shipmentType === 'Non Project Related' && (
-
-
-                                                    <div class="col-sm-6 selectwrap">
+                                                    <div class="col-sm-4 wrap-box">
                                                         <Form.Item
                                                             label="Material For"
                                                             name="materialFor"
@@ -782,7 +782,7 @@ const Create_po = ({ base_url }) => {
 
                                                     name='hst_amount'
                                                     label="HST Amount"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                    rules={[{ required: true, message: 'Please enter hst amount' }]}
                                                 >
                                                     <Input placeholder="description" />
                                                 </Form.Item>
@@ -794,7 +794,7 @@ const Create_po = ({ base_url }) => {
 
                                                     name='total_amount'
                                                     label="Total Amount"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                    rules={[{ required: true, message: 'Please enter total amount' }]}
                                                 >
                                                     <Input placeholder="description" />
                                                 </Form.Item>
@@ -812,7 +812,7 @@ const Create_po = ({ base_url }) => {
 
                                                     name='first_name'
                                                     label="First Name"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                    rules={[{ required: true, message: 'Please enter first name' }]}
                                                 >
                                                     <Input placeholder="" />
                                                 </Form.Item>
@@ -825,7 +825,7 @@ const Create_po = ({ base_url }) => {
 
                                                     name='last_name'
                                                     label="Last Name"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                    rules={[{ required: true, message: 'Please enter lastname' }]}
                                                 >
                                                     <Input placeholder="" />
                                                 </Form.Item>

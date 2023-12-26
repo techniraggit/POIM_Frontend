@@ -185,7 +185,7 @@ const Create_Vendor = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
                                     </div>
-                                    <div className="create-another">
+                                    <div className="create-another minus-vendor-wrap">
                                         <Form.List name="items">
                                             {(fields, { add, remove }) => (
                                                 <>

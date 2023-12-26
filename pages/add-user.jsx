@@ -164,7 +164,7 @@ const AddUser = ({ base_url }) => {
                         label="Edit Password"
                         name="address"  // Add a name to link the input to the form values
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your address !' }]}
+                        rules={[{ required: true, message: 'Please enter your edit password !' }]}
                       >
                         <Input />
                       </Form.Item>
@@ -176,7 +176,7 @@ const AddUser = ({ base_url }) => {
                         label="Confirm New Password"
                         name="state"  // Add a name to link the input to the form values
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your state!' }]}
+                        rules={[{ required: true, message: 'Please enter your new password!' }]}
                       >
                         <Input />
                       </Form.Item>
@@ -188,7 +188,7 @@ const AddUser = ({ base_url }) => {
                         label="Address"
                         name="country"  // Add a name to link the input to the form values
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your country!' }]}
+                        rules={[{ required: true, message: 'Please enter your address!' }]}
                       >
                         <Input />
                       </Form.Item>
@@ -200,7 +200,7 @@ const AddUser = ({ base_url }) => {
                         label="State / Province"
                         name="country"  // Add a name to link the input to the form values
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your country!' }]}
+                        rules={[{ required: true, message: 'Please enter your state / province!' }]}
                       >
                         <Input />
                       </Form.Item>
@@ -235,4 +235,4 @@ const AddUser = ({ base_url }) => {
   )
 }
 export { getServerSideProps };
-export default AddUser
+export default AddUser;
