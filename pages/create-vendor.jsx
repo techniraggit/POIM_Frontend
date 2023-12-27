@@ -275,6 +275,7 @@ const Create_Vendor = ({ base_url }) => {
                                                             <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
                                                         </Space>
                                                     ))}
+                                                
                                                     <Form.Item>
                                                         <Button className="add-more-btn" type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
                                                             <span >Add Another Contact Person</span>
@@ -283,7 +284,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 </>
                                             )}
                                         </Form.List>
-                                    </div>
+                                        </div>  
                                     <Form.Item>
                                         <button type="submit" className="create-ven-butt">Submit</button>
                                     </Form.Item>

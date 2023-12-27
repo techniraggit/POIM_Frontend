@@ -8,7 +8,7 @@ import Link from "next/link";
 const PO_list = ({ base_url }) => {
 
     const [purchaseOrders, setPurchaseOrders] = useState([]);
-    const [totalPuchaseOrder,setTotalPurchaseOrder]=useState(0)
+    const [totalPuchaseOrder, setTotalPurchaseOrder] = useState(0)
     useEffect(() => {
         const fetchroles = async () => {
             try {
@@ -74,38 +74,37 @@ const PO_list = ({ base_url }) => {
                                             <th className="hedaings-tb">PO Amount</th>
                                             <th className="hedaings-tb">PO Status</th>
                                             <th className="hedaings-tb">PO Vendor</th>
-                                        <th className="hedaings-tb">Action</th> 
+                                            <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {Array.isArray(purchaseOrders) &&
-                                            purchaseOrders.map((purchase, index) => {
-                                                console.log(purchase.material.po.po_type,'purchaseeeeeeeeeeeee');
-                                            }
-                                                
-                                                // <tr key={index}>
-                                                //     <td>{index + 1}</td>
-                                                //     <td>00584</td>
-                                                //     <td className="td-color">{purchase.po_type}</td>
-                                                //     <td>{purchase.created_on}</td>
-                                                //     <td>{purchase.status}</td>
-                                                //     <td>{purchase.status}</td>
-                                                //     <td>
-                                                //         {purchase.vendor_contact && Array.isArray(purchase.vendor_contact) ? (
-                                                //             purchase.vendor_contact.map((vendor_contact, index) => (
-                                                //                 <td key={index}>{vendor_contact.name}<br /></td>
-                                                //             ))
-                                                //         ) : (
-                                                //             <td>No vendor contact</td>
-                                                //         )}
-                                                //     </td>
-                                                //     <td className="td-icon-color">
-                                                //         <a href="#" className="me-1"><EyeFilled /></a>
-                                                //         <a href="" className="me-1"><DeleteFilled /></a>
-                                                //         <a href="" className="me-1"><EditFilled /></a>
-                                                //     </td>
-                                                // </tr>
-                                            )} 
+
+                                        {Array.isArray(purchaseOrders) && purchaseOrders.length > 0 ? (
+                                            purchaseOrders.map((purchase, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{purchase.material?.po?.po_number}</td>
+                                                    <td className="td-color">{purchase.material?.po?.po_type}</td>
+                                                    <td>{new Date(purchase.material?.po?.created_on).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                    })}</td>
+                                                    <td>{purchase.material?.Total_amount}</td>
+                                                    <td>{purchase.material?.po?.status}</td>
+                                                    <td>{purchase.material?.po?.phone}</td>
+                                                    <td className="td-icon-color">
+                                                        <a href="#" className="me-1"><EyeFilled /></a>
+                                                        <a href="" className="me-1"><DeleteFilled /></a>
+                                                        <a href="" className="me-1"><EditFilled /></a>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="8">No purchase orders available</td>
+                                            </tr>
+                                        )}
 
                                         {/* {Array.isArray(purchaseOrders) &&
                                             purchaseOrders.map((purchase, index) => (
