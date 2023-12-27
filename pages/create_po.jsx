@@ -5,7 +5,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import axios from 'axios';
 import '../styles/style.css'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined, CaretDownFilled } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 // import "antd/dist/antd.css";
@@ -49,56 +49,56 @@ const Create_po = ({ base_url }) => {
     }
     // const [shipmentAddress, setShipmentAddress] = useState('1860 Shawson')
 
-    
 
-  const calculateAmount = (quantity, unitPrice) => quantity * unitPrice;
 
-  //const thirteenPercent = calculateAmount * 0.13;
-  //console.log(thirteenPercent,'herre>>>>>>>>>>')
-  //form.setFieldsValue({ HST_Amount: thirteenPercent });
+    const calculateAmount = (quantity, unitPrice) => quantity * unitPrice;
 
-const handleQuantityRepeaterChange = (value, index) => {
-  const unitPrice = form.getFieldValue(['items', index, 'unit_price']) || 0;
-  const test_amount = calculateAmount(value, unitPrice);
-  form.setFields([{ name: ['items', index, 'amount'], value: test_amount }]);
-};
+    //const thirteenPercent = calculateAmount * 0.13;
+    //console.log(thirteenPercent,'herre>>>>>>>>>>')
+    //form.setFieldsValue({ HST_Amount: thirteenPercent });
 
-const handleUnitPriceRepeaterChange = (value, index) => {
-  const quantity = form.getFieldValue(['items', index, 'quantity']) || 0;
-  const test_amount = calculateAmount(quantity, value);
-   form.setFields([{ name: ['items', index, 'amount'], value: test_amount }]);
-    const totalAmount = getTotalAmount();
-    form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
-    form.setFieldsValue({ Total_amount: totalAmount * 0.13 + totalAmount });
-};
+    const handleQuantityRepeaterChange = (value, index) => {
+        const unitPrice = form.getFieldValue(['items', index, 'unit_price']) || 0;
+        const test_amount = calculateAmount(value, unitPrice);
+        form.setFields([{ name: ['items', index, 'amount'], value: test_amount }]);
+    };
 
-const getTotalAmount = () => {
-    const repeaterLength = form.getFieldValue(['items']) ? form.getFieldValue(['items']).length : 0;
-    let totalAmount = 0;
-  
-    for (let i = 0; i < repeaterLength; i++) {
-      const quantity = form.getFieldValue(['items', i, 'quantity']) || 0;
-      const unitPrice = form.getFieldValue(['items', i, 'unit_price']) || 0;
-      const amount = calculateAmount(quantity, unitPrice);
-      totalAmount += amount;
-    }
+    const handleUnitPriceRepeaterChange = (value, index) => {
+        const quantity = form.getFieldValue(['items', index, 'quantity']) || 0;
+        const test_amount = calculateAmount(quantity, value);
+        form.setFields([{ name: ['items', index, 'amount'], value: test_amount }]);
+        const totalAmount = getTotalAmount();
+        form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
+        form.setFieldsValue({ Total_amount: totalAmount * 0.13 + totalAmount });
+    };
 
-    if(real_amount){
-        totalAmount = totalAmount+real_amount;
-    }
-    else{
-        totalAmount = totalAmount
-    }
-  
-    return totalAmount;
-  };
+    const getTotalAmount = () => {
+        const repeaterLength = form.getFieldValue(['items']) ? form.getFieldValue(['items']).length : 0;
+        let totalAmount = 0;
 
-  
+        for (let i = 0; i < repeaterLength; i++) {
+            const quantity = form.getFieldValue(['items', i, 'quantity']) || 0;
+            const unitPrice = form.getFieldValue(['items', i, 'unit_price']) || 0;
+            const amount = calculateAmount(quantity, unitPrice);
+            totalAmount += amount;
+        }
 
-      const handleAddMaterial = () => {
+        if (real_amount) {
+            totalAmount = totalAmount + real_amount;
+        }
+        else {
+            totalAmount = totalAmount
+        }
+
+        return totalAmount;
+    };
+
+
+
+    const handleAddMaterial = () => {
         // Add a new item to the state
         setItems([...items, { quantity: 0, unit_price: 0, amount: 0, description: '' }]);
-      };
+    };
     //   const calculateTotalAmount = () => {
     //     return items.reduce((total, item) => total + (item.quantity * item.unit_price), 0);
     //   };
@@ -122,7 +122,7 @@ const getTotalAmount = () => {
 
     const updateAmount = (quantity, unitPrice) => {
         const calculatedAmount = quantity * unitPrice;
-        console.log(calculatedAmount,'heree?????????????')
+        console.log(calculatedAmount, 'heree?????????????')
 
         setAmount(calculatedAmount);
         form.setFieldsValue({ Amount: calculatedAmount });
@@ -130,7 +130,7 @@ const getTotalAmount = () => {
         form.setFieldsValue({ Total_amount: calculatedAmount * 0.13 + calculatedAmount });
     };
 
-   
+
 
     const handlePoTypeChange = (value) => {
         console.log(value, 'valueeeeeeeeeeeeeeeeeeeeee');
@@ -222,7 +222,7 @@ const getTotalAmount = () => {
             }
         };
 
-        if (shipmentType === 'Project Related'|| shipmentType=== 'Combined') {
+        if (shipmentType === 'Project Related' || shipmentType === 'Combined') {
             fetchProjects();
         }
     }, [shipmentType]);
@@ -244,7 +244,7 @@ const getTotalAmount = () => {
     };
     const list = (value) => {
         console.log(value, 'asssssssssssssssss');
-        if (shipmentType === 'Project Related'|| shipmentType=== 'Combined') {
+        if (shipmentType === 'Project Related' || shipmentType === 'Combined') {
             fetchSites(value);
         }
     };
@@ -355,27 +355,29 @@ const getTotalAmount = () => {
                                     <div className="row">
                                         <div className="col-lg-4 col-md-12">
                                             <div className="selectwrap react-select">
-                                                <Form.Item
-                                                    label="Choose PO Type"
-                                                    name="po_type"
-                                                    class="bold-label"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please choose PO Type",
-                                                        },
-                                                      
-                                                    ]}
-                                                >
-                                                    <Select placeholder="Select PO Type" id="single1"
-                                                        class="js-states form-control file-wrap-select bold-select"
-                                                    // onChange={handlePoTypeChange}
+                                                <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
+                                                    {/* <CaretDownFilled className="caret-icon" /> */}
+                                                    <Form.Item
+                                                        label="Choose PO Type"
+                                                        name="po_type"
+                                                        class="bold-label"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose PO Type",
+                                                            },
+                                                        ]}
                                                     >
-                                                        <Option value="material">Material PO</Option>
-                                                        <Option value="rental">Rental PO</Option>
-                                                        <Option value="subcontractor">Sub Contractor PO</Option>
-                                                    </Select>
-                                                </Form.Item>
+                                                        <Select placeholder="Select PO Type" id="single1"
+                                                            class="js-states form-control file-wrap-select bold-select"
+                                                        // onChange={handlePoTypeChange}
+                                                        >
+                                                            <Option value="material">Material PO</Option>
+                                                            <Option value="rental">Rental PO</Option>
+                                                            <Option value="subcontractor">Sub Contractor PO</Option>
+                                                        </Select>
+                                                    </Form.Item>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -388,7 +390,7 @@ const getTotalAmount = () => {
                                                 initialValue="00854"
 
                                             >
-                                                <Input placeholder="00854" value='00584' readOnly/>
+                                                <Input placeholder="00854" value='00584' readOnly />
                                             </Form.Item>
                                         </div>
 
@@ -427,31 +429,36 @@ const getTotalAmount = () => {
                                     <div class="row">
                                         <div class="col-lg-4 col-md-12">
                                             <div class="selectwrap react-select" id="vendor-selector">
-                                                <Form.Item
-                                                    label="Vendor"
-                                                    name="vendor_id"
-                                                    for="file"
-                                                    class="same-clr"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please choose Vendor",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Select
-                                                        id="single2"
-                                                        className="js-states form-control file-wrap-select"
-                                                        onChange={(value) => handleVendorChange(value)}
-                                                    >
-                                                        {names.map((entry) => (
-                                                            <Select.Option key={entry.vendorId} value={entry.vendorId}>
-                                                                {entry.contactName}
-                                                            </Select.Option>
-                                                        ))}
-                                                    </Select>
+                                                <div class="selectwrap  shipment-caret select-site aligned-text">
+                                                    <Form.Item
+                                                        label="Vendor"
+                                                        name="vendor_id"
+                                                        for="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
 
-                                                </Form.Item>
+                                                                message: "Please choose Vendor",
+
+                                                            },
+
+                                                        ]}  
+                                                    >
+                                                        <Select
+                                                            id="single2"
+                                                            className="js-states form-control file-wrap-select"
+                                                            onChange={(value) => handleVendorChange(value)}
+                                                        >
+                                                            {names.map((entry) => (
+                                                                <Select.Option key={entry.vendorId} value={entry.vendorId}>
+                                                                    {entry.contactName}
+                                                                </Select.Option>
+                                                            ))}
+                                                        </Select>
+
+                                                    </Form.Item>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -526,8 +533,6 @@ const getTotalAmount = () => {
 
                                                     onChange={handleChange}
                                                 />
-
-
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
@@ -584,7 +589,9 @@ const getTotalAmount = () => {
                                     </div>
                                     <div class="row space-bottom">
                                         <div class="col-md-12  all-wrap-box">
-                                            <div class="selectwrap react-select">
+                                            <div class="selectwrap  shipment-caret aligned-text">
+                                                {/* <CaretDownFilled className="caret-icon" /> */}
+
                                                 <Form.Item
                                                     label="Shipment Type"
                                                     name="shipment_type"
@@ -607,7 +614,10 @@ const getTotalAmount = () => {
                                                 </Form.Item>
                                             </div>
                                             {shipmentType === 'Project Related' && (
-                                                <div class="selectwrap columns-select border-selectd">
+                                                <div class="selectwrap columns-select shipment-caret">
+                                                    {/* <CaretDownFilled className="caret-icon" /> */}
+
+                                                    {/* / */}
                                                     <Form.Item
                                                         label="Project"
                                                         name="project_id"
@@ -638,7 +648,8 @@ const getTotalAmount = () => {
                                                 </div>
                                             )}
                                             {shipmentType === 'Non Project Related' && (
-                                                <div class="selectwrap columns-select border-selectd">
+                                                <div class="selectwrap non-project-wrap">
+
                                                     <Form.Item
                                                         label="Delivery Address"
                                                         name="deliveryAddress"
@@ -657,6 +668,7 @@ const getTotalAmount = () => {
                                                     </Form.Item>
                                                 </div>
                                             )}
+
 
                                         </div>
                                     </div>
@@ -678,7 +690,7 @@ const getTotalAmount = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="00854" onChange={(e) => handleQuantityChange(e.target.value)} />
+                                                    <Input placeholder="Quantity" onChange={(e) => handleQuantityChange(e.target.value)} />
                                                 </Form.Item>
 
                                             </div>
@@ -696,7 +708,7 @@ const getTotalAmount = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="00854" onChange={(e) => handleUnitPriceChange(e.target.value)}/>
+                                                    <Input placeholder="Unit Price" onChange={(e) => handleUnitPriceChange(e.target.value)} />
                                                 </Form.Item>
 
                                             </div>
@@ -713,16 +725,17 @@ const getTotalAmount = () => {
                                                             message: "Please enter amount",
                                                         },
                                                     ]}
-                                                    // onChange={}
+                                                // onChange={}
                                                 >
-                                                    <Input placeholder="00854"  readOnly/>
+                                                    <Input placeholder="Amount" readOnly />
                                                 </Form.Item>
 
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 space-col-spc">
-                                            <div class="po-selected">
-                                                <div class="col-sm-12 wrap-box ">
+                                        <div class="row space-col-spc">
+                                            {/* <div class="po-selected"> */}
+                                            <div class="col-sm-4">
+                                                <div className="wrap-box">
                                                     <Form.Item
                                                         label="Description"
                                                         for="name"
@@ -734,68 +747,79 @@ const getTotalAmount = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Input placeholder="00854" />
+                                                        <Input placeholder="Description" />
                                                     </Form.Item>
                                                 </div>
                                             </div>
+                                            {/* </div> */}
 
-                                            <div className="col-md-4">
-                                                <div className="wrap-box">
-                                                    {shipmentType === 'Project Related' && (
-                                                        <div class="col-sm-4 selectwrap">
-                                                            <Form.Item
-                                                                label="Select Site"
-                                                                name="site_id"
-                                                                htmlFor="file"
-                                                                class="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please choose site",
-                                                                    },
-                                                                ]}
+                                            {/* <div className="col-md-4"> */}
+                                            {/* <div className="wrap-box"> */}
+                                            {shipmentType === 'Project Related' && (
+                                                <div class="col-sm-4">
+                                                    <div className="selectwrap columns-select shipment-caret ">
+                                                        {/* <CaretDownFilled className="caret-icon" /> */}
+
+                                                        {/* /// */}
+                                                        <Form.Item
+                                                            label="Select Site"
+                                                            name="site_id"
+                                                            htmlFor="file"
+                                                            class="same-clr"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please choose site",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                                {Array.isArray(siteOptions) &&
+                                                                    siteOptions.map((site) => (
+                                                                        <Select.Option key={site.id} value={site.id}>
+                                                                            {site.name}
+                                                                        </Select.Option>
+                                                                    ))}
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {shipmentType === 'Non Project Related' && (
+                                                <div class="col-sm-4 ">
+                                                    <div className="selectwrap add-dropdown-wrap shipment-caret">
+                                                        {/* <CaretDownFilled className="caret-icon" /> */}
+                                                        <Form.Item
+                                                            label="Material For"
+                                                            name="materialFor"
+                                                            htmlFor="file"
+                                                            class="same-clr"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please choose Material For",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Select id="single90"
+                                                                class="js-states form-control file-wrap-select"
+                                                                onChange={(value) => setMaterialFor(value)}
                                                             >
-                                                                <Select id="singlesa" class="js-states form-control file-wrap-select">
-                                                                    {Array.isArray(siteOptions) &&
-                                                                        siteOptions.map((site) => (
-                                                                            <Select.Option key={site.id} value={site.id}>
-                                                                                {site.name}
-                                                                            </Select.Option>
-                                                                        ))}
-                                                                </Select>
-                                                            </Form.Item>
-                                                        </div>
-                                                    )}
-                                                    {shipmentType === 'Non Project Related' && (
+                                                                <Option value="inventory">Inventory</Option>
+                                                                <Option value="">Supplies/Expenses</Option>
 
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+                                            )}
 
-                                                        <div class="col-sm-4 selectwrap">
-                                                            <Form.Item
-                                                                label="Material For"
-                                                                name="materialFor"
-                                                                htmlFor="file"
-                                                                class="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please choose Material For",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Select id="single90"
-                                                                    class="js-states form-control file-wrap-select"
-                                                                    onChange={(value) => setMaterialFor(value)}
-                                                                >
-                                                                    <Option value="inventory">Inventory</Option>
-                                                                    <Option value="supplies">Supplies/Expenses</Option>
+                                            {shipmentType === 'Combined' && (
+                                                <div className="col-md-4">
+                                                    <div class="selectwrap add-dropdown-wrap">
+                                                        <div class="selectwrap columns-select shipment-caret select-sites">
+                                                            {/* <CaretDownFilled className="caret-icon" /> */}
 
-                                                                </Select>
-                                                            </Form.Item>
-                                                        </div>
-                                                    )}
-
-                                                    {shipmentType === 'Combined' && (
-                                                        <div class="selectwrap">
                                                             <Form.Item
                                                                 label="Material For"
                                                                 name="materialFor"
@@ -817,14 +841,16 @@ const getTotalAmount = () => {
                                                                 </Select>
                                                             </Form.Item>
                                                         </div>
-
-
-
-                                                    )}
-
-
+                                                    </div>
                                                 </div>
-                                            </div>
+
+
+
+                                            )}
+
+
+                                            {/* </div> */}
+                                            {/* </div> */}
                                             <div className="col-md-4">
                                                 <div className="wrap-box">
                                                     {materialFor === 'inventory' && (
@@ -862,34 +888,39 @@ const getTotalAmount = () => {
 
                                                     {materialFor === 'projects' && (
                                                         <>
-                                                            <div class="selectwrap columns-select">
-                                                                <Form.Item
-                                                                    label="Project"
-                                                                    name="project_id"
-                                                                    htmlFor="file"
-                                                                    class="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please choose Project",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Select id="single406"
-                                                                        class="js-states form-control file-wrap-select"
-                                                                        onChange={(value) => list(value)}
+                                                            <div class="selectwrap add-dropdown-wrap">
+                                                                <div class="selectwrap columns-select shipment-caret ">
+                                                                    {/* <CaretDownFilled className="caret-icon" /> */}
 
+                                                                    {/* /////////////////////////////////////////////////////////////////////////////////// */}
+                                                                    <Form.Item
+                                                                        label="Project"
+                                                                        name="project_id"
+                                                                        htmlFor="file"
+                                                                        class="same-clr"
+                                                                        rules={[
+                                                                            {
+                                                                                required: true,
+                                                                                message: "Please choose Project",
+                                                                            },
+                                                                        ]}
                                                                     >
-                                                                        {Array.isArray(projects) &&
-                                                                            projects.map((project) => (
-                                                                                <Select.Option key={project.id} value={project.id}
+                                                                        <Select id="single406"
+                                                                            class="js-states form-control file-wrap-select"
+                                                                            onChange={(value) => list(value)}
 
-                                                                                >
-                                                                                    {project.name}
-                                                                                </Select.Option>
-                                                                            ))}
-                                                                    </Select>
-                                                                </Form.Item>
+                                                                        >
+                                                                            {Array.isArray(projects) &&
+                                                                                projects.map((project) => (
+                                                                                    <Select.Option key={project.id} value={project.id}
+
+                                                                                    >
+                                                                                        {project.name}
+                                                                                    </Select.Option>
+                                                                                ))}
+                                                                        </Select>
+                                                                    </Form.Item>
+                                                                </div>
 
                                                             </div>
                                                         </>
@@ -916,23 +947,23 @@ const getTotalAmount = () => {
                                                         </>
 
                                                     )}
-                                                    {materialFor === 'expenses' && (                                                  <>
-                                                            <Form.Item
-                                                                label="GL Code"
-                                                                name="code"
-                                                                htmlFor="file"
-                                                                className="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please enter GL Code",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Input />
-                                                            </Form.Item>
+                                                    {materialFor === 'expenses' && (<>
+                                                        <Form.Item
+                                                            label="GL Code"
+                                                            name="code"
+                                                            htmlFor="file"
+                                                            className="same-clr"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please enter GL Code",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input />
+                                                        </Form.Item>
 
-                                                        </>
+                                                    </>
 
                                                     )}
 
@@ -944,28 +975,31 @@ const getTotalAmount = () => {
 
                                             <div className="col-md-4">
                                                 {materialFor === 'projects' && (
-                                                    <div class="selectwrap columns-select">
-                                                        <Form.Item
-                                                            label="Select Site"
-                                                            name="site_id"
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose site",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select id="single51" class="js-states form-control file-wrap-select">
-                                                                {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) => (
-                                                                        <Select.Option key={site.id} value={site.id}>
-                                                                            {site.name}
-                                                                        </Select.Option>
-                                                                    ))}
-                                                            </Select>
-                                                        </Form.Item>
+                                                    <div class="selectwrap add-dropdown-wrap">
+                                                        <div className="selectwrap columns-select shipment-caret ">
+                                                            {/* <CaretDownFilled className="caret-icon" /> */}
+                                                            <Form.Item
+                                                                label="Select Site"
+                                                                name="site_id"
+                                                                htmlFor="file"
+                                                                class="same-clr"
+                                                                rules={[
+                                                                    {
+                                                                        required: true,
+                                                                        message: "Please choose site",
+                                                                    },
+                                                                ]}
+                                                            >
+                                                                <Select id="single51" class="js-states form-control file-wrap-select">
+                                                                    {Array.isArray(siteOptions) &&
+                                                                        siteOptions.map((site) => (
+                                                                            <Select.Option key={site.id} value={site.id}>
+                                                                                {site.name}
+                                                                            </Select.Option>
+                                                                        ))}
+                                                                </Select>
+                                                            </Form.Item>
+                                                        </div>
                                                     </div>
                                                 )}
                                                 {materialFor === 'inventorys' && (
@@ -1017,69 +1051,77 @@ const getTotalAmount = () => {
 
 
                                         {/* <div> */}
-                                        <Form.List name="items" initialValue={[]}>
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name, fieldKey, ...restField }, index) => (
-              <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                <Form.Item
-                  {...restField}
-                  name={[name, 'quantity']}
-                  fieldKey={[fieldKey, 'quantity']}
-                  label="Quantity"
-                  rules={[{ required: true, message: 'Please enter quantity' }]}
-                >
-                  <Input
-                    placeholder="Quantity"
-                    onChange={(e) => handleQuantityRepeaterChange(e.target.value, index)}
-                  />
-                </Form.Item>
+                                        <div className="create-another minuswrap-img">
 
-                <Form.Item
-                  {...restField}
-                  name={[name, 'unit_price']}
-                  fieldKey={[fieldKey, 'unit_price']}
-                  label="Unit Price"
-                  rules={[{ required: true, message: 'Please enter unit price' }]}
-                >
-                  <Input
-                    placeholder="Unit Price"
-                    onChange={(e) => handleUnitPriceRepeaterChange(e.target.value, index)}
-                  />
-                </Form.Item>
+                                            <Form.List name="items" initialValue={[]}>
+                                                {(fields, { add, remove }) => (
+                                                    <>
+                                                        {fields.map(({ key, name, fieldKey, ...restField }, index) => (
+                                                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                                                <div className="wrap-box">
 
-                <Form.Item
-                  {...restField}
-                  name={[name, 'amount']}
-                  fieldKey={[fieldKey, 'amount']}
-                  label="Amount"
-                  rules={[{ required: true, message: 'Amount is required' }]}
-                >
-                  <Input placeholder="Amount" readOnly />
-                </Form.Item>
+                                                                    <Form.Item
+                                                                        {...restField}
+                                                                        name={[name, 'quantity']}
+                                                                        fieldKey={[fieldKey, 'quantity']}
+                                                                        label="Quantity"
+                                                                        rules={[{ required: true, message: 'Please enter quantity' }]}
+                                                                    >
+                                                                        <Input
+                                                                            placeholder="Quantity"
+                                                                            onChange={(e) => handleQuantityRepeaterChange(e.target.value, index)}
+                                                                        />
+                                                                    </Form.Item>
+                                                                </div>
+                                                                <div className="wrap-box">
+                                                                    <Form.Item
+                                                                        {...restField}
+                                                                        name={[name, 'unit_price']}
+                                                                        fieldKey={[fieldKey, 'unit_price']}
+                                                                        label="Unit Price"
+                                                                        rules={[{ required: true, message: 'Please enter unit price' }]}
+                                                                    >
+                                                                        <Input
+                                                                            placeholder="Unit Price"
+                                                                            onChange={(e) => handleUnitPriceRepeaterChange(e.target.value, index)}
+                                                                        />
+                                                                    </Form.Item>
+                                                                </div>
+                                                                <div className="wrap-box">
 
-                <Form.Item
-                  {...restField}
-                  name={[name, 'description']}
-                  fieldKey={[fieldKey, 'description']}
-                  label="Description"
-                  rules={[{ required: true, message: 'Please enter description' }]}
-                >
-                  <Input placeholder="Description" />
-                </Form.Item>
-
-                <MinusCircleOutlined onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-              </Space>
-            ))}
-            <Form.Item>
-              <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
-                Add More Material
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
-
+                                                                    <Form.Item
+                                                                        {...restField}
+                                                                        name={[name, 'amount']}
+                                                                        fieldKey={[fieldKey, 'amount']}
+                                                                        label="Amount"
+                                                                        rules={[{ required: true, message: 'Amount is required' }]}
+                                                                    >
+                                                                        <Input placeholder="Amount" readOnly />
+                                                                    </Form.Item>
+                                                                </div>
+                                                                <div className="wrap-box">
+                                                                    <Form.Item
+                                                                        {...restField}
+                                                                        name={[name, 'description']}
+                                                                        fieldKey={[fieldKey, 'description']}
+                                                                        label="Description"
+                                                                        rules={[{ required: true, message: 'Please enter description' }]}
+                                                                    >
+                                                                        <Input placeholder="Description" />
+                                                                    </Form.Item>
+                                                                </div>
+                                                                <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                                            </Space>
+                                                        ))}
+                                                        <Form.Item>
+                                                            <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
+                                                                Add More Material
+                                                            </Button>
+                                                        </Form.Item>
+                                                    </>
+                                                )}
+                                            </Form.List>
+                                        </div>
                                     </div>
                                     <div className="row top-btm-space">
                                         <div className="col-lg-4 col-md-6">
@@ -1090,7 +1132,7 @@ const getTotalAmount = () => {
                                                     label="HST Amount"
                                                     rules={[{ required: true, message: 'Please enter phone number' }]}
                                                 >
-                                                    <Input placeholder="description" />
+                                                    <Input placeholder="HST Amount" />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -1102,7 +1144,7 @@ const getTotalAmount = () => {
                                                     label="Total Amount"
                                                     rules={[{ required: true, message: 'Please enter phone number' }]}
                                                 >
-                                                    <Input placeholder="description" />
+                                                    <Input placeholder="Total Amount" />
                                                 </Form.Item>
                                             </div>
                                         </div>
