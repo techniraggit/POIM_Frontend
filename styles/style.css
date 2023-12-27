@@ -1681,6 +1681,86 @@ li.user:hover .dropdown-content {
     font-weight: 500;
     font-size: 15px;
 }
+
+
+
+.details-main {
+    /* margin-left: 41px; */
+    /* margin-right: 81px; */
+    width: 540px;
+    margin: 0 auto;
+}
+.detail-para2 {
+    color: rgb(17, 47, 92);
+    font-size: 19px;
+    font-weight: 600;
+    margin-right: 20px;
+    outline: none;
+    border: 0;
+}
+ 
+p.detail-para3 {
+    color: rgb(17, 47, 92);
+    font-size: 19px;
+    font-weight: 600;
+    margin-right: 47px;
+}
+.projct-details {
+    display: flex;
+    flex-direction: column;
+}
+.pop-up-flex {
+    display: flex;
+    justify-content: space-between;
+}
+.approve-po {
+    box-shadow: 0px 3px 39px #00000021;
+    width: 632px;
+    margin: 0 auto;
+    background-color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+}
+ 
+.cross-icon {
+    float: right;
+ 
+    font-size: 19px;
+}
+.detail-para1 {
+    color: rgb(17, 47, 92, 0.5);
+    font-weight: 500;
+    margin-bottom: 13px;
+}
+.detail-para {
+    margin-bottom: 45px;
+ 
+    color: rgb(17, 47, 92);
+    font-size: 19px;
+    font-weight: 600;
+    outline: none;
+    border: 0;
+}
+input.detail-para::placeholder {
+    color: rgb(17, 47, 92);
+}
+ 
+input.detail-para2::placeholder {
+    color: rgb(17, 47, 92);
+}
+.vendor-pop-up-butt {
+    border-radius: 20px;
+    background: #E91D26;
+    border: none;
+    width: 135px;
+    color: white;
+    padding: 8px 37px;
+    margin-bottom: 30px;
+}
+ 
 /* ////headrer dropdown */
 
 /* 21/12/2023 */
