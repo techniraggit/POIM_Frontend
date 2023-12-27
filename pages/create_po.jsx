@@ -138,23 +138,15 @@ const getTotalAmount = () => {
         setshipmentType(value);
     };
     const onFinish = async (values) => {
-        const dynamicItems = values.items?.map(item => ({
-            quantity: item.quantity,
-            unit_price: item.unit_price,
-            amount: item.Amount,
-            description: item.Description
-        }));
-        console.log(dynamicItems, 'dynamicccccccccccccc================');
-        try {
-            const headers = {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            };
-            console.log("values === ", values)
-            const data = {
-                //...values,
-
+        if(values.items?.length>0){
+            console.log(values.items,'valuessssssssssssssssss');
+            const dynamicItems = values.items?.map(item => ({
+                quantity: item.quantity,
+                unit_price: item.unit_price,
+                Amount: item.Amount,
+                Description: item.Description
+            }));
+            var data = {
                 po_data: {
                     company_name: vendorForm.company_name,
                     email: vendorForm.email,
@@ -170,7 +162,7 @@ const getTotalAmount = () => {
                     Total_amount: values.Total_amount,
                     shipment_type: values.shipment_type,
                     project_id: values.project_id,
-                    shipment_address: 'add'
+                    shipment_address: 'add',
                 },
                 shipment_material: {
                     quantity: values.quantity,
@@ -181,12 +173,61 @@ const getTotalAmount = () => {
                     site_id: values.site_id,
                     project_id: values.project_id,
                     code: values.code,
-                    shipment_address: values.shipment_address
+                    shipment_address: values.shipment_address,
+                    material_details:[...dynamicItems]
                 }
-
+    
             }
-            // console.log(data,  values, 'hereeeee')
-            // return
+        }
+        else{
+            var data = {    
+                po_data: {
+                    company_name: vendorForm.company_name,
+                    email: vendorForm.email,
+                    phone: vendorForm.phone,
+                    state: vendorForm.state,
+                    country: vendorForm.country,
+                    vendor_id: values.vendor_id,
+                    po_type: values.po_type,
+                    address1: vendorForm.address,
+                },
+                shipment: {
+                    HST_Amount: values.HST_Amount,
+                    Total_amount: values.Total_amount,
+                    shipment_type: values.shipment_type,
+                    project_id: values.project_id,
+                    shipment_address: 'add',
+                },
+                shipment_material: {
+                    quantity: values.quantity,
+                    unit_price: values.unit_price,
+                    Amount: values.Amount,
+                    Description: values.Description,
+                    material_for: values.materialFor,
+                    site_id: values.site_id,
+                    project_id: values.project_id,
+                    code: values.code,
+                    shipment_address: values.shipment_address,
+                    material_details:[{
+                        quantity: values.quantity,
+                        unit_price: values.unit_price,
+                        Amount: values.Amount,
+                        Description: values.Description
+                    }
+                    ]
+                },
+               
+            }    
+        }
+       
+        try {
+            const headers = {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            };
+            console.log("values === ", values)
+            
             const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
                 headers: headers,
             });

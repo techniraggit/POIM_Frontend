@@ -114,6 +114,11 @@ const Login = ({ base_url }) => {
                 }
             } catch (error) {
                 console.error('Error during login:', error);
+                if (error.response && error.response.status === 401) {
+                    console.log('Token expired. Redirecting to login page...');
+                    // Redirect to the login page
+                    router.push('/');
+                } 
                 // Handle error as needed
             }
         } else {
