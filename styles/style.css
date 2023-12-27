@@ -1654,6 +1654,36 @@ div#materialFor_help {
 .aligned-text .ant-row.ant-form-item-row {
     flex-direction: column;
 }
+/* ////headrer dropdown */
+.user {
+    padding-left: 10px;
+    position: relative;
+}
+li.user:hover .dropdown-content {
+        display: block;
+        transition: 0.3s ease-in-out;
+}
+.dropdown-content {
+    background-color: #fff;
+    padding: 15px 21px;
+    position: absolute;
+    min-width: 147px;
+    box-shadow: 0px 7px 17px 0px rgba(0,0,0,0.1);
+    z-index: 999;
+    left: -87px;
+    /* top: 41px; */
+    display: none;
+    margin-top: 1px;
+}
+.dropdown-content li a {
+    text-decoration: none;
+    color: #0d0d0d;
+    font-weight: 500;
+    font-size: 15px;
+}
+/* ////headrer dropdown */
+
+/* 21/12/2023 */
 /* responsive */
 @media (max-width: 1199px) {
     table.table-hover {

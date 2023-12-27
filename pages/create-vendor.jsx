@@ -10,6 +10,7 @@ import axios from 'axios';
 
 
 const Create_Vendor = ({ base_url }) => {
+    const [form] = Form.useForm();
     const router = useRouter();
     const onFinish = async (values) => {
 
@@ -81,6 +82,15 @@ const Create_Vendor = ({ base_url }) => {
         console.log(values, 'hfurhgiurehg');
     }
 
+    const handlePhoneNumberChange = (value) => {
+        // If the value is exactly 10 digits, automatically add the +91 prefix
+        if (value && /^\d{10}$/.test(value)) {
+          form.setFieldsValue({
+            phone_number: '+91' + value,
+          });
+        }
+      };
+
 
     return (
         <>
@@ -98,7 +108,7 @@ const Create_Vendor = ({ base_url }) => {
                         </ul>
 
                         <div className="vendor-form-create">
-                            <Form onFinish={onFinish} layout="vertical"
+                            <Form onFinish={onFinish} layout="vertical" form={form}
                                 labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -139,7 +149,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
-                                                <Input />
+                                                <Input  onChange={(e) => handlePhoneNumberChange(e.target.value)}/>
                                             </Form.Item>
                                         </div>
                                     </div>
