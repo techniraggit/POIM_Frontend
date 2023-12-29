@@ -35,30 +35,59 @@ const Create_Vendor = ({ base_url }) => {
     }, [])
 
     const onFinish = async (values) => {
-        const dynamicItems = values.items.map(item => ({
-            name: item.name,
-            address: item.address,
-            state: item.state,
-        }));
+        if(values.items){
+            const dynamicItems = values.items.map(item => ({
+                name: item.name,
+                address: item.address,
+                state: item.state,
+            }));
 
-        // Add values from static fields to the beginning of dynamicItems array
-        // const finalFormValues = [
-        //     {
-        //         name: values.name,
-        //         address: values.address,
-        //         state: values.state,
-        //     },
-        //     ...dynamicItems
-        // ];
 
-        const test = {
-            name: values.name,
-            customer_name: values.customer_name,
-            project_manager_id: rootData,
-            project_sites: [...dynamicItems]
+
+            var test = {
+                ...values,
+                name: values.name,
+                customer_name: values.customer_name,
+                project_manager_id: rootData,
+                project_sites: [...dynamicItems]
+            }
+
+
+            
+        }
+        else{
+            var test = {
+                ...values,
+                project_sites: [
+                    {
+                        name: values.name,
+                        address: values.address,
+                        state: values.state,
+                    }
+                   
+                ]
+            };
         }
 
-        console.log('Final Form Values:', test);
+
+
+
+
+
+
+        // const dynamicItems = values.items.map(item => ({
+        //     name: item.name,
+        //     address: item.address,
+        //     state: item.state,
+        // }));
+        // const test = {
+        //     name: values.name,
+        //     customer_name: values.customer_name,
+        //     project_manager_id: rootData,
+        //     project_sites: [...dynamicItems]
+        // }
+
+        // console.log('Final Form Values:', test);
 
 
         // return 
@@ -154,7 +183,7 @@ const Create_Vendor = ({ base_url }) => {
                                 <div className="row">
                                     <div className="col-lg-4 col-md-12">
                                         <div className="selectwrap bg-border-select">
-                                            <Form.Item label="Project Maneger" name="project_manager" initialValue="" className="vender-input">
+                                            <Form.Item label="Project Maneger" name="project_manager_id" initialValue="" className="vender-input">
                                                 <Select onChange={(value) => project(value)}>
                                                     {Array.isArray(managers) &&
                                                         managers.map((manager) => (
@@ -172,10 +201,20 @@ const Create_Vendor = ({ base_url }) => {
 
                                 <div className="row">
                                     <div className="col-lg-4 col-md-12">
+                                    <div className="wrap-box">
+                                            <Form.Item
+                                                label="Site Name"
+                                                name="name"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your site address!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                        </div>
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Site Address"
-                                                name="site_address"  // Add a name to link the input to the form values
+                                                name="address"  // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your site address!' }]}
                                             >
@@ -188,7 +227,7 @@ const Create_Vendor = ({ base_url }) => {
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="State / Province"
-                                                name="State_Province"  // Add a name to link the input to the form values
+                                                name="state"  // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your State Province!' }]}
                                             >
@@ -252,6 +291,18 @@ const Create_Vendor = ({ base_url }) => {
                                             </>
                                         )}
                                     </Form.List>
+                                    <div className="col-lg-4 col-md-12">
+                                        <div className="wrap-box">
+                                            <Form.Item
+                                                label="Customer Name"
+                                                name="customer_name"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your State Province!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
                                     </div>
                                     <Form.Item >
                                         <button type="submit" className="create-ven-butt">Submit</button>
