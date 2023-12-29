@@ -33,6 +33,7 @@ const Vendor_Edit = ({ base_url }) => {
 
                 const vendorData = response.data.vendors_details;
                 console.log(vendorData,'$$$$$$$$$$$$$$$$$');
+                
                 form.setFieldsValue({
                 company_name:vendorData.company_name,
                 name:vendorData.vendor_contact[0].name,
@@ -111,7 +112,7 @@ const Vendor_Edit = ({ base_url }) => {
 
             // Display a success message
             message.success('Vendor updated successfully');
-            // router.push('/vendor')
+            router.push('/vendor')
 
             // Reset the selected vendor and refetch the updated list
             setSelectedVendor(null);

@@ -121,7 +121,8 @@ const User_list = ({ base_url }) => {
                                                             <DeleteFilled />
                                                             
                                                         </Popconfirm>
-                                            <a href="#" className="me-2"><EditFilled /></a> 
+                                                        {/* <Link></> */}
+                                            <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link> 
                                                     </td>
                                                 </tr>
                                             ))}

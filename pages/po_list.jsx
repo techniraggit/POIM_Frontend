@@ -3,10 +3,12 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
+import { Table, Button, message, Popconfirm, Input } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
 
 const PO_list = ({ base_url }) => {
+    // const [po, setPo] = useState([]);
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [totalPuchaseOrder, setTotalPurchaseOrder] = useState(0);
 
@@ -25,6 +27,35 @@ const PO_list = ({ base_url }) => {
         };
         fetchRoles();
     }, []);
+
+    const handleDelete = async (id) => {
+        try {
+            const headers = {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json', // Set content type to JSON
+            };
+
+            const body = JSON.stringify({ po_id: id }); // Use 'category_id' in the request body
+
+            // console.log('Deleting category with ID:', );
+            console.log('Request Headers:', headers);
+            console.log('Request Body:', body);
+
+            const response = await axios.delete(`${base_url}/api/admin/purchase-order`, {
+                headers,
+                data: body, // Send the body as data
+            });
+
+            console.log('Delete response:', response);
+            message.success('Purchase Order deleted successfully.');
+            setPurchaseOrders(prepo => prepo.filter(po => po.id !== id));
+            // Reload the categories after deleting
+        } catch (error) {
+            console.error('Error deleting purchase order:', error);
+            message.error('Failed to delete the item. Please try again later.');
+        }
+    };
 
     return (
         <>
@@ -81,8 +112,15 @@ const PO_list = ({ base_url }) => {
                                                     <td>{purchase.material?.po?.status}</td>
                                                     <td>{purchase.material?.po?.phone}</td>
                                                     <td className="td-icon-color">
-                                                        <a href="#" className="me-1"><EyeFilled /></a>
-                                                        <a href="" className="me-1"><DeleteFilled /></a>
+                                                        <Link  href={`/view-purchaseorder/${purchase.id}`} className="me-1"><EyeFilled /></Link>
+                                                        <Popconfirm
+                                                            title="Are you sure you want to delete this item?"
+                                                            onConfirm={() => handleDelete(purchase.id)}
+                                                            okText="Yes"
+                                                            cancelText="No"
+                                                        >
+                                                            <DeleteFilled />
+                                                        </Popconfirm>
                                                         <a href="" className="me-1"><EditFilled /></a>
                                                     </td>
                                                 </tr>

@@ -47,16 +47,7 @@ const Create_po = ({ base_url }) => {
             [name]: value
         })
     }
-    // const [shipmentAddress, setShipmentAddress] = useState('1860 Shawson')
-
-
-
     const calculateAmount = (quantity, unitPrice) => quantity * unitPrice;
-
-    //const thirteenPercent = calculateAmount * 0.13;
-    //console.log(thirteenPercent,'herre>>>>>>>>>>')
-    //form.setFieldsValue({ HST_Amount: thirteenPercent });
-
     const handleQuantityRepeaterChange = (value, index) => {
         const unitPrice = form.getFieldValue(['items', index, 'unit_price']) || 0;
         const test_amount = calculateAmount(value, unitPrice);
@@ -92,24 +83,6 @@ const Create_po = ({ base_url }) => {
 
         return totalAmount;
     };
-
-
-
-    const handleAddMaterial = () => {
-        // Add a new item to the state
-        setItems([...items, { quantity: 0, unit_price: 0, amount: 0, description: '' }]);
-    };
-    //   const calculateTotalAmount = () => {
-    //     return items.reduce((total, item) => total + (item.quantity * item.unit_price), 0);
-    //   };
-
-
-
-
-
-
-
-
     const handleQuantityChange = (value) => {
         setQuantity(value);
         updateAmount(value, unitPrice);
@@ -129,123 +102,116 @@ const Create_po = ({ base_url }) => {
         form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
         form.setFieldsValue({ Total_amount: calculatedAmount * 0.13 + calculatedAmount });
     };
-
-
-
     const handlePoTypeChange = (value) => {
         console.log(value, 'valueeeeeeeeeeeeeeeeeeeeee');
 
         setshipmentType(value);
     };
     const onFinish = async (values) => {
-        if(values.items?.length>0){
-            console.log(values.items,'valuessssssssssssssssss');
-            const dynamicItems = values.items?.map(item => ({
-                quantity: item.quantity,
-                unit_price: item.unit_price,
-                Amount: item.Amount,
-                Description: item.Description
-            }));
-            var data = {
-                po_data: {
-                    company_name: vendorForm.company_name,
-                    email: vendorForm.email,
-                    phone: vendorForm.phone,
-                    state: vendorForm.state,
-                    country: vendorForm.country,
-                    vendor_id: values.vendor_id,
-                    po_type: values.po_type,
-                    address1: vendorForm.address,
-                },
-                shipment: {
-                    HST_Amount: values.HST_Amount,
-                    Total_amount: values.Total_amount,
-                    shipment_type: values.shipment_type,
-                    project_id: values.project_id,
-                    shipment_address: 'add',
-                },
-                shipment_material: {
-                    quantity: values.quantity,
-                    unit_price: values.unit_price,
-                    Amount: values.Amount,
-                    Description: values.Description,
-                    material_for: values.materialFor,
-                    site_id: values.site_id,
-                    project_id: values.project_id,
-                    code: values.code,
-                    shipment_address: values.shipment_address,
-                    material_details:[...dynamicItems]
-                }
+        // if(values.items?.length>0){
+        //     console.log(values.items,'valuessssssssssssssssss');
+        //     const dynamicItems = values.items?.map(item => ({
+        //         quantity: item.quantity,
+        //         unit_price: item.unit_price,
+        //         Amount: item.Amount,
+        //         Description: item.Description
+        //     }));
+        //     var data = {
+        //         po_data: {
+        //             company_name: vendorForm.company_name,
+        //             email: vendorForm.email,
+        //             phone: vendorForm.phone,
+        //             state: vendorForm.state,
+        //             country: vendorForm.country,
+        //             vendor_id: values.vendor_id,
+        //             po_type: values.po_type,
+        //             address1: vendorForm.address,
+        //         },
+        //         shipment: {
+        //             HST_Amount: values.HST_Amount,
+        //             Total_amount: values.Total_amount,
+        //             shipment_type: values.shipment_type,
+        //             project_id: values.project_id,
+        //             shipment_address: 'add',
+        //         },
+        //         shipment_material: {
+        //             quantity: values.quantity,
+        //             unit_price: values.unit_price,
+        //             Amount: values.Amount,
+        //             Description: values.Description,
+        //             material_for: values.materialFor,
+        //             site_id: values.site_id,
+        //             project_id: values.project_id,
+        //             code: values.code,
+        //             shipment_address: values.shipment_address,
+        //             material_details:[...dynamicItems]
+        //         }
     
-            }
-        }
-        else{
-            var data = {    
-                po_data: {
-                    company_name: vendorForm.company_name,
-                    email: vendorForm.email,
-                    phone: vendorForm.phone,
-                    state: vendorForm.state,
-                    country: vendorForm.country,
-                    vendor_id: values.vendor_id,
-                    po_type: values.po_type,
-                    address1: vendorForm.address,
-                },
-                shipment: {
-                    HST_Amount: values.HST_Amount,
-                    Total_amount: values.Total_amount,
-                    shipment_type: values.shipment_type,
-                    project_id: values.project_id,
-                    shipment_address: 'add',
-                },
-                shipment_material: {
-                    quantity: values.quantity,
-                    unit_price: values.unit_price,
-                    Amount: values.Amount,
-                    Description: values.Description,
-                    material_for: values.materialFor,
-                    site_id: values.site_id,
-                    project_id: values.project_id,
-                    code: values.code,
-                    shipment_address: values.shipment_address,
-                    material_details:[{
-                        quantity: values.quantity,
-                        unit_price: values.unit_price,
-                        Amount: values.Amount,
-                        Description: values.Description
-                    }
-                    ]
-                },
+        //     }
+        // }
+        // else{
+        //     var data = {    
+        //         po_data: {
+        //             company_name: vendorForm.company_name,
+        //             email: vendorForm.email,
+        //             phone: vendorForm.phone,
+        //             state: vendorForm.state,
+        //             country: vendorForm.country,
+        //             vendor_id: values.vendor_id,
+        //             po_type: values.po_type,
+        //             address1: vendorForm.address,
+        //         },
+        //         shipment: {
+        //             HST_Amount: values.HST_Amount,
+        //             Total_amount: values.Total_amount,
+        //             shipment_type: values.shipment_type,
+        //             project_id: values.project_id,
+        //             shipment_address: 'add',
+        //         },
+        //         shipment_material: {
+        //             quantity: values.quantity,
+        //             unit_price: values.unit_price,
+        //             Amount: values.Amount,
+        //             Description: values.Description,
+        //             material_for: values.materialFor,
+        //             site_id: values.site_id,
+        //             project_id: values.project_id,
+        //             code: values.code,
+        //             shipment_address: values.shipment_address,
+        //             material_details:[{
+        //                 quantity: values.quantity,
+        //                 unit_price: values.unit_price,
+        //                 Amount: values.Amount,
+        //                 Description: values.Description
+        //             }
+        //             ]
+        //         },
                
-            }    
-        }
+        //     }    
+        // }
        
-        try {
-            const headers = {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            };
-            console.log("values === ", values)
+        // try {
+        //     const headers = {
+        //         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //     };
+        //     console.log("values === ", values)
             
-            const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
-                headers: headers,
-            });
-            console.log(response.data, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
-            // setShipmentAddress(response.data.shipment_address)
-            if (response.data.status == true) {
-                message.success(response.data.message)
-                router.push('/po_list')
-            }
-
-
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
-        }
-        catch (error) {
-            console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
-        }
-        console.log("Received values:", values);
+        //     const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
+        //         headers: headers,
+        //     });
+        //     console.log(response.data, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+        //     // setShipmentAddress(response.data.shipment_address)
+        //     if (response.data.status == true) {
+        //         message.success(response.data.message)
+        //         router.push('/po_list')
+        //     }
+        // }
+        // catch (error) {
+        //     console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
+        // }
+        // console.log("Received values:", values);
     };
 
 
@@ -309,9 +275,6 @@ const Create_po = ({ base_url }) => {
 
         // }
     }, [])
-
-
-
     useEffect(() => {
         const vendorDetails = async () => {
             try {
@@ -367,8 +330,6 @@ const Create_po = ({ base_url }) => {
         setVendorId(value)
         console.log(value, 'vendoriddddddddddddddddd=================');
     }
-
-
     return (
         <>
             <div className="wrapper-main">
@@ -387,12 +348,10 @@ const Create_po = ({ base_url }) => {
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
                                 <Form onFinish={onFinish} form={form} className="file-form">
-                                    {/* ... (your existing code) */}
                                     <div className="row">
                                         <div className="col-lg-4 col-md-12">
                                             <div className="selectwrap react-select">
                                                 <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
-                                                    {/* <CaretDownFilled className="caret-icon" /> */}
                                                     <Form.Item
                                                         label="Choose PO Type"
                                                         name="po_type"
@@ -406,7 +365,6 @@ const Create_po = ({ base_url }) => {
                                                     >
                                                         <Select placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
-                                                        // onChange={handlePoTypeChange}
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
@@ -417,7 +375,6 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* ... (your existing code) */}
                                     <div class="order-choose d-flex">
                                         <div className="left-wrap wrap-number">
                                             <Form.Item
@@ -502,21 +459,6 @@ const Create_po = ({ base_url }) => {
                                     <div class="row space-raw  btm-space">
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                {/* <Form.Item
-                                                    label="Company Name"
-                                                    for="name"
-                                                    name="company_name"
-                                                    // value={vendorForm.company_name}
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter company name",
-                                                        },
-                                                    ]}
-                                                    onChange={handleChange}
-                                                >
-                                                    <Input placeholder="00854" value={vendorForm.company_name} />
-                                                </Form.Item> */}
                                                 <label>
                                                     Company Name
                                                 </label>
@@ -526,19 +468,8 @@ const Create_po = ({ base_url }) => {
                                                     name="company_name"
                                                     type="text"
                                                     value={vendorForm.company_name}
-                                                    // rules={[
-                                                    //     {
-                                                    //         required: true,
-                                                    //         message: "Please enter Company name",
-                                                    //     },
-                                                    // ]}
                                                     onChange={handleChange}
-                                                // onChange=handleChange={}
                                                 />
-                                                {/* <Input value={vendorForm.company_name} placeholder="00854" /> */}
-                                                {/* </input> */}
-                                                {/* <label for="name">Email</label>
-                                                <input type="email"> */}
                                             </div>
                                         </div>
 
@@ -626,8 +557,6 @@ const Create_po = ({ base_url }) => {
                                     <div class="row space-bottom">
                                         <div class="col-md-12  all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
-                                                {/* <CaretDownFilled className="caret-icon" /> */}
-
                                                 <Form.Item
                                                     label="Shipment Type"
                                                     name="shipment_type"
@@ -651,8 +580,6 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                             {shipmentType === 'Project Related' && (
                                                 <div class="selectwrap columns-select shipment-caret">
-                                                    {/* <CaretDownFilled className="caret-icon" /> */}
-
                                                     {/* / */}
                                                     <Form.Item
                                                         label="Project"
@@ -787,16 +714,9 @@ const Create_po = ({ base_url }) => {
                                                     </Form.Item>
                                                 </div>
                                             </div>
-                                            {/* </div> */}
-
-                                            {/* <div className="col-md-4"> */}
-                                            {/* <div className="wrap-box"> */}
                                             {shipmentType === 'Project Related' && (
                                                 <div class="col-sm-4">
                                                     <div className="selectwrap columns-select shipment-caret ">
-                                                        {/* <CaretDownFilled className="caret-icon" /> */}
-
-                                                        {/* /// */}
                                                         <Form.Item
                                                             label="Select Site"
                                                             name="site_id"
@@ -824,7 +744,6 @@ const Create_po = ({ base_url }) => {
                                             {shipmentType === 'Non Project Related' && (
                                                 <div class="col-sm-4 ">
                                                     <div className="selectwrap add-dropdown-wrap shipment-caret">
-                                                        {/* <CaretDownFilled className="caret-icon" /> */}
                                                         <Form.Item
                                                             label="Material For"
                                                             name="materialFor"
@@ -854,8 +773,6 @@ const Create_po = ({ base_url }) => {
                                                 <div className="col-md-4">
                                                     <div class="selectwrap add-dropdown-wrap">
                                                         <div class="selectwrap columns-select shipment-caret select-sites">
-                                                            {/* <CaretDownFilled className="caret-icon" /> */}
-
                                                             <Form.Item
                                                                 label="Material For"
                                                                 name="materialFor"
@@ -879,14 +796,7 @@ const Create_po = ({ base_url }) => {
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
                                             )}
-
-
-                                            {/* </div> */}
-                                            {/* </div> */}
                                             <div className="col-md-4">
                                                 <div className="wrap-box">
                                                     {materialFor === 'inventory' && (
@@ -926,9 +836,6 @@ const Create_po = ({ base_url }) => {
                                                         <>
                                                             <div class="selectwrap add-dropdown-wrap">
                                                                 <div class="selectwrap columns-select shipment-caret ">
-                                                                    {/* <CaretDownFilled className="caret-icon" /> */}
-
-                                                                    {/* /////////////////////////////////////////////////////////////////////////////////// */}
                                                                     <Form.Item
                                                                         label="Project"
                                                                         name="project_id"

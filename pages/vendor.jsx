@@ -126,9 +126,7 @@ const Vendor = ({ base_url }) => {
                                                             okText="Yes"
                                                             cancelText="No"
                                                         >
-                                                            {/* <Link href="" className="me-2"> */}
                                                             <DeleteFilled />
-                                                            {/* </Link> */}
                                                         </Popconfirm>
                                                         <Link href={`/edit_vendor/${vendor.id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
