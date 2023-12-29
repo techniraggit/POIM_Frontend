@@ -110,7 +110,11 @@ const Vendor = ({ base_url }) => {
                                     </thead>
                                     <tbody>
                                         {Array.isArray(projects) &&
-                                            projects.map((project, index) => (
+                                            projects.map((project, index) => 
+                                            // {
+                                            //     console.log(project,'project namesssssssssssss');
+                                                (
+                                                
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{project.name}</td>
@@ -163,7 +167,9 @@ const Vendor = ({ base_url }) => {
                                                         <Link href={`/edit_project/${project.id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
-                                            ))}
+                                            )
+                                        // }
+                                            )}
 
                                     </tbody>
                                 </table>

@@ -278,8 +278,6 @@ const Vendor_Edit = ({ base_url }) => {
 
                                                             onChange={handleChange}
                                                         />
-
-
                                                     </div>
                                                     )}
                                                     </>
