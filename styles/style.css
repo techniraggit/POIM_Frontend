@@ -1781,6 +1781,13 @@ input.detail-para2::placeholder {
 
 /* 21/12/2023 */
 /* responsive */
+@media (max-width: 1299px) {
+.table-hover tbody tr td {
+    /* margin-left: 10px; */
+    color: #112F5C;
+    padding: 10px 10px;
+}
+}
 @media (max-width: 1199px) {
     table.table-hover {
         min-width: 910px;
