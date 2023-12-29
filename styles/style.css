@@ -236,6 +236,9 @@ section.dashboard-wrap {
     width: 100%;
     font-size: 18px;
     margin-bottom: 25px;
+    border-radius: 0;
+    color: rgb(31, 30, 30, 0.26);
+    font-weight: 700;
 }
 .logowrap form input::placeholder {
     opacity: 0.26;
@@ -246,6 +249,7 @@ h4.admin {
     text-transform: capitalize;
     margin-bottom: 30px;
     margin-top: 20px;
+    font-weight: 600;
 }
 .col-md-12.chekbox-wrap {
     display: flex;
@@ -296,9 +300,24 @@ button.submit-btn {
     padding: 10px 12px;
     margin-top: 40px;
 }
-label.label-div.mb-2 {
+label.label-div {
     position: relative;
     padding: 0px 0px 0px 34px;
+    display: flex;
+    align-items: center;
+    width: 70%;
+}
+button.submit-btn:hover {
+    background-color: #000000;
+}
+.label-div > span {
+    color: #404040;
+    font-weight: 500;
+}
+.chekbox-wrap div:last-child a {
+    text-decoration: none;
+    color: #404040;
+    display: block;
 }
 label.label-div input {
     margin-bottom: 0px !important;
@@ -1139,7 +1158,7 @@ ul.list-icons li a span {
     margin-top: 20px;
     padding: 25px 25px 25px 25px;
     background-color: white;
-
+}
 ul.list-icons li a span svg {
     font-size: 19px;
     color: #fff;
@@ -1269,7 +1288,7 @@ span.ant-select-arrow {
 }
 button.ant-btn.add-more-btn:hover  span {
     color: #0D0D0D;
-=======
+}
 .react-select .ant-form-item {
     width: 100% !important;
 }
