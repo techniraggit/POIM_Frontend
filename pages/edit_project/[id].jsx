@@ -108,7 +108,7 @@ const Project_Edit = ({ base_url }) => {
                 });
                 console.log(response.data.projects.project_manager.first_name, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
                 const projectData = response.data.projects;
-                console.log(projectData,'fffffffffffffffffff');
+                console.log(projectData.name,'fffffffffffffffffff');
                 form.setFieldsValue({
                     project_name:projectData.name,
                     number:projectData.project_no,
@@ -188,7 +188,7 @@ const Project_Edit = ({ base_url }) => {
 
             // Display a success message
             message.success('Project updated successfully');
-            // router.push('/project')
+            router.push('/project')
 
             // Reset the selected vendor and refetch the updated list
             setSelectedVendor(null);
