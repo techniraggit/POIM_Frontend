@@ -1,108 +1,128 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
-import React, { useState } from "react";
-import DynamicTitle from '@/components/dynamic-title.jsx';
-import { Form, Input, Button, Select, Space, message } from 'antd';
-import { getServerSideProps } from "@/components/mainVariable";
+import React, { useEffect, useState } from "react";
+import { Form, Input, Button, message, Space, } from 'antd';
+import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons';
+import axios from 'axios';
+import Link from "next/link";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+import { getServerSideProps } from "@/components/mainVariable";
+import DynamicTitle from '@/components/dynamic-title.jsx';
 
-
-const Create_Vendor = ({ base_url }) => {
+const Vendor_Edit = ({ base_url }) => {
     const [form] = Form.useForm();
+   
     const router = useRouter();
+    const { id } = router.query;
+    const [vendors, setVendors] = useState([]);
+    const [totalVendor, setTotalVendor] = useState(0);
+    const [selectedVendor, setSelectedVendor] = useState(null);
+
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const headers = {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                };
+                const response = await axios.get(`${base_url}/api/admin/vendors?vendor_id=${id}`, { headers });
+                console.log(response.data,'get vendor api respone');
+                setTotalVendor(response.data.total_vendors);
+                setVendors(response.data.vendors);
+
+
+                const vendorData = response.data.vendors_details;
+                console.log(vendorData,'$$$$$$$$$$$$$$$$$');
+                
+                form.setFieldsValue({
+                company_name:vendorData.company_name,
+                name:vendorData.vendor_contact[0].name,
+                phone_number:vendorData.vendor_contact[0].phone_number,
+                email:vendorData.vendor_contact[0].email,
+                address:vendorData.address
+
+                })
+                
+            //    vendorData.map((data)=>{
+            //     console.log(data.company_name,'#################');
+            //     form.setFieldValue({
+            //         company_name:data.company_name,
+            //     })
+            //    })
+                console.log(vendorData,'!!!!!!!!!!!!!!!!!!!!!!!S');
+               
+
+            } catch (error) {
+                console.error('Error fetching vendors:', error);
+            }
+        };
+        fetchRoles();
+    }, []);
+
+    // const handleEditClick = (vendor) => {
+    //     setSelectedVendor(vendor);
+    // };
+
     const onFinish = async (values) => {
-
-
-        // const dynamicItems = values.items.map(item => ({
-        //     name: item.name,
-        //     phone_number: item.phone_number,
-        //     email: item.email,
-        // }));
-
-        // const data = {
-        //     ...values,
-        //     contact_info: [...dynamicItems]
-        // }
-        // console.log(data, 'datataaaaaaa');
-
-
-        if(values.items){
-            console.log(values.items,'?????????????????????');
+        if(values.items?.length>0){
             const dynamicItems = values.items.map(item => ({
+                id:item.id,
                 name: item.name,
                 phone_number: item.phone_number,
                 email: item.email,
             }));
             var data = {
                 ...values,
-                contact_info: [
-                    {
-                        name: values.name,
-                        phone_number: values.phone_number,
-                        email: values.email,
-                    },
-                    ...dynamicItems,
-                   
-                ]
+                vendor_id:itemsData[0].vendor_id,
+                contact_info: [...dynamicItems]
             };
-            console.log(data,'ifffffffffff');
+             console.log(data,'hhhhhhhhhhhhhhhhhhhhhhhhhhhh');
         }
         else{
             var data = {
                 ...values,
+                vendor_id:id,
                 contact_info: [
                     {
+                        id:values.id,
                         name: values.name,
                         phone_number: values.phone_number,
                         email: values.email,
-                    }
-                   
+                    }                   
                 ]
             };
-            console.log(data,'elseeeeeeeeee')
         }
-        // return
 
-        // console.log(data,'hereeeeeeee')
-        // return
+
+
 
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
             };
-            console.log("values === ", values)
 
-            const response = await axios.post(`${base_url}/api/admin/vendors`, data, {
-                headers: headers,
-            });
-            message.success(response.data.message)
-            // router.push('/vendor')
-            
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+            // Make a PUT request to update the vendor
+           const response= await axios.patch(`${base_url}/api/admin/vendors`, data, 
+           {
+             headers :headers,
+             
+        }
+           );
+           console.log(response,'vendor edit rsponse');
+
+            // Display a success message
+            message.success('Vendor updated successfully');
             router.push('/vendor')
 
-
+            // Reset the selected vendor and refetch the updated list
+            setSelectedVendor(null);
+            // fetchRoles();
+        } catch (error) {
+            console.error('Error updating vendor:', error);
+            // Display an error message
+            message.error('Error updating vendor');
         }
-        catch (error) {
-        }
-
-        console.log(values, 'hfurhgiurehg');
-    }
-
-    const handlePhoneNumberChange = (value) => {
-        // If the value is exactly 10 digits, automatically add the +91 prefix
-        if (value && /^\d{10}$/.test(value)) {
-          form.setFieldsValue({
-            phone_number: '+91' + value,
-          });
-        }
-      };
-
+    };
 
     return (
         <>
@@ -222,29 +242,13 @@ const Create_Vendor = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
                                     </div>
-
-
-                                    {/* <div className="col-lg-4 col-md-12">
-                                        <div className="wrap-box">
-                                            <Form.Item
-                                                label="Contact No"
-                                                name="contact_no"  // Add a name to link the input to the form values
-                                                className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter contact no!' }]}
-                                            >
-                                                <Input />
-                                            </Form.Item>
-                                        </div>
-                                    </div> */}
-
-
                                     <div className="col-lg-4 col-md-12">
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Customer Name"
                                                 name="customer_name"  // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                // rules={[{ required: true, message: 'Please enter your customer name!' }]}
+                                                rules={[{ required: true, message: 'Please enter your customer name!' }]}
                                             >
                                                 <Input />
 
@@ -307,7 +311,7 @@ const Create_Vendor = ({ base_url }) => {
                                         </Form.List>
                                     </div>
                                     <Form.Item>
-                                        <button type="submit" className="create-ven-butt">Submit</button>
+                                        <button type="submit" className="create-ven-butt">Update</button>
                                     </Form.Item>
                                 </div>
                             </Form>
@@ -316,7 +320,7 @@ const Create_Vendor = ({ base_url }) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 export { getServerSideProps }
-export default Create_Vendor
+export default Vendor_Edit;

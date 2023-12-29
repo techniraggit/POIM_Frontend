@@ -3,11 +3,13 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
+import {Popconfirm, Input, message } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
+import UserPopUp from "@/components/user-popup";
 const User_list = ({ base_url }) => {
-
     const [users, setUsers] = useState([]);
+    const [isViewUserVisible, setUserVisible] = useState(false);
     useEffect(() => {
         const fetchroles = async () => {
             try {
@@ -24,7 +26,37 @@ const User_list = ({ base_url }) => {
         fetchroles();
     }, [])
 
+    const handleDelete = async (id) => {
+        try {
+            const headers = {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json', // Set content type to JSON
+            };
 
+            const body = JSON.stringify({ user_id: id }); // Use 'category_id' in the request body
+
+            // console.log('Deleting category with ID:', );
+            console.log('Request Headers:', headers);
+            console.log('Request Body:', body);
+
+            const response = await axios.delete(`${base_url}/api/admin/users`, {
+                headers,
+                data: body, // Send the body as data
+            });
+
+            console.log('Delete response:', response);
+            message.success('user deleted successfully.');
+            setUsers(preuser => preuser.filter(user => user.id !== id));
+            // Reload the categories after deleting
+        } catch (error) {
+            console.error('Error deleting category:', error);
+            message.error('Failed to delete the item. Please try again later.');
+        }
+    };
+    const handleIconClick = (id) => {
+        setUserVisible((prevVisible) => (prevVisible === id ? null : id));
+    };
     return (
         <>
             <div className="wrapper-main">
@@ -76,9 +108,21 @@ const User_list = ({ base_url }) => {
                                                     <td>{user.email}</td>
                                                     <td>{user.phone_number}</td>
                                                     <td className="td-icon-color">
-                                                    <a href="#" className="me-2"><EyeFilled /></a> 
-                                            <a href="#" className="me-2"><DeleteFilled /></a> 
-                                            <a href="#" className="me-2"><EditFilled /></a> 
+                                                    <EyeFilled onClick={() => handleIconClick(user.id)} />
+                                                        {isViewUserVisible === user.id && <UserPopUp user_id={user.id} />} 
+                                                    <Popconfirm
+                                                            title="Are you sure you want to delete this item?"
+                                                            onConfirm={() => handleDelete(user.id)}
+                                                            okText="Yes"
+                                                            cancelText="No"
+                                                            
+                                                        >
+                                                            
+                                                            <DeleteFilled />
+                                                            
+                                                        </Popconfirm>
+                                                        {/* <Link></> */}
+                                            <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link> 
                                                     </td>
                                                 </tr>
                                             ))}

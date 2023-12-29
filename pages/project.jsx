@@ -3,12 +3,16 @@ import Sidebar from "@/components/sidebar";
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import axios from 'axios';
+import { Table, Button, message, Popconfirm, Input } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
+import ProjectPopup from "@/components/project-popup";
 
 const Vendor = ({ base_url }) => {
+    
     const [projects, setProjects] = useState([]);
+    const [isViewProjectVisible, setProjectVisible] = useState(false);
     // const [addresses,setAddresses]=useState([]);
     const [totalProjects, setTotalProjects] = useState(0)
     useEffect(() => {
@@ -18,7 +22,7 @@ const Vendor = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
-                console.log(response.data, '55555555555555555555555555');
+                console.log(response.data.projects, '55555555555555555555555555');
                 setProjects(response.data.projects)
                 // setAddresses(response.data.address)
                 setTotalProjects(response.data.total_projects); // Assuming the API response is an array of projects
@@ -29,12 +33,44 @@ const Vendor = ({ base_url }) => {
         fetchroles();
     }, [])
 
-    const siteAddress = projects ?.map((project) => {
+    const siteAddress = projects?.map((project) => {
         console.log(project, 'projecttttttttttttttttt');
         return project.sites.map((site) => {
             return (site.address)
         })
     })
+
+    const handleDelete = async (id) => {
+        try {
+            const headers = {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json', // Set content type to JSON
+            };
+
+            const body = JSON.stringify({ project_id: id }); // Use 'category_id' in the request body
+
+            // console.log('Deleting category with ID:', );
+            console.log('Request Headers:', headers);
+            console.log('Request Body:', body);
+
+            const response = await axios.delete(`${base_url}/api/admin/projects`, {
+                headers,
+                data: body, // Send the body as data
+            });
+
+            console.log('Delete response:', response);
+            message.success('project deleted successfully.');
+            setProjects(preproject => preproject.filter(project => project.id !== id));
+            // Reload the categories after deleting
+        } catch (error) {
+            console.error('Error deleting category:', error);
+            message.error('Failed to delete the item. Please try again later.');
+        }
+    };
+    const handleIconClick = (id) => {
+        setProjectVisible((prevVisible) => (prevVisible === id ? null : id));
+    };
 
     return (
         <>
@@ -69,7 +105,7 @@ const Vendor = ({ base_url }) => {
                                             <th className="hedaings-tb">Project Name</th>
                                             <th className="hedaings-tb">Customer Name</th>
                                             <th className="hedaings-tb">Address</th>
-                                            <th className="hedaings-tb">Action</th> 
+                                            <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -87,22 +123,19 @@ const Vendor = ({ base_url }) => {
                                                     <td>{project.customer_name}</td>
                                                     {/* <td>{project.address}</td> */}
                                                     <td>
-                                                        {
+                                                    {project.sites[0].address}
+                                                        
+                                                        {/* {
                                                             siteAddress.flat().map((siteAddress) => {
                                                                 return (
                                                                     <td key={siteAddress} value={siteAddress}
                                                                     >
                                                                         {siteAddress}
-                                                                        {/* {vendor.vendor_contact.map((vendor_contact, index) => (
-                                                                        <Select.Option>{vendor_contact.name}</Select.Option>
-                                                                        //  {vendor_contact.name}
-                                                                        ))} */}
-                                                                        {/* {vendor.company_name} */}
                                                                     </td>)
                                                             }
 
 
-                                                            )}
+                                                            )} */}
                                                     </td>
 
                                                     {/* <td>
@@ -111,9 +144,23 @@ const Vendor = ({ base_url }) => {
                                                         ))}
                                                     </td> */}
                                                     <td className="td-icon-color">
-                                                    <a href="#" className="me-2"><EyeFilled /></a> 
-                                            <a href="#" className="me-2"><DeleteFilled /></a> 
-                                            <a href="#" className="me-2"><EditFilled /></a> 
+                                                    <EyeFilled onClick={() => handleIconClick(project.id)} />
+                                                        {isViewProjectVisible === project.id && <ProjectPopup project_id={project.id} />} 
+                                                        
+                                                        
+
+                                                        <Popconfirm
+                                                            title="Are you sure you want to delete this item?"
+                                                            onConfirm={() => handleDelete(project.id)}
+                                                            okText="Yes"
+                                                            cancelText="No"
+                                                            
+                                                        >
+                                                            
+                                                            <DeleteFilled />
+                                                            
+                                                        </Popconfirm>
+                                                        <Link href={`/edit_project/${project.id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             ))}

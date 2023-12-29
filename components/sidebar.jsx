@@ -1,9 +1,23 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import '../styles/style.css'
 import Link from 'next/link';
 import { RightOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 
 const Sidebar = () => {
+  const router = useRouter();
+  const [initialVisit, setInitialVisit] = useState(true);
+  useEffect(() => {
+    const access_token = localStorage.getItem('access_token');
+    const access_refresh = localStorage.getItem('refresh_token');
+
+    if (!initialVisit && access_token === null && access_refresh === null) {
+        router.push('/');
+    } else {
+      setInitialVisit(false);
+    }
+  }, [initialVisit]);
+
   return (
     <>
       <div className="aside-dashboard">

@@ -4,13 +4,19 @@ import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons'
 import axios from 'axios';
+import { Table, Button, message, Popconfirm, Input } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
-import { EyeFilled, DeleteFilled , EditFilled } from '@ant-design/icons'
+import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
+import View_Vendor from "@/components/view-vendor";
 
 const Vendor = ({ base_url }) => {
     const [vendors, setVendors] = useState([]);
-    const [totalVendor,setTotalVendor]=useState(0)
+    const [totalVendor, setTotalVendor] = useState(0)
+    const [isViewVendorVisible, setViewVendorVisible] = useState(false);
+
+
+
     useEffect(() => {
         const fetchroles = async () => {
             try {
@@ -27,6 +33,41 @@ const Vendor = ({ base_url }) => {
         }
         fetchroles();
     }, [])
+
+
+    const handleDelete = async (id) => {
+        try {
+            const headers = {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json', // Set content type to JSON
+            };
+
+            const body = JSON.stringify({ vendor_id: id }); // Use 'category_id' in the request body
+
+            // console.log('Deleting category with ID:', );
+            console.log('Request Headers:', headers);
+            console.log('Request Body:', body);
+
+            const response = await axios.delete(`${base_url}/api/admin/vendors`, {
+                headers,
+                data: body, // Send the body as data
+            });
+
+            console.log('Delete response:', response);
+            message.success('Category deleted successfully.');
+            setVendors(prevVendors => prevVendors.filter(vendor => vendor.id !== id));
+            // Reload the categories after deleting
+        } catch (error) {
+            console.error('Error deleting category:', error);
+            message.error('Failed to delete the item. Please try again later.');
+        }
+    };
+
+
+    const handleIconClick = (id) => {
+        setViewVendorVisible((prevVisible) => (prevVisible === id ? null : id));
+    };
     return (
         <>
             <div className="wrapper-main">
@@ -60,7 +101,7 @@ const Vendor = ({ base_url }) => {
                                             <th className="hedaings-tb">Company Name</th>
                                             <th className="hedaings-tb">Country</th>
                                             <th className="hedaings-tb">State</th>
-                                            <th className="hedaings-tb">Action</th> 
+                                            <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -69,24 +110,25 @@ const Vendor = ({ base_url }) => {
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{vendor.company_name}</td>
-                                                    {/* <td className="td-color">{vendor.name}</td> */}
-                                                    {/* <td>
-                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
-                                                            <td>{vendor_contact.name}<br /></td>
-                                                        ))}
-                                                    </td> */}
+
                                                     <td>{vendor.country}</td>
                                                     <td>{vendor.state}</td>
-
-                                                    {/* <td>
-                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
-                                                            <td>{vendor_contact.name}<br /></td>
-                                                        ))}
-                                                    </td> */}
                                                     <td className="td-icon-color">
-                                                        <a href="#" className="me-2"><EyeFilled /></a>
-                                                        <a href="" className="me-2"><DeleteFilled /></a>
-                                                        <a href="" className="me-2"><EditFilled /></a>
+                                                        {/* <Link href="#" className="me-2"> */}
+                                                        <EyeFilled onClick={() => handleIconClick(vendor.id)} />
+                                                        {isViewVendorVisible === vendor.id && <View_Vendor vendor_id={vendor.id} />}
+
+
+                                                        {/* </Link> */}
+                                                        <Popconfirm
+                                                            title="Are you sure you want to delete this item?"
+                                                            onConfirm={() => handleDelete(vendor.id)}
+                                                            okText="Yes"
+                                                            cancelText="No"
+                                                        >
+                                                            <DeleteFilled />
+                                                        </Popconfirm>
+                                                        <Link href={`/edit_vendor/${vendor.id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             ))}

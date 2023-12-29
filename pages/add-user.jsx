@@ -50,6 +50,8 @@ const AddUser = ({ base_url }) => {
       const data = {
         ...values,
       }
+      // console.log(data,'99999999999999999999999999');
+      // return
 
       const response = await axios.post(`${base_url}/api/admin/users`, data, {
         headers: headers,
@@ -84,6 +86,17 @@ const AddUser = ({ base_url }) => {
         phone_number: '+91' + value,
       });
     }
+  };
+
+
+  const validatePhoneNumber = (value) => {
+    return new Promise((resolve, reject) => {
+      if (/^\+91[0-9]{10}$/.test(value)) {
+        resolve(); // Valid phone number
+      } else {
+        reject('Please enter a valid phone number starting with +91 and followed by 10 digits.');
+      }
+    });
   };
 
   return (
@@ -173,17 +186,28 @@ const AddUser = ({ base_url }) => {
                           label="Contact No"
                           name="phone_number"  // Add a name to link the input to the form values
                           className="vender-input"
-                          // rules={[
-                          //   { required: true, message: 'Please enter your contact number!' },
-                          //   { validator: validatePhoneNumber },
-                          // ]}
                           rules={[
                             { required: true, message: 'Please enter your contact number!' },
                             {
                               pattern: /^\+91[0-9]{10}$/,
                               message: 'Please enter a valid phone number starting with +91 and followed by 10 digits.',
                             },
+                            // Uncomment the following lines if you want to use a custom validator function
+                            // {
+                            //   validator: validatePhoneNumber,
+                            // },
                           ]}
+                        // rules={[
+                        //   { required: true, message: 'Please enter your contact number!' },
+                        //   { validator: validatePhoneNumber },
+                        // ]}
+                        // rules={[
+                        //   { required: true, message: 'Please enter your contact number!' },
+                        //   {
+                        //     pattern: /^\+91[0-9]{10}$/,
+                        //     message: 'Please enter a valid phone number starting with +91 and followed by 10 digits.',
+                        //   },
+                        // ]}
                         // rules={[{ required: true, message: 'Please enter your contact number !' }]}
                         >
                           <Input
@@ -262,8 +286,8 @@ const AddUser = ({ base_url }) => {
                         </Button>
                       </Form.Item> */}
                       <Form.Item >
-                      <button type="submit" className="create-ven-butt" loading={loading}>Submit</button>
-                    </Form.Item>
+                        <button type="submit" className="create-ven-butt" loading={loading}>Submit</button>
+                      </Form.Item>
                     </div>
                   </div>
                 </Form>
