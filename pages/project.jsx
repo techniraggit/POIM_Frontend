@@ -7,9 +7,12 @@ import { Table, Button, message, Popconfirm, Input } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
+import ProjectPopup from "@/components/project-popup";
 
 const Vendor = ({ base_url }) => {
+    
     const [projects, setProjects] = useState([]);
+    const [isViewProjectVisible, setProjectVisible] = useState(false);
     // const [addresses,setAddresses]=useState([]);
     const [totalProjects, setTotalProjects] = useState(0)
     useEffect(() => {
@@ -64,6 +67,9 @@ const Vendor = ({ base_url }) => {
             console.error('Error deleting category:', error);
             message.error('Failed to delete the item. Please try again later.');
         }
+    };
+    const handleIconClick = (id) => {
+        setProjectVisible((prevVisible) => (prevVisible === id ? null : id));
     };
 
     return (
@@ -138,7 +144,9 @@ const Vendor = ({ base_url }) => {
                                                         ))}
                                                     </td> */}
                                                     <td className="td-icon-color">
-                                                        <EyeFilled />
+                                                    <EyeFilled onClick={() => handleIconClick(project.id)} />
+                                                        {isViewProjectVisible === project.id && <ProjectPopup project_id={project.id} />} 
+                                                        
                                                         
 
                                                         <Popconfirm
@@ -152,7 +160,7 @@ const Vendor = ({ base_url }) => {
                                                             <DeleteFilled />
                                                             
                                                         </Popconfirm>
-                                                        <a href="#" className="me-2"><EditFilled /></a>
+                                                        <Link href={`/edit_project/${project.id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             ))}

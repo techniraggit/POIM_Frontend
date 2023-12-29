@@ -297,7 +297,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 label="Customer Name"
                                                 name="customer_name"  // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your State Province!' }]}
+                                                // rules={[{ required: true, message: 'Please enter your State Province!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>
