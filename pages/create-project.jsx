@@ -98,7 +98,6 @@ const Create_Vendor = ({ base_url }) => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             };
-            console.log("values === ", values)
             // const data = {
             //     ...values,
             //     project_manager_id: rootData
