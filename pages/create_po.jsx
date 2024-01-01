@@ -388,8 +388,8 @@ const Create_po = ({ base_url }) => {
                             <div className="inner-choose">
                                 <Form onFinish={onFinish} form={form} className="file-form">
                                     {/* ... (your existing code) */}
-                                    <div className="row">
-                                        <div className="col-lg-4 col-md-12">
+                                    <div className="row po-typeraw">
+                                        <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap react-select">
                                                 <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
                                                     {/* <CaretDownFilled className="caret-icon" /> */}
@@ -462,8 +462,8 @@ const Create_po = ({ base_url }) => {
                                         <span class="d-block me-0">To</span>
                                         <hr />
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-12">
+                                    <div class="row vendor-rowgap">
+                                        <div class="col-lg-4 col-md-6">
                                             <div class="selectwrap react-select" id="vendor-selector">
                                                 <div class="selectwrap  shipment-caret select-site aligned-text">
                                                     <Form.Item
@@ -624,7 +624,7 @@ const Create_po = ({ base_url }) => {
                                         <hr />
                                     </div>
                                     <div class="row space-bottom">
-                                        <div class="col-md-12  all-wrap-box">
+                                        <div class="col-md-6 col-lg-12 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 {/* <CaretDownFilled className="caret-icon" /> */}
 
@@ -1217,7 +1217,7 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="po-wrap">
+                                    <div className="po-wrap create-wrap-butt">
                                         <Form.Item>
                                             <Button type="primary" htmlType="submit" className="create-ven-butt">
                                                 Create PO
