@@ -4,18 +4,19 @@ import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import axios from 'axios';
-import '../styles/style.css'
+import '@/styles/style.css'
 import { MinusOutlined, PlusOutlined, CaretDownFilled } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-// import "antd/dist/antd.css";
 
 const { Option } = Select;
 
 const Create_po = ({ base_url }) => {
     const [form] = Form.useForm();
     const router = useRouter();
-
+    const { id } = router.query;
+    // console.log(id,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%5');
+const [shipmentTypeData,setshipmentTypeData]=useState('');
     const [shipmentType, setshipmentType] = useState(null);
     const [materialFor, setMaterialFor] = useState('');
     const defaultDate = moment();
@@ -138,115 +139,145 @@ const Create_po = ({ base_url }) => {
         setshipmentType(value);
     };
     const onFinish = async (values) => {
-        if(values.items?.length>0){
-            console.log(values.items,'valuessssssssssssssssss');
-            const dynamicItems = values.items?.map(item => ({
-                quantity: item.quantity,
-                unit_price: item.unit_price,
-                Amount: item.Amount,
-                Description: item.Description
-            }));
-            var data = {
-                po_data: {
-                    company_name: vendorForm.company_name,
-                    email: vendorForm.email,
-                    phone: vendorForm.phone,
-                    state: vendorForm.state,
-                    country: vendorForm.country,
-                    vendor_id: values.vendor_id,
-                    po_type: values.po_type,
-                    address1: vendorForm.address,
-                },
-                shipment: {
-                    HST_Amount: values.HST_Amount,
-                    Total_amount: values.Total_amount,
-                    shipment_type: values.shipment_type,
-                    project_id: values.project_id,
-                    shipment_address: 'add',
-                },
-                shipment_material: {
-                    quantity: values.quantity,
-                    unit_price: values.unit_price,
-                    Amount: values.Amount,
-                    Description: values.Description,
-                    material_for: values.materialFor,
-                    site_id: values.site_id,
-                    project_id: values.project_id,
-                    code: values.code,
-                    shipment_address: values.shipment_address,
-                    material_details:[...dynamicItems]
-                }
-    
-            }
-        }
-        else{
-            var data = {    
-                po_data: {
-                    company_name: vendorForm.company_name,
-                    email: vendorForm.email,
-                    phone: vendorForm.phone,
-                    state: vendorForm.state,
-                    country: vendorForm.country,
-                    vendor_id: values.vendor_id,
-                    po_type: values.po_type,
-                    address1: vendorForm.address,
-                },
-                shipment: {
-                    HST_Amount: values.HST_Amount,
-                    Total_amount: values.Total_amount,
-                    shipment_type: values.shipment_type,
-                    project_id: values.project_id,
-                    shipment_address: 'add',
-                },
-                shipment_material: {
-                    quantity: values.quantity,
-                    unit_price: values.unit_price,
-                    Amount: values.Amount,
-                    Description: values.Description,
-                    material_for: values.materialFor,
-                    site_id: values.site_id,
-                    project_id: values.project_id,
-                    code: values.code,
-                    shipment_address: values.shipment_address,
-                    material_details:[{
-                        quantity: values.quantity,
-                        unit_price: values.unit_price,
-                        Amount: values.Amount,
-                        Description: values.Description
-                    }
-                    ]
-                },
-               
-            }    
-        }
-       
-        try {
-            const headers = {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            };
-            console.log("values === ", values)
-            
-            const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
-                headers: headers,
-            });
-            console.log(response.data, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
-            // setShipmentAddress(response.data.shipment_address)
-            if (response.data.status == true) {
-                message.success(response.data.message)
-                router.push('/po_list')
-            }
+        // if(values.items?.length>0){
+        //     console.log(values.items,'valuessssssssssssssssss');
+        //     const dynamicItems = values.items?.map(item => ({
+        //         quantity: item.quantity,
+        //         unit_price: item.unit_price,
+        //         Amount: item.Amount,
+        //         Description: item.Description
+        //     }));
+        //     var data = {
+        //         po_data: {
+        //             company_name: vendorForm.company_name,
+        //             email: vendorForm.email,
+        //             phone: vendorForm.phone,
+        //             state: vendorForm.state,
+        //             country: vendorForm.country,
+        //             vendor_id: values.vendor_id,
+        //             po_type: values.po_type,
+        //             address1: vendorForm.address,
+        //         },
+        //         shipment: {
+        //             HST_Amount: values.HST_Amount,
+        //             Total_amount: values.Total_amount,
+        //             shipment_type: values.shipment_type,
+        //             project_id: values.project_id,
+        //             shipment_address: 'add',
+        //         },
+        //         shipment_material: {
+        //             quantity: values.quantity,
+        //             unit_price: values.unit_price,
+        //             Amount: values.Amount,
+        //             Description: values.Description,
+        //             material_for: values.materialFor,
+        //             site_id: values.site_id,
+        //             project_id: values.project_id,
+        //             code: values.code,
+        //             shipment_address: values.shipment_address,
+        //             material_details:[...dynamicItems]
+        //         }
+
+        //     }
+        // }
+        // else{
+        //     var data = {    
+        //         po_data: {
+        //             company_name: vendorForm.company_name,
+        //             email: vendorForm.email,
+        //             phone: vendorForm.phone,
+        //             state: vendorForm.state,
+        //             country: vendorForm.country,
+        //             vendor_id: values.vendor_id,
+        //             po_type: values.po_type,
+        //             address1: vendorForm.address,
+        //         },
+        //         shipment: {
+        //             HST_Amount: values.HST_Amount,
+        //             Total_amount: values.Total_amount,
+        //             shipment_type: values.shipment_type,
+        //             project_id: values.project_id,
+        //             shipment_address: 'add',
+        //         },
+        //         shipment_material: {
+        //             quantity: values.quantity,
+        //             unit_price: values.unit_price,
+        //             Amount: values.Amount,
+        //             Description: values.Description,
+        //             material_for: values.materialFor,
+        //             site_id: values.site_id,
+        //             project_id: values.project_id,
+        //             code: values.code,
+        //             shipment_address: values.shipment_address,
+        //             material_details:[{
+        //                 quantity: values.quantity,
+        //                 unit_price: values.unit_price,
+        //                 Amount: values.Amount,
+        //                 Description: values.Description
+        //             }
+        //             ]
+        //         },
+
+        //     }    
+    }
+    useEffect(() => {
+        const projectData = async () => {
+            try {
+                const headers = {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                };
+                // console.log("values === ", values)
+
+                const response = await axios.get(`${base_url}/api/admin/purchase-order?po_id=${id}`, {
+                    headers: headers,
+                });
+                console.log(response.data.purchase_orders.material.po.updated_by.first_name,'xxxx000000000');
+                setshipmentTypeData(response.data.purchase_orders.material.shipment_type)
+                //console.log(response.data.purchase_orders.material.po.vendor,'email');
+                // const projectViewData = response.data;
+                // console.log(projectViewData,'$$$$$$$$$$$$$$$$$');
+
+                form.setFieldsValue({
+
+                    company_name: response.data.purchase_orders.material.po.vendor.company_name,
+                    vendor_id: response.data.purchase_orders.material.po.vendor.id,
+                    email:response.data.purchase_orders.material.po.vendor.vendor_contact[0].email,
+                    phone:response.data.purchase_orders.material.po.vendor.vendor_contact[0].phone_number,
+                    address:response.data.purchase_orders.material.po.vendor.address,
+                    state:response.data.purchase_orders.material.po.vendor.state,
+                    country:response.data.purchase_orders.material.po.vendor.country,
+                    shipment_type:response.data.purchase_orders.material.shipment_type,
+                    project_id:response.data.purchase_orders.material.name,
+                    HST_Amount:response.data.purchase_orders.material.HST_Amount,
+                    Total_amount:response.data.purchase_orders.material.Total_amount,
+                    quantity:response.data.purchase_orders.quantity,
+                    unit_price:response.data.purchase_orders.unit_price,
+                    Amount:response.data.purchase_orders.Amount,
+                    Description:response.data.purchase_orders.Description,
+                    first_name:response.data.purchase_orders.material.po.updated_by.first_name,
+                    last_name:response.data.purchase_orders.material.po.updated_by.last_name
+                })
+                // if (response.data.status == true) {
+                //     message.success(response.data.message)
+                //     router.push('/po_list')
+                // }
 
 
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+                // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
+                // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+            }
+            catch (error) {
+                console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
+            }
+
         }
-        catch (error) {
-            console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
-        }
-        console.log("Received values:", values);
-    };
+        projectData();
+        // console.log("Received values:", values);
+    }, [id, form])
+
+    // };
 
 
     useEffect(() => {
@@ -479,7 +510,7 @@ const Create_po = ({ base_url }) => {
 
                                                             },
 
-                                                        ]}  
+                                                        ]}
                                                     >
                                                         <Select
                                                             id="single2"
@@ -502,7 +533,7 @@ const Create_po = ({ base_url }) => {
                                     <div class="row space-raw  btm-space">
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                {/* <Form.Item
+                                                <Form.Item
                                                     label="Company Name"
                                                     for="name"
                                                     name="company_name"
@@ -515,36 +546,31 @@ const Create_po = ({ base_url }) => {
                                                     ]}
                                                     onChange={handleChange}
                                                 >
-                                                    <Input placeholder="00854" value={vendorForm.company_name} />
-                                                </Form.Item> */}
-                                                <label>
-                                                    Company Name
-                                                </label>
-                                                <input
-                                                    label="Company Name"
-                                                    for="name"
-                                                    name="company_name"
-                                                    type="text"
-                                                    value={vendorForm.company_name}
-                                                    // rules={[
-                                                    //     {
-                                                    //         required: true,
-                                                    //         message: "Please enter Company name",
-                                                    //     },
-                                                    // ]}
-                                                    onChange={handleChange}
-                                                // onChange=handleChange={}
-                                                />
-                                                {/* <Input value={vendorForm.company_name} placeholder="00854" /> */}
-                                                {/* </input> */}
-                                                {/* <label for="name">Email</label>
-                                                <input type="email"> */}
+                                                    <Input placeholder="00854" />
+                                                </Form.Item>
+
+
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                <label>
+                                                <Form.Item
+                                                    label="Email"
+                                                    for="name"
+                                                    name="email"
+                                                    // value={vendorForm.company_name}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter email",
+                                                        },
+                                                    ]}
+                                                    onChange={handleChange}
+                                                >
+                                                    <Input placeholder="00854" />
+                                                </Form.Item>
+                                                {/* <label>
                                                     Email
                                                 </label>
                                                 <input
@@ -554,13 +580,28 @@ const Create_po = ({ base_url }) => {
                                                     value={vendorForm.email}
 
                                                     onChange={handleChange}
-                                                />
+                                                /> */}
 
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                <label>Contact Number</label>
+                                                <Form.Item
+                                                    label="Contact Number"
+                                                    for="name"
+                                                    name="phone"
+                                                    // value={vendorForm.company_name}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter phone number",
+                                                        },
+                                                    ]}
+                                                    onChange={handleChange}
+                                                >
+                                                    <Input placeholder="00854" />
+                                                </Form.Item>
+                                                {/* <label>Contact Number</label>
                                                 <input
                                                     for="name"
                                                     name="phone"
@@ -568,12 +609,27 @@ const Create_po = ({ base_url }) => {
                                                     value={vendorForm.phone}
 
                                                     onChange={handleChange}
-                                                />
+                                                /> */}
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                <label>Address</label>
+                                                <Form.Item
+                                                    label="Address"
+                                                    for="name"
+                                                    name="address"
+                                                    // value={vendorForm.company_name}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter your address",
+                                                        },
+                                                    ]}
+                                                    onChange={handleChange}
+                                                >
+                                                    <Input placeholder="00854" />
+                                                </Form.Item>
+                                                {/* <label>Address</label>
                                                 <input
                                                     for="name"
                                                     name="address"
@@ -581,7 +637,7 @@ const Create_po = ({ base_url }) => {
                                                     value={vendorForm.address}
 
                                                     onChange={handleChange}
-                                                />
+                                                /> */}
 
 
                                             </div>
@@ -589,7 +645,22 @@ const Create_po = ({ base_url }) => {
 
                                         <div class="col-lg-4 col-md-6 space-col-spc">
                                             <div class="wrap-box">
-                                                <label>State / Province</label>
+                                                <Form.Item
+                                                    label="State / Province"
+                                                    for="name"
+                                                    name="state"
+                                                    // value={vendorForm.company_name}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter state",
+                                                        },
+                                                    ]}
+                                                    onChange={handleChange}
+                                                >
+                                                    <Input placeholder="00854" />
+                                                </Form.Item>
+                                                {/* <label>State / Province</label>
                                                 <input
                                                     for="name"
                                                     name="state"
@@ -597,14 +668,30 @@ const Create_po = ({ base_url }) => {
                                                     value={vendorForm.state}
 
                                                     onChange={handleChange}
-                                                />
+                                                /> */}
 
 
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
-                                                <label>Country</label>
+                                            <Form.Item
+                                                    label="Country"
+                                                    for="name"
+                                                    name="country"
+                                                    // value={vendorForm.company_name}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter country",
+                                                        },
+                                                    ]}
+                                                    onChange={handleChange}
+                                                >
+                                                    <Input placeholder="00854" />
+                                                </Form.Item>
+
+                                                {/* <label>Country</label>
                                                 <input
                                                     for="name"
                                                     name="country"
@@ -612,7 +699,7 @@ const Create_po = ({ base_url }) => {
                                                     value={vendorForm.country}
 
                                                     onChange={handleChange}
-                                                />
+                                                /> */}
 
 
                                             </div>
@@ -649,9 +736,9 @@ const Create_po = ({ base_url }) => {
                                                     </Select>
                                                 </Form.Item>
                                             </div>
-                                            {shipmentType === 'Project Related' && (
+                                            {shipmentType === 'Project Related'|| shipmentTypeData==='Project Related' && (
                                                 <div class="selectwrap columns-select shipment-caret">
-                                                    {/* <CaretDownFilled className="caret-icon" /> */}
+                                                    {/* <CaretDownFilled classNam e="caret-icon" /> */}
 
                                                     {/* / */}
                                                     <Form.Item
@@ -683,7 +770,7 @@ const Create_po = ({ base_url }) => {
                                                     </Form.Item>
                                                 </div>
                                             )}
-                                            {shipmentType === 'Non Project Related' && (
+                                            {shipmentType === 'Non Project Related' || shipmentTypeData==='Non Project Related' && (
                                                 <div class="selectwrap non-project-wrap">
 
                                                     <Form.Item
@@ -791,7 +878,7 @@ const Create_po = ({ base_url }) => {
 
                                             {/* <div className="col-md-4"> */}
                                             {/* <div className="wrap-box"> */}
-                                            {shipmentType === 'Project Related' && (
+                                            {shipmentType === 'Project Related' || shipmentTypeData==='Project Related' && (
                                                 <div class="col-sm-4">
                                                     <div className="selectwrap columns-select shipment-caret ">
                                                         {/* <CaretDownFilled className="caret-icon" /> */}
@@ -821,7 +908,7 @@ const Create_po = ({ base_url }) => {
                                                     </div>
                                                 </div>
                                             )}
-                                            {shipmentType === 'Non Project Related' && (
+                                            {shipmentType === 'Non Project Related' || shipmentTypeData==='Non Project Related'  && (
                                                 <div class="col-sm-4 ">
                                                     <div className="selectwrap add-dropdown-wrap shipment-caret">
                                                         {/* <CaretDownFilled className="caret-icon" /> */}
@@ -842,7 +929,7 @@ const Create_po = ({ base_url }) => {
                                                                 onChange={(value) => setMaterialFor(value)}
                                                             >
                                                                 <Option value="inventory">Inventory</Option>
-                                                                <Option value="supplies">Supplies/Expenses</Option>
+                                                                <Option value="">Supplies/Expenses</Option>
 
                                                             </Select>
                                                         </Form.Item>
@@ -850,7 +937,7 @@ const Create_po = ({ base_url }) => {
                                                 </div>
                                             )}
 
-                                            {shipmentType === 'Combined' && (
+                                            {shipmentType === 'Combined' || shipmentTypeData==='Combined' && (
                                                 <div className="col-md-4">
                                                     <div class="selectwrap add-dropdown-wrap">
                                                         <div class="selectwrap columns-select shipment-caret select-sites">
@@ -1217,13 +1304,13 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="po-wrap">
+                                    {/* <div className="po-wrap">
                                         <Form.Item>
                                             <Button type="primary" htmlType="submit" className="create-ven-butt">
                                                 Create PO
                                             </Button>
                                         </Form.Item>
-                                    </div>
+                                    </div> */}
                                 </Form>
                             </div>
                         </div>
