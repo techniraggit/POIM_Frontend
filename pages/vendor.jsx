@@ -24,7 +24,7 @@ const Vendor = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/vendors`, { headers: headers });
-                console.log(response.data.total_vendors, '55555555555555555555555555');
+                console.log(response.data, '55555555555555555555555555');
                 setTotalVendor(response.data.total_vendors)
                 setVendors(response.data.vendors); // Assuming the API response is an array of projects
             } catch (error) {
@@ -128,7 +128,7 @@ const Vendor = ({ base_url }) => {
                                                         >
                                                             <DeleteFilled />
                                                         </Popconfirm>
-                                                        <Link href={`/edit_vendor/${vendor.id}`} className="me-2"><EditFilled /></Link>
+                                                        <Link href={`/edit_vendor/${vendor.vendor_id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             ))}

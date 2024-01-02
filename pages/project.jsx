@@ -149,7 +149,7 @@ const Vendor = ({ base_url }) => {
                                                     </td> */}
                                                     <td className="td-icon-color">
                                                     <EyeFilled onClick={() => handleIconClick(project.id)} />
-                                                        {isViewProjectVisible === project.id && <ProjectPopup project_id={project.id} />} 
+                                                        {isViewProjectVisible === project.id && <ProjectPopup project_id={project.project_id} />} 
                                                         
                                                         
 
@@ -164,7 +164,7 @@ const Vendor = ({ base_url }) => {
                                                             <DeleteFilled />
                                                             
                                                         </Popconfirm>
-                                                        <Link href={`/edit_project/${project.id}`} className="me-2"><EditFilled /></Link>
+                                                        <Link href={`/edit_project/${project.project_id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             )

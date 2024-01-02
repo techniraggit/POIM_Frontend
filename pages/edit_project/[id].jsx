@@ -158,12 +158,24 @@ const Project_Edit = ({ base_url }) => {
         setRootData(id);
     }
 
-    const handleChange = ({ target: { name, value } }) => {
-        setRepeaterData({
-            ...repeaterData,
-            [name]: value
-        })
-    }
+    const handleChange = (index, field, value) => {
+        const updatedRepeaterData = [...repeaterData];
+
+        // Update the specific field for the given index
+        updatedRepeaterData[index] = {
+            ...updatedRepeaterData[index],
+            [field]: value,
+        };
+
+        setRepeaterData(updatedRepeaterData);
+    };
+
+    // const handleChange = ({ target: { name, value } }) => {
+    //     setRepeaterData({
+    //         ...repeaterData,
+    //         [name]: value
+    //     })
+    // }
 
     return (
         <>
@@ -285,7 +297,8 @@ const Project_Edit = ({ base_url }) => {
                                                                 name="name"
                                                                 type="text"
                                                                 value={repeater.name}
-                                                                onChange={handleChange}
+                                                                onChange={(e) => handleChange(index, 'name', e.target.value)}
+                                                                // onChange={handleChange}
                                                             />
                                                         </div>
                                                     )}
@@ -306,8 +319,9 @@ const Project_Edit = ({ base_url }) => {
                                                                 name="address"
                                                                 type="text"
                                                                 value={repeater.address}
+                                                                onChange={(e) => handleChange(index, 'address', e.target.value)}
 
-                                                                onChange={handleChange}
+                                                                // onChange={handleChange}
                                                             />
                                                         </div>
                                                     )}
@@ -329,8 +343,9 @@ const Project_Edit = ({ base_url }) => {
                                                                 name="state"
                                                                 type="text"
                                                                 value={repeater.state}
+                                                                onChange={(e) => handleChange(index, 'state', e.target.value)}
 
-                                                                onChange={handleChange}
+                                                                // onChange={handleChange}
                                                             />
                                                         </div>
                                                     )}
