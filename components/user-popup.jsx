@@ -24,7 +24,7 @@ const UserPopUp = ({ user_id }) => {
         };
         console.log(user_id, 'user_id>>>>>>>>>>>')
         const response = await axios.get(`${base_url}/api/admin/users?id=${user_id}`, { headers });
-        console.log(response.data.data.user_role.name, 'hereeeeeeeeee');
+        console.log(response.data, 'hereeeeeeeeee');
         setUserRoles(response.data.data.user_role.name);
         //   setvendorcontact(response.data.vendors_details.vendor_contact[0])
         setUserData(response.data.data)

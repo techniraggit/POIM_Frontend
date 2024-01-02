@@ -177,6 +177,34 @@ const Project_Edit = ({ base_url }) => {
     //     })
     // }
 
+    const removeField = async (id) => {
+        
+        try {
+            const headers = {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json', // Set content type to JSON
+            };
+            //const body = JSON.stringify({ vendor_contact_id: id });
+            const response = await axios.delete(`${base_url}/api/admin/project-sites`,
+            {
+                site_id: id,
+            },
+                {
+                    headers: headers,
+                }
+            );
+            console.log(response.data, 'removeeee');
+            setRepeaterData(prevVendors => prevVendors.filter(repeater => repeater.site_id !== id));
+            // fetchRoles();
+        } catch (error) {
+            console.error('Error in remove:', error);
+            message.error('Error remove');
+        }
+
+    }
+
+
     return (
         <>
             <DynamicTitle title="Add User" />
@@ -283,7 +311,54 @@ const Project_Edit = ({ base_url }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="vendor-ant-form">
+                                        {Array.isArray(repeaterData) &&
+                                            repeaterData.map((repeater, index) => (
+                                                
+                                                index !== 0 && (
+                                                    <>
+                                                        <div className="wrap-box" key={index}>
+                                                            <label>Site Name</label>
+                                                            <input
+                                                                htmlFor="name"
+                                                                name="name"
+                                                                type="text"
+                                                                value={repeater.name}
+                                                                onChange={(e) => handleChange(index, 'name', e.target.value)}
+                                                            />
+                                                        </div>
+                                                        <div className="wrap-box" key={index}>
+
+                                                            <label>Site Address</label>
+                                                            <input
+                                                                htmlFor="address"
+                                                                name="address"
+                                                                type="text"
+                                                                value={repeater.address}
+                                                                onChange={(e) => handleChange(index, 'address', e.target.value)}
+                                                            />
+                                                        </div>
+                                                        <div className="minus-wraper1 wrap-box">
+                                                            <label>State</label>
+                                                            <input
+                                                                htmlFor="state"
+                                                                name="state"
+                                                                type="text"
+                                                                value={repeater.state}
+                                                                onChange={(e) => handleChange(index, 'state', e.target.value)}
+                                                            />
+
+                                                        </div>
+                                                        <div className="wrap-minus" >
+                                                            <MinusOutlined className="minus-wrap" 
+                                                            onClick={()=>removeField(repeater.site_id)}
+                                                            style={{ marginLeft: '8px' }} />
+                                                        </div>
+                                                    </>
+                                                )
+                                            ))}
+                                    </Space>
+                                {/* <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                     <div className="wrap-box">
                                         {Array.isArray(repeaterData) &&
                                             repeaterData.map((repeater, index) =>
@@ -321,7 +396,6 @@ const Project_Edit = ({ base_url }) => {
                                                                 value={repeater.address}
                                                                 onChange={(e) => handleChange(index, 'address', e.target.value)}
 
-                                                                // onChange={handleChange}
                                                             />
                                                         </div>
                                                     )}
@@ -345,7 +419,6 @@ const Project_Edit = ({ base_url }) => {
                                                                 value={repeater.state}
                                                                 onChange={(e) => handleChange(index, 'state', e.target.value)}
 
-                                                                // onChange={handleChange}
                                                             />
                                                         </div>
                                                     )}
@@ -355,7 +428,7 @@ const Project_Edit = ({ base_url }) => {
                                         }
                                     </div>
                                     <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-                                </Space>
+                                </Space> */}
                                 <div className="create-another">
                                     <Form.List name="items">
 

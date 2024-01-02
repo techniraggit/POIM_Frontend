@@ -61,7 +61,7 @@ const Vendor = ({ base_url }) => {
 
             console.log('Delete response:', response);
             message.success('project deleted successfully.');
-            setProjects(preproject => preproject.filter(project => project.id !== id));
+            setProjects(preproject => preproject.filter(project => project.project_id !== id));
             // Reload the categories after deleting
         } catch (error) {
             console.error('Error deleting category:', error);
@@ -155,7 +155,7 @@ const Vendor = ({ base_url }) => {
 
                                                         <Popconfirm
                                                             title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(project.id)}
+                                                            onConfirm={() => handleDelete(project.project_id)}
                                                             okText="Yes"
                                                             cancelText="No"
                                                             

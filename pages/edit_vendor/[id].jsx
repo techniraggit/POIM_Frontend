@@ -41,7 +41,8 @@ const Vendor_Edit = ({ base_url }) => {
                     name: vendorData.vendor_contact[0].name,
                     phone_number: vendorData.vendor_contact[0].phone_number,
                     email: vendorData.vendor_contact[0].email,
-                    address: vendorData.address
+                    address: vendorData.address,
+                    customer_name: vendorData.customer_name,
 
                 })
 
@@ -61,7 +62,7 @@ const Vendor_Edit = ({ base_url }) => {
         fetchRoles();
     }, []);
 
-  
+
 
     const onFinish = async (values) => {
         console.log(values, 'bbbbbbbbbbbb');
@@ -73,7 +74,7 @@ const Vendor_Edit = ({ base_url }) => {
                 phone_number: item.phone_number,
                 email: item.email,
             }));
-            console.log(item, 'ifffffffffffffffff');
+            // console.log(item, 'ifffffffffffffffff');
             var data = {
                 ...values,
                 vendor_id: id,
@@ -107,7 +108,7 @@ const Vendor_Edit = ({ base_url }) => {
 
                 }
             );
-            console.log(response.data, 'vendor edit rsponse');
+            console.log(response, 'vendor edit rsponse');
 
             // Display a success message
             message.success('Vendor updated successfully');
@@ -135,8 +136,8 @@ const Vendor_Edit = ({ base_url }) => {
         setRepeaterData(updatedRepeaterData);
     };
     const removeField = async (id) => {
-        console.log(id,'idididididid');
-        
+        console.log(id, 'idididididid');
+
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -145,17 +146,15 @@ const Vendor_Edit = ({ base_url }) => {
             };
             //const body = JSON.stringify({ vendor_contact_id: id });
             const response = await axios.put(`${base_url}/api/admin/vendors`,
-            {
-                vendor_contact_id: id,
-            },
+                {
+                    vendor_contact_id: id,
+                },
                 {
                     headers: headers,
-                   
-
                 }
             );
             console.log(response.data, 'removeeee');
-            setRepeaterData(prevVendors => prevVendors.filter(repeater => repeater.id !== id));
+            setRepeaterData(prevVendors => prevVendors.filter(repeater => repeater.vendor_contact_id !== id));
             // fetchRoles();
         } catch (error) {
             console.error('Error in remove:', error);
@@ -281,9 +280,7 @@ const Vendor_Edit = ({ base_url }) => {
                                             <Form.Item
                                                 label="Customer Name"
                                                 name="customer_name"  // Add a name to link the input to the form values
-                                                className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your customer name!' }]}
-                                            >
+                                                className="vender-input"                                            >
                                                 <Input />
 
                                             </Form.Item>
@@ -291,8 +288,12 @@ const Vendor_Edit = ({ base_url }) => {
                                     </div>
                                     <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="vendor-ant-form">
                                         {Array.isArray(repeaterData) &&
-                                            repeaterData.map((repeater, index) => (
-                                                
+                                            repeaterData.map((repeater, index) => 
+                                            // {
+                                            //     console.log(repeater,'repeater data');
+                                            // }
+                                            (
+
                                                 index !== 0 && (
                                                     <>
                                                         <div className="wrap-box" key={index}>
@@ -328,13 +329,14 @@ const Vendor_Edit = ({ base_url }) => {
 
                                                         </div>
                                                         <div className="wrap-minus" >
-                                                            <MinusOutlined className="minus-wrap" 
-                                                            onClick={()=>removeField(repeater.id)}
-                                                            style={{ marginLeft: '8px' }} />
+                                                            <MinusOutlined className="minus-wrap"
+                                                                onClick={() => removeField(repeater.vendor_contact_id)}
+                                                                style={{ marginLeft: '8px' }} />
                                                         </div>
                                                     </>
                                                 )
-                                            ))}
+                                            )
+                                            )}
                                     </Space>
 
                                     {/* <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">

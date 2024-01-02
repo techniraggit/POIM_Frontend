@@ -21,7 +21,7 @@ const Create_po = ({ base_url }) => {
     const defaultDate = moment();
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
-    const[contactOptions,setContactOptions]=useState([]);
+    // const[contactOptions,setContactOptions]=useState([]);
     const [vendors, setVendors] = useState([]);
     const [vendorId, setVendorId] = useState('');
 
@@ -303,6 +303,7 @@ const Create_po = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
+                console.log(response.data.projects,'projectsssddddd');
                 setProjects(response.data.projects); // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -336,6 +337,39 @@ const Create_po = ({ base_url }) => {
     }, [])
 
 
+
+
+
+
+    // useEffect(() => {
+    const fetchVendorContactDropdown = async (id) => {
+        console.log(id, 'fetchVendorContactDropdown');
+        try {
+            const headers = {
+                Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+            }
+            const response = await axios.get(`${base_url}/api/helping/vendors-and-contacts?vendor_id=${id}`, { headers: headers });
+            console.log(response.data.vendors, '#################################################vendor contact Dropdown');
+            setContactId(response.data.vendors)
+            // setVendors(response.data.vendors);
+            // Assuming the API response is an array of projects
+        } catch (error) {
+            console.error('Error fetching projects:', error);
+        }
+    }
+    // if(vendorId){
+    // fetchVendorContactDropdown();
+
+    // }
+    // }, [])
+
+
+    const handleVendorChange = (value) => {
+        console.log(value, 'vendoriddddddddddddddddd=================');
+        fetchVendorContactDropdown(value)
+
+    }
+
     const fetchSites = async () => {
         try {
             const headers = {
@@ -343,7 +377,7 @@ const Create_po = ({ base_url }) => {
             };
 
             const response = await axios.get(`${base_url}/api/admin/project-sites`, { headers });
-            console.log(response,'aaaaaaaaaaaaaaaaaaaa');
+            console.log(response, 'aaaaaaaaaaaaaaaaaaaa');
 
             const sitesArray = response.data.sites;
             setSiteOptions(sitesArray);
@@ -358,104 +392,76 @@ const Create_po = ({ base_url }) => {
         }
     };
 
-    // useEffect(() => {
-    //     const fetchVendor = async () => {
-    //         try {
-    //             const headers = {
-    //                 Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-    //             }
-    //             const response = await axios.get(`${base_url}/api/admin/vendors`, { headers: headers });
-    //             console.log(response.data, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    //             setVendors(response.data.vendors);
-    //             // Assuming the API response is an array of projects
-    //         } catch (error) {
-    //             console.error('Error fetching projects:', error);
-    //         }
-    //     }
-    //     // if(vendorId){
-    //     fetchVendor();
+    
 
-    //     // }
-    // }, [])
-  
 
 
 
     // useEffect(() => {
-        const vendorContactDetails = async (id) => {
-            console.log(id,'ver00000000000000')
-            try {
-                const headers = {
-                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-                }
-                const response = await axios.get(`${base_url}/api/helping/vendor-details?vendor_contact_id=${id}`, { headers: headers });
-                console.log(response.data,'9999999999999999999');
-
-
-                // setVendors(response.data.vendors); 
-                
-                // if (vendorId && response?.data?.status) {
-                //     console.log({
-                //         ...vendorForm,
-                //         company_name: response.data.vendors_details.company_name,
-                //         email: response.data.vendors_details.vendor_contact[0].email,
-                //         phone: response.data.vendors_details.vendor_contact[0].phone_number,
-                //         address: response.data.vendors_details.address,
-                //         state: response.data.vendors_details.state,
-                //         country: response.data.vendors_details.country
-                //     }, "=======data");
-
-                //     setVendorForm({
-                //         ...vendorForm,
-                //         company_name: response.data.vendors_details.company_name,
-                //         email: response.data.vendors_details.vendor_contact[0].email,
-                //         phone: response.data.vendors_details.vendor_contact[0].phone_number,
-                //         address: response.data.vendors_details.address,
-                //         state: response.data.vendors_details.state,
-                //         country: response.data.vendors_details.country
-                //     })
-                // }
-
-            } catch (error) {
-                console.error('Error fetching projects:', error);
+    const vendorContactDetails = async (id) => {
+        console.log(id, 'ver00000000000000')
+        try {
+            const headers = {
+                Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
             }
-        }
-        // if (vendorId) {
-        //     vendorContactDetails();
+            const response = await axios.get(`${base_url}/api/helping/vendor-details?vendor_contact_id=${id}`, { headers: headers });
+            console.log(response.data.vendors, '9999999999999999999');
 
-        // }
+            setContacts(response.data.vendors);
+            // setVendors(response.data.vendors); 
+
+            // if (vendorId && response?.data?.status) {
+            //     console.log({
+            //         ...vendorForm,
+            //         company_name: response.data.vendors_details.company_name,
+            //         email: response.data.vendors_details.vendor_contact[0].email,
+            //         phone: response.data.vendors_details.vendor_contact[0].phone_number,
+            //         address: response.data.vendors_details.address,
+            //         state: response.data.vendors_details.state,
+            //         country: response.data.vendors_details.country
+            //     }, "=======data");
+
+                setVendorForm({
+                    ...vendorForm,
+                    company_name: response.data.vendors.company.company_name,
+                    email: response.data.vendors.email,
+                    phone: response.data.vendors.phone_number,
+                    address: response.data.vendors.company.address,
+                    state: response.data.vendors.company.state,
+                    country: response.data.vendors.company.country
+                })
+            // }
+
+        } catch (error) {
+            console.error('Error fetching projects:', error);
+        }
+    }
+    // if (vendorId) {
+    //     vendorContactDetails();
+
+    // }
     // }, [vendorId])
 
-    const handleVendorChange = (value) => {
-        vendorContactDetails(value)
-        console.log(value, 'vendoriddddddddddddddddd=================');
-    }
+    const handleVendorContactChange = (value) => {
+        console.log(value, 'dropdown id=================');
 
-    console.log(vendorForm, '3333333333333333333333333');
+        vendorContactDetails(value)
+    }
     const names = vendors?.map((vendor) => {
-        console.log(vendor,'vendorrrrrrrr');
+        console.log(vendor, 'vendorrrrrrrr');
         return {
             vendorId: vendor.vendor_id,
-            company_name:vendor.company_name,
+            company_name: vendor.company_name,
             // contactName: vendor.vendor_contact[0].name
         };
     });
 
 
-    const namesContact = contacts?.map((contact) => {
-        console.log(namesContact,'ccccccccccccccccccccccccc');
-        // return {
-        //     vendorId: contact.id,
-        //     contactName: contact.name
-        // };
-    });
 
 
-    
-    const handleVendorContactChange = (value) => {
-        // setVendorId(value)
-        console.log(value, 'contactiddddddddddddddddd=================');
-    }
+
+
+
 
 
     return (
@@ -575,7 +581,7 @@ const Create_po = ({ base_url }) => {
                                                             className="js-states form-control file-wrap-select"
                                                             onChange={(value) => handleVendorChange(value)}
                                                         >
-                                                            {names.map((entry) => 
+                                                            {names.map((entry) =>
                                                             // {
                                                             //     console.log(entry,'vendordd');
                                                             // }
@@ -589,30 +595,32 @@ const Create_po = ({ base_url }) => {
 
                                                     </Form.Item>
                                                     <Form.Item
-                                                            label="Vendor Contact"
-                                                            name="vendor_contact_id"
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose site",
-                                                                },
-                                                            ]}
+                                                        label="Vendor Contact"
+                                                        name="vendor_contact_id"
+                                                        htmlFor="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose site",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select
+                                                            id="singlesa"
+                                                            class="js-states form-control file-wrap-select"
+                                                            onChange={(value) => handleVendorContactChange(value)}
                                                         >
-                                                            <Select id="singlesa" class="js-states form-control file-wrap-select">
-                                                                {Array.isArray(contactOptions) &&
-                                                                    contactOptions.map((contact) => {
-                                                                    console.log(contact,'11111111111111');
-                                                                }
-                                                                    // (
-                                                                    //     <Select.Option key={contact.id} value={contact.id}>
-                                                                    //         {contact.name}
-                                                                    //     </Select.Option>
-                                                                    // )
-                                                                    )}
-                                                            </Select>
-                                                        </Form.Item>
+                                                            {contactId.length > 0 &&
+                                                                contactId.map((contact) => (
+                                                                    <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
+                                                                        {contact.name}
+                                                                    </Select.Option>
+                                                                ))
+                                                            }
+                                                        </Select>
+
+                                                    </Form.Item>
 
                                                     {/* <Form.Item
                                                         label="Vendor Contact"
@@ -962,11 +970,11 @@ const Create_po = ({ base_url }) => {
                                                         >
                                                             <Select id="singlesa" class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) => 
+                                                                    siteOptions.map((site) =>
                                                                     // {
                                                                     //     console.log(site,'siteeeeeeeeeee');
                                                                     // }
-                                                                    
+
                                                                     (
                                                                         <Select.Option key={site.id} value={site.project_id}>
                                                                             {site.name}

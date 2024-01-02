@@ -55,8 +55,8 @@ const Vendor = ({ base_url }) => {
             });
 
             console.log('Delete response:', response);
-            message.success('Category deleted successfully.');
-            setVendors(prevVendors => prevVendors.filter(vendor => vendor.id !== id));
+            message.success('vendor deleted successfully.');
+            setVendors(prevVendors => prevVendors.filter(vendor => vendor.vendor_id !== id));
             // Reload the categories after deleting
         } catch (error) {
             console.error('Error deleting category:', error);
@@ -116,13 +116,13 @@ const Vendor = ({ base_url }) => {
                                                     <td className="td-icon-color">
                                                         {/* <Link href="#" className="me-2"> */}
                                                         <EyeFilled onClick={() => handleIconClick(vendor.id)} />
-                                                        {isViewVendorVisible === vendor.id && <View_Vendor vendor_id={vendor.id} />}
+                                                        {isViewVendorVisible === vendor.id && <View_Vendor vendor_id={vendor.vendor_id} />}
 
 
                                                         {/* </Link> */}
                                                         <Popconfirm
                                                             title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(vendor.id)}
+                                                            onConfirm={() => handleDelete(vendor.vendor_id)}
                                                             okText="Yes"
                                                             cancelText="No"
                                                         >
