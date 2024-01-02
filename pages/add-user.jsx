@@ -88,7 +88,6 @@ const AddUser = ({ base_url }) => {
     }
   };
 
-
   const validatePhoneNumber = (value) => {
     return new Promise((resolve, reject) => {
       if (/^\+91[0-9]{10}$/.test(value)) {
