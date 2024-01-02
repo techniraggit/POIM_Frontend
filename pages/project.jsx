@@ -34,7 +34,6 @@ const Vendor = ({ base_url }) => {
     }, [])
 
     const siteAddress = projects?.map((project) => {
-        console.log(project, 'projecttttttttttttttttt');
         return project.sites.map((site) => {
             return (site.address)
         })
@@ -69,6 +68,7 @@ const Vendor = ({ base_url }) => {
         }
     };
     const handleIconClick = (id) => {
+        console.log(id,'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
         setProjectVisible((prevVisible) => (prevVisible === id ? null : id));
     };
 
@@ -148,8 +148,8 @@ const Vendor = ({ base_url }) => {
                                                         ))}
                                                     </td> */}
                                                     <td className="td-icon-color">
-                                                    <EyeFilled onClick={() => handleIconClick(project.id)} />
-                                                        {isViewProjectVisible === project.id && <ProjectPopup project_id={project.project_id} />} 
+                                                    <EyeFilled onClick={() => handleIconClick(project.project_id)} />
+                                                        {isViewProjectVisible === project.project_id && <ProjectPopup project_id={project.project_id} />} 
                                                         
                                                         
 
