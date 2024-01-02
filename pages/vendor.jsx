@@ -24,7 +24,7 @@ const Vendor = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/vendors`, { headers: headers });
-                console.log(response.data.total_vendors, '55555555555555555555555555');
+                console.log(response.data, '55555555555555555555555555');
                 setTotalVendor(response.data.total_vendors)
                 setVendors(response.data.vendors); // Assuming the API response is an array of projects
             } catch (error) {
@@ -55,8 +55,8 @@ const Vendor = ({ base_url }) => {
             });
 
             console.log('Delete response:', response);
-            message.success('Category deleted successfully.');
-            setVendors(prevVendors => prevVendors.filter(vendor => vendor.id !== id));
+            message.success('vendor deleted successfully.');
+            setVendors(prevVendors => prevVendors.filter(vendor => vendor.vendor_id !== id));
             // Reload the categories after deleting
         } catch (error) {
             console.error('Error deleting category:', error);
@@ -116,19 +116,19 @@ const Vendor = ({ base_url }) => {
                                                     <td className="td-icon-color">
                                                         {/* <Link href="#" className="me-2"> */}
                                                         <EyeFilled onClick={() => handleIconClick(vendor.id)} />
-                                                        {isViewVendorVisible === vendor.id && <View_Vendor vendor_id={vendor.id} />}
+                                                        {isViewVendorVisible === vendor.id && <View_Vendor vendor_id={vendor.vendor_id} />}
 
 
                                                         {/* </Link> */}
                                                         <Popconfirm
                                                             title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(vendor.id)}
+                                                            onConfirm={() => handleDelete(vendor.vendor_id)}
                                                             okText="Yes"
                                                             cancelText="No"
                                                         >
                                                             <DeleteFilled />
                                                         </Popconfirm>
-                                                        <Link href={`/edit_vendor/${vendor.id}`} className="me-2"><EditFilled /></Link>
+                                                        <Link href={`/edit_vendor/${vendor.vendor_id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             ))}

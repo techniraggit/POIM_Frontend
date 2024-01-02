@@ -13,23 +13,8 @@ const Create_Vendor = ({ base_url }) => {
     const [form] = Form.useForm();
     const router = useRouter();
     const onFinish = async (values) => {
-
-
-        // const dynamicItems = values.items.map(item => ({
-        //     name: item.name,
-        //     phone_number: item.phone_number,
-        //     email: item.email,
-        // }));
-
-        // const data = {
-        //     ...values,
-        //     contact_info: [...dynamicItems]
-        // }
-        // console.log(data, 'datataaaaaaa');
-
-
-        if (values.items) {
-            console.log(values.items, '?????????????????????');
+        if(values.items){
+            console.log(values.items,'?????????????????????');
             const dynamicItems = values.items.map(item => ({
                 name: item.name,
                 phone_number: item.phone_number,
@@ -63,11 +48,6 @@ const Create_Vendor = ({ base_url }) => {
             };
             console.log(data, 'elseeeeeeeeee')
         }
-        // return
-
-        // console.log(data,'hereeeeeeee')
-        // return
-
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -80,13 +60,7 @@ const Create_Vendor = ({ base_url }) => {
                 headers: headers,
             });
             message.success(response.data.message)
-            // router.push('/vendor')
-
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
             router.push('/vendor')
-
-
         }
         catch (error) {
         }
@@ -95,13 +69,20 @@ const Create_Vendor = ({ base_url }) => {
     }
 
     const handlePhoneNumberChange = (value) => {
-        // If the value is exactly 10 digits, automatically add the +91 prefix
-        if (value && /^\d{10}$/.test(value)) {
-            form.setFieldsValue({
-                phone_number: '+91' + value,
-            });
-        }
-    };
+        // If the value is exactly 10 or 11 digits, automatically add the appropriate prefix
+        if (isValidPhone(value)) {
+            // Do something with the valid phone number
+            console.log('Valid phone number:', value);
+          } else {
+            console.log('Invalid phone number:', value);
+          }
+      };
+
+
+      function isValidPhone(phoneNumber) {
+        const pattern = /^\+(?:[0-9] ?){6,11}[0-9]$/;
+        return phoneNumber && pattern.test(phoneNumber);
+      }
 
 
     return (
@@ -222,28 +203,12 @@ const Create_Vendor = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
                                     </div>
-
-
-                                    {/* <div className="col-lg-4 col-md-12">
-                                        <div className="wrap-box">
-                                            <Form.Item
-                                                label="Contact No"
-                                                name="contact_no"  // Add a name to link the input to the form values
-                                                className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter contact no!' }]}
-                                            >
-                                                <Input />
-                                            </Form.Item>
-                                        </div>
-                                    </div> */}
                                     <div className="col-lg-4 col-md-12">
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Customer Name"
                                                 name="customer_name"  // Add a name to link the input to the form values
-                                                className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your customer name!' }]}
-                                            >
+                                                className="vender-input"                                            >
                                                 <Input />
                                             </Form.Item>
                                         </div>

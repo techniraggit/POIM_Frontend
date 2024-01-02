@@ -61,7 +61,7 @@ const Vendor = ({ base_url }) => {
 
             console.log('Delete response:', response);
             message.success('project deleted successfully.');
-            setProjects(preproject => preproject.filter(project => project.id !== id));
+            setProjects(preproject => preproject.filter(project => project.project_id !== id));
             // Reload the categories after deleting
         } catch (error) {
             console.error('Error deleting category:', error);
@@ -110,7 +110,11 @@ const Vendor = ({ base_url }) => {
                                     </thead>
                                     <tbody>
                                         {Array.isArray(projects) &&
-                                            projects.map((project, index) => (
+                                            projects.map((project, index) => 
+                                            // {
+                                            //     console.log(project,'project namesssssssssssss');
+                                                (
+                                                
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{project.name}</td>
@@ -145,13 +149,13 @@ const Vendor = ({ base_url }) => {
                                                     </td> */}
                                                     <td className="td-icon-color">
                                                     <EyeFilled onClick={() => handleIconClick(project.id)} />
-                                                        {isViewProjectVisible === project.id && <ProjectPopup project_id={project.id} />} 
+                                                        {isViewProjectVisible === project.id && <ProjectPopup project_id={project.project_id} />} 
                                                         
                                                         
 
                                                         <Popconfirm
                                                             title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(project.id)}
+                                                            onConfirm={() => handleDelete(project.project_id)}
                                                             okText="Yes"
                                                             cancelText="No"
                                                             
@@ -160,10 +164,12 @@ const Vendor = ({ base_url }) => {
                                                             <DeleteFilled />
                                                             
                                                         </Popconfirm>
-                                                        <Link href={`/edit_project/${project.id}`} className="me-2"><EditFilled /></Link>
+                                                        <Link href={`/edit_project/${project.project_id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
-                                            ))}
+                                            )
+                                        // }
+                                            )}
 
                                     </tbody>
                                 </table>

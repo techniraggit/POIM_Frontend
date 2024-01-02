@@ -8,6 +8,7 @@ import { base_url } from './constant';
 const ProjectPopup = ({project_id}) => {
     
     const [isModalOpen, setIsModalOpen] = useState(true);
+    const [projectData,setProjectData]=useState([])
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
@@ -18,9 +19,10 @@ const ProjectPopup = ({project_id}) => {
             const headers = {
               Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             };
-            // console.log(user_id, 'user_id>>>>>>>>>>>')
+
             const response = await axios.get(`${base_url}/api/admin/projects?project_id=${project_id}`, { headers });
-            console.log(response.data, 'hereeeeeeeeee');
+            console.log(response.data.projects, 'hereeeeeeeeee');
+            setProjectData(response.data.projects)
             // setUserRoles(response.data.data.user_role.name);
             //   setvendorcontact(response.data.vendors_details.vendor_contact[0])
             // setUserData(response.data.data)
@@ -42,39 +44,39 @@ const ProjectPopup = ({project_id}) => {
                 <div className="details-main">
                     <div className="projct-details">
                         <p className="detail-para">Project No.</p>
-                        <button className="vendor-pop-up-butt">#45488</button>
+                        <button className="vendor-pop-up-butt">{projectData.project_no}</button>
                     </div>
 
                     <div className="projct-details">
                         <p className="detail-para1">Customer Name</p>
-                        <p className="detail-para">Justin Spencer</p>
+                        <p className="detail-para">{projectData.customer_name}</p>
                     </div>
 
                     <div className="pop-up-flex">
                         <div className="projct-details">
                             <p className="detail-para1">Email Address</p>
-                            <p className="detail-para">Justin@gmail.com</p>
+                            <p className="detail-para">{projectData.project_manager.email}</p>
                         </div>
 
                         <div className="projct-details">
                             <p className="detail-para1">Contact No</p>
-                            <p className="detail-para">123654789</p>
+                            <p className="detail-para">{projectData.project_manager.phone_number}</p>
                         </div>
                     </div>
 
                     <div className="projct-details">
                         <p className="detail-para1">Project Address</p>
-                        <p className="detail-para">#456 - Upper Link, PA</p>
+                        <p className="detail-para">{projectData.sites[0].address}</p>
                     </div>
 
                     <div className="pop-up-flex">
                         <div className="projct-details">
                             <p className="detail-para1">State / Province</p>
-                            <p className="detail-para">Austin</p>
+                            <p className="detail-para">Ontario</p>
                         </div>
                         <div className="projct-details">
                             <p className="detail-para1">Country</p>
-                            <p className="detail-para">USA</p>
+                            <p className="detail-para">Canada</p>
                         </div>
                     </div>
                 </div>
