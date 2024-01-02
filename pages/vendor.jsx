@@ -79,7 +79,7 @@ const Vendor = ({ base_url }) => {
                             <li className="me-4">
                                 <Link href="/create-vendor" className="mb-2 d-block"><PlusOutlined /></Link>
                                 {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
-                                <div>Create New Vendor</div>
+                                <span>Create New Vendor</span>
                             </li>
                             <li className="me-4">
                                 <span className="text-size mt-0">{totalVendor}</span>

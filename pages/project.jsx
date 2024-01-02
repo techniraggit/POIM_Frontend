@@ -92,7 +92,7 @@ const Vendor = ({ base_url }) => {
                         </ul>
                         <div className="wrapin-form">
                             <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Vendor" />
+                                <input className="vendor-input" placeholder="Search Vendor" type="text" />
                                 <button className="vendor-search-butt">Search</button>
                             </form>
                         </div>

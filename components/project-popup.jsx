@@ -19,7 +19,7 @@ const ProjectPopup = ({project_id}) => {
             const headers = {
               Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             };
-            // console.log(user_id, 'user_id>>>>>>>>>>>')
+
             const response = await axios.get(`${base_url}/api/admin/projects?project_id=${project_id}`, { headers });
             console.log(response.data.projects, 'hereeeeeeeeee');
             setProjectData(response.data.projects)
