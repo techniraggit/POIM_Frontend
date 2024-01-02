@@ -138,8 +138,8 @@ const Create_po = ({ base_url }) => {
         setshipmentType(value);
     };
     const onFinish = async (values) => {
-        if(values.items?.length>0){
-            console.log(values.items,'valuessssssssssssssssss');
+        if (values.items?.length > 0) {
+            console.log(values.items, 'valuessssssssssssssssss');
             const dynamicItems = values.items?.map(item => ({
                 quantity: item.quantity,
                 unit_price: item.unit_price,
@@ -174,13 +174,13 @@ const Create_po = ({ base_url }) => {
                     project_id: values.project_id,
                     code: values.code,
                     shipment_address: values.shipment_address,
-                    material_details:[...dynamicItems]
+                    material_details: [...dynamicItems]
                 }
-    
+
             }
         }
-        else{
-            var data = {    
+        else {
+            var data = {
                 po_data: {
                     company_name: vendorForm.company_name,
                     email: vendorForm.email,
@@ -208,7 +208,7 @@ const Create_po = ({ base_url }) => {
                     project_id: values.project_id,
                     code: values.code,
                     shipment_address: values.shipment_address,
-                    material_details:[{
+                    material_details: [{
                         quantity: values.quantity,
                         unit_price: values.unit_price,
                         Amount: values.Amount,
@@ -216,10 +216,10 @@ const Create_po = ({ base_url }) => {
                     }
                     ]
                 },
-               
-            }    
+
+            }
         }
-       
+
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -227,7 +227,7 @@ const Create_po = ({ base_url }) => {
                 'Content-Type': 'application/json',
             };
             console.log("values === ", values)
-            
+
             const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
                 headers: headers,
             });
@@ -478,8 +478,8 @@ const Create_po = ({ base_url }) => {
                                                                 message: "Please choose Vendor",
 
                                                             },
-
-                                                        ]}  
+                                                            
+                                                        ]}
                                                     >
                                                         <Select
                                                             id="single2"
