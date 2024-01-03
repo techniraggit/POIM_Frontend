@@ -751,8 +751,8 @@ div#w-small span {
     color: rgb(17, 47, 92, 0.5) !important;
     font-size: 16px !important;
     font-weight: 500;
-    margin-bottom: 7px;
-    margin-top: 35px;
+    margin-bottom: 2px !important;
+    margin-top: 0px !important;
 }
 
 .ant-col label.ant-form-item-required::before {
@@ -1422,7 +1422,7 @@ ul.list-icons li {
 }
 
 .create-another .ant-space {
-    margin-bottom: 70px !important;
+    margin-bottom: 40px !important;
 }
 
 .list-dboard li:hover {
@@ -1894,6 +1894,59 @@ button.ant-btn.add-more-btnn {
     align-items: center;
     height: 42px;
     margin-bottom: 26px;
+}
+
+button.ant-btn.ant-btn-dashed.add-more-btnn:hover span {
+    color: #000 !important;
+}
+
+.ant-btn-dashed:hover {
+    color: #0d0d0d;
+    /* border-color: #4096ff; */
+}
+.sub-line {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+.sub-line span {
+    color: #112F5C;
+    font-size: 20px;
+    font-weight: 500;
+    width: 29%;
+}
+.sub-line hr {
+    border: 1px solid #1DBF8E;
+    width: 100%;
+}
+
+.new-existing button {
+    border: 1.4px solid #00000063;
+    background-color: transparent;
+    padding: 7px 20px;
+    border-radius: 26px;
+    color: #112F5C;
+    font-weight: 500;
+}
+button.exist-btn {
+    border: 1.4px solid #1DBF8E;
+    box-shadow: 0px 3px 2px #00000029;
+}
+
+.top-first p {
+    color: #112F5C;
+    font-weight: 600;
+}
+.bottom-second {
+    margin-top: 40px;
+}
+.sub-line {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+.inner-para {
+    border: 1px solid #70707054;
+    border-radius: 2px;
+    padding: 30px 25px;
 }
 /* 2jan */
 
