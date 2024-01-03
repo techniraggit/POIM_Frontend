@@ -4,51 +4,13 @@ import Link from "next/link";
 import { Form, Select,Button } from "antd";
 
 import { PlusOutlined } from '@ant-design/icons'
+import Sidebar from '@/components/sidebar';
 
 function PurchaseOrderForm() {
     return (
         <>
             <div className="wrapper-main">
-                <div className="aside-dashboard">
-                    <div className="logo">
-                        <a href="#"><img src="./images/logo.png" alt="" /></a>
-                    </div>
-                    <ul className="list-dboard">
-                        <li>
-                            <a href="#"><span className="db-span"><i className="fa-solid fa-house arrow-clr me-4"></i>Dashboard</span><i
-                                className="fa-solid fa-chevron-left"></i></a>
-                        </li>
-
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/user.svg" alt="" className="me-4" />Users</span><i
-                                className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/vendors.svg" alt=""
-                                className="me-4" />Vendors</span><i className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Projects.svg" alt=""
-                                className="me-4" />Projects</span><i className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Purchase.svg" alt="" className="me-4" />Purchase
-                                Orders</span><i className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Invoice.svg" alt=""
-                                className="me-4" />Invoice</span><i className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Reports.svg" alt=""
-                                className="me-4" />Reports</span><i className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Settings.svg" alt=""
-                                className="me-4" />Settings</span><i className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                    </ul>
-                </div>
+                <Sidebar/>
                 <div className="inner-wrapper">
                     <div className="top-wrapp">
                         <div className="text-wrap">
@@ -94,14 +56,14 @@ function PurchaseOrderForm() {
                                                 <div class="selectwrap  shipment-caret select-site aligned-text">
                                                     <Form.Item
                                                         label="Choose PO Type"
-                                                        name="vendor_id"
+                                                        name="chose_po_type"
                                                         for="file"
                                                         class="same-clr"
                                                         rules={[
                                                             {
                                                                 required: true,
 
-                                                                message: "Please choose Vendor",
+                                                                message: "Please choose Po Type",
 
                                                             },
 
@@ -296,14 +258,14 @@ function PurchaseOrderForm() {
                                                 <div class="selectwrap  shipment-caret select-site aligned-text">
                                                     <Form.Item
                                                         label="Choose Project"
-                                                        name="vendor_id"
+                                                        name="chose_project"
                                                         for="file"
                                                         class="same-clr"
                                                         rules={[
                                                             {
                                                                 required: true,
 
-                                                                message: "Please choose Vendor",
+                                                                message: "Please choose project",
 
                                                             },
 

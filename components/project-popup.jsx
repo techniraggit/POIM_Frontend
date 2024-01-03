@@ -54,8 +54,8 @@ const ProjectPopup = ({ project_id }) => {
                                 <p className="detail-para">{projectData.customer_name}</p>
                             </div>
 
-                            <div className="pop-up-flex">
-                                <div className="projct-details">
+                            <div className="pop-up-flex row" >
+                                <div className="projct-details col-sm-8">
                                     <p className="detail-para1">Email Address</p>
                                     {/* <p className="detail-para">{projectData.customer_name}</p> */}
 
@@ -64,7 +64,7 @@ const ProjectPopup = ({ project_id }) => {
                 : ''}</p>
                                 </div>
 
-                                <div className="projct-details">
+                                <div className="projct-details col-sm-4">
                                     <p className="detail-para1">Contact No</p>
                                     <p className="detail-para">
                                     
@@ -86,12 +86,12 @@ const ProjectPopup = ({ project_id }) => {
                                 </p>
                             </div>
 
-                            <div className="pop-up-flex">
-                                <div className="projct-details">
+                            <div className="pop-up-flex row">
+                                <div className="projct-details col-sm-8">
                                     <p className="detail-para1">State / Province</p>
                                     <p className="detail-para">Ontario</p>
                                 </div>
-                                <div className="projct-details">
+                                <div className="projct-details col-sm-4">
                                     <p className="detail-para1">Country</p>
                                     <p className="detail-para">Canada</p>
                                 </div>

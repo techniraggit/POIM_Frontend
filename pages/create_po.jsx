@@ -296,7 +296,7 @@ const Create_po = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
-                console.log(response.data.projects,'projectsssddddd');
+                console.log(response.data.projects, 'projectsssddddd');
                 setProjects(response.data.projects); // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -385,7 +385,7 @@ const Create_po = ({ base_url }) => {
         }
     };
 
-    
+
 
 
 
@@ -414,15 +414,15 @@ const Create_po = ({ base_url }) => {
             //         country: response.data.vendors_details.country
             //     }, "=======data");
 
-                setVendorForm({
-                    ...vendorForm,
-                    company_name: response.data.vendors.company.company_name,
-                    email: response.data.vendors.email,
-                    phone: response.data.vendors.phone_number,
-                    address: response.data.vendors.company.address,
-                    state: response.data.vendors.company.state,
-                    country: response.data.vendors.company.country
-                })
+            setVendorForm({
+                ...vendorForm,
+                company_name: response.data.vendors.company.company_name,
+                email: response.data.vendors.email,
+                phone: response.data.vendors.phone_number,
+                address: response.data.vendors.company.address,
+                state: response.data.vendors.company.state,
+                country: response.data.vendors.company.country
+            })
             // }
 
         } catch (error) {
@@ -566,7 +566,7 @@ const Create_po = ({ base_url }) => {
                                                                 message: "Please choose Vendor",
 
                                                             },
-                                                            
+
                                                         ]}
                                                     >
                                                         <Select
@@ -584,33 +584,6 @@ const Create_po = ({ base_url }) => {
                                                                 </Select.Option>
                                                             )
                                                             )}
-                                                        </Select>
-
-                                                    </Form.Item>
-                                                    <Form.Item
-                                                        label="Vendor Contact"
-                                                        name="vendor_contact_id"
-                                                        htmlFor="file"
-                                                        class="same-clr"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please choose site",
-                                                            },
-                                                        ]}
-                                                    >
-                                                        <Select
-                                                            id="singlesa"
-                                                            class="js-states form-control file-wrap-select"
-                                                            onChange={(value) => handleVendorContactChange(value)}
-                                                        >
-                                                            {contactId.length > 0 &&
-                                                                contactId.map((contact) => (
-                                                                    <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
-                                                                        {contact.name}
-                                                                    </Select.Option>
-                                                                ))
-                                                            }
                                                         </Select>
 
                                                     </Form.Item>
@@ -649,10 +622,44 @@ const Create_po = ({ base_url }) => {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="selectwrap react-select" id="vendor-selector">
+                                                <div class="selectwrap  shipment-caret select-site aligned-text">
+
+                                                    <Form.Item
+                                                        label="Vendor Contact Person"
+                                                        name="vendor_contact_id"
+                                                        htmlFor="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose Vendor Contact Person",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select
+                                                            id="singlesa"
+                                                            class="js-states form-control file-wrap-select"
+                                                            onChange={(value) => handleVendorContactChange(value)}
+                                                        >
+                                                            {contactId.length > 0 &&
+                                                                contactId.map((contact) => (
+                                                                    <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
+                                                                        {contact.name}
+                                                                    </Select.Option>
+                                                                ))
+                                                            }
+                                                        </Select>
+
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row space-raw  btm-space">
-                                        <div class="col-lg-4 col-md-6 space-col-spc">
+                                        <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 {/* <Form.Item
                                                     label="Company Name"
@@ -694,7 +701,7 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4 col-md-6 space-col-spc">
+                                        <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <label>
                                                     Email
@@ -710,7 +717,7 @@ const Create_po = ({ base_url }) => {
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 space-col-spc">
+                                        <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <label>Contact Number</label>
                                                 <input
@@ -723,8 +730,8 @@ const Create_po = ({ base_url }) => {
                                                 />
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 space-col-spc">
-                                            <div class="wrap-box">
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box mb-0">
                                                 <label>Address</label>
                                                 <input
                                                     for="name"
@@ -739,8 +746,8 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4 col-md-6 space-col-spc">
-                                            <div class="wrap-box">
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box mb-0">
                                                 <label>State / Province</label>
                                                 <input
                                                     for="name"
@@ -755,7 +762,7 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
+                                            <div class="wrap-box mb-0">
                                                 <label>Country</label>
                                                 <input
                                                     for="name"
@@ -775,7 +782,7 @@ const Create_po = ({ base_url }) => {
                                         <span class="d-block me-4">Ship To</span>
                                         <hr />
                                     </div>
-                                    <div class="row space-bottom">
+                                    <div class="row space-bottom mb-0">
                                         <div class="col-md-6 col-lg-12 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 {/* <CaretDownFilled className="caret-icon" /> */}
@@ -920,7 +927,7 @@ const Create_po = ({ base_url }) => {
 
                                             </div>
                                         </div>
-                                        <div class="row space-col-spc">
+                                        <div class="row space-col-spc mb-0">
                                             {/* <div class="po-selected"> */}
                                             <div class="col-sm-4">
                                                 <div className="wrap-box">
@@ -1237,13 +1244,10 @@ const Create_po = ({ base_url }) => {
                                                             </Form.Item>
                                                         </div>
                                                     </>
-
                                                 )}
-
+                                                
                                             </div>
                                         </div>
-
-
                                         {/* <div> */}
                                         <div className="create-another minuswrap-img">
 
@@ -1317,7 +1321,7 @@ const Create_po = ({ base_url }) => {
                                             </Form.List>
                                         </div>
                                     </div>
-                                    <div className="row top-btm-space">
+                                    <div className="row top-btm-space mb-0">
                                         <div className="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
@@ -1379,7 +1383,7 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="po-wrap create-wrap-butt">
+                                    <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
                                             <Button type="primary" htmlType="submit" className="create-ven-butt">
                                                 Create PO
