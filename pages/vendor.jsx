@@ -13,6 +13,7 @@ import View_Vendor from "@/components/view-vendor";
 const Vendor = ({ base_url }) => {
     const [vendors, setVendors] = useState([]);
     const [totalVendor, setTotalVendor] = useState(0)
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isViewVendorVisible, setViewVendorVisible] = useState(false);
 
 
@@ -67,6 +68,7 @@ const Vendor = ({ base_url }) => {
 
     const handleIconClick = (id) => {
         setViewVendorVisible((prevVisible) => (prevVisible === id ? null : id));
+        setIsModalOpen(true);
     };
     return (
         <>
@@ -116,8 +118,6 @@ const Vendor = ({ base_url }) => {
                                                     <td className="td-icon-color">
                                                         {/* <Link href="#" className="me-2"> */}
                                                         <EyeFilled onClick={() => handleIconClick(vendor.id)} />
-                                                        {isViewVendorVisible === vendor.id && <View_Vendor vendor_id={vendor.vendor_id} />}
-
 
                                                         {/* </Link> */}
                                                         <Popconfirm
@@ -138,6 +138,7 @@ const Vendor = ({ base_url }) => {
                         </div>
                     </div>
                 </div>
+                <View_Vendor setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible} />
             </div>
         </>
     )

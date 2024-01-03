@@ -7,9 +7,7 @@ import axios from 'axios';
 import { base_url } from './constant';
 
 
-const View_Vendor = ({ vendor_id }) => {
-
-  const [isModalOpen, setIsModalOpen] = useState(true);
+const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen }) => {
   const [vendorData, setVenndorData] = useState([])
   const [vendorcontact, setvendorcontact] = useState([])
   const handleCloseModal = () => {
