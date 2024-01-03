@@ -102,10 +102,10 @@ const Project_Edit = ({ base_url }) => {
             }));
             var data = {
                 ...values,
-                project_id: itemsData[0].project_id,
+                project_id: id,
                 name: values.name,
                 customer_name: values.customer_name,
-                project_manager_id: rootData,
+                //project_manager_id: rootData,
                 project_sites: [...dynamicItems]
             };
             console.log(data, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhh');
@@ -129,6 +129,10 @@ const Project_Edit = ({ base_url }) => {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             };
+
+
+            // console.log(data,'here>>>>>>>>')
+            // return
 
             // Make a PUT request to update the vendor
             const response = await axios.patch(`${base_url}/api/admin/projects`, data,
@@ -180,22 +184,23 @@ const Project_Edit = ({ base_url }) => {
     const removeField = async (id) => {
         
         try {
+
+
+            console.log(id,'access_token------------')
+           
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 Accept: 'application/json',
                 'Content-Type': 'application/json', // Set content type to JSON
             };
-            //const body = JSON.stringify({ vendor_contact_id: id });
-            const response = await axios.delete(`${base_url}/api/admin/project-sites`,
-            {
-                site_id: id,
-            },
-                {
-                    headers: headers,
-                }
-            );
-            console.log(response.data, 'removeeee');
-            setRepeaterData(prevVendors => prevVendors.filter(repeater => repeater.site_id !== id));
+            const response = await axios.delete(`${base_url}/api/admin/project-sites`, {
+                headers: headers,
+                data: {
+                    site_id: id,
+                },
+            });
+            console.log(response,'response>>>>>>>>>>>>>>>>>>>>')
+            //setRepeaterData(prevVendors => prevVendors.filter(repeater => repeater.site_id !== id));
             // fetchRoles();
         } catch (error) {
             console.error('Error in remove:', error);
