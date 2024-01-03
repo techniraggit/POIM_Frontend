@@ -751,10 +751,12 @@ div#w-small span {
     color: rgb(17, 47, 92, 0.5) !important;
     font-size: 16px !important;
     font-weight: 500;
-    margin-bottom: 7px;
+    margin-bottom: 7px !important;
+    margin-top: 0px !important;
+}
+.minuswrap-img {
     margin-top: 35px;
 }
-
 .ant-col label.ant-form-item-required::before {
     display: none !important;
 }
@@ -827,6 +829,12 @@ button.butt-flex span {
     display: flex;
     align-items: center;
 } */
+.ant-space.space-unit {
+    flex-direction: column;
+}
+.ant-space.space-unit   .ant-space-item {
+    width: 100%;
+}
 .ant-space.vendor-ant-form {
     align-items: center;
 }
