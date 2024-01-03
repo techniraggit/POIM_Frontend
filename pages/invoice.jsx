@@ -1,54 +1,21 @@
 import React from "react";
 import '../styles/style.css';
 import { Button } from "antd";
+import { EyeFilled ,EditFilled } from '@ant-design/icons'
+import Sidebar from "@/components/sidebar";
+import Link from "next/link";
+import { PlusOutlined } from '@ant-design/icons'
+
+
 function Invoice() {
     return (
         <>
             <div className="wrapper-main">
-                <div className="aside-dashboard">
-                    <div className="logo">
-                        <a href="#"><img src="./images/logo.png" alt="" /></a>
-                    </div>
-                    <ul className="list-dboard">
-                        <li>
-                            <a href="#"><span className="db-span"><i className="fa-solid fa-house arrow-clr me-4"></i>Dashboard</span><i
-                                className="fa-solid fa-chevron-left"></i></a>
-                        </li>
-
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/user.svg" alt="" className="me-4" />Users</span><i
-                                className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/vendors.svg" alt="" className="me-4" />Vendors</span><i
-                                className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Projects.svg" alt="" className="me-4" />Projects</span><i
-                                className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Purchase.svg" alt="" className="me-4" />Purchase
-                                Orders</span><i className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Invoice.svg" alt="" className="me-4" />Invoice</span><i
-                                className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Reports.svg" alt="" className="me-4" />Reports</span><i
-                                className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><span className="db-span"><img src="./images/Settings.svg" alt="" className="me-4" />Settings</span><i
-                                className="fa-solid fa-chevron-right"></i></a>
-                        </li>
-                    </ul>
-                </div>
+                <Sidebar/>
                 <div className="inner-wrapper">
                     <div className="top-wrapp">
                         <div className="text-wrap">
-                            <h5>Purchase Orders</h5>
+                            <h5>Invoice</h5>
                         </div>
                         <div className="notify">
                             <div className="leftwrap">
@@ -62,13 +29,15 @@ function Invoice() {
                     </div>
                     <div className="bottom-wrapp-purchase">
                         <ul className="list-icons">
-                            <li className="me-4">
-                                <i className="fa-solid fa-plus mb-3"></i>
-                                <span>Create PO</span>
+                        <li className="me-4">
+                        <span className="text-sizes mb-3">5</span>
+
+                                {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
+                                <span>Pending Invoice</span>
                             </li>
                             <li className="me-4">
                                 <span className="text-size mb-3">224</span>
-                                <span>Create User</span>
+                                <span>Total Invoice</span>
                             </li>
                         </ul>
                         <div className="searchbar-wrapper">
@@ -111,9 +80,8 @@ function Invoice() {
                                             <td className="td-color">Teri Dactyl</td>
                                             <td>Approved</td>
                                             <td>
-                                                <div className="icons-td"><i className="fa-solid fa-eye"></i>
-                                                    <i className="fa-solid fa-pen"></i>
-                                                </div>
+                                            <EyeFilled/>
+                                            <EditFilled />
                                             </td>
                                         </tr>
                                         <tr>
@@ -125,9 +93,8 @@ function Invoice() {
                                             <td className="td-color">Lynn O’leeum</td>
                                             <td>Approved</td>
                                             <td>
-                                                <div className="icons-td"><i className="fa-solid fa-eye"></i>
-                                                    <i className="fa-solid fa-pen"></i>
-                                                </div>
+                                            <EyeFilled/>
+                                            <EditFilled />
                                             </td>
                                         </tr>
                                         <tr>
@@ -139,9 +106,8 @@ function Invoice() {
                                             <td className="td-color">Lynn O’leeum</td>
                                             <td>Approved</td>
                                             <td>
-                                                <div className="icons-td"><i className="fa-solid fa-eye"></i>
-                                                    <i className="fa-solid fa-pen"></i>
-                                                </div>
+                                            <EyeFilled/>
+                                            <EditFilled />
                                             </td>
 
                                         </tr>
@@ -154,9 +120,8 @@ function Invoice() {
                                             <td className="td-color">Olive Yew</td>
                                             <td>Approved</td>
                                             <td>
-                                                <div className="icons-td"><i className="fa-solid fa-eye"></i>
-                                                    <i className="fa-solid fa-pen"></i>
-                                                </div>
+                                            <EyeFilled/>
+                                            <EditFilled />
                                             </td>
 
                                         </tr>
@@ -169,9 +134,10 @@ function Invoice() {
                                             <td className="td-color">Lynn O’leeum</td>
                                             <td>Approved</td>
                                             <td>
-                                                <div className="icons-td"><i className="fa-solid fa-eye"></i>
-                                                    <i className="fa-solid fa-pen"></i>
-                                                </div>
+                                            <EyeFilled/>
+
+                                            <EditFilled />
+
                                             </td>
                                         </tr>
                                         <tr>
@@ -183,9 +149,9 @@ function Invoice() {
                                             <td className="td-color">Sam Billings</td>
                                             <td>Approved</td>
                                             <td>
-                                                <div className="icons-td"><i className="fa-solid fa-eye"></i>
-                                                    <i className="fa-solid fa-pen"></i>
-                                                </div>
+                                            <EyeFilled/>
+                                            <EditFilled />
+
                                             </td>
                                         </tr>
                                         <tr>
@@ -197,9 +163,8 @@ function Invoice() {
                                             <td className="td-color">Sam Billings</td>
                                             <td>Approved</td>
                                             <td>
-                                                <div className="icons-td"><i className="fa-solid fa-eye"></i>
-                                                    <i className="fa-solid fa-pen"></i>
-                                                </div>
+                                            <EyeFilled/>
+                                            <EditFilled />
                                             </td>
 
                                         </tr>
@@ -212,9 +177,8 @@ function Invoice() {
                                             <td className="td-color">Lynn O’leeum</td>
                                             <td>Approved</td>
                                             <td>
-                                                <div className="icons-td"><i className="fa-solid fa-eye"></i>
-                                                    <i className="fa-solid fa-pen"></i>
-                                                </div>
+                                            <EyeFilled/>
+                                            <EditFilled />
                                             </td>
                                         </tr>
                                     </tbody>

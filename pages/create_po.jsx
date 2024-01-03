@@ -571,6 +571,7 @@ const Create_po = ({ base_url }) => {
                                                     >
                                                         <Select
                                                             id="single2"
+                                                            placeholder="Select"
                                                             className="js-states form-control file-wrap-select"
                                                             onChange={(value) => handleVendorChange(value)}
                                                         >
@@ -584,6 +585,34 @@ const Create_po = ({ base_url }) => {
                                                                 </Select.Option>
                                                             )
                                                             )}
+                                                        </Select>
+
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                        label="Vendor Contact"
+                                                        name="vendor_contact_id"
+                                                        htmlFor="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose site",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select
+                                                            id="singlesa"
+                                                            placeholder="Select"
+                                                            class="js-states form-control file-wrap-select"
+                                                            onChange={(value) => handleVendorContactChange(value)}
+                                                        >
+                                                            {contactId.length > 0 &&
+                                                                contactId.map((contact) => (
+                                                                    <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
+                                                                        {contact.name}
+                                                                    </Select.Option>
+                                                                ))
+                                                            }
                                                         </Select>
 
                                                     </Form.Item>
@@ -799,7 +828,7 @@ const Create_po = ({ base_url }) => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Select id="single3" class="js-states form-control file-wrap-select"
+                                                    <Select id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
                                                         onChange={handlePoTypeChange}
                                                     >
                                                         <Option value="Project Related">Project Related</Option>
