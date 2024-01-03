@@ -21,8 +21,16 @@ const Create_po = ({ base_url }) => {
     const defaultDate = moment();
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
+    // const[contactOptions,setContactOptions]=useState([]);
     const [vendors, setVendors] = useState([]);
     const [vendorId, setVendorId] = useState('');
+
+
+    const [contacts, setContacts] = useState([]);
+    const [contactId, setContactId] = useState('');
+
+    const [userFirstName, setUserFirstName] = useState('');
+    const [userLastName, setUserLastName] = useState('');
 
     const [quantity, setQuantity] = useState(0);
     const [unitPrice, setUnitPrice] = useState(0);
@@ -52,10 +60,6 @@ const Create_po = ({ base_url }) => {
 
 
     const calculateAmount = (quantity, unitPrice) => quantity * unitPrice;
-
-    //const thirteenPercent = calculateAmount * 0.13;
-    //console.log(thirteenPercent,'herre>>>>>>>>>>')
-    //form.setFieldsValue({ HST_Amount: thirteenPercent });
 
     const handleQuantityRepeaterChange = (value, index) => {
         const unitPrice = form.getFieldValue(['items', index, 'unit_price']) || 0;
@@ -137,6 +141,17 @@ const Create_po = ({ base_url }) => {
 
         setshipmentType(value);
     };
+
+
+    useEffect(() => {
+        // Get user information from localStorage when the component mounts
+        const storedFirstName = localStorage.getItem('user_first_name');
+        const storedLastName = localStorage.getItem('user_last_name');
+
+        // Update state with the stored information
+        setUserFirstName(storedFirstName || '');
+        setUserLastName(storedLastName || '');
+    }, []);
     const onFinish = async (values) => {
         if (values.items?.length > 0) {
             console.log(values.items, 'valuessssssssssssssssss');
@@ -147,75 +162,99 @@ const Create_po = ({ base_url }) => {
                 Description: item.Description
             }));
             var data = {
-                po_data: {
-                    company_name: vendorForm.company_name,
-                    email: vendorForm.email,
-                    phone: vendorForm.phone,
-                    state: vendorForm.state,
-                    country: vendorForm.country,
-                    vendor_id: values.vendor_id,
-                    po_type: values.po_type,
-                    address1: vendorForm.address,
-                },
-                shipment: {
-                    HST_Amount: values.HST_Amount,
-                    Total_amount: values.Total_amount,
-                    shipment_type: values.shipment_type,
-                    project_id: values.project_id,
-                    shipment_address: 'add',
-                },
-                shipment_material: {
-                    quantity: values.quantity,
-                    unit_price: values.unit_price,
-                    Amount: values.Amount,
-                    Description: values.Description,
-                    material_for: values.materialFor,
-                    site_id: values.site_id,
-                    project_id: values.project_id,
-                    code: values.code,
-                    shipment_address: values.shipment_address,
-                    material_details: [...dynamicItems]
-                }
+                // -------------------------------------------------------------------
+                po_type: values.po_type,
+                vendor_id: values.vendor_id,
+                shipment_type: values.shipment_type,
+                hst_amount: values.HST_Amount,
+                total_amount: values.Total_amount,
+                project_site_id: values.site_id,
+                material_details: [...dynamicItems],
+                // -------------------------------------------------------------------
+                // po_data: {
+                //     company_name: vendorForm.company_name,
+                //     email: vendorForm.email,
+                //     phone: vendorForm.phone,
+                //     state: vendorForm.state,
+                //     country: vendorForm.country,
+                //     vendor_id: values.vendor_id,
+                //     po_type: values.po_type,
+                //     address1: vendorForm.address,
+                // },
+                // shipment: {
+                //     HST_Amount: values.HST_Amount,
+                //     Total_amount: values.Total_amount,
+                //     shipment_type: values.shipment_type,
+                //     project_id: values.project_id,
+                //     shipment_address: 'add',
+                // },
+                // shipment_material: {
+                //     quantity: values.quantity,
+                //     unit_price: values.unit_price,
+                //     Amount: values.Amount,
+                //     Description: values.Description,
+                //     material_for: values.materialFor,
+                //     site_id: values.site_id,
+                //     project_id: values.project_id,
+                //     code: values.code,
+                //     shipment_address: values.shipment_address,
+                //     material_details:[...dynamicItems]
+                // }
 
             }
         }
         else {
             var data = {
-                po_data: {
-                    company_name: vendorForm.company_name,
-                    email: vendorForm.email,
-                    phone: vendorForm.phone,
-                    state: vendorForm.state,
-                    country: vendorForm.country,
-                    vendor_id: values.vendor_id,
-                    po_type: values.po_type,
-                    address1: vendorForm.address,
-                },
-                shipment: {
-                    HST_Amount: values.HST_Amount,
-                    Total_amount: values.Total_amount,
-                    shipment_type: values.shipment_type,
-                    project_id: values.project_id,
-                    shipment_address: 'add',
-                },
-                shipment_material: {
+
+
+                po_type: values.po_type,
+                vendor_id: values.vendor_id,
+                shipment_type: values.shipment_type,
+                hst_amount: values.HST_Amount,
+                total_amount: values.Total_amount,
+                project_site_id: values.site_id,
+                material_details: [{
                     quantity: values.quantity,
                     unit_price: values.unit_price,
                     Amount: values.Amount,
-                    Description: values.Description,
-                    material_for: values.materialFor,
-                    site_id: values.site_id,
-                    project_id: values.project_id,
-                    code: values.code,
-                    shipment_address: values.shipment_address,
-                    material_details: [{
-                        quantity: values.quantity,
-                        unit_price: values.unit_price,
-                        Amount: values.Amount,
-                        Description: values.Description
-                    }
-                    ]
-                },
+                    Description: values.Description
+                }
+                ]
+                // po_data: {
+                //     company_name: vendorForm.company_name,
+                //     email: vendorForm.email,
+                //     phone: vendorForm.phone,
+                //     state: vendorForm.state,
+                //     country: vendorForm.country,
+                //     vendor_id: values.vendor_id,
+                //     po_type: values.po_type,
+                //     address1: vendorForm.address,
+                // },
+                // shipment: {
+                //     HST_Amount: values.HST_Amount,
+                //     Total_amount: values.Total_amount,
+                //     shipment_type: values.shipment_type,
+                //     project_id: values.project_id,
+                //     shipment_address: 'add',
+                // },
+                // shipment_material: {
+                //     quantity: values.quantity,
+                //     unit_price: values.unit_price,
+                //     Amount: values.Amount,
+                //     Description: values.Description,
+                //     material_for: values.materialFor,
+                //     site_id: values.site_id,
+                //     project_id: values.project_id,
+                //     code: values.code,
+                //     shipment_address: values.shipment_address,
+                // material_details:[{
+                //     quantity: values.quantity,
+                //     unit_price: values.unit_price,
+                //     Amount: values.Amount,
+                //     Description: values.Description
+                // }
+                // ]
+                // },
 
             }
         }
@@ -257,6 +296,7 @@ const Create_po = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
+                console.log(response.data.projects,'projectsssddddd');
                 setProjects(response.data.projects); // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -269,13 +309,68 @@ const Create_po = ({ base_url }) => {
     }, [shipmentType]);
 
 
-    const fetchSites = async (projectId) => {
+    useEffect(() => {
+        const fetchVendorContact = async () => {
+            try {
+                const headers = {
+                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+                }
+                const response = await axios.get(`${base_url}/api/helping/vendors-and-contacts`, { headers: headers });
+                console.log(response.data, 'vendor contact==========');
+                setVendors(response.data.vendors);
+                // Assuming the API response is an array of projects
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+        }
+        // if(vendorId){
+        fetchVendorContact();
+
+        // }
+    }, [])
+
+
+
+
+
+
+    // useEffect(() => {
+    const fetchVendorContactDropdown = async (id) => {
+        console.log(id, 'fetchVendorContactDropdown');
+        try {
+            const headers = {
+                Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+            }
+            const response = await axios.get(`${base_url}/api/helping/vendors-and-contacts?vendor_id=${id}`, { headers: headers });
+            console.log(response.data.vendors, '#################################################vendor contact Dropdown');
+            setContactId(response.data.vendors)
+            // setVendors(response.data.vendors);
+            // Assuming the API response is an array of projects
+        } catch (error) {
+            console.error('Error fetching projects:', error);
+        }
+    }
+    // if(vendorId){
+    // fetchVendorContactDropdown();
+
+    // }
+    // }, [])
+
+
+    const handleVendorChange = (value) => {
+        console.log(value, 'vendoriddddddddddddddddd=================');
+        fetchVendorContactDropdown(value)
+
+    }
+
+    const fetchSites = async () => {
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             };
 
-            const response = await axios.get(`${base_url}/api/admin/project-sites?project_id=${projectId}`, { headers });
+            const response = await axios.get(`${base_url}/api/admin/project-sites`, { headers });
+            console.log(response, 'aaaaaaaaaaaaaaaaaaaa');
 
             const sitesArray = response.data.sites;
             setSiteOptions(sitesArray);
@@ -290,83 +385,76 @@ const Create_po = ({ base_url }) => {
         }
     };
 
-    useEffect(() => {
-        const fetchVendor = async () => {
-            try {
-                const headers = {
-                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-                }
-                const response = await axios.get(`${base_url}/api/admin/vendors`, { headers: headers });
-                console.log(response.data.vendors, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-                setVendors(response.data.vendors);
-                // Assuming the API response is an array of projects
-            } catch (error) {
-                console.error('Error fetching projects:', error);
+    
+
+
+
+
+    // useEffect(() => {
+    const vendorContactDetails = async (id) => {
+        console.log(id, 'ver00000000000000')
+        try {
+            const headers = {
+                Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
             }
+            const response = await axios.get(`${base_url}/api/helping/vendor-details?vendor_contact_id=${id}`, { headers: headers });
+            console.log(response.data.vendors, '9999999999999999999');
+
+            setContacts(response.data.vendors);
+            // setVendors(response.data.vendors); 
+
+            // if (vendorId && response?.data?.status) {
+            //     console.log({
+            //         ...vendorForm,
+            //         company_name: response.data.vendors_details.company_name,
+            //         email: response.data.vendors_details.vendor_contact[0].email,
+            //         phone: response.data.vendors_details.vendor_contact[0].phone_number,
+            //         address: response.data.vendors_details.address,
+            //         state: response.data.vendors_details.state,
+            //         country: response.data.vendors_details.country
+            //     }, "=======data");
+
+                setVendorForm({
+                    ...vendorForm,
+                    company_name: response.data.vendors.company.company_name,
+                    email: response.data.vendors.email,
+                    phone: response.data.vendors.phone_number,
+                    address: response.data.vendors.company.address,
+                    state: response.data.vendors.company.state,
+                    country: response.data.vendors.company.country
+                })
+            // }
+
+        } catch (error) {
+            console.error('Error fetching projects:', error);
         }
-        // if(vendorId){
-        fetchVendor();
+    }
+    // if (vendorId) {
+    //     vendorContactDetails();
 
-        // }
-    }, [])
+    // }
+    // }, [vendorId])
 
+    const handleVendorContactChange = (value) => {
+        console.log(value, 'dropdown id=================');
 
-
-    useEffect(() => {
-        const vendorDetails = async () => {
-            try {
-                const headers = {
-                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-                }
-                const response = await axios.get(`${base_url}/api/admin/vendors?vendor_id=${vendorId}`, { headers: headers });
-
-
-                // setVendors(response.data.vendors); 
-                console.log(vendorId)
-                if (vendorId && response?.data?.status) {
-                    console.log({
-                        ...vendorForm,
-                        company_name: response.data.vendors_details.company_name,
-                        email: response.data.vendors_details.vendor_contact[0].email,
-                        phone: response.data.vendors_details.vendor_contact[0].phone_number,
-                        address: response.data.vendors_details.address,
-                        state: response.data.vendors_details.state,
-                        country: response.data.vendors_details.country
-                    }, "=======data");
-
-                    setVendorForm({
-                        ...vendorForm,
-                        company_name: response.data.vendors_details.company_name,
-                        email: response.data.vendors_details.vendor_contact[0].email,
-                        phone: response.data.vendors_details.vendor_contact[0].phone_number,
-                        address: response.data.vendors_details.address,
-                        state: response.data.vendors_details.state,
-                        country: response.data.vendors_details.country
-                    })
-                }
-
-            } catch (error) {
-                console.error('Error fetching projects:', error);
-            }
-        }
-        if (vendorId) {
-            vendorDetails();
-
-        }
-    }, [vendorId])
-
-    console.log(vendorForm, '3333333333333333333333333');
+        vendorContactDetails(value)
+    }
     const names = vendors?.map((vendor) => {
+        console.log(vendor, 'vendorrrrrrrr');
         return {
-            vendorId: vendor.id,
-            contactName: vendor.vendor_contact[0].name
+            vendorId: vendor.vendor_id,
+            company_name: vendor.company_name,
+            // contactName: vendor.vendor_contact[0].name
         };
     });
 
-    const handleVendorChange = (value) => {
-        setVendorId(value)
-        console.log(value, 'vendoriddddddddddddddddd=================');
-    }
+
+
+
+
+
+
 
 
     return (
@@ -486,14 +574,78 @@ const Create_po = ({ base_url }) => {
                                                             className="js-states form-control file-wrap-select"
                                                             onChange={(value) => handleVendorChange(value)}
                                                         >
-                                                            {names.map((entry) => (
+                                                            {names.map((entry) =>
+                                                            // {
+                                                            //     console.log(entry,'vendordd');
+                                                            // }
+                                                            (
                                                                 <Select.Option key={entry.vendorId} value={entry.vendorId}>
-                                                                    {entry.contactName}
+                                                                    {entry.company_name}
                                                                 </Select.Option>
-                                                            ))}
+                                                            )
+                                                            )}
                                                         </Select>
 
                                                     </Form.Item>
+                                                    <Form.Item
+                                                        label="Vendor Contact"
+                                                        name="vendor_contact_id"
+                                                        htmlFor="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose site",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select
+                                                            id="singlesa"
+                                                            class="js-states form-control file-wrap-select"
+                                                            onChange={(value) => handleVendorContactChange(value)}
+                                                        >
+                                                            {contactId.length > 0 &&
+                                                                contactId.map((contact) => (
+                                                                    <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
+                                                                        {contact.name}
+                                                                    </Select.Option>
+                                                                ))
+                                                            }
+                                                        </Select>
+
+                                                    </Form.Item>
+
+                                                    {/* <Form.Item
+                                                        label="Vendor Contact"
+                                                        name="vendor_contact_id"
+                                                        for="file"
+                                                        className="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+
+                                                                message: "Please choose Vendor contact",
+
+                                                            },
+
+                                                        ]}
+                                                    >
+                                                        <Select
+                                                            id="single2"
+                                                            className="js-states form-control file-wrap-select"
+                                                            onChange={(value) => handleVendorContactChange(value)}
+                                                        >
+                                                            {namesContact.map((entry) =>
+                                                             {
+                                                                console.log(entry,'entry contact id');
+
+
+                                                            }
+                                                            
+                                                            )}
+                                                        </Select>
+
+                                                    </Form.Item> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -811,11 +963,17 @@ const Create_po = ({ base_url }) => {
                                                         >
                                                             <Select id="singlesa" class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) => (
-                                                                        <Select.Option key={site.id} value={site.id}>
+                                                                    siteOptions.map((site) =>
+                                                                    // {
+                                                                    //     console.log(site,'siteeeeeeeeeee');
+                                                                    // }
+
+                                                                    (
+                                                                        <Select.Option key={site.id} value={site.project_id}>
                                                                             {site.name}
                                                                         </Select.Option>
-                                                                    ))}
+                                                                    )
+                                                                    )}
                                                             </Select>
                                                         </Form.Item>
                                                     </div>
@@ -1192,27 +1350,31 @@ const Create_po = ({ base_url }) => {
                                     <div className="row">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
-                                                <Form.Item
+                                                <label htmlFor="">First Name</label>
+                                                <input type="text" value={userFirstName} />
+                                                {/* <Form.Item
 
                                                     name='first_name'
                                                     label="First Name"
                                                     rules={[{ required: true, message: 'Please enter phone number' }]}
                                                 >
-                                                    <Input placeholder="" />
-                                                </Form.Item>
+                                                    <Input placeholder="" value={userFirstName}/>
+                                                </Form.Item> */}
 
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
-                                                <Form.Item
+                                                <label htmlFor="">Last Name</label>
+                                                <input type="text" value={userLastName} />
+                                                {/* <Form.Item
 
                                                     name='last_name'
                                                     label="Last Name"
                                                     rules={[{ required: true, message: 'Please enter phone number' }]}
                                                 >
-                                                    <Input placeholder="" />
-                                                </Form.Item>
+                                                    <Input placeholder="" value={userLastName} />
+                                                </Form.Item> */}
 
                                             </div>
                                         </div>
