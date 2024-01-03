@@ -19,8 +19,10 @@ const PO_list = ({ base_url }) => {
                     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 };
                 const response = await axios.get(`${base_url}/api/admin/purchase-order`, { headers });
-                setTotalPurchaseOrder(response.data.total_purchase_orders);
-                setPurchaseOrders(response.data.purchase_orders || []); // Ensure purchase_orders is an array
+                console.log(response.data.total_po,'purchase order listing');
+                setPurchaseOrders(response.data.data || []);
+                setTotalPurchaseOrder(response.data.total_po);
+                // setPurchaseOrders(response.data.purchase_orders || []); // Ensure purchase_orders is an array
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
@@ -101,16 +103,16 @@ const PO_list = ({ base_url }) => {
                                             purchaseOrders.map((purchase, index) => (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
-                                                    <td>{purchase.material?.po?.po_number}</td>
-                                                    <td className="td-color">{purchase.material?.po?.po_type}</td>
-                                                    <td>{new Date(purchase.material?.po?.created_on).toLocaleDateString('en-US', {
+                                                    <td>{purchase.po_number}</td>
+                                                    <td className="td-color">{purchase.po_type}</td>
+                                                    <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
                                                         year: 'numeric',
                                                         month: 'short',
                                                         day: 'numeric',
                                                     })}</td>
-                                                    <td>{purchase.material?.Total_amount}</td>
-                                                    <td>{purchase.material?.po?.status}</td>
-                                                    <td>{purchase.material?.po?.phone}</td>
+                                                    <td>{purchase.total_amount}</td>
+                                                    <td>{purchase.status}</td>
+                                                    <td>{purchase.vendor_contact.name}</td>
                                                     <td className="td-icon-color">
                                                         <Link  href={`/view-purchaseorder/${purchase.id}`} className="me-1"><EyeFilled /></Link>
                                                         <Popconfirm

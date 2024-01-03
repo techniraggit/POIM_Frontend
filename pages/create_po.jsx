@@ -11,7 +11,16 @@ import { useRouter } from 'next/router';
 // import "antd/dist/antd.css";
 
 const { Option } = Select;
-
+const repeatorData = {
+    quantity: '',
+    unit_price: 0,
+    amount: 0,
+    description: '',
+    materialFor: '',
+    code: '',
+    project: '',
+    site: ''
+}
 const Create_po = ({ base_url }) => {
     const [form] = Form.useForm();
     const router = useRouter();
@@ -31,7 +40,7 @@ const Create_po = ({ base_url }) => {
 
     const [userFirstName, setUserFirstName] = useState('');
     const [userLastName, setUserLastName] = useState('');
-
+    const [repeator, setRepeator] = useState([]);
     const [quantity, setQuantity] = useState(0);
     const [unitPrice, setUnitPrice] = useState(0);
     const [real_amount, setAmount] = useState(0);
@@ -67,10 +76,7 @@ const Create_po = ({ base_url }) => {
         form.setFields([{ name: ['items', index, 'amount'], value: test_amount }]);
     };
 
-    const handleUnitPriceRepeaterChange = (value, index) => {
-        const quantity = form.getFieldValue(['items', index, 'quantity']) || 0;
-        const test_amount = calculateAmount(quantity, value);
-        form.setFields([{ name: ['items', index, 'amount'], value: test_amount }]);
+    const handleUnitPriceRepeaterChange = () => {
         const totalAmount = getTotalAmount();
         form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
         form.setFieldsValue({ Total_amount: totalAmount * 0.13 + totalAmount });
@@ -81,16 +87,15 @@ const Create_po = ({ base_url }) => {
         let totalAmount = 0;
 
         for (let i = 0; i < repeaterLength; i++) {
-            const quantity = form.getFieldValue(['items', i, 'quantity']) || 0;
-            const unitPrice = form.getFieldValue(['items', i, 'unit_price']) || 0;
+            const quantity = repeator[i].quantity || 0;
+            const unitPrice = repeator[i].unit_price || 0;
             const amount = calculateAmount(quantity, unitPrice);
             totalAmount += amount;
         }
 
         if (real_amount) {
             totalAmount = totalAmount + real_amount;
-        }
-        else {
+        } else {
             totalAmount = totalAmount
         }
 
@@ -106,14 +111,6 @@ const Create_po = ({ base_url }) => {
     //   const calculateTotalAmount = () => {
     //     return items.reduce((total, item) => total + (item.quantity * item.unit_price), 0);
     //   };
-
-
-
-
-
-
-
-
     const handleQuantityChange = (value) => {
         setQuantity(value);
         updateAmount(value, unitPrice);
@@ -126,7 +123,6 @@ const Create_po = ({ base_url }) => {
 
     const updateAmount = (quantity, unitPrice) => {
         const calculatedAmount = quantity * unitPrice;
-        console.log(calculatedAmount, 'heree?????????????')
 
         setAmount(calculatedAmount);
         form.setFieldsValue({ Amount: calculatedAmount });
@@ -137,8 +133,6 @@ const Create_po = ({ base_url }) => {
 
 
     const handlePoTypeChange = (value) => {
-        console.log(value, 'valueeeeeeeeeeeeeeeeeeeeee');
-
         setshipmentType(value);
     };
 
@@ -153,18 +147,24 @@ const Create_po = ({ base_url }) => {
         setUserLastName(storedLastName || '');
     }, []);
     const onFinish = async (values) => {
+        console.log(values.items)
         if (values.items?.length > 0) {
-            console.log(values.items, 'valuessssssssssssssssss');
-            const dynamicItems = values.items?.map(item => ({
+            const dynamicItems = repeator?.map((item)=> ({
                 quantity: item.quantity,
                 unit_price: item.unit_price,
-                Amount: item.Amount,
-                Description: item.Description
+                amount: item.amount,
+                description: item.description,
+                material_for: values.materialFor,
+                code: values.code,
+                project_id: values.project,
+                project_site_id: values.site,
             }));
             var data = {
                 // -------------------------------------------------------------------
                 po_type: values.po_type,
-                vendor_id: values.vendor_id,
+                // vendor_id: values.vendor_id,
+                amount: values.Amount,
+                vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
@@ -202,24 +202,26 @@ const Create_po = ({ base_url }) => {
                 // }
 
             }
-        }
-        else {
+        } else {
             var data = {
-
-
                 po_type: values.po_type,
-                vendor_id: values.vendor_id,
+                // vendor_id: values.vendor_id,
+                vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
                 project_site_id: values.site_id,
+                amount: values.Amount,
                 material_details: [{
                     quantity: values.quantity,
                     unit_price: values.unit_price,
-                    Amount: values.Amount,
-                    Description: values.Description
-                }
-                ]
+                    amount: values.amount,
+                    description: values.Description,
+                    material_for: values.materialFor,
+                    code: values.code,
+                    project_id: values.project_id,
+                    project_site_id: values.site_id,
+                }]
                 // po_data: {
                 //     company_name: vendorForm.company_name,
                 //     email: vendorForm.email,
@@ -265,7 +267,6 @@ const Create_po = ({ base_url }) => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             };
-            console.log("values === ", values)
 
             const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
                 headers: headers,
@@ -276,15 +277,9 @@ const Create_po = ({ base_url }) => {
                 message.success(response.data.message)
                 router.push('/po_list')
             }
-
-
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
         }
         catch (error) {
-            console.log(error, 'catchhhhhhhhhhhhhhhhhhhh');
         }
-        console.log("Received values:", values);
     };
 
 
@@ -296,7 +291,6 @@ const Create_po = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
-                console.log(response.data.projects,'projectsssddddd');
                 setProjects(response.data.projects); // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -316,7 +310,6 @@ const Create_po = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/helping/vendors-and-contacts`, { headers: headers });
-                console.log(response.data, 'vendor contact==========');
                 setVendors(response.data.vendors);
                 // Assuming the API response is an array of projects
             } catch (error) {
@@ -336,13 +329,11 @@ const Create_po = ({ base_url }) => {
 
     // useEffect(() => {
     const fetchVendorContactDropdown = async (id) => {
-        console.log(id, 'fetchVendorContactDropdown');
         try {
             const headers = {
                 Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
             }
             const response = await axios.get(`${base_url}/api/helping/vendors-and-contacts?vendor_id=${id}`, { headers: headers });
-            console.log(response.data.vendors, '#################################################vendor contact Dropdown');
             setContactId(response.data.vendors)
             // setVendors(response.data.vendors);
             // Assuming the API response is an array of projects
@@ -356,13 +347,6 @@ const Create_po = ({ base_url }) => {
     // }
     // }, [])
 
-
-    const handleVendorChange = (value) => {
-        console.log(value, 'vendoriddddddddddddddddd=================');
-        fetchVendorContactDropdown(value)
-
-    }
-
     const fetchSites = async () => {
         try {
             const headers = {
@@ -370,7 +354,6 @@ const Create_po = ({ base_url }) => {
             };
 
             const response = await axios.get(`${base_url}/api/admin/project-sites`, { headers });
-            console.log(response, 'aaaaaaaaaaaaaaaaaaaa');
 
             const sitesArray = response.data.sites;
             setSiteOptions(sitesArray);
@@ -378,27 +361,20 @@ const Create_po = ({ base_url }) => {
             console.error('Error fetching projects:', error);
         }
     };
+
     const list = (value) => {
-        console.log(value, 'asssssssssssssssss');
         if (shipmentType === 'Project Related' || shipmentType === 'Combined') {
             fetchSites(value);
         }
     };
 
-    
-
-
-
-
     // useEffect(() => {
     const vendorContactDetails = async (id) => {
-        console.log(id, 'ver00000000000000')
         try {
             const headers = {
                 Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
             }
             const response = await axios.get(`${base_url}/api/helping/vendor-details?vendor_contact_id=${id}`, { headers: headers });
-            console.log(response.data.vendors, '9999999999999999999');
 
             setContacts(response.data.vendors);
             // setVendors(response.data.vendors); 
@@ -414,34 +390,23 @@ const Create_po = ({ base_url }) => {
             //         country: response.data.vendors_details.country
             //     }, "=======data");
 
-                setVendorForm({
-                    ...vendorForm,
-                    company_name: response.data.vendors.company.company_name,
-                    email: response.data.vendors.email,
-                    phone: response.data.vendors.phone_number,
-                    address: response.data.vendors.company.address,
-                    state: response.data.vendors.company.state,
-                    country: response.data.vendors.company.country
-                })
+            setVendorForm({
+                ...vendorForm,
+                company_name: response.data.vendors.company.company_name,
+                email: response.data.vendors.email,
+                phone: response.data.vendors.phone_number,
+                address: response.data.vendors.company.address,
+                state: response.data.vendors.company.state,
+                country: response.data.vendors.company.country
+            })
             // }
 
         } catch (error) {
             console.error('Error fetching projects:', error);
         }
     }
-    // if (vendorId) {
-    //     vendorContactDetails();
 
-    // }
-    // }, [vendorId])
-
-    const handleVendorContactChange = (value) => {
-        console.log(value, 'dropdown id=================');
-
-        vendorContactDetails(value)
-    }
     const names = vendors?.map((vendor) => {
-        console.log(vendor, 'vendorrrrrrrr');
         return {
             vendorId: vendor.vendor_id,
             company_name: vendor.company_name,
@@ -449,13 +414,28 @@ const Create_po = ({ base_url }) => {
         };
     });
 
+    const handleRepeatorChange = (value, name, index) => {
+        const values = repeator[index];
+        if (values) {
+            repeator[index] = {
+                ...repeator[index],
+                [name]: value
+            }
 
-
-
-
-
-
-
+            if(repeator[index].quantity && repeator[index].unit_price) {
+                console.log(parseFloat(repeator[index].quantity) * parseFloat(repeator[index].unit_price))
+                repeator[index] = {
+                    ...repeator[index],
+                    amount: parseFloat(repeator[index].quantity) * parseFloat(repeator[index].unit_price)
+                }
+            }
+        }
+        if(name === 'unit_price' || name === 'quantity') {
+            handleUnitPriceRepeaterChange();
+        }
+        console.log(repeator, "============repa")
+        setRepeator([...repeator]);
+    }
 
     return (
         <>
@@ -566,13 +546,13 @@ const Create_po = ({ base_url }) => {
                                                                 message: "Please choose Vendor",
 
                                                             },
-                                                            
+
                                                         ]}
                                                     >
                                                         <Select
                                                             id="single2"
                                                             className="js-states form-control file-wrap-select"
-                                                            onChange={(value) => handleVendorChange(value)}
+                                                            onChange={(value) => fetchVendorContactDropdown(value)}
                                                         >
                                                             {names.map((entry) =>
                                                             // {
@@ -602,7 +582,7 @@ const Create_po = ({ base_url }) => {
                                                         <Select
                                                             id="singlesa"
                                                             class="js-states form-control file-wrap-select"
-                                                            onChange={(value) => handleVendorContactChange(value)}
+                                                            onChange={(value) => vendorContactDetails(value)}
                                                         >
                                                             {contactId.length > 0 &&
                                                                 contactId.map((contact) => (
@@ -825,7 +805,7 @@ const Create_po = ({ base_url }) => {
                                                         >
                                                             {Array.isArray(projects) &&
                                                                 projects.map((project) => (
-                                                                    <Select.Option key={project.id} value={project.id}
+                                                                    <Select.Option key={project.project_id} value={project.project_id}
                                                                     // onChange={dsdsdsd(project.id)}
                                                                     >
                                                                         {project.name}
@@ -969,7 +949,7 @@ const Create_po = ({ base_url }) => {
                                                                     // }
 
                                                                     (
-                                                                        <Select.Option key={site.id} value={site.project_id}>
+                                                                        <Select.Option key={site.site_id} value={site.site_id}>
                                                                             {site.name}
                                                                         </Select.Option>
                                                                     )
@@ -1012,8 +992,6 @@ const Create_po = ({ base_url }) => {
                                                 <div className="col-md-4">
                                                     <div class="selectwrap add-dropdown-wrap">
                                                         <div class="selectwrap columns-select shipment-caret select-sites">
-                                                            {/* <CaretDownFilled className="caret-icon" /> */}
-
                                                             <Form.Item
                                                                 label="Material For"
                                                                 name="materialFor"
@@ -1037,9 +1015,6 @@ const Create_po = ({ base_url }) => {
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
                                             )}
 
 
@@ -1084,9 +1059,6 @@ const Create_po = ({ base_url }) => {
                                                         <>
                                                             <div class="selectwrap add-dropdown-wrap">
                                                                 <div class="selectwrap columns-select shipment-caret ">
-                                                                    {/* <CaretDownFilled className="caret-icon" /> */}
-
-                                                                    {/* /////////////////////////////////////////////////////////////////////////////////// */}
                                                                     <Form.Item
                                                                         label="Project"
                                                                         name="project_id"
@@ -1106,7 +1078,7 @@ const Create_po = ({ base_url }) => {
                                                                         >
                                                                             {Array.isArray(projects) &&
                                                                                 projects.map((project) => (
-                                                                                    <Select.Option key={project.id} value={project.id}
+                                                                                    <Select.Option key={project.project_id} value={project.project_id}
 
                                                                                     >
                                                                                         {project.name}
@@ -1119,8 +1091,6 @@ const Create_po = ({ base_url }) => {
                                                             </div>
                                                         </>
                                                     )}
-
-
                                                     {materialFor === 'inventorys' && (
                                                         <>
                                                             <Form.Item
@@ -1187,7 +1157,7 @@ const Create_po = ({ base_url }) => {
                                                                 <Select id="single51" class="js-states form-control file-wrap-select">
                                                                     {Array.isArray(siteOptions) &&
                                                                         siteOptions.map((site) => (
-                                                                            <Select.Option key={site.id} value={site.id}>
+                                                                            <Select.Option key={site.site_id} value={site.site_id}>
                                                                                 {site.name}
                                                                             </Select.Option>
                                                                         ))}
@@ -1246,75 +1216,197 @@ const Create_po = ({ base_url }) => {
 
                                         {/* <div> */}
                                         <div className="create-another minuswrap-img">
-
+                                            {/* {shipmentType === 'Non Project Related' && ( */}
                                             <Form.List name="items" initialValue={[]}>
                                                 {(fields, { add, remove }) => (
                                                     <>
-                                                        {fields.map(({ key, name, fieldKey, ...restField }, index) => (
-                                                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                                <div className="wrap-box">
+                                                        {fields.map(({ key, name, fieldKey, ...restField }, index) => {
+                                                            return (
+                                                                <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
+                                                                    <div className="row">
+                                                                        <div className="wrap-box col-sm-3">
 
-                                                                    <Form.Item
-                                                                        {...restField}
-                                                                        name={[name, 'quantity']}
-                                                                        fieldKey={[fieldKey, 'quantity']}
-                                                                        label="Quantity"
-                                                                        rules={[{ required: true, message: 'Please enter quantity' }]}
-                                                                    >
-                                                                        <Input
-                                                                            placeholder="Quantity"
-                                                                            onChange={(e) => handleQuantityRepeaterChange(e.target.value, index)}
-                                                                        />
-                                                                    </Form.Item>
-                                                                </div>
-                                                                <div className="wrap-box">
-                                                                    <Form.Item
-                                                                        {...restField}
-                                                                        name={[name, 'unit_price']}
-                                                                        fieldKey={[fieldKey, 'unit_price']}
-                                                                        label="Unit Price"
-                                                                        rules={[{ required: true, message: 'Please enter unit price' }]}
-                                                                    >
-                                                                        <Input
-                                                                            placeholder="Unit Price"
-                                                                            onChange={(e) => handleUnitPriceRepeaterChange(e.target.value, index)}
-                                                                        />
-                                                                    </Form.Item>
-                                                                </div>
-                                                                <div className="wrap-box">
+                                                                            <Form.Item
+                                                                                {...restField}
+                                                                                name={[name, 'quantity']}
+                                                                                fieldKey={[fieldKey, 'quantity']}
+                                                                                label="Quantity"
+                                                                                rules={[{ required: true, message: 'Please enter quantity' }]}
+                                                                            >
+                                                                                <Input
+                                                                                    placeholder="Quantity"
+                                                                                    value={repeator[index].quantity}
+                                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'quantity', index)}
+                                                                                />
+                                                                            </Form.Item>
+                                                                        </div>
+                                                                        <div className="wrap-box col-sm-3">
+                                                                            <Form.Item
+                                                                                {...restField}
+                                                                                name={[name, 'unit_price']}
+                                                                                value={repeator[index].unit_price}
+                                                                                fieldKey={[fieldKey, 'unit_price']}
+                                                                                label="Unit Price"
+                                                                                rules={[{ required: true, message: 'Please enter unit price' }]}
+                                                                            >
+                                                                                <Input
+                                                                                    placeholder="Unit Price"
+                                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'unit_price', index)}
+                                                                                />
+                                                                            </Form.Item>
+                                                                        </div>
+                                                                        <div className="wrap-box col-sm-3">
+                                                                            <lable for="amount">Amount</lable>
+                                                                            <input name="amount" value={repeator[index].amount} placeholder="Amount" readOnly />
+                                                                        </div>
+                                                                        <div className="wrap-box col-sm-3">
+                                                                            <Form.Item
+                                                                                {...restField}
+                                                                                name={[name, 'Description']}
+                                                                                value={repeator[index].description}
+                                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'description', index)}
+                                                                                fieldKey={[fieldKey, 'Description']}
+                                                                                label="Description"
+                                                                                rules={[{ required: true, message: 'Please enter description' }]}
+                                                                            >
+                                                                                <Input placeholder="Description" />
+                                                                            </Form.Item>
+                                                                        </div>
 
-                                                                    <Form.Item
-                                                                        {...restField}
-                                                                        name={[name, 'amount']}
-                                                                        fieldKey={[fieldKey, 'amount']}
-                                                                        label="Amount"
-                                                                        rules={[{ required: true, message: 'Amount is required' }]}
-                                                                    >
-                                                                        <Input placeholder="Amount" readOnly />
-                                                                    </Form.Item>
-                                                                </div>
-                                                                <div className="wrap-box">
-                                                                    <Form.Item
-                                                                        {...restField}
-                                                                        name={[name, 'description']}
-                                                                        fieldKey={[fieldKey, 'description']}
-                                                                        label="Description"
-                                                                        rules={[{ required: true, message: 'Please enter description' }]}
-                                                                    >
-                                                                        <Input placeholder="Description" />
-                                                                    </Form.Item>
-                                                                </div>
-                                                                <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-                                                            </Space>
-                                                        ))}
+                                                                    </div>
+
+                                                                    <div className="row">
+                                                                        <div class="col-sm-4">
+
+                                                                            {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
+                                                                                <>
+                                                                                    <div className="selectwrap add-dropdown-wrap shipment-caret">
+                                                                                        {/* <CaretDownFilled className="caret-icon" /> */}
+                                                                                        {/* <Form.Item
+                                                                                            label="Material For"
+                                                                                            name={`materialFor-${index}`}
+                                                                                            htmlFor="file"
+                                                                                            class="same-clr"
+                                                                                            value={repeator[index].materialFor}
+                                                                                            rules={[
+                                                                                                {
+                                                                                                    required: true,
+                                                                                                    message: "Please choose Material For",
+                                                                                                },
+                                                                                            ]}
+                                                                                        >
+                                                                                            <Select id="single90"
+                                                                                                class="js-states form-control file-wrap-select"
+                                                                                                onChange={(value) => {
+                                                                                                    handleRepeatorChange(value, 'materialFor', index)
+                                                                                                }}
+                                                                                            >
+                                                                                                {shipmentType === 'Combined' && <Option value="project">Project</Option>}
+                                                                                                <Option value="inventory">Inventory</Option>
+                                                                                                <Option value="supplies">Supplies/Expenses</Option>
+                                                                                            </Select>
+                                                                                        </Form.Item> */}
+                                                                                        <lable>Material For</lable>
+                                                                                        <select onChange={({target: { value }}) => {
+                                                                                                    handleRepeatorChange(value, 'materialFor', index)
+                                                                                                }} value={repeator[index].materialFor}>
+                                                                                            {shipmentType === 'Combined' && <option value="project">Project</option>}
+                                                                                            <option value="inventory">Inventory</option>
+                                                                                            <option value="supplies">Supplies/Expenses</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </>
+                                                                            )}
+                                                                        </div>
+
+                                                                        <div className="col-sm-4">
+                                                                            <div className="wrap-box">
+                                                                                {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
+                                                                                    // <Form.Item
+                                                                                    //     label={repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
+                                                                                    //     name={`code_${index}`}
+                                                                                    //     htmlFor="file"
+                                                                                    //     className="same-clr"
+                                                                                    //     value={repeator[index].code}
+                                                                                    //     onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)}
+                                                                                    //     rules={[
+                                                                                    //         {
+                                                                                    //             required: true,
+                                                                                    //             message: `Please enter ${repeator[index].materialFor === 'inventory' ? "inventory" : "GL"} Code`,
+                                                                                    //         },
+                                                                                    //     ]}
+                                                                                    // >
+                                                                                    //     <Input />
+                                                                                    // </Form.Item>
+                                                                                    <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row">
+                                                                        <div className="col-sm-4">
+                                                                            {repeator[index].materialFor === 'project' && (
+                                                                                <>
+                                                                                    <div class="selectwrap add-dropdown-wrap">
+                                                                                        <div class="selectwrap columns-select shipment-caret ">
+                                                                                            <label>Project</label>
+                                                                                            <select onChange={({ target: { value } }) => {
+                                                                                                    list(value);
+                                                                                                    handleRepeatorChange(value, 'project', index)}
+                                                                                                }
+                                                                                                value={repeator[index].project}
+                                                                                            >
+                                                                                                {Array.isArray(projects) &&
+                                                                                                    projects.map((project) => (
+                                                                                                        <option key={project.project_id} value={project.project_id}>
+                                                                                                            {project.name}
+                                                                                                        </option>
+                                                                                                ))}
+                                                                                            </select>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </>
+                                                                            )}
+                                                                        </div>
+
+                                                                        <div className="col-sm-4">
+                                                                            {repeator[index].materialFor === 'project' && (
+                                                                                <div class="selectwrap add-dropdown-wrap">
+                                                                                    <div className="selectwrap columns-select shipment-caret ">
+                                                                                        {/* <CaretDownFilled className="caret-icon" /> */}
+                                                                                        <select onChange={({target: { value }}) => handleRepeatorChange(value, 'site', index)}>
+                                                                                            {Array.isArray(siteOptions) &&
+                                                                                                siteOptions.map((site) => (
+                                                                                                    <option key={site.site_id} value={site.site_id}>
+                                                                                                        {site.name}
+                                                                                                    </option>
+                                                                                                ))
+                                                                                            }
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                                                </Space>
+                                                            )
+                                                        }
+
+                                                        )}
                                                         <Form.Item>
-                                                            <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
+                                                            <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
+                                                                setRepeator([...repeator, repeatorData]);
+                                                                add();
+                                                            }} icon={<PlusOutlined />}>
                                                                 Add More Material
                                                             </Button>
                                                         </Form.Item>
                                                     </>
                                                 )}
                                             </Form.List>
+                                            {/* )} */}
                                         </div>
                                     </div>
                                     <div className="row top-btm-space">

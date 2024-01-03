@@ -755,7 +755,9 @@ div#w-small span {
     margin-bottom: 2px !important;
     margin-top: 0px;
 }
-
+.minuswrap-img {
+    margin-top: 35px;
+}
 .ant-col label.ant-form-item-required::before {
     display: none !important;
 }
@@ -828,6 +830,12 @@ button.butt-flex span {
     display: flex;
     align-items: center;
 } */
+.ant-space.space-unit {
+    flex-direction: column;
+}
+.ant-space.space-unit   .ant-space-item {
+    width: 100%;
+}
 .ant-space.vendor-ant-form {
     align-items: center;
 }
