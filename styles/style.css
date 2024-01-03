@@ -1950,6 +1950,16 @@ button.ant-btn.add-more-btnn {
     }
 }
 
+span.text-sizes {
+    font-size: 23px;
+    color: #fff;
+    background-color: #659CEE;
+    padding: 11px 14px;
+    border-radius: 16px;
+    width: 55px;
+    text-align: center;
+}
+
 @media (max-width: 1024px) {
     th.hedaings-tb {
         padding: 10px 12px;
