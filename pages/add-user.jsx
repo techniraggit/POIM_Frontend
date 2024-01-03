@@ -50,6 +50,8 @@ const AddUser = ({ base_url }) => {
       const data = {
         ...values,
       }
+      // console.log(data,'99999999999999999999999999');
+      // return
 
       const response = await axios.post(`${base_url}/api/admin/users`, data, {
         headers: headers,
@@ -78,13 +80,20 @@ const AddUser = ({ base_url }) => {
   };
 
   const handlePhoneNumberChange = (value) => {
-    // If the value is exactly 10 digits, automatically add the +91 prefix
-    if (value && /^\d{10}$/.test(value)) {
-      form.setFieldsValue({
-        phone_number: '+91' + value,
-      });
-    }
+    // If the value is exactly 10 or 11 digits, automatically add the appropriate prefix
+    if (isValidPhone(value)) {
+        // Do something with the valid phone number
+        console.log('Valid phone number:', value);
+      } else {
+        console.log('Invalid phone number:', value);
+      }
   };
+
+
+  function isValidPhone(phoneNumber) {
+    const pattern = /^\+(?:[0-9] ?){6,11}[0-9]$/;
+    return phoneNumber && pattern.test(phoneNumber);
+  }
 
   return (
     <>
@@ -173,17 +182,28 @@ const AddUser = ({ base_url }) => {
                           label="Contact No"
                           name="phone_number"  // Add a name to link the input to the form values
                           className="vender-input"
-                          // rules={[
-                          //   { required: true, message: 'Please enter your contact number!' },
-                          //   { validator: validatePhoneNumber },
-                          // ]}
                           rules={[
                             { required: true, message: 'Please enter your contact number!' },
-                            {
-                              pattern: /^\+91[0-9]{10}$/,
-                              message: 'Please enter a valid phone number starting with +91 and followed by 10 digits.',
-                            },
+                            // {
+                            //   pattern: /^\+91[0-9]{10}$/,
+                            //   message: 'Please enter a valid phone number starting with +91 and followed by 10 digits.',
+                            // },
+                            // Uncomment the following lines if you want to use a custom validator function
+                            // {
+                            //   validator: validatePhoneNumber,
+                            // },
                           ]}
+                        // rules={[
+                        //   { required: true, message: 'Please enter your contact number!' },
+                        //   { validator: validatePhoneNumber },
+                        // ]}
+                        // rules={[
+                        //   { required: true, message: 'Please enter your contact number!' },
+                        //   {
+                        //     pattern: /^\+91[0-9]{10}$/,
+                        //     message: 'Please enter a valid phone number starting with +91 and followed by 10 digits.',
+                        //   },
+                        // ]}
                         // rules={[{ required: true, message: 'Please enter your contact number !' }]}
                         >
                           <Input
@@ -262,8 +282,8 @@ const AddUser = ({ base_url }) => {
                         </Button>
                       </Form.Item> */}
                       <Form.Item >
-                      <button type="submit" className="create-ven-butt" loading={loading}>Submit</button>
-                    </Form.Item>
+                        <button type="submit" className="create-ven-butt" loading={loading}>Submit</button>
+                      </Form.Item>
                     </div>
                   </div>
                 </Form>

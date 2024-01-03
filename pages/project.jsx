@@ -7,9 +7,12 @@ import { Table, Button, message, Popconfirm, Input } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
+import ProjectPopup from "@/components/project-popup";
 
 const Vendor = ({ base_url }) => {
+    
     const [projects, setProjects] = useState([]);
+    const [isViewProjectVisible, setProjectVisible] = useState(false);
     // const [addresses,setAddresses]=useState([]);
     const [totalProjects, setTotalProjects] = useState(0)
     useEffect(() => {
@@ -31,7 +34,6 @@ const Vendor = ({ base_url }) => {
     }, [])
 
     const siteAddress = projects?.map((project) => {
-        console.log(project, 'projecttttttttttttttttt');
         return project.sites.map((site) => {
             return (site.address)
         })
@@ -58,12 +60,16 @@ const Vendor = ({ base_url }) => {
 
             console.log('Delete response:', response);
             message.success('project deleted successfully.');
-            setProjects(preproject => preproject.filter(project => project.id !== id));
+            setProjects(preproject => preproject.filter(project => project.project_id !== id));
             // Reload the categories after deleting
         } catch (error) {
             console.error('Error deleting category:', error);
             message.error('Failed to delete the item. Please try again later.');
         }
+    };
+    const handleIconClick = (id) => {
+        console.log(id,'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
+        setProjectVisible((prevVisible) => (prevVisible === id ? null : id));
     };
 
     return (
@@ -86,7 +92,7 @@ const Vendor = ({ base_url }) => {
                         </ul>
                         <div className="wrapin-form">
                             <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Vendor" />
+                                <input className="vendor-input" placeholder="Search Vendor" type="text" />
                                 <button className="vendor-search-butt">Search</button>
                             </form>
                         </div>
@@ -104,7 +110,11 @@ const Vendor = ({ base_url }) => {
                                     </thead>
                                     <tbody>
                                         {Array.isArray(projects) &&
-                                            projects.map((project, index) => (
+                                            projects.map((project, index) => 
+                                            // {
+                                            //     console.log(project,'project namesssssssssssss');
+                                                (
+                                                
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{project.name}</td>
@@ -138,12 +148,14 @@ const Vendor = ({ base_url }) => {
                                                         ))}
                                                     </td> */}
                                                     <td className="td-icon-color">
-                                                        <EyeFilled />
+                                                    <EyeFilled onClick={() => handleIconClick(project.project_id)} />
+                                                        {isViewProjectVisible === project.project_id && <ProjectPopup project_id={project.project_id} />} 
+                                                        
                                                         
 
                                                         <Popconfirm
                                                             title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(project.id)}
+                                                            onConfirm={() => handleDelete(project.project_id)}
                                                             okText="Yes"
                                                             cancelText="No"
                                                             
@@ -152,10 +164,12 @@ const Vendor = ({ base_url }) => {
                                                             <DeleteFilled />
                                                             
                                                         </Popconfirm>
-                                                        <a href="#" className="me-2"><EditFilled /></a>
+                                                        <Link href={`/edit_project/${project.project_id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
-                                            ))}
+                                            )
+                                        // }
+                                            )}
 
                                     </tbody>
                                 </table>

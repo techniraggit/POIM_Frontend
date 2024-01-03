@@ -12,12 +12,13 @@ import DynamicTitle from '@/components/dynamic-title.jsx';
 
 const Vendor_Edit = ({ base_url }) => {
     const [form] = Form.useForm();
-   
+
     const router = useRouter();
     const { id } = router.query;
     const [vendors, setVendors] = useState([]);
     const [totalVendor, setTotalVendor] = useState(0);
     const [selectedVendor, setSelectedVendor] = useState(null);
+    const [repeaterData, setRepeaterData] = useState([])
 
     useEffect(() => {
         const fetchRoles = async () => {
@@ -26,30 +27,33 @@ const Vendor_Edit = ({ base_url }) => {
                     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 };
                 const response = await axios.get(`${base_url}/api/admin/vendors?vendor_id=${id}`, { headers });
-                console.log(response.data,'get vendor api respone');
+                console.log(response.data, 'get vendor api respone');
+                setRepeaterData(response.data.vendors_details.vendor_contact);
                 setTotalVendor(response.data.total_vendors);
                 setVendors(response.data.vendors);
 
 
                 const vendorData = response.data.vendors_details;
-                console.log(vendorData,'$$$$$$$$$$$$$$$$$');
+                console.log(vendorData, '$$$$$$$$$$$$$$$$$');
+
                 form.setFieldsValue({
-                company_name:vendorData.company_name,
-                name:vendorData.vendor_contact[0].name,
-                phone_number:vendorData.vendor_contact[0].phone_number,
-                email:vendorData.vendor_contact[0].email,
-                address:vendorData.address
+                    company_name: vendorData.company_name,
+                    name: vendorData.vendor_contact[0].name,
+                    phone_number: vendorData.vendor_contact[0].phone_number,
+                    email: vendorData.vendor_contact[0].email,
+                    address: vendorData.address,
+                    customer_name: vendorData.customer_name,
 
                 })
-                
-            //    vendorData.map((data)=>{
-            //     console.log(data.company_name,'#################');
-            //     form.setFieldValue({
-            //         company_name:data.company_name,
-            //     })
-            //    })
-                console.log(vendorData,'!!!!!!!!!!!!!!!!!!!!!!!S');
-               
+
+                //    vendorData.map((data)=>{
+                //     console.log(data.company_name,'#################');
+                //     form.setFieldValue({
+                //         company_name:data.company_name,
+                //     })
+                //    })
+                console.log(vendorData, '!!!!!!!!!!!!!!!!!!!!!!!S');
+
 
             } catch (error) {
                 console.error('Error fetching vendors:', error);
@@ -58,60 +62,57 @@ const Vendor_Edit = ({ base_url }) => {
         fetchRoles();
     }, []);
 
-    // const handleEditClick = (vendor) => {
-    //     setSelectedVendor(vendor);
-    // };
+
 
     const onFinish = async (values) => {
-        if(values.items?.length>0){
+        console.log(values, 'bbbbbbbbbbbb');
+        if (values.items?.length > 0) {
             const dynamicItems = values.items.map(item => ({
-                id:item.id,
+
+                id: item.id,
                 name: item.name,
                 phone_number: item.phone_number,
                 email: item.email,
             }));
+            // console.log(item, 'ifffffffffffffffff');
             var data = {
                 ...values,
-                vendor_id:itemsData[0].vendor_id,
+                vendor_id: id,
                 contact_info: [...dynamicItems]
             };
-             console.log(data,'hhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+            console.log(data, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhh');
         }
-        else{
+        else {
             var data = {
+                vendor_id: id,
                 ...values,
-                vendor_id:id,
                 contact_info: [
                     {
-                        id:values.id,
+                        // id: values.id,
                         name: values.name,
                         phone_number: values.phone_number,
                         email: values.email,
-                    }                   
+                    }
                 ]
             };
+            console.log(data, 'elseeeeeeeeee');
         }
-
-
-
-
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             };
 
-            // Make a PUT request to update the vendor
-           const response= await axios.patch(`${base_url}/api/admin/vendors`, data, 
-           {
-             headers :headers,
-             
-        }
-           );
-           console.log(response,'vendor edit rsponse');
+            const response = await axios.patch(`${base_url}/api/admin/vendors`, data,
+                {
+                    headers: headers,
+
+                }
+            );
+            console.log(response, 'vendor edit rsponse');
 
             // Display a success message
             message.success('Vendor updated successfully');
-            // router.push('/vendor')
+            router.push('/vendor')
 
             // Reset the selected vendor and refetch the updated list
             setSelectedVendor(null);
@@ -122,6 +123,45 @@ const Vendor_Edit = ({ base_url }) => {
             message.error('Error updating vendor');
         }
     };
+
+    const handleChange = (index, field, value) => {
+        const updatedRepeaterData = [...repeaterData];
+
+        // Update the specific field for the given index
+        updatedRepeaterData[index] = {
+            ...updatedRepeaterData[index],
+            [field]: value,
+        };
+
+        setRepeaterData(updatedRepeaterData);
+    };
+    const removeField = async (id) => {
+        console.log(id, 'idididididid');
+
+        try {
+            const headers = {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json', // Set content type to JSON
+            };
+            //const body = JSON.stringify({ vendor_contact_id: id });
+            const response = await axios.put(`${base_url}/api/admin/vendors`,
+                {
+                    vendor_contact_id: id,
+                },
+                {
+                    headers: headers,
+                }
+            );
+            console.log(response.data, 'removeeee');
+            setRepeaterData(prevVendors => prevVendors.filter(repeater => repeater.vendor_contact_id !== id));
+            // fetchRoles();
+        } catch (error) {
+            console.error('Error in remove:', error);
+            message.error('Error remove');
+        }
+
+    }
 
     return (
         <>
@@ -150,7 +190,6 @@ const Vendor_Edit = ({ base_url }) => {
                                             <Form.Item
                                                 label="Company Name"
                                                 name="company_name"
-                                                // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
@@ -163,7 +202,6 @@ const Vendor_Edit = ({ base_url }) => {
                                             <Form.Item
                                                 label="Contact Person Name"
                                                 name="name"
-                                                // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
@@ -180,12 +218,10 @@ const Vendor_Edit = ({ base_url }) => {
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
-                                                <Input  onChange={(e) => handlePhoneNumberChange(e.target.value)}/>
+                                                <Input onChange={(e) => handlePhoneNumberChange(e.target.value)} />
                                             </Form.Item>
                                         </div>
                                     </div>
-                                  
-
                                     <div className="col-lg-4 col-md-12">
                                         <div className="wrap-box">
                                             <Form.Item
@@ -199,8 +235,6 @@ const Vendor_Edit = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
                                     </div>
-
-
                                     <div className="col-lg-4 col-md-12">
                                         <div className="wrap-box">
                                             <Form.Item
@@ -210,7 +244,7 @@ const Vendor_Edit = ({ base_url }) => {
                                                 rules={[{ required: true, message: 'Please enter your State / Province!' }]}
                                                 initialValue='Ontario'
                                             >
-                                                <Input readOnly/>
+                                                <Input readOnly />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -224,7 +258,7 @@ const Vendor_Edit = ({ base_url }) => {
                                                 rules={[{ required: true, message: 'Please enter your country!' }]}
                                                 initialValue='Canada'
                                             >
-                                                <Input readOnly/>
+                                                <Input readOnly />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -246,14 +280,163 @@ const Vendor_Edit = ({ base_url }) => {
                                             <Form.Item
                                                 label="Customer Name"
                                                 name="customer_name"  // Add a name to link the input to the form values
-                                                className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your customer name!' }]}
-                                            >
+                                                className="vender-input"                                            >
                                                 <Input />
 
                                             </Form.Item>
                                         </div>
                                     </div>
+                                    <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="vendor-ant-form">
+                                        {Array.isArray(repeaterData) &&
+                                            repeaterData.map((repeater, index) => 
+                                            // {
+                                            //     console.log(repeater,'repeater data');
+                                            // }
+                                            (
+
+                                                index !== 0 && (
+                                                    <>
+                                                        <div className="wrap-box" key={index}>
+                                                            <label>Name</label>
+                                                            <input
+                                                                htmlFor="name"
+                                                                name="name"
+                                                                type="text"
+                                                                value={repeater.name}
+                                                                onChange={(e) => handleChange(index, 'name', e.target.value)}
+                                                            />
+                                                        </div>
+                                                        <div className="wrap-box" key={index}>
+
+                                                            <label>Email</label>
+                                                            <input
+                                                                htmlFor="email"
+                                                                name="email"
+                                                                type="text"
+                                                                value={repeater.email}
+                                                                onChange={(e) => handleChange(index, 'email', e.target.value)}
+                                                            />
+                                                        </div>
+                                                        <div className="minus-wraper1 wrap-box">
+                                                            <label>Phone Number</label>
+                                                            <input
+                                                                htmlFor="phone_number"
+                                                                name="phone_number"
+                                                                type="text"
+                                                                value={repeater.phone_number}
+                                                                onChange={(e) => handleChange(index, 'phone_number', e.target.value)}
+                                                            />
+
+                                                        </div>
+                                                        <div className="wrap-minus" >
+                                                            <MinusOutlined className="minus-wrap"
+                                                                onClick={() => removeField(repeater.vendor_contact_id)}
+                                                                style={{ marginLeft: '8px' }} />
+                                                        </div>
+                                                    </>
+                                                )
+                                            )
+                                            )}
+                                    </Space>
+
+                                    {/* <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                        <div className="wrap-box">
+                                            {Array.isArray(repeaterData) &&
+                                                repeaterData.map((repeater, index) =>
+                                                (
+                                                    <>
+
+                                                        {index !== 0 && (
+                                                            <div class="wrap-box">
+                                                                <label>Name</label>
+                                                                <input
+                                                                    for="name"
+                                                                    name="name"
+                                                                    type="text"
+                                                                    value={repeater.name}
+                                                                    onChange={(e) => handleChange(index, 'name', e.target.value)}
+
+                                                                />
+
+
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                    
+                                                )
+                                            
+                                                )
+                                            }
+                                        </div>
+                                        <div className="wrap-box">
+                                            {Array.isArray(repeaterData) &&
+                                                repeaterData.map((repeater, index) => (
+                                                    <>
+                                                        {index !== 0 && (
+                                                            <div class="wrap-box">
+                                                                <label>Email</label>
+                                                                <input
+                                                                    for="name"
+                                                                    name="email"
+                                                                    type="text"
+                                                                    value={repeater.email}
+                                                                    onChange={(e) => handleChange(index, 'email', e.target.value)}
+
+                                                            
+                                                                />
+
+
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                    
+                                                ))
+                                            }
+                                        </div>
+
+                                        <div className="box-wrapp-center">
+                                            {Array.isArray(repeaterData) &&
+                                                repeaterData.map((repeater, index) => (
+                                                    <>
+                                                        {index !== 0 && (
+                                                            <div className="minus-wraper1">
+                                                                <div class="wrap-box">
+                                                                    <label>Phone Number</label>
+                                                                    <input
+                                                                        for="name"
+                                                                        name="phone_number"
+                                                                        type="text"
+                                                                        value={repeater.phone_number}
+                                                                        onChange={(e) => handleChange(index, 'phone_number', e.target.value)}
+
+                                                                    
+                                                                    />
+
+                                                                </div>
+                                                                <div class="wrap-minus" onClick={removeField}>
+                                                                    <MinusOutlined className="minus-wrap"
+
+                                                                        style={{ marginLeft: '8px' }} />
+                                                                </div>
+
+                                                            </div>
+
+                                                        )}
+
+
+                                                    </>
+                                                ))
+                                            }
+                                        </div>
+                                       
+                                    </Space> */}
+                                    {/* )} */}
+
+
+
+
+
+
                                     <div className="create-another">
                                         <Form.List name="items">
                                             {(fields, { add, remove }) => (
@@ -295,8 +478,6 @@ const Vendor_Edit = ({ base_url }) => {
                                                                     <Input placeholder="Phone Number" />
                                                                 </Form.Item>
                                                             </div>
-
-
                                                             <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
                                                         </Space>
                                                     ))}

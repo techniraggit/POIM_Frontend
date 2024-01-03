@@ -13,6 +13,7 @@ import View_Vendor from "@/components/view-vendor";
 const Vendor = ({ base_url }) => {
     const [vendors, setVendors] = useState([]);
     const [totalVendor, setTotalVendor] = useState(0)
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isViewVendorVisible, setViewVendorVisible] = useState(false);
 
 
@@ -24,7 +25,7 @@ const Vendor = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/vendors`, { headers: headers });
-                console.log(response.data.total_vendors, '55555555555555555555555555');
+                console.log(response.data, '55555555555555555555555555');
                 setTotalVendor(response.data.total_vendors)
                 setVendors(response.data.vendors); // Assuming the API response is an array of projects
             } catch (error) {
@@ -55,8 +56,8 @@ const Vendor = ({ base_url }) => {
             });
 
             console.log('Delete response:', response);
-            message.success('Category deleted successfully.');
-            setVendors(prevVendors => prevVendors.filter(vendor => vendor.id !== id));
+            message.success('vendor deleted successfully.');
+            setVendors(prevVendors => prevVendors.filter(vendor => vendor.vendor_id !== id));
             // Reload the categories after deleting
         } catch (error) {
             console.error('Error deleting category:', error);
@@ -67,6 +68,7 @@ const Vendor = ({ base_url }) => {
 
     const handleIconClick = (id) => {
         setViewVendorVisible((prevVisible) => (prevVisible === id ? null : id));
+        setIsModalOpen(true);
     };
     return (
         <>
@@ -79,7 +81,7 @@ const Vendor = ({ base_url }) => {
                             <li className="me-4">
                                 <Link href="/create-vendor" className="mb-2 d-block"><PlusOutlined /></Link>
                                 {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
-                                <div>Create New Vendor</div>
+                                <span>Create New Vendor</span>
                             </li>
                             <li className="me-4">
                                 <span className="text-size mt-0">{totalVendor}</span>
@@ -116,21 +118,17 @@ const Vendor = ({ base_url }) => {
                                                     <td className="td-icon-color">
                                                         {/* <Link href="#" className="me-2"> */}
                                                         <EyeFilled onClick={() => handleIconClick(vendor.id)} />
-                                                        {isViewVendorVisible === vendor.id && <View_Vendor vendor_id={vendor.id} />}
-
 
                                                         {/* </Link> */}
                                                         <Popconfirm
                                                             title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(vendor.id)}
+                                                            onConfirm={() => handleDelete(vendor.vendor_id)}
                                                             okText="Yes"
                                                             cancelText="No"
                                                         >
-                                                            {/* <Link href="" className="me-2"> */}
                                                             <DeleteFilled />
-                                                            {/* </Link> */}
                                                         </Popconfirm>
-                                                        <Link href={`/edit_vendor/${vendor.id}`} className="me-2"><EditFilled /></Link>
+                                                        <Link href={`/edit_vendor/${vendor.vendor_id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -140,6 +138,7 @@ const Vendor = ({ base_url }) => {
                         </div>
                     </div>
                 </div>
+                <View_Vendor setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible} />
             </div>
         </>
     )

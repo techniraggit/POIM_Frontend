@@ -13,21 +13,6 @@ const Create_Vendor = ({ base_url }) => {
     const [form] = Form.useForm();
     const router = useRouter();
     const onFinish = async (values) => {
-
-
-        // const dynamicItems = values.items.map(item => ({
-        //     name: item.name,
-        //     phone_number: item.phone_number,
-        //     email: item.email,
-        // }));
-
-        // const data = {
-        //     ...values,
-        //     contact_info: [...dynamicItems]
-        // }
-        // console.log(data, 'datataaaaaaa');
-
-
         if(values.items){
             console.log(values.items,'?????????????????????');
             const dynamicItems = values.items.map(item => ({
@@ -44,12 +29,12 @@ const Create_Vendor = ({ base_url }) => {
                         email: values.email,
                     },
                     ...dynamicItems,
-                   
+
                 ]
             };
-            console.log(data,'ifffffffffff');
+            console.log(data, 'ifffffffffff');
         }
-        else{
+        else {
             var data = {
                 ...values,
                 contact_info: [
@@ -58,16 +43,11 @@ const Create_Vendor = ({ base_url }) => {
                         phone_number: values.phone_number,
                         email: values.email,
                     }
-                   
+
                 ]
             };
-            console.log(data,'elseeeeeeeeee')
+            console.log(data, 'elseeeeeeeeee')
         }
-        // return
-
-        // console.log(data,'hereeeeeeee')
-        // return
-
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -80,13 +60,7 @@ const Create_Vendor = ({ base_url }) => {
                 headers: headers,
             });
             message.success(response.data.message)
-            // router.push('/vendor')
-            
-            // console.log(response.data.message,'messssssssssssssssssssssssageeeeee');
-            // console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
             router.push('/vendor')
-
-
         }
         catch (error) {
         }
@@ -95,13 +69,20 @@ const Create_Vendor = ({ base_url }) => {
     }
 
     const handlePhoneNumberChange = (value) => {
-        // If the value is exactly 10 digits, automatically add the +91 prefix
-        if (value && /^\d{10}$/.test(value)) {
-          form.setFieldsValue({
-            phone_number: '+91' + value,
-          });
-        }
+        // If the value is exactly 10 or 11 digits, automatically add the appropriate prefix
+        if (isValidPhone(value)) {
+            // Do something with the valid phone number
+            console.log('Valid phone number:', value);
+          } else {
+            console.log('Invalid phone number:', value);
+          }
       };
+
+
+      function isValidPhone(phoneNumber) {
+        const pattern = /^\+(?:[0-9] ?){6,11}[0-9]$/;
+        return phoneNumber && pattern.test(phoneNumber);
+      }
 
 
     return (
@@ -161,11 +142,11 @@ const Create_Vendor = ({ base_url }) => {
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
-                                                <Input  onChange={(e) => handlePhoneNumberChange(e.target.value)}/>
+                                                <Input onChange={(e) => handlePhoneNumberChange(e.target.value)} />
                                             </Form.Item>
                                         </div>
                                     </div>
-                                  
+
 
                                     <div className="col-lg-4 col-md-12">
                                         <div className="wrap-box">
@@ -191,7 +172,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 rules={[{ required: true, message: 'Please enter your State / Province!' }]}
                                                 initialValue='Ontario'
                                             >
-                                                <Input readOnly/>
+                                                <Input readOnly />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -205,7 +186,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 rules={[{ required: true, message: 'Please enter your country!' }]}
                                                 initialValue='Canada'
                                             >
-                                                <Input readOnly/>
+                                                <Input readOnly />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -222,35 +203,17 @@ const Create_Vendor = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
                                     </div>
-
-
-                                    {/* <div className="col-lg-4 col-md-12">
-                                        <div className="wrap-box">
-                                            <Form.Item
-                                                label="Contact No"
-                                                name="contact_no"  // Add a name to link the input to the form values
-                                                className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter contact no!' }]}
-                                            >
-                                                <Input />
-                                            </Form.Item>
-                                        </div>
-                                    </div> */}
-
-
                                     <div className="col-lg-4 col-md-12">
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Customer Name"
                                                 name="customer_name"  // Add a name to link the input to the form values
-                                                className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your customer name!' }]}
-                                            >
+                                                className="vender-input"                                            >
                                                 <Input />
-
                                             </Form.Item>
                                         </div>
                                     </div>
+                                 
                                     <div className="create-another">
                                         <Form.List name="items">
                                             {(fields, { add, remove }) => (
@@ -297,6 +260,7 @@ const Create_Vendor = ({ base_url }) => {
                                                             <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
                                                         </Space>
                                                     ))}
+                                                
                                                     <Form.Item>
                                                         <Button className="add-more-btn" type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
                                                             <span >Add Another Contact Person</span>
@@ -305,7 +269,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 </>
                                             )}
                                         </Form.List>
-                                    </div>
+                                        </div>  
                                     <Form.Item>
                                         <button type="submit" className="create-ven-butt">Submit</button>
                                     </Form.Item>

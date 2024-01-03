@@ -104,6 +104,8 @@ const Login = ({ base_url }) => {
                 if (response.status === 200) {
                     localStorage.setItem('access_token', response.data.access_token)
                     localStorage.setItem('refresh_token', response.data.refresh_token)
+                    localStorage.setItem('user_first_name', response.data.user_first_name)
+                    localStorage.setItem('user_last_name', response.data.user_last_name)
                     router.push('/dashboard');
                     message.success('Login successful');
                     // Handle successful login

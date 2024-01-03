@@ -7,88 +7,75 @@ import axios from 'axios';
 import { base_url } from './constant';
 
 
-const View_Vendor = ({vendor_id}) => {
-
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const[vendorData,setVenndorData]=useState([])
-  const[vendorcontact,setvendorcontact]=useState([])
-   
-  
-
+const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen }) => {
+  const [vendorData, setVenndorData] = useState([])
+  const [vendorcontact, setvendorcontact] = useState([])
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchRoles = async () => {
       try {
-    const headers = {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-  };
-  const response =await axios.get(`${base_url}/api/admin/vendors?vendor_id=${vendor_id}`, { headers });
-  setvendorcontact(response.data.vendors_details.vendor_contact[0])
-  setVenndorData(response.data.vendors_details)
-}catch (error) {
-  console.error('Error fetching vendors:', error);
-}
+        const headers = {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        };
+        const response = await axios.get(`${base_url}/api/admin/vendors?vendor_id=${vendor_id}`, { headers });
+        setvendorcontact(response.data.vendors_details.vendor_contact[0])
+        setVenndorData(response.data.vendors_details)
+      } catch (error) {
+        console.error('Error fetching vendors:', error);
+      }
     }
     fetchRoles();
-  },[vendor_id])
+  }, [vendor_id])
   return (
     <>
       {isModalOpen && (
-        <div className="approve-po">
+        <div class="approve-po">
           <div className="cross-icon" onClick={handleCloseModal}>
             <CloseOutlined />
           </div>
-          <form className="details-main">
-            {/* Project Details */}
-            <div className="projct-details">
-              <label className="detail-para1">S No.</label>
-              
-              {/* <input className="detail-para" placeholder="#45488" /> */}
+          <form class="details-main">
+            <div class="projct-details">
+              <p class="detail-para1">S No.</p>
+              <p class="detail-para">#45488</p>
             </div>
 
-            <div className="projct-details">
-              <label className="detail-para1">Company Name</label>
-              <p>{vendorData.company_name}</p>
-              {/* <input className="detail-para" placeholder="Justin" /> */}
-            </div>
+            <div class="projct-details">
+              <p class="detail-para1">Company Name</p>
+              <p class="detail-para">Justin</p>
 
-            {/* Email and Contact */}
-            <div className="pop-up-flex row">
-              <div className="projct-details col-md-9">
-                <label className="detail-para1">Email Address</label>
-                <p>{vendorcontact.email}</p>
-                {/* <p>{vendorData.vendor_contact[0].email}</p> */}
-                {/* <input className="detail-para" placeholder="Justin@gmail.com" /> */}
+
+              <div class="pop-up-flex row">
+                <div class="projct-details col-md-9">
+                  <p class="detail-para1">Email Address</p>
+                  <p class="detail-para">Justin@gmail.com</p>
+                </div>
+
+                <div class="projct-details col-md-3">
+                  <p class="detail-para1">Contact No</p>
+                  <p class="detail-para">123654789</p>
+                </div>
+
               </div>
 
-              <div className="projct-details col-md-3">
-                <label className="detail-para1">Contact No</label>
-                <p>{vendorcontact.phone_number}</p>
-                {/* <p>{vendorData.vendor_contact[0].phone_number}</p> */}
-                {/* <input className="detail-para" placeholder="123654789" /> */}
+              <div class="projct-details">
+                <p class="detail-para1">Address</p>
+                <p class="detail-para">#456 - Upper Link, PA</p>
               </div>
-            </div>
 
-            {/* Address */}
-            <div className="projct-details">
-              <label className="detail-para1">Address</label>
-              <p>{vendorData.address}</p>
-              {/* <input className="detail-para" placeholder="#456 - Upper Link, PA" /> */}
-            </div>
+              <div class="pop-up-flex row">
+                <div class="projct-details col-md-9">
+                  <p class="detail-para1">State / Province</p>
+                  <p class="detail-para">Ontario</p>
+                </div>
+                <div class="projct-details col-md-3">
+                  <p class="detail-para1">Country</p>
+                  <p class="detail-para2">Canada</p>
+                </div>
+              </div>
 
-            {/* State/Province and Country */}
-            <div className="pop-up-flex row">
-              <div className="projct-details col-md-9">
-                <label className="detail-para1">State / Province</label>
-                <input className="detail-para" placeholder="Ontario" />
-              </div>
-              <div className="projct-details col-md-3">
-                <label className="detail-para1">Country</label>
-                <input className="detail-para2" placeholder="Canada" />
-              </div>
             </div>
           </form>
         </div>

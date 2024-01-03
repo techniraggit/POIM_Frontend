@@ -98,7 +98,6 @@ const Create_Vendor = ({ base_url }) => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             };
-            console.log("values === ", values)
             // const data = {
             //     ...values,
             //     project_manager_id: rootData
@@ -181,7 +180,7 @@ const Create_Vendor = ({ base_url }) => {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-4 col-md-12">
+                                    <div className="col-lg-4 col-md-12 shipment-caret">
                                         <div className="selectwrap bg-border-select">
                                             <Form.Item label="Project Maneger" name="project_manager_id" initialValue="" className="vender-input">
                                                 <Select onChange={(value) => project(value)}>
@@ -197,7 +196,6 @@ const Create_Vendor = ({ base_url }) => {
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div className="row">
                                     <div className="col-lg-4 col-md-12">
@@ -297,7 +295,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 label="Customer Name"
                                                 name="customer_name"  // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your State Province!' }]}
+                                                // rules={[{ required: true, message: 'Please enter your State Province!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>
