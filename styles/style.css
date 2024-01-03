@@ -751,8 +751,9 @@ div#w-small span {
     color: rgb(17, 47, 92, 0.5) !important;
     font-size: 16px !important;
     font-weight: 500;
-    margin-bottom: 7px;
-    margin-top: 35px;
+    height: auto;
+    margin-bottom: 2px !important;
+    margin-top: 0px;
 }
 
 .ant-col label.ant-form-item-required::before {
@@ -1281,12 +1282,22 @@ li.react-icon {
 
 .ant-select-item.ant-select-item-option {
     background-color: transparent !important;
+    padding-left: 4px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.ant-select-item.ant-select-item-option:not(:last-child) {
+    border-bottom: 1px solid rgb(112, 112, 112, 0.25);
+    border-radius: 0;
+    padding-left: 4px;
+    background-color: transparent !important;
 }
 
 .ant-select-dropdown {
-    border: 1px solid #0D0D0D !important;
+    border: 2px solid rgb(13, 13, 13,0.6) !important;
     border-radius: 6px !important;
     box-shadow: none !important;
+    padding: 4px 20px;
 }
 
 button.ant-btn.add-more-btn {
