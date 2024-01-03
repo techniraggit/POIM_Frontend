@@ -57,7 +57,7 @@ const View_Vendor = ({ vendor_id }) => {
 
                 <div class="projct-details col-md-3">
                   <p class="detail-para1">Contact No</p>
-                  <p class="detail-para">123654789</p>
+                  <p class="detail-para2">123654789</p>
                 </div>
 
               </div>

@@ -36,9 +36,9 @@ function SubcontractorPurchaseOrderForm() {
                         <div className="choose-potype">
                             <div className="inner-choose">
                                 <Form className="file-form">
-                                    <div className="row exist-row">
+                                    <div className="row exist-row align-items-end">
                                         <div className="col-md-4">
-                                            <div class="row vendor-rowgap">
+                                            <div class="row vendor-rowgap mb-0 ">
                                                 {/* <div class="col-lg-4 col-md-6"> */}
                                                 <div class="selectwrap react-select" id="vendor-selector">
                                                     <div class="selectwrap  shipment-caret select-site aligned-text">
@@ -76,7 +76,7 @@ function SubcontractorPurchaseOrderForm() {
                                             </div>
                                         </div>
                                         <div className="col-md-4">
-                                            <div className="new-existing">
+                                            <div className="new-existing d-flex">
                                                 <Button className="new-btn me-3">New</Button>
                                                 <Button classNameName="exist-btn">Existing</Button>
                                             </div>

@@ -77,7 +77,7 @@ const PO_list = ({ base_url }) => {
                         </ul>
                         <div className="wrapin-form">
                             <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Users" />
+                                <input className="vendor-input" placeholder="Search Purchase Order" />
                                 <button className="vendor-search-butt">Search</button>
                             </form>
                         </div>
