@@ -37,7 +37,7 @@ const UserPopUp = ({ user_id }) => {
   return (
     <>
       {isModalOpen && (
-        <div className="approve-main">
+        // <div className="approve-main">
           <div className="approve-po">
             <div className="cross-icon" onClick={handleCloseModal}>
               <CloseOutlined />
@@ -47,22 +47,22 @@ const UserPopUp = ({ user_id }) => {
                 <p className="detail-para">Role</p>
                 <button className="user-pop-up-butt">{userRoles}</button>
               </div>
-              <div className="pop-up-flex">
-                <div className="projct-details">
+              <div className="pop-up-flex row">
+                <div className="projct-details col-sm-8">
                   <p className="detail-para1">First Name</p>
                   <p className="detail-para">{userData.first_name}</p>
                 </div>
-                <div className="projct-details">
+                <div className="projct-details col-sm-4">
                   <p className="detail-para1">Last Name</p>
-                  <p className="detail-para2">{userData.last_name}</p>
+                  <p className="detail-para">{userData.last_name}</p>
                 </div>
               </div>
-              <div className="pop-up-flex">
-                <div className="projct-details">
+              <div className="pop-up-flex row">
+                <div className="projct-details col-sm-8">
                   <p className="detail-para1">Email Address</p>
                   <p className="detail-para">{userData.email}</p>
                 </div>
-                <div className="projct-details">
+                <div className="projct-details col-sm-4">
                   <p className="detail-para1">Contact No</p>
                   <p className="detail-para">{userData.phone_number}</p>
                 </div>
@@ -71,17 +71,17 @@ const UserPopUp = ({ user_id }) => {
                 <p className="detail-para1">Address</p>
                 <p className="detail-para">{userData.address}</p>
               </div>
-              <div className="pop-up-flex">
-                <div className="projct-details">
+              <div className="pop-up-flex row">
+                <div className="projct-details col-sm-8">
                   <p className="detail-para1">State / Province</p>
                   <p className="detail-para">{userData.state}</p>
                 </div>
-                <div className="projct-details">
+                <div className="projct-details col-sm-4">
                   <p className="detail-para1">Country</p>
                   <p className="detail-para3">{userData.country}</p>
                 </div>
               </div>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       )}
