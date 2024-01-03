@@ -719,7 +719,7 @@ div#w-small span {
 
 .linewrap {
     margin-bottom: 35px;
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 .wrap-box label {
@@ -1443,11 +1443,11 @@ ul.list-icons li {
 
 .create-another .ant-space span.anticon.anticon-minus.minus-wrap svg {
     color: #0d0d0d !important;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 
 .create-another .ant-space {
-    margin-bottom: 70px !important;
+    margin-bottom: 50px !important;
 }
 
 .list-dboard li:hover {
@@ -1560,7 +1560,7 @@ button.ant-btn.add-more-btn:hover span {
 }
 
 .add-space-btn {
-    margin-top: 86px;
+    margin-top: 50px;
 }
 
 .react-select .ant-form-item .ant-form-item-explain-error {
@@ -1759,18 +1759,13 @@ li.user:hover .dropdown-content {
 
 
 
-.details-main {
-    /* margin-left: 41px; */
-    /* margin-right: 81px; */
-    width: 540px;
-    margin: 0 auto;
-}
+
 
 .detail-para2 {
     color: rgb(17, 47, 92);
-    font-size: 19px;
+    font-size: 17px;
     font-weight: 600;
-    margin-right: 20px;
+    /* margin-right: 20px; */
     outline: none;
     border: 0;
 }
@@ -1794,14 +1789,15 @@ p.detail-para3 {
 
 .approve-po {
     box-shadow: 0px 3px 39px #00000021;
-    width: 632px;
+    width: 562px;
     margin: 0 auto;
     background-color: #fff;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    padding: 15px;
+    padding: 35px 35px 35px 45px;
+    z-index: 99999;
 }
 
 .cross-icon {
@@ -1813,13 +1809,13 @@ p.detail-para3 {
 .detail-para1 {
     color: rgb(17, 47, 92, 0.5);
     font-weight: 500;
-    margin-bottom: 13px;
+    margin-bottom: 3px;
 }
 
 .detail-para {
-    margin-bottom: 45px;
+    /* margin: 0px; */
     color: rgb(17, 47, 92);
-    font-size: 19px;
+    font-size: 17px;
     font-weight: 600;
     outline: none;
     border: 0;
@@ -1832,7 +1828,9 @@ input.detail-para::placeholder {
 input.detail-para2::placeholder {
     color: rgb(17, 47, 92);
 }
-
+.wrap-box  .ant-form-item.css-dev-only-do-not-override-p7e5j5 {
+    margin-bottom: 3px !important;
+}
 .vendor-pop-up-butt {
     border-radius: 20px;
     background: #E91D26;
@@ -1865,11 +1863,11 @@ button.user-pop-up-butt {
 }
 
 .po-typeraw {
-    margin-bottom: 100px;
+    margin-bottom: 10px;
 }
 
 .vendor-rowgap {
-    margin-bottom: 110px;
+    margin-bottom: 40px;
 }
 
 /* 29 dec */
@@ -1920,7 +1918,138 @@ button.ant-btn.add-more-btnn {
     height: 42px;
     margin-bottom: 26px;
 }
+
+button.ant-btn.ant-btn-dashed.add-more-btnn:hover span {
+    color: #000 !important;
+}
+
+.ant-btn-dashed:hover {
+    color: #0d0d0d;
+    /* border-color: #4096ff; */
+}
+.sub-line {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+.sub-line span {
+    color: #112F5C;
+    font-size: 20px;
+    font-weight: 500;
+    width: 29%;
+}
+.sub-line hr {
+    border: 1px solid #1DBF8E;
+    width: 100%;
+}
+
+.new-existing button {
+    border: 1.4px solid #00000063;
+    background-color: transparent;
+    padding: 7px 20px;
+    border-radius: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    height: 40px;
+    color: #112F5C !important;
+    font-weight: 600;
+}
+
+.new-existing button.ant-btn:hover {
+    border: 1.4px solid #00000063 !important;
+    color: #112F5C !important;
+}
+button.new-btn {
+    border: 2px solid #1DBF8E;
+    box-shadow: 0px 3px 2px #00000029;
+}
+.new-existing button.new-btn:hover {
+    border: 2px solid #1DBF8E !important;
+    box-shadow: 0px 3px 2px #00000029 !important;
+}
+
+.top-first p {
+    color: #112F5C;
+    font-weight: 600;
+}
+.bottom-second {
+    margin-top: 40px;
+}
+.sub-line {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+.inner-para {
+    border: 1px solid #70707054;
+    border-radius: 2px;
+    padding: 30px 25px;
+}
 /* 2jan */
+/* 3jan */
+Button.save-button {
+    margin-top: 20px;
+    background-color: #E91D26;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    font-size: 19px;
+    border-radius: 37px;
+    width: 100%;
+}
+
+.outer-div {
+    padding: 30px 40px;
+}
+
+.listclips {
+    display: flex;
+    align-items: center;
+}
+
+.listclips {
+    display: flex;
+    align-items: center;
+}
+
+.lists-items {
+    max-width: 100%;
+    width: 340px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    background-color: #fff;
+    padding: 10px 12px;
+}
+.align-items-center {
+    align-items: center!important;
+}
+
+.align-items-center {
+    align-items: center!important;
+}
+
+.dollars-input {
+    width: 100%;
+}
+.set-btn {
+    background-color: black;
+    color: white;
+}
+.dollars-input button {
+    width: 25%;
+    font-size: 14px;
+    border: none;
+    border-radius: 2px;
+    padding: 8px 12px;
+}
+
+.create-another.minuswrap-img {
+    margin-top: 40px;
+}
+.vendor-rowgap .selectwrap .ant-form-item {
+    margin-bottom: 0px !important;
+}
+/* 3jan */
 
 /* responsive */
 @media (max-width: 1299px) {
@@ -1956,6 +2085,16 @@ button.ant-btn.add-more-btnn {
         gap: 25px;
         align-items: start;
     }
+}
+
+span.text-sizes {
+    font-size: 23px;
+    color: #fff;
+    background-color: #659CEE;
+    padding: 11px 14px;
+    border-radius: 16px;
+    width: 55px;
+    text-align: center;
 }
 
 @media (max-width: 1024px) {
