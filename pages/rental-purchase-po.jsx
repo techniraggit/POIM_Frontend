@@ -36,20 +36,6 @@ function PurchaseOrderForm() {
                         <div className="choose-potype">
                             <div className="inner-choose">
                                 <Form className="file-form">
-                                    {/* <div className="row">
-                                <div className="col-md-4">
-                                    <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
-                                        <label className="bold-label">Choose PO Type</label>
-                                        <select id="sub1" className="js-states form-control file-wrap-select bold-select">
-                                            <option></option>
-                                            <option>Subcontractor Po</option>
-                                            <option>Non Project Related</option>
-                                            <option>Combined</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> */}
-
                                     <div class="row vendor-rowgap">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="selectwrap react-select" id="vendor-selector">

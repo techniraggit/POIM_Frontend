@@ -317,10 +317,7 @@ const Create_po = ({ base_url }) => {
                 console.error('Error fetching projects:', error);
             }
         }
-        // if(vendorId){
         fetchVendorContact();
-
-        // }
     }, [])
 
 
@@ -455,6 +452,7 @@ const Create_po = ({ base_url }) => {
                         {/* ... (your existing code) */}
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
+                                {/* <Material/> */}
                                 <Form onFinish={onFinish} form={form} className="file-form">
                                     {/* ... (your existing code) */}
                                     <div className="row po-typeraw">
@@ -569,35 +567,7 @@ const Create_po = ({ base_url }) => {
                                                         </Select>
 
                                                     </Form.Item>
-                                                    <Form.Item
-                                                        label="Vendor Contact"
-                                                        name="vendor_contact_id"
-                                                        htmlFor="file"
-                                                        class="same-clr"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please choose site",
-                                                            },
-                                                        ]}
-                                                    >
-                                                        <Select
-                                                            id="singlesa"
-                                                            placeholder="Select"
-                                                            class="js-states form-control file-wrap-select"
-                                                            onChange={(value) => vendorContactDetails(value)}
-                                                        >
-                                                            {contactId.length > 0 &&
-                                                                contactId.map((contact) => (
-                                                                    <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
-                                                                        {contact.name}
-                                                                    </Select.Option>
-                                                                ))
-                                                            }
-                                                        </Select>
-
-                                                    </Form.Item>
-
+                                                  
                                                     {/* <Form.Item
                                                         label="Vendor Contact"
                                                         name="vendor_contact_id"
@@ -636,7 +606,7 @@ const Create_po = ({ base_url }) => {
                                             <div class="selectwrap react-select" id="vendor-selector">
                                                 <div class="selectwrap  shipment-caret select-site aligned-text">
 
-                                                    <Form.Item
+                                                <Form.Item
                                                         label="Vendor Contact Person"
                                                         name="vendor_contact_id"
                                                         htmlFor="file"
@@ -644,14 +614,15 @@ const Create_po = ({ base_url }) => {
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "Please choose Vendor Contact Person",
+                                                                message: "Please choose site",
                                                             },
                                                         ]}
                                                     >
                                                         <Select
                                                             id="singlesa"
+                                                            placeholder="Select"
                                                             class="js-states form-control file-wrap-select"
-                                                            onChange={(value) => handleVendorContactChange(value)}
+                                                            onChange={(value) => vendorContactDetails(value)}
                                                         >
                                                             {contactId.length > 0 &&
                                                                 contactId.map((contact) => (
@@ -663,6 +634,7 @@ const Create_po = ({ base_url }) => {
                                                         </Select>
 
                                                     </Form.Item>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1356,23 +1328,12 @@ const Create_po = ({ base_url }) => {
                                                                         <div className="col-sm-4">
                                                                             <div className="wrap-box">
                                                                                 {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
-                                                                                    // <Form.Item
-                                                                                    //     label={repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
-                                                                                    //     name={`code_${index}`}
-                                                                                    //     htmlFor="file"
-                                                                                    //     className="same-clr"
-                                                                                    //     value={repeator[index].code}
-                                                                                    //     onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)}
-                                                                                    //     rules={[
-                                                                                    //         {
-                                                                                    //             required: true,
-                                                                                    //             message: `Please enter ${repeator[index].materialFor === 'inventory' ? "inventory" : "GL"} Code`,
-                                                                                    //         },
-                                                                                    //     ]}
-                                                                                    // >
-                                                                                    //     <Input />
-                                                                                    // </Form.Item>
-                                                                                    <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
+                                                                                    <>
+                                                                                    <label>
+                                                                                    {repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
+                                                                                    </label>
+                                                                                     <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
+                                                                                    </>
                                                                                 )}
                                                                             </div>
                                                                         </div>
