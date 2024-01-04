@@ -243,7 +243,7 @@ const Create_Vendor = ({ base_url }) => {
                                             <>
                                                 {fields.map(({ key, name, fieldKey, ...restField }) => (
                                                     <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                        <div className="wrap-box">
+                                                        <div className="wrap-box mb-0">
                                                             <Form.Item
                                                                 {...restField}
                                                                 name={[name, 'name']}
@@ -255,7 +255,7 @@ const Create_Vendor = ({ base_url }) => {
                                                             </Form.Item>
                                                         </div>
 
-                                                        <div className="wrap-box">
+                                                        <div className="wrap-box mb-0">
                                                             <Form.Item
                                                                 {...restField}
                                                                 name={[name, 'address']}
@@ -267,7 +267,7 @@ const Create_Vendor = ({ base_url }) => {
                                                             </Form.Item>
                                                         </div>
 
-                                                        <div className="wrap-box">
+                                                        <div className="wrap-box mb-0">
                                                             <Form.Item
                                                                 {...restField}
                                                                 name={[name, 'state']}
@@ -289,7 +289,7 @@ const Create_Vendor = ({ base_url }) => {
                                             </>
                                         )}
                                     </Form.List>
-                                    <div className="col-lg-4 col-md-12">
+                                    <div className="col-lg-4 col-md-12 mt-4">
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Customer Name"
@@ -303,7 +303,7 @@ const Create_Vendor = ({ base_url }) => {
                                     </div>
                                     </div>
                                     <Form.Item >
-                                        <button type="submit" className="create-ven-butt">Submit</button>
+                                        <button type="submit" className="create-ven-butt">Create Project</button>
                                     </Form.Item>
                             </Form>
                         </div>

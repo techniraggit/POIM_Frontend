@@ -82,11 +82,11 @@ const AddUser = ({ base_url }) => {
   const handlePhoneNumberChange = (value) => {
     // If the value is exactly 10 or 11 digits, automatically add the appropriate prefix
     if (isValidPhone(value)) {
-        // Do something with the valid phone number
-        console.log('Valid phone number:', value);
-      } else {
-        console.log('Invalid phone number:', value);
-      }
+      // Do something with the valid phone number
+      console.log('Valid phone number:', value);
+    } else {
+      console.log('Invalid phone number:', value);
+    }
   };
 
 
@@ -123,8 +123,8 @@ const AddUser = ({ base_url }) => {
                     <div className="col-lg-4 col-md-6">
                       <div className="selectwrap react-select">
 
-                        <Form.Item label="Role" name="role_id" initialValue="select role" className='dropdown vender-input'>
-                          <Select >
+                        <Form.Item label="Select Role" name="role_id" initialValue="select role" className='dropdown vender-input'>
+                          <Select className='arrow-wrap-user'>
                             {Array.isArray(roles) &&
                               roles.map((role) => (
                                 <Option key={role.id} value={role.id}
