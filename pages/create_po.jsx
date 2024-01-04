@@ -569,34 +569,7 @@ const Create_po = ({ base_url }) => {
                                                         </Select>
 
                                                     </Form.Item>
-                                                    <Form.Item
-                                                        label="Vendor Contact"
-                                                        name="vendor_contact_id"
-                                                        htmlFor="file"
-                                                        class="same-clr"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please choose site",
-                                                            },
-                                                        ]}
-                                                    >
-                                                        <Select
-                                                            id="singlesa"
-                                                            placeholder="Select"
-                                                            class="js-states form-control file-wrap-select"
-                                                            onChange={(value) => vendorContactDetails(value)}
-                                                        >
-                                                            {contactId.length > 0 &&
-                                                                contactId.map((contact) => (
-                                                                    <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
-                                                                        {contact.name}
-                                                                    </Select.Option>
-                                                                ))
-                                                            }
-                                                        </Select>
-
-                                                    </Form.Item>
+                                                   
 
                                                     {/* <Form.Item
                                                         label="Vendor Contact"
@@ -636,7 +609,7 @@ const Create_po = ({ base_url }) => {
                                             <div class="selectwrap react-select" id="vendor-selector">
                                                 <div class="selectwrap  shipment-caret select-site aligned-text">
 
-                                                    <Form.Item
+                                                <Form.Item
                                                         label="Vendor Contact Person"
                                                         name="vendor_contact_id"
                                                         htmlFor="file"
@@ -644,14 +617,15 @@ const Create_po = ({ base_url }) => {
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "Please choose Vendor Contact Person",
+                                                                message: "Please choose site",
                                                             },
                                                         ]}
                                                     >
                                                         <Select
                                                             id="singlesa"
+                                                            placeholder="Select"
                                                             class="js-states form-control file-wrap-select"
-                                                            onChange={(value) => handleVendorContactChange(value)}
+                                                            onChange={(value) => vendorContactDetails(value)}
                                                         >
                                                             {contactId.length > 0 &&
                                                                 contactId.map((contact) => (
@@ -824,7 +798,7 @@ const Create_po = ({ base_url }) => {
 
                                                     {/* / */}
                                                     <Form.Item
-                                                        label="Project"
+                                                        label="Project  "
                                                         name="project_id"
                                                         for="file"
                                                         class="same-clr"
@@ -1290,7 +1264,7 @@ const Create_po = ({ base_url }) => {
                                                                             </Form.Item>
                                                                         </div>
                                                                         <div className="wrap-box col-sm-3">
-                                                                            <lable for="amount">Amount</lable>
+                                                                            <label for="amount">Amount</label>
                                                                             <input name="amount" value={repeator[index].amount} placeholder="Amount" readOnly />
                                                                         </div>
                                                                         <div className="wrap-box col-sm-3">
@@ -1314,7 +1288,7 @@ const Create_po = ({ base_url }) => {
 
                                                                             {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
                                                                                 <>
-                                                                                    <div className="selectwrap add-dropdown-wrap shipment-caret">
+                                                                                    <div className="material-for-wrap">
                                                                                         {/* <CaretDownFilled className="caret-icon" /> */}
                                                                                         {/* <Form.Item
                                                                                             label="Material For"
@@ -1340,8 +1314,8 @@ const Create_po = ({ base_url }) => {
                                                                                                 <Option value="supplies">Supplies/Expenses</Option>
                                                                                             </Select>
                                                                                         </Form.Item> */}
-                                                                                        <lable>Material For</lable>
-                                                                                        <select onChange={({target: { value }}) => {
+                                                                                         <label>Material For</label>
+                                                                                        <select placeholder="Select" className="js-states form-control custom-wrap-selector"  onChange={({target: { value }}) => {
                                                                                                     handleRepeatorChange(value, 'materialFor', index)
                                                                                                 }} value={repeator[index].materialFor}>
                                                                                             {shipmentType === 'Combined' && <option value="project">Project</option>}
@@ -1353,8 +1327,11 @@ const Create_po = ({ base_url }) => {
                                                                             )}
                                                                         </div>
 
+
                                                                         <div className="col-sm-4">
                                                                             <div className="wrap-box">
+                                                                            <label>Inventory</label>
+
                                                                                 {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
                                                                                     // <Form.Item
                                                                                     //     label={repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
@@ -1372,19 +1349,21 @@ const Create_po = ({ base_url }) => {
                                                                                     // >
                                                                                     //     <Input />
                                                                                     // </Form.Item>
-                                                                                    <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
+                                                                                    
+                                                                                    <input className="wrap-box" placeholder="Inventory" onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
                                                                                 )}
                                                                             </div>
+                                                                         
                                                                         </div>
                                                                     </div>
                                                                     <div className="row">
                                                                         <div className="col-sm-4">
                                                                             {repeator[index].materialFor === 'project' && (
                                                                                 <>
-                                                                                    <div class="selectwrap add-dropdown-wrap">
+                                                                                    <div class="top-project">
                                                                                         <div class="selectwrap columns-select shipment-caret ">
                                                                                             <label>Project</label>
-                                                                                            <select onChange={({ target: { value } }) => {
+                                                                                            <select  className="js-states form-control custom-wrap-selector" onChange={({ target: { value } }) => {
                                                                                                     list(value);
                                                                                                     handleRepeatorChange(value, 'project', index)}
                                                                                                 }
@@ -1406,10 +1385,12 @@ const Create_po = ({ base_url }) => {
 
                                                                         <div className="col-sm-4">
                                                                             {repeator[index].materialFor === 'project' && (
-                                                                                <div class="selectwrap add-dropdown-wrap">
+                                                                                <div class="selectwrap shipment-caret add-dropdown-wrap">
                                                                                     <div className="selectwrap columns-select shipment-caret ">
                                                                                         {/* <CaretDownFilled className="caret-icon" /> */}
-                                                                                        <select onChange={({target: { value }}) => handleRepeatorChange(value, 'site', index)}>
+                                                                                        <label>Project Site</label>
+
+                                                                                        <select  className="js-states form-control custom-wrap-selector" onChange={({target: { value }}) => handleRepeatorChange(value, 'site', index)}>
                                                                                             {Array.isArray(siteOptions) &&
                                                                                                 siteOptions.map((site) => (
                                                                                                     <option key={site.site_id} value={site.site_id}>
