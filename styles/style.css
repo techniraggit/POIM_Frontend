@@ -726,7 +726,7 @@ div#w-small span {
     color: rgb(17, 47, 92, 0.5);
     font-size: 16px;
     font-weight: 500;
-    margin-bottom: 7px;
+    margin-bottom: 2px !important;
 }
 
 .wrap-box input {
@@ -2050,6 +2050,33 @@ Button.save-button {
     margin-bottom: 0px !important;
 }
 /* 3jan */
+/* 4jan */
+
+.select-sitee {
+    margin-top: 60px;
+}
+select.custom-wrap-selector {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #0D0D0D36 !important;
+    background-color: transparent;
+    padding: 6px 13px !important;
+    border-radius: 50px;
+    font-size: 14px;
+    height: 40px;
+}
+.form-control:focus  {
+    border: 1px solid #0D0D0D36 !important;
+    box-shadow: none;
+}
+select.custom-wrap-selector option {
+    padding: 6px 12px !important;
+    margin-bottom: 20px !important;
+    height: 30px;
+    display: block;
+    border-radius: 0;
+}
+/* 4jan */
 
 /* responsive */
 @media (max-width: 1299px) {
