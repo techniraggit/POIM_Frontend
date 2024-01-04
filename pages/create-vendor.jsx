@@ -220,7 +220,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 <>
                                                     {fields.map(({ key, name, fieldKey, ...restField }) => (
                                                         <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                            <div className="wrap-box">
+                                                            <div className="wrap-box mb-0">
                                                                 <Form.Item
                                                                     {...restField}
                                                                     name={[name, 'name']}
@@ -232,7 +232,7 @@ const Create_Vendor = ({ base_url }) => {
                                                                 </Form.Item>
                                                             </div>
 
-                                                            <div className="wrap-box">
+                                                            <div className="wrap-box mb-0">
                                                                 <Form.Item
                                                                     {...restField}
                                                                     name={[name, 'email']}
@@ -244,7 +244,7 @@ const Create_Vendor = ({ base_url }) => {
                                                                 </Form.Item>
                                                             </div>
 
-                                                            <div className="wrap-box">
+                                                            <div className="wrap-box mb-0">
                                                                 <Form.Item
                                                                     {...restField}
                                                                     name={[name, 'phone_number']}
