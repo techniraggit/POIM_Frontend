@@ -710,6 +710,7 @@ div#w-small span {
 .wrap-box .ant-col {
     width: 100% !important;
     max-width: 100% !important;
+    padding: 0;
 }
 
 .linewrap hr {
@@ -1144,6 +1145,8 @@ input.vendor-input::placeholder {
     max-width: 500px;
     display: flex;
     position: relative;
+    flex-direction: row;
+    gap: unset;
 }
 
 .vendor-search-butt {
@@ -1522,11 +1525,12 @@ label {
     border-color: #70707054 !important;
     box-shadow: none !important;
 }
-
-button.ant-btn.add-more-btn:hover span {
-    color: #0D0D0D;
+button.ant-btn.ant-btn-dashed.add-more-btn:hover span {
+    color: #0D0D0D !important;
 }
-
+button.ant-btn.ant-btn-dashed.add-more-btn:hover  {
+    color: #0D0D0D !important;
+}
 .react-select .ant-form-item {
     width: 100% !important;
 }
@@ -2050,6 +2054,29 @@ Button.save-button {
     margin-bottom: 0px !important;
 }
 /* 3jan */
+/* 04/01/2024 */
+.ant-select.ant-select-in-form-item.arrow-wrap-user::after {
+    content: "";
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #818B96;
+    z-index: 9999;
+    visibility: visible !important;
+    content: "" !important;
+    border-radius: 4px;
+    transform: rotateX(180deg) !important;
+    z-index: 1;
+}
+.ant-select.ant-select-in-form-item.arrow-wrap-user {
+    position: relative;
+}
+.ant-select.ant-select-in-form-item.arrow-wrap-user  
+ span.ant-select-arrow {
+    display: none;
+}
 /* 4jan */
 
 .select-sitee {
