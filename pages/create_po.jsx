@@ -142,7 +142,7 @@ const Create_po = () => {
                 material_details: [{
                     quantity: values.quantity,
                     unit_price: values.unit_price,
-                    amount: values.amount,
+                    amount: values.Amount,
                     description: values.Description,
                     material_for: values.materialFor,
                     code: values.code,
@@ -155,8 +155,8 @@ const Create_po = () => {
         const response = createPO(data);
 
         response.then((res) => {
-            if (res?.data?.status) {
-                message.success(response.data.message)
+            if(res?.data?.status) {
+                message.success(res.data?.message)
                 router.push('/po_list')
             }
         });

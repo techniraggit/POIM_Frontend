@@ -14,7 +14,7 @@ export const fetchVendorContacts = (id) => {
 }
 
 export const createPO = (data) => {
-    Axios.post(`/api/admin/purchase-order`, data);
+    return Axios.post(`/api/admin/purchase-order`, data);
 }
 
 export const fetchProjectSites = () => {
