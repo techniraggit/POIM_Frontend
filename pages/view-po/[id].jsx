@@ -216,7 +216,7 @@ const ViewPO = () => {
                         <ul class=" create-icons">
                             <li class="icon-text react-icon">
                                 <PlusOutlined />
-                                <span>Edit Purchase Order</span>
+                                <span>View Purchase Order</span>
                             </li>
                         </ul>
                         <div className="choose-potype round-wrap">
@@ -607,7 +607,7 @@ const ViewPO = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input readOnly placeholder="Amount" readOnly />
+                                                    <Input readOnly placeholder="Amount" />
                                                 </Form.Item>
 
                                             </div>
