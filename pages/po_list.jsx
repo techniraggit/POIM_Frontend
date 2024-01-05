@@ -3,61 +3,37 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
-import { Table, Button, message, Popconfirm, Input } from 'antd';
-import axios from 'axios';
+import { message, Popconfirm } from 'antd';
 import Link from "next/link";
+import { deletePO, getPoList } from "@/apis/apis/adminApis";
 
-const PO_list = ({ base_url }) => {
-    // const [po, setPo] = useState([]);
+const PO_list = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
-    const [totalPuchaseOrder, setTotalPurchaseOrder] = useState(0);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
-        const fetchRoles = async () => {
-            try {
-                const headers = {
-                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                };
-                const response = await axios.get(`${base_url}/api/admin/purchase-order`, { headers });
-                console.log(response.data.total_po,'purchase order listing');
-                setPurchaseOrders(response.data.data || []);
-                setTotalPurchaseOrder(response.data.total_po);
-                // setPurchaseOrders(response.data.purchase_orders || []); // Ensure purchase_orders is an array
-            } catch (error) {
-                console.error('Error fetching projects:', error);
+        const response = getPoList();
+        response.then((res) => {
+            if(res?.data?.status) {
+                setPurchaseOrders(res.data.data || []);
             }
-        };
-        fetchRoles();
+        })
     }, []);
 
-    const handleDelete = async (id) => {
-        try {
-            const headers = {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                Accept: 'application/json',
-                'Content-Type': 'application/json', // Set content type to JSON
-            };
-
-            const body = JSON.stringify({ po_id: id }); // Use 'category_id' in the request body
-
-            // console.log('Deleting category with ID:', );
-            console.log('Request Headers:', headers);
-            console.log('Request Body:', body);
-
-            const response = await axios.delete(`${base_url}/api/admin/purchase-order`, {
-                headers,
-                data: body, // Send the body as data
-            });
-
-            console.log('Delete response:', response);
-            message.success('Purchase Order deleted successfully.');
-            setPurchaseOrders(prepo => prepo.filter(po => po.id !== id));
-            // Reload the categories after deleting
-        } catch (error) {
-            console.error('Error deleting purchase order:', error);
-            message.error('Failed to delete the item. Please try again later.');
-        }
+    const handleDelete = (id) => {
+        const response = deletePO({ po_id: id });
+        response.then((res) => {
+            if(res?.data?.status) {
+                message.success('Purchase Order deleted successfully.');
+                setPurchaseOrders(prepo => prepo.filter(po => po.po_id !== id));
+            }
+        })
     };
+
+    const rows = purchaseOrders?.filter((order) => {
+        return order.po_type.toLowerCase().includes(search.toLowerCase()) || 
+            order.vendor_contact.name.toLowerCase().includes(search.toLowerCase())
+    }) || [];
 
     return (
         <>
@@ -73,13 +49,15 @@ const PO_list = ({ base_url }) => {
                                 <span>Create PO</span>
                             </li>
                             <li className="me-4">
-                                <span className="text-size mt-0 mb-2">{totalPuchaseOrder}</span>
+                                <span className="text-size mt-0 mb-2">{purchaseOrders?.length || 0}</span>
                                 <span>Total POs</span>
                             </li>
                         </ul>
                         <div className="wrapin-form">
                             <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Purchase Order" />
+                                <input value={search} onChange={({ target: { value } }) => {
+                                    setSearch(value);
+                                }} className="vendor-input" placeholder="Search Purchase Order" />
                                 <button className="vendor-search-butt">Search</button>
                             </form>
                         </div>
@@ -99,8 +77,8 @@ const PO_list = ({ base_url }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {Array.isArray(purchaseOrders) && purchaseOrders.length > 0 ? (
-                                            purchaseOrders.map((purchase, index) => (
+                                        {Array.isArray(rows) && rows.length > 0 ? (
+                                            rows.map((purchase, index) => (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{purchase.po_number}</td>
@@ -114,16 +92,16 @@ const PO_list = ({ base_url }) => {
                                                     <td>{purchase.status}</td>
                                                     <td>{purchase.vendor_contact.name}</td>
                                                     <td className="td-icon-color">
-                                                        <Link  href={`/view-purchaseorder/${purchase.id}`} className="me-1"><EyeFilled /></Link>
+                                                        <Link href={`/view-purchaseorder/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
                                                         <Popconfirm
                                                             title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(purchase.id)}
+                                                            onConfirm={() => handleDelete(purchase.po_id)}
                                                             okText="Yes"
                                                             cancelText="No"
                                                         >
                                                             <DeleteFilled />
                                                         </Popconfirm>
-                                                        <a href="" className="me-1"><EditFilled /></a>
+                                                        <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             ))

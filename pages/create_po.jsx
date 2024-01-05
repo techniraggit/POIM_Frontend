@@ -3,12 +3,11 @@ import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
-import axios from 'axios';
 import '../styles/style.css'
-import { MinusOutlined, PlusOutlined, CaretDownFilled } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-// import "antd/dist/antd.css";
+import { createPO, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 
 const { Option } = Select;
 const repeatorData = {
@@ -21,25 +20,23 @@ const repeatorData = {
     project: '',
     site: ''
 }
-const Create_po = ({ base_url }) => {
+
+const Create_po = () => {
     const [form] = Form.useForm();
     const router = useRouter();
 
     const [shipmentType, setshipmentType] = useState(null);
     const [materialFor, setMaterialFor] = useState('');
-    const defaultDate = moment();
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
-    // const[contactOptions,setContactOptions]=useState([]);
     const [vendors, setVendors] = useState([]);
-    const [vendorId, setVendorId] = useState('');
 
+    const [userName, setUserName] = useState({
+        firstName: '',
+        lastName: ''
+    });
 
-    const [contacts, setContacts] = useState([]);
     const [contactId, setContactId] = useState('');
-
-    const [userFirstName, setUserFirstName] = useState('');
-    const [userLastName, setUserLastName] = useState('');
     const [repeator, setRepeator] = useState([]);
     const [quantity, setQuantity] = useState(0);
     const [unitPrice, setUnitPrice] = useState(0);
@@ -49,14 +46,9 @@ const Create_po = ({ base_url }) => {
         email: '',
         phone: '',
         address: '',
-        // address2:'',
         state: '',
         country: ''
     })
-
-
-    const [items, setItems] = useState([]);
-
 
     const handleChange = ({ target: { name, value } }) => {
         setVendorForm({
@@ -64,17 +56,8 @@ const Create_po = ({ base_url }) => {
             [name]: value
         })
     }
-    // const [shipmentAddress, setShipmentAddress] = useState('1860 Shawson')
-
-
 
     const calculateAmount = (quantity, unitPrice) => quantity * unitPrice;
-
-    const handleQuantityRepeaterChange = (value, index) => {
-        const unitPrice = form.getFieldValue(['items', index, 'unit_price']) || 0;
-        const test_amount = calculateAmount(value, unitPrice);
-        form.setFields([{ name: ['items', index, 'amount'], value: test_amount }]);
-    };
 
     const handleUnitPriceRepeaterChange = () => {
         const totalAmount = getTotalAmount();
@@ -102,15 +85,6 @@ const Create_po = ({ base_url }) => {
         return totalAmount;
     };
 
-
-
-    const handleAddMaterial = () => {
-        // Add a new item to the state
-        setItems([...items, { quantity: 0, unit_price: 0, amount: 0, description: '' }]);
-    };
-    //   const calculateTotalAmount = () => {
-    //     return items.reduce((total, item) => total + (item.quantity * item.unit_price), 0);
-    //   };
     const handleQuantityChange = (value) => {
         setQuantity(value);
         updateAmount(value, unitPrice);
@@ -123,31 +97,18 @@ const Create_po = ({ base_url }) => {
 
     const updateAmount = (quantity, unitPrice) => {
         const calculatedAmount = quantity * unitPrice;
-
         setAmount(calculatedAmount);
         form.setFieldsValue({ Amount: calculatedAmount });
         form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
         form.setFieldsValue({ Total_amount: calculatedAmount * 0.13 + calculatedAmount });
     };
 
-
-
     const handlePoTypeChange = (value) => {
         setshipmentType(value);
     };
 
-
-    useEffect(() => {
-        // Get user information from localStorage when the component mounts
-        const storedFirstName = localStorage.getItem('user_first_name');
-        const storedLastName = localStorage.getItem('user_last_name');
-
-        // Update state with the stored information
-        setUserFirstName(storedFirstName || '');
-        setUserLastName(storedLastName || '');
-    }, []);
-    const onFinish = async (values) => {
-        console.log(values.items)
+    const onFinish = (values) => {
+        let data;
         if (values.items?.length > 0) {
             const dynamicItems = repeator?.map((item)=> ({
                 quantity: item.quantity,
@@ -159,53 +120,19 @@ const Create_po = ({ base_url }) => {
                 project_id: values.project,
                 project_site_id: values.site,
             }));
-            var data = {
-                // -------------------------------------------------------------------
+            data = {
                 po_type: values.po_type,
-                // vendor_id: values.vendor_id,
                 amount: values.Amount,
                 vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
                 project_site_id: values.site_id,
-                material_details: [...dynamicItems],
-                // -------------------------------------------------------------------
-                // po_data: {
-                //     company_name: vendorForm.company_name,
-                //     email: vendorForm.email,
-                //     phone: vendorForm.phone,
-                //     state: vendorForm.state,
-                //     country: vendorForm.country,
-                //     vendor_id: values.vendor_id,
-                //     po_type: values.po_type,
-                //     address1: vendorForm.address,
-                // },
-                // shipment: {
-                //     HST_Amount: values.HST_Amount,
-                //     Total_amount: values.Total_amount,
-                //     shipment_type: values.shipment_type,
-                //     project_id: values.project_id,
-                //     shipment_address: 'add',
-                // },
-                // shipment_material: {
-                //     quantity: values.quantity,
-                //     unit_price: values.unit_price,
-                //     Amount: values.Amount,
-                //     Description: values.Description,
-                //     material_for: values.materialFor,
-                //     site_id: values.site_id,
-                //     project_id: values.project_id,
-                //     code: values.code,
-                //     shipment_address: values.shipment_address,
-                //     material_details:[...dynamicItems]
-                // }
-
+                material_details: [...dynamicItems]
             }
         } else {
-            var data = {
+            data = {
                 po_type: values.po_type,
-                // vendor_id: values.vendor_id,
                 vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
                 hst_amount: values.HST_Amount,
@@ -222,142 +149,61 @@ const Create_po = ({ base_url }) => {
                     project_id: values.project_id,
                     project_site_id: values.site_id,
                 }]
-                // po_data: {
-                //     company_name: vendorForm.company_name,
-                //     email: vendorForm.email,
-                //     phone: vendorForm.phone,
-                //     state: vendorForm.state,
-                //     country: vendorForm.country,
-                //     vendor_id: values.vendor_id,
-                //     po_type: values.po_type,
-                //     address1: vendorForm.address,
-                // },
-                // shipment: {
-                //     HST_Amount: values.HST_Amount,
-                //     Total_amount: values.Total_amount,
-                //     shipment_type: values.shipment_type,
-                //     project_id: values.project_id,
-                //     shipment_address: 'add',
-                // },
-                // shipment_material: {
-                //     quantity: values.quantity,
-                //     unit_price: values.unit_price,
-                //     Amount: values.Amount,
-                //     Description: values.Description,
-                //     material_for: values.materialFor,
-                //     site_id: values.site_id,
-                //     project_id: values.project_id,
-                //     code: values.code,
-                //     shipment_address: values.shipment_address,
-                // material_details:[{
-                //     quantity: values.quantity,
-                //     unit_price: values.unit_price,
-                //     Amount: values.Amount,
-                //     Description: values.Description
-                // }
-                // ]
-                // },
-
             }
         }
 
-        try {
-            const headers = {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            };
+        const response = createPO(data);
 
-            const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
-                headers: headers,
-            });
-            console.log(response.data, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
-            // setShipmentAddress(response.data.shipment_address)
-            if (response.data.status == true) {
+        response.then((res) => {
+            if(res?.data?.status) {
                 message.success(response.data.message)
                 router.push('/po_list')
             }
-        }
-        catch (error) {
-        }
+        });
     };
 
-
     useEffect(() => {
-        const fetchProjects = async () => {
-
-            try {
-                const headers = {
-                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-                }
-                const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
-
-                setProjects(response.data.projects); // Assuming the API response is an array of projects
-            } catch (error) {
-                console.error('Error fetching projects:', error);
-            }
-        };
-
         if (shipmentType === 'Project Related' || shipmentType === 'Combined') {
-            fetchProjects();
+            const response = fetchProjects();
+            response.then((res) => {
+                if(res?.data?.status) {
+                    setProjects(res.data.projects);
+                }
+            });
         }
     }, [shipmentType]);
 
-
     useEffect(() => {
-        const fetchVendorContact = async () => {
-            try {
-                const headers = {
-                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-                }
-                const response = await axios.get(`${base_url}/api/helping/vendors-and-contacts`, { headers: headers });
-                setVendors(response.data.vendors);
-                // Assuming the API response is an array of projects
-            } catch (error) {
-                console.error('Error fetching projects:', error);
+        const response = fetchVendorContact();
+        response.then((res) => {
+            if(res?.data?.status) {
+                setVendors([...res.data.vendors]);
             }
-        }
-        fetchVendorContact();
+        })
+        setUserName({
+            firstName: localStorage.getItem('user_first_name'),
+            lastName: localStorage.getItem('user_last_name')
+        })
     }, [])
 
-
-
-
-
-
-    // useEffect(() => {
-    const fetchVendorContactDropdown = async (id) => {
-        try {
-            const headers = {
-                Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+    const fetchVendorContactDropdown = (id) => {
+        const response = fetchVendorContacts(id);
+        response.then((res) => {
+            if(res?.data?.status) {
+                setContactId([...res.data.vendors])
             }
-            const response = await axios.get(`${base_url}/api/helping/vendors-and-contacts?vendor_id=${id}`, { headers: headers });
-            setContactId(response.data.vendors)
-            // setVendors(response.data.vendors);
-            // Assuming the API response is an array of projects
-        } catch (error) {
-            console.error('Error fetching projects:', error);
-        }
+        })
     }
-    // if(vendorId){
-    // fetchVendorContactDropdown();
 
-    // }
-    // }, [])
+    const fetchSites = () => {
+        const response = fetchProjectSites();
 
-    const fetchSites = async () => {
-        try {
-            const headers = {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-            };
-
-            const response = await axios.get(`${base_url}/api/admin/project-sites`, { headers });
-
-            const sitesArray = response.data.sites;
-            setSiteOptions(sitesArray);
-        } catch (error) {
-            console.error('Error fetching projects:', error);
-        }
+        response.then((res) => {
+            if(res?.data?.status) {
+                const sitesArray = res.data.sites;
+                setSiteOptions(sitesArray);
+            }
+        })
     };
 
     const list = (value) => {
@@ -366,49 +212,27 @@ const Create_po = ({ base_url }) => {
         }
     };
 
-    // useEffect(() => {
     const vendorContactDetails = async (id) => {
-        try {
-            const headers = {
-                Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+        const response = getVendorDetails(id)
+        response.then((res) => {
+            if(res.data?.status) {
+                setVendorForm({
+                    ...vendorForm,
+                    company_name: res.data.vendors.company.company_name,
+                    email: res.data.vendors.email,
+                    phone: res.data.vendors.phone_number,
+                    address: res.data.vendors.company.address,
+                    state: res.data.vendors.company.state,
+                    country: res.data.vendors.company.country
+                })
             }
-            const response = await axios.get(`${base_url}/api/helping/vendor-details?vendor_contact_id=${id}`, { headers: headers });
-
-            setContacts(response.data.vendors);
-            // setVendors(response.data.vendors); 
-
-            // if (vendorId && response?.data?.status) {
-            //     console.log({
-            //         ...vendorForm,
-            //         company_name: response.data.vendors_details.company_name,
-            //         email: response.data.vendors_details.vendor_contact[0].email,
-            //         phone: response.data.vendors_details.vendor_contact[0].phone_number,
-            //         address: response.data.vendors_details.address,
-            //         state: response.data.vendors_details.state,
-            //         country: response.data.vendors_details.country
-            //     }, "=======data");
-
-            setVendorForm({
-                ...vendorForm,
-                company_name: response.data.vendors.company.company_name,
-                email: response.data.vendors.email,
-                phone: response.data.vendors.phone_number,
-                address: response.data.vendors.company.address,
-                state: response.data.vendors.company.state,
-                country: response.data.vendors.company.country
-            })
-            // }
-
-        } catch (error) {
-            console.error('Error fetching projects:', error);
-        }
+        })
     }
 
     const names = vendors?.map((vendor) => {
         return {
             vendorId: vendor.vendor_id,
             company_name: vendor.company_name,
-            // contactName: vendor.vendor_contact[0].name
         };
     });
 
@@ -421,7 +245,6 @@ const Create_po = ({ base_url }) => {
             }
 
             if(repeator[index].quantity && repeator[index].unit_price) {
-                console.log(parseFloat(repeator[index].quantity) * parseFloat(repeator[index].unit_price))
                 repeator[index] = {
                     ...repeator[index],
                     amount: parseFloat(repeator[index].quantity) * parseFloat(repeator[index].unit_price)
@@ -431,7 +254,6 @@ const Create_po = ({ base_url }) => {
         if(name === 'unit_price' || name === 'quantity') {
             handleUnitPriceRepeaterChange();
         }
-        console.log(repeator, "============repa")
         setRepeator([...repeator]);
     }
 
@@ -449,17 +271,13 @@ const Create_po = ({ base_url }) => {
                                 <span>Create New Purchase Order</span>
                             </li>
                         </ul>
-                        {/* ... (your existing code) */}
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
-                                {/* <Material/> */}
                                 <Form onFinish={onFinish} form={form} className="file-form">
-                                    {/* ... (your existing code) */}
                                     <div className="row po-typeraw">
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap react-select">
                                                 <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
-                                                    {/* <CaretDownFilled className="caret-icon" /> */}
                                                     <Form.Item
                                                         label="Choose PO Type"
                                                         name="po_type"
@@ -473,7 +291,6 @@ const Create_po = ({ base_url }) => {
                                                     >
                                                         <Select placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
-                                                        // onChange={handlePoTypeChange}
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
@@ -484,7 +301,6 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* ... (your existing code) */}
                                     <div class="order-choose d-flex">
                                         <div className="left-wrap wrap-number">
                                             <Form.Item
@@ -497,12 +313,11 @@ const Create_po = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
 
-
                                         <div className="left-wrap wrap-number" id="forspce">
                                             <Form.Item
                                                 label="Date"
                                                 name="poDate"
-                                                initialValue={moment()} // Set initial value to the current date
+                                                initialValue={moment()}
                                                 rules={[
                                                     {
                                                         validator: (_, value) => {
@@ -516,7 +331,7 @@ const Create_po = ({ base_url }) => {
                                             >
                                                 <DatePicker
                                                     style={{ width: "100%" }}
-                                                    disabled // Disable user input
+                                                    disabled
                                                     placeholder="18 Oct 2023"
                                                     suffixIcon={null}
                                                 />
@@ -554,11 +369,7 @@ const Create_po = ({ base_url }) => {
                                                             className="js-states form-control file-wrap-select"
                                                             onChange={(value) => fetchVendorContactDropdown(value)}
                                                         >
-                                                            {names.map((entry) =>
-                                                            // {
-                                                            //     console.log(entry,'vendordd');
-                                                            // }
-                                                            (
+                                                            {names.map((entry) =>(
                                                                 <Select.Option key={entry.vendorId} value={entry.vendorId}>
                                                                     {entry.company_name}
                                                                 </Select.Option>
@@ -567,37 +378,6 @@ const Create_po = ({ base_url }) => {
                                                         </Select>
 
                                                     </Form.Item>
-                                                    {/* <Form.Item
-                                                        label="Vendor Contact"
-                                                        name="vendor_contact_id"
-                                                        for="file"
-                                                        className="same-clr"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-
-                                                                message: "Please choose Vendor contact",
-
-                                                            },
-
-                                                        ]}
-                                                    >
-                                                        <Select
-                                                            id="single2"
-                                                            className="js-states form-control file-wrap-select"
-                                                            onChange={(value) => handleVendorContactChange(value)}
-                                                        >
-                                                            {namesContact.map((entry) =>
-                                                             {
-                                                                console.log(entry,'entry contact id');
-
-
-                                                            }
-                                                            
-                                                            )}
-                                                        </Select>
-
-                                                    </Form.Item> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -642,21 +422,6 @@ const Create_po = ({ base_url }) => {
                                     <div class="row space-raw  btm-space">
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
-                                                {/* <Form.Item
-                                                    label="Company Name"
-                                                    for="name"
-                                                    name="company_name"
-                                                    // value={vendorForm.company_name}
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter company name",
-                                                        },
-                                                    ]}
-                                                    onChange={handleChange}
-                                                >
-                                                    <Input placeholder="00854" value={vendorForm.company_name} />
-                                                </Form.Item> */}
                                                 <label>
                                                     Company Name
                                                 </label>
@@ -666,19 +431,8 @@ const Create_po = ({ base_url }) => {
                                                     name="company_name"
                                                     type="text"
                                                     value={vendorForm.company_name}
-                                                    // rules={[
-                                                    //     {
-                                                    //         required: true,
-                                                    //         message: "Please enter Company name",
-                                                    //     },
-                                                    // ]}
                                                     onChange={handleChange}
-                                                // onChange=handleChange={}
                                                 />
-                                                {/* <Input value={vendorForm.company_name} placeholder="00854" /> */}
-                                                {/* </input> */}
-                                                {/* <label for="name">Email</label>
-                                                <input type="email"> */}
                                             </div>
                                         </div>
 
@@ -766,8 +520,6 @@ const Create_po = ({ base_url }) => {
                                     <div class="row space-bottom mb-0">
                                         <div class="col-md-6 col-lg-12 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
-                                                {/* <CaretDownFilled className="caret-icon" /> */}
-
                                                 <Form.Item
                                                     label="Shipment Type"
                                                     name="shipment_type"
@@ -791,9 +543,6 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                             {shipmentType === 'Project Related' && (
                                                 <div class="selectwrap columns-select shipment-caret">
-                                                    {/* <CaretDownFilled className="caret-icon" /> */}
-
-                                                    {/* / */}
                                                     <Form.Item
                                                         label="Project  "
                                                         name="project_id"
@@ -814,7 +563,6 @@ const Create_po = ({ base_url }) => {
                                                             {Array.isArray(projects) &&
                                                                 projects.map((project) => (
                                                                     <Select.Option key={project.project_id} value={project.project_id}
-                                                                    // onChange={dsdsdsd(project.id)}
                                                                     >
                                                                         {project.name}
                                                                     </Select.Option>
@@ -901,7 +649,6 @@ const Create_po = ({ base_url }) => {
                                                             message: "Please enter amount",
                                                         },
                                                     ]}
-                                                // onChange={}
                                                 >
                                                     <Input placeholder="Amount" readOnly />
                                                 </Form.Item>
@@ -909,7 +656,6 @@ const Create_po = ({ base_url }) => {
                                             </div>
                                         </div>
                                         <div class="row space-col-spc mb-0">
-                                            {/* <div class="po-selected"> */}
                                             <div class="col-sm-4">
                                                 <div className="wrap-box">
                                                     <Form.Item
@@ -927,16 +673,9 @@ const Create_po = ({ base_url }) => {
                                                     </Form.Item>
                                                 </div>
                                             </div>
-                                            {/* </div> */}
-
-                                            {/* <div className="col-md-4"> */}
-                                            {/* <div className="wrap-box"> */}
                                             {shipmentType === 'Project Related' && (
                                                 <div class="col-sm-4">
                                                     <div className="selectwrap columns-select shipment-caret ">
-                                                        {/* <CaretDownFilled className="caret-icon" /> */}
-
-                                                        {/* /// */}
                                                         <Form.Item
                                                             label="Select Site"
                                                             name="site_id"
@@ -951,12 +690,7 @@ const Create_po = ({ base_url }) => {
                                                         >
                                                             <Select id="singlesa" class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) =>
-                                                                    // {
-                                                                    //     console.log(site,'siteeeeeeeeeee');
-                                                                    // }
-
-                                                                    (
+                                                                    siteOptions.map((site) =>(
                                                                         <Select.Option key={site.site_id} value={site.site_id}>
                                                                             {site.name}
                                                                         </Select.Option>
@@ -970,7 +704,6 @@ const Create_po = ({ base_url }) => {
                                             {shipmentType === 'Non Project Related' && (
                                                 <div class="col-sm-4 ">
                                                     <div className="selectwrap add-dropdown-wrap shipment-caret">
-                                                        {/* <CaretDownFilled className="caret-icon" /> */}
                                                         <Form.Item
                                                             label="Material For"
                                                             name="materialFor"
@@ -1024,10 +757,6 @@ const Create_po = ({ base_url }) => {
                                                     </div>
                                                 </div>
                                             )}
-
-
-                                            {/* </div> */}
-                                            {/* </div> */}
                                             <div className="col-md-4">
                                                 <div className="wrap-box">
                                                     {materialFor === 'inventory' && (
@@ -1149,7 +878,6 @@ const Create_po = ({ base_url }) => {
                                                 {materialFor === 'projects' && (
                                                     <div class="selectwrap add-dropdown-wrap">
                                                         <div className="selectwrap columns-select shipment-caret ">
-                                                            {/* <CaretDownFilled className="caret-icon" /> */}
                                                             <Form.Item
                                                                 label="Select Site"
                                                                 name="site_id"
@@ -1219,9 +947,7 @@ const Create_po = ({ base_url }) => {
                                                 
                                             </div>
                                         </div>
-                                        {/* <div> */}
                                         <div className="create-another minuswrap-img">
-                                            {/* {shipmentType === 'Non Project Related' && ( */}
                                             <Form.List name="items" initialValue={[]}>
                                                 {(fields, { add, remove }) => (
                                                     <>
@@ -1286,31 +1012,6 @@ const Create_po = ({ base_url }) => {
                                                                             {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
                                                                                 <>
                                                                                     <div className="material-for-wrap">
-                                                                                        {/* <CaretDownFilled className="caret-icon" /> */}
-                                                                                        {/* <Form.Item
-                                                                                            label="Material For"
-                                                                                            name={`materialFor-${index}`}
-                                                                                            htmlFor="file"
-                                                                                            class="same-clr"
-                                                                                            value={repeator[index].materialFor}
-                                                                                            rules={[
-                                                                                                {
-                                                                                                    required: true,
-                                                                                                    message: "Please choose Material For",
-                                                                                                },
-                                                                                            ]}
-                                                                                        >
-                                                                                            <Select id="single90"
-                                                                                                class="js-states form-control file-wrap-select"
-                                                                                                onChange={(value) => {
-                                                                                                    handleRepeatorChange(value, 'materialFor', index)
-                                                                                                }}
-                                                                                            >
-                                                                                                {shipmentType === 'Combined' && <Option value="project">Project</Option>}
-                                                                                                <Option value="inventory">Inventory</Option>
-                                                                                                <Option value="supplies">Supplies/Expenses</Option>
-                                                                                            </Select>
-                                                                                        </Form.Item> */}
                                                                                          <label>Material For</label>
                                                                                         <select placeholder="Select" className="js-states form-control custom-wrap-selector"  onChange={({target: { value }}) => {
                                                                                                     handleRepeatorChange(value, 'materialFor', index)
@@ -1372,7 +1073,6 @@ const Create_po = ({ base_url }) => {
                                                                             {repeator[index].materialFor === 'project' && (
                                                                                 <div class="selectwrap shipment-caret add-dropdown-wrap">
                                                                                     <div className="selectwrap columns-select shipment-caret ">
-                                                                                        {/* <CaretDownFilled className="caret-icon" /> */}
                                                                                         <label>Project Site</label>
 
                                                                                         <select  className="js-states form-control custom-wrap-selector" onChange={({target: { value }}) => handleRepeatorChange(value, 'site', index)}>
@@ -1443,30 +1143,14 @@ const Create_po = ({ base_url }) => {
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <label htmlFor="">First Name</label>
-                                                <input type="text" value={userFirstName} />
-                                                {/* <Form.Item
-
-                                                    name='first_name'
-                                                    label="First Name"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                >
-                                                    <Input placeholder="" value={userFirstName}/>
-                                                </Form.Item> */}
+                                                <input type="text" value={userName.firstName} />
 
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <label htmlFor="">Last Name</label>
-                                                <input type="text" value={userLastName} />
-                                                {/* <Form.Item
-
-                                                    name='last_name'
-                                                    label="Last Name"
-                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                >
-                                                    <Input placeholder="" value={userLastName} />
-                                                </Form.Item> */}
+                                                <input type="text" value={userName.lastName} />
 
                                             </div>
                                         </div>
@@ -1487,5 +1171,7 @@ const Create_po = ({ base_url }) => {
         </>
     );
 };
+
 export { getServerSideProps };
+
 export default Create_po;
