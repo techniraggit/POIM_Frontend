@@ -247,6 +247,7 @@ const AddUser = ({ base_url }) => {
                         >
                           <Input />
                         </Form.Item>
+                        
                       </div>
                     </div>
                     <div className="col-lg-4 col-md-6">
