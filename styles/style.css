@@ -685,7 +685,7 @@ div#forspce {
 
 .linewrap span {
     color: #112F5C;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 500;
     width: 16%;
 }
@@ -693,7 +693,12 @@ div#forspce {
 div#w-small span {
     width: 7%;
 }
-
+button.ant-btn.vendor-search-butt:hover span {
+    color: #fff;
+}
+.ant-btn-defaultvendor-search-butt:hover {
+    color: #fff;
+}
 .columns-select .ant-row {
     flex-direction: column;
 }
@@ -1875,7 +1880,7 @@ button.user-pop-up-butt {
 }
 
 .vendor-rowgap {
-    margin-bottom: 40px;
+    margin-bottom: 70px !important;
 }
 
 /* 29 dec */
@@ -2026,7 +2031,7 @@ Button.save-button {
     border-radius: 4px;
     margin-bottom: 6px;
     background-color: #fff;
-    padding: 10px 12px;
+    padding: 17px 14px;
 }
 .align-items-center {
     align-items: center!important;
@@ -2046,9 +2051,19 @@ Button.save-button {
 .dollars-input button {
     width: 25%;
     font-size: 14px;
+    display: flex;
     border: none;
-    border-radius: 2px;
+    justify-content: center;
+    align-items: center;
     padding: 8px 12px;
+    border-radius: 2px;
+    height: 35px;
+}
+button.ant-btn.ant-btn-default.set-btn:hover {
+    color: #fff;
+}
+button.ant-btn.ant-btn-default.set-btn:hover span {
+    color: #fff;
 }
 
 .create-another.minuswrap-img {
@@ -2109,7 +2124,118 @@ select.custom-wrap-selector option {
     border-radius: 0;
 }
 /* 4jan */
-
+/* 5jan/01/2024 */
+.img-clr {
+    background-color: #E91D26;
+    padding: 8px 10px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 30px; */
+    /* height: 30px; */
+}
+.img-clr img {
+    width: 100%;
+    max-width: 11px;
+}
+.lists-items > span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0D0D0D;
+}
+.set-thre {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+}
+.card-thre-wrap span {
+    background-color: #818B96;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    font-size: 10px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+.card-thre-wrap {
+    margin-bottom: 10px;
+}
+.lists-items .dollars-input > input {
+    width: 75%;
+    border: none;
+    background-color: #FAFAFA;
+    padding: 6px 13px;
+    font-size: 14px;
+    outline: none;
+    height: 35px;
+}
+.lists-items .dollars-input > input::placeholder {
+    color: hsl(211, 23%, 25%, 0.51);
+    font-size: 13px;
+}
+button.ant-btn.ant-btn-default.save-Button {
+    background-color: #E91D26;
+    color: #fff;
+    border-radius: 37px;
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+    height: 35px;
+}
+button.ant-btn.ant-btn-default.save-Button:hover {
+    color: #fff;
+}
+button.ant-btn.ant-btn-default.save-Button:hover span {
+    color: #fff;
+}
+.lists-items > hr {
+    color: rgb(112, 112, 112, 0.32);
+}
+.ant-select.line-select.ant-select-show-arrow {
+    width: 130px;
+    height: 40px;
+    max-width: 100% !important;
+}
+.ant-select.line-select.ant-select-show-arrow  .ant-select-selector {
+    background-color: transparent !important;
+    border: 1px solid #7E8EA7 !important;
+    padding: 6px 12px !important;
+    height: 36px !important;
+    position: relative !important;
+    z-index: 1;
+    color: #112F5C !important;
+    font-size: 13px !important;
+}
+.ant-select.line-select.ant-select-show-arrow .ant-select-selector::after {
+    position: absolute;
+    content: "";
+    right: 30px;
+    background-color: rgb(126, 142, 167, 0.28);
+    width: 1px;
+    height: 16px;
+    top: 50%;
+    color: red;
+    transform: translateY(-50%);
+    visibility: visible;
+    display: block !important;
+}
+.ant-select.line-select.ant-select-show-arrow span.ant-select-arrow {
+    transform: translateY(-59%);
+    margin-top: 0px !important;
+    color: #627693 !important;
+    font-size: 10px !important;
+    top: 50%;
+}
+/* 5jan/01/2024 */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
@@ -2118,7 +2244,6 @@ select.custom-wrap-selector option {
         padding: 10px 10px;
     }
 }
-
 @media (max-width: 1199px) {
     ul.list-icons li a span {
         width: 45px;
@@ -2138,12 +2263,12 @@ select.custom-wrap-selector option {
         overflow-x: auto;
     }
 
-    .Purchase-form {
+    /* .Purchase-form {
         justify-content: center;
-        flex-direction: column;
-        gap: 25px;
-        align-items: start;
-    }
+        /* flex-direction: column;
+        gap: 25px; 
+        align-items: center;
+    } */
 }
 
 span.text-sizes {
@@ -2157,6 +2282,12 @@ span.text-sizes {
 }
 
 @media (max-width: 1024px) {
+    .Purchase-form {
+        justify-content: center;
+        flex-direction: column;
+        gap: 25px;
+        align-items: start;
+    }
     th.hedaings-tb {
         padding: 10px 12px;
         font-size: 13px;
