@@ -22,7 +22,7 @@ const repeatorData = {
     project_site_id: ''
 }
 
-const EditPo = () => {
+const ViewPO = () => {
     const [vendors, setVendors] = useState([]);
     const [formData, setFormData] = useState({
         po_type: '',
@@ -305,6 +305,7 @@ const EditPo = () => {
                                                         ]}
                                                     >
                                                         <Select
+                                                            disabled
                                                             id="single2"
                                                             placeholder="Select"
                                                             className="js-states form-control file-wrap-select"
@@ -342,6 +343,7 @@ const EditPo = () => {
                                                     >
                                                         <Select
                                                             id="singlesa"
+                                                            disabled
                                                             placeholder="Select"
                                                             class="js-states form-control file-wrap-select"
                                                             onChange={(value) => {
@@ -377,7 +379,7 @@ const EditPo = () => {
                                                             },
                                                         ]}
                                                 >
-                                                    <Input onChange={({ target: { value } }) => onChange('company_name', value)} />
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('company_name', value)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -395,7 +397,7 @@ const EditPo = () => {
                                                             },
                                                         ]}
                                                 >
-                                                    <Input onChange={({ target: { value } }) => onChange('email', value)} />
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('email', value)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -412,7 +414,7 @@ const EditPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input onChange={({ target: { value } }) => onChange('phone', value)} />
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('phone', value)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -429,7 +431,7 @@ const EditPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input onChange={({ target: { value } }) => onChange('address', value)} />
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('address', value)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -447,7 +449,7 @@ const EditPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input onChange={({ target: { value } }) => onChange('state', value)} />
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('state', value)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -464,7 +466,7 @@ const EditPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input onChange={({ target: { value } }) => onChange('country', value)} />
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('country', value)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -488,7 +490,7 @@ const EditPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Select id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
+                                                    <Select disabled id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
                                                         onChange={(value) => {onChange('shipment_type', value)}}
                                                     >
                                                         <Option value="project related">Project Related</Option>
@@ -511,7 +513,7 @@ const EditPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Select id="single456"
+                                                        <Select disabled id="single456"
                                                             class="js-states form-control file-wrap-select"
                                                             onChange={(value) => {
                                                                 list(value)
@@ -571,7 +573,7 @@ const EditPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="Quantity" onChange={(e) => onChange('quantity', e.target.value)} />
+                                                    <Input readOnly placeholder="Quantity" onChange={(e) => onChange('quantity', e.target.value)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -588,7 +590,7 @@ const EditPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="Unit Price" onChange={(e) => onChange('unit_price', e.target.value)} />
+                                                    <Input readOnly placeholder="Unit Price" onChange={(e) => onChange('unit_price', e.target.value)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -605,7 +607,7 @@ const EditPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="Amount" readOnly />
+                                                    <Input readOnly placeholder="Amount" readOnly />
                                                 </Form.Item>
 
                                             </div>
@@ -624,7 +626,7 @@ const EditPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Input placeholder="Description" onChange={({ target: { value } }) => onChange('description', value)} />
+                                                        <Input readOnly placeholder="Description" onChange={({ target: { value } }) => onChange('description', value)} />
                                                     </Form.Item>
                                                 </div>
                                             </div>
@@ -643,7 +645,7 @@ const EditPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Select id="singlesa" onChange={(value) => onChange('project_site_id', value)} class="js-states form-control file-wrap-select">
+                                                            <Select disabled id="singlesa" onChange={(value) => onChange('project_site_id', value)} class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions) &&
                                                                     siteOptions.map((site) =>(
                                                                         <Select.Option key={site.site_id} value={site.site_id}>
@@ -671,7 +673,7 @@ const EditPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Select id="single90"
+                                                            <Select disabled id="single90"
                                                                 class="js-states form-control file-wrap-select"
                                                                 onChange={(value) => {onChange('material_details', {material_for: value}, 0)}}
                                                             >
@@ -700,7 +702,7 @@ const EditPo = () => {
                                                                     },
                                                                 ]}
                                                             >
-                                                                <Select id="single67" class="js-states form-control file-wrap-select"
+                                                                <Select disabled id="single67" class="js-states form-control file-wrap-select"
                                                                     onChange={(value) => {onChange('material_details', {material_for: value}, 0)}}
                                                                 >
                                                                     <Option value="projects">Project </Option>
@@ -727,7 +729,7 @@ const EditPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input onChange={({ target: { value } }) => onChange('material_details', { code: value }, 0)} />
+                                                            <Input readOnly onChange={({ target: { value } }) => onChange('material_details', { code: value }, 0)} />
                                                         </Form.Item>
                                                     )}
                                                     {formData.material_details[0]?.material_for === 'supplies' && (
@@ -743,7 +745,7 @@ const EditPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input onChange={({ target: { value } }) => onChange('material_details', { code: value }, 0)} />
+                                                            <Input readOnly onChange={({ target: { value } }) => onChange('material_details', { code: value }, 0)} />
                                                         </Form.Item>
                                                     )}
 
@@ -763,7 +765,7 @@ const EditPo = () => {
                                                                             },
                                                                         ]}
                                                                     >
-                                                                        <Select id="single406"
+                                                                        <Select disabled id="single406"
                                                                             class="js-states form-control file-wrap-select"
                                                                             onChange={(value) => {
                                                                                 list(value);
@@ -804,7 +806,7 @@ const EditPo = () => {
                                                                     },
                                                                 ]}
                                                             >
-                                                                <Select id="single51" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
+                                                                <Select disabled id="single51" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
                                                                     {Array.isArray(siteOptions) &&
                                                                         siteOptions.map((site) => (
                                                                             <Select.Option key={site.site_id} value={site.site_id}>
@@ -833,7 +835,7 @@ const EditPo = () => {
                                                                 ]}
                                                                 initialValue="1860 Shawson"
                                                             >
-                                                                <Input readOnly />
+                                                                <Input disabled readOnly />
                                                             </Form.Item>
                                                         </div>
                                                     </>
@@ -861,6 +863,7 @@ const EditPo = () => {
                                                                                     rules={[{ required: true, message: 'Please enter quantity' }]}
                                                                                 >
                                                                                     <Input
+                                                                                        readOnly
                                                                                         placeholder="Quantity"
                                                                                         value={formData.material_details[index + 1].quantity}
                                                                                         onChange={({ target: { value, name } }) => onChange('material_details', {quantity: value}, index + 1)}
@@ -877,6 +880,7 @@ const EditPo = () => {
                                                                                     rules={[{ required: true, message: 'Please enter unit price' }]}
                                                                                 >
                                                                                     <Input
+                                                                                        readOnly
                                                                                         placeholder="Unit Price"
                                                                                         onChange={({ target: { value, name } }) => onChange('material_details', {unit_price: value}, index + 1)}
                                                                                     />
@@ -896,7 +900,7 @@ const EditPo = () => {
                                                                                     label="Description"
                                                                                     rules={[{ required: true, message: 'Please enter description' }]}
                                                                                 >
-                                                                                    <Input placeholder="Description" />
+                                                                                    <Input readOnly placeholder="Description" />
                                                                                 </Form.Item>
                                                                             </div>
                                                                         </div>
@@ -907,7 +911,7 @@ const EditPo = () => {
                                                                                     <>
                                                                                         <div className="material-for-wrap">
                                                                                             <label>Material For</label>
-                                                                                            <select placeholder="Select" className="js-states form-control custom-wrap-selector" onChange={({target: { value }}) => {
+                                                                                            <select disabled placeholder="Select" className="js-states form-control custom-wrap-selector" onChange={({target: { value }}) => {
                                                                                                        onChange('material_details', {material_for: value}, index + 1)
                                                                                                     }} value={formData.material_details[index + 1].material_for}>
                                                                                                 {formData.shipment_type === 'combined' && <option value="project">Project</option>}
@@ -927,7 +931,7 @@ const EditPo = () => {
                                                                                         <label>
                                                                                         {formData.material_details[index + 1].material_for === 'inventory' ? "Inventory Code" : "GL Code"}
                                                                                         </label>
-                                                                                        <input onChange={({ target: { value, name } }) => onChange('material_details', {code: value}, index + 1)} value={formData.material_details[index + 1].code} />
+                                                                                        <input disabled onChange={({ target: { value, name } }) => onChange('material_details', {code: value}, index + 1)} value={formData.material_details[index + 1].code} />
                                                                                         </>
                                                                                     )}
                                                                                 </div>
@@ -941,7 +945,7 @@ const EditPo = () => {
                                                                                         <div class="top-project">
                                                                                             <div class="selectwrap columns-select shipment-caret ">
                                                                                                 <label>Project</label>
-                                                                                                <select  className="js-states form-control custom-wrap-selector" onChange={({ target: { value } }) => {
+                                                                                                <select disabled className="js-states form-control custom-wrap-selector" onChange={({ target: { value } }) => {
                                                                                                         list(value);
                                                                                                         onChange('material_details', {project_id: value}, index + 1)}
                                                                                                     }
@@ -967,7 +971,7 @@ const EditPo = () => {
                                                                                         <div className="selectwrap columns-select shipment-caret ">
                                                                                             <label>Project Site</label>
 
-                                                                                            <select className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({target: { value }}) => onChange('material_details', {project_site_id: value}, index + 1)}>
+                                                                                            <select disabled className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({target: { value }}) => onChange('material_details', {project_site_id: value}, index + 1)}>
                                                                                                 {Array.isArray(siteOptions) &&
                                                                                                     siteOptions.map((site) => (
                                                                                                         <option key={site.site_id} value={site.site_id}>
@@ -992,7 +996,7 @@ const EditPo = () => {
                                                                 )
                                                             }
                                                             )}
-                                                            <Form.Item>
+                                                            {/* <Form.Item>
                                                                 <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                                                                     // setFormData({
                                                                     //     ...formData,
@@ -1002,7 +1006,7 @@ const EditPo = () => {
                                                                 }} icon={<PlusOutlined />}>
                                                                     Add More Material
                                                                 </Button>
-                                                            </Form.Item>
+                                                            </Form.Item> */}
                                                         </>
                                                     )
                                                 }}
@@ -1080,4 +1084,4 @@ const EditPo = () => {
 
 export { getServerSideProps };
 
-export default EditPo;
+export default ViewPO;
