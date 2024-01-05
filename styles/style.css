@@ -1450,7 +1450,7 @@ ul.list-icons li {
 }
 
 .create-another .ant-space {
-    margin-bottom: 50px !important;
+    margin-bottom: 40px !important;
 }
 
 .list-dboard li:hover {
@@ -1516,6 +1516,9 @@ label {
 .ant-select-selector {
     height: 44px !important;
 }
+.ant-select-selectors {
+    height: 44px !important;
+}
 
 .ant-select:hover .ant-select-selector {
     border-color: #70707054 !important;
@@ -1525,6 +1528,7 @@ label {
     border-color: #70707054 !important;
     box-shadow: none !important;
 }
+
 button.ant-btn.ant-btn-dashed.add-more-btn:hover span {
     color: #0D0D0D !important;
 }
@@ -1563,9 +1567,9 @@ button.ant-btn.ant-btn-dashed.add-more-btn:hover  {
     align-items: end;
 }
 
-.add-space-btn {
+/* .add-space-btn {
     margin-top: 50px;
-}
+} */
 
 .react-select .ant-form-item .ant-form-item-explain-error {
     margin-top: 15px;
@@ -2091,6 +2095,7 @@ select.custom-wrap-selector {
     border-radius: 50px;
     font-size: 14px;
     height: 40px;
+    font-weight: 700;
 }
 .form-control:focus  {
     border: 1px solid #0D0D0D36 !important;
