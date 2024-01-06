@@ -5,7 +5,7 @@ import Header from "@/components/header";
 import '../../styles/style.css'
 import {MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
-import { fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts } from "@/apis/apis/adminApis";
+import { fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, updatePo } from "@/apis/apis/adminApis";
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 import moment from "moment";
 
@@ -89,7 +89,7 @@ const EditPo = () => {
                 form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
                 form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
                 form.setFieldValue('shipment_type', data.shipment_type);
-                form.setFieldValue('hst_amount', data.hst_amount);
+                form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2));
                 form.setFieldValue('total_amount', data.total_amount);
                 form.setFieldValue('project_id', data.project_site?.project?.project_id);
                 form.setFieldValue('project_site_id', data.project_site?.site_id);
@@ -151,6 +151,16 @@ const EditPo = () => {
         return totalAmount;
     };
 
+    const updateAmount = (quantity, unitPrice, index) => {
+        const calculatedAmount = quantity * unitPrice;
+        const details = formData.material_details[index];
+        details.amount = calculatedAmount || 0;
+        formData.material_details[index] = details;
+        setFormData({
+            ...formData
+        })
+    };
+
     const handleUnitPriceRepeaterChange = () => {
         const totalAmount = getTotalAmount();
         setFormData({
@@ -158,13 +168,20 @@ const EditPo = () => {
             hst_amount: totalAmount * 0.13,
             total_amount: totalAmount * 0.13 + totalAmount
         })
-        form.setFieldsValue({ 'hst_amount': totalAmount * 0.13 });
-        form.setFieldsValue({ 'total_amount': totalAmount * 0.13 + totalAmount });
+        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) });
+        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
     };
 
-    const onFinish = (values) => {
-        console.log(values);
-        console.log(formData);
+    const onFinish = () => {
+        updatePo({
+            ...formData,
+            po_id: id,
+            project_site_id: formData.project_site_id?.site_id
+        }).then((res) => {
+            if(res?.data?.status) {
+                router.push('/po_list');
+            }
+        });
     }
     
     const onChange = (name, value, index) => {
@@ -173,6 +190,11 @@ const EditPo = () => {
             Object.keys(value).map((key) => {
                 materialDetails[index][key] = value[key];
             });
+            if(value.unit_price) {
+                updateAmount(materialDetails[index].quantity, value.unit_price, index);
+            } else if(value.quantity) {
+                updateAmount(quantity, materialDetails[index].unit_price, index);
+            }
             setFormData({
                 ...formData,
                 material_details: [...materialDetails]
@@ -841,172 +863,135 @@ const EditPo = () => {
                                             </div>
                                         </div>
                                         <div className="create-another minuswrap-img">
-                                            <Form.List name="items" initialValue={formData.material_details.slice(1).map((item, index) => ({ ...item, key: index }))}>
-                                                {(fields, { add, remove }) => {
-                                                    console.log(fields)
-                                                    return(
-                                                        <>
-                                                            {fields.map(({ key, name, fieldKey, ...restField }, index) => {
-                                                                const itemData = formData.material_details[name];
-                                                                return (
-                                                                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
-                                                                        <div className="row">
-                                                                            <div className="wrap-box col-sm-3">
-
+                                            <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
+                                                {
+                                                    formData.material_details.slice(1).map((data, index) => {
+                                                        return <div className="row">
+                                                            {
+                                                                Object.keys(data).map((key) => {
+                                                                    let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
+                                                                    if(key.includes('_')) {
+                                                                        upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');
+                                                                    }
+                                                                    if(key === 'quantity' || key === 'unit_price' || key === 'description' || key === "amount") {
+                                                                        return(
+                                                                            <div key={key} className="wrap-box col-sm-3">
                                                                                 <Form.Item
-                                                                                    {...restField}
-                                                                                    name={[name, 'quantity']}
-                                                                                    fieldKey={[fieldKey, 'quantity']}
-                                                                                    label="Quantity"
-                                                                                    rules={[{ required: true, message: 'Please enter quantity' }]}
+                                                                                    label={upperKey}
+                                                                                    rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                                                 >
                                                                                     <Input
-                                                                                        placeholder="Quantity"
-                                                                                        value={formData.material_details[index + 1].quantity}
-                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {quantity: value}, index + 1)}
+                                                                                        placeholder={upperKey}
+                                                                                        value={data[key]}
+                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {[key]: value}, index + 1)}
                                                                                     />
                                                                                 </Form.Item>
                                                                             </div>
-                                                                            <div className="wrap-box col-sm-3">
-                                                                                <Form.Item
-                                                                                    {...restField}
-                                                                                    name={[name, 'unit_price']}
-                                                                                    value={formData.material_details[index + 1].unit_price}
-                                                                                    fieldKey={[fieldKey, 'unit_price']}
-                                                                                    label="Unit Price"
-                                                                                    rules={[{ required: true, message: 'Please enter unit price' }]}
-                                                                                >
-                                                                                    <Input
-                                                                                        placeholder="Unit Price"
-                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {unit_price: value}, index + 1)}
-                                                                                    />
-                                                                                </Form.Item>
-                                                                            </div>
-                                                                            <div className="wrap-box col-sm-3">
-                                                                                <label for="amount">Amount</label>
-                                                                                <input name="amount" value={formData.material_details[index + 1].amount} placeholder="Amount" readOnly />
-                                                                            </div>
-                                                                            <div className="wrap-box col-sm-3">
-                                                                                <Form.Item
-                                                                                    {...restField}
-                                                                                    name={[name, 'description']}
-                                                                                    value={formData.material_details[index + 1].description}
-                                                                                    onChange={({ target: { value, name } }) => onChange('material_details', {description: value}, index + 1)}
-                                                                                    fieldKey={[fieldKey, 'Description']}
-                                                                                    label="Description"
-                                                                                    rules={[{ required: true, message: 'Please enter description' }]}
-                                                                                >
-                                                                                    <Input placeholder="Description" />
-                                                                                </Form.Item>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div className="row">
-                                                                            <div class="col-sm-4">
-                                                                                {(formData.shipment_type === 'non project related' || formData.shipment_type === 'combined') && (
-                                                                                    <>
-                                                                                        <div className="material-for-wrap">
-                                                                                            <label>Material For</label>
-                                                                                            <select placeholder="Select" className="js-states form-control custom-wrap-selector" onChange={({target: { value }}) => {
-                                                                                                       onChange('material_details', {material_for: value}, index + 1)
-                                                                                                    }} value={formData.material_details[index + 1].material_for}>
-                                                                                                {formData.shipment_type === 'combined' && <option value="project">Project</option>}
-                                                                                                <option value="inventory">Inventory</option>
-                                                                                                <option value="supplies">Supplies/Expenses</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </>
-                                                                                )}
-                                                                            </div>
-
-                                                                            <div className="col-sm-4">
-                                                                                <div className="wrap-box">
-
-                                                                                    {(formData.material_details[index + 1].material_for === 'inventory' || formData.material_details[index + 1].material_for === 'supplies') && (
+                                                                        )
+                                                                    } else if(key === 'material_for') {
+                                                                        return(
+                                                                            <div className="row">
+                                                                                <div class="col-sm-4">
+                                                                                    {(formData.shipment_type === 'non project related' || formData.shipment_type === 'combined') && (
                                                                                         <>
-                                                                                        <label>
-                                                                                        {formData.material_details[index + 1].material_for === 'inventory' ? "Inventory Code" : "GL Code"}
-                                                                                        </label>
-                                                                                        <input onChange={({ target: { value, name } }) => onChange('material_details', {code: value}, index + 1)} value={formData.material_details[index + 1].code} />
+                                                                                            <div className="material-for-wrap">
+                                                                                                <label>Material For</label>
+                                                                                                <select placeholder="Select" className="js-states form-control custom-wrap-selector" onChange={({target: { value }}) => {
+                                                                                                            onChange('material_details', {material_for: value}, index + 1)
+                                                                                                        }} value={formData.material_details[index + 1].material_for}>
+                                                                                                    {formData.shipment_type === 'combined' && <option value="project">Project</option>}
+                                                                                                    <option value="inventory">Inventory</option>
+                                                                                                    <option value="supplies">Supplies/Expenses</option>
+                                                                                                </select>
+                                                                                            </div>
                                                                                         </>
                                                                                     )}
                                                                                 </div>
-                                                                            
+                                                                                <div className="col-sm-4">
+                                                                                    <div className="wrap-box">
+                                                                                        {(formData.material_details[index + 1].material_for === 'inventory' || formData.material_details[index + 1].material_for === 'supplies') && (
+                                                                                            <>
+                                                                                                <label>{formData.material_details[index + 1].material_for === 'inventory' ? "Inventory Code" : "GL Code"}</label>
+                                                                                                <input 
+                                                                                                    onChange={({ target: { value, name } }) => onChange('material_details', {code: value}, index + 1)} 
+                                                                                                    value={formData.material_details[index + 1].code} 
+                                                                                                />
+                                                                                            </>
+                                                                                        )}
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div className="row">
-                                                                            <div className="col-sm-4">
-                                                                                {formData.material_details[index + 1].material_for === 'project' && (
-                                                                                    <>
+                                                                        )
+                                                                    } else if(key === 'project') {
+                                                                        return(
+                                                                            formData.material_details[index + 1].material_for === 'projects' && (
+                                                                                <div className="row">
+                                                                                    <div className="col-sm-4">
                                                                                         <div class="top-project">
                                                                                             <div class="selectwrap columns-select shipment-caret ">
                                                                                                 <label>Project</label>
                                                                                                 <select  className="js-states form-control custom-wrap-selector" onChange={({ target: { value } }) => {
                                                                                                         list(value);
-                                                                                                        onChange('material_details', {project_id: value}, index + 1)}
+                                                                                                        onChange('material_details', {project: value}, index + 1)}
                                                                                                     }
-                                                                                                    value={formData.material_details[index + 1].project_id}
+                                                                                                    value={formData.material_details[index + 1].project}
                                                                                                 >
                                                                                                     {Array.isArray(projects) &&
                                                                                                         projects.map((project) => (
-                                                                                                            <option key={project.project_id} value={project.project_id}>
+                                                                                                            <option key={project.project} value={project.project}>
                                                                                                                 {project.name}
                                                                                                             </option>
                                                                                                     ))}
                                                                                                 </select>
                                                                                             </div>
-
-                                                                                        </div>
-                                                                                    </>
-                                                                                )}
-                                                                            </div>
-
-                                                                            <div className="col-sm-4">
-                                                                                {formData.material_details[index + 1].material_for === 'project' && (
-                                                                                    <div class="selectwrap shipment-caret add-dropdown-wrap">
-                                                                                        <div className="selectwrap columns-select shipment-caret ">
-                                                                                            <label>Project Site</label>
-
-                                                                                            <select className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({target: { value }}) => onChange('material_details', {project_site_id: value}, index + 1)}>
-                                                                                                {Array.isArray(siteOptions) &&
-                                                                                                    siteOptions.map((site) => (
-                                                                                                        <option key={site.site_id} value={site.site_id}>
-                                                                                                            {site.name}
-                                                                                                        </option>
-                                                                                                    ))
-                                                                                                }
-                                                                                            </select>
                                                                                         </div>
                                                                                     </div>
-                                                                                )}
-                                                                            </div>
-                                                                        </div>
-                                                                        <MinusOutlined className="minus-wrap" onClick={() => {
-                                                                            setFormData({
-                                                                                ...formData,
-                                                                                material_details: [...formData.material_details.slice(0, name + 1), ...formData.material_details.slice(name + 2)]
-                                                                            });
-                                                                            remove(name)
-                                                                        }} style={{ marginLeft: '8px' }} />
-                                                                    </Space>
-                                                                )
+                                                                                    <div className="col-sm-4">
+                                                                                        {formData.material_details[index + 1].material_for === 'projects' && (
+                                                                                            <div class="selectwrap shipment-caret add-dropdown-wrap">
+                                                                                                <div className="selectwrap columns-select shipment-caret ">
+                                                                                                    <label>Project Site</label>
+
+                                                                                                    <select className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({target: { value }}) => onChange('material_details', {project_site_id: value}, index + 1)}>
+                                                                                                        {Array.isArray(siteOptions) &&
+                                                                                                            siteOptions.map((site) => (
+                                                                                                                <option key={site.site_id} value={site.site_id}>
+                                                                                                                    {site.name}
+                                                                                                                </option>
+                                                                                                            ))
+                                                                                                        }
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        )}
+                                                                                    </div>
+                                                                                </div>
+                                                                            )
+                                                                        )
+                                                                    }
+                                                                    return <></>
+                                                                })
                                                             }
-                                                            )}
-                                                            <Form.Item>
-                                                                <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
-                                                                    // setFormData({
-                                                                    //     ...formData,
-                                                                    //     material_details: formData.material_details.filter((_, i) => i !== index + 1)
-                                                                    // });
-                                                                    add();
-                                                                }} icon={<PlusOutlined />}>
-                                                                    Add More Material
-                                                                </Button>
-                                                            </Form.Item>
-                                                        </>
-                                                    )
-                                                }}
-                                            </Form.List>
+                                                            <MinusOutlined className="minus-wrap" onClick={() => {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 2)]
+                                                                });
+                                                            }} style={{ marginLeft: '8px' }} />
+                                                        </div>
+                                                    })
+                                                }
+                                                <Form.Item>
+                                                    <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
+                                                        setFormData({
+                                                            ...formData,
+                                                            material_details: [...formData.material_details, repeatorData]
+                                                        });
+                                                    }} icon={<PlusOutlined />}>
+                                                        Add More Material
+                                                    </Button>
+                                                </Form.Item>
+                                            </Space>
                                         </div>
                                     </div>
                                     <div className="row top-btm-space mb-0">

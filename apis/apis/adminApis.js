@@ -36,3 +36,7 @@ export const deletePO = (data) => {
 export const fetchPo = (id) => {
     return Axios.get(`api/admin/purchase-order?po_id=${id}`);
 }
+
+export const updatePo = (data) => {
+    return Axios.patch(`/api/admin/purchase-order`, data);
+}
