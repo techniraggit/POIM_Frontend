@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import '../styles/style.css'
 import Link from 'next/link';
-import { RightOutlined } from '@ant-design/icons';
+import { RightOutlined, HomeFilled } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 
 const Sidebar = () => {
@@ -28,7 +28,9 @@ const Sidebar = () => {
           <li>
             <Link href="/dashboard">
               <span className="db-span">
-                <i className="fa-solid fa-house arrow-clr me-4"></i>Dashboard
+              <HomeFilled className='home-sidebar me-4' />
+                {/* <i className="fa-solid fa-house arrow-clr me-4"></i> */}
+                Dashboard
               </span>
               <RightOutlined className='right-outline' />
               {/* <i className="fa-solid fa-chevron-left"></i> */}

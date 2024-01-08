@@ -134,7 +134,7 @@ const Login = ({ base_url }) => {
                 <div className="container">
                     <div className="login-board">
                         <div className="logowrap">
-                            <img src="./images/logo.png" alt="" />
+                            <img src="/images/logo.png" alt="" />
                             <h4 className="admin">Admin Login</h4>
                             <form action="#" onSubmit={handleSubmit}>
                                 <div className="row">
