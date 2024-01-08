@@ -4,7 +4,7 @@ import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 import moment from 'moment';
 import axios from 'axios';
 import { base_url } from './constant';
-import { CalendarOutlined, PlusOutlined,MinusOutlined } from '@ant-design/icons';
+import { CalendarOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 
 const { Option } = Select;
@@ -13,7 +13,7 @@ const repeatorData = {
     date: "",
     to: "",
     amount: '',
-    
+
 }
 const Rental = () => {
     const [form] = Form.useForm();
@@ -35,6 +35,9 @@ const Rental = () => {
     const [userFirstName, setUserFirstName] = useState('');
     const [userLastName, setUserLastName] = useState('');
     const [repeator, setRepeator] = useState([]);
+  const [amount, setAmount] = useState(0);
+  const[totalAmount,setTotalAmount]=useState(0);
+  
 
     const fetchVendorContactDropdown = async (id) => {
         try {
@@ -157,7 +160,52 @@ const Rental = () => {
         setUserFirstName(storedFirstName || '');
         setUserLastName(storedLastName || '');
     }, []);
+   
+    
 
+    // const handleRepeatorChange = (value, name, index) => {
+    //     console.log(value,name,index,'wwwwwwwwwwwwwwwwwwwwwww');
+    //     const values = repeator[index];
+    //     if (values) {
+    //         repeator[index] = {
+    //             ...repeator[index],
+    //             [name]: parseInt(value)
+                
+    //         }  
+    //         console.log(totalAmount,value,'totalAmount and value');
+           
+    //         form.setFieldsValue({
+    //             HST_Amount: ((totalAmount+parseInt(value)) * 0.13),
+    //             Total_amount: ((totalAmount+parseInt(value))),
+    //           });
+    //           setTotalAmount((parseInt(value)+ totalAmount))
+          
+          
+            
+    //     }
+    //     console.log((totalAmount+parseInt(value)) * 0.13,totalAmount,'@@@@@@@@@@@@@@@@@@@@@@');
+    //     console.log(repeator, "============repa")
+    //     setRepeator([...repeator]);
+    // }
+
+
+    const handleAmountChange = (value) => {
+        console.log(value, 'handleAmountChange');
+        setAmount((prevAmount) => {
+            console.log(prevAmount,'prevAmount');
+          // Use the previous state to ensure you have the latest value
+          handleAmountRepeaterChange(value);
+          return value;
+        });
+      };
+
+      const handleamountRepeaterChange = () => {
+        const totalAmount = getTotalAmount();
+        console.log(totalAmount,'qqqqqqqqqqqqqqqqqqq');
+        form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
+        form.setFieldsValue({ Total_amount: totalAmount * 0.13 + totalAmount });
+    };
+    
 
     const handleRepeatorChange = (value, name, index) => {
         const values = repeator[index];
@@ -167,20 +215,44 @@ const Rental = () => {
                 [name]: value
             }
 
-            // if (repeator[index].quantity && repeator[index].unit_price) {
-            //     console.log(parseFloat(repeator[index].quantity) * parseFloat(repeator[index].unit_price))
-            //     repeator[index] = {
-            //         ...repeator[index],
-            //         amount: parseFloat(repeator[index].quantity) * parseFloat(repeator[index].unit_price)
-            //     }
-            // }
+            if(repeator[index].amount) {
+                console.log(parseFloat(repeator[index].quantity))
+                repeator[index] = {
+                    ...repeator[index],
+                    amount: parseFloat(repeator[index].amount)
+                }
+            }
         }
-        // if (name === 'unit_price' || name === 'quantity') {
-        //     handleUnitPriceRepeaterChange();
-        // }
-        console.log(repeator, "============repa")
-        setRepeator([...repeator]);
+
+        if(name === 'amount') {
+            handleamountRepeaterChange();
+        }
     }
+
+    // const handleAmountChange = (value) => {
+    //     console.log(value,'handleAmountChange')
+    //     const setamount=setAmount(value);
+    //     console.log(setamount,'aaaaaaaaaaaa======');    
+    //     handleAmountRepeaterChange(value);
+    //     return;
+    //   };
+
+      const getTotalAmount = () => {
+        return amount; // Replace with your actual logic
+        
+
+      };
+      const handleAmountRepeaterChange = (e) => {
+        // setAmount(value);
+        // const totalAmount = getTotalAmount();
+        // console.log(totalAmount,'totaaaaaallll');
+        form.setFieldsValue({
+          HST_Amount: (e.target.value * 0.13),
+          Total_amount: (+e.target.value * 0.13 + parseInt(e.target.value)),
+        });
+        console.log(e.target.value,'e.target.value');
+        setTotalAmount(( parseInt(e.target.value)))
+      };
 
     const onFinish = async (values) => { }
     return (
@@ -585,9 +657,10 @@ const Rental = () => {
                                     },
                                 ]}
                             >
-                                <Input />
+                                <Input onChange={(e) => handleAmountRepeaterChange(e)}/>
 
                             </Form.Item>
+                         
                         </div>
                     </div>
                     <div className="create-another minuswrap-img">
@@ -597,83 +670,88 @@ const Rental = () => {
                                     {fields.map(({ key, name, fieldKey, ...restField }, index) => {
                                         return (
                                             <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
-                                                <div className="wrap-box">
-                                                    <Form.Item
-                                                        {...restField}
-                                                        name={[name, 'description']}
-                                                        fieldKey={[fieldKey, 'description']}
-                                                        label="Description"
-                                                        rules={[{ required: true, message: 'Please enter description' }]}
-                                                    >
-                                                        <Input
-                                                            placeholder="description"
-                                                            value={repeator[index].quantity}
-                                                            onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'quantity', index)}
-                                                        />
-                                                    </Form.Item>
-                                                </div>
-                                                <div className="col-sm-4 d-flex align-items-center">
+                                                <div className="row">
                                                     <div className="wrap-box">
                                                         <Form.Item
-                                                            label="Date Range"
                                                             {...restField}
-                                                            name={[name, 'date']}
-                                                            fieldKey={[fieldKey, 'date']}
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please enter date",
-                                                                },
-                                                            ]}
+                                                            name={[name, 'description']}
+                                                            fieldKey={[fieldKey, 'description']}
+                                                            label="Description"
+                                                            rules={[{ required: true, message: 'Please enter description' }]}
                                                         >
-                                                            <DatePicker
-                                                                style={{ width: "100%" }}
-                                                                suffixIcon={<CalendarOutlined />}
+                                                            <Input
+                                                                placeholder="description"
+                                                                value={repeator[index].quantity}
+                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'description', index)}
                                                             />
                                                         </Form.Item>
                                                     </div>
-                                                    <div className="text-to"><p className='mb-2'>To</p></div>
-                                                </div>
-                                                <div className="col-sm-4">
-                                                    <div className="wrap-box">
-                                                        <Form.Item
-                                                            label="To"
-                                                            {...restField}
-                                                            name={[name, 'to']}
+                                                    <div className="col-sm-4 d-flex align-items-center">
+                                                        <div className="wrap-box">
+                                                            <Form.Item
+                                                                label="Date Range"
+                                                                {...restField}
+                                                                name={[name, 'date']}
+                                                                fieldKey={[fieldKey, 'date']}
+                                                                rules={[
+                                                                    {
+                                                                        required: true,
+                                                                        message: "Please enter date",
+                                                                    },
+                                                                ]}
+                                                            >
+                                                                <DatePicker
+                                                                    style={{ width: "100%" }}
+                                                                    suffixIcon={<CalendarOutlined />}
+                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'date', index)}
+                                                                />
+                                                            </Form.Item>
+                                                        </div>
+                                                        <div className="text-to"><p className='mb-2'>To</p></div>
+                                                    </div>
+                                                    <div className="col-sm-4">
+                                                        <div className="wrap-box">
+                                                            <Form.Item
+                                                                label="To"
+                                                                {...restField}
+                                                                name={[name, 'to']}
 
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please enter date",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <DatePicker
-                                                                style={{ width: "100%" }}
-                                                                suffixIcon={<CalendarOutlined />}
-                                                            />
-                                                        </Form.Item>
-                                                        <div className="col-sm-4">
-                                                            <div className="wrap-box">
-                                                                <Form.Item
-                                                                    label="Amount"
-                                                                    name="amount"
-                                                                    for="file"
-                                                                    class="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter amount",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Input />
+                                                                rules={[
+                                                                    {
+                                                                        required: true,
+                                                                        message: "Please enter date",
+                                                                    },
+                                                                ]}
+                                                            >
+                                                                <DatePicker
+                                                                    style={{ width: "100%" }}
+                                                                    suffixIcon={<CalendarOutlined />}
+                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'to', index)}
+                                                                />
+                                                            </Form.Item>
+                                                            <div className="col-sm-4">
+                                                                <div className="wrap-box">
+                                                                    <Form.Item
+                                                                        label="Amount"
+                                                                        name="amount"
+                                                                        for="file"
+                                                                        class="same-clr"
+                                                                        rules={[
+                                                                            {
+                                                                                required: true,
+                                                                                message: "Please enter amount",
+                                                                            },
+                                                                        ]}
+                                                                    >
+                                                                        <Input 
+                                                                        // onChange={(e) => handleAmountChange(e.target.value)}
+                                                                        onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'amount', index)}
+                                                                        />
 
-                                                                </Form.Item>
+                                                                    </Form.Item>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        {/* <label for="name">To</label>
-                            <input type="date" /> */}
                                                     </div>
                                                 </div>
                                                 <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
@@ -684,6 +762,7 @@ const Rental = () => {
                                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                                             setRepeator([...repeator, repeatorData]);
                                             add();
+                                            // handleAmountRepeaterChange([...repeator, repeatorData]);
                                         }} icon={<PlusOutlined />}>
                                             Add More Material
                                         </Button>
