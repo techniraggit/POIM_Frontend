@@ -243,21 +243,19 @@ section.dashboard-wrap {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    padding-bottom: 54px;
-    padding-top: 54px;
+    padding-bottom: 40px;
+    padding-top: 40px;
     height: 100vh;
-    height: 100%;
+    /* height: 100%; */
 }
-
 .login-board {
-    max-width: 708px;
+    max-width: 480px;
     margin: 0 auto;
     text-align: center;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 4px 0px 11px #0000000A;
     border-radius: 6px;
 }
-
 .logowrap img {
     max-width: 120px;
     height: auto;
@@ -265,20 +263,20 @@ section.dashboard-wrap {
 }
 
 .logowrap {
-    padding-top: 30px;
-    padding-bottom: 50px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .logowrap form input {
     border: none;
     border-bottom: 1px solid #707070;
-    padding-bottom: 20px;
+    padding-bottom: 17px;
     outline: none;
     width: 100%;
-    font-size: 18px;
-    margin-bottom: 25px;
+    font-size: 16px;
+    margin-bottom: 15px;
     border-radius: 0;
     color: rgb(31, 30, 30, 0.26);
     font-weight: 700;
@@ -287,13 +285,13 @@ section.dashboard-wrap {
 .logowrap form input::placeholder {
     opacity: 0.26;
 }
-
 h4.admin {
     color: #404040;
-    font-size: 32px;
+    font-size: 26px;
+    text-align: center;
     text-transform: capitalize;
-    margin-bottom: 30px;
-    margin-top: 20px;
+    margin-bottom: 28px;
+    margin-top: 15px;
     font-weight: 600;
 }
 
@@ -355,7 +353,7 @@ label.label-div {
     padding: 0px 0px 0px 34px;
     display: flex;
     align-items: center;
-    width: 70%;
+    width: 60%;
 }
 
 button.submit-btn:hover {
@@ -708,9 +706,9 @@ button.ant-btn.vendor-search-butt:hover span {
     gap: 30px;
 }
 
-.all-wrap-box .selectwrap {
+/* .all-wrap-box .selectwrap {
     width: 30%;
-}
+} */
 
 .wrap-box .ant-col {
     width: 100% !important;
@@ -787,7 +785,7 @@ button.ant-btn.vendor-search-butt:hover span {
     margin-bottom: 60px;
 }
 
-.wrap-box input:focus {
+.wrap-box  input:focus {
     background-color: #F9F9FA;
     border: none;
 }
@@ -1577,7 +1575,7 @@ button.ant-btn.ant-btn-dashed.add-more-btn:hover  {
 } */
 
 .react-select .ant-form-item .ant-form-item-explain-error {
-    margin-top: 15px;
+    margin-top: 3px;
 }
 
 .add-dropdown-wrap .ant-row {
@@ -1689,12 +1687,12 @@ div#materialFor_help {
 }
 
 .shipment-caret .ant-form-item .ant-form-item-explain-connected {
-    padding-top: 10px;
+    padding-top: 3px;
 }
 
-.shipment-caret .ant-form-item-explain-error {
-    margin-top: 16px;
-}
+/* .shipment-caret .ant-form-item-explain-error {
+    margin-top: 3px;
+} */
 
 .shipment-caret .ant-select-selector::after {
     position: absolute;
@@ -1914,9 +1912,14 @@ textarea.text-area {
 .text-to p {
     font-weight: 600;
 }
-
+.text-to > p {
+    font-weight: 700;
+    color: #112F5C;
+    margin-bottom: 0;
+    font-size: 16px;
+}
 .text-to {
-    padding-left: 60px;
+    padding-left: 16px;
 }
 button.ant-btn.add-more-btnn {
     background-color: #F6F7F8;
@@ -2236,6 +2239,43 @@ button.ant-btn.ant-btn-default.save-Button:hover span {
     top: 50%;
 }
 /* 5jan/01/2024 */
+/* 8 jan/ 2024  */
+.wrap-box .ant-form-item-control-input-content .ant-picker {
+    border: 1px solid #70707054;
+    border-radius: 2px;
+    width: 100%;
+    padding: 9px 20px;
+    outline: none;
+    font-size: 16px;
+    color: #112F5C;
+    font-weight: 500;
+}
+.ant-picker-focused.ant-picker:focus, .ant-picker-focused.ant-picker {
+    box-shadow: none !important;
+}
+.wrap-box input:focus .ant-picker-input >input:focus{
+    background-color: #F9F9FA;
+    border: none;
+}
+.ant-picker .ant-picker-input >input:focus {
+    background-color: transparent  !important;
+}
+.wrap-box  .ant-col.ant-form-item-control.css-dev-only-do-not-override-p7e5j5 {
+    min-height: unset !important;
+}
+span.anticon.anticon-home.home-sidebar > svg {
+    color: #818B96 !important;
+    font-size: 20px;
+}  
+.shipment-caret.aligned-text .ant-form-item-explain .ant-form-item-explain-error {
+    margin-top: 11px;
+}
+.all-wrap-box > .aligned-text {
+    margin-bottom: 26px;
+    width: 100%;
+}
+
+/* 8 jan/ 2024  */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
