@@ -155,7 +155,7 @@ const Create_po = () => {
         const response = createPO(data);
 
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 message.success(res.data?.message)
                 router.push('/po_list')
             }
@@ -257,6 +257,14 @@ const Create_po = () => {
         setRepeator([...repeator]);
     }
 
+    const handleSelectChange = (selectedValue) => {
+        // const rentalPoPageUrl = "/rental-po";
+
+    if (selectedValue === "rental") {
+        router.push('/rental-po');
+    }
+    }
+
     return (
         <>
             <div className="wrapper-main">
@@ -288,9 +296,11 @@ const Create_po = () => {
                                                                 message: "Please choose PO Type",
                                                             },
                                                         ]}
+                                                        onChange={handleSelectChange}
                                                     >
                                                         <Select placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
+                                                            onChange={handleSelectChange}
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
@@ -1007,9 +1017,21 @@ const Create_po = () => {
                                                                     </div>
 
                                                                     <div className="row">
-                                                                        <div class="col-sm-4">
 
-                                                                            {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
+
+
+                                                                        <div className="wrap-box col-sm-4">
+                                                                            {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (materialFor === 'inventory'||materialFor === 'supplies') && (
+                                                                                <>
+                                                                                    <label>{materialFor === 'inventory'? "Inventory Code" : "GL Code"}</label>
+                                                                                    <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
+                                                                                </>
+                                                                            )}
+                                                                        </div>
+
+                                                                        {/* <div class="col-sm-4"> */}
+
+                                                                        {/* {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
                                                                                 <>
                                                                                     <div className="material-for-wrap">
                                                                                         <label>Material For</label>
@@ -1022,20 +1044,20 @@ const Create_po = () => {
                                                                                         </select>
                                                                                     </div>
                                                                                 </>
-                                                                            )}
-                                                                        </div>
+                                                                            )} */}
+                                                                        {/* </div> */}
 
 
                                                                         <div className="col-sm-4">
                                                                             <div className="wrap-box mb-0">
-                                                                                {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
+                                                                                {/* {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
                                                                                     <>
                                                                                         <label>
                                                                                             {repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
                                                                                         </label>
                                                                                         <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
                                                                                     </>
-                                                                                )}
+                                                                                )} */}
                                                                             </div>
                                                                             {repeator[index].materialFor === 'project' && (
                                                                                 <>
@@ -1084,7 +1106,7 @@ const Create_po = () => {
                                                                     </div>
 
 
-                                                                      
+
                                                                     <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
                                                                 </Space>
                                                             )

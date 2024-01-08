@@ -14,7 +14,7 @@ const PO_list = () => {
     useEffect(() => {
         const response = getPoList();
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 setPurchaseOrders(res.data.data || []);
             }
         })
@@ -23,7 +23,7 @@ const PO_list = () => {
     const handleDelete = (id) => {
         const response = deletePO({ po_id: id });
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 message.success('Purchase Order deleted successfully.');
                 setPurchaseOrders(prepo => prepo.filter(po => po.po_id !== id));
             }
@@ -31,7 +31,7 @@ const PO_list = () => {
     };
 
     const rows = purchaseOrders?.filter((order) => {
-        return order.po_type.toLowerCase().includes(search.toLowerCase()) || 
+        return order.po_type.toLowerCase().includes(search.toLowerCase()) ||
             order.vendor_contact.name.toLowerCase().includes(search.toLowerCase())
     }) || [];
 
@@ -101,7 +101,14 @@ const PO_list = () => {
                                                         >
                                                             <DeleteFilled />
                                                         </Popconfirm>
-                                                        <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                        {purchase.po_type === "material" && (
+                                                            <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                        )}
+                                                        {purchase.po_type === "rental" && (
+                                                            <Link href={`/edit_rental_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                        )}
+                                                        {/* <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                        <Link href={`/edit_rental_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link> */}
                                                     </td>
                                                 </tr>
                                             ))
