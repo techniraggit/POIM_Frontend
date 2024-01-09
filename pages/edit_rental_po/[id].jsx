@@ -86,12 +86,12 @@ const Edit_Rental_Po = () => {
 
     const fetchSites = () => {
         const response = fetchProjectSites();
-        console.log(response,'fetchProjectSites');
+        console.log(response, 'fetchProjectSites');
 
         response.then((res) => {
             if (res?.data?.status) {
                 const sitesArray = res.data.sites;
-                console.log(sitesArray,'sitesArray');
+                console.log(sitesArray, 'sitesArray');
                 setSiteOptions(sitesArray);
             }
         })
@@ -187,9 +187,7 @@ const Edit_Rental_Po = () => {
             Object.keys(value).map((key) => {
                 materialDetails[index][key] = value[key];
             });
-            //else if(value.quantity) {
-            //     updateAmount(quantity, materialDetails[index].unit_price, index);
-            // }
+           
             setFormData({
                 ...formData,
                 material_details: [...materialDetails]
@@ -231,7 +229,7 @@ const Edit_Rental_Po = () => {
                 Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
             }
             const response = await axios.get(`${base_url}/api/helping/vendor-details?vendor_contact_id=${id}`, { headers: headers });
-            console.log(response,'vendorContactDetails');
+            console.log(response, 'vendorContactDetails');
 
             setContacts(response.data.vendors);
             setVendorForm({
@@ -657,7 +655,7 @@ const Edit_Rental_Po = () => {
 
 
 
-                                        {formData.shipment_type === 'Project Related' && (
+                                        {formData.shipment_type === 'project related' && (
                                             <div class="col-sm-4">
                                                 {/* <div className="selectwrap columns-select shipment-caret "> */}
                                                 <Form.Item
@@ -739,6 +737,35 @@ const Edit_Rental_Po = () => {
                                                             })
 
                                                         }
+                                                        {formData.shipment_type === 'project related' && (
+                                                            <div class="col-sm-4">
+                                                                {/* <div className="selectwrap columns-select shipment-caret "> */}
+                                                                <Form.Item
+                                                                    label="Select Site"
+                                                                    name="site_id"
+                                                                    htmlFor="file"
+                                                                    class="same-clr"
+                                                                    rules={[
+                                                                        {
+                                                                            required: true,
+                                                                            message: "Please choose site",
+                                                                        },
+                                                                    ]}
+                                                                >
+                                                                    <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                                        {Array.isArray(siteOptions) &&
+                                                                            siteOptions.map((site) =>
+                                                                            (
+                                                                                <Select.Option key={site.site_id} value={site.site_id}>
+                                                                                    {site.name}
+                                                                                </Select.Option>
+                                                                            )
+                                                                            )}
+                                                                    </Select>
+                                                                </Form.Item>
+                                                                {/* </div> */}
+                                                            </div>
+                                                        )}
                                                         <MinusOutlined className="minus-wrap" onClick={() => {
                                                             setFormData({
                                                                 ...formData,
