@@ -14,7 +14,7 @@ const repeatorData = {
     date: "",
     to: "",
     amount: '',
-    
+
 }
 const Rental = () => {
     const [form] = Form.useForm();
@@ -882,9 +882,42 @@ const Rental = () => {
                                                     </div>
                                                 </div>
 
-                                                {/* <label for="name">To</label>
-                            <input type="date" /> */}
-
+                                            </div>
+                                            <div className="row">
+                                                {shipmentType === 'Project Related' && (
+                                                    <div class="col-sm-4">
+                                                        <div className="selectwrap columns-select shipment-caret ">
+                                                            <Form.Item
+                                                                label="Select Site"
+                                                                {...restField}
+                                                                name={[name, 'site_id']}
+                                                                fieldKey={[fieldKey, 'site_id']}
+                                                                value={repeator[index].site_id}
+                                                                // name="site_id"
+                                                                htmlFor="file"
+                                                                class="same-clr"
+                                                                rules={[
+                                                                    {
+                                                                        required: true,
+                                                                        message: "Please choose site",
+                                                                    },
+                                                                ]}
+                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
+                                                            >
+                                                                <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                                    {Array.isArray(siteOptions) &&
+                                                                        siteOptions.map((site) =>
+                                                                        (
+                                                                            <Select.Option key={site.site_id} value={site.site_id}>
+                                                                                {site.name}
+                                                                            </Select.Option>
+                                                                        )
+                                                                        )}
+                                                                </Select>
+                                                            </Form.Item>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                             <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
                                         </Space>

@@ -736,10 +736,9 @@ const Edit_Rental_Po = () => {
                                                                 }
                                                             })
 
-                                                        }
+                                                        } 
                                                         {formData.shipment_type === 'project related' && (
                                                             <div class="col-sm-4">
-                                                                {/* <div className="selectwrap columns-select shipment-caret "> */}
                                                                 <Form.Item
                                                                     label="Select Site"
                                                                     name="site_id"
@@ -763,7 +762,6 @@ const Edit_Rental_Po = () => {
                                                                             )}
                                                                     </Select>
                                                                 </Form.Item>
-                                                                {/* </div> */}
                                                             </div>
                                                         )}
                                                         <MinusOutlined className="minus-wrap" onClick={() => {
