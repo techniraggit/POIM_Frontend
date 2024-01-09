@@ -4,9 +4,9 @@ import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 import moment from 'moment';
 import axios from 'axios';
 import { base_url } from './constant';
-import { CalendarOutlined, PlusOutlined,MinusOutlined } from '@ant-design/icons';
+import { CalendarOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { createPO} from "@/apis/apis/adminApis";
+import { createPO } from "@/apis/apis/adminApis";
 
 const { Option } = Select;
 const repeatorData = {
@@ -37,7 +37,7 @@ const Rental = () => {
     const [userFirstName, setUserFirstName] = useState('');
     const [userLastName, setUserLastName] = useState('');
     const [repeator, setRepeator] = useState([]);
-    const [amount,setAmount]=useState(0)
+    const [amount, setAmount] = useState(0)
 
     const fetchVendorContactDropdown = async (id) => {
         try {
@@ -162,16 +162,16 @@ const Rental = () => {
     }, []);
 
 
-   
+
 
     const handleAmountChange = (value) => {
-        console.log(value,'amount');
+        console.log(value, 'amount');
         setAmount(value);
         updateAmount(value);
     };
     const updateAmount = (amount) => {
         const calculatedAmount = amount;
-        console.log(calculatedAmount,'calculatedAmount');
+        console.log(calculatedAmount, 'calculatedAmount');
         setAmount(calculatedAmount);
         form.setFieldsValue({ Amount: calculatedAmount });
         form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
@@ -215,7 +215,7 @@ const Rental = () => {
             }
 
             if (repeator[index].amount) {
-                console.log(parseFloat(repeator[index].amount,'arseFloat(repeator[index].amount'))
+                console.log(parseFloat(repeator[index].amount, 'arseFloat(repeator[index].amount'))
                 repeator[index] = {
                     ...repeator[index],
                     amount: parseFloat(repeator[index].amount)
@@ -235,8 +235,8 @@ const Rental = () => {
             const dynamicItems = repeator?.map((item) => ({
                 // quantity: item.quantity,
                 // unit_price: item.unit_price,
-                start_date:item.start_date,
-                end_date:item.end_date,
+                start_date: item.start_date,
+                end_date: item.end_date,
                 amount: item.amount,
                 description: item.description,
                 material_for: values.materialFor,
@@ -268,8 +268,8 @@ const Rental = () => {
                     // unit_price: values.unit_price,
                     description: values.description,
                     material_for: values.materialFor,
-                    start_date:values.start_date,
-                    end_date:values.end_date,
+                    start_date: values.start_date,
+                    end_date: values.end_date,
                     amount: values.amount,
                     // code: values.code,
                     project_id: values.project_id,
@@ -279,10 +279,10 @@ const Rental = () => {
         }
 
         const response = createPO(data);
-        console.log(response,'ttttttttttttt');
+        console.log(response, 'ttttttttttttt');
 
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 message.success(res.data?.message)
                 router.push('/po_list')
             }
@@ -290,7 +290,7 @@ const Rental = () => {
     };
 
     const initialDate = "2024-01-12T07:09:14.022Z";
-  const formattedDate = moment.utc(initialDate).format("YYYY-MM-DD")
+    const formattedDate = moment.utc(initialDate).format("YYYY-MM-DD")
     return (
         <>
             <Form onFinish={onFinish} form={form} className="file-form">
@@ -536,7 +536,7 @@ const Rental = () => {
                     <hr />
                 </div>
                 <div class="row space-bottom mb-0">
-                    <div class="col-md-6 col-lg-12 all-wrap-box">
+                    <div class="col-lg-4 col-md-6 all-wrap-box">
                         <div class="selectwrap  shipment-caret aligned-text">
                             <Form.Item
                                 label="Shipment Type"
@@ -559,6 +559,57 @@ const Rental = () => {
                                 </Select>
                             </Form.Item>
                         </div>
+                        {/* {shipmentType === 'Project Related' && (
+                            <div class="selectwrap columns-select shipment-caret">
+                                <Form.Item
+                                    label="Project"
+                                    name="project_id"
+                                    for="file"
+                                    class="same-clr"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please choose Project",
+                                        },
+                                    ]}
+                                >
+                                    <Select id="single456"
+                                        class="js-states form-control file-wrap-select"
+                                        onChange={(value) => list(value)}
+                                    >
+                                        {Array.isArray(projects) &&
+                                            projects.map((project) => (
+                                                <Select.Option key={project.project_id} value={project.project_id}
+                                                >
+                                                    {project.name}
+                                                </Select.Option>
+                                            ))}
+                                    </Select>
+                                </Form.Item>
+                            </div>
+                        )} */}
+                        {/* {shipmentType === 'Non Project Related' && (
+                            <div class="selectwrap non-project-wrap">
+                                <Form.Item
+                                    label="Delivery Address"
+                                    name="deliveryAddress"
+                                    for="file"
+                                    class="same-clr"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please choose Delivery Address",
+                                        },
+                                    ]}
+                                    initialValue='1860 Shawson'
+                                >
+                                    <Input readOnly />
+
+                                </Form.Item>
+                            </div>
+                        )} */}
+                    </div>
+                    <div className="col-lg-4">
                         {shipmentType === 'Project Related' && (
                             <div class="selectwrap columns-select shipment-caret">
                                 <Form.Item
@@ -588,26 +639,6 @@ const Rental = () => {
                                 </Form.Item>
                             </div>
                         )}
-                        {/* {shipmentType === 'Non Project Related' && (
-                            <div class="selectwrap non-project-wrap">
-                                <Form.Item
-                                    label="Delivery Address"
-                                    name="deliveryAddress"
-                                    for="file"
-                                    class="same-clr"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Please choose Delivery Address",
-                                        },
-                                    ]}
-                                    initialValue='1860 Shawson'
-                                >
-                                    <Input readOnly />
-
-                                </Form.Item>
-                            </div>
-                        )} */}
                     </div>
                 </div>
                 <div className="linewrap d-flex">
@@ -637,7 +668,7 @@ const Rental = () => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-sm-4 d-flex align-items-center">
+                    <div className="col-sm-4 d-flex align-items-center to-wrap-datepicker">
                         <div className="wrap-box">
                             <Form.Item
                                 label="Date Range"
@@ -659,6 +690,8 @@ const Rental = () => {
                                 /> */}
                                 <Input type="date"></Input>
                             </Form.Item>
+                        </div>
+                        <div className="text-to"><p class="mt-0">To</p>
                         </div>
                     </div>
 
@@ -703,158 +736,13 @@ const Rental = () => {
                                     },
                                 ]}
                             >
-                                <Input onChange={(e) => handleAmountChange(e.target.value)}/>
+                                <Input onChange={(e) => handleAmountChange(e.target.value)} />
 
                             </Form.Item>
                         </div>
                     </div>
-                    <div className="create-another minuswrap-img">
-                        <Form.List name="items" initialValue={[]}>
-                            {(fields, { add, remove }) => (
-                                <>
-                                    {fields.map(({ key, name, fieldKey, ...restField }, index) => {
-                                        return (
-                                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
-                                                <div className="wrap-box">
-                                                    <Form.Item
-                                                        {...restField}
-                                                        name={[name, 'description']}
-                                                        fieldKey={[fieldKey, 'description']}
-                                                        label="Description"
-                                                        rules={[{ required: true, message: 'Please enter description' }]}
-                                                    >
-                                                        <Input
-                                                            placeholder="description"
-                                                            value={repeator[index].description}
-                                                            onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'description', index)}
-                                                        />
-                                                    </Form.Item>
-                                                </div>
-                                                <div className="col-sm-4 d-flex align-items-center">
-                                                    <div className="wrap-box">
-                                                        <Form.Item
-                                                            label="Date Range"
-                                                            {...restField}
-                                                            name={[name, 'start_date']}
-                                                            fieldKey={[fieldKey, 'start_date']}
-                            
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please enter date",
-                                                                },
-                                                            ]}
-                                                        >
-                                                             <Input type="date"
-                                                               value={repeator[index].start_date}
-                                                               onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'start_date', index)}
-                                                             />
-                                                            {/* <DatePicker
-                                                                style={{ width: "100%" }}
-                                                                suffixIcon={<CalendarOutlined />}
-                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'date', index)}
-                                                            /> */}
-                                                        </Form.Item>
-                                                    </div>
-                                                    <div className="text-to"><p className='mb-2'>To</p></div>
-                                                </div>
-                                                <div className="col-sm-4">
-                                                    <div className="wrap-box">
-                                                        <Form.Item
-                                                            label="To"
-                                                            {...restField}
-                                                            name={[name, 'end_date']}
-                                                            fieldKey={[fieldKey, 'end_date']}
-                                                            value={repeator[index].end_date}
-
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please enter date",
-                                                                },
-                                                            ]}
-                                                        >
-                                                             <Input type="date"
-                                                              value={repeator[index].end_date}
-                                                              onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'end_date', index)}
-
-                                                             />
-                                                            {/* <DatePicker
-                                                                style={{ width: "100%" }}
-                                                                suffixIcon={<CalendarOutlined />}
-                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'to', index)}
-                                                            /> */}
-                                                        </Form.Item>
-                                                        <div className="col-sm-4">
-                                                            <div className="wrap-box">
-                                                                <Form.Item
-                                                                    label="Amount"
-                                                                    {...restField}
-                                                                    name={[name, 'amount']}
-                                                                    fieldKey={[fieldKey, 'amount']}
-                                                                    value={repeator[index].amount}
-                                                                    for="file"
-                                                                    class="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please enter amount",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Input 
-                                                                    // value={repeator[index].amount}
-                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'amount', index)}
-                                                                    />
-
-                                                                </Form.Item>
-                                                            </div>
-                                                        </div>
-                                                        {/* <label for="name">To</label>
-                            <input type="date" /> */}
-                                                    </div>
-                                                </div>
-                                                <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-                                            </Space>
-                                        )
-                                    })}
-                                    <Form.Item>
-                                        <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
-                                            setRepeator([...repeator, repeatorData]);
-                                            add();
-                                        }} icon={<PlusOutlined />}>
-                                            Add More Material
-                                        </Button>
-                                    </Form.Item>
-                                </>
-                            )}
-                        </Form.List>
-                    </div>
-                    <div className="col-lg-4 col-md-6">
-                        <div class="wrap-box">
-                            <Form.Item
-
-                                name='HST_Amount'
-                                label="HST Amount"
-                                rules={[{ required: true, message: 'Please enter phone number' }]}
-                            >
-                                <Input placeholder="HST Amount" />
-                            </Form.Item>
-                        </div>
-                    </div>
-                    <div className="col-lg-4 col-md-6">
-                        <div class="wrap-box">
-                            <Form.Item
-
-                                name='Total_amount'
-                                label="Total Amount"
-                                rules={[{ required: true, message: 'Please enter phone number' }]}
-                            >
-                                <Input placeholder="Total Amount" />
-                            </Form.Item>
-                        </div>
-                    </div>
-                    {/* </div> */}
+                </div>
+                <div className="row">
                     {shipmentType === 'Project Related' && (
                         <div class="col-sm-4">
                             <div className="selectwrap columns-select shipment-caret ">
@@ -884,10 +772,196 @@ const Rental = () => {
                             </div>
                         </div>
                     )}
-
                 </div>
 
                 <div className="create-another minuswrap-img">
+                    <Form.List name="items" initialValue={[]}>
+                        {(fields, { add, remove }) => (
+                            <>
+                                {fields.map(({ key, name, fieldKey, ...restField }, index) => {
+                                    return (
+                                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
+                                            <div className="row mb-2">
+                                                <div className="wrap-box mb-0">
+                                                    <Form.Item
+                                                        {...restField}
+                                                        name={[name, 'description']}
+                                                        fieldKey={[fieldKey, 'description']}
+                                                        label="Description"
+                                                        rules={[{ required: true, message: 'Please enter description' }]}
+                                                    >
+                                                        <Input
+                                                            placeholder="description"
+                                                            value={repeator[index].description}
+                                                            onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'description', index)}
+                                                        />
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                            <div className="row mt-1">
+                                                <div className="col-sm-4 d-flex align-items-center">
+                                                    <div className="wrap-box mb-0">
+                                                        <Form.Item
+                                                            label="Date Range"
+                                                            {...restField}
+                                                            name={[name, 'start_date']}
+                                                            fieldKey={[fieldKey, 'start_date']}
+
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please enter date",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input type="date"
+                                                                value={repeator[index].start_date}
+                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'start_date', index)}
+                                                            />
+                                                            {/* <DatePicker
+                                                                style={{ width: "100%" }}
+                                                                suffixIcon={<CalendarOutlined />}
+                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'date', index)}
+                                                            /> */}
+                                                        </Form.Item>
+                                                    </div>
+                                                    <div className="text-to"><p className='mt-3'>To</p></div>
+                                                </div>
+
+                                                <div className="col-sm-4">
+                                                    <div className="wrap-box mb-0">
+                                                        <Form.Item
+                                                            label="To"
+                                                            {...restField}
+                                                            name={[name, 'end_date']}
+                                                            fieldKey={[fieldKey, 'end_date']}
+                                                            value={repeator[index].end_date}
+
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please enter date",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input type="date"
+                                                                value={repeator[index].end_date}
+                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'end_date', index)}
+
+                                                            />
+                                                            {/* <DatePicker
+                                                                style={{ width: "100%" }}
+                                                                suffixIcon={<CalendarOutlined />}
+                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'to', index)}
+                                                            /> */}
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+                                                <div className="col-sm-4">
+                                                    <div className="wrap-box mb-0">
+                                                        <Form.Item
+                                                            label="Amount"
+                                                            {...restField}
+                                                            name={[name, 'amount']}
+                                                            fieldKey={[fieldKey, 'amount']}
+                                                            value={repeator[index].amount}
+                                                            for="file"
+                                                            class="same-clr"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please enter amount",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input
+                                                                // value={repeator[index].amount}
+                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'amount', index)}
+                                                            />
+
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+
+                                                {/* <label for="name">To</label>
+                            <input type="date" /> */}
+
+                                            </div>
+                                            <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                        </Space>
+                                    )
+                                })}
+                                <Form.Item>
+                                    <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
+                                        setRepeator([...repeator, repeatorData]);
+                                        add();
+                                    }} icon={<PlusOutlined />}>
+                                        Add More Material
+                                    </Button>
+                                </Form.Item>
+                            </>
+                        )}
+                    </Form.List>
+                </div>
+                <div className="row">
+                    <div className="col-lg-4 col-md-6">
+                        <div class="wrap-box">
+                            <Form.Item
+
+                                name='HST_Amount'
+                                label="HST Amount"
+                                rules={[{ required: true, message: 'Please enter phone number' }]}
+                            >
+                                <Input placeholder="HST Amount" />
+                            </Form.Item>
+                        </div>
+                    </div>
+                    <div className="col-lg-4 col-md-6">
+                        <div class="wrap-box">
+                            <Form.Item
+
+                                name='Total_amount'
+                                label="Total Amount"
+                                rules={[{ required: true, message: 'Please enter phone number' }]}
+                            >
+                                <Input placeholder="Total Amount" />
+                            </Form.Item>
+                        </div>
+                    </div>
+                </div>
+                {/* </div> */}
+                {/* {shipmentType === 'Project Related' && (
+                        <div class="col-sm-4">
+                            <div className="selectwrap columns-select shipment-caret ">
+                                <Form.Item
+                                    label="Select Site"
+                                    name="site_id"
+                                    htmlFor="file"
+                                    class="same-clr"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please choose site",
+                                        },
+                                    ]}
+                                >
+                                    <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                        {Array.isArray(siteOptions) &&
+                                            siteOptions.map((site) =>
+                                            (
+                                                <Select.Option key={site.site_id} value={site.site_id}>
+                                                    {site.name}
+                                                </Select.Option>
+                                            )
+                                            )}
+                                    </Select>
+                                </Form.Item>
+                            </div>
+                        </div>
+                    )} */}
+
+
+                {/* <div className="create-another minuswrap-img">
                     <Form.List name="items" initialValue={[]}>
                         {(fields, { add, remove }) => (
                             <>
@@ -974,8 +1048,7 @@ const Rental = () => {
                                                         </Form.Item>
                                                     </div>
                                                 </div>
-                                                {/* <label for="name">To</label>
-                            <input type="date" /> */}
+                                               
 
 
                                             </div>
@@ -994,14 +1067,14 @@ const Rental = () => {
                             </>
                         )}
                     </Form.List>
-                </div>
+                </div> */}
                 {/* <Form.Item>
                         <Button className="add-more-btnn" type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
                             <span >Add More Item</span>
                         </Button>
                     </Form.Item> */}
                 {/* <div className="row top-btm-space mb-0"> */}
-                <div className="row">
+                {/* <div className="row">
                     <div className="col-lg-4 col-md-6">
                         <div class="wrap-box">
                             <Form.Item
@@ -1026,7 +1099,7 @@ const Rental = () => {
                             </Form.Item>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* </div> */}
                 {/* {shipmentType === 'Project Related' && (
                     <div class="col-sm-4">
@@ -1217,7 +1290,7 @@ const Rental = () => {
                         </Button>
                     </Form.Item>
                 </div>
-            </Form>
+            </Form >
         </>
     )
 }
