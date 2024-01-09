@@ -551,28 +551,6 @@ const EditPo = () => {
                                                     </Form.Item>
                                                 </div>
                                             )}
-                                            {formData.shipment_type === 'non project related' && (
-                                                <div class="selectwrap non-project-wrap">
-                                                    <Form.Item
-                                                        label="Delivery Address"
-                                                        name="delivery_address"
-                                                        for="file"
-                                                        class="same-clr"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please choose Delivery Address",
-                                                            },
-                                                        ]}
-                                                        initialValue='1860 Shawson'
-                                                    >
-                                                        <Input readOnly />
-
-                                                    </Form.Item>
-                                                </div>
-                                            )}
-
-
                                         </div>
                                     </div>
                                     <div class="linewrap d-flex">

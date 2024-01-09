@@ -257,6 +257,14 @@ const Create_po = () => {
         setRepeator([...repeator]);
     }
 
+    const handleSelectChange = (selectedValue) => {
+        // const rentalPoPageUrl = "/rental-po";
+
+    if (selectedValue === "rental") {
+        router.push('/rental-po');
+    }
+    }
+
     return (
         <>
             <div className="wrapper-main">
@@ -288,9 +296,11 @@ const Create_po = () => {
                                                                 message: "Please choose PO Type",
                                                             },
                                                         ]}
+                                                        onChange={handleSelectChange}
                                                     >
                                                         <Select placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
+                                                            onChange={handleSelectChange}
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
@@ -1035,25 +1045,19 @@ const Create_po = () => {
                                                             <div className="row">
                                                                 <div class="col-sm-4">
 
-                                                                    {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
-                                                                        <>
-                                                                            <div className="material-for-wrap">
-                                                                                <label>Material For</label>
-                                                                                <select placeholder="Select" className="js-states form-control custom-wrap-selector ant-select-selectors" onChange={({ target: { value } }) => {
-                                                                                    handleRepeatorChange(value, 'materialFor', index)
-                                                                                }} value={repeator[index].materialFor}>
-                                                                                    {shipmentType === 'Combined' && <option value="project">Project</option>}
-                                                                                    <option value="inventory">Inventory</option>
-                                                                                    <option value="supplies">Supplies/Expenses</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </>
-                                                                    )}
+                                                                <div className="wrap-box col-sm-4">
+                                                                            {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (materialFor === 'inventory'||materialFor === 'supplies') && (
+                                                                                <>
+                                                                                    <label>{materialFor === 'inventory'? "Inventory Code" : "GL Code"}</label>
+                                                                                    <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
+                                                                                </>
+                                                                            )}
+                                                                        </div>
                                                                 </div>
 
 
                                                                 <div className="col-sm-4">
-                                                                    <div className="wrap-box mb-0">
+                                                                    {/* <div className="wrap-box mb-0">
                                                                         {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
                                                                             <>
                                                                                 <label>
@@ -1062,7 +1066,7 @@ const Create_po = () => {
                                                                                 <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
                                                                             </>
                                                                         )}
-                                                                    </div>
+                                                                    </div> */}
                                                                     {repeator[index].materialFor === 'project' && (
                                                                         <>
                                                                             <div class="top-project">
