@@ -9,6 +9,13 @@ import moment from "moment";
 import { useRouter } from "next/router";
 
 const { Option } = Select;
+const repeatorData = {
+    description: '',
+    date: "",
+    to: "",
+    amount: '',
+    
+}
 const Edit_Rental_Po = () => {
     const [form] = Form.useForm();
     const router = useRouter();
@@ -157,7 +164,6 @@ const Edit_Rental_Po = () => {
             po_id: id,
             project_site_id: formData.project_site_id?.site_id
         }).then((res) => {
-            console.log(res, 'zzzzzzzzzzzzzzzz');
             if (res?.data?.status) {
                 router.push('/po_list');
             }
@@ -170,9 +176,6 @@ const Edit_Rental_Po = () => {
             Object.keys(value).map((key) => {
                 materialDetails[index][key] = value[key];
             });
-            if (value.amount) {
-                updateAmount(materialDetails[index].quantity, value.unit_price, index);
-            }
             //else if(value.quantity) {
             //     updateAmount(quantity, materialDetails[index].unit_price, index);
             // }
@@ -189,18 +192,19 @@ const Edit_Rental_Po = () => {
         if (value.amount || name === 'amount') {
             handleRepeaterAmountChange();
         }
+        console.log(formData);
     }
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
-            return total + item.amount;
+            return total + parseFloat(item.amount);
         }, 0);
 
         return totalAmount;
     };
 
     const handleRepeaterAmountChange = () => {
-        const totalAmount = getTotalAmount();
+        const totalAmount = getTotalAmount()
         setFormData({
             ...formData,
             hst_amount: totalAmount * 0.13,
@@ -210,16 +214,6 @@ const Edit_Rental_Po = () => {
         form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
     };
 
-
-    const updateAmount = (amount, index) => {
-        const calculatedAmount = amount;
-        const details = formData.material_details[index];
-        details.amount = calculatedAmount || 0;
-        formData.material_details[index] = details;
-        setFormData({
-            ...formData
-        })
-    };
     return (
         <>
 
@@ -636,7 +630,7 @@ const Edit_Rental_Po = () => {
                                                                 if (key.includes('_')) {
                                                                     upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');
                                                                 }
-                                                                if (key === 'description' || key === 'date' || key === 'to' || key === "amount") {
+                                                                if (key === 'description' || key === "amount") {
                                                                     return (
                                                                         <div key={key} className="wrap-box col-sm-3">
                                                                             <Form.Item
@@ -649,6 +643,28 @@ const Edit_Rental_Po = () => {
                                                                                     onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                                                 />
                                                                             </Form.Item>
+                                                                        </div>
+                                                                    )
+                                                                } else if(key === 'date' || key === 'to') {
+                                                                    return (
+                                                                        <div className="col-sm-4">
+                                                                            <div className="wrap-box">
+                                                                                <Form.Item
+                                                                                    label={upperKey}
+                                                                                    rules={[
+                                                                                        {
+                                                                                            required: true,
+                                                                                            message: "Please enter date",
+                                                                                        },
+                                                                                    ]}
+                                                                                >
+                                                                                    <Input type="date"
+                                                                                        placeholder={upperKey}
+                                                                                        value={data[key]}
+                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+                                                                                    ></Input>
+                                                                                </Form.Item>
+                                                                            </div>
                                                                         </div>
                                                                     )
                                                                 }
