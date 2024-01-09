@@ -130,10 +130,6 @@ const Project_Edit = ({ base_url }) => {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             };
 
-
-            // console.log(data,'here>>>>>>>>')
-            // return
-
             // Make a PUT request to update the vendor
             const response = await axios.patch(`${base_url}/api/admin/projects`, data,
                 {
@@ -185,9 +181,6 @@ const Project_Edit = ({ base_url }) => {
         
         try {
 
-
-            console.log(id,'access_token------------')
-           
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 Accept: 'application/json',
@@ -199,9 +192,7 @@ const Project_Edit = ({ base_url }) => {
                     site_id: id,
                 },
             });
-            console.log(response,'response>>>>>>>>>>>>>>>>>>>>')
-            //setRepeaterData(prevVendors => prevVendors.filter(repeater => repeater.site_id !== id));
-            // fetchRoles();
+
         } catch (error) {
             console.error('Error in remove:', error);
             message.error('Error remove');
