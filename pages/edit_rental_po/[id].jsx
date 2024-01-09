@@ -14,7 +14,7 @@ const repeatorData = {
     date: "",
     to: "",
     amount: '',
-    
+
 }
 const Edit_Rental_Po = () => {
     const [form] = Form.useForm();
@@ -23,6 +23,15 @@ const Edit_Rental_Po = () => {
     const [contactId, setContactId] = useState('');
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
+    const [contacts, setContacts] = useState([]);
+    const [vendorForm, setVendorForm] = useState({
+        company_name: '',
+        email: '',
+        phone: '',
+        address: '',
+        state: '',
+        country: ''
+    });
 
     const [vendors, setVendors] = useState([]);
     const [formData, setFormData] = useState({
@@ -77,10 +86,12 @@ const Edit_Rental_Po = () => {
 
     const fetchSites = () => {
         const response = fetchProjectSites();
+        console.log(response,'fetchProjectSites');
 
         response.then((res) => {
             if (res?.data?.status) {
                 const sitesArray = res.data.sites;
+                console.log(sitesArray,'sitesArray');
                 setSiteOptions(sitesArray);
             }
         })
@@ -213,6 +224,31 @@ const Edit_Rental_Po = () => {
         form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) });
         form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
     };
+
+    const vendorContactDetails = async (id) => {
+        try {
+            const headers = {
+                Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+            }
+            const response = await axios.get(`${base_url}/api/helping/vendor-details?vendor_contact_id=${id}`, { headers: headers });
+            console.log(response,'vendorContactDetails');
+
+            setContacts(response.data.vendors);
+            setVendorForm({
+                ...vendorForm,
+                company_name: response.data.vendors.company.company_name,
+                email: response.data.vendors.email,
+                phone: response.data.vendors.phone_number,
+                address: response.data.vendors.company.address,
+                state: response.data.vendors.company.state,
+                country: response.data.vendors.company.country
+            })
+            // }
+
+        } catch (error) {
+            console.error('Error fetching projects:', error);
+        }
+    }
 
     return (
         <>
@@ -618,6 +654,38 @@ const Edit_Rental_Po = () => {
                                                 </Form.Item>
                                             </div>
                                         </div>
+
+
+
+                                        {formData.shipment_type === 'Project Related' && (
+                                            <div class="col-sm-4">
+                                                {/* <div className="selectwrap columns-select shipment-caret "> */}
+                                                <Form.Item
+                                                    label="Select Site"
+                                                    name="site_id"
+                                                    htmlFor="file"
+                                                    class="same-clr"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please choose site",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                        {Array.isArray(siteOptions) &&
+                                                            siteOptions.map((site) =>
+                                                            (
+                                                                <Select.Option key={site.site_id} value={site.site_id}>
+                                                                    {site.name}
+                                                                </Select.Option>
+                                                            )
+                                                            )}
+                                                    </Select>
+                                                </Form.Item>
+                                                {/* </div> */}
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="create-another minuswrap-img">
                                         <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
@@ -645,7 +713,7 @@ const Edit_Rental_Po = () => {
                                                                             </Form.Item>
                                                                         </div>
                                                                     )
-                                                                } else if(key === 'date' || key === 'to') {
+                                                                } else if (key === 'date' || key === 'to') {
                                                                     return (
                                                                         <div className="col-sm-4">
                                                                             <div className="wrap-box">

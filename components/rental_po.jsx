@@ -235,8 +235,8 @@ const Rental = () => {
             const dynamicItems = repeator?.map((item) => ({
                 // quantity: item.quantity,
                 // unit_price: item.unit_price,
-                start_date:item.date,
-                start_date:item.to,
+                start_date:item.start_date,
+                end_date:item.end_date,
                 amount: item.amount,
                 description: item.description,
                 material_for: values.materialFor,
@@ -268,8 +268,8 @@ const Rental = () => {
                     // unit_price: values.unit_price,
                     description: values.description,
                     material_for: values.materialFor,
-                    start_date:values.date,
-                    end_date:values.to,
+                    start_date:values.start_date,
+                    end_date:values.end_date,
                     amount: values.amount,
                     // code: values.code,
                     project_id: values.project_id,
@@ -641,7 +641,7 @@ const Rental = () => {
                         <div className="wrap-box">
                             <Form.Item
                                 label="Date Range"
-                                name="date"
+                                name="start_date"
                                 rules={[
                                     {
                                         required: true,
@@ -667,7 +667,7 @@ const Rental = () => {
                         <div className="wrap-box">
                             <Form.Item
                                 label="To"
-                                name="to"
+                                name="end_date"
                                 //  initialValue={moment(formattedDate, "YYYY-MM-DD")}
                                 rules={[
                                     {
@@ -736,9 +736,9 @@ const Rental = () => {
                                                         <Form.Item
                                                             label="Date Range"
                                                             {...restField}
-                                                            name={[name, 'date']}
-                                                            fieldKey={[fieldKey, 'date']}
-                                                            value={repeator[index].date}
+                                                            name={[name, 'start_date']}
+                                                            fieldKey={[fieldKey, 'start_date']}
+                            
                                                             rules={[
                                                                 {
                                                                     required: true,
@@ -746,11 +746,15 @@ const Rental = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <DatePicker
+                                                             <Input type="date"
+                                                               value={repeator[index].start_date}
+                                                               onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'start_date', index)}
+                                                             />
+                                                            {/* <DatePicker
                                                                 style={{ width: "100%" }}
                                                                 suffixIcon={<CalendarOutlined />}
                                                                 onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'date', index)}
-                                                            />
+                                                            /> */}
                                                         </Form.Item>
                                                     </div>
                                                     <div className="text-to"><p className='mb-2'>To</p></div>
@@ -760,9 +764,9 @@ const Rental = () => {
                                                         <Form.Item
                                                             label="To"
                                                             {...restField}
-                                                            name={[name, 'to']}
-                                                            fieldKey={[fieldKey, 'to']}
-                                                            value={repeator[index].to}
+                                                            name={[name, 'end_date']}
+                                                            fieldKey={[fieldKey, 'end_date']}
+                                                            value={repeator[index].end_date}
 
                                                             rules={[
                                                                 {
@@ -771,11 +775,16 @@ const Rental = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <DatePicker
+                                                             <Input type="date"
+                                                              value={repeator[index].end_date}
+                                                              onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'end_date', index)}
+
+                                                             />
+                                                            {/* <DatePicker
                                                                 style={{ width: "100%" }}
                                                                 suffixIcon={<CalendarOutlined />}
                                                                 onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'to', index)}
-                                                            />
+                                                            /> */}
                                                         </Form.Item>
                                                         <div className="col-sm-4">
                                                             <div className="wrap-box">
