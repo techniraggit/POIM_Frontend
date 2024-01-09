@@ -714,6 +714,7 @@ button.ant-btn.vendor-search-butt:hover span {
     width: 100% !important;
     max-width: 100% !important;
     padding: 0;
+    min-height: unset !important;
 }
 
 .linewrap hr {
@@ -1326,6 +1327,7 @@ button.ant-btn.add-more-btn {
     display: flex;
     align-items: center;
     height: 42px;
+    margin-top: 35px;
 }
 
 button.ant-btn.add-more-btn:hover span {
@@ -1698,7 +1700,7 @@ div#materialFor_help {
 }
 
 .shipment-caret .ant-form-item .ant-form-item-explain-connected {
-    padding-top: 3px;
+    padding-top: 10px;
 }
 
 /* .shipment-caret .ant-form-item-explain-error {
@@ -2287,6 +2289,11 @@ span.anticon.anticon-home.home-sidebar > svg {
 }
 
 /* 8 jan/ 2024  */
+/* 9jan work */
+.ant-space.mb-space {
+    margin-top: 70px;
+}
+/* 9jan work */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
