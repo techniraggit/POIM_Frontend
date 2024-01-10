@@ -733,7 +733,9 @@ button.ant-btn.vendor-search-butt:hover span {
     font-weight: 500;
     margin-bottom: 2px !important;
 }
-
+.left-wrap.wrap-number .ant-col {
+    min-height: unset !important;
+}
 .wrap-box input {
     border: 1px solid #70707054;
     border-radius: 2px;
@@ -1502,6 +1504,7 @@ ul.list-icons li {
 /* 21 dec */
 .selectwrap.react-select .ant-col {
     max-width: 100% !important;
+    min-height: unset !important;
 }
 
 .selectwrap.react-select .ant-form-item {
@@ -1518,6 +1521,7 @@ label {
 
 .bg-border-select .ant-col {
     max-width: 100% !important;
+    min-height: unset !important;
 }
 
 .ant-select-selector {
@@ -1714,7 +1718,7 @@ div#materialFor_help {
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-bottom: 8px solid #818B96;
-    z-index: 9999;
+    z-index: 999;
     visibility: visible !important;
     content: "" !important;
     border-radius: 4px;
@@ -2284,8 +2288,19 @@ span.anticon.anticon-home.home-sidebar > svg {
     margin-top: 11px;
 }
 .all-wrap-box > .aligned-text {
-    margin-bottom: 26px;
+    margin-bottom: 0px;
     width: 100%;
+}
+.all-wrap-box > .aligned-text .ant-form-item {
+    margin-bottom: 0px !important;
+}
+.selectwrap .ant-col {
+    min-height: unset !important;
+}
+.hide-wrap {
+    height: 100%;
+    align-items: center;
+    display: flex;
 }
 
 /* 8 jan/ 2024  */
