@@ -238,7 +238,7 @@ const Create_po = () => {
 
     const handleRepeatorChange = (value, name, index) => {
         const values = repeator[index];
-        console.log(values,'jjjjjjjjjjjjjjjjjjjjjjjjj');
+        console.log(values, 'jjjjjjjjjjjjjjjjjjjjjjjjj');
         if (values) {
             repeator[index] = {
                 ...repeator[index],
@@ -1059,8 +1059,10 @@ const Create_po = () => {
                                                                                 <div class="selectwrap add-dropdown-wrap">
                                                                                     <div className="selectwrap columns-select shipment-caret ">
                                                                                         <Form.Item
+                                                                                            {...restField}
                                                                                             label="Select Site"
-                                                                                            name="site_id"
+
+                                                                                            name={[name, 'site_id']}
                                                                                             value={repeator[index].site_id}
                                                                                             onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
                                                                                             htmlFor="file"
@@ -1090,10 +1092,11 @@ const Create_po = () => {
                                                                                 <>
                                                                                     <div className="selectwrap columns-select shipment-caret ">
                                                                                         <Form.Item
-                                                                                            label="Select Site"
-                                                                                            name="site_id"
-                                                                                           
-                                                                                            value={repeator[index].site_id}
+                                                                                         {...restField}
+                                                                                         label="Select Site"
+
+                                                                                         name={[name, 'site_id']}
+                                                                                         value={repeator[index].site_id}
                                                                                             onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
                                                                                             htmlFor="file"
                                                                                             class="same-clr"
