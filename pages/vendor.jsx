@@ -117,7 +117,7 @@ const Vendor = ({ base_url }) => {
                                                     <td>{vendor.state}</td>
                                                     <td className="td-icon-color">
                                                         {/* <Link href="#" className="me-2"> */}
-                                                        <EyeFilled onClick={() => handleIconClick(vendor.id)} />
+                                                        <EyeFilled onClick={() => handleIconClick(vendor.vendor_id)} />
 
                                                         {/* </Link> */}
                                                         <Popconfirm

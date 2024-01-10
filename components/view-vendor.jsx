@@ -21,7 +21,9 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen }) => {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         };
         const response = await axios.get(`${base_url}/api/admin/vendors?vendor_id=${vendor_id}`, { headers });
+        console.log(response,'sssssssssssssssss');
         setvendorcontact(response.data.vendors_details.vendor_contact[0])
+        console.log(response.data.vendors_details.vendor_contact[0],'response.data.vendors_details');
         setVenndorData(response.data.vendors_details)
       } catch (error) {
         console.error('Error fetching vendors:', error);
@@ -44,25 +46,27 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen }) => {
 
             <div class="projct-details">
               <p class="detail-para1">Company Name</p>
-              <p class="detail-para">Justin</p>
+              <p class="detail-para">{vendorData.company_name}</p>
 
 
               <div class="pop-up-flex row">
                 <div class="projct-details col-md-9">
                   <p class="detail-para1">Email Address</p>
-                  <p class="detail-para">Justin@gmail.com</p>
+                  <p class="detail-para">{vendorcontact.email}</p>
+                  {/* <p class="detail-para">{vendorData.vendor_contact[0].email}</p> */}
                 </div>
 
                 <div class="projct-details col-md-3">
                   <p class="detail-para1">Contact No</p>
-                  <p class="detail-para2">123654789</p>
+                  <p class="detail-para">{vendorcontact.phone_number}</p>
+                  {/* <p class="detail-para2">{vendorData.vendor_contact[0].phone_number}</p> */}
                 </div>
 
               </div>
 
               <div class="projct-details">
                 <p class="detail-para1">Address</p>
-                <p class="detail-para">#456 - Upper Link, PA</p>
+                <p class="detail-para">{vendorData.address}</p>
               </div>
 
               <div class="pop-up-flex row">

@@ -184,31 +184,12 @@ const AddUser = ({ base_url }) => {
                           className="vender-input"
                           rules={[
                             { required: true, message: 'Please enter your contact number!' },
-                            // {
-                            //   pattern: /^\+91[0-9]{10}$/,
-                            //   message: 'Please enter a valid phone number starting with +91 and followed by 10 digits.',
-                            // },
-                            // Uncomment the following lines if you want to use a custom validator function
-                            // {
-                            //   validator: validatePhoneNumber,
-                            // },
+                           
                           ]}
-                        // rules={[
-                        //   { required: true, message: 'Please enter your contact number!' },
-                        //   { validator: validatePhoneNumber },
-                        // ]}
-                        // rules={[
-                        //   { required: true, message: 'Please enter your contact number!' },
-                        //   {
-                        //     pattern: /^\+91[0-9]{10}$/,
-                        //     message: 'Please enter a valid phone number starting with +91 and followed by 10 digits.',
-                        //   },
-                        // ]}
-                        // rules={[{ required: true, message: 'Please enter your contact number !' }]}
+                        
                         >
                           <Input
                             onChange={(e) => handlePhoneNumberChange(e.target.value)}
-                          // type='number' 
                           />
                         </Form.Item>
                       </div>
