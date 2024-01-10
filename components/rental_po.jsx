@@ -691,12 +691,11 @@ const Rental = () => {
                                 <Input type="date"></Input>
                             </Form.Item>
                         </div>
-                        <div className="text-to"><p class="mt-0">To</p>
-                        </div>
+                        <div className="text-to"><p className='mb-2'>To</p></div>
                     </div>
 
                     <div className="col-sm-4">
-                        <div className="wrap-box mb-0">
+                        <div className="wrap-box">
                             <Form.Item
                                 label="To"
                                 name="end_date"
@@ -723,7 +722,7 @@ const Rental = () => {
                         </div>
                     </div>
                     <div className="col-sm-4">
-                        <div className="wrap-box mb-0">
+                        <div className="wrap-box">
                             <Form.Item
                                 label="Amount"
                                 name="amount"
@@ -883,9 +882,42 @@ const Rental = () => {
                                                     </div>
                                                 </div>
 
-                                                {/* <label for="name">To</label>
-                            <input type="date" /> */}
-
+                                            </div>
+                                            <div className="row">
+                                                {shipmentType === 'Project Related' && (
+                                                    <div class="col-sm-4">
+                                                        <div className="selectwrap columns-select shipment-caret ">
+                                                            <Form.Item
+                                                                label="Select Site"
+                                                                {...restField}
+                                                                name={[name, 'site_id']}
+                                                                fieldKey={[fieldKey, 'site_id']}
+                                                                value={repeator[index].site_id}
+                                                                // name="site_id"
+                                                                htmlFor="file"
+                                                                class="same-clr"
+                                                                rules={[
+                                                                    {
+                                                                        required: true,
+                                                                        message: "Please choose site",
+                                                                    },
+                                                                ]}
+                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
+                                                            >
+                                                                <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                                    {Array.isArray(siteOptions) &&
+                                                                        siteOptions.map((site) =>
+                                                                        (
+                                                                            <Select.Option key={site.site_id} value={site.site_id}>
+                                                                                {site.name}
+                                                                            </Select.Option>
+                                                                        )
+                                                                        )}
+                                                                </Select>
+                                                            </Form.Item>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                             <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
                                         </Space>
@@ -1239,32 +1271,136 @@ const Rental = () => {
                             <div className="selectwrap columns-select shipment-caret ">
                                 {/* <CaretDownFilled className="caret-icon" /> */}
                                 <Form.Item
-                                    label="Select Site"
-                                    name="site_id"
+                                    label="Material For"
+                                    name="materialFor"
                                     htmlFor="file"
                                     class="same-clr"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please choose site",
+                                            message: "Please choose Material For",
                                         },
                                     ]}
                                 >
-                                    <Select id="single51" class="js-states form-control file-wrap-select">
-                                        {Array.isArray(siteOptions) &&
-                                            siteOptions.map((site) => (
-                                                <Select.Option key={site.site_id} value={site.site_id}>
-                                                    {site.name}
-                                                </Select.Option>
-                                            ))}
+                                    <Select id="single90"
+                                        class="js-states form-control file-wrap-select"
+                                        onChange={(value) => setMaterialFor(value)}
+                                    >
+                                        {shipmentType === 'Combined' && <Option value="project">Project</Option>}
+                                        <Option value="inventory">Inventory</Option>
+                                        <Option value="supplies">Supplies/Expenses</Option>
+
                                     </Select>
                                 </Form.Item>
                             </div>
                         </div>
                     )}
+                    <div className="col-md-4">
+                        <div className="wrap-box">
+                            {materialFor === 'inventory' && (
+                                <Form.Item
+                                    label="Inventory Code"
+                                    name="code"
+                                    htmlFor="file"
+                                    className="same-clr"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please enter Inventory Code",
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            )}
+                            {materialFor === 'supplies' && (
+                                <Form.Item
+                                    label="GL Code"
+                                    name="code"
+                                    htmlFor="file"
+                                    className="same-clr"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please enter Inventory Code",
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            )}
+
+
+                            {materialFor === 'project' && (
+                                <>
+                                    <div class="selectwrap add-dropdown-wrap">
+                                        <div class="selectwrap columns-select shipment-caret ">
+                                            <Form.Item
+                                                label="Project"
+                                                name="project_id"
+                                                htmlFor="file"
+                                                class="same-clr"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "Please choose Project",
+                                                    },
+                                                ]}
+                                            >
+                                                <Select id="single406"
+                                                    class="js-states form-control file-wrap-select"
+                                                    onChange={(value) => list(value)}
+
+                                                >
+                                                    {Array.isArray(projects) &&
+                                                        projects.map((project) => (
+                                                            <Select.Option key={project.project_id} value={project.project_id}
+
+                                                            >
+                                                                {project.name}
+                                                            </Select.Option>
+                                                        ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </div>
+
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        {materialFor === 'project' && (
+                            <div class="selectwrap add-dropdown-wrap">
+                                <div className="selectwrap columns-select shipment-caret ">
+                                    {/* <CaretDownFilled className="caret-icon" /> */}
+                                    <Form.Item
+                                        label="Select Site"
+                                        name="site_id"
+                                        htmlFor="file"
+                                        class="same-clr"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please choose site",
+                                            },
+                                        ]}
+                                    >
+                                        <Select id="single51" class="js-states form-control file-wrap-select">
+                                            {Array.isArray(siteOptions) &&
+                                                siteOptions.map((site) => (
+                                                    <Select.Option key={site.site_id} value={site.site_id}>
+                                                        {site.name}
+                                                    </Select.Option>
+                                                ))}
+                                        </Select>
+                                    </Form.Item>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
                 </div>
-
-
                 <div class="linewrap d-flex">
                     <span class="d-block me-2">By Details</span>
                     <hr />

@@ -55,23 +55,23 @@ const Vendor_Edit = ({ base_url }) => {
                 //     ...values,
                 // }
 
-                const response = await axios.get(`${base_url}/api/admin/users?id=${id}`,  {
+                const response = await axios.get(`${base_url}/api/admin/users?id=${id}`, {
                     headers: headers,
                 });
                 console.log(response.data.data.user_role.id, 'jjjjjjjjjjjjjj');
 
                 const userData = response.data.data;
-                console.log(userData,'$$$$$$$$$$$$$$$$$');
+                console.log(userData, '$$$$$$$$$$$$$$$$$');
 
                 form.setFieldsValue({
-                    role_id:response.data.data.user_role.id,
-                    first_name:userData.first_name,
-                    last_name:userData.last_name,
-                    email:userData.email,
-                    phone_number:userData.phone_number,
-                    address:userData.address,
-                    state:userData.state,
-                    country:userData.country
+                    role_id: response.data.data.user_role.id,
+                    first_name: userData.first_name,
+                    last_name: userData.last_name,
+                    email: userData.email,
+                    phone_number: userData.phone_number,
+                    address: userData.address,
+                    state: userData.state,
+                    country: userData.country
 
                 })
 
@@ -86,41 +86,41 @@ const Vendor_Edit = ({ base_url }) => {
     // };
 
     const onFinish = async (values) => {
-        console.log(values,'user values');
-    //     if (values.items?.length > 0) {
-    //         const dynamicItems = values.items.map(item => ({
-    //             id: item.id,
-    //             name: item.name,
-    //             phone_number: item.phone_number,
-    //             email: item.email,
-    //         }));
-    //         var data = {
-    //             ...values,
-    //             vendor_id: itemsData[0].vendor_id,
-    //             contact_info: [...dynamicItems]
-    //         };
-    //         console.log(data, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhh');
-    //     }
-    //     else {
-    //         var data = {
-    //             ...values,
-    //             vendor_id: id,
-    //             contact_info: [
-    //                 {
-    //                     id: values.id,
-    //                     name: values.name,
-    //                     phone_number: values.phone_number,
-    //                     email: values.email,
-    //                 }
-    //             ]
-    //         };
-    //     }
-    const data = {
-       id:id,
-        ...values,
-      }
-// console.log(data,'00000000000000000');
-// return
+        console.log(values, 'user values');
+        //     if (values.items?.length > 0) {
+        //         const dynamicItems = values.items.map(item => ({
+        //             id: item.id,
+        //             name: item.name,
+        //             phone_number: item.phone_number,
+        //             email: item.email,
+        //         }));
+        //         var data = {
+        //             ...values,
+        //             vendor_id: itemsData[0].vendor_id,
+        //             contact_info: [...dynamicItems]
+        //         };
+        //         console.log(data, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+        //     }
+        //     else {
+        //         var data = {
+        //             ...values,
+        //             vendor_id: id,
+        //             contact_info: [
+        //                 {
+        //                     id: values.id,
+        //                     name: values.name,
+        //                     phone_number: values.phone_number,
+        //                     email: values.email,
+        //                 }
+        //             ]
+        //         };
+        //     }
+        const data = {
+            id: id,
+            ...values,
+        }
+        // console.log(data,'00000000000000000');
+        // return
 
 
         try {
@@ -150,6 +150,22 @@ const Vendor_Edit = ({ base_url }) => {
             message.error('Error updating project');
         }
     };
+
+    const handlePhoneNumberChange = (value) => {
+        // If the value is exactly 10 or 11 digits, automatically add the appropriate prefix
+        if (isValidPhone(value)) {
+          // Do something with the valid phone number
+          console.log('Valid phone number:', value);
+        } else {
+          console.log('Invalid phone number:', value);
+        }
+      };
+    
+    
+      function isValidPhone(phoneNumber) {
+        const pattern = /^\+(?:[0-9] ?){6,11}[0-9]$/;
+        return phoneNumber && pattern.test(phoneNumber);
+      }
 
     return (
         <>
@@ -238,22 +254,14 @@ const Vendor_Edit = ({ base_url }) => {
                                                     label="Contact No"
                                                     name="phone_number"  // Add a name to link the input to the form values
                                                     className="vender-input"
-                                                    // rules={[
-                                                    //   { required: true, message: 'Please enter your contact number!' },
-                                                    //   { validator: validatePhoneNumber },
-                                                    // ]}
                                                     rules={[
                                                         { required: true, message: 'Please enter your contact number!' },
-                                                        {
-                                                            pattern: /^\+91[0-9]{10}$/,
-                                                            message: 'Please enter a valid phone number starting with +91 and followed by 10 digits.',
-                                                        },
+
                                                     ]}
-                                                // rules={[{ required: true, message: 'Please enter your contact number !' }]}
+
                                                 >
                                                     <Input
                                                         onChange={(e) => handlePhoneNumberChange(e.target.value)}
-                                                    // type='number' 
                                                     />
                                                 </Form.Item>
                                             </div>
@@ -301,7 +309,7 @@ const Vendor_Edit = ({ base_url }) => {
                                                     name="state"  // Add a name to link the input to the form values
                                                     className="vender-input"
                                                     rules={[{ required: true, message: 'Please enter your state!' }]}
-                                                    // initialValue='Ontario'
+                                                // initialValue='Ontario'
                                                 >
                                                     <Input readOnly />
                                                 </Form.Item>
@@ -314,7 +322,7 @@ const Vendor_Edit = ({ base_url }) => {
                                                     name="country"  // Add a name to link the input to the form values
                                                     className="vender-input"
                                                     rules={[{ required: true, message: 'Please enter your country!' }]}
-                                                    // initialValue='Canada'
+                                                // initialValue='Canada'
                                                 >
                                                     <Input readOnly />
                                                 </Form.Item>

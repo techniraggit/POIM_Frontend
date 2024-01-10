@@ -973,9 +973,9 @@ const Material = ({ base_url }) => {
                                             <Select id="single67" class="js-states form-control file-wrap-select"
                                                 onChange={(value) => setMaterialFor(value)}
                                             >
-                                                <Option value="projects">Project </Option>
-                                                <Option value="inventorys">Inventory</Option>
-                                                <Option value="expenses">Supplies/Expenses</Option>
+                                                <Option value="project">Project </Option>
+                                                <Option value="inventory">Inventory</Option>
+                                                <Option value="supplies">Supplies/Expenses</Option>
                                             </Select>
                                         </Form.Item>
                                     </div>
@@ -1021,7 +1021,7 @@ const Material = ({ base_url }) => {
                                     </Form.Item>
                                 )}
 
-                                {materialFor === 'projects' && (
+                                {materialFor === 'project' && (
                                     <>
                                         <div class="selectwrap add-dropdown-wrap">
                                             <div class="selectwrap columns-select shipment-caret ">
@@ -1057,7 +1057,7 @@ const Material = ({ base_url }) => {
                                         </div>
                                     </>
                                 )}
-                                {materialFor === 'inventorys' && (
+                                {/* {materialFor === 'inventorys' && (
                                     <>
                                         <Form.Item
                                             label="Inventory Code"
@@ -1095,7 +1095,7 @@ const Material = ({ base_url }) => {
 
                                 </>
 
-                                )}
+                                )} */}
 
                             </div>
                         </div>
@@ -1104,7 +1104,7 @@ const Material = ({ base_url }) => {
                     <div className="row select-sitee">
 
                         <div className="col-md-4">
-                            {materialFor === 'projects' && (
+                            {materialFor === 'project' && (
                                 <div class="selectwrap add-dropdown-wrap">
                                     <div className="selectwrap columns-select shipment-caret ">
                                         {/* <CaretDownFilled className="caret-icon" /> */}
@@ -1132,7 +1132,7 @@ const Material = ({ base_url }) => {
                                     </div>
                                 </div>
                             )}
-                            {materialFor === 'inventorys' && (
+                            {/* {materialFor === 'inventorys' && (
                                 <div class="wrap-box">
                                     < Form.Item
                                         label="Delivery Address"
@@ -1173,7 +1173,7 @@ const Material = ({ base_url }) => {
                                         </Form.Item>
                                     </div>
                                 </>
-                            )}
+                            )} */}
 
                         </div>
                     </div>
