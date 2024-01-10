@@ -779,7 +779,7 @@ const Rental = () => {
                             <>
                                 {fields.map(({ key, name, fieldKey, ...restField }, index) => {
                                     return (
-                                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
+                                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit mb-space">
                                             <div className="row mb-2">
                                                 <div className="wrap-box mb-0">
                                                     <Form.Item
