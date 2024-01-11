@@ -62,7 +62,7 @@ const Create_Vendor = ({ base_url }) => {
             // console.log(error.response,'response.status');
             if (response.status == 201) {
             message.success(response.data.message)
-            // router.push('/vendor')
+            router.push('/vendor')
             }
         }
         catch (error) {

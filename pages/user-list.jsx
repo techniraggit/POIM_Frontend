@@ -7,6 +7,7 @@ import { Popconfirm, Input, message } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
 import UserPopUp from "@/components/user-popup";
+import { userSearch , userClear} from "@/apis/apis/adminApis";
 const User_list = ({ base_url }) => {
     const [users, setUsers] = useState([]);
     const [isViewUserVisible, setUserVisible] = useState(false);
@@ -72,16 +73,18 @@ const User_list = ({ base_url }) => {
     
       const handleButtonClick = async  (event) => {
         event.preventDefault();
-        try {
-                const headers = {
-                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                };
-                const response = await axios.get(`${base_url}/api/search/users?query=${inputValue}`, { headers: headers });
-                console.log(response.data.search_query_data, 'aaaaaaaaaaaaa========');
-                setUsers(response.data.search_query_data)
-            } catch (error) {
-                console.error('Error fetching projects:', error);
-            }
+        userSearch(inputValue).then((response)=>{
+            setUsers(response.data.search_query_data)
+
+        })
+        
+      };
+      const handleClearButtonClick = () => {
+        setInputValue('');
+        userClear().then((res)=>{
+            setUsers(res.data.data);
+
+        })
       };
     return (
         <>
@@ -104,10 +107,14 @@ const User_list = ({ base_url }) => {
                         </ul>
                         <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Users" />
-                                <button className="vendor-search-butt">Search</button>
+                                <input className="vendor-input" placeholder="Search Users"
+                                 value={inputValue} onChange={handleInputChange}
+                                 />
+                                <button className="vendor-search-butt"
+                                 onClick={handleButtonClick}
+                                >Search</button>
                             </form>
-                            <button type="submit" className="clear-button ms-3">Clear</button>
+                            <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
                         </div>
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">

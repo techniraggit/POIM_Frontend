@@ -46,3 +46,21 @@ export const threshold=()=>{
 export const updateThreshold = (data) => {
     return Axios.put(`/api/admin/threshold`, data);
 }
+export const userSearch=(inputValue)=>{
+    return Axios.get(`/api/search/users?query=${inputValue}`)
+}
+export const userClear=()=>{
+    return Axios.get(`/api/admin/users`)
+}
+export const vendorSearch=(inputValue)=>{
+    return Axios.get(`/api/search/vendors?query=${inputValue}`)
+}
+export const vendorClear=()=>{
+    return Axios.get(`/api/admin/vendors`)
+}
+export const projectSearch=(inputValue)=>{
+    return Axios.get(`/api/search/projects?query=${inputValue}`)
+}
+export const projectClear=()=>{
+    return Axios.get(`/api/admin/projects`)
+}

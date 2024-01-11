@@ -9,6 +9,7 @@ import { getServerSideProps } from "@/components/mainVariable";
 import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
 import View_Vendor from "@/components/view-vendor";
+import { vendorSearch,vendorClear} from "@/apis/apis/adminApis";
 
 const Vendor = ({ base_url }) => {
     const [vendors, setVendors] = useState([]);
@@ -16,6 +17,7 @@ const Vendor = ({ base_url }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isViewVendorVisible, setViewVendorVisible] = useState(false);
     const [clickedIndex, setClickedIndex] = useState(null);
+    const [inputValue, setInputValue] = useState('');
     // const [serialNumber, setSerialNumber] = useState(null);
 
 
@@ -79,6 +81,27 @@ const Vendor = ({ base_url }) => {
         setClickedIndex(index);
        
     };
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+      };
+
+      const handleButtonClick = async  (event) => {
+        event.preventDefault();
+        vendorSearch(inputValue).then((response)=>{
+            console.log(response,'pppppppppppppp');
+            setVendors(response.data.search_vendors_data)
+
+        })
+        
+      };
+      const handleClearButtonClick = () => {
+        setInputValue('');
+        vendorClear().then((res)=>{
+            console.log(res,'apppppppppppp');
+            setVendors(res.data.vendors)
+
+        })
+      };
     return (
         <>
             <div className="wrapper-main">
@@ -97,11 +120,16 @@ const Vendor = ({ base_url }) => {
                                 <span>Total Vendors</span>
                             </li>
                         </ul>
-                        <div className="wrapin-form">
+                        <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Vendor" />
-                                <button className="vendor-search-butt">Search</button>
+                                <input className="vendor-input" placeholder="Search Users"
+                                 value={inputValue} onChange={handleInputChange}
+                                 />
+                                <button className="vendor-search-butt"
+                                 onClick={handleButtonClick}
+                                >Search</button>
                             </form>
+                            <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
                         </div>
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
