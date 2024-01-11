@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/sidebar";
 import '../styles/style.css'
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { threshold, updateThreshold } from "@/apis/apis/adminApis";
 
 
@@ -26,7 +26,10 @@ const Settings = () => {
             value: value
         })
             .then((res) => {
-                console.log(res, 'sssssssssssssssss');
+                if(res.status){
+                    message.success(res.data.message)
+                }
+                console.log(res.data.message, 'sssssssssssssssss');
 
             })
     }
