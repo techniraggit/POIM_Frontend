@@ -7,7 +7,7 @@ import axios from 'axios';
 import { base_url } from './constant';
 
 
-const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen }) => {
+const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) => {
   const [vendorData, setVenndorData] = useState([])
   const [vendorcontact, setvendorcontact] = useState([])
   const handleCloseModal = () => {
@@ -41,7 +41,7 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen }) => {
           <form class="details-main">
             <div class="projct-details">
               <p class="detail-para1">S No.</p>
-              <p class="detail-para">#45488</p>
+              <p className="detail-para">{clickedIndex !== null ? clickedIndex + 1 : ''}</p>
             </div>
 
             <div class="projct-details">
@@ -53,13 +53,11 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen }) => {
                 <div class="projct-details col-md-9">
                   <p class="detail-para1">Email Address</p>
                   <p class="detail-para">{vendorcontact.email}</p>
-                  {/* <p class="detail-para">{vendorData.vendor_contact[0].email}</p> */}
                 </div>
 
                 <div class="projct-details col-md-3">
                   <p class="detail-para1">Contact No</p>
                   <p class="detail-para">{vendorcontact.phone_number}</p>
-                  {/* <p class="detail-para2">{vendorData.vendor_contact[0].phone_number}</p> */}
                 </div>
 
               </div>

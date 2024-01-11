@@ -99,7 +99,7 @@ const Sidebar = () => {
            
           </li>
           <li>
-            <Link href='#'>
+            <Link href='settings'>
             <span className="db-span">
                 <img src="/images/Settings.svg" alt="" className="me-4" />
                 Settings

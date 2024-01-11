@@ -755,7 +755,12 @@ button.ant-btn.vendor-search-butt:hover span {
     justify-content: start;
     align-items: start;
 }
-
+.wrap-box .ant-col {
+    min-height: unset !important;
+}
+.selectwrap.columns-select.shipment-caret .ant-col {
+    min-height: unset !important;
+}
 .ant-col label.ant-form-item-required {
     width: 100%;
     color: rgb(17, 47, 92, 0.5) !important;

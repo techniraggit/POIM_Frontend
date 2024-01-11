@@ -59,10 +59,15 @@ const Create_Vendor = ({ base_url }) => {
             const response = await axios.post(`${base_url}/api/admin/vendors`, data, {
                 headers: headers,
             });
+            // console.log(error.response,'response.status');
+            if (response.status == 201) {
             message.success(response.data.message)
-            router.push('/vendor')
+            // router.push('/vendor')
+            }
         }
         catch (error) {
+            console.log(error,'vendorError');
+            message.error(error.response.data.message)
         }
 
         console.log(values, 'hfurhgiurehg');
@@ -140,7 +145,7 @@ const Create_Vendor = ({ base_url }) => {
                                                 name="phone_number"
                                                 // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your company name!' }]}
+                                                rules={[{ required: true, message: 'Please enter your contact no.!' }]}
                                             >
                                                 <Input onChange={(e) => handlePhoneNumberChange(e.target.value)} />
                                             </Form.Item>

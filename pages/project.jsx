@@ -60,6 +60,7 @@ const Vendor = ({ base_url }) => {
 
             console.log('Delete response:', response);
             message.success('project deleted successfully.');
+            setTotalProjects(prevTotalProjects => prevTotalProjects - 1);
             setProjects(preproject => preproject.filter(project => project.project_id !== id));
             // Reload the categories after deleting
         } catch (error) {
