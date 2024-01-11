@@ -15,6 +15,8 @@ const Vendor = ({ base_url }) => {
     const [totalVendor, setTotalVendor] = useState(0)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isViewVendorVisible, setViewVendorVisible] = useState(false);
+    const [clickedIndex, setClickedIndex] = useState(null);
+    // const [serialNumber, setSerialNumber] = useState(null);
 
 
 
@@ -34,6 +36,10 @@ const Vendor = ({ base_url }) => {
         }
         fetchroles();
     }, [])
+
+    // useEffect(() => {
+
+    // }, [totalVendor])
 
 
     const handleDelete = async (id) => {
@@ -57,6 +63,7 @@ const Vendor = ({ base_url }) => {
 
             console.log('Delete response:', response);
             message.success('vendor deleted successfully.');
+            setTotalVendor(prevTotalVendor => prevTotalVendor - 1);
             setVendors(prevVendors => prevVendors.filter(vendor => vendor.vendor_id !== id));
             // Reload the categories after deleting
         } catch (error) {
@@ -66,9 +73,11 @@ const Vendor = ({ base_url }) => {
     };
 
 
-    const handleIconClick = (id) => {
+    const handleIconClick = (id, index) => {
         setViewVendorVisible((prevVisible) => (prevVisible === id ? null : id));
         setIsModalOpen(true);
+        setClickedIndex(index);
+       
     };
     return (
         <>
@@ -117,7 +126,7 @@ const Vendor = ({ base_url }) => {
                                                     <td>{vendor.state}</td>
                                                     <td className="td-icon-color">
                                                         {/* <Link href="#" className="me-2"> */}
-                                                        <EyeFilled onClick={() => handleIconClick(vendor.vendor_id)} />
+                                                        <EyeFilled onClick={() => handleIconClick(vendor.vendor_id, index)} />
 
                                                         {/* </Link> */}
                                                         <Popconfirm
@@ -138,7 +147,9 @@ const Vendor = ({ base_url }) => {
                         </div>
                     </div>
                 </div>
-                <View_Vendor setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible} />
+                <View_Vendor setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible} 
+                clickedIndex={clickedIndex}
+                />
             </div>
         </>
     )

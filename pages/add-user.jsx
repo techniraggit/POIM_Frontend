@@ -37,6 +37,22 @@ const AddUser = ({ base_url }) => {
       setLoading(false);
     };
   }, [])
+  // useEffect(()=>{
+  //   const search = async () => {
+  //     try {
+  //       const headers = {
+  //         Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
+  //       }
+  //       const response = await axios.get(`${base_url}/api/search/users?query=`, { headers: headers });
+  //       console.log(response, 'ddddddddddd');
+  //     } catch (error) {
+  //       console.error('Error fetching projects:', error);
+  //     }
+  //   }
+  //   search();
+    
+
+  // },[])
 
   const onFinish = async (values) => {
     try {
@@ -72,6 +88,7 @@ const AddUser = ({ base_url }) => {
       // router.push('/user-list')
     }
     catch (error) {
+      console.log(error,'userError');
       setLoading(false);
       message.error(error.response.data.message)
     }
