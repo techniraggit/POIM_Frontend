@@ -133,7 +133,7 @@ const AddUser = ({ base_url }) => {
                   labelCol={{ span: 8 }}
                   wrapperCol={{ span: 16 }}
                 >
-                  <div className="row">
+                  <div className="row mb-3">
                     {/* <div className="Role">
                   <p>Role</p>
                 </div> */}

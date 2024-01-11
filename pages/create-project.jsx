@@ -179,7 +179,7 @@ const Create_Vendor = ({ base_url }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row">
+                                <div className="row mb-4">
                                     <div className="col-lg-4 col-md-12 shipment-caret">
                                         <div className="selectwrap bg-border-select">
                                             <Form.Item label="Project Maneger" name="project_manager_id" initialValue="" className="vender-input">

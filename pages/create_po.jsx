@@ -529,7 +529,7 @@ const Create_po = () => {
                                         <hr />
                                     </div>
                                     <div class="row space-bottom mb-0">
-                                        <div class="col-md-6 col-lg-4 all-wrap-box">
+                                        <div class="col-md-6 col-lg-5 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
                                                     label="Shipment Type"
@@ -553,7 +553,7 @@ const Create_po = () => {
                                                 </Form.Item>
                                             </div>
                                         </div>
-                                        <div className="col-lg-4">
+                                        <div className="col-lg-5 col-md-6">
                                             {shipmentType === 'Project Related' && (
                                                 <div class="selectwrap columns-select shipment-caret">
                                                     <Form.Item
@@ -606,7 +606,7 @@ const Create_po = () => {
                                                 </div>
                                             )}
                                         </div>
-                                        <div className="col-lg-4">
+                                        <div className="col-lg-3">
                                             {/* {shipmentType === 'Non Project Related' && (
                                                 <div class="selectwrap non-project-wrap">
 
@@ -984,6 +984,7 @@ const Create_po = () => {
                                         )} */}
 
                                             </div>
+
                                         </div>
                                         <div className="create-another minuswrap-img">
                                             <Form.List name="items" initialValue={[]}>
@@ -1047,7 +1048,7 @@ const Create_po = () => {
                                                                     <div className="row">
                                                                         {/* <div class="col-sm-4"> */}
 
-                                                                        <div className="wrap-box col-sm-4">
+                                                                        <div className="wrap-box col-sm-4 mb">
                                                                             {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (materialFor === 'inventory' || materialFor === 'supplies') && (
                                                                                 <>
                                                                                     {/* {shipmentType === 'Combined' && <label value="project">Project</label>} */}
@@ -1092,11 +1093,11 @@ const Create_po = () => {
                                                                                 <>
                                                                                     <div className="selectwrap columns-select shipment-caret ">
                                                                                         <Form.Item
-                                                                                         {...restField}
-                                                                                         label="Select Site"
+                                                                                            {...restField}
+                                                                                            label="Select Site"
 
-                                                                                         name={[name, 'site_id']}
-                                                                                         value={repeator[index].site_id}
+                                                                                            name={[name, 'site_id']}
+                                                                                            value={repeator[index].site_id}
                                                                                             onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
                                                                                             htmlFor="file"
                                                                                             class="same-clr"
@@ -1121,21 +1122,21 @@ const Create_po = () => {
                                                                                     </div>
                                                                                 </>
                                                                             )}
-                                                                        </div>
-                                                                        {/* </div> */}
+                                                                            {/* </div> */}
+                                                                            {/* </div> */}
 
 
-                                                                        <div className="col-sm-4">
+                                                                            {/* <div className="col-sm-4"> */}
                                                                             {/* <div className="wrap-box mb-0">
-                                                                        {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
+                                                                            {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
                                                                             <>
                                                                                 <label>
                                                                                     {repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
                                                                                 </label>
                                                                                 <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
                                                                             </>
-                                                                        )}
-                                                                    </div> */}
+                                                                            )}
+                                                                         </div> */}
                                                                             {repeator[index].materialFor === 'project' && (
                                                                                 <>
                                                                                     <div class="top-project">
@@ -1160,8 +1161,8 @@ const Create_po = () => {
                                                                                     </div>
                                                                                 </>
                                                                             )}
-                                                                        </div>
-                                                                        <div className="col-sm-4 ">
+
+                                                                            {/* <div className="col-sm-4 "> */}
                                                                             {repeator[index].materialFor === 'project' && (
                                                                                 <div class="selectwrap shipment-caret add-dropdown-wrap">
                                                                                     <div className="selectwrap columns-select shipment-caret ">
@@ -1178,13 +1179,21 @@ const Create_po = () => {
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>
+
                                                                             )}
+                                                                        </div>
+                                                                        {/* </div> */}
+                                                                        <div className="col-sm-4">
+                                                                        <div className="hide-wrap">
+                                                                            <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                                                            </div>
+                                                                        
                                                                         </div>
                                                                     </div>
 
 
 
-                                                                    <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+
                                                                 </Space>
                                                             )
                                                         }
