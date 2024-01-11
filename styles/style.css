@@ -239,7 +239,7 @@ td {
 
 /* login */
 section.dashboard-wrap {
-    background-image: url(/_next/static/media/overlaybg.f0831482.png);
+    background-image: url("../public/images/overlaybg.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
