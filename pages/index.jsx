@@ -10,7 +10,6 @@ const Login = ({ base_url }) => {
     const [email, setEmail] = useState('');
     const [forgotEmail, setforgotEmail] = useState('')
     const [password, setPassword] = useState('');
-    const [isEmployee, setIsEmployee] = useState(false);
     const [errors, setErrors] = useState({});
     const [showForgotPasswordPopup, setShowForgotPasswordPopup] = useState(false);
     const [forgotPasswordErrors, setForgotPasswordErrors] = useState({});
@@ -72,8 +71,6 @@ const Login = ({ base_url }) => {
             .catch((error) => {
                 console.log(error, 'jjjjjjjjjjjjjjjjjjjjj');
             })
-        // Add logic to send the email using the entered email address
-        // You can use axios or any other method to send the email
         if (validateForgotPasswordForm()) {
             handlePopupClose();
         } else {
@@ -93,19 +90,16 @@ const Login = ({ base_url }) => {
                 password: password,
                 forgotEmail: forgotEmail,
             }
-            // (`${Business_Url}/add-customer/`, addValues)
-
             try {
 
                 const response = await axios.post(`${base_url}/api/accounts/login`, values
                 );
-                console.log(response, 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
-                // Assuming your API returns a success status
                 if (response.status === 200) {
                     localStorage.setItem('access_token', response.data.access_token)
                     localStorage.setItem('refresh_token', response.data.refresh_token)
                     localStorage.setItem('user_first_name', response.data.user_first_name)
                     localStorage.setItem('user_last_name', response.data.user_last_name)
+                    localStorage.setItem("roles", response.data.user_role)
                     router.push('/dashboard');
                     message.success('Login successful');
                     // Handle successful login
@@ -118,10 +112,8 @@ const Login = ({ base_url }) => {
                 console.error('Error during login:', error);
                 if (error.response && error.response.status === 401) {
                     console.log('Token expired. Redirecting to login page...');
-                    // Redirect to the login page
                     router.push('/');
                 } 
-                // Handle error as needed
             }
         } else {
             console.log('Form validation failed');

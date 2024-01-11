@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
-import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import '../styles/style.css'
@@ -8,6 +7,7 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { createPO, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
+import withAuth from '../components/PrivateRoute';
 
 const { Option } = Select;
 const repeatorData = {
@@ -1278,6 +1278,4 @@ const Create_po = () => {
     );
 };
 
-export { getServerSideProps };
-
-export default Create_po;
+export default withAuth(['Admin'])(Create_po);
