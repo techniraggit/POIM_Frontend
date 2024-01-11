@@ -918,8 +918,11 @@ const Rental = () => {
                                                         </div>
                                                     </div>
                                                 )}
+                                                <div className="col-sm-4 minus-align-mid d-flex align-items-center">
+                                                <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                                </div>
                                             </div>
-                                            <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                           
                                         </Space>
                                     )
                                 })}
