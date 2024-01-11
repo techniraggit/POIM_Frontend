@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import axios from 'axios';
 import { getServerSideProps } from "@/components/mainVariable";
 import '../styles/popup.css';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
+import { isLoggedIn } from "@/apis/apis/shared";
 
 const Login = ({ base_url }) => {
     const [email, setEmail] = useState('');
@@ -15,6 +16,12 @@ const Login = ({ base_url }) => {
     const [forgotPasswordErrors, setForgotPasswordErrors] = useState({});
 
     const router = useRouter();
+
+    useEffect(() => {
+        if(isLoggedIn()) {
+            router.push('/dashboard');
+        }
+    }, [])
 
     const validateForm = () => {
         const errors = {};
