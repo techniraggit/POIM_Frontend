@@ -166,7 +166,7 @@ const Login = ({ base_url }) => {
                                 </div>
                                 <div className="col-md-12 chekbox-wrap">
 
-                                    <label className="label-div mb-2">
+                                    {/* <label className="label-div mb-2">
                                         <span>Employee</span>
                                         <input
                                             type="checkbox"
@@ -176,7 +176,7 @@ const Login = ({ base_url }) => {
                                         // type="checkbox" name="" id="" placeholder="" 
                                         />
                                         <span class="checkmark"></span>
-                                    </label>
+                                    </label> */}
 
                                     <div ><a href="javascript:void(0)"><span onClick={handleForgotPassword}>Forgot Password?</span></a></div>
 

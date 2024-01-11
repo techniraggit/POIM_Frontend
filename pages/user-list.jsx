@@ -3,13 +3,17 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
-import {Popconfirm, Input, message } from 'antd';
+import { Popconfirm, Input, message } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
 import UserPopUp from "@/components/user-popup";
 const User_list = ({ base_url }) => {
     const [users, setUsers] = useState([]);
     const [isViewUserVisible, setUserVisible] = useState(false);
+    const [totalUser, setTotalUser] = useState(0)
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchValue, setSearchValue] = useState('');
+    const [inputValue, setInputValue] = useState('');
     useEffect(() => {
         const fetchroles = async () => {
             try {
@@ -17,14 +21,16 @@ const User_list = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/users`, { headers: headers });
-                console.log(response.data.data, '55555555555555555555555555');
-                setUsers(response.data.data); // Assuming the API response is an array of projects
+                console.log(response, 'aaaaaaaaaaaaa');
+                setTotalUser(response.data.total_users)
+                setUsers(response.data.data);
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
         }
         fetchroles();
     }, [])
+    
 
     const handleDelete = async (id) => {
         try {
@@ -47,6 +53,7 @@ const User_list = ({ base_url }) => {
 
             console.log('Delete response:', response);
             message.success('user deleted successfully.');
+            setTotalUser(prevTotalUser => prevTotalUser - 1);
             setUsers(preuser => preuser.filter(user => user.id !== id));
             // Reload the categories after deleting
         } catch (error) {
@@ -57,6 +64,25 @@ const User_list = ({ base_url }) => {
     const handleIconClick = (id) => {
         setUserVisible((prevVisible) => (prevVisible === id ? null : id));
     };
+
+
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+      };
+    
+      const handleButtonClick = async  (event) => {
+        event.preventDefault();
+        try {
+                const headers = {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                };
+                const response = await axios.get(`${base_url}/api/search/users?query=${inputValue}`, { headers: headers });
+                console.log(response.data.search_query_data, 'aaaaaaaaaaaaa========');
+                setUsers(response.data.search_query_data)
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+      };
     return (
         <>
             <div className="wrapper-main">
@@ -72,14 +98,24 @@ const User_list = ({ base_url }) => {
                                 <span>Create New User</span>
                             </li>
                             <li className="me-4">
-                                <span className="text-size mt-0">22</span>
+                                <span className="text-size mt-0">{totalUser}</span>
                                 <span>Total Users</span>
                             </li>
                         </ul>
                         <div className="wrapin-form">
-                            <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Users" />
-                                <button className="vendor-search-butt">Search</button>
+                            <form className="search-vendor" >
+                                <input className="vendor-input" placeholder="Search Users"
+                                   value={inputValue} onChange={handleInputChange}
+                                />
+                                <button className="vendor-search-butt" 
+                                onClick={handleButtonClick}
+                                // onClick={handleSearch}
+                                // onClick={(e) => {
+                                //     e.preventDefault(); // Prevents the default click behavior (e.g., form submission)
+                                //     handleSearch(e.target.value);
+                                // }}
+                                >
+                                    Search</button>
                             </form>
                         </div>
                         <div className="table-wrap vendor-wrap">
@@ -93,7 +129,7 @@ const User_list = ({ base_url }) => {
                                             <th className="hedaings-tb">Address</th>
                                             <th className="hedaings-tb">Email</th>
                                             <th className="hedaings-tb">Contact No</th>
-                                            <th className="hedaings-tb">Action</th>                     
+                                            <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,21 +144,21 @@ const User_list = ({ base_url }) => {
                                                     <td>{user.email}</td>
                                                     <td>{user.phone_number}</td>
                                                     <td className="td-icon-color">
-                                                    <EyeFilled onClick={() => handleIconClick(user.id)} />
-                                                        {isViewUserVisible === user.id && <UserPopUp user_id={user.id} />} 
-                                                    <Popconfirm
+                                                        <EyeFilled onClick={() => handleIconClick(user.id)} />
+                                                        {isViewUserVisible === user.id && <UserPopUp user_id={user.id} />}
+                                                        <Popconfirm
                                                             title="Are you sure you want to delete this item?"
                                                             onConfirm={() => handleDelete(user.id)}
                                                             okText="Yes"
                                                             cancelText="No"
-                                                            
+
                                                         >
-                                                            
+
                                                             <DeleteFilled />
-                                                            
+
                                                         </Popconfirm>
                                                         {/* <Link></> */}
-                                            <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link> 
+                                                        <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             ))}

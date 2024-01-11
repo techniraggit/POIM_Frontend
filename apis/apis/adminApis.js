@@ -40,3 +40,9 @@ export const fetchPo = (id) => {
 export const updatePo = (data) => {
     return Axios.patch(`/api/admin/purchase-order`, data);
 }
+export const threshold=()=>{
+    return Axios.get(`/api/admin/threshold`)
+}
+export const updateThreshold = (data) => {
+    return Axios.put(`/api/admin/threshold`, data);
+}

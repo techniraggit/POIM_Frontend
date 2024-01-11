@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/sidebar";
 import '../styles/style.css'
 import { Button } from "antd";
+import { threshold, updateThreshold } from "@/apis/apis/adminApis";
 
 
-function Settings() {
+const Settings = () => {
+    const [thresholdData, setThresholdData] = useState(0)
+    useEffect(() => {
+        const response = threshold();
+        response.then((res) => {
+            console.log(res.data.data, 'pppppppppppppppppp');
+            setThresholdData(res.data.data || []);
+        });
+    }, [])
+    const handleInputChange = (index, value) => {
+        const updatedThresholdData = [...thresholdData];
+        updatedThresholdData[index].value = value;
+        setThresholdData(updatedThresholdData);
+    };
+    const handleSaveClick = (id, value) => {
+        console.log(id, value, 'idvalue');
+        updateThreshold({
+            th_id: id,
+            value: value
+        })
+            .then((res) => {
+                console.log(res, 'sssssssssssssssss');
+
+            })
+    }
     return (
         <>
 
@@ -32,31 +57,36 @@ function Settings() {
                     </div>
                     <div className="outer-div">
                         <div className="listclips row">
-                            <div className="col-lg-4 col-md-6">
-                                <div className="wrapp-box">
-                                    <div className="lists-items me-2 d-flex align-items-center">
-                                        {/* <i className="fa-solid fa-clipboard-list clip-list me-3 mt-0 "></i> */}
-                                        <span className="img-clr me-3">
-                                            <img src="./images/to-do-list.svg" alt="" className="" />
-                                        </span>
-                                        <span>Material PO</span>
-                                    </div>
-                                    <div className="lists-items me-2">
-                                        <div className="card-thre-wrap d-flex align-items-center">
-                                            <p className="mb-0 set-thre me-1">Set Threshold Limit</p><span>i</span>
+                            {Array.isArray(thresholdData) && thresholdData.map((item, index) => (
+                                <div className="col-lg-4 col-md-6">
+                                    <div className="wrapp-box">
+                                        <div className="lists-items me-2 d-flex align-items-center">
+                                            <span className="img-clr me-3">
+                                                <img src="./images/to-do-list.svg" alt="" className="" />
+                                            </span>
+                                            <span>{item.name}</span>
                                         </div>
-                                        <div className="dollars-input d-flex align-items-center">
-                                            <input placeholder="Enter value in dollars" /><Button className="set-btn">Set</Button>
+                                        <div className="lists-items me-2">
+                                            <div className="card-thre-wrap d-flex align-items-center">
+                                                <p className="mb-0 set-thre me-1">Set Threshold Limit</p><span>i</span>
+                                            </div>
+                                            <div className="dollars-input d-flex align-items-center">
+
+                                                <input placeholder="Enter value in dollars"
+                                                    value={thresholdData[index].value}
+                                                    onChange={(e) => handleInputChange(index, e.target.value)}
+                                                />
+                                                {/* <Button className="set-btn">Set</Button> */}
+                                            </div>
+                                            <hr className="mt-4" />
+                                            <Button className="save-Button" onClick={() => handleSaveClick(item.th_id, item.value)}>save</Button>
                                         </div>
-                                        <hr className="mt-4" />
-                                        <Button className="save-Button">save</Button>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col-lg-4 col-md-6">
+                            ))}
+                            {/* <div className="col-lg-4 col-md-6">
                                 <div className="wrapp-box">
                                     <div className="lists-items me-2 d-flex align-items-center">
-                                        {/* <i className="fa-solid fa-clipboard-list clip-list me-3 mt-0 "></i> */}
                                         <span className="img-clr me-3">
                                             <img src="./images/to-do-list.svg" alt="" className="" />
                                         </span>
@@ -67,21 +97,19 @@ function Settings() {
                                             <p className="mb-0 set-thre me-1">Set Threshold Limit</p><span>i</span>
                                         </div>
                                         <div className="dollars-input d-flex align-items-center">
-                                            <input placeholder="Enter value in dollars" /><Button className="set-btn">Set</Button>
+                                            <input placeholder="Enter value in dollars" 
+                                             value={thresholdData[1].value}
+                                            />
+                                            <Button className="set-btn">Set</Button>
                                         </div>
                                         <hr className="mt-4" />
                                         <Button className="save-Button">save</Button>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col-lg-4 col-md-6">
+                            </div> */}
+                            {/* <div className="col-lg-4 col-md-6">
                                 <div className="wrapp-box">
-                                    {/* <div className="lists-items me-2">
-                                    <i className="fa-solid fa-clipboard-list clip-list me-3 mt-0 "></i>
-                                    <span>Material PO</span>
-                                </div> */}
                                     <div className="lists-items me-2 d-flex align-items-center">
-                                        {/* <i className="fa-solid fa-clipboard-list clip-list me-3 mt-0 "></i> */}
                                         <span className="img-clr me-3">
                                             <img src="./images/to-do-list.svg" alt="" className="" />
                                         </span>
@@ -92,13 +120,16 @@ function Settings() {
                                             <p className="mb-0 set-thre me-1">Set Threshold Limit</p><span>i</span>
                                         </div>
                                         <div className="dollars-input d-flex align-items-center">
-                                            <input placeholder="Enter value in dollars" /><Button className="set-btn">Set</Button>
+                                            <input placeholder="Enter value in dollars"
+                                             value={thresholdData[1].value} 
+                                            />
+                                            <Button className="set-btn">Set</Button>
                                         </div>
                                         <hr className="mt-4" />
                                         <Button className="save-Button">save</Button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

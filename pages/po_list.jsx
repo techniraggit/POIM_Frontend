@@ -13,6 +13,7 @@ const PO_list = () => {
 
     useEffect(() => {
         const response = getPoList();
+        console.log(response,'xxxxxxxxxxxxxxxxxxxxxx');
         response.then((res) => {
             if (res?.data?.status) {
                 setPurchaseOrders(res.data.data || []);
@@ -90,7 +91,7 @@ const PO_list = () => {
                                                     })}</td>
                                                     <td>{purchase.total_amount}</td>
                                                     <td>{purchase.status}</td>
-                                                    <td>{purchase.vendor_contact.name}</td>
+                                                    <td>{purchase.vendor_contact?.name}</td>
                                                     <td className="td-icon-color">
                                                         <Link href={`/view-po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
                                                         <Popconfirm
