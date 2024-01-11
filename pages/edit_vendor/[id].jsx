@@ -286,9 +286,9 @@ const Vendor_Edit = ({ base_url }) => {
                                             </Form.Item>
                                         </div>
                                     </div>
-                                    <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="vendor-ant-form">
+                                    <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="vendor-ant-form vendoer-filld-data">
                                         {Array.isArray(repeaterData) &&
-                                            repeaterData.map((repeater, index) => 
+                                            repeaterData.map((repeater, index) =>
                                             // {
                                             //     console.log(repeater,'repeater data');
                                             // }
@@ -296,42 +296,52 @@ const Vendor_Edit = ({ base_url }) => {
 
                                                 index !== 0 && (
                                                     <>
-                                                        <div className="wrap-box" key={index}>
-                                                            <label>Name</label>
-                                                            <input
-                                                                htmlFor="name"
-                                                                name="name"
-                                                                type="text"
-                                                                value={repeater.name}
-                                                                onChange={(e) => handleChange(index, 'name', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div className="wrap-box" key={index}>
+                                                        <div className="wrap-vendorfilled">
+                                                            <div className="row">
+                                                                <div className="col-sm-4">
+                                                                    <div className="wrap-box kt" key={index}>
+                                                                        <label>Name</label>
+                                                                        <input
+                                                                            htmlFor="name"
+                                                                            name="name"
+                                                                            type="text"
+                                                                            value={repeater.name}
+                                                                            onChange={(e) => handleChange(index, 'name', e.target.value)}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-sm-4">
+                                                                    <div className="wrap-box" key={index}>
 
-                                                            <label>Email</label>
-                                                            <input
-                                                                htmlFor="email"
-                                                                name="email"
-                                                                type="text"
-                                                                value={repeater.email}
-                                                                onChange={(e) => handleChange(index, 'email', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div className="minus-wraper1 wrap-box">
-                                                            <label>Phone Number</label>
-                                                            <input
-                                                                htmlFor="phone_number"
-                                                                name="phone_number"
-                                                                type="text"
-                                                                value={repeater.phone_number}
-                                                                onChange={(e) => handleChange(index, 'phone_number', e.target.value)}
-                                                            />
+                                                                        <label>Email</label>
+                                                                        <input
+                                                                            htmlFor="email"
+                                                                            name="email"
+                                                                            type="text"
+                                                                            value={repeater.email}
+                                                                            onChange={(e) => handleChange(index, 'email', e.target.value)}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-sm-4">
+                                                                    <div className="minus-wraper1 wrap-box">
+                                                                        <label>Phone Number</label>
+                                                                        <input
+                                                                            htmlFor="phone_number"
+                                                                            name="phone_number"
+                                                                            type="text"
+                                                                            value={repeater.phone_number}
+                                                                            onChange={(e) => handleChange(index, 'phone_number', e.target.value)}
+                                                                        />
 
-                                                        </div>
-                                                        <div className="wrap-minus" >
-                                                            <MinusOutlined className="minus-wrap"
-                                                                onClick={() => removeField(repeater.vendor_contact_id)}
-                                                                style={{ marginLeft: '8px' }} />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="wrap-minus" >
+                                                                <MinusOutlined className="minus-wrap"
+                                                                    onClick={() => removeField(repeater.vendor_contact_id)}
+                                                                    style={{ marginLeft: '8px' }} />
+                                                            </div>
                                                         </div>
                                                     </>
                                                 )
@@ -443,7 +453,8 @@ const Vendor_Edit = ({ base_url }) => {
                                                 <>
                                                     {fields.map(({ key, name, fieldKey, ...restField }) => (
                                                         <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                            <div className="wrap-box">
+
+                                                            <div className="wrap-box nirag">
                                                                 <Form.Item
                                                                     {...restField}
                                                                     name={[name, 'name']}
