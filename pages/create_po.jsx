@@ -263,6 +263,8 @@ const Create_po = () => {
 
         if (selectedValue === "rental") {
             router.push('/rental-po');
+        } else if(selectedValue === 'subcontractor') {
+            router.push('/create-subcontractor-po');
         }
     }
 

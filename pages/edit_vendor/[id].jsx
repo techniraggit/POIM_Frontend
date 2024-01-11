@@ -12,7 +12,6 @@ import DynamicTitle from '@/components/dynamic-title.jsx';
 
 const Vendor_Edit = ({ base_url }) => {
     const [form] = Form.useForm();
-
     const router = useRouter();
     const { id } = router.query;
     const [vendors, setVendors] = useState([]);
