@@ -239,7 +239,7 @@ td {
 
 /* login */
 section.dashboard-wrap {
-    background-image: url("../public/images/overlaybg.png");
+    background-image: url(/_next/static/media/overlaybg.f0831482.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -247,6 +247,9 @@ section.dashboard-wrap {
     padding-top: 40px;
     height: 100vh;
     /* height: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .login-board {
     max-width: 480px;
@@ -1162,6 +1165,9 @@ input.vendor-input::placeholder {
     color: #FFFFFF;
     border: none;
     height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 107px;
     border-radius: 0px 20px 20px 0px;
     opacity: 1;
@@ -2309,6 +2315,29 @@ span.anticon.anticon-home.home-sidebar > svg {
     margin-top: 70px;
 }
 /* 9jan work */
+/* 11jan  */
+.add-clear-wrap {
+    display: flex;
+    align-items: center;
+}
+button.vendor-search-butt:hover {
+    background-color: #e91d26;
+}
+button.clear-button {
+    height: 40px;
+    font-size: 15px;
+    padding: 6px 32px;
+    border-radius: 20px;
+    border: 1px solid #e91d26;
+    background-color: transparent;
+    color: #e91d26;
+}
+button.clear-button:hover{
+    background-color: #e91d26;
+    color: #fff;
+    transition: all ease 0.3s;
+}
+/* 11jan  */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
@@ -2319,8 +2348,8 @@ span.anticon.anticon-home.home-sidebar > svg {
 }
 @media (max-width: 1199px) {
     ul.list-icons li a span {
-        width: 45px;
-        height: 45px;
+        width: 56px;
+        height: 56px;
         display: flex;
         justify-content: center;
         align-items: center;

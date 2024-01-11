@@ -76,11 +76,12 @@ const User_list = ({ base_url }) => {
                                 <span>Total Users</span>
                             </li>
                         </ul>
-                        <div className="wrapin-form">
+                        <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
                                 <input className="vendor-input" placeholder="Search Users" />
                                 <button className="vendor-search-butt">Search</button>
                             </form>
+                            <button type="submit" className="clear-button ms-3">Clear</button>
                         </div>
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
