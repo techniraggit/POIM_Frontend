@@ -13,7 +13,6 @@ const PO_list = () => {
 
     useEffect(() => {
         const response = getPoList();
-        console.log(response,'xxxxxxxxxxxxxxxxxxxxxx');
         response.then((res) => {
             if (res?.data?.status) {
                 setPurchaseOrders(res.data.data || []);
@@ -108,8 +107,9 @@ const PO_list = () => {
                                                         {purchase.po_type === "rental" && (
                                                             <Link href={`/edit_rental_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
                                                         )}
-                                                        {/* <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
-                                                        <Link href={`/edit_rental_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link> */}
+                                                        {purchase.po_type === "subcontractor" && (
+                                                            <Link href={`/edit_subcontractor_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                        )}
                                                     </td>
                                                 </tr>
                                             ))

@@ -64,3 +64,7 @@ export const projectSearch=(inputValue)=>{
 export const projectClear=()=>{
     return Axios.get(`/api/admin/projects`)
 }
+
+export const getPoNumber = () => {
+    return Axios.get('/api/admin/po_number');
+}
