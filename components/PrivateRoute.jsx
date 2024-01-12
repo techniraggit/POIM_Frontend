@@ -9,17 +9,15 @@ const withAuth = (allowedRoles) => (WrappedComponent) => {
     const router = useRouter();
 
     useEffect(() => {
-        console.log(isLoggedIn())
       if (!isLoggedIn()) {
         router.push('/');
       } else {
         const userRoles = getUserRoles();
-        console.log(userRoles)
         const hasRequiredRole = allowedRoles.some(role => userRoles.includes(role));
-        console.log(hasRequiredRole)
         if (!hasRequiredRole) {
           router.push('/forbidden');
         }
+        router.push('/dashboard');
       }
     }, []);
 
