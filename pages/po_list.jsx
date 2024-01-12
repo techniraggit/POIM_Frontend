@@ -6,6 +6,7 @@ import { getServerSideProps } from "@/components/mainVariable";
 import { message, Popconfirm } from 'antd';
 import Link from "next/link";
 import { deletePO, getPoList } from "@/apis/apis/adminApis";
+import withAuth from "@/components/PrivateRoute";
 
 const PO_list = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
@@ -13,11 +14,11 @@ const PO_list = () => {
 
     useEffect(() => {
         const response = getPoList();
-        response.then((res) => {
-            if (res?.data?.status) {
-                setPurchaseOrders(res.data.data || []);
-            }
-        })
+        // response.then((res) => {
+        //     if (res?.data?.status) {
+        //         setPurchaseOrders(res.data.data || []);
+        //     }
+        // })
     }, []);
 
     const handleDelete = (id) => {
@@ -130,4 +131,6 @@ const PO_list = () => {
 };
 
 export { getServerSideProps };
-export default PO_list;
+export default withAuth(['project manager','supervisor','project coordinate','marketing','health & safety','estimator','shop','admin'])(PO_list)
+
+// export default PO_list;

@@ -9,7 +9,7 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { getServerSideProps } from "@/components/mainVariable";
 import DynamicTitle from '@/components/dynamic-title.jsx';
-
+import withAuth from "@/components/PrivateRoute";
 
 const { Option } = Select;
 
@@ -354,77 +354,7 @@ const Project_Edit = ({ base_url }) => {
                                                 )
                                             ))}
                                     </Space>
-                                {/* <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                    <div className="wrap-box">
-                                        {Array.isArray(repeaterData) &&
-                                            repeaterData.map((repeater, index) =>
-                                            (
-                                                <>
-                                                    {index !== 0 && (
-                                                        <div class="wrap-box">
-                                                            <label>Site Name</label>
-                                                            <input
-                                                                for="name"
-                                                                name="name"
-                                                                type="text"
-                                                                value={repeater.name}
-                                                                onChange={(e) => handleChange(index, 'name', e.target.value)}
-                                                                // onChange={handleChange}
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </>
-                                            )
-                                            )
-                                        }
-                                    </div>
-                                    <div className="wrap-box">
-                                        {Array.isArray(repeaterData) &&
-                                            repeaterData.map((repeater, index) => (
-                                                <>
-                                                    {index !== 0 && (
-                                                        <div class="wrap-box">
-                                                            <label>Site Address</label>
-                                                            <input
-                                                                for="name"
-                                                                name="address"
-                                                                type="text"
-                                                                value={repeater.address}
-                                                                onChange={(e) => handleChange(index, 'address', e.target.value)}
-
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </>
-
-                                            ))
-                                        }
-                                    </div>
-
-                                    <div className="wrap-box">
-                                        {Array.isArray(repeaterData) &&
-                                            repeaterData.map((repeater, index) => (
-                                                <>
-                                                    {index !== 0 && (
-                                                        <div class="wrap-box">
-                                                            <label>State</label>
-                                                            <input
-                                                                for="name"
-                                                                name="state"
-                                                                type="text"
-                                                                value={repeater.state}
-                                                                onChange={(e) => handleChange(index, 'state', e.target.value)}
-
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </>
-
-                                            ))
-                                        }
-                                    </div>
-                                    <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-                                </Space> */}
+                              
                                 <div className="create-another">
                                     <Form.List name="items">
 
@@ -503,4 +433,5 @@ const Project_Edit = ({ base_url }) => {
     );
 };
 export { getServerSideProps }
-export default Project_Edit;
+export default withAuth(['admin', 'accounting'])(Project_Edit)
+// export default Project_Edit;

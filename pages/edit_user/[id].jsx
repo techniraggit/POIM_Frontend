@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { getServerSideProps } from "@/components/mainVariable";
 import DynamicTitle from '@/components/dynamic-title.jsx';
 import { Spin } from 'antd';
+import withAuth from "@/components/PrivateRoute";
 
 const { Option } = Select;
 
@@ -351,4 +352,5 @@ const Vendor_Edit = ({ base_url }) => {
     );
 };
 export { getServerSideProps }
-export default Vendor_Edit;
+export default withAuth(['admin','accounting'])(Vendor_Edit);
+// export default Vendor_Edit;

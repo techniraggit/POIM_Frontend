@@ -7,6 +7,7 @@ import { getServerSideProps } from "@/components/mainVariable";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import withAuth from "@/components/PrivateRoute";
 
 
 const Create_Vendor = ({ base_url }) => {
@@ -314,4 +315,5 @@ const Create_Vendor = ({ base_url }) => {
     )
 }
 export { getServerSideProps }
-export default Create_Vendor
+export default (['admin','accounting'])(Create_Vendor)
+// export default Create_Vendor

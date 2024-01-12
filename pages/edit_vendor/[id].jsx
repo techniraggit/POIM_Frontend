@@ -9,6 +9,7 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { getServerSideProps } from "@/components/mainVariable";
 import DynamicTitle from '@/components/dynamic-title.jsx';
+import withAuth from "@/components/PrivateRoute";
 
 const Vendor_Edit = ({ base_url }) => {
     const [form] = Form.useForm();
@@ -405,4 +406,5 @@ const Vendor_Edit = ({ base_url }) => {
     );
 };
 export { getServerSideProps }
-export default Vendor_Edit;
+export default withAuth(['admin','accounting', 'project manager'])(Vendor_Edit)
+// export default Vendor_Edit;

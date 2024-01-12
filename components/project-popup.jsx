@@ -3,6 +3,7 @@ import '../styles/style.css';
 import { CloseOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { base_url } from './constant';
+import withAuth from './PrivateRoute';
 
 
 const ProjectPopup = ({ project_id }) => {
@@ -103,5 +104,7 @@ const ProjectPopup = ({ project_id }) => {
         </>
     );
 };
-
-export default ProjectPopup;
+export default withAuth(['admin','accounting','project manager','department manager',
+'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])
+(ProjectPopup)
+// export default ProjectPopup;

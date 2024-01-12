@@ -10,6 +10,7 @@ import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
 import View_Vendor from "@/components/view-vendor";
 import { vendorSearch,vendorClear} from "@/apis/apis/adminApis";
+import withAuth from "@/components/PrivateRoute";
 
 const Vendor = ({ base_url }) => {
     const [vendors, setVendors] = useState([]);
@@ -183,4 +184,7 @@ const Vendor = ({ base_url }) => {
     )
 }
 export { getServerSideProps }
-export default Vendor
+export default withAuth(['admin','accounting','project manager','department manager',
+'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])
+(Vendor)
+// export default Vendor

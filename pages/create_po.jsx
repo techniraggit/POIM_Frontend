@@ -6,7 +6,7 @@ import '../styles/style.css'
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { createPO, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
+import { createPO, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails, getPoNumber } from "@/apis/apis/adminApis";
 import withAuth from '../components/PrivateRoute';
 
 const { Option } = Select;
@@ -267,6 +267,21 @@ const Create_po = () => {
             router.push('/create-subcontractor-po');
         }
     }
+
+    useEffect(() => {
+            const poNumberResponse = getPoNumber();
+            console.log(poNumberResponse,'poNumberResponse');
+            // poNumberResponse.then((res) => {
+            //     if(res?.data?.status) {
+            //         form.setFieldValue('poNumber', res.data?.po_number);
+            //         setFormData({
+            //             ...formData,
+            //             po_number: res.data.po_number
+            //         });
+            //     }
+            // })
+        
+    }, []);
 
     return (
         <>
@@ -1278,4 +1293,4 @@ const Create_po = () => {
     );
 };
 
-export default withAuth(['Admin'])(Create_po);
+export default withAuth(['admin','project manager','supervisor','project coordinate','marketing','health & safety','estimator','shop'])(Create_po);

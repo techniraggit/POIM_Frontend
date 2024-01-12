@@ -8,6 +8,7 @@ import axios from 'axios';
 import Link from "next/link";
 import UserPopUp from "@/components/user-popup";
 import { userSearch , userClear} from "@/apis/apis/adminApis";
+import withAuth from "@/components/PrivateRoute";
 const User_list = ({ base_url }) => {
     const [users, setUsers] = useState([]);
     const [isViewUserVisible, setUserVisible] = useState(false);
@@ -160,81 +161,6 @@ const User_list = ({ base_url }) => {
                                                     </td>
                                                 </tr>
                                             ))}
-
-                                        {/* <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>ts123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color">
-                                            <a href="#"><EyeOutlined /></a> 
-                                                <i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr> */}
-                                        {/* <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Aecom</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Pinnacle Builders</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>ts123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Aecom</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr> */}
                                     </tbody>
                                 </table>
                             </div>
@@ -247,4 +173,5 @@ const User_list = ({ base_url }) => {
     )
 }
 export { getServerSideProps }
-export default User_list
+export default withAuth(['admin','accounting','project manager','director','department manager'])(User_list);
+// export default User_list

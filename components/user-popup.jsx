@@ -3,6 +3,7 @@ import '../styles/style.css'; // Import your stylesheet
 import { CloseOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { base_url } from './constant';
+import withAuth from './PrivateRoute';
 
 const UserPopUp = ({ user_id }) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -88,5 +89,6 @@ const UserPopUp = ({ user_id }) => {
     </>
   );
 };
+export default withAuth(['admin','accounting','project manager','director','department manager'])(UserPopUp);
 
-export default UserPopUp;
+// export default UserPopUp;

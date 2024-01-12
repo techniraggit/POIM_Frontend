@@ -215,4 +215,5 @@ const Login = ({ base_url }) => {
     )
 }
 export { getServerSideProps };
-export default withAuth(['Admin'])(Login);
+export default Login
+// export default withAuth(['admin'])(Login);
