@@ -453,43 +453,53 @@ const Vendor_Edit = ({ base_url }) => {
                                                 <>
                                                     {fields.map(({ key, name, fieldKey, ...restField }) => (
                                                         <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                                            <div className="wrap-vendorfilled">
+                                                                <div className="row">
+                                                                    <div className="col-sm-4">
+                                                                        <div className="wrap-box nirag">
+                                                                            <Form.Item
+                                                                                {...restField}
+                                                                                name={[name, 'name']}
+                                                                                fieldKey={[fieldKey, 'name']}
+                                                                                label="Name"
+                                                                                rules={[{ required: true, message: 'Please enter name' }]}
+                                                                            >
+                                                                                <Input placeholder="Name" />
+                                                                            </Form.Item>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="col-sm-4">
 
-                                                            <div className="wrap-box nirag">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'name']}
-                                                                    fieldKey={[fieldKey, 'name']}
-                                                                    label="Name"
-                                                                    rules={[{ required: true, message: 'Please enter name' }]}
-                                                                >
-                                                                    <Input placeholder="Name" />
-                                                                </Form.Item>
-                                                            </div>
+                                                                        <div className="wrap-box">
+                                                                            <Form.Item
+                                                                                {...restField}
+                                                                                name={[name, 'email']}
+                                                                                fieldKey={[fieldKey, 'email']}
+                                                                                label="Email"
+                                                                                rules={[{ required: true, message: 'Please enter email' }]}
+                                                                            >
+                                                                                <Input placeholder="Email" />
+                                                                            </Form.Item>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="col-sm-4">
 
-                                                            <div className="wrap-box">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'email']}
-                                                                    fieldKey={[fieldKey, 'email']}
-                                                                    label="Email"
-                                                                    rules={[{ required: true, message: 'Please enter email' }]}
-                                                                >
-                                                                    <Input placeholder="Email" />
-                                                                </Form.Item>
-                                                            </div>
+                                                                        <div className="wrap-box">
+                                                                            <Form.Item
+                                                                                {...restField}
+                                                                                name={[name, 'phone_number']}
+                                                                                fieldKey={[fieldKey, 'phone_number']}
+                                                                                label="Phone Number"
+                                                                                rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                                            >
+                                                                                <Input placeholder="Phone Number" />
+                                                                            </Form.Item>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
 
-                                                            <div className="wrap-box">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'phone_number']}
-                                                                    fieldKey={[fieldKey, 'phone_number']}
-                                                                    label="Phone Number"
-                                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                                >
-                                                                    <Input placeholder="Phone Number" />
-                                                                </Form.Item>
                                                             </div>
-                                                            <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
                                                         </Space>
                                                     ))}
                                                     <Form.Item>
