@@ -1470,7 +1470,7 @@ ul.list-icons li {
 }
 
 .create-another .ant-space {
-    margin-bottom: 40px !important;
+    margin-bottom: 20px !important;
 }
 
 .list-dboard li:hover {
@@ -2352,6 +2352,9 @@ button.ant-btn.create-ven-butt  > div > .ant-wave.wave-motion-appear {
 .ant-space.vendor-ant-form.vendoer-filld-data {
     flex-direction: column;
 }
+.wrap-box .ant-form-item {
+    margin-bottom: 0px !important;
+}
 /* 11jan  */
 /* responsive */
 @media (max-width: 1299px) {
@@ -2519,9 +2522,15 @@ span.text-sizes {
     }
 
     .wrap-box input {
-        padding: 6px 14px;
+        padding: 6px 8px;
+        font-size: 15px;
     }
-
+    .search-vendor {
+        max-width: 300px;
+    }
+    .vendor-input {
+        width: 204px;
+    }
     .left-wrap p {
         font-size: 18px;
     }
@@ -2611,14 +2620,15 @@ span.text-sizes {
         border-radius: 11px;
     }
 
-    ul.list-icons li span {
-        font-size: 14px;
+    ul.list-icons li > span:first-child {
+        font-size: 17px;
+        padding: 11px 3px;
     }
 
     ul.list-icons li {
-        padding: 14px 11px 12px;
+        padding: 14px 10px 12px;
         border-radius: 6px;
-        width: 160px;
+        width: 170px;
     }
 }
 
