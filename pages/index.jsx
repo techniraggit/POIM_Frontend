@@ -6,6 +6,7 @@ import '../styles/popup.css';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
 import { isLoggedIn } from "@/apis/apis/shared";
+import withAuth from "@/components/PrivateRoute";
 
 const Login = ({ base_url }) => {
     const [email, setEmail] = useState('');
@@ -214,4 +215,4 @@ const Login = ({ base_url }) => {
     )
 }
 export { getServerSideProps };
-export default Login
+export default withAuth(['Admin'])(Login);

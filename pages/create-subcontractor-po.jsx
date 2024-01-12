@@ -120,10 +120,9 @@ const CreateSubContractorPo = () => {
         return totalAmount;
     };
 
-    const updateAmount = (quantity, unitPrice, index) => {
-        const calculatedAmount = quantity * unitPrice;
+    const updateAmount = (amount, index) => {
         const details = formData.material_details[index];
-        details.amount = calculatedAmount || 0;
+        details.amount = amount || 0;
         formData.material_details[index] = details;
         setFormData({
             ...formData
@@ -180,10 +179,8 @@ const CreateSubContractorPo = () => {
             Object.keys(value).map((key) => {
                 materialDetails[index][key] = value[key];
             });
-            if(value.unit_price) {
-                updateAmount(materialDetails[index].quantity, value.unit_price, index);
-            } else if(value.quantity) {
-                updateAmount(quantity, materialDetails[index].unit_price, index);
+            if(value.amount) {
+                updateAmount(value.amount, index);
             }
             setFormData({
                 ...formData,
@@ -194,9 +191,6 @@ const CreateSubContractorPo = () => {
                 ...formData,
                 [name]: value
             });
-        }
-        if(value.unit_price || value.quantity || name === 'unit_price' || name === 'quantity') {
-            handleUnitPriceRepeaterChange();
         }
     }
 
