@@ -37,6 +37,7 @@ const Vendor_Edit = ({ base_url }) => {
                 console.log(vendorData, '$$$$$$$$$$$$$$$$$');
 
                 form.setFieldsValue({
+                    id: vendorData.vendor_contact[0].vendor_contact_id,
                     company_name: vendorData.company_name,
                     name: vendorData.vendor_contact[0].name,
                     phone_number: vendorData.vendor_contact[0].phone_number,
@@ -45,16 +46,7 @@ const Vendor_Edit = ({ base_url }) => {
                     customer_name: vendorData.customer_name,
 
                 })
-
-                //    vendorData.map((data)=>{
-                //     console.log(data.company_name,'#################');
-                //     form.setFieldValue({
-                //         company_name:data.company_name,
-                //     })
-                //    })
-                console.log(vendorData, '!!!!!!!!!!!!!!!!!!!!!!!S');
-
-
+                console.log(vendorData, '!!!!!!!!!!!!!!!!!!!!!!!');
             } catch (error) {
                 console.error('Error fetching vendors:', error);
             }
@@ -68,13 +60,13 @@ const Vendor_Edit = ({ base_url }) => {
         console.log(values, 'bbbbbbbbbbbb');
         if (values.items?.length > 0) {
             const dynamicItems = values.items.map(item => ({
-
                 id: item.id,
                 name: item.name,
                 phone_number: item.phone_number,
                 email: item.email,
             }));
-            // console.log(item, 'ifffffffffffffffff');
+           
+          
             var data = {
                 ...values,
                 vendor_id: id,
@@ -88,7 +80,7 @@ const Vendor_Edit = ({ base_url }) => {
                 ...values,
                 contact_info: [
                     {
-                        // id: values.id,
+                        id: values.id,
                         name: values.name,
                         phone_number: values.phone_number,
                         email: values.email,
@@ -108,11 +100,11 @@ const Vendor_Edit = ({ base_url }) => {
 
                 }
             );
-            console.log(response, 'vendor edit rsponse');
+           
 
             // Display a success message
             message.success('Vendor updated successfully');
-            router.push('/vendor')
+            // router.push('/vendor')
 
             // Reset the selected vendor and refetch the updated list
             setSelectedVendor(null);
@@ -162,6 +154,7 @@ const Vendor_Edit = ({ base_url }) => {
         }
 
     }
+    console.log(repeaterData,'repeaterData');
 
     return (
         <>
@@ -289,13 +282,21 @@ const Vendor_Edit = ({ base_url }) => {
                                     <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="vendor-ant-form">
                                         {Array.isArray(repeaterData) &&
                                             repeaterData.map((repeater, index) => 
-                                            // {
-                                            //     console.log(repeater,'repeater data');
-                                            // }
                                             (
 
                                                 index !== 0 && (
+
                                                     <>
+                                                    <div className="wrap-box" key={index}>
+                                                            
+                                                            <input
+                                                                htmlFor="id"
+                                                                name="id"
+                                                                type="hidden"
+                                                                value={repeater.vendor_contact_id}
+                                                                onChange={(e) => handleChange(index, 'id', e.target.value)}
+                                                            />
+                                                        </div>
                                                         <div className="wrap-box" key={index}>
                                                             <label>Name</label>
                                                             <input
@@ -338,111 +339,13 @@ const Vendor_Edit = ({ base_url }) => {
                                             )
                                             )}
                                     </Space>
-
-                                    {/* <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                        <div className="wrap-box">
-                                            {Array.isArray(repeaterData) &&
-                                                repeaterData.map((repeater, index) =>
-                                                (
-                                                    <>
-
-                                                        {index !== 0 && (
-                                                            <div class="wrap-box">
-                                                                <label>Name</label>
-                                                                <input
-                                                                    for="name"
-                                                                    name="name"
-                                                                    type="text"
-                                                                    value={repeater.name}
-                                                                    onChange={(e) => handleChange(index, 'name', e.target.value)}
-
-                                                                />
-
-
-                                                            </div>
-                                                        )}
-                                                    </>
-                                                    
-                                                )
-                                            
-                                                )
-                                            }
-                                        </div>
-                                        <div className="wrap-box">
-                                            {Array.isArray(repeaterData) &&
-                                                repeaterData.map((repeater, index) => (
-                                                    <>
-                                                        {index !== 0 && (
-                                                            <div class="wrap-box">
-                                                                <label>Email</label>
-                                                                <input
-                                                                    for="name"
-                                                                    name="email"
-                                                                    type="text"
-                                                                    value={repeater.email}
-                                                                    onChange={(e) => handleChange(index, 'email', e.target.value)}
-
-                                                            
-                                                                />
-
-
-                                                            </div>
-                                                        )}
-                                                    </>
-                                                    
-                                                ))
-                                            }
-                                        </div>
-
-                                        <div className="box-wrapp-center">
-                                            {Array.isArray(repeaterData) &&
-                                                repeaterData.map((repeater, index) => (
-                                                    <>
-                                                        {index !== 0 && (
-                                                            <div className="minus-wraper1">
-                                                                <div class="wrap-box">
-                                                                    <label>Phone Number</label>
-                                                                    <input
-                                                                        for="name"
-                                                                        name="phone_number"
-                                                                        type="text"
-                                                                        value={repeater.phone_number}
-                                                                        onChange={(e) => handleChange(index, 'phone_number', e.target.value)}
-
-                                                                    
-                                                                    />
-
-                                                                </div>
-                                                                <div class="wrap-minus" onClick={removeField}>
-                                                                    <MinusOutlined className="minus-wrap"
-
-                                                                        style={{ marginLeft: '8px' }} />
-                                                                </div>
-
-                                                            </div>
-
-                                                        )}
-
-
-                                                    </>
-                                                ))
-                                            }
-                                        </div>
-                                       
-                                    </Space> */}
-                                    {/* )} */}
-
-
-
-
-
-
                                     <div className="create-another">
                                         <Form.List name="items">
                                             {(fields, { add, remove }) => (
                                                 <>
                                                     {fields.map(({ key, name, fieldKey, ...restField }) => (
                                                         <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                                            
                                                             <div className="wrap-box">
                                                                 <Form.Item
                                                                     {...restField}
