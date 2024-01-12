@@ -204,7 +204,7 @@ const EditSubContractorPo = () => {
                 materialDetails[index][key] = value[key];
             });
             if(value.amount) {
-                updateAmount(index);
+                updateAmount(value.amount, index);
             }
             setFormData({
                 ...formData,

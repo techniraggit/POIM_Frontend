@@ -1,5 +1,3 @@
-// withAuth.js
-
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { isLoggedIn, getUserRoles } from '@/apis/apis/shared';
@@ -15,7 +13,7 @@ const withAuth = (allowedRoles) => (WrappedComponent) => {
         const userRoles = getUserRoles();
         const hasRequiredRole = allowedRoles.some(role => userRoles.includes(role));
         if (!hasRequiredRole) {
-          router.push('/forbidden');
+          router.push('/dashboard');
         }
         router.push('/dashboard');
       }
