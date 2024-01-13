@@ -2,160 +2,86 @@ import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, message, Space, } from 'antd';
-import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons';
-import axios from 'axios';
-import Link from "next/link";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { getServerSideProps } from "@/components/mainVariable";
 import DynamicTitle from '@/components/dynamic-title.jsx';
 import withAuth from "@/components/PrivateRoute";
+import { fetchVendorDetails, updateVendorDetails } from "@/apis/apis/adminApis";
 
-const Vendor_Edit = ({ base_url }) => {
+const repeatorData = {
+    id: "",
+    name: "",
+    phone_number: "",
+    email: ""
+}
+
+const Vendor_Edit = () => {
     const [form] = Form.useForm();
     const router = useRouter();
     const { id } = router.query;
-    const [vendors, setVendors] = useState([]);
-    const [totalVendor, setTotalVendor] = useState(0);
-    const [selectedVendor, setSelectedVendor] = useState(null);
-    const [repeaterData, setRepeaterData] = useState([])
+    const [formData, setFormData] = useState({
+        company_name: '',
+        state: '',
+        country: '',
+        address: '',
+        customer_name: '',
+        contact_info: []
+    })
 
     useEffect(() => {
-        const fetchRoles = async () => {
-            try {
-                const headers = {
-                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                };
-                const response = await axios.get(`${base_url}/api/admin/vendors?vendor_id=${id}`, { headers });
-                console.log(response.data, 'get vendor api respone');
-                setRepeaterData(response.data.vendors_details.vendor_contact);
-                setTotalVendor(response.data.total_vendors);
-                setVendors(response.data.vendors);
-
-
-                const vendorData = response.data.vendors_details;
-                console.log(vendorData, '$$$$$$$$$$$$$$$$$');
-
-                form.setFieldsValue({
-                    id: vendorData.vendor_contact[0].vendor_contact_id,
-                    company_name: vendorData.company_name,
-                    name: vendorData.vendor_contact[0].name,
-                    phone_number: vendorData.vendor_contact[0].phone_number,
-                    email: vendorData.vendor_contact[0].email,
-                    address: vendorData.address,
-                    customer_name: vendorData.customer_name,
-
+        const response = fetchVendorDetails(id);
+        response.then((res) => {
+            if(res?.data?.status) {
+                Object.keys(res.data.vendors_details).forEach((key) => {
+                    if(key !== 'vendor_contact') {
+                        form.setFieldValue(key, res.data.vendors_details[key])
+                        formData[key] = res.data.vendors_details[key];
+                    } else {
+                        formData['contact_info'] = [...res.data.vendors_details[key]];
+                    }
+                });
+                form.setFieldValue('name', res.data?.vendors_details?.vendor_contact[0]?.name);
+                form.setFieldValue('phone_number', res.data?.vendors_details?.vendor_contact[0]?.phone_number);
+                form.setFieldValue('email', res.data?.vendors_details?.vendor_contact[0]?.email);
+                setFormData({
+                    ...formData
                 })
-                console.log(vendorData, '!!!!!!!!!!!!!!!!!!!!!!!');
-            } catch (error) {
-                console.error('Error fetching vendors:', error);
             }
-        };
-        fetchRoles();
+        })
     }, []);
 
-
-
-    const onFinish = async (values) => {
-        console.log(values, 'bbbbbbbbbbbb');
-        if (values.items?.length > 0) {
-            const dynamicItems = values.items.map(item => ({
-                id: item.id,
-                name: item.name,
-                phone_number: item.phone_number,
-                email: item.email,
-            }));
-           
-          
-            var data = {
-                ...values,
-                vendor_id: id,
-                contact_info: [...dynamicItems]
+    const onChange = (name, value, index) => {
+        if(name === 'contact_info') {
+            const contactInfo = formData.contact_info[index];
+            Object.keys(value).forEach((key) => {
+                contactInfo[key] = value[key];
+            });
+            formData.contact_info[index] = {
+                ...contactInfo
             };
-            console.log(data, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+        } else {
+            formData[name] = value;
         }
-        else {
-            var data = {
-                vendor_id: id,
-                ...values,
-                contact_info: [
-                    {
-                        id: values.id,
-                        name: values.name,
-                        phone_number: values.phone_number,
-                        email: values.email,
-                    }
-                ]
-            };
-            console.log(data, 'elseeeeeeeeee');
-        }
-        try {
-            const headers = {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-            };
-
-            const response = await axios.patch(`${base_url}/api/admin/vendors`, data,
-                {
-                    headers: headers,
-
-                }
-            );
-           
-
-            // Display a success message
-            message.success('Vendor updated successfully');
-            // router.push('/vendor')
-
-            // Reset the selected vendor and refetch the updated list
-            setSelectedVendor(null);
-            // fetchRoles();
-        } catch (error) {
-            console.error('Error updating vendor:', error);
-            // Display an error message
-            message.error('Error updating vendor');
-        }
-    };
-
-    const handleChange = (index, field, value) => {
-        const updatedRepeaterData = [...repeaterData];
-
-        // Update the specific field for the given index
-        updatedRepeaterData[index] = {
-            ...updatedRepeaterData[index],
-            [field]: value,
-        };
-
-        setRepeaterData(updatedRepeaterData);
-    };
-    const removeField = async (id) => {
-        console.log(id, 'idididididid');
-
-        try {
-            const headers = {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                Accept: 'application/json',
-                'Content-Type': 'application/json', // Set content type to JSON
-            };
-            //const body = JSON.stringify({ vendor_contact_id: id });
-            const response = await axios.put(`${base_url}/api/admin/vendors`,
-                {
-                    vendor_contact_id: id,
-                },
-                {
-                    headers: headers,
-                }
-            );
-            console.log(response.data, 'removeeee');
-            setRepeaterData(prevVendors => prevVendors.filter(repeater => repeater.vendor_contact_id !== id));
-            // fetchRoles();
-        } catch (error) {
-            console.error('Error in remove:', error);
-            message.error('Error remove');
-        }
-
+        setFormData({
+            ...formData
+        });
     }
-    console.log(repeaterData,'repeaterData');
 
+    const onFinish = () => {
+        console.log(formData)
+        const response = updateVendorDetails({
+            ...formData,
+            vendor_id: id
+        });
+        response.then((res) => {
+            if(res?.data?.status) {
+                message.success('Vendor updated successfully');
+                router.push('/vendor');
+            }
+        });
+    };
+    console.log(formData.contact_info.slice(1))
     return (
         <>
             <DynamicTitle title="Add User" />
@@ -167,7 +93,7 @@ const Vendor_Edit = ({ base_url }) => {
                         <ul className=" create-icons">
                             <li className="me-0 icon-text">
                                 <i className="fa-solid fa-plus me-3 mt-0"></i>
-                                <span>Create New Vendor</span>
+                                <span>Edit Vendor</span>
                             </li>
                         </ul>
 
@@ -186,7 +112,7 @@ const Vendor_Edit = ({ base_url }) => {
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
-                                                <Input />
+                                                <Input onChange={({ target: { value } }) => onChange('contact_indo', { company_name: value }, 0)} />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -198,7 +124,7 @@ const Vendor_Edit = ({ base_url }) => {
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
-                                                <Input />
+                                                <Input onChange={({ target: { value } }) => onChange('contact_indo', { name: value }, 0)} />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -207,11 +133,10 @@ const Vendor_Edit = ({ base_url }) => {
                                             <Form.Item
                                                 label="Contact No"
                                                 name="phone_number"
-                                                // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
-                                                <Input onChange={(e) => handlePhoneNumberChange(e.target.value)} />
+                                                <Input onChange={({ target: { value } }) => onChange('contact_indo', { phone_number: value }, 0)} />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -220,11 +145,10 @@ const Vendor_Edit = ({ base_url }) => {
                                             <Form.Item
                                                 label="Email Address"
                                                 name="email"
-                                                // Add a name to link the input to the form values
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your email address!' }]}
                                             >
-                                                <Input />
+                                                <Input onChange={({ target: { value } }) => onChange('contact_indo', { email: value }, 0)} />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -232,7 +156,7 @@ const Vendor_Edit = ({ base_url }) => {
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="State / Province"
-                                                name="state"  // Add a name to link the input to the form values
+                                                name="state"
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your State / Province!' }]}
                                                 initialValue='Ontario'
@@ -246,7 +170,7 @@ const Vendor_Edit = ({ base_url }) => {
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Country"
-                                                name="country"  // Add a name to link the input to the form values
+                                                name="country"
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your country!' }]}
                                                 initialValue='Canada'
@@ -260,11 +184,11 @@ const Vendor_Edit = ({ base_url }) => {
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Address"
-                                                name="address"  // Add a name to link the input to the form values
+                                                name="address"
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your  address!' }]}
                                             >
-                                                <Input />
+                                                <Input onChange={({ target: { value } }) => onChange('address', value)} />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -272,126 +196,82 @@ const Vendor_Edit = ({ base_url }) => {
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Customer Name"
-                                                name="customer_name"  // Add a name to link the input to the form values
-                                                className="vender-input"                                            >
-                                                <Input />
-
+                                                name="customer_name"
+                                                className="vender-input"                                            
+                                            >
+                                                <Input onChange={({ target: { value } }) => onChange('customer_name', value)} />
                                             </Form.Item>
                                         </div>
                                     </div>
-                                    <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="vendor-ant-form">
-                                        {Array.isArray(repeaterData) &&
-                                            repeaterData.map((repeater, index) => 
-                                            (
-
-                                                index !== 0 && (
-
-                                                    <>
-                                                    <div className="wrap-box" key={index}>
-                                                            
-                                                            <input
-                                                                htmlFor="id"
-                                                                name="id"
-                                                                type="hidden"
-                                                                value={repeater.vendor_contact_id}
-                                                                onChange={(e) => handleChange(index, 'id', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div className="wrap-box" key={index}>
-                                                            <label>Name</label>
-                                                            <input
-                                                                htmlFor="name"
-                                                                name="name"
-                                                                type="text"
-                                                                value={repeater.name}
-                                                                onChange={(e) => handleChange(index, 'name', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div className="wrap-box" key={index}>
-
-                                                            <label>Email</label>
-                                                            <input
-                                                                htmlFor="email"
-                                                                name="email"
-                                                                type="text"
-                                                                value={repeater.email}
-                                                                onChange={(e) => handleChange(index, 'email', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div className="minus-wraper1 wrap-box">
-                                                            <label>Phone Number</label>
-                                                            <input
-                                                                htmlFor="phone_number"
-                                                                name="phone_number"
-                                                                type="text"
-                                                                value={repeater.phone_number}
-                                                                onChange={(e) => handleChange(index, 'phone_number', e.target.value)}
-                                                            />
-
-                                                        </div>
-                                                        <div className="wrap-minus" >
-                                                            <MinusOutlined className="minus-wrap"
-                                                                onClick={() => removeField(repeater.vendor_contact_id)}
-                                                                style={{ marginLeft: '8px' }} />
-                                                        </div>
-                                                    </>
-                                                )
-                                            )
-                                            )}
-                                    </Space>
+                                    
                                     <div className="create-another">
-                                        <Form.List name="items">
-                                            {(fields, { add, remove }) => (
-                                                <>
-                                                    {fields.map(({ key, name, fieldKey, ...restField }) => (
-                                                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                            
-                                                            <div className="wrap-box">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'name']}
-                                                                    fieldKey={[fieldKey, 'name']}
-                                                                    label="Name"
-                                                                    rules={[{ required: true, message: 'Please enter name' }]}
-                                                                >
-                                                                    <Input placeholder="Name" />
-                                                                </Form.Item>
+                                        <Space style={{ display: 'flex', flexDirection: 'column', marginBottom: 8 }} align="baseline" className="vendor-ant-form">
+                                            {
+                                                formData.contact_info?.slice(1).map((contact, index) => {
+                                                    return(
+                                                        <>
+                                                            <div className="repeator-row" style={{display: 'flex'}}>
+                                                                <div className="wrap-box" key={index}>
+                                                                    <input
+                                                                        htmlFor="id"
+                                                                        name="id"
+                                                                        type="hidden"
+                                                                        value={contact.vendor_contact_id}
+                                                                        onChange={(e) => onChange('id', e.target.value, index + 1)}
+                                                                    />
+                                                                </div>
+                                                                <div className="wrap-box" key={index}>
+                                                                    <label>Name</label>
+                                                                    <input
+                                                                        htmlFor="name"
+                                                                        name="name"
+                                                                        type="text"
+                                                                        value={contact.name}
+                                                                        onChange={(e) => onChange('contact_info', {'name': e.target.value}, index + 1)}
+                                                                    />
+                                                                </div>
+                                                                <div className="wrap-box" key={index}>
+                                                                    <label>Email</label>
+                                                                    <input
+                                                                        htmlFor="email"
+                                                                        name="email"
+                                                                        type="text"
+                                                                        value={contact.email}
+                                                                        onChange={(e) => onChange('contact_info', {'email': e.target.value}, index + 1)}
+                                                                    />
+                                                                </div>
+                                                                <div className="minus-wraper1 wrap-box">
+                                                                    <label>Phone Number</label>
+                                                                    <input
+                                                                        htmlFor="phone_number"
+                                                                        name="phone_number"
+                                                                        type="text"
+                                                                        value={contact.phone_number}
+                                                                        onChange={(e) => onChange('contact_info', {'phone_number': e.target.value}, index + 1)}
+                                                                    />
+                                                                </div>
+                                                                <MinusOutlined className="minus-wrap" onClick={() => {
+                                                                    setFormData({
+                                                                        ...formData,
+                                                                        contact_info: [...formData.contact_info.slice(0, index + 1), ...formData.contact_info.slice(index + 2)]
+                                                                    });
+                                                                }} style={{ marginLeft: '8px' }} />
                                                             </div>
-
-                                                            <div className="wrap-box">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'email']}
-                                                                    fieldKey={[fieldKey, 'email']}
-                                                                    label="Email"
-                                                                    rules={[{ required: true, message: 'Please enter email' }]}
-                                                                >
-                                                                    <Input placeholder="Email" />
-                                                                </Form.Item>
-                                                            </div>
-
-                                                            <div className="wrap-box">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'phone_number']}
-                                                                    fieldKey={[fieldKey, 'phone_number']}
-                                                                    label="Phone Number"
-                                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
-                                                                >
-                                                                    <Input placeholder="Phone Number" />
-                                                                </Form.Item>
-                                                            </div>
-                                                            <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-                                                        </Space>
-                                                    ))}
-                                                    <Form.Item>
-                                                        <Button className="add-more-btn" type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
-                                                            <span >Add Another Contact Person</span>
-                                                        </Button>
-                                                    </Form.Item>
-                                                </>
-                                            )}
-                                        </Form.List>
+                                                        </>
+                                                    )
+                                                })
+                                            }
+                                            <Form.Item>
+                                                <Button className="add-more-btn" type="dashed" onClick={() => {
+                                                    setFormData({
+                                                        ...formData,
+                                                        contact_info: [...formData.contact_info, repeatorData]
+                                                    });
+                                                }} icon={<PlusOutlined />}>
+                                                    <span >Add Another Contact Person</span>
+                                                </Button>
+                                            </Form.Item>
+                                        </Space>
                                     </div>
                                     <Form.Item>
                                         <button type="submit" className="create-ven-butt">Update</button>
@@ -407,4 +287,3 @@ const Vendor_Edit = ({ base_url }) => {
 };
 export { getServerSideProps }
 export default withAuth(['admin','accounting', 'project manager'])(Vendor_Edit)
-// export default Vendor_Edit;

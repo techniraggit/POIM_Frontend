@@ -41,7 +41,7 @@ const CreateSubContractorPo = () => {
         shipment_type: '',
         delivery_address: '',
         quantity: 0,
-        material_details: []
+        material_details: [{...repeatorData}]
     });
 
     const [contactId, setContactId] = useState('');
@@ -114,45 +114,23 @@ const CreateSubContractorPo = () => {
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
-            return total + item.amount;
+            return total + parseFloat(item.amount);
         }, 0);
 
         return totalAmount;
-    };
-
-    const updateAmount = (amount, index) => {
-        const details = formData.material_details[index];
-        details.amount = amount || 0;
-        formData.material_details[index] = details;
-        setFormData({
-            ...formData
-        })
-    };
-
-    const handleUnitPriceRepeaterChange = () => {
-        const totalAmount = getTotalAmount();
-        setFormData({
-            ...formData,
-            hst_amount: totalAmount * 0.13,
-            total_amount: totalAmount * 0.13 + totalAmount
-        })
-        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) });
-        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
     };
 
     const vendorContactDetails = (id) => {
         const response = getVendorDetails(id)
         response.then((res) => {
             if (res.data?.status) {
-                setFormData({
-                    ...formData,
-                    company_name: res.data.vendors.company.company_name,
-                    email: res.data.vendors.email,
-                    phone: res.data.vendors.phone_number,
-                    address: res.data.vendors.company.address,
-                    state: res.data.vendors.company.state,
-                    country: res.data.vendors.company.country
-                })
+                formData.company_name = res.data.vendors.company.company_name;
+                formData.email = res.data.vendors.email;
+                formData.phone = res.data.vendors.phone_number;
+                formData.address = res.data.vendors.company.address;
+                formData.state = res.data.vendors.company.state;
+                formData.country = res.data.vendors.company.country;
+
                 form.setFieldsValue({ 'company_name': res.data.vendors.company.company_name });
                 form.setFieldsValue({ 'email': res.data.vendors.email });
                 form.setFieldsValue({ 'phone': res.data.vendors.phone_number });
@@ -166,6 +144,7 @@ const CreateSubContractorPo = () => {
     const onFinish = () => {
         createPO({
             ...formData,
+            subcontractor_type: isNew ? 'new' : 'existing'
         }).then((res) => {
             if(res?.data?.status) {
                 router.push('/po_list');
@@ -175,23 +154,30 @@ const CreateSubContractorPo = () => {
     
     const onChange = (name, value, index) => {
         if(name === 'material_details') {
-            const materialDetails = formData.material_details;
-            Object.keys(value).map((key) => {
-                materialDetails[index][key] = value[key];
+            let totalAmount = 0;
+            const materalDetails = formData.material_details[index];
+            Object.keys(value).forEach((key) => {
+                materalDetails[key] = value[key];
             });
+
             if(value.amount) {
-                updateAmount(value.amount, index);
+                totalAmount = getTotalAmount();
             }
-            setFormData({
-                ...formData,
-                material_details: [...materialDetails]
-            });
+            formData.material_details[index] = {
+                ...materalDetails
+            };
+            formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
+            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : totalAmount.hst_amount;
+            if(totalAmount > 0) {
+                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) });
+                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
+            }
         } else {
-            setFormData({
-                ...formData,
-                [name]: value
-            });
+            formData[name] = value;
         }
+        setFormData({
+            ...formData
+        });
     }
 
     const fetchSites = () => {
@@ -575,7 +561,7 @@ const CreateSubContractorPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="Description" onChange={(e) => onChange('descirption', e.target.value)} />
+                                                    <Input placeholder="Description" onChange={(e) => onChange('material_details', {description: e.target.value}, 0)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -591,7 +577,7 @@ const CreateSubContractorPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input onChange={({ target: { value } }) => onChange('date', value)} type="date"></Input>
+                                                    <Input onChange={({ target: { value } }) => onChange('material_details', {date: value}, 0)} type="date"></Input>
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -609,7 +595,7 @@ const CreateSubContractorPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Input placeholder="Amount" onChange={({ target: { value } }) => onChange('amount', value)} />
+                                                        <Input placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', {amount: value}, 0)} />
                                                     </Form.Item>
                                                 </div>
                                             </div>
@@ -628,7 +614,7 @@ const CreateSubContractorPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Select id="singlesa" onChange={(value) => onChange('project_site_id', value)} class="js-states form-control file-wrap-select">
+                                                            <Select id="singlesa" onChange={(value) => onChange('material_details', {project_site_id: value}, 0)} class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions) &&
                                                                     siteOptions.map((site) =>(
                                                                         <Select.Option key={site.site_id} value={site.site_id}>
@@ -645,7 +631,7 @@ const CreateSubContractorPo = () => {
                                         <div className="create-another minuswrap-img">
                                             <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                                                 {
-                                                    formData.material_details.map((data, index) => {
+                                                    formData.material_details.slice(1).map((data, index) => {
                                                         return <div className="row">
                                                             {
                                                                 Object.keys(data).map((key) => {
@@ -663,7 +649,8 @@ const CreateSubContractorPo = () => {
                                                                                     <Input
                                                                                         placeholder={upperKey}
                                                                                         value={data[key]}
-                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {[key]: value}, index)}
+                                                                                        name={key + index}
+                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {[key]: value}, index + 1)}
                                                                                     />
                                                                                 </Form.Item>
                                                                             </div>
@@ -684,7 +671,7 @@ const CreateSubContractorPo = () => {
                                                                                         <Input type="date"
                                                                                             placeholder={upperKey}
                                                                                             value={data[key]}
-                                                                                            onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index)}
+                                                                                            onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                                                         ></Input>
                                                                                     </Form.Item>
                                                                                 </div>
@@ -696,7 +683,7 @@ const CreateSubContractorPo = () => {
                                                                                 <div className="selectwrap columns-select shipment-caret ">
                                                                                     <Form.Item
                                                                                         label="Select Site"
-                                                                                        name={`project_site_id_${index}`}
+                                                                                        name={`project_site_id_${index + 1}`}
                                                                                         htmlFor="file"
                                                                                         class="same-clr"
                                                                                         rules={[
@@ -706,7 +693,7 @@ const CreateSubContractorPo = () => {
                                                                                             },
                                                                                         ]}
                                                                                     >
-                                                                                        <Select id="singlesa" defaultValue={formData.material_details[0].project_site_id} onChange={(value) => onChange('material_details', { [key]: value }, index)} class="js-states form-control file-wrap-select">
+                                                                                        <Select id="singlesa" defaultValue={formData.material_details[0].project_site_id} onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
                                                                                             {Array.isArray(siteOptions) &&
                                                                                                 siteOptions.map((site) =>(
                                                                                                     <Select.Option key={site.site_id} value={site.site_id}>
@@ -726,7 +713,7 @@ const CreateSubContractorPo = () => {
                                                             <MinusOutlined className="minus-wrap" onClick={() => {
                                                                 setFormData({
                                                                     ...formData,
-                                                                    material_details: [...formData.material_details.slice(0, index), ...formData.material_details.slice(index + 1)]
+                                                                    material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                                                 });
                                                             }} style={{ marginLeft: '8px' }} />
                                                         </div>
