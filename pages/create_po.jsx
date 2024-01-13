@@ -270,17 +270,11 @@ const Create_po = () => {
 
     useEffect(() => {
             const poNumberResponse = getPoNumber();
-            console.log(poNumberResponse,'poNumberResponse');
-            // poNumberResponse.then((res) => {
-            //     if(res?.data?.status) {
-            //         form.setFieldValue('poNumber', res.data?.po_number);
-            //         setFormData({
-            //             ...formData,
-            //             po_number: res.data.po_number
-            //         });
-            //     }
-            // })
-        
+            poNumberResponse.then((response) => {
+                if(response?.data?.status) {
+                    form.setFieldValue('poNumber', response.data.po_number);
+                }
+            })
     }, []);
 
     return (
