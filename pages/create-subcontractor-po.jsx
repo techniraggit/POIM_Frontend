@@ -243,16 +243,24 @@ const CreateSubContractorPo = () => {
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap react-select">
                                                 <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
-                                                    {formData.po_type === 'subcontractor' && (
-                                                        <div>
-                                                            <div className={isNew ? 'selected' : ''} onClick={() => {
-                                                                setISNew(true);
-                                                            }}>New</div>
-                                                            <div className={!isNew ? 'selected' : ''} onClick={() => {
-                                                                setISNew(false);
-                                                            }}>Existing</div>
-                                                        </div>
-                                                    )}
+                                                    <Form.Item
+                                                        label="Choose PO Type"
+                                                        name="subcontractor_type"
+                                                        class="bold-label"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose PO Type",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select defaultValue="existing" onChange={(value) => setISNew(value === 'new')} placeholder="Select PO Type" id="single1"
+                                                            class="js-states form-control file-wrap-select bold-select"
+                                                        >
+                                                            <Option value="existing">Existing</Option>
+                                                            <Option value="new">New</Option>
+                                                        </Select>
+                                                    </Form.Item>
                                                 </div>
                                             </div>
                                         </div>
