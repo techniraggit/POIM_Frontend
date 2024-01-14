@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
-import '../styles/style.css'
+import '../../styles/style.css'
 import {MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails, updatePo } from "@/apis/apis/adminApis";
