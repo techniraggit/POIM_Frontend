@@ -5,6 +5,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import axios from 'axios';
 // import {base_url} from '@/components/constants';
 import { base_url } from './constant';
+import withAuth from './PrivateRoute';
 
 
 const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) => {
@@ -86,4 +87,7 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) =
   );
 };
 // export { getServerSideProps }
-export default View_Vendor;
+export default withAuth(['admin','accounting','project manager','department manager',
+'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])
+(View_Vendor)
+// export default View_Vendor;

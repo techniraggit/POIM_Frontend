@@ -7,6 +7,8 @@ import { Popconfirm, Input, message } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
 import UserPopUp from "@/components/user-popup";
+import { userSearch , userClear} from "@/apis/apis/adminApis";
+import withAuth from "@/components/PrivateRoute";
 const User_list = ({ base_url }) => {
     const [users, setUsers] = useState([]);
     const [isViewUserVisible, setUserVisible] = useState(false);
@@ -72,16 +74,18 @@ const User_list = ({ base_url }) => {
     
       const handleButtonClick = async  (event) => {
         event.preventDefault();
-        try {
-                const headers = {
-                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                };
-                const response = await axios.get(`${base_url}/api/search/users?query=${inputValue}`, { headers: headers });
-                console.log(response.data.search_query_data, 'aaaaaaaaaaaaa========');
-                setUsers(response.data.search_query_data)
-            } catch (error) {
-                console.error('Error fetching projects:', error);
-            }
+        userSearch(inputValue).then((response)=>{
+            setUsers(response.data.search_query_data)
+
+        })
+        
+      };
+      const handleClearButtonClick = () => {
+        setInputValue('');
+        userClear().then((res)=>{
+            setUsers(res.data.data);
+
+        })
       };
     return (
         <>
@@ -104,10 +108,14 @@ const User_list = ({ base_url }) => {
                         </ul>
                         <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Users" />
-                                <button className="vendor-search-butt">Search</button>
+                                <input className="vendor-input" placeholder="Search Users"
+                                 value={inputValue} onChange={handleInputChange}
+                                 />
+                                <button className="vendor-search-butt"
+                                 onClick={handleButtonClick}
+                                >Search</button>
                             </form>
-                            <button type="submit" className="clear-button ms-3">Clear</button>
+                            <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
                         </div>
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
@@ -153,81 +161,6 @@ const User_list = ({ base_url }) => {
                                                     </td>
                                                 </tr>
                                             ))}
-
-                                        {/* <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>ts123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color">
-                                            <a href="#"><EyeOutlined /></a> 
-                                                <i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr> */}
-                                        {/* <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Aecom</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Pinnacle Builders</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>ts123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Aecom</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>aecom123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#45488</td>
-                                            <td className="td-color">Turner Construction</td>
-                                            <td>#456 - Upper Link, PA</td>
-                                            <td>sam123@gmail.com</td>
-                                            <td>123 654 987</td>
-                                            <td className="td-icon-color"><i className="fa-solid fa-eye"></i><i
-                                                className="fa-solid fa-trash"></i><i className="fa-solid fa-pen"></i></td>
-                                        </tr> */}
                                     </tbody>
                                 </table>
                             </div>
@@ -240,4 +173,5 @@ const User_list = ({ base_url }) => {
     )
 }
 export { getServerSideProps }
-export default User_list
+export default withAuth(['admin','accounting','project manager','director','department manager'])(User_list);
+// export default User_list

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
-import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import '../styles/style.css'
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { createPO, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
+import { createPO, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails, getPoNumber } from "@/apis/apis/adminApis";
+import withAuth from '../components/PrivateRoute';
 
 const { Option } = Select;
 const repeatorData = {
@@ -263,8 +263,19 @@ const Create_po = () => {
 
         if (selectedValue === "rental") {
             router.push('/rental-po');
+        } else if(selectedValue === 'subcontractor') {
+            router.push('/create-subcontractor-po');
         }
     }
+
+    useEffect(() => {
+            const poNumberResponse = getPoNumber();
+            poNumberResponse.then((response) => {
+                if(response?.data?.status) {
+                    form.setFieldValue('poNumber', response.data.po_number);
+                }
+            })
+    }, []);
 
     return (
         <>
@@ -1276,6 +1287,4 @@ const Create_po = () => {
     );
 };
 
-export { getServerSideProps };
-
-export default Create_po;
+export default withAuth(['admin','project manager','supervisor','project coordinate','marketing','health & safety','estimator','shop'])(Create_po);

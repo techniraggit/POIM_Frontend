@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, updatePo } from "@/apis/apis/adminApis";
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 import moment from "moment";
+import withAuth from "@/components/PrivateRoute";
 
 const { Option } = Select;
 
@@ -1045,5 +1046,7 @@ const ViewPO = () => {
 };
 
 export { getServerSideProps };
+export default (['admin','accounting','project manager','department manager',
+'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])(ViewPO)
 
-export default ViewPO;
+// export default ViewPO;

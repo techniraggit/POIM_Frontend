@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { getServerSideProps } from "@/components/mainVariable";
 import DynamicTitle from '@/components/dynamic-title.jsx';
 import { Spin } from 'antd';
+import withAuth from "@/components/PrivateRoute";
 
 const { Option } = Select;
 
@@ -138,16 +139,16 @@ const Vendor_Edit = ({ base_url }) => {
             console.log(response, 'vendor edit rsponse');
 
             // Display a success message
-            message.success('Project updated successfully');
+            message.success('User updated successfully');
             router.push('/user-list')
 
             // Reset the selected vendor and refetch the updated list
             setSelectedUser(null);
             // fetchRoles();
         } catch (error) {
-            console.error('Error updating project:', error);
+            console.error('Error updating user:', error);
             // Display an error message
-            message.error('Error updating project');
+            message.error('Error updating user');
         }
     };
 
@@ -351,4 +352,5 @@ const Vendor_Edit = ({ base_url }) => {
     );
 };
 export { getServerSideProps }
-export default Vendor_Edit;
+export default withAuth(['admin','accounting'])(Vendor_Edit);
+// export default Vendor_Edit;

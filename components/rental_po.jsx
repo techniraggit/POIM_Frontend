@@ -6,7 +6,7 @@ import axios from 'axios';
 import { base_url } from './constant';
 import { CalendarOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { createPO } from "@/apis/apis/adminApis";
+import { createPO, getPoNumber } from "@/apis/apis/adminApis";
 
 const { Option } = Select;
 const repeatorData = {
@@ -289,8 +289,15 @@ const Rental = () => {
         });
     };
 
-    const initialDate = "2024-01-12T07:09:14.022Z";
-    const formattedDate = moment.utc(initialDate).format("YYYY-MM-DD")
+    useEffect(() => {
+        const poNumberResponse = getPoNumber();
+        poNumberResponse.then((response) => {
+            if(response?.data?.status) {
+                form.setFieldValue('poNumber', response.data.po_number);
+            }
+        })
+    }, []);
+
     return (
         <>
             <Form onFinish={onFinish} form={form} className="file-form">

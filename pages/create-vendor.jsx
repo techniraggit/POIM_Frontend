@@ -7,6 +7,7 @@ import { getServerSideProps } from "@/components/mainVariable";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import withAuth from "@/components/PrivateRoute";
 
 
 const Create_Vendor = ({ base_url }) => {
@@ -62,7 +63,7 @@ const Create_Vendor = ({ base_url }) => {
             // console.log(error.response,'response.status');
             if (response.status == 201) {
             message.success(response.data.message)
-            // router.push('/vendor')
+            router.push('/vendor')
             }
         }
         catch (error) {
@@ -288,4 +289,5 @@ const Create_Vendor = ({ base_url }) => {
     )
 }
 export { getServerSideProps }
-export default Create_Vendor
+export default withAuth(['admin', 'project manager', 'accounting', 'supervisor','project coordinate'])(Create_Vendor)
+// export default Create_Vendor

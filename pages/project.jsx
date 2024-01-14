@@ -8,6 +8,8 @@ import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
 import ProjectPopup from "@/components/project-popup";
+import { projectSearch,projectClear} from "@/apis/apis/adminApis";
+import withAuth from "@/components/PrivateRoute";
 
 const Vendor = ({ base_url }) => {
     
@@ -15,6 +17,7 @@ const Vendor = ({ base_url }) => {
     const [isViewProjectVisible, setProjectVisible] = useState(false);
     // const [addresses,setAddresses]=useState([]);
     const [totalProjects, setTotalProjects] = useState(0)
+    const [inputValue, setInputValue] = useState('');
     useEffect(() => {
         const fetchroles = async () => {
             try {
@@ -73,6 +76,28 @@ const Vendor = ({ base_url }) => {
         setProjectVisible((prevVisible) => (prevVisible === id ? null : id));
     };
 
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+      };
+
+      const handleButtonClick = async  (event) => {
+        event.preventDefault();
+        projectSearch(inputValue).then((response)=>{
+            console.log(response,'pppppppppppppp');
+            setProjects(response.data.search_project_data)
+
+        })
+        
+      };
+      const handleClearButtonClick = () => {
+        setInputValue('');
+        projectClear().then((res)=>{
+            console.log(res,'apppppppppppp');
+            setProjects(res.data.projects)
+
+        })
+      };
+
     return (
         <>
             <div className="wrapper-main">
@@ -91,11 +116,16 @@ const Vendor = ({ base_url }) => {
                                 <span>Total Projects</span>
                             </li>
                         </ul>
-                        <div className="wrapin-form">
+                        <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Vendor" type="text" />
-                                <button className="vendor-search-butt">Search</button>
+                                <input className="vendor-input" placeholder="Search Users"
+                                 value={inputValue} onChange={handleInputChange}
+                                 />
+                                <button className="vendor-search-butt"
+                                 onClick={handleButtonClick}
+                                >Search</button>
                             </form>
+                            <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
                         </div>
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
@@ -183,4 +213,7 @@ const Vendor = ({ base_url }) => {
     )
 }
 export { getServerSideProps }
-export default Vendor
+export default withAuth(['admin','accounting','project manager','department manager',
+'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])
+(Vendor)
+// export default Vendor
