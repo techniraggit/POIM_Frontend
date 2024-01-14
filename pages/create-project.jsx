@@ -315,5 +315,5 @@ const Create_Vendor = ({ base_url }) => {
     )
 }
 export { getServerSideProps }
-export default (['admin','accounting'])(Create_Vendor)
+export default withAuth(['admin','accounting'])(Create_Vendor)
 // export default Create_Vendor
