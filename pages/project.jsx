@@ -9,6 +9,7 @@ import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/i
 import Link from "next/link";
 import ProjectPopup from "@/components/project-popup";
 import { projectSearch,projectClear} from "@/apis/apis/adminApis";
+import withAuth from "@/components/PrivateRoute";
 
 const Vendor = ({ base_url }) => {
     

@@ -139,16 +139,16 @@ const Vendor_Edit = ({ base_url }) => {
             console.log(response, 'vendor edit rsponse');
 
             // Display a success message
-            message.success('Project updated successfully');
+            message.success('User updated successfully');
             router.push('/user-list')
 
             // Reset the selected vendor and refetch the updated list
             setSelectedUser(null);
             // fetchRoles();
         } catch (error) {
-            console.error('Error updating project:', error);
+            console.error('Error updating user:', error);
             // Display an error message
-            message.error('Error updating project');
+            message.error('Error updating user');
         }
     };
 
