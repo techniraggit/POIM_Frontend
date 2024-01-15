@@ -2356,6 +2356,27 @@ button.ant-btn.create-ven-butt  > div > .ant-wave.wave-motion-appear {
     margin-bottom: 0px !important;
 }
 /* 11jan  */
+/* 15-jan-2024 */
+ul.list-icons.board-list span {
+    font-weight: 500;
+}
+.selectwrap.bg-border-select 
+ .ant-select-single {
+    height: unset !important;
+}
+.vendor-edit-input   .ant-col.ant-col-16.ant-form-item-control {
+    flex-direction: row;
+}
+.repeator-row .ant-space-item {
+    width: 100%;
+}
+.ant-space.re-peator-vendorr .ant-space-item {
+    width: 100%;
+}
+button.ant-btn.edit-vendor-btn {
+    margin-left: 11px;
+}
+/* 15-jan-2024 */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
@@ -2432,8 +2453,21 @@ span.text-sizes {
         font-size: 14px;
     }
 }
+@media (max-width: 825px) {
+    ul.list-icons.board-list li {
+        width: 100%;
+        padding: 14px 6px 12px;
+    }
+ }
 
 @media (min-width: 768px) and (max-width: 991px) {
+    ul.list-icons.board-list li {
+        width: 100%;
+        padding: 14px 6px 12px;
+    }
+    ul.list-icons.board-list span {
+        font-size: 13px;
+    }
     .all-wrap-box .selectwrap {
         width: 100%;
     }

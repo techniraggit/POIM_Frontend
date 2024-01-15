@@ -28,22 +28,22 @@ const Dashboard = () => {
                         </div>
                     </div> */}
                     <div className="bottom-wrapp">
-                        <ul className="list-icons">
-                            <li className="me-4">
+                        <ul className="list-icons board-list">
+                            <li className="me-4 me-md-3">
                                 <i className="fa-solid fa-check mb-3"></i>
                                 <span>Create User</span>
                             </li>
-                            <li className="me-4">
+                            <li className="me-4 me-md-3">
                                 <i className="fa-solid fa-check mb-3"></i>
-                                <span>Create User</span>
+                                <span>Create Vendors</span>
                             </li>
-                            <li className="me-4">
+                            <li className="me-4 me-md-3">
                                 <i className="fa-solid fa-check mb-3"></i>
-                                <span>Create User</span>
+                                <span>Create Project</span>
                             </li>
                             <li>
                                 <i className="fa-solid fa-check mb-3"></i>
-                                <span>Create User</span>
+                                <span>Create New Roles</span>
                             </li>
                         </ul>
                         <div className="table-wrap">

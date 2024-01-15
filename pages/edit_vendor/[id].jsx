@@ -205,12 +205,12 @@ const Vendor_Edit = () => {
                                     </div>
                                     
                                     <div className="create-another">
-                                        <Space style={{ display: 'flex', flexDirection: 'column', marginBottom: 8 }} align="baseline" className="vendor-ant-form">
+                                        <Space style={{ display: 'flex', flexDirection: 'column', marginBottom: 8 }} align="baseline" className="vendor-ant-form re-peator-vendorr">
                                             {
                                                 formData.contact_info?.slice(1).map((contact, index) => {
                                                     return(
                                                         <>
-                                                            <div className="repeator-row" style={{display: 'flex'}}>
+                                                            <div className="repeator-row" style={{display: 'flex', columnGap: '8px'}}>
                                                                 <div className="wrap-box" key={index}>
                                                                     <input
                                                                         htmlFor="id"
@@ -261,8 +261,9 @@ const Vendor_Edit = () => {
                                                     )
                                                 })
                                             }
-                                            <Form.Item>
-                                                <Button className="add-more-btn" type="dashed" onClick={() => {
+                                            <Form.Item className="vendor-edit-input">
+                                                <div className="row">
+                                                <Button className="add-more-btn edit-vendor-btn" type="dashed" onClick={() => {
                                                     setFormData({
                                                         ...formData,
                                                         contact_info: [...formData.contact_info, repeatorData]
@@ -270,6 +271,7 @@ const Vendor_Edit = () => {
                                                 }} icon={<PlusOutlined />}>
                                                     <span >Add Another Contact Person</span>
                                                 </Button>
+                                                </div>
                                             </Form.Item>
                                         </Space>
                                     </div>
