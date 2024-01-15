@@ -14,11 +14,12 @@ const PO_list = () => {
 
     useEffect(() => {
         const response = getPoList();
-        // response.then((res) => {
-        //     if (res?.data?.status) {
-        //         setPurchaseOrders(res.data.data || []);
-        //     }
-        // })
+        console.log(response,'getPoList');
+        response.then((res) => {
+            if (res?.data?.status) {
+                setPurchaseOrders(res.data.data || []);
+            }
+        })
     }, []);
 
     const handleDelete = (id) => {
