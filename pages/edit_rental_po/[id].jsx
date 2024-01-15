@@ -14,6 +14,9 @@ const repeatorData = {
     date: "",
     to: "",
     amount: '',
+    // material_for: '',
+    project_id: '',
+    project_site_id: ''
 
 }
 const Edit_Rental_Po = () => {
