@@ -499,7 +499,7 @@ const ViewPO = () => {
                                         <hr />
                                     </div>
                                     <div class="row space-bottom mb-0">
-                                        <div class="col-md-6 col-lg-12 all-wrap-box">
+                                        <div class="col-md-6 col-lg-4 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
                                                     label="Shipment Type"
@@ -583,7 +583,7 @@ const ViewPO = () => {
                                         <hr />
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-4 space-col-spc">
+                                        <div class="col-sm-4 space-col-spc mb-0">
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Quantity"
@@ -600,8 +600,8 @@ const ViewPO = () => {
                                                 </Form.Item>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4 space-col-spc">
-                                            <div class="wrap-box">
+                                        <div class="col-sm-4 space-col-spc mb-0">
+                                            <div class="wrap-box ">
                                                 <Form.Item
                                                     label="Unit Price"
                                                     for="name"
@@ -617,7 +617,7 @@ const ViewPO = () => {
                                                 </Form.Item>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4 space-col-spc">
+                                        <div class="col-sm-4 space-col-spc mb-0">
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Amount"
@@ -865,7 +865,7 @@ const ViewPO = () => {
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="create-another minuswrap-img">
+                                        <div className="create-another minuswrap-img mt-0">
                                             <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                                                 {
                                                     formData.material_details.slice(1).map((data, index) => {

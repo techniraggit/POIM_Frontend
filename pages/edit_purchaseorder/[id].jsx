@@ -3,7 +3,7 @@ import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import '../../styles/style.css'
-import {MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, updatePo } from "@/apis/apis/adminApis";
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
@@ -57,12 +57,12 @@ const EditPo = () => {
     useEffect(() => {
         const response = fetchVendorContact();
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 setVendors([...res.data.vendors]);
             }
         });
         fetchPo(id).then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 const data = res.data.data;
                 fetchVendorContactDropdown(data.vendor_contact.company.vendor_id);
                 fetchSites();
@@ -121,7 +121,7 @@ const EditPo = () => {
         if (form.getFieldValue('shipment_type') === 'project related' || form.getFieldValue('shipment_type') === 'combined') {
             const response = fetchProjects();
             response.then((res) => {
-                if(res?.data?.status) {
+                if (res?.data?.status) {
                     setProjects(res.data.projects);
                 }
             });
@@ -131,7 +131,7 @@ const EditPo = () => {
     const fetchVendorContactDropdown = (id) => {
         const response = fetchVendorContacts(id);
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 setContactId([...res.data.vendors])
             }
         })
@@ -179,21 +179,21 @@ const EditPo = () => {
             po_id: id,
             project_site_id: formData.project_site_id?.site_id
         }).then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 router.push('/po_list');
             }
         });
     }
-    
+
     const onChange = (name, value, index) => {
-        if(name === 'material_details') {
+        if (name === 'material_details') {
             const materialDetails = formData.material_details;
             Object.keys(value).map((key) => {
                 materialDetails[index][key] = value[key];
             });
-            if(value.unit_price) {
+            if (value.unit_price) {
                 updateAmount(materialDetails[index].quantity, value.unit_price, index);
-            } else if(value.quantity) {
+            } else if (value.quantity) {
                 updateAmount(quantity, materialDetails[index].unit_price, index);
             }
             setFormData({
@@ -206,7 +206,7 @@ const EditPo = () => {
                 [name]: value
             });
         }
-        if(value.unit_price || value.quantity || name === 'unit_price' || name === 'quantity') {
+        if (value.unit_price || value.quantity || name === 'unit_price' || name === 'quantity') {
             handleUnitPriceRepeaterChange();
         }
     }
@@ -215,7 +215,7 @@ const EditPo = () => {
         const response = fetchProjectSites();
 
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 const sitesArray = res.data.sites;
                 setSiteOptions(sitesArray);
             }
@@ -336,7 +336,7 @@ const EditPo = () => {
                                                                 onChange('vendor_id', value);
                                                             }}
                                                         >
-                                                            {names.map((entry) =>(
+                                                            {names.map((entry) => (
                                                                 <Select.Option key={entry.vendorId} value={entry.vendorId}>
                                                                     {entry.company_name}
                                                                 </Select.Option>
@@ -390,15 +390,15 @@ const EditPo = () => {
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
-                                                        label="Company name"
-                                                        name="company_name"
-                                                        class="bold-label"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please Enter Company name",
-                                                            },
-                                                        ]}
+                                                    label="Company name"
+                                                    name="company_name"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Company name",
+                                                        },
+                                                    ]}
                                                 >
                                                     <Input onChange={({ target: { value } }) => onChange('company_name', value)} />
                                                 </Form.Item>
@@ -408,15 +408,15 @@ const EditPo = () => {
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
-                                                        label="Email"
-                                                        name="email"
-                                                        class="bold-label"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please Enter Email",
-                                                            },
-                                                        ]}
+                                                    label="Email"
+                                                    name="email"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Email",
+                                                        },
+                                                    ]}
                                                 >
                                                     <Input onChange={({ target: { value } }) => onChange('email', value)} />
                                                 </Form.Item>
@@ -497,7 +497,7 @@ const EditPo = () => {
                                         <hr />
                                     </div>
                                     <div class="row space-bottom mb-0">
-                                        <div class="col-md-6 col-lg-12 all-wrap-box">
+                                        <div class="col-md-6 col-lg-4 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
                                                     label="Shipment Type"
@@ -512,7 +512,7 @@ const EditPo = () => {
                                                     ]}
                                                 >
                                                     <Select id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
-                                                        onChange={(value) => {onChange('shipment_type', value)}}
+                                                        onChange={(value) => { onChange('shipment_type', value) }}
                                                     >
                                                         <Option value="project related">Project Related</Option>
                                                         <Option value="non project related">Non Project Related</Option>
@@ -520,6 +520,8 @@ const EditPo = () => {
                                                     </Select>
                                                 </Form.Item>
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 all-wrap-box">
                                             {formData.shipment_type === 'project related' && (
                                                 <div class="selectwrap columns-select shipment-caret">
                                                     <Form.Item
@@ -553,13 +555,14 @@ const EditPo = () => {
                                                 </div>
                                             )}
                                         </div>
+
                                     </div>
                                     <div class="linewrap d-flex">
                                         <span class="d-block me-4">Material</span>
                                         <hr />
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-4 space-col-spc">
+                                        <div class="col-sm-4 space-col-spc mb-0">
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Quantity"
@@ -576,7 +579,7 @@ const EditPo = () => {
                                                 </Form.Item>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4 space-col-spc">
+                                        <div class="col-sm-4 space-col-spc mb-0">
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Unit Price"
@@ -593,7 +596,7 @@ const EditPo = () => {
                                                 </Form.Item>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4 space-col-spc">
+                                        <div class="col-sm-4 space-col-spc mb-0">
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Amount"
@@ -646,7 +649,7 @@ const EditPo = () => {
                                                         >
                                                             <Select id="singlesa" onChange={(value) => onChange('project_site_id', value)} class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) =>(
+                                                                    siteOptions.map((site) => (
                                                                         <Select.Option key={site.site_id} value={site.site_id}>
                                                                             {site.name}
                                                                         </Select.Option>
@@ -674,7 +677,7 @@ const EditPo = () => {
                                                         >
                                                             <Select id="single90"
                                                                 class="js-states form-control file-wrap-select"
-                                                                onChange={(value) => {onChange('material_details', {material_for: value}, 0)}}
+                                                                onChange={(value) => { onChange('material_details', { material_for: value }, 0) }}
                                                             >
                                                                 <Option value="inventory">Inventory</Option>
                                                                 <Option value="supplies">Supplies/Expenses</Option>
@@ -702,7 +705,7 @@ const EditPo = () => {
                                                                 ]}
                                                             >
                                                                 <Select id="single67" class="js-states form-control file-wrap-select"
-                                                                    onChange={(value) => {onChange('material_details', {material_for: value}, 0)}}
+                                                                    onChange={(value) => { onChange('material_details', { material_for: value }, 0) }}
                                                                 >
                                                                     <Option value="projects">Project </Option>
                                                                     <Option value="inventory">Inventory</Option>
@@ -788,7 +791,7 @@ const EditPo = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="row select-sitee">
+                                        <div className="row select-sitee mt-3">
                                             <div className="col-md-4">
                                                 {formData.material_details[0]?.material_for === 'projects' && (
                                                     <div class="selectwrap add-dropdown-wrap">
@@ -812,7 +815,7 @@ const EditPo = () => {
                                                                                 {site.name}
                                                                             </Select.Option>
                                                                         )
-                                                                    )}
+                                                                        )}
                                                                 </Select>
                                                             </Form.Item>
                                                         </div>
@@ -841,7 +844,7 @@ const EditPo = () => {
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="create-another minuswrap-img">
+                                        <div className="create-another minuswrap-img mt-4">
                                             <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                                                 {
                                                     formData.material_details.slice(1).map((data, index) => {
@@ -849,11 +852,11 @@ const EditPo = () => {
                                                             {
                                                                 Object.keys(data).map((key) => {
                                                                     let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
-                                                                    if(key.includes('_')) {
+                                                                    if (key.includes('_')) {
                                                                         upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');
                                                                     }
-                                                                    if(key === 'quantity' || key === 'unit_price' || key === 'description' || key === "amount") {
-                                                                        return(
+                                                                    if (key === 'quantity' || key === 'unit_price' || key === 'description' || key === "amount") {
+                                                                        return (
                                                                             <div key={key} className="wrap-box col-sm-3">
                                                                                 <Form.Item
                                                                                     label={upperKey}
@@ -862,22 +865,22 @@ const EditPo = () => {
                                                                                     <Input
                                                                                         placeholder={upperKey}
                                                                                         value={data[key]}
-                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {[key]: value}, index + 1)}
+                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                                                     />
                                                                                 </Form.Item>
                                                                             </div>
                                                                         )
-                                                                    } else if(key === 'material_for') {
-                                                                        return(
+                                                                    } else if (key === 'material_for') {
+                                                                        return (
                                                                             <div className="row">
                                                                                 <div class="col-sm-4">
                                                                                     {(formData.shipment_type === 'non project related' || formData.shipment_type === 'combined') && (
                                                                                         <>
                                                                                             <div className="material-for-wrap">
                                                                                                 <label>Material For</label>
-                                                                                                <select placeholder="Select" className="js-states form-control custom-wrap-selector" onChange={({target: { value }}) => {
-                                                                                                            onChange('material_details', {material_for: value}, index + 1)
-                                                                                                        }} value={formData.material_details[index + 1].material_for}>
+                                                                                                <select placeholder="Select" className="js-states form-control custom-wrap-selector" onChange={({ target: { value } }) => {
+                                                                                                    onChange('material_details', { material_for: value }, index + 1)
+                                                                                                }} value={formData.material_details[index + 1].material_for}>
                                                                                                     {formData.shipment_type === 'combined' && <option value="project">Project</option>}
                                                                                                     <option value="inventory">Inventory</option>
                                                                                                     <option value="supplies">Supplies/Expenses</option>
@@ -891,9 +894,9 @@ const EditPo = () => {
                                                                                         {(formData.material_details[index + 1].material_for === 'inventory' || formData.material_details[index + 1].material_for === 'supplies') && (
                                                                                             <>
                                                                                                 <label>{formData.material_details[index + 1].material_for === 'inventory' ? "Inventory Code" : "GL Code"}</label>
-                                                                                                <input 
-                                                                                                    onChange={({ target: { value, name } }) => onChange('material_details', {code: value}, index + 1)} 
-                                                                                                    value={formData.material_details[index + 1].code} 
+                                                                                                <input
+                                                                                                    onChange={({ target: { value, name } }) => onChange('material_details', { code: value }, index + 1)}
+                                                                                                    value={formData.material_details[index + 1].code}
                                                                                                 />
                                                                                             </>
                                                                                         )}
@@ -901,18 +904,19 @@ const EditPo = () => {
                                                                                 </div>
                                                                             </div>
                                                                         )
-                                                                    } else if(key === 'project') {
-                                                                        return(
+                                                                    } else if (key === 'project') {
+                                                                        return (
                                                                             formData.material_details[index + 1].material_for === 'projects' && (
                                                                                 <div className="row">
                                                                                     <div className="col-sm-4">
                                                                                         <div class="top-project">
                                                                                             <div class="selectwrap columns-select shipment-caret ">
                                                                                                 <label>Project</label>
-                                                                                                <select  className="js-states form-control custom-wrap-selector" onChange={({ target: { value } }) => {
-                                                                                                        list(value);
-                                                                                                        onChange('material_details', {project: value}, index + 1)}
-                                                                                                    }
+                                                                                                <select className="js-states form-control custom-wrap-selector" onChange={({ target: { value } }) => {
+                                                                                                    list(value);
+                                                                                                    onChange('material_details', { project: value }, index + 1)
+                                                                                                }
+                                                                                                }
                                                                                                     value={formData.material_details[index + 1].project}
                                                                                                 >
                                                                                                     {Array.isArray(projects) &&
@@ -920,7 +924,7 @@ const EditPo = () => {
                                                                                                             <option key={project.project} value={project.project}>
                                                                                                                 {project.name}
                                                                                                             </option>
-                                                                                                    ))}
+                                                                                                        ))}
                                                                                                 </select>
                                                                                             </div>
                                                                                         </div>
@@ -931,7 +935,7 @@ const EditPo = () => {
                                                                                                 <div className="selectwrap columns-select shipment-caret ">
                                                                                                     <label>Project Site</label>
 
-                                                                                                    <select className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({target: { value }}) => onChange('material_details', {project_site_id: value}, index + 1)}>
+                                                                                                    <select className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({ target: { value } }) => onChange('material_details', { project_site_id: value }, index + 1)}>
                                                                                                         {Array.isArray(siteOptions) &&
                                                                                                             siteOptions.map((site) => (
                                                                                                                 <option key={site.site_id} value={site.site_id}>
@@ -1043,6 +1047,6 @@ const EditPo = () => {
 };
 
 export { getServerSideProps };
-export default withAuth(['project manager','supervisor','project coordinate','marketing','health & safety','estimator','shop','admin'])(EditPo)
+export default withAuth(['project manager', 'supervisor', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(EditPo)
 
 // export default EditPo;
