@@ -125,6 +125,7 @@ const Create_po = () => {
                 amount: values.Amount,
                 vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
+                po_number:values.poNumber,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
                 project_site_id: values.site_id,
@@ -135,6 +136,7 @@ const Create_po = () => {
                 po_type: values.po_type,
                 vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
+                po_number:values.poNumber,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
                 project_site_id: values.site_id,
@@ -270,7 +272,9 @@ const Create_po = () => {
 
     useEffect(() => {
             const poNumberResponse = getPoNumber();
+            // console.log(poNumberResponse,'poNumberResponse');
             poNumberResponse.then((response) => {
+                // console.log(response,'response');
                 if(response?.data?.status) {
                     form.setFieldValue('poNumber', response.data.po_number);
                 }
