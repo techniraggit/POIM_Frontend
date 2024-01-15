@@ -279,6 +279,7 @@ const ViewPO = () => {
                                 <span>View Purchase Order</span>
                             </li>
                         </ul>
+                        <div class="choose-potype round-wrap"><div class="inner-choose">
                         <Form onFinish={onFinish} form={form} className="file-form">
                             <div className="row po-typeraw">
                                 <div className="col-lg-4 col-md-6">
@@ -636,7 +637,7 @@ const ViewPO = () => {
                                             <Input type="date"></Input>
                                         </Form.Item>
                                     </div>
-                                    <div className="text-to"><p className='mb-2'>To</p></div>
+                                    <div className="text-to ps-2"><p className='mb-2'>To</p></div>
                                 </div>
 
                                 <div className="col-sm-4">
@@ -1163,6 +1164,8 @@ const ViewPO = () => {
                                 </Form.Item>
                             </div>
                         </Form >
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>

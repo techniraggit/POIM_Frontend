@@ -1947,7 +1947,7 @@ textarea.text-area {
     font-size: 16px;
 }
 .text-to {
-    padding-left: 7px;
+    padding-left: 21px;
 }
 button.ant-btn.add-more-btnn {
     background-color: #F6F7F8;
@@ -2375,6 +2375,35 @@ ul.list-icons.board-list span {
 }
 button.ant-btn.edit-vendor-btn {
     margin-left: 11px;
+}
+.selectwrap.mb-caret-po  .ant-form-item {
+    margin-bottom: 0px !important;
+}
+.wrap-box textarea.ant-input {
+    border: 1px solid #70707054;
+    border-radius: 2px;
+    padding: 9px 20px;
+    outline: none;
+    font-size: 16px;
+    color: #112F5C;
+    font-weight: 500;
+}
+.wrap-box textarea.ant-input:focus {
+    box-shadow: none !important;
+}
+.selectwrap.bg-border-select .ant-select-selector {
+    padding: 0 18px !important;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+}
+.edit-po-rental .ant-col {
+    width: 100%;
+    height: unset !important;
+    min-width: 100% !important;
+}
+.selectwrap.edit-rental-po span.ant-select-arrow {
+    /* display: none; */
 }
 /* 15-jan-2024 */
 /* responsive */
