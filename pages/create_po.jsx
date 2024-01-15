@@ -61,8 +61,14 @@ const Create_po = () => {
 
     const handleUnitPriceRepeaterChange = () => {
         const totalAmount = getTotalAmount();
-        form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
-        form.setFieldsValue({ Total_amount: totalAmount * 0.13 + totalAmount });
+        const hstAmount = (totalAmount * 0.13).toFixed(2);
+    const totalAmountWithHst = (parseFloat(hstAmount) + totalAmount).toFixed(2);
+
+    form.setFieldsValue({ HST_Amount: hstAmount });
+    form.setFieldsValue({ Total_amount: totalAmountWithHst });
+    
+        // form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
+        // form.setFieldsValue({ Total_amount: totalAmount * 0.13 + totalAmount });
     };
 
     const getTotalAmount = () => {
@@ -95,12 +101,28 @@ const Create_po = () => {
         updateAmount(quantity, value);
     };
 
+    // const updateAmount = (quantity, unitPrice) => {
+    //     const calculatedAmount = quantity * unitPrice;
+    //     setAmount(calculatedAmount);
+    //     form.setFieldsValue({ Amount: calculatedAmount });
+    //     form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
+    //     form.setFieldsValue(({ Total_amount: calculatedAmount * 0.13 + calculatedAmount }));
+    // };
+
+
     const updateAmount = (quantity, unitPrice) => {
         const calculatedAmount = quantity * unitPrice;
+        const hstAmount = calculatedAmount * 0.13;
+        const totalAmount = calculatedAmount + hstAmount;
+    
         setAmount(calculatedAmount);
-        form.setFieldsValue({ Amount: calculatedAmount });
-        form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
-        form.setFieldsValue({ Total_amount: calculatedAmount * 0.13 + calculatedAmount });
+        
+        // Format the calculatedAmount, HST amount, and Total amount to have 2 decimal places
+        form.setFieldsValue({
+            Amount: calculatedAmount.toFixed(2),
+            HST_Amount: hstAmount.toFixed(2),
+            Total_amount: totalAmount.toFixed(2),
+        });
     };
 
     const handlePoTypeChange = (value) => {
@@ -137,8 +159,8 @@ const Create_po = () => {
                 vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
                 po_number:values.poNumber,
-                hst_amount: values.HST_Amount,
-                total_amount: values.Total_amount,
+                hst_amount: values.HST_Amount.toFixed(2),
+                total_amount: values.Total_amount.toFixed(2),
                 project_site_id: values.site_id,
                 amount: values.Amount,
                 material_details: [{
