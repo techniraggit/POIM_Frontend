@@ -14,8 +14,6 @@ const repeatorData = {
     date: "",
     to: "",
     amount: '',
-    // material_for: '',
-    project_id: '',
     project_site_id: ''
 
 }
@@ -124,6 +122,7 @@ const Edit_Rental_Po = () => {
                     amount: data.amount,
                     company_name: data.vendor_contact.company.company_name,
                     vendor_id: data.vendor_contact.company.vendor_id,
+                    project_id:data.vendor_contact.company.project_id,
                     vendor_contact_id: data.vendor_contact.vendor_contact_id,
                     hst_amount: data.hst_amount,
                     total_amount: data.total_amount,
@@ -142,10 +141,11 @@ const Edit_Rental_Po = () => {
                 form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
                 form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
                 form.setFieldValue('shipment_type', data.shipment_type);
+                form.setFieldValue('project_id', data.project_id);
                 form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2));
                 form.setFieldValue('total_amount', data.total_amount);
                 form.setFieldValue('project_id', data.project_site?.project?.project_id);
-                form.setFieldValue('project_site_id', data.project_site?.site_id);
+                form.setFieldValue('project_site_id', data.project_site?.project_site_id);
                 form.setFieldValue('poDate', moment(data.po_date));
                 form.setFieldValue('country', data.vendor_contact.company.country);
                 form.setFieldValue('state', data.vendor_contact.company.state);
@@ -154,17 +154,11 @@ const Edit_Rental_Po = () => {
                 form.setFieldValue('email', data.vendor_contact.email);
                 form.setFieldValue('poNumber', data.po_number)
                 form.setFieldValue('shipment_type', data.shipment_type)
-                // form.setFieldValue('delivery_address', data.delivery_address || '1860 Shawson')
                 form.setFieldValue('amount', data.material_details[0]?.amount)
                 form.setFieldValue('date', data.material_details[0]?.date)
                 form.setFieldValue('to', data.material_details[0]?.end_date)
-                // form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
-                // form.setFieldValue('amount', data.material_details[0]?.amount)
                 form.setFieldValue('description', data.material_details[0]?.description)
-                // form.setFieldValue('material_for', data.material_details[0]?.material_for)
                 form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
-                // form.setFieldValue('code', data.material_details[0]?.code)
-                // form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
                 form.setFieldValue('first_name', data.created_by.first_name)
                 form.setFieldValue('last_name', data.created_by.last_name)
             }
@@ -663,7 +657,7 @@ const Edit_Rental_Po = () => {
                                                 {/* <div className="selectwrap columns-select shipment-caret "> */}
                                                 <Form.Item
                                                     label="Select Site"
-                                                    name="site_id"
+                                                    name="project_site_id"
                                                     htmlFor="file"
                                                     class="same-clr"
                                                     rules={[
@@ -744,7 +738,7 @@ const Edit_Rental_Po = () => {
                                                             <div class="col-sm-4">
                                                                 <Form.Item
                                                                     label="Select Site"
-                                                                    name="site_id"
+                                                                    name="project_site_id"
                                                                     htmlFor="file"
                                                                     class="same-clr"
                                                                     rules={[
