@@ -11,9 +11,10 @@ import { createPO, getPoNumber } from "@/apis/apis/adminApis";
 const { Option } = Select;
 const repeatorData = {
     description: '',
-    date: "",
-    to: "",
+    start_date: "",
+    end_date: "",
     amount: '',
+    project_site_id:''
 
 }
 const Rental = () => {
@@ -169,9 +170,22 @@ const Rental = () => {
         setAmount(value);
         updateAmount(value);
     };
+    // const updateAmount = (amount) => {
+    //     const calculatedAmount = parseFloat(amount);
+    
+    //     // Assuming setAmount and form.setFieldsValue are functions that you have defined elsewhere
+    //     setAmount(calculatedAmount);
+        
+    //     const hstAmount = (calculatedAmount * 0.13).toFixed(2);
+    //     const totalAmount = (calculatedAmount + parseFloat(hstAmount)).toFixed(2);
+    
+    //     form.setFieldsValue({ Amount: calculatedAmount });
+    //     form.setFieldsValue({ HST_Amount: hstAmount });
+    //     form.setFieldsValue({ Total_amount: totalAmount });
+    // };
+    
     const updateAmount = (amount) => {
         const calculatedAmount = amount;
-        console.log(calculatedAmount, 'calculatedAmount');
         setAmount(calculatedAmount);
         form.setFieldsValue({ Amount: calculatedAmount });
         form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
@@ -182,9 +196,18 @@ const Rental = () => {
 
     const handleRepeaterAmountChange = () => {
         const totalAmount = getTotalAmount();
-        form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
-        form.setFieldsValue({ Total_amount: totalAmount * 0.13 + parseInt(totalAmount) });
+        const hstAmount = (totalAmount * 0.13).toFixed(2);
+        const totalAmountWithDecimal = (totalAmount * 0.13 + parseInt(totalAmount)).toFixed(2);
+    
+        form.setFieldsValue({ HST_Amount: parseFloat(hstAmount) });
+        form.setFieldsValue({ Total_amount: parseFloat(totalAmountWithDecimal) });
     };
+
+    // const handleRepeaterAmountChange = () => {
+    //     const totalAmount = getTotalAmount();
+    //     form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
+    //     form.setFieldsValue({ Total_amount: totalAmount * 0.13 + parseInt(totalAmount) });
+    // };
 
     const getTotalAmount = () => {
         const repeaterLength = form.getFieldValue(['items']) ? form.getFieldValue(['items']).length : 0;
@@ -233,16 +256,12 @@ const Rental = () => {
         let data;
         if (values.items?.length > 0) {
             const dynamicItems = repeator?.map((item) => ({
-                // quantity: item.quantity,
-                // unit_price: item.unit_price,
                 start_date: item.start_date,
                 end_date: item.end_date,
                 amount: item.amount,
                 description: item.description,
-                // material_for: values.materialFor,
-                // code: values.code,
-                project_id: values.project_id,
-                project_site_id: values.site,
+                // project_id: values.project_id,
+                project_site_id: values.project_site_id,
             }));
             data = {
                 po_type: values.po_type,
@@ -253,7 +272,7 @@ const Rental = () => {
                 po_number:values.poNumber,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
-                project_site_id: values.site_id,
+                project_site_id: values.project_site_id,
                 material_details: [...dynamicItems]
             }
         } else {
@@ -265,19 +284,15 @@ const Rental = () => {
                 po_number:values.poNumber,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
-                project_site_id: values.site_id,
+                project_site_id: values.project_site_id,
                 amount: values.amount,
                 material_details: [{
-                    // quantity: values.quantity,
-                    // unit_price: values.unit_price,
                     description: values.description,
-                    // material_for: values.materialFor,
                     start_date: values.start_date,
                     end_date: values.end_date,
                     amount: values.amount,
-                    // code: values.code,
-                    project_id: values.project_id,
-                    project_site_id: values.site_id,
+                    // project_id: values.project_id,
+                    project_site_id: values.project_site_id,
                 }]
             }
         }
@@ -758,7 +773,7 @@ const Rental = () => {
                             <div className="selectwrap columns-select shipment-caret ">
                                 <Form.Item
                                     label="Select Site"
-                                    name="site_id"
+                                    name="project_site_id"
                                     htmlFor="file"
                                     class="same-clr"
                                     rules={[
@@ -901,7 +916,7 @@ const Rental = () => {
                                                             <Form.Item
                                                                 label="Select Site"
                                                                 {...restField}
-                                                                name={[name, 'site_id']}
+                                                                name={[name, 'project_site_id']}
                                                                 fieldKey={[fieldKey, 'site_id']}
                                                                 value={repeator[index].site_id}
                                                                 // name="site_id"
