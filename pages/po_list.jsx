@@ -94,7 +94,13 @@ const PO_list = () => {
                                                     <td>{purchase.status}</td>
                                                     <td>{purchase.vendor_contact?.name}</td>
                                                     <td className="td-icon-color">
+                                                    {purchase.po_type === 'material' && (
                                                         <Link href={`/view-po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
+                                                    )}
+                                                        
+                                                        {purchase.po_type === 'rental' && (
+                                                            <Link href={`/view_rental_po/${purchase.po_id}`}><EyeFilled /></Link>
+                                                        )}
                                                         <Popconfirm
                                                             title="Are you sure you want to delete this item?"
                                                             onConfirm={() => handleDelete(purchase.po_id)}

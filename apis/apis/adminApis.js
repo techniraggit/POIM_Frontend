@@ -76,3 +76,6 @@ export const fetchVendorDetails = (id) => {
 export const updateVendorDetails = (data) => {
     return Axios.patch('/api/admin/vendors', data);
 }
+export const projectNumber=()=>{
+    return Axios.get(`/api/admin/project-number`);
+}

@@ -8,13 +8,14 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import withAuth from "@/components/PrivateRoute";
+import { projectNumber } from "@/apis/apis/adminApis";
 
 
 const Create_Vendor = ({ base_url }) => {
     const [managers, setManagers] = useState([]);
     const [rootData, setRootData] = useState('')
 
-
+    const [form] = Form.useForm();
     // const [formData, setFormData] = useState([]);
     const router = useRouter();
 
@@ -76,22 +77,7 @@ const Create_Vendor = ({ base_url }) => {
 
 
 
-        // const dynamicItems = values.items.map(item => ({
-        //     name: item.name,
-        //     address: item.address,
-        //     state: item.state,
-        // }));
-        // const test = {
-        //     name: values.name,
-        //     customer_name: values.customer_name,
-        //     project_manager_id: rootData,
-        //     project_sites: [...dynamicItems]
-        // }
-
-        // console.log('Final Form Values:', test);
-
-
-        // return 
+        
 
         try {
             const headers = {
@@ -99,21 +85,10 @@ const Create_Vendor = ({ base_url }) => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             };
-            // const data = {
-            //     ...values,
-            //     project_manager_id: rootData
-            // }
-            // const siteData = {
-            //     ...values,
-            //     name: values.name,
-            //     address: values.address,
-            //     site: values.site,
-            //     project_id: site
-            // }
+           
             const response = await axios.post(`${base_url}/api/admin/projects`, test, {
                 headers: headers,
             });
-            console.log(response, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
             message.success(response.data.message)
             // setFormData(values.items);
 
@@ -126,9 +101,35 @@ const Create_Vendor = ({ base_url }) => {
         console.log(values, 'hfurhgiurehg');
     }
     const project = (id) => {
-        console.log(id, 'ttttttttttttttttttttttttttt');
         setRootData(id);
     }
+    //  useEffect(()=>{
+    //     const projectNumberResponse= projectNumber()
+    //     projectNumberResponse.then((res)=>{
+    //         if(res?.data) {
+    //             console.log(res.data.project_number,'oooooooooooooooooooo');
+    //         form.setFieldValue('project_number',res.data.project_number)
+               
+    //         }
+
+    //     })
+       
+    // },[])
+    const fetchProjectNumber=()=>{
+        const projectNumberResponse= projectNumber()
+        projectNumberResponse.then((res)=>{
+            if(res?.data) {
+                console.log(res.data.project_number,'oooooooooooooooooooo');
+            form.setFieldValue('project_number',res.data.project_number)
+                // form.setFieldValue('poNumber', response.data.po_number);
+            }
+
+        })
+    }
+//      useEffect=()=>{
+// const response= projectNumber()
+// console.log(response,'pppppppppppppppppppppppp');
+//     }
 
 
     return (
@@ -148,7 +149,7 @@ const Create_Vendor = ({ base_url }) => {
 
                         <div className="vendor-form-create">
 
-                            <Form onFinish={onFinish} layout="vertical"
+                            <Form onFinish={onFinish} form={form} layout="vertical"
                                 labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -170,12 +171,14 @@ const Create_Vendor = ({ base_url }) => {
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Project Number"
-                                                name="number"
-                                                // Add a name to link the input to the form values
+                                                name="project_number"
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your project number!' }]}
+                                                // initialValue="00854"
+                                                // rules={[{ required: true, message: 'Please enter your project number!' }]}
                                             >
-                                                <Input />
+                                                <Input placeholder="00854" 
+                                                onClick={() => fetchProjectNumber()}
+                                                value='00584' readOnly/>
                                             </Form.Item>
                                         </div>
                                     </div>
