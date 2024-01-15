@@ -1340,7 +1340,7 @@ button.ant-btn.add-more-btn {
     display: flex;
     align-items: center;
     height: 42px;
-    margin-top: 35px;
+    margin-top: 15px;
 }
 
 button.ant-btn.add-more-btn:hover span {
@@ -1470,7 +1470,7 @@ ul.list-icons li {
 }
 
 .create-another .ant-space {
-    margin-bottom: 40px !important;
+    margin-bottom: 20px !important;
 }
 
 .list-dboard li:hover {
@@ -1594,7 +1594,7 @@ button.ant-btn.ant-btn-dashed.add-more-btn:hover  {
 } */
 
 .react-select .ant-form-item .ant-form-item-explain-error {
-    margin-top: 3px;
+    margin-top: 8px;
 }
 
 .add-dropdown-wrap .ant-row {
@@ -2296,7 +2296,7 @@ span.anticon.anticon-home.home-sidebar > svg {
     font-size: 20px;
 }  
 .shipment-caret.aligned-text .ant-form-item-explain .ant-form-item-explain-error {
-    margin-top: 11px;
+    margin-top: 3px;
 }
 .all-wrap-box > .aligned-text {
     margin-bottom: 0px;
@@ -2341,6 +2341,19 @@ button.clear-button:hover{
     background-color: #e91d26;
     color: #fff;
     transition: all ease 0.3s;
+}
+button.ant-btn.create-ven-butt  > div > .ant-wave.wave-motion-appear {
+    transition: none !important;
+}
+.wrap-vendorfilled {
+    display: flex;
+    align-items: center;
+}
+.ant-space.vendor-ant-form.vendoer-filld-data {
+    flex-direction: column;
+}
+.wrap-box .ant-form-item {
+    margin-bottom: 0px !important;
 }
 /* 11jan  */
 /* responsive */
@@ -2509,9 +2522,15 @@ span.text-sizes {
     }
 
     .wrap-box input {
-        padding: 6px 14px;
+        padding: 6px 8px;
+        font-size: 15px;
     }
-
+    .search-vendor {
+        max-width: 300px;
+    }
+    .vendor-input {
+        width: 204px;
+    }
     .left-wrap p {
         font-size: 18px;
     }
@@ -2601,14 +2620,15 @@ span.text-sizes {
         border-radius: 11px;
     }
 
-    ul.list-icons li span {
-        font-size: 14px;
+    ul.list-icons li > span:first-child {
+        font-size: 17px;
+        padding: 11px 3px;
     }
 
     ul.list-icons li {
-        padding: 14px 11px 12px;
+        padding: 14px 10px 12px;
         border-radius: 6px;
-        width: 160px;
+        width: 170px;
     }
 }
 

@@ -1046,7 +1046,7 @@ const ViewPO = () => {
 };
 
 export { getServerSideProps };
-export default (['admin','accounting','project manager','department manager',
+export default withAuth(['admin','accounting','project manager','department manager',
 'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])(ViewPO)
 
 // export default ViewPO;

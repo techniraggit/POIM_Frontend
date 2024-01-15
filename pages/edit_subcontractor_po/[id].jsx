@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
-import '../styles/style.css'
+import '../../styles/style.css'
 import {MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails, updatePo } from "@/apis/apis/adminApis";
@@ -142,39 +142,17 @@ const EditSubContractorPo = () => {
         return totalAmount;
     };
 
-    const updateAmount = (amount, index) => {
-        const details = formData.material_details[index];
-        details.amount = amount || 0;
-        formData.material_details[index] = details;
-        setFormData({
-            ...formData
-        })
-    };
-
-    const handleUnitPriceRepeaterChange = () => {
-        const totalAmount = getTotalAmount();
-        setFormData({
-            ...formData,
-            hst_amount: totalAmount * 0.13,
-            total_amount: totalAmount * 0.13 + totalAmount
-        })
-        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) });
-        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
-    };
-
     const vendorContactDetails = (id) => {
         const response = getVendorDetails(id)
         response.then((res) => {
             if (res.data?.status) {
-                setFormData({
-                    ...formData,
-                    company_name: res.data.vendors.company.company_name,
-                    email: res.data.vendors.email,
-                    phone: res.data.vendors.phone_number,
-                    address: res.data.vendors.company.address,
-                    state: res.data.vendors.company.state,
-                    country: res.data.vendors.company.country
-                })
+                formData.company_name = res.data.vendors.company.company_name;
+                formData.email = res.data.vendors.email;
+                formData.phone = res.data.vendors.phone_number;
+                formData.address = res.data.vendors.company.address;
+                formData.state = res.data.vendors.company.state;
+                formData.country = res.data.vendors.company.country;
+
                 form.setFieldsValue({ 'company_name': res.data.vendors.company.company_name });
                 form.setFieldsValue({ 'email': res.data.vendors.email });
                 form.setFieldsValue({ 'phone': res.data.vendors.phone_number });
@@ -199,26 +177,30 @@ const EditSubContractorPo = () => {
     
     const onChange = (name, value, index) => {
         if(name === 'material_details') {
-            const materialDetails = formData.material_details;
-            Object.keys(value).map((key) => {
-                materialDetails[index][key] = value[key];
+            let totalAmount = 0;
+            const materalDetails = formData.material_details[index];
+            Object.keys(value).forEach((key) => {
+                materalDetails[key] = value[key];
             });
+
             if(value.amount) {
-                updateAmount(value.amount, index);
+                totalAmount = getTotalAmount();
             }
-            setFormData({
-                ...formData,
-                material_details: [...materialDetails]
-            });
+            formData.material_details[index] = {
+                ...materalDetails
+            };
+            formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
+            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : totalAmount.hst_amount;
+            if(totalAmount > 0) {
+                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) });
+                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
+            }
         } else {
-            setFormData({
-                ...formData,
-                [name]: value
-            });
+            formData[name] = value;
         }
-        if(value.amount || name === "amount") {
-            handleUnitPriceRepeaterChange();
-        }
+        setFormData({
+            ...formData
+        });
     }
 
     const fetchSites = () => {
@@ -586,7 +568,7 @@ const EditSubContractorPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="Description" onChange={(e) => onChange('description', {project_site_id: value}, 0)} />
+                                                    <Input placeholder="Description" onChange={(e) => onChange('material_details', {description: value}, 0)} />
                                                 </Form.Item>
                                             </div>
                                         </div>

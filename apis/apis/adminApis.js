@@ -68,3 +68,11 @@ export const projectClear=()=>{
 export const getPoNumber = () => {
     return Axios.get('/api/admin/po_number');
 }
+
+export const fetchVendorDetails = (id) => {
+    return Axios.get(`/api/admin/vendors?vendor_id=${id}`);
+}
+
+export const updateVendorDetails = (data) => {
+    return Axios.patch('/api/admin/vendors', data);
+}

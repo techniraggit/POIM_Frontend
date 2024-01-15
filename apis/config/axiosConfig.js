@@ -22,7 +22,9 @@ Axios.interceptors.request.use(function (config) {
 Axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    console.error(error);
+    if(error.response?.data?.code === "token_not_valid") {
+        localStorage.removeItem('access_token');
+    }
     return Promise.reject(error);
 });
 
