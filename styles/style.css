@@ -697,6 +697,9 @@ div#w-small span {
 button.ant-btn.vendor-search-butt:hover span {
     color: #fff;
 }
+button.ant-btn.ant-btn-default.vendor-search-butt:hover{
+    color: #fff;
+}
 .ant-btn-defaultvendor-search-butt:hover {
     color: #fff;
 }
@@ -2406,6 +2409,24 @@ button.ant-btn.edit-vendor-btn {
     /* display: none; */
 }
 /* 15-jan-2024 */
+/* 16-jan-2024 */
+ul.list-icons.board-list  li {
+    padding: 22px 19px 17px;
+}
+.to-wrap-datepicker > .wrap-box {
+    width: 89%;
+}
+.wid-projects > div {
+    width: 100%;
+}
+.date-range-wrapper {
+    display: flex;
+    align-items: center;
+}
+.row.first-dr {
+    width: 100%;
+}
+/* 16-jan-2024 */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {

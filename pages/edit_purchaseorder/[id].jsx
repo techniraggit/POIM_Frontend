@@ -521,7 +521,7 @@ const EditPo = () => {
                                                 </Form.Item>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-lg-4 all-wrap-box">
+                                        <div class="col-md-6 col-lg-4 all-wrap-box wid-projects">
                                             {formData.shipment_type === 'project related' && (
                                                 <div class="selectwrap columns-select shipment-caret">
                                                     <Form.Item

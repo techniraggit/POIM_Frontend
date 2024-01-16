@@ -14,7 +14,7 @@ const repeatorData = {
     start_date: "",
     end_date: "",
     amount: '',
-    project_site_id:''
+    project_site_id: ''
 
 }
 const Rental = () => {
@@ -172,18 +172,18 @@ const Rental = () => {
     };
     // const updateAmount = (amount) => {
     //     const calculatedAmount = parseFloat(amount);
-    
+
     //     // Assuming setAmount and form.setFieldsValue are functions that you have defined elsewhere
     //     setAmount(calculatedAmount);
-        
+
     //     const hstAmount = (calculatedAmount * 0.13).toFixed(2);
     //     const totalAmount = (calculatedAmount + parseFloat(hstAmount)).toFixed(2);
-    
+
     //     form.setFieldsValue({ Amount: calculatedAmount });
     //     form.setFieldsValue({ HST_Amount: hstAmount });
     //     form.setFieldsValue({ Total_amount: totalAmount });
     // };
-    
+
     const updateAmount = (amount) => {
         const calculatedAmount = amount;
         const hstAmount = (calculatedAmount * 0.13).toFixed(2);
@@ -207,7 +207,7 @@ const Rental = () => {
         const totalAmount = getTotalAmount();
         const hstAmount = (totalAmount * 0.13).toFixed(2);
         const totalAmountWithDecimal = (totalAmount * 0.13 + parseInt(totalAmount)).toFixed(2);
-    
+
         form.setFieldsValue({ HST_Amount: parseFloat(hstAmount) });
         form.setFieldsValue({ Total_amount: parseFloat(totalAmountWithDecimal) });
     };
@@ -278,7 +278,7 @@ const Rental = () => {
                 vendor_contact_id: values.vendor_contact_id,
                 project_id: values.project_id,
                 shipment_type: values.shipment_type,
-                po_number:values.poNumber,
+                po_number: values.poNumber,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
                 project_site_id: values.project_site_id,
@@ -290,7 +290,7 @@ const Rental = () => {
                 vendor_contact_id: values.vendor_contact_id,
                 project_id: values.project_id,
                 shipment_type: values.shipment_type,
-                po_number:values.poNumber,
+                po_number: values.poNumber,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
                 project_site_id: values.project_site_id,
@@ -320,7 +320,7 @@ const Rental = () => {
     useEffect(() => {
         const poNumberResponse = getPoNumber();
         poNumberResponse.then((response) => {
-            if(response?.data?.status) {
+            if (response?.data?.status) {
                 form.setFieldValue('poNumber', response.data.po_number);
             }
         })
@@ -703,19 +703,20 @@ const Rental = () => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-sm-4 d-flex align-items-center to-wrap-datepicker">
-                        <div className="wrap-box">
-                            <Form.Item
-                                label="Date Range"
-                                name="start_date"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please enter date",
-                                    },
-                                ]}
-                            >
-                                {/* <DatePicker
+                    <div className="col-sm-4">
+                        <div className="d-flex align-items-center to-wrap-datepicker">
+                            <div className="wrap-box">
+                                <Form.Item
+                                    label="Date Range"
+                                    name="start_date"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please enter date",
+                                        },
+                                    ]}
+                                >
+                                    {/* <DatePicker
                                     style={{ width: "100%" }}
                                     suffixIcon={<CalendarOutlined />}
                                     format="YYYY-MM-DD"
@@ -723,10 +724,13 @@ const Rental = () => {
                                         console.log('Selected date:', dateString);
                                       }}
                                 /> */}
-                                <Input type="date"></Input>
-                            </Form.Item>
+                                    <Input type="date"></Input>
+                                </Form.Item>
+                            </div>
+                            <div className="text-to ps-3">
+                                <p className='mb-1'>To</p>
+                            </div>
                         </div>
-                        <div className="text-to"><p className='mb-2'>To</p></div>
                     </div>
 
                     <div className="col-sm-4">
@@ -832,132 +836,137 @@ const Rental = () => {
                                                     </Form.Item>
                                                 </div>
                                             </div>
-                                            <div className="row mt-1">
-                                                <div className="col-sm-4 d-flex align-items-center">
-                                                    <div className="wrap-box mb-0">
-                                                        <Form.Item
-                                                            label="Date Range"
-                                                            {...restField}
-                                                            name={[name, 'start_date']}
-                                                            fieldKey={[fieldKey, 'start_date']}
+                                            <div className="date-range-wrapper">
+                                                <div className="row mt-1 first-dr">
+                                                    <div className="col-sm-4">
+                                                        <div className="d-flex align-items-center to-wrap-datepicker">
+                                                            <div className="wrap-box mb-0">
+                                                                <Form.Item
+                                                                    label="Date Range"
+                                                                    {...restField}
+                                                                    name={[name, 'start_date']}
+                                                                    fieldKey={[fieldKey, 'start_date']}
 
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please enter date",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Input type="date"
-                                                                value={repeator[index].start_date}
-                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'start_date', index)}
-                                                            />
-                                                            {/* <DatePicker
+                                                                    rules={[
+                                                                        {
+                                                                            required: true,
+                                                                            message: "Please enter date",
+                                                                        },
+                                                                    ]}
+                                                                >
+                                                                    <Input type="date"
+                                                                        value={repeator[index].start_date}
+                                                                        onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'start_date', index)}
+                                                                    />
+                                                                    {/* <DatePicker
                                                                 style={{ width: "100%" }}
                                                                 suffixIcon={<CalendarOutlined />}
                                                                 onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'date', index)}
                                                             /> */}
-                                                        </Form.Item>
+                                                                </Form.Item>
+                                                            </div>
+                                                            <div className="text-to ps-3"><p className='mt-1'>To</p></div>
+                                                        </div>
                                                     </div>
-                                                    <div className="text-to"><p className='mt-3'>To</p></div>
-                                                </div>
 
-                                                <div className="col-sm-4">
-                                                    <div className="wrap-box mb-0">
-                                                        <Form.Item
-                                                            label="To"
-                                                            {...restField}
-                                                            name={[name, 'end_date']}
-                                                            fieldKey={[fieldKey, 'end_date']}
-                                                            value={repeator[index].end_date}
-
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please enter date",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Input type="date"
+                                                    <div className="col-sm-4">
+                                                        <div className="wrap-box mb-0">
+                                                            <Form.Item
+                                                                label="To"
+                                                                {...restField}
+                                                                name={[name, 'end_date']}
+                                                                fieldKey={[fieldKey, 'end_date']}
                                                                 value={repeator[index].end_date}
-                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'end_date', index)}
 
-                                                            />
-                                                            {/* <DatePicker
+                                                                rules={[
+                                                                    {
+                                                                        required: true,
+                                                                        message: "Please enter date",
+                                                                    },
+                                                                ]}
+                                                            >
+                                                                <Input type="date"
+                                                                    value={repeator[index].end_date}
+                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'end_date', index)}
+
+                                                                />
+                                                                {/* <DatePicker
                                                                 style={{ width: "100%" }}
                                                                 suffixIcon={<CalendarOutlined />}
                                                                 onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'to', index)}
                                                             /> */}
-                                                        </Form.Item>
+                                                            </Form.Item>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="col-sm-4">
-                                                    <div className="wrap-box mb-0">
-                                                        <Form.Item
-                                                            label="Amount"
-                                                            {...restField}
-                                                            name={[name, 'amount']}
-                                                            fieldKey={[fieldKey, 'amount']}
-                                                            value={repeator[index].amount}
-                                                            for="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please enter amount",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Input
-                                                                // value={repeator[index].amount}
-                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'amount', index)}
-                                                            />
-
-                                                        </Form.Item>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div className="row">
-                                                {shipmentType === 'Project Related' && (
-                                                    <div class="col-sm-4">
-                                                        <div className="selectwrap columns-select shipment-caret ">
+                                                    <div className="col-sm-4">
+                                                        <div className="wrap-box mb-0">
                                                             <Form.Item
-                                                                label="Select Site"
+                                                                label="Amount"
                                                                 {...restField}
-                                                                name={[name, 'project_site_id']}
-                                                                fieldKey={[fieldKey, 'site_id']}
-                                                                value={repeator[index].site_id}
-                                                                // name="site_id"
-                                                                htmlFor="file"
+                                                                name={[name, 'amount']}
+                                                                fieldKey={[fieldKey, 'amount']}
+                                                                value={repeator[index].amount}
+                                                                for="file"
                                                                 class="same-clr"
                                                                 rules={[
                                                                     {
                                                                         required: true,
-                                                                        message: "Please choose site",
+                                                                        message: "Please enter amount",
                                                                     },
                                                                 ]}
-                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
                                                             >
-                                                                <Select id="singlesa" class="js-states form-control file-wrap-select">
-                                                                    {Array.isArray(siteOptions) &&
-                                                                        siteOptions.map((site) =>
-                                                                        (
-                                                                            <Select.Option key={site.site_id} value={site.site_id}>
-                                                                                {site.name}
-                                                                            </Select.Option>
-                                                                        )
-                                                                        )}
-                                                                </Select>
+                                                                <Input
+                                                                    // value={repeator[index].amount}
+                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'amount', index)}
+                                                                />
+
                                                             </Form.Item>
                                                         </div>
                                                     </div>
-                                                )}
-                                                <div className="col-sm-4 minus-align-mid d-flex align-items-center">
-                                                <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+
+
+                                                </div>
+                                                <div className="row second-dr">
+                                                    {shipmentType === 'Project Related' && (
+                                                        <div class="col-sm-4">
+                                                            <div className="selectwrap columns-select shipment-caret ">
+                                                                <Form.Item
+                                                                    label="Select Site"
+                                                                    {...restField}
+                                                                    name={[name, 'project_site_id']}
+                                                                    fieldKey={[fieldKey, 'site_id']}
+                                                                    value={repeator[index].site_id}
+                                                                    // name="site_id"
+                                                                    htmlFor="file"
+                                                                    class="same-clr"
+                                                                    rules={[
+                                                                        {
+                                                                            required: true,
+                                                                            message: "Please choose site",
+                                                                        },
+                                                                    ]}
+                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
+                                                                >
+                                                                    <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                                        {Array.isArray(siteOptions) &&
+                                                                            siteOptions.map((site) =>
+                                                                            (
+                                                                                <Select.Option key={site.site_id} value={site.site_id}>
+                                                                                    {site.name}
+                                                                                </Select.Option>
+                                                                            )
+                                                                            )}
+                                                                    </Select>
+                                                                </Form.Item>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    <div className="col-sm-4 minus-align-mid d-flex align-items-center">
+                                                        <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                                    </div>
                                                 </div>
                                             </div>
-                                           
+
                                         </Space>
                                     )
                                 })}
