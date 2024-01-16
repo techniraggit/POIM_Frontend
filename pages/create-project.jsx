@@ -103,33 +103,19 @@ const Create_Vendor = ({ base_url }) => {
     const project = (id) => {
         setRootData(id);
     }
-    //  useEffect(()=>{
+    
+    // const fetchProjectNumber=()=>{
     //     const projectNumberResponse= projectNumber()
     //     projectNumberResponse.then((res)=>{
     //         if(res?.data) {
     //             console.log(res.data.project_number,'oooooooooooooooooooo');
     //         form.setFieldValue('project_number',res.data.project_number)
-               
+    //             // form.setFieldValue('poNumber', response.data.po_number);
     //         }
 
     //     })
-       
-    // },[])
-    const fetchProjectNumber=()=>{
-        const projectNumberResponse= projectNumber()
-        projectNumberResponse.then((res)=>{
-            if(res?.data) {
-                console.log(res.data.project_number,'oooooooooooooooooooo');
-            form.setFieldValue('project_number',res.data.project_number)
-                // form.setFieldValue('poNumber', response.data.po_number);
-            }
+    // }
 
-        })
-    }
-//      useEffect=()=>{
-// const response= projectNumber()
-// console.log(response,'pppppppppppppppppppppppp');
-//     }
 
 
     return (
@@ -174,11 +160,12 @@ const Create_Vendor = ({ base_url }) => {
                                                 name="project_number"
                                                 className="vender-input"
                                                 // initialValue="00854"
-                                                // rules={[{ required: true, message: 'Please enter your project number!' }]}
+                                                rules={[{ required: true, message: 'Please enter your project number!' }]}
                                             >
                                                 <Input placeholder="00854" 
-                                                onClick={() => fetchProjectNumber()}
-                                                value='00584' readOnly/>
+                                                // onClick={() => fetchProjectNumber()}
+                                                //  readOnly
+                                                 />
                                             </Form.Item>
                                         </div>
                                     </div>

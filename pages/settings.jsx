@@ -67,7 +67,8 @@ const Settings = () => {
                                             <span className="img-clr me-3">
                                                 <img src="./images/to-do-list.svg" alt="" className="" />
                                             </span>
-                                            <span>{item.name}</span>
+                                            {/* <span>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</span> */}
+                                            <span style={{ textTransform: 'capitalize' }}>{item.name}</span>
                                         </div>
                                         <div className="lists-items me-2">
                                             <div className="card-thre-wrap d-flex align-items-center">
@@ -76,7 +77,8 @@ const Settings = () => {
                                             <div className="dollars-input d-flex align-items-center">
 
                                                 <input placeholder="Enter value in dollars"
-                                                    value={thresholdData[index].value}
+                                                  value={`$ ${thresholdData[index].value}`}
+                                                    // value={thresholdData[index].value}
                                                     onChange={(e) => handleInputChange(index, e.target.value)}
                                                 />
                                                 {/* <Button className="set-btn">Set</Button> */}
