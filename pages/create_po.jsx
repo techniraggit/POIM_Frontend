@@ -61,8 +61,8 @@ const Create_po = () => {
 
     const handleUnitPriceRepeaterChange = () => {
         const totalAmount = getTotalAmount();
-        const hstAmount = (totalAmount * 0.13).toFixed(2);
-    const totalAmountWithHst = (parseFloat(hstAmount) + totalAmount).toFixed(2);
+        const hstAmount = (totalAmount * 0.13).toFixed(2) || 0;
+    const totalAmountWithHst = (parseFloat(hstAmount) + totalAmount).toFixed(2) || 0;
 
     form.setFieldsValue({ HST_Amount: hstAmount });
     form.setFieldsValue({ Total_amount: totalAmountWithHst });
@@ -119,9 +119,9 @@ const Create_po = () => {
         
         // Format the calculatedAmount, HST amount, and Total amount to have 2 decimal places
         form.setFieldsValue({
-            Amount: calculatedAmount.toFixed(2),
-            HST_Amount: hstAmount.toFixed(2),
-            Total_amount: totalAmount.toFixed(2),
+            Amount: calculatedAmount.toFixed(2) || 0,
+            HST_Amount: hstAmount.toFixed(2) || 0,
+            Total_amount: totalAmount.toFixed(2) || 0,
         });
     };
 

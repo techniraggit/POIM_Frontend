@@ -78,7 +78,6 @@ const User_list = ({ base_url }) => {
             setUsers(response.data.search_query_data)
 
         })
-        
       };
       const handleClearButtonClick = () => {
         setInputValue('');
@@ -125,21 +124,20 @@ const User_list = ({ base_url }) => {
                                             <th className="hedaings-tb">S No.</th>
                                             <th className="hedaings-tb">First Name</th>
                                             <th className="hedaings-tb">Last Name</th>
-                                            <th className="hedaings-tb">Address</th>
+                                            <th className="hedaings-tb">Role</th>
                                             <th className="hedaings-tb">Email</th>
                                             <th className="hedaings-tb">Contact No</th>
                                             <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         {Array.isArray(users) &&
                                             users.map((user, index) => (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{user.first_name}</td>
                                                     <td className="td-color">{user.last_name}</td>
-                                                    <td>{user.address}</td>
+                                                    <td>{user.user_role.name}</td>
                                                     <td>{user.email}</td>
                                                     <td>{user.phone_number}</td>
                                                     <td className="td-icon-color">
@@ -152,9 +150,7 @@ const User_list = ({ base_url }) => {
                                                             cancelText="No"
 
                                                         >
-
                                                             <DeleteFilled />
-
                                                         </Popconfirm>
                                                         {/* <Link></> */}
                                                         <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link>

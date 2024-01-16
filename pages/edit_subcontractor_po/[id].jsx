@@ -86,7 +86,7 @@ const EditSubContractorPo = () => {
                 form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
                 form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
                 form.setFieldValue('shipment_type', data.shipment_type);
-                form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2));
+                form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
                 form.setFieldValue('total_amount', data.total_amount);
                 form.setFieldValue('project_id', data.project_site?.project?.project_id);
                 form.setFieldValue('project_site_id', data.project_site?.site_id);
@@ -192,8 +192,8 @@ const EditSubContractorPo = () => {
             formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
             formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : totalAmount.hst_amount;
             if(totalAmount > 0) {
-                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) });
-                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
+                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
+                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
             }
         } else {
             formData[name] = value;

@@ -12,9 +12,9 @@ import moment from "moment";
 const { Option } = Select;
 
 const repeatorData = {
-    amount: 0,
     description: '',
     date: '',
+    amount: 0,
     project_site_id: ''
 }
 
@@ -167,10 +167,10 @@ const CreateSubContractorPo = () => {
                 ...materalDetails
             };
             formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : totalAmount.hst_amount;
+            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
             if(totalAmount > 0) {
-                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) });
-                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
+                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
+                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
             }
         } else {
             formData[name] = value;
@@ -555,41 +555,40 @@ const CreateSubContractorPo = () => {
                                         <hr />
                                     </div>
                                     <div class="row">
-                                        
-                                        <div class="col-sm-4 space-col-spc">
+                                        <div class="col-12 space-col-spc">
                                             <div class="wrap-box">
                                                 <Form.Item
-                                                    label="Description"
+                                                    label="Scope Of Work"
                                                     for="name"
                                                     name="description"
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message: "Please enter description",
+                                                            message: "Please enter Scope Of Work",
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="Description" onChange={(e) => onChange('material_details', {description: e.target.value}, 0)} />
-                                                </Form.Item>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4 space-col-spc">
-                                            <div className="wrap-box">
-                                                <Form.Item
-                                                    label="Date"
-                                                    name="date"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please enter date",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Input onChange={({ target: { value } }) => onChange('material_details', {date: value}, 0)} type="date"></Input>
+                                                    <Input.TextArea rows={4} cols={50} placeholder="Scope Of Work" onChange={(e) => onChange('material_details', {description: e.target.value}, 0)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
                                         <div class="row space-col-spc mb-0">
+                                            <div class="col-sm-4 space-col-spc">
+                                                <div className="wrap-box">
+                                                    <Form.Item
+                                                        label="Date"
+                                                        name="date"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please enter date",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input onChange={({ target: { value } }) => onChange('material_details', {date: value}, 0)} type="date"></Input>
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
                                             <div class="col-sm-4">
                                                 <div className="wrap-box">
                                                     <Form.Item
@@ -647,7 +646,7 @@ const CreateSubContractorPo = () => {
                                                                     if(key.includes('_')) {
                                                                         upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');
                                                                     }
-                                                                    if(key === 'description' || key === "amount") {
+                                                                    if(key === "amount") {
                                                                         return(
                                                                             <div key={key} className="wrap-box col-sm-3">
                                                                                 <Form.Item
@@ -656,6 +655,24 @@ const CreateSubContractorPo = () => {
                                                                                 >
                                                                                     <Input
                                                                                         placeholder={upperKey}
+                                                                                        value={data[key]}
+                                                                                        name={key + index}
+                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {[key]: value}, index + 1)}
+                                                                                    />
+                                                                                </Form.Item>
+                                                                            </div>
+                                                                        )
+                                                                    } else if(key === 'description' ) {
+                                                                        return(
+                                                                            <div key={key} className="wrap-box col-12">
+                                                                                <Form.Item
+                                                                                    label={"Scope Of Work"}
+                                                                                    rules={[{ required: true, message: `Please enter Scope Of Work` }]}
+                                                                                >
+                                                                                    <Input.TextArea
+                                                                                        rows={4} 
+                                                                                        cols={50}
+                                                                                        placeholder={"Enter Scope Of Work"}
                                                                                         value={data[key]}
                                                                                         name={key + index}
                                                                                         onChange={({ target: { value, name } }) => onChange('material_details', {[key]: value}, index + 1)}
@@ -694,12 +711,6 @@ const CreateSubContractorPo = () => {
                                                                                         name={`project_site_id_${index + 1}`}
                                                                                         htmlFor="file"
                                                                                         class="same-clr"
-                                                                                        rules={[
-                                                                                            {
-                                                                                                required: true,
-                                                                                                message: "Please choose site",
-                                                                                            },
-                                                                                        ]}
                                                                                     >
                                                                                         <Select id="singlesa" defaultValue={formData.material_details[0].project_site_id} onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
                                                                                             {Array.isArray(siteOptions) &&
@@ -731,7 +742,10 @@ const CreateSubContractorPo = () => {
                                                     <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                                                         setFormData({
                                                             ...formData,
-                                                            material_details: [...formData.material_details, repeatorData]
+                                                            material_details: [...formData.material_details, {
+                                                                ...repeatorData,
+                                                                project_site_id: formData.material_details[0].project_site_id
+                                                            }]
                                                         });
                                                     }} icon={<PlusOutlined />}>
                                                         Add More Material

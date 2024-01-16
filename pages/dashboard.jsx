@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DynamicTitle from '@/components/dynamic-title.jsx';
 import '../styles/style.css'
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
+import { getPoList } from '@/apis/apis/adminApis';
 
 const Dashboard = () => {
+    const [purchaseOrders, setPurchaseOrders] = useState([]);
+    useEffect(() => {
+        const response = getPoList();
+        console.log(response,'getPoList');
+        response.then((res) => {
+            if (res?.data?.status) {
+                setPurchaseOrders(res.data.data || []);
+            }
+        })
+    }, []);
+
     return (
         <>
             <DynamicTitle title="Dashboard" />
@@ -12,21 +24,6 @@ const Dashboard = () => {
                 <Sidebar />
                 <div className="inner-wrapper">
                     <Header heading="Dashboard"/>
-                    {/* <div className="top-wrapp">
-                        <div className="text-wrap">
-                            <h5>Dashboard</h5>
-                        </div>
-                        <div className="notify">
-                            <div className="leftwrap">
-                                <img src="/images/notification.svg" alt="" />
-                                <span>1</span>
-                            </div>
-                            <div className="user">
-                                <span>John Smith</span>
-                                <img src="/images/profile.png" alt="" className="ms-2" />
-                            </div>
-                        </div>
-                    </div> */}
                     <div className="bottom-wrapp">
                         <ul className="list-icons board-list">
                             <li className="me-4 me-md-3">
@@ -52,70 +49,37 @@ const Dashboard = () => {
                                 <table id="resizeMe" className="table-hover">
                                     <thead>
                                         <tr id="header-row">
-                                            <th className="hedaings-tb">S. No</th>
-                                            <th className="hedaings-tb">PO</th>
-                                            <th className="hedaings-tb">PO Type</th>
+                                            <th className="hedaings-tb">S No.</th>
+                                            <th className="hedaings-tb">PO No.</th>
+                                            <th className="hedaings-tb">Purchase Order Type</th>
+                                            <th className="hedaings-tb">PO Creation date</th>
+                                            <th className="hedaings-tb">PO Amount</th>
                                             <th className="hedaings-tb">PO Status</th>
-                                            <th className="hedaings-tb">Created By</th>
-                                            <th className="hedaings-tb">Creation Date</th>
-                                            <th className="hedaings-tb">Invoice Status</th>
+                                            <th className="hedaings-tb">PO Vendor</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>#1226465</td>
-                                            <td>Material PO</td>
-                                            <td>Approved</td>
-                                            <td>Sam</td>
-                                            <td>02 Sep 23</td>
-                                            <td>Approved</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>#1226465</td>
-                                            <td>Rental PO</td>
-                                            <td>Approved</td>
-                                            <td>Smith</td>
-                                            <td>02 Sep 23</td>
-                                            <td>Approved</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>#1226465</td>
-                                            <td>Subcontractor PO</td>
-                                            <td>Closed</td>
-                                            <td>Jason</td>
-                                            <td>02 Sep 23</td>
-                                            <td>Closed</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>#1226465</td>
-                                            <td>Roberts</td>
-                                            <td>Closed</td>
-                                            <td>Jason</td>
-                                            <td>02 Sep 23</td>
-                                            <td>Closed</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>#1226465</td>
-                                            <td>Alsop</td>
-                                            <td>Closed</td>
-                                            <td>Approved</td>
-                                            <td>02 Sep 23</td>
-                                            <td>Approved</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>#1226465</td>
-                                            <td>Forsyth</td>
-                                            <td>Closed</td>
-                                            <td>Jason</td>
-                                            <td>02 Sep 23</td>
-                                            <td>Closed</td>
-                                        </tr>
+                                        {Array.isArray(purchaseOrders) && purchaseOrders.length > 0 ? (
+                                            purchaseOrders.map((purchase, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{purchase.po_number}</td>
+                                                    <td className="td-color">{purchase.po_type}</td>
+                                                    <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                    })}</td>
+                                                    <td>{purchase.total_amount}</td>
+                                                    <td>{purchase.status}</td>
+                                                    <td>{purchase.vendor_contact?.name}</td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="8">No purchase orders available</td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -127,7 +91,3 @@ const Dashboard = () => {
     )
 }
 export default Dashboard;
-
-
-
-

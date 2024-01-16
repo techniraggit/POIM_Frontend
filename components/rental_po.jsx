@@ -168,7 +168,7 @@ const Rental = () => {
     const handleAmountChange = (value) => {
         console.log(value, 'amount');
         setAmount(value);
-        updateAmount(value);
+        updateAmount(value || 0);
     };
     // const updateAmount = (amount) => {
     //     const calculatedAmount = parseFloat(amount);
@@ -186,15 +186,15 @@ const Rental = () => {
 
     const updateAmount = (amount) => {
         const calculatedAmount = amount;
-        const hstAmount = (calculatedAmount * 0.13).toFixed(2);
-    const totalAmount = (calculatedAmount * 0.13 + parseInt(calculatedAmount)).toFixed(2);
+        const hstAmount = (calculatedAmount * 0.13).toFixed(2) || 0;
+        const totalAmount = (parseFloat(calculatedAmount) * 0.13 + parseFloat(calculatedAmount)).toFixed(2) || 0;
 
     // Update the state and form fields with the calculated values
-    setAmount(calculatedAmount);
-    form.setFieldsValue({ Amount: calculatedAmount });
+    setAmount(calculatedAmount || 0);
+    form.setFieldsValue({ Amount: calculatedAmount || 0 });
     form.setFieldsValue({ HST_Amount: hstAmount });
-    form.setFieldsValue({ Total_amount: totalAmount });
-       
+    form.setFieldsValue({ Total_amount: totalAmount || 0 });
+       console.log(calculateAmount, hstAmount, totalAmount)
         // setAmount(calculatedAmount);
         // form.setFieldsValue({ Amount: calculatedAmount });
         // form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
@@ -205,8 +205,8 @@ const Rental = () => {
 
     const handleRepeaterAmountChange = () => {
         const totalAmount = getTotalAmount();
-        const hstAmount = (totalAmount * 0.13).toFixed(2);
-        const totalAmountWithDecimal = (totalAmount * 0.13 + parseInt(totalAmount)).toFixed(2);
+        const hstAmount = (totalAmount * 0.13) || 0;
+        const totalAmountWithDecimal = (totalAmount * 0.13 + parseInt(totalAmount)).toFixed(2) || 0;
 
         form.setFieldsValue({ HST_Amount: parseFloat(hstAmount) });
         form.setFieldsValue({ Total_amount: parseFloat(totalAmountWithDecimal) });
@@ -828,7 +828,9 @@ const Rental = () => {
                                                         label="Description"
                                                         rules={[{ required: true, message: 'Please enter description' }]}
                                                     >
-                                                        <Input
+                                                        <Input.TextArea
+                                                            rows={4} 
+                                                            cols={50}
                                                             placeholder="description"
                                                             value={repeator[index].description}
                                                             onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'description', index)}

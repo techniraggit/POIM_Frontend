@@ -88,7 +88,7 @@ const ViewPO = () => {
                 form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
                 form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
                 form.setFieldValue('shipment_type', data.shipment_type);
-                form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2));
+                form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
                 form.setFieldValue('total_amount', data.total_amount);
                 form.setFieldValue('project_id', data.project_site?.project?.project_id);
                 form.setFieldValue('project_site_id', data.project_site?.site_id);
