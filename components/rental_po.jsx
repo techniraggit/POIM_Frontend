@@ -186,10 +186,19 @@ const Rental = () => {
     
     const updateAmount = (amount) => {
         const calculatedAmount = amount;
-        setAmount(calculatedAmount);
-        form.setFieldsValue({ Amount: calculatedAmount });
-        form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
-        form.setFieldsValue({ Total_amount: calculatedAmount * 0.13 + parseInt(calculatedAmount) });
+        const hstAmount = (calculatedAmount * 0.13).toFixed(2);
+    const totalAmount = (calculatedAmount * 0.13 + parseInt(calculatedAmount)).toFixed(2);
+
+    // Update the state and form fields with the calculated values
+    setAmount(calculatedAmount);
+    form.setFieldsValue({ Amount: calculatedAmount });
+    form.setFieldsValue({ HST_Amount: hstAmount });
+    form.setFieldsValue({ Total_amount: totalAmount });
+       
+        // setAmount(calculatedAmount);
+        // form.setFieldsValue({ Amount: calculatedAmount });
+        // form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
+        // form.setFieldsValue({ Total_amount: calculatedAmount * 0.13 + parseInt(calculatedAmount) });
     };
 
     const calculateAmount = (amount) => amount;
