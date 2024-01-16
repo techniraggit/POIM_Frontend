@@ -307,13 +307,14 @@ const Project_Edit = ({ base_url }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="vendor-ant-form">
+                                <Space style={{ display: 'block', marginBottom: 8 }} align="baseline" className="vendor-ant-form re-peator-project">
                                         {Array.isArray(repeaterData) &&
                                             repeaterData.map((repeater, index) => (
                                                 
                                                 index !== 0 && (
                                                     <>
-                                                        <div className="wrap-box" key={index}>
+                                                    <div className="repeator-row" style={{display: 'flex', columnGap: '8px', alignItems: 'center' }}>
+                                                        <div className="wrap-box kt" key={index}>
                                                             <label>Site Name</label>
                                                             <input
                                                                 htmlFor="name"
@@ -349,6 +350,7 @@ const Project_Edit = ({ base_url }) => {
                                                             <MinusOutlined className="minus-wrap" 
                                                             onClick={()=>removeField(repeater.site_id)}
                                                             style={{ marginLeft: '8px' }} />
+                                                        </div>
                                                         </div>
                                                     </>
                                                 )

@@ -44,7 +44,7 @@ function Invoice() {
                         <div className="searchbar-wrapper">
                             <div className="Purchase-form">
                                 <form className="search-purchase">
-                                    <input className="vendor-input" placeholder="Invoice" />
+                                    <input className="vendor-input" placeholder="Search Invoice" />
                                     <Button className="vendor-search-butt">Search</Button>
                                 </form>
                                 <div className="purchase-filter">
