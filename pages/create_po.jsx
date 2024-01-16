@@ -1031,7 +1031,7 @@ const Create_po = () => {
                                                             return (
                                                                 <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                                                                     <div className="row">
-                                                                        <div className="wrap-box col-sm-3">
+                                                                        <div className="wrap-box col-sm-3 kt">
 
                                                                             <Form.Item
                                                                                 {...restField}

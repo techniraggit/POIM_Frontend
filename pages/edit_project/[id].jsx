@@ -204,7 +204,7 @@ const Project_Edit = ({ base_url }) => {
     return (
         <>
             <DynamicTitle title="Add User" />
-            <div className="wrapper-main">
+            <div className="wrapper-main kt">
                 <Sidebar />
                 <div className="inner-wrapper">
                     <Header heading="Project" />

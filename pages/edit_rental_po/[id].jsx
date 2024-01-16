@@ -184,7 +184,7 @@ const Edit_Rental_Po = () => {
             Object.keys(value).map((key) => {
                 materialDetails[index][key] = value[key];
             });
-           
+
             setFormData({
                 ...formData,
                 material_details: [...materialDetails]
@@ -514,7 +514,7 @@ const Edit_Rental_Po = () => {
                                         <hr />
                                     </div>
                                     <div class="row space-bottom mb-0">
-                                        <div class="col-md-6 col-lg-12 all-wrap-box">
+                                        <div class="col-md-6 col-lg-4 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
                                                     label="Shipment Type"
@@ -537,6 +537,8 @@ const Edit_Rental_Po = () => {
                                                     </Select>
                                                 </Form.Item>
                                             </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 all-wrap-box">
                                             {formData.shipment_type === 'project related' && (
                                                 <div class="selectwrap columns-select shipment-caret">
                                                     <Form.Item
@@ -571,6 +573,7 @@ const Edit_Rental_Po = () => {
                                             )}
                                         </div>
                                     </div>
+
 
                                     <div className="linewrap d-flex">
                                         <span className="d-block me-4">Details</span>
@@ -612,7 +615,7 @@ const Edit_Rental_Po = () => {
                                                     <Input type="date"></Input>
                                                 </Form.Item>
                                             </div>
-                                            <div className="text-to"><p className='mb-2'>To</p></div>
+                                            <div className="text-to ps-2"><p className='mb-2'>To</p></div>
                                         </div>
                                         <div className="col-sm-4">
                                             <div className="wrap-box">
@@ -653,7 +656,7 @@ const Edit_Rental_Po = () => {
 
 
                                         {formData.shipment_type === 'project related' && (
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4 edit-po-rental">
                                                 {/* <div className="selectwrap columns-select shipment-caret "> */}
                                                 <Form.Item
                                                     label="Select Site"
@@ -667,16 +670,19 @@ const Edit_Rental_Po = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Select id="singlesa" class="js-states form-control file-wrap-select">
-                                                        {Array.isArray(siteOptions) &&
-                                                            siteOptions.map((site) =>
-                                                            (
-                                                                <Select.Option key={site.site_id} value={site.site_id}>
-                                                                    {site.name}
-                                                                </Select.Option>
-                                                            )
-                                                            )}
-                                                    </Select>
+
+                                                    <div class="selectwrap  shipment-caret aligned-text">
+                                                        <Select id="singles-edit-po" class="selectwrap react-select edit-rental-po">
+                                                            {Array.isArray(siteOptions) &&
+                                                                siteOptions.map((site) =>
+                                                                (
+                                                                    <Select.Option key={site.site_id} value={site.site_id}>
+                                                                        {site.name}
+                                                                    </Select.Option>
+                                                                )
+                                                                )}
+                                                        </Select>
+                                                    </div>
                                                 </Form.Item>
                                                 {/* </div> */}
                                             </div>
@@ -733,7 +739,7 @@ const Edit_Rental_Po = () => {
                                                                 }
                                                             })
 
-                                                        } 
+                                                        }
                                                         {formData.shipment_type === 'project related' && (
                                                             <div class="col-sm-4">
                                                                 <Form.Item
@@ -846,8 +852,8 @@ const Edit_Rental_Po = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     )
 }
