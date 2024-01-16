@@ -159,8 +159,8 @@ const Create_po = () => {
                 vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
                 po_number:values.poNumber,
-                hst_amount: values.HST_Amount.toFixed(2),
-                total_amount: values.Total_amount.toFixed(2),
+                hst_amount: values.HST_Amount,
+                total_amount: values.Total_amount,
                 project_site_id: values.site_id,
                 amount: values.Amount,
                 material_details: [{
@@ -177,6 +177,7 @@ const Create_po = () => {
         }
 
         const response = createPO(data);
+        console.log(response,'ggggggggg');
 
         response.then((res) => {
             if (res?.data?.status) {
