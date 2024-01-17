@@ -570,7 +570,7 @@ const Rental = () => {
                     <span class="d-block me-4">Ship To</span>
                     <hr />
                 </div>
-                <div class="row space-bottom mb-0">
+                <div class="row space-bottom">
                     <div class="col-lg-4 col-md-6 all-wrap-box">
                         <div class="selectwrap  shipment-caret aligned-text">
                             <Form.Item
@@ -704,7 +704,7 @@ const Rental = () => {
                 </div>
                 <div className="row">
                     <div className="col-sm-4">
-                        <div className="d-flex align-items-center to-wrap-datepicker">
+                        <div className="d-flex align-items-center to-wrap-datepicker justify-content-between">
                             <div className="wrap-box">
                                 <Form.Item
                                     label="Date Range"
@@ -838,10 +838,10 @@ const Rental = () => {
                                                     </Form.Item>
                                                 </div>
                                             </div>
-                                            <div className="date-range-wrapper">
+                                            <div className="">
                                                 <div className="row mt-1 first-dr">
                                                     <div className="col-sm-4">
-                                                        <div className="d-flex align-items-center to-wrap-datepicker">
+                                                        <div className="d-flex align-items-center to-wrap-datepicker justify-content-between">
                                                             <div className="wrap-box mb-0">
                                                                 <Form.Item
                                                                     label="Date Range"
@@ -928,7 +928,7 @@ const Rental = () => {
 
 
                                                 </div>
-                                                <div className="row second-dr">
+                                                <div className="row second-dr mt-2">
                                                     {shipmentType === 'Project Related' && (
                                                         <div class="col-sm-4">
                                                             <div className="selectwrap columns-select shipment-caret ">
@@ -984,7 +984,7 @@ const Rental = () => {
                         )}
                     </Form.List>
                 </div>
-                <div className="row">
+                <div className="row mt-rentalpo">
                     <div className="col-lg-4 col-md-6">
                         <div class="wrap-box">
                             <Form.Item

@@ -3,7 +3,7 @@ import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import '../styles/style.css'
-import {MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { createPO, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getPoNumber, getVendorDetails } from "@/apis/apis/adminApis";
 import { Form, Input, Select, Button, DatePicker, Space } from "antd";
@@ -41,7 +41,7 @@ const CreateSubContractorPo = () => {
         shipment_type: '',
         delivery_address: '',
         quantity: 0,
-        material_details: [{...repeatorData}]
+        material_details: [{ ...repeatorData }]
     });
 
     const [contactId, setContactId] = useState('');
@@ -65,16 +65,16 @@ const CreateSubContractorPo = () => {
                 })
             }
         })
-        
+
         form.setFieldValue('first_name', localStorage.getItem('user_first_name'))
         form.setFieldValue('last_name', localStorage.getItem('user_last_name'))
     }, []);
 
     useEffect(() => {
-        if(isNew) {
+        if (isNew) {
             const poNumberResponse = getPoNumber();
             poNumberResponse.then((res) => {
-                if(res?.data?.status) {
+                if (res?.data?.status) {
                     form.setFieldValue('poNumber', res.data?.po_number);
                     setFormData({
                         ...formData,
@@ -89,7 +89,7 @@ const CreateSubContractorPo = () => {
         if (form.getFieldValue('shipment_type') === 'project related') {
             const response = fetchProjects();
             response.then((res) => {
-                if(res?.data?.status) {
+                if (res?.data?.status) {
                     setProjects(res.data.projects);
                 }
             });
@@ -99,7 +99,7 @@ const CreateSubContractorPo = () => {
     const fetchVendorContactDropdown = (id) => {
         const response = fetchVendorContacts(id);
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 setContactId([...res.data.vendors])
             }
         })
@@ -146,21 +146,21 @@ const CreateSubContractorPo = () => {
             ...formData,
             subcontractor_type: isNew ? 'new' : 'existing'
         }).then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 router.push('/po_list');
             }
         });
     }
-    
+
     const onChange = (name, value, index) => {
-        if(name === 'material_details') {
+        if (name === 'material_details') {
             let totalAmount = 0;
             const materalDetails = formData.material_details[index];
             Object.keys(value).forEach((key) => {
                 materalDetails[key] = value[key];
             });
 
-            if(value.amount) {
+            if (value.amount) {
                 totalAmount = getTotalAmount();
             }
             formData.material_details[index] = {
@@ -168,7 +168,7 @@ const CreateSubContractorPo = () => {
             };
             formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
             formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
-            if(totalAmount > 0) {
+            if (totalAmount > 0) {
                 form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
                 form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
             }
@@ -184,7 +184,7 @@ const CreateSubContractorPo = () => {
         const response = fetchProjectSites();
 
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 const sitesArray = res.data.sites;
                 setSiteOptions(sitesArray);
             }
@@ -266,7 +266,7 @@ const CreateSubContractorPo = () => {
                                         </div>
                                     </div>
                                     <div class="order-choose d-flex">
-                                        <div className="left-wrap wrap-number">
+                                        <div className="left-wrap wrap-number sub-po-typee">
                                             <Form.Item
                                                 label="Purchase Order Number"
                                                 name="poNumber"
@@ -330,7 +330,7 @@ const CreateSubContractorPo = () => {
                                                                 onChange('vendor_id', value);
                                                             }}
                                                         >
-                                                            {names.map((entry) =>(
+                                                            {names.map((entry) => (
                                                                 <Select.Option key={entry.vendorId} value={entry.vendorId}>
                                                                     {entry.company_name}
                                                                 </Select.Option>
@@ -384,15 +384,15 @@ const CreateSubContractorPo = () => {
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
-                                                        label="Company name"
-                                                        name="company_name"
-                                                        class="bold-label"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please Enter Company name",
-                                                            },
-                                                        ]}
+                                                    label="Company name"
+                                                    name="company_name"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Company name",
+                                                        },
+                                                    ]}
                                                 >
                                                     <Input onChange={({ target: { value } }) => onChange('company_name', value)} />
                                                 </Form.Item>
@@ -402,15 +402,15 @@ const CreateSubContractorPo = () => {
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
-                                                        label="Email"
-                                                        name="email"
-                                                        class="bold-label"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please Enter Email",
-                                                            },
-                                                        ]}
+                                                    label="Email"
+                                                    name="email"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Email",
+                                                        },
+                                                    ]}
                                                 >
                                                     <Input onChange={({ target: { value } }) => onChange('email', value)} />
                                                 </Form.Item>
@@ -490,8 +490,8 @@ const CreateSubContractorPo = () => {
                                         <span class="d-block me-4">Ship To</span>
                                         <hr />
                                     </div>
-                                    <div class="row space-bottom mb-0">
-                                        <div class="col-md-6 col-lg-12 all-wrap-box">
+                                    <div class="row space-bottom">
+                                        <div class="col-md-6 col-lg-4 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
                                                     label="Shipment Type"
@@ -506,56 +506,57 @@ const CreateSubContractorPo = () => {
                                                     ]}
                                                 >
                                                     <Select id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
-                                                        onChange={(value) => {onChange('shipment_type', value)}}
+                                                        onChange={(value) => { onChange('shipment_type', value) }}
                                                     >
                                                         <Option value="project related">Project Related</Option>
                                                     </Select>
                                                 </Form.Item>
                                             </div>
-                                            {formData.shipment_type === 'project related' && (
-                                                <div className="col-lg-6">
-                                                    <div class="selectwrap columns-select shipment-caret">
-                                                        <Form.Item
-                                                            label="Project  "
-                                                            name="project_id"
-                                                            for="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose Project",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select id="single456"
-                                                                class="js-states form-control file-wrap-select"
-                                                                onChange={(value) => {
-                                                                    list(value)
-                                                                    onChange('project_id', value)
-                                                                }}
-                                                            >
-                                                                {Array.isArray(projects) &&
-                                                                    projects.map((project) => {
-                                                                        return (
-                                                                            <Select.Option key={project.project_id} value={project.project_id}
-                                                                            >
-                                                                                {project.name}
-                                                                            </Select.Option>
-                                                                        )
-                                                                    })}
-                                                            </Select>
-                                                        </Form.Item>
-                                                    </div>
-                                                </div>
-                                            )}
                                         </div>
+                                        {formData.shipment_type === 'project related' && (
+                                            <div className="col-lg-4 col-md-6">
+                                                <div class="selectwrap columns-select shipment-caret">
+                                                    <Form.Item
+                                                        label="Project "
+                                                        name="project_id"
+                                                        for="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose Project",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select id="single456"
+                                                            class="js-states form-control file-wrap-select"
+                                                            onChange={(value) => {
+                                                                list(value)
+                                                                onChange('project_id', value)
+                                                            }}
+                                                        >
+                                                            {Array.isArray(projects) &&
+                                                                projects.map((project) => {
+                                                                    return (
+                                                                        <Select.Option key={project.project_id} value={project.project_id}
+                                                                        >
+                                                                            {project.name}
+                                                                        </Select.Option>
+                                                                    )
+                                                                })}
+                                                        </Select>
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                        )}
+
                                     </div>
                                     <div class="linewrap d-flex">
                                         <span class="d-block me-4">Material</span>
                                         <hr />
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 space-col-spc">
+                                        <div class="col-12 space-col-spc mb-3">
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Scope Of Work"
@@ -568,12 +569,12 @@ const CreateSubContractorPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input.TextArea rows={4} cols={50} placeholder="Scope Of Work" onChange={(e) => onChange('material_details', {description: e.target.value}, 0)} />
+                                                    <Input.TextArea rows={4} cols={50} placeholder="Scope Of Work" onChange={(e) => onChange('material_details', { description: e.target.value }, 0)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
                                         <div class="row space-col-spc mb-0">
-                                            <div class="col-sm-4 space-col-spc">
+                                            <div class="col-sm-4">
                                                 <div className="wrap-box">
                                                     <Form.Item
                                                         label="Date"
@@ -585,7 +586,7 @@ const CreateSubContractorPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Input onChange={({ target: { value } }) => onChange('material_details', {date: value}, 0)} type="date"></Input>
+                                                        <Input onChange={({ target: { value } }) => onChange('material_details', { date: value }, 0)} type="date"></Input>
                                                     </Form.Item>
                                                 </div>
                                             </div>
@@ -602,7 +603,7 @@ const CreateSubContractorPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Input placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', {amount: value}, 0)} />
+                                                        <Input placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
                                                     </Form.Item>
                                                 </div>
                                             </div>
@@ -621,9 +622,9 @@ const CreateSubContractorPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Select id="singlesa" onChange={(value) => onChange('material_details', {project_site_id: value}, 0)} class="js-states form-control file-wrap-select">
+                                                            <Select id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) =>(
+                                                                    siteOptions.map((site) => (
                                                                         <Select.Option key={site.site_id} value={site.site_id}>
                                                                             {site.name}
                                                                         </Select.Option>
@@ -640,14 +641,15 @@ const CreateSubContractorPo = () => {
                                                 {
                                                     formData.material_details.slice(1).map((data, index) => {
                                                         return <div className="row">
+                                                            
                                                             {
                                                                 Object.keys(data).map((key) => {
                                                                     let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
-                                                                    if(key.includes('_')) {
+                                                                    if (key.includes('_')) {
                                                                         upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');
                                                                     }
-                                                                    if(key === "amount") {
-                                                                        return(
+                                                                    if (key === "amount") {
+                                                                        return (
                                                                             <div key={key} className="wrap-box col-sm-3">
                                                                                 <Form.Item
                                                                                     label={upperKey}
@@ -657,31 +659,32 @@ const CreateSubContractorPo = () => {
                                                                                         placeholder={upperKey}
                                                                                         value={data[key]}
                                                                                         name={key + index}
-                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {[key]: value}, index + 1)}
+                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                                                     />
                                                                                 </Form.Item>
                                                                             </div>
                                                                         )
-                                                                    } else if(key === 'description' ) {
-                                                                        return(
+                                                                    } else if (key === 'description') {
+                                                                        return (
                                                                             <div key={key} className="wrap-box col-12">
                                                                                 <Form.Item
                                                                                     label={"Scope Of Work"}
                                                                                     rules={[{ required: true, message: `Please enter Scope Of Work` }]}
                                                                                 >
                                                                                     <Input.TextArea
-                                                                                        rows={4} 
+                                                                                        rows={4}
                                                                                         cols={50}
                                                                                         placeholder={"Enter Scope Of Work"}
                                                                                         value={data[key]}
                                                                                         name={key + index}
-                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {[key]: value}, index + 1)}
+                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                                                     />
                                                                                 </Form.Item>
                                                                             </div>
                                                                         )
                                                                     } else if (key === 'date') {
                                                                         return (
+
                                                                             <div className="col-sm-4">
                                                                                 <div className="wrap-box">
                                                                                     <Form.Item
@@ -714,7 +717,7 @@ const CreateSubContractorPo = () => {
                                                                                     >
                                                                                         <Select id="singlesa" defaultValue={formData.material_details[0].project_site_id} onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
                                                                                             {Array.isArray(siteOptions) &&
-                                                                                                siteOptions.map((site) =>(
+                                                                                                siteOptions.map((site) => (
                                                                                                     <Select.Option key={site.site_id} value={site.site_id}>
                                                                                                         {site.name}
                                                                                                     </Select.Option>
@@ -726,7 +729,7 @@ const CreateSubContractorPo = () => {
                                                                             </div>
                                                                         )
                                                                     }
-                                                                    return <></>
+                                                                    return 
                                                                 })
                                                             }
                                                             <MinusOutlined className="minus-wrap" onClick={() => {
