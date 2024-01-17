@@ -79,3 +79,9 @@ export const updateVendorDetails = (data) => {
 export const projectNumber=()=>{
     return Axios.get(`/api/admin/project-number`);
 }
+export const fetchPoNumbr=()=>{
+    return Axios.get(`/api/helping/purchase-orders-list`)
+}
+export const fetchPoNumbers=(id)=>{
+    return Axios.get(`/api/admin/purchase-order?po_id=${id}`)
+}
