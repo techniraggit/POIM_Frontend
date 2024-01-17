@@ -62,7 +62,7 @@ const ViewPO = () => {
         fetchPo(id).then((res) => {
             if (res?.data?.status) {
                 const data = res.data.data;
-                console.log(data,'ghfhhggdgh');
+                console.log(data, 'ghfhhggdgh');
                 fetchVendorContactDropdown(data.vendor_contact.company.vendor_id);
                 fetchSites();
                 setFormData({
@@ -279,618 +279,619 @@ const ViewPO = () => {
                                 <span>View Purchase Order</span>
                             </li>
                         </ul>
-                        <div class="choose-potype round-wrap"><div class="inner-choose">
-                        <Form onFinish={onFinish} form={form} className="file-form">
-                            <div className="row po-typeraw">
-                                <div className="col-lg-4 col-md-6">
-                                    <div className="selectwrap react-select">
-                                        <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
-                                            {/* <CaretDownFilled className="caret-icon" /> */}
+                        <div class="choose-potype round-wrap">
+                            <div class="inner-choose">
+                                <Form onFinish={onFinish} form={form} className="file-form">
+                                    <div className="row po-typeraw">
+                                        <div className="col-lg-4 col-md-6">
+                                            <div className="selectwrap react-select">
+                                                <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
+                                                    {/* <CaretDownFilled className="caret-icon" /> */}
+                                                    <Form.Item
+                                                        label="Choose PO Type"
+                                                        name="po_type"
+                                                        class="bold-label"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose PO Type",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select placeholder="Select PO Type" id="single1"
+                                                            class="js-states form-control file-wrap-select bold-select"
+                                                        // onChange={handlePoTypeChange}
+                                                        >
+                                                            <Option value="material">Material PO</Option>
+                                                            <Option value="rental">Rental PO</Option>
+                                                            <Option value="subcontractor">Sub Contractor PO</Option>
+                                                        </Select>
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-choose d-flex">
+                                        <div className="left-wrap wrap-number">
                                             <Form.Item
-                                                label="Choose PO Type"
-                                                name="po_type"
-                                                class="bold-label"
+                                                label="Purchase Order Number"
+                                                name="poNumber"
+                                                initialValue="00854"
+
+                                            >
+                                                <Input placeholder="00854" value='00584' readOnly />
+                                            </Form.Item>
+                                        </div>
+                                        <div className="left-wrap wrap-number" id="forspce">
+                                            <Form.Item
+                                                label="Date"
+                                                name="poDate"
+                                                initialValue={moment()} // Set initial value to the current date
                                                 rules={[
                                                     {
-                                                        required: true,
-                                                        message: "Please choose PO Type",
+                                                        validator: (_, value) => {
+                                                            if (!value) {
+                                                                return Promise.reject("Please enter Date");
+                                                            }
+                                                            return Promise.resolve();
+                                                        },
                                                     },
                                                 ]}
                                             >
-                                                <Select placeholder="Select PO Type" id="single1"
-                                                    class="js-states form-control file-wrap-select bold-select"
-                                                // onChange={handlePoTypeChange}
+                                                <DatePicker
+                                                    style={{ width: "100%" }}
+                                                    disabled // Disable user input
+                                                    placeholder="18 Oct 2023"
+                                                    suffixIcon={null}
+                                                />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                    <div class="linewrap d-flex" id="w-small">
+                                        <span class="d-block me-0">To</span>
+                                        <hr />
+                                    </div>
+                                    <div class="row vendor-rowgap">
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="selectwrap react-select" id="vendor-selector">
+                                                <div class="selectwrap  shipment-caret select-site aligned-text">
+                                                    <Form.Item
+                                                        label="Vendor"
+                                                        name="vendor_id"
+                                                        for="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+
+                                                                message: "Please choose Vendor",
+
+                                                            },
+
+                                                        ]}
+                                                    >
+                                                        <Select
+                                                            id="single2"
+                                                            placeholder="Select"
+                                                            className="js-states form-control file-wrap-select"
+                                                            onChange={(value) => fetchVendorContactDropdown(value)}
+                                                        >
+                                                            {names.map((entry) =>
+                                                            (
+                                                                <Select.Option key={entry.vendorId} value={entry.vendorId}>
+                                                                    {entry.company_name}
+                                                                </Select.Option>
+                                                            )
+                                                            )}
+                                                        </Select>
+
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="selectwrap react-select" id="vendor-selector">
+                                                <div class="selectwrap  shipment-caret select-site aligned-text">
+
+                                                    <Form.Item
+                                                        label="Vendor Contact Person"
+                                                        name="vendor_contact_id"
+                                                        htmlFor="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose site",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select
+                                                            id="singlesa"
+                                                            placeholder="Select"
+                                                            class="js-states form-control file-wrap-select"
+                                                            onChange={(value) => vendorContactDetails(value)}
+                                                        >
+                                                            {contactId.length > 0 &&
+                                                                contactId.map((contact) => (
+                                                                    <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
+                                                                        {contact.name}
+                                                                    </Select.Option>
+                                                                ))
+                                                            }
+                                                        </Select>
+
+                                                    </Form.Item>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row space-raw  btm-space">
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box">
+                                                <Form.Item
+                                                    label="Company name"
+                                                    name="company_name"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Company name",
+                                                        },
+                                                    ]}
                                                 >
-                                                    <Option value="material">Material PO</Option>
-                                                    <Option value="rental">Rental PO</Option>
-                                                    <Option value="subcontractor">Sub Contractor PO</Option>
-                                                </Select>
-                                            </Form.Item>
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('company_name', value)} />
+                                                </Form.Item>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="order-choose d-flex">
-                                <div className="left-wrap wrap-number">
-                                    <Form.Item
-                                        label="Purchase Order Number"
-                                        name="poNumber"
-                                        initialValue="00854"
 
-                                    >
-                                        <Input placeholder="00854" value='00584' readOnly />
-                                    </Form.Item>
-                                </div>
-                                <div className="left-wrap wrap-number" id="forspce">
-                                    <Form.Item
-                                        label="Date"
-                                        name="poDate"
-                                        initialValue={moment()} // Set initial value to the current date
-                                        rules={[
-                                            {
-                                                validator: (_, value) => {
-                                                    if (!value) {
-                                                        return Promise.reject("Please enter Date");
-                                                    }
-                                                    return Promise.resolve();
-                                                },
-                                            },
-                                        ]}
-                                    >
-                                        <DatePicker
-                                            style={{ width: "100%" }}
-                                            disabled // Disable user input
-                                            placeholder="18 Oct 2023"
-                                            suffixIcon={null}
-                                        />
-                                    </Form.Item>
-                                </div>
-                            </div>
-                            <div class="linewrap d-flex" id="w-small">
-                                <span class="d-block me-0">To</span>
-                                <hr />
-                            </div>
-                            <div class="row vendor-rowgap">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="selectwrap react-select" id="vendor-selector">
-                                        <div class="selectwrap  shipment-caret select-site aligned-text">
-                                            <Form.Item
-                                                label="Vendor"
-                                                name="vendor_id"
-                                                for="file"
-                                                class="same-clr"
-                                                rules={[
-                                                    {
-                                                        required: true,
-
-                                                        message: "Please choose Vendor",
-
-                                                    },
-
-                                                ]}
-                                            >
-                                                <Select
-                                                    id="single2"
-                                                    placeholder="Select"
-                                                    className="js-states form-control file-wrap-select"
-                                                    onChange={(value) => fetchVendorContactDropdown(value)}
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box">
+                                                <Form.Item
+                                                    label="Email"
+                                                    name="email"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Email",
+                                                        },
+                                                    ]}
                                                 >
-                                                    {names.map((entry) =>
-                                                    (
-                                                        <Select.Option key={entry.vendorId} value={entry.vendorId}>
-                                                            {entry.company_name}
-                                                        </Select.Option>
-                                                    )
-                                                    )}
-                                                </Select>
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('email', value)} />
+                                                </Form.Item>
 
-                                            </Form.Item>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="selectwrap react-select" id="vendor-selector">
-                                        <div class="selectwrap  shipment-caret select-site aligned-text">
-
-                                            <Form.Item
-                                                label="Vendor Contact Person"
-                                                name="vendor_contact_id"
-                                                htmlFor="file"
-                                                class="same-clr"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please choose site",
-                                                    },
-                                                ]}
-                                            >
-                                                <Select
-                                                    id="singlesa"
-                                                    placeholder="Select"
-                                                    class="js-states form-control file-wrap-select"
-                                                    onChange={(value) => vendorContactDetails(value)}
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box">
+                                                <Form.Item
+                                                    label="Phone"
+                                                    name="phone"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Phone",
+                                                        },
+                                                    ]}
                                                 >
-                                                    {contactId.length > 0 &&
-                                                        contactId.map((contact) => (
-                                                            <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
-                                                                {contact.name}
-                                                            </Select.Option>
-                                                        ))
-                                                    }
-                                                </Select>
-
-                                            </Form.Item>
-
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('phone', value)} />
+                                                </Form.Item>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row space-raw  btm-space">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <Form.Item
-                                            label="Company name"
-                                            name="company_name"
-                                            class="bold-label"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please Enter Company name",
-                                                },
-                                            ]}
-                                        >
-                                            <Input readOnly onChange={({ target: { value } }) => onChange('company_name', value)} />
-                                        </Form.Item>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <Form.Item
-                                            label="Email"
-                                            name="email"
-                                            class="bold-label"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please Enter Email",
-                                                },
-                                            ]}
-                                        >
-                                            <Input readOnly onChange={({ target: { value } }) => onChange('email', value)} />
-                                        </Form.Item>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <Form.Item
-                                            label="Phone"
-                                            name="phone"
-                                            class="bold-label"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please Enter Phone",
-                                                },
-                                            ]}
-                                        >
-                                            <Input readOnly onChange={({ target: { value } }) => onChange('phone', value)} />
-                                        </Form.Item>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box mb-0">
-                                        <Form.Item
-                                            label="Address"
-                                            name="address"
-                                            class="bold-label"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please Enter Company address",
-                                                },
-                                            ]}
-                                        >
-                                            <Input readOnly onChange={({ target: { value } }) => onChange('address', value)} />
-                                        </Form.Item>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box mb-0">
-                                        <Form.Item
-                                            label="State / Province"
-                                            name="state"
-                                            class="bold-label"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please Enter State",
-                                                },
-                                            ]}
-                                        >
-                                            <Input readOnly onChange={({ target: { value } }) => onChange('state', value)} />
-                                        </Form.Item>
-
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box mb-0">
-                                        <Form.Item
-                                            label="Country"
-                                            name="country"
-                                            class="bold-label"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please Enter Country",
-                                                },
-                                            ]}
-                                        >
-                                            <Input readOnly onChange={({ target: { value } }) => onChange('country', value)} />
-                                        </Form.Item>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="linewrap d-flex">
-                                <span class="d-block me-4">Ship To</span>
-                                <hr />
-                            </div>
-                            <div class="row space-bottom mb-0">
-                                <div class="col-lg-4 col-md-6 all-wrap-box">
-                                    <div class="selectwrap  shipment-caret aligned-text">
-                                        <Form.Item
-                                            label="Shipment Type"
-                                            name="shipment_type"
-                                            for="file"
-                                            class="same-clr"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please Choose Shipment Type",
-                                                },
-                                            ]}
-                                        >
-                                            <Select id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
-                                                onChange={handlePoTypeChange}
-                                            >
-                                                <Option value="Project Related">Project Related</Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </div>
-
-                                </div>
-                                <div className="col-lg-4">
-                                    {formData.shipment_type === 'Project Related' && (
-                                        <div class="selectwrap columns-select shipment-caret">
-                                            <Form.Item
-                                                label="Project"
-                                                name="project_id"
-                                                for="file"
-                                                class="same-clr"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please choose Project",
-                                                    },
-                                                ]}
-                                            >
-                                                <Select id="single456"
-                                                    class="js-states form-control file-wrap-select"
-                                                    onChange={(value) => list(value)}
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box mb-0">
+                                                <Form.Item
+                                                    label="Address"
+                                                    name="address"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Company address",
+                                                        },
+                                                    ]}
                                                 >
-                                                    {Array.isArray(projects) &&
-                                                        projects.map((project) => (
-                                                            <Select.Option key={project.project_id} value={project.project_id}
-                                                            >
-                                                                {project.name}
-                                                            </Select.Option>
-                                                        ))}
-                                                </Select>
-                                            </Form.Item>
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('address', value)} />
+                                                </Form.Item>
+
+                                            </div>
                                         </div>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="linewrap d-flex">
-                                <span className="d-block me-4">Details</span>
-                                <hr />
-                            </div>
-                            <div className="row">
-                                <div className="col-sm-12">
-                                    <div className="wrap-box">
-                                        <Form.Item
-                                            label="Description"
-                                            name="description"
-                                            for="file"
-                                            class="same-clr"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please enter description",
-                                                },
-                                            ]}
-                                        >
-                                            <Input.TextArea rows={4} cols={50} />
-                                        </Form.Item>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-sm-4 d-flex align-items-center to-wrap-datepicker">
-                                    <div className="wrap-box">
-                                        <Form.Item
-                                            label="Date Range"
-                                            name="start_date"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please enter date",
-                                                },
-                                            ]}
-                                        >
-                                            <Input type="date"></Input>
-                                        </Form.Item>
-                                    </div>
-                                    <div className="text-to ps-2"><p className='mb-2'>To</p></div>
-                                </div>
 
-                                <div className="col-sm-4">
-                                    <div className="wrap-box">
-                                        <Form.Item
-                                            label="To"
-                                            name="end_date"
-                                            //  initialValue={moment(formattedDate, "YYYY-MM-DD")}
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please enter date",
-                                                },
-                                            ]}
-                                        >
-                                            <Input type="date"></Input>
-                                        </Form.Item>
-                                    </div>
-                                </div>
-                                <div className="col-sm-4">
-                                    <div className="wrap-box">
-                                        <Form.Item
-                                            label="Amount"
-                                            name="amount"
-                                            for="file"
-                                            class="same-clr"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: "Please enter amount",
-                                                },
-                                            ]}
-                                        >
-                                            <Input onChange={(e) => handleAmountChange(e.target.value)} />
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box mb-0">
+                                                <Form.Item
+                                                    label="State / Province"
+                                                    name="state"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter State",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('state', value)} />
+                                                </Form.Item>
 
-                                        </Form.Item>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                {formData.shipment_type === 'Project Related' && (
-                                    <div class="col-sm-4">
-                                        <div className="selectwrap columns-select shipment-caret ">
-                                            <Form.Item
-                                                label="Select Site"
-                                                name="project_site_id"
-                                                htmlFor="file"
-                                                class="same-clr"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please choose site",
-                                                    },
-                                                ]}
-                                            >
-                                                <Select id="singlesa" class="js-states form-control file-wrap-select">
-                                                    {Array.isArray(siteOptions) &&
-                                                        siteOptions.map((site) =>
-                                                        (
-                                                            <Select.Option key={site.site_id} value={site.site_id}>
-                                                                {site.name}
-                                                            </Select.Option>
-                                                        )
-                                                        )}
-                                                </Select>
-                                            </Form.Item>
+
+                                            </div>
                                         </div>
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box mb-0">
+                                                <Form.Item
+                                                    label="Country"
+                                                    name="country"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Country",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('country', value)} />
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                )}
-                            </div>
 
-                            <div className="create-another minuswrap-img">
-                                <Form.List name="items" initialValue={[]}>
-                                    {(fields, { add, remove }) => (
-                                        <>
-                                            {fields.map(({ key, name, fieldKey, ...restField }, index) => {
-                                                return (
-                                                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit mb-space">
-                                                        <div className="row mb-2">
-                                                            <div className="wrap-box mb-0">
-                                                                <Form.Item
-                                                                    {...restField}
-                                                                    name={[name, 'description']}
-                                                                    fieldKey={[fieldKey, 'description']}
-                                                                    label="Description"
-                                                                    rules={[{ required: true, message: 'Please enter description' }]}
-                                                                >
-                                                                    <Input
-                                                                        placeholder="description"
-                                                                        value={repeator[index].description}
-                                                                        onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'description', index)}
-                                                                    />
-                                                                </Form.Item>
-                                                            </div>
-                                                        </div>
-                                                        <div className="row mt-1">
-                                                            <div className="col-sm-4 d-flex align-items-center">
-                                                                <div className="wrap-box mb-0">
-                                                                    <Form.Item
-                                                                        label="Date Range"
-                                                                        {...restField}
-                                                                        name={[name, 'start_date']}
-                                                                        fieldKey={[fieldKey, 'start_date']}
+                                    <div class="linewrap d-flex">
+                                        <span class="d-block me-4">Ship To</span>
+                                        <hr />
+                                    </div>
+                                    <div class="row space-bottom mb-0">
+                                        <div class="col-lg-4 col-md-6 all-wrap-box">
+                                            <div class="selectwrap  shipment-caret aligned-text">
+                                                <Form.Item
+                                                    label="Shipment Type"
+                                                    name="shipment_type"
+                                                    for="file"
+                                                    class="same-clr"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Choose Shipment Type",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Select id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
+                                                        onChange={handlePoTypeChange}
+                                                    >
+                                                        <Option value="Project Related">Project Related</Option>
+                                                    </Select>
+                                                </Form.Item>
+                                            </div>
 
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please enter date",
-                                                                            },
-                                                                        ]}
+                                        </div>
+                                        <div className="col-lg-4">
+                                            {formData.shipment_type === 'Project Related' && (
+                                                <div class="selectwrap columns-select shipment-caret">
+                                                    <Form.Item
+                                                        label="Project"
+                                                        name="project_id"
+                                                        for="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose Project",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select id="single456"
+                                                            class="js-states form-control file-wrap-select"
+                                                            onChange={(value) => list(value)}
+                                                        >
+                                                            {Array.isArray(projects) &&
+                                                                projects.map((project) => (
+                                                                    <Select.Option key={project.project_id} value={project.project_id}
                                                                     >
-                                                                        <Input type="date"
-                                                                            value={repeator[index].start_date}
-                                                                            onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'start_date', index)}
-                                                                        />
-                                                                    </Form.Item>
-                                                                </div>
-                                                                <div className="text-to"><p className='mt-3'>To</p></div>
-                                                            </div>
+                                                                        {project.name}
+                                                                    </Select.Option>
+                                                                ))}
+                                                        </Select>
+                                                    </Form.Item>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="linewrap d-flex">
+                                        <span className="d-block me-4">Details</span>
+                                        <hr />
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                            <div className="wrap-box">
+                                                <Form.Item
+                                                    label="Description"
+                                                    name="description"
+                                                    for="file"
+                                                    class="same-clr"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter description",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input.TextArea rows={4} cols={50} />
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-sm-4 d-flex align-items-center to-wrap-datepicker">
+                                            <div className="wrap-box">
+                                                <Form.Item
+                                                    label="Date Range"
+                                                    name="start_date"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter date",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input type="date"></Input>
+                                                </Form.Item>
+                                            </div>
+                                            <div className="text-to ps-2"><p className='mb-2'>To</p></div>
+                                        </div>
 
-                                                            <div className="col-sm-4">
-                                                                <div className="wrap-box mb-0">
-                                                                    <Form.Item
-                                                                        label="To"
-                                                                        {...restField}
-                                                                        name={[name, 'end_date']}
-                                                                        fieldKey={[fieldKey, 'end_date']}
-                                                                        value={repeator[index].end_date}
+                                        <div className="col-sm-4">
+                                            <div className="wrap-box">
+                                                <Form.Item
+                                                    label="To"
+                                                    name="end_date"
+                                                    //  initialValue={moment(formattedDate, "YYYY-MM-DD")}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter date",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input type="date"></Input>
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-4">
+                                            <div className="wrap-box">
+                                                <Form.Item
+                                                    label="Amount"
+                                                    name="amount"
+                                                    for="file"
+                                                    class="same-clr"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter amount",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input onChange={(e) => handleAmountChange(e.target.value)} />
 
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please enter date",
-                                                                            },
-                                                                        ]}
-                                                                    >
-                                                                        <Input type="date"
-                                                                            value={repeator[index].end_date}
-                                                                            onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'end_date', index)}
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        {formData.shipment_type === 'Project Related' && (
+                                            <div class="col-sm-4">
+                                                <div className="selectwrap columns-select shipment-caret ">
+                                                    <Form.Item
+                                                        label="Select Site"
+                                                        name="project_site_id"
+                                                        htmlFor="file"
+                                                        class="same-clr"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose site",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                            {Array.isArray(siteOptions) &&
+                                                                siteOptions.map((site) =>
+                                                                (
+                                                                    <Select.Option key={site.site_id} value={site.site_id}>
+                                                                        {site.name}
+                                                                    </Select.Option>
+                                                                )
+                                                                )}
+                                                        </Select>
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
 
-                                                                        />
-                                                                    </Form.Item>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-sm-4">
-                                                                <div className="wrap-box mb-0">
-                                                                    <Form.Item
-                                                                        label="Amount"
-                                                                        {...restField}
-                                                                        name={[name, 'amount']}
-                                                                        fieldKey={[fieldKey, 'amount']}
-                                                                        value={repeator[index].amount}
-                                                                        for="file"
-                                                                        class="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please enter amount",
-                                                                            },
-                                                                        ]}
-                                                                    >
-                                                                        <Input
-                                                                            // value={repeator[index].amount}
-                                                                            onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'amount', index)}
-                                                                        />
-
-                                                                    </Form.Item>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <div className="row">
-                                                            {shipmentType === 'Project Related' && (
-                                                                <div class="col-sm-4">
-                                                                    <div className="selectwrap columns-select shipment-caret ">
+                                    <div className="create-another minuswrap-img">
+                                        <Form.List name="items" initialValue={[]}>
+                                            {(fields, { add, remove }) => (
+                                                <>
+                                                    {fields.map(({ key, name, fieldKey, ...restField }, index) => {
+                                                        return (
+                                                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit mb-space">
+                                                                <div className="row mb-2">
+                                                                    <div className="wrap-box mb-0">
                                                                         <Form.Item
-                                                                            label="Select Site"
                                                                             {...restField}
-                                                                            name={[name, 'site_id']}
-                                                                            fieldKey={[fieldKey, 'site_id']}
-                                                                            value={repeator[index].site_id}
-                                                                            // name="site_id"
-                                                                            htmlFor="file"
-                                                                            class="same-clr"
-                                                                            rules={[
-                                                                                {
-                                                                                    required: true,
-                                                                                    message: "Please choose site",
-                                                                                },
-                                                                            ]}
-                                                                            onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
+                                                                            name={[name, 'description']}
+                                                                            fieldKey={[fieldKey, 'description']}
+                                                                            label="Description"
+                                                                            rules={[{ required: true, message: 'Please enter description' }]}
                                                                         >
-                                                                            <Select id="singlesa" class="js-states form-control file-wrap-select">
-                                                                                {Array.isArray(siteOptions) &&
-                                                                                    siteOptions.map((site) =>
-                                                                                    (
-                                                                                        <Select.Option key={site.site_id} value={site.site_id}>
-                                                                                            {site.name}
-                                                                                        </Select.Option>
-                                                                                    )
-                                                                                    )}
-                                                                            </Select>
+                                                                            <Input
+                                                                                placeholder="description"
+                                                                                value={repeator[index].description}
+                                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'description', index)}
+                                                                            />
                                                                         </Form.Item>
                                                                     </div>
                                                                 </div>
-                                                            )}
-                                                            <div className="col-sm-4 minus-align-mid d-flex align-items-center">
-                                                                <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
-                                                            </div>
-                                                        </div>
+                                                                <div className="row mt-1">
+                                                                    <div className="col-sm-4 d-flex align-items-center">
+                                                                        <div className="wrap-box mb-0">
+                                                                            <Form.Item
+                                                                                label="Date Range"
+                                                                                {...restField}
+                                                                                name={[name, 'start_date']}
+                                                                                fieldKey={[fieldKey, 'start_date']}
 
-                                                    </Space>
-                                                )
-                                            })}
-                                            <Form.Item>
-                                                <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
-                                                    setRepeator([...repeator, repeatorData]);
-                                                    add();
-                                                }} icon={<PlusOutlined />}>
-                                                    Add More Material
-                                                </Button>
-                                            </Form.Item>
-                                        </>
-                                    )}
-                                </Form.List>
-                            </div>
-                            <div className="row">
-                                <div className="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <Form.Item
+                                                                                rules={[
+                                                                                    {
+                                                                                        required: true,
+                                                                                        message: "Please enter date",
+                                                                                    },
+                                                                                ]}
+                                                                            >
+                                                                                <Input type="date"
+                                                                                    value={repeator[index].start_date}
+                                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'start_date', index)}
+                                                                                />
+                                                                            </Form.Item>
+                                                                        </div>
+                                                                        <div className="text-to"><p className='mt-3'>To</p></div>
+                                                                    </div>
 
-                                            name='hst_amount'
-                                            label="HST Amount"
-                                            rules={[{ required: true, message: 'Please enter phone number' }]}
-                                        >
-                                            <Input placeholder="HST Amount" />
-                                        </Form.Item>
+                                                                    <div className="col-sm-4">
+                                                                        <div className="wrap-box mb-0">
+                                                                            <Form.Item
+                                                                                label="To"
+                                                                                {...restField}
+                                                                                name={[name, 'end_date']}
+                                                                                fieldKey={[fieldKey, 'end_date']}
+                                                                                value={repeator[index].end_date}
+
+                                                                                rules={[
+                                                                                    {
+                                                                                        required: true,
+                                                                                        message: "Please enter date",
+                                                                                    },
+                                                                                ]}
+                                                                            >
+                                                                                <Input type="date"
+                                                                                    value={repeator[index].end_date}
+                                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'end_date', index)}
+
+                                                                                />
+                                                                            </Form.Item>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="col-sm-4">
+                                                                        <div className="wrap-box mb-0">
+                                                                            <Form.Item
+                                                                                label="Amount"
+                                                                                {...restField}
+                                                                                name={[name, 'amount']}
+                                                                                fieldKey={[fieldKey, 'amount']}
+                                                                                value={repeator[index].amount}
+                                                                                for="file"
+                                                                                class="same-clr"
+                                                                                rules={[
+                                                                                    {
+                                                                                        required: true,
+                                                                                        message: "Please enter amount",
+                                                                                    },
+                                                                                ]}
+                                                                            >
+                                                                                <Input
+                                                                                    // value={repeator[index].amount}
+                                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'amount', index)}
+                                                                                />
+
+                                                                            </Form.Item>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div className="row">
+                                                                    {shipmentType === 'Project Related' && (
+                                                                        <div class="col-sm-4">
+                                                                            <div className="selectwrap columns-select shipment-caret ">
+                                                                                <Form.Item
+                                                                                    label="Select Site"
+                                                                                    {...restField}
+                                                                                    name={[name, 'site_id']}
+                                                                                    fieldKey={[fieldKey, 'site_id']}
+                                                                                    value={repeator[index].site_id}
+                                                                                    // name="site_id"
+                                                                                    htmlFor="file"
+                                                                                    class="same-clr"
+                                                                                    rules={[
+                                                                                        {
+                                                                                            required: true,
+                                                                                            message: "Please choose site",
+                                                                                        },
+                                                                                    ]}
+                                                                                    onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
+                                                                                >
+                                                                                    <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                                                        {Array.isArray(siteOptions) &&
+                                                                                            siteOptions.map((site) =>
+                                                                                            (
+                                                                                                <Select.Option key={site.site_id} value={site.site_id}>
+                                                                                                    {site.name}
+                                                                                                </Select.Option>
+                                                                                            )
+                                                                                            )}
+                                                                                    </Select>
+                                                                                </Form.Item>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                    <div className="col-sm-4 minus-align-mid d-flex align-items-center">
+                                                                        <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                                                    </div>
+                                                                </div>
+
+                                                            </Space>
+                                                        )
+                                                    })}
+                                                    <Form.Item>
+                                                        <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
+                                                            setRepeator([...repeator, repeatorData]);
+                                                            add();
+                                                        }} icon={<PlusOutlined />}>
+                                                            Add More Material
+                                                        </Button>
+                                                    </Form.Item>
+                                                </>
+                                            )}
+                                        </Form.List>
                                     </div>
-                                </div>
-                                <div className="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <Form.Item
+                                    <div className="row">
+                                        <div className="col-lg-4 col-md-6">
+                                            <div class="wrap-box">
+                                                <Form.Item
 
-                                            name='total_amount'
-                                            label="Total Amount"
-                                            rules={[{ required: true, message: 'Please enter phone number' }]}
-                                        >
-                                            <Input placeholder="Total Amount" />
-                                        </Form.Item>
+                                                    name='hst_amount'
+                                                    label="HST Amount"
+                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                >
+                                                    <Input placeholder="HST Amount" />
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-4 col-md-6">
+                                            <div class="wrap-box">
+                                                <Form.Item
+
+                                                    name='total_amount'
+                                                    label="Total Amount"
+                                                    rules={[{ required: true, message: 'Please enter phone number' }]}
+                                                >
+                                                    <Input placeholder="Total Amount" />
+                                                </Form.Item>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            {/* {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
+                                    {/* {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
                     <div class="col-sm-4 ">
                         <div className="selectwrap add-dropdown-wrap shipment-caret">
                             <Form.Item
@@ -918,8 +919,8 @@ const ViewPO = () => {
                         </div>
                     </div>
                 )} */}
-                            <div className="col-md-4">
-                                {/* <div className="wrap-box">
+                                    <div className="col-md-4">
+                                        {/* <div className="wrap-box">
                         {materialFor === 'inventory' && (
                             <Form.Item
                                 label="Inventory Code"
@@ -991,9 +992,9 @@ const ViewPO = () => {
                             </>
                         )}
                     </div> */}
-                            </div>
-                            <div className="col-md-4">
-                                {/* {materialFor === 'project' && (
+                                    </div>
+                                    <div className="col-md-4">
+                                        {/* {materialFor === 'project' && (
                         <div class="selectwrap add-dropdown-wrap">
                             <div className="selectwrap columns-select shipment-caret ">
                                
@@ -1022,8 +1023,8 @@ const ViewPO = () => {
                             </div>
                         </div>
                     )} */}
-                                <div className="col-md-4">
-                                    {/* <div className="wrap-box">
+                                        <div className="col-md-4">
+                                            {/* <div className="wrap-box">
                             {materialFor === 'inventory' && (
                                 <Form.Item
                                     label="Inventory Code"
@@ -1095,9 +1096,9 @@ const ViewPO = () => {
                                 </>
                             )}
                         </div> */}
-                                </div>
-                                <div className="col-md-4">
-                                    {/* {materialFor === 'project' && (
+                                        </div>
+                                        <div className="col-md-4">
+                                            {/* {materialFor === 'project' && (
                             <div class="selectwrap add-dropdown-wrap">
                                 <div className="selectwrap columns-select shipment-caret ">
                                    
@@ -1125,46 +1126,46 @@ const ViewPO = () => {
                                 </div>
                             </div>
                         )} */}
-                                </div>
+                                        </div>
 
-                            </div>
-                            <div class="linewrap d-flex">
-                                <span class="d-block me-2">By Details</span>
-                                <hr />
-                            </div>
-                            <div className="row">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <Form.Item
-                                            name='first_name'
-                                            label="First Name"
-                                            rules={[{ required: true, message: 'Please enter First Name' }]}
-                                        >
-                                            <Input readOnly placeholder="First Name" />
+                                    </div>
+                                    <div class="linewrap d-flex">
+                                        <span class="d-block me-2">By Details</span>
+                                        <hr />
+                                    </div>
+                                    <div className="row">
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box">
+                                                <Form.Item
+                                                    name='first_name'
+                                                    label="First Name"
+                                                    rules={[{ required: true, message: 'Please enter First Name' }]}
+                                                >
+                                                    <Input readOnly placeholder="First Name" />
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="wrap-box">
+                                                <Form.Item
+                                                    name='last_name'
+                                                    label="Last Name"
+                                                    rules={[{ required: true, message: 'Please enter Last Name' }]}
+                                                >
+                                                    <Input readOnly placeholder="Last Name" />
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="po-wrap create-wrap-butt m-0">
+                                        <Form.Item>
+                                            <Button type="primary" htmlType="submit" className="create-ven-butt">
+                                                Create PO
+                                            </Button>
                                         </Form.Item>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <Form.Item
-                                            name='last_name'
-                                            label="Last Name"
-                                            rules={[{ required: true, message: 'Please enter Last Name' }]}
-                                        >
-                                            <Input readOnly placeholder="Last Name" />
-                                        </Form.Item>
-                                    </div>
-                                </div>
+                                </Form >
                             </div>
-                            <div className="po-wrap create-wrap-butt m-0">
-                                <Form.Item>
-                                    <Button type="primary" htmlType="submit" className="create-ven-butt">
-                                        Create PO
-                                    </Button>
-                                </Form.Item>
-                            </div>
-                        </Form >
-                        </div>
                         </div>
                     </div>
                 </div>

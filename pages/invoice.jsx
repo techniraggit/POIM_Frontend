@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { EyeFilled, EditFilled } from '@ant-design/icons'
 import { Button, Select, } from 'antd';
 import Sidebar from "@/components/sidebar";
 import Link from "next/link";
 import { PlusOutlined } from '@ant-design/icons'
+import { invoiceList } from "@/apis/apis/adminApis";
 
 
 const { Option } = Select;
-function Invoice() {
+
+const Invoice = () => {
+    const [invoiceTable, setInvoiceTable] = useState([]);
+    useEffect(() => {
+        const response = invoiceList();
+        response.then((res) => {
+            console.log(res.data.invoice_data, 'lllllllllllllllll');
+            setInvoiceTable(res.data.invoice_data)
+        })
+
+    }, [])
     return (
         <>
             <div className="wrapper-main">
@@ -30,11 +41,11 @@ function Invoice() {
                     </div>
                     <div className="bottom-wrapp-purchase">
                         <ul className="list-icons">
-                        <li class="me-4 ">
-                                  <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
-                                    {/* <i class="fa-solid fa-plus mb-3"></i> */}
-                                    <span>Add Invoice</span>
-                                </li>
+                            <li class="me-4 ">
+                                <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
+                                {/* <i class="fa-solid fa-plus mb-3"></i> */}
+                                <span>Add Invoice</span>
+                            </li>
                             <li className="me-4">
                                 <span className="text-sizes mb-3">5</span>
 
@@ -88,11 +99,45 @@ function Invoice() {
                                             <th className="hedaings-tb">PO Amount</th>
                                             <th className="hedaings-tb td-color">PO Vendor</th>
                                             <th className="hedaings-tb">PO Status</th>
-                                            <th></th>
+                                            <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        {Array.isArray(invoiceTable) &&
+                                            invoiceTable.map((invoice, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{invoice.invoice_number}</td>
+                                                    <td>{invoice.purchase_order.po_number}</td>
+                                                    <td>{invoice.purchase_order.created_by.first_name} {invoice.purchase_order.created_by.last_name}</td>
+                                                    <td>{invoice.purchase_order.total_amount}</td>
+                                                    <td>{invoice.purchase_order.vendor_contact.name}</td>
+                                                    <td>{invoice.purchase_order.status}</td>
+                                                    <td>
+                                                        <EyeFilled />
+                                                        <EditFilled />
+                                                    </td>
+                                                    {/* <td className="td-color">{user.last_name}</td>
+                                                    <td>{user.user_role.name}</td>
+                                                    <td>{user.email}</td>
+                                                    <td>{user.phone_number}</td>
+                                                    <td className="td-icon-color">
+                                                        <EyeFilled onClick={() => handleIconClick(user.id)} />
+                                                        {isViewUserVisible === user.id && <UserPopUp user_id={user.id} />}
+                                                        <Popconfirm
+                                                            title="Are you sure you want to delete this item?"
+                                                            onConfirm={() => handleDelete(user.id)}
+                                                            okText="Yes"
+                                                            cancelText="No"
+
+                                                        >
+                                                            <DeleteFilled />
+                                                        </Popconfirm>
+                                                        <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link>
+                                                    </td> */}
+                                                </tr>
+                                            ))}
+                                        {/* <tr>
                                             <td>1</td>
                                             <td>#45488</td>
                                             <td>#45488</td>
@@ -201,7 +246,7 @@ function Invoice() {
                                                 <EyeFilled />
                                                 <EditFilled />
                                             </td>
-                                        </tr>
+                                        </tr> */}
                                     </tbody>
                                 </table>
 

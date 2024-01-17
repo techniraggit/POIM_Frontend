@@ -85,3 +85,9 @@ export const fetchPoNumbr=()=>{
 export const fetchPoNumbers=(id)=>{
     return Axios.get(`/api/admin/purchase-order?po_id=${id}`)
 }
+export const invoiceSubmit=(data)=>{
+    return Axios.post(`/api/admin/invoice`,data)
+}
+export const invoiceList=()=>{
+    return Axios.get(`/api/admin/invoice`)
+}

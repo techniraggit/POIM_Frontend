@@ -32,9 +32,9 @@ const Vendor_Edit = () => {
     useEffect(() => {
         const response = fetchVendorDetails(id);
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 Object.keys(res.data.vendors_details).forEach((key) => {
-                    if(key !== 'vendor_contact') {
+                    if (key !== 'vendor_contact') {
                         form.setFieldValue(key, res.data.vendors_details[key])
                         formData[key] = res.data.vendors_details[key];
                     } else {
@@ -52,7 +52,7 @@ const Vendor_Edit = () => {
     }, []);
 
     const onChange = (name, value, index) => {
-        if(name === 'contact_info') {
+        if (name === 'contact_info') {
             const contactInfo = formData.contact_info[index];
             Object.keys(value).forEach((key) => {
                 contactInfo[key] = value[key];
@@ -69,13 +69,13 @@ const Vendor_Edit = () => {
     }
 
     const onFinish = () => {
-        console.log(formData)
+        console.log(formData, 'jjjjjjjjjjjj')
         const response = updateVendorDetails({
             ...formData,
             vendor_id: id
         });
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 message.success('Vendor updated successfully');
                 router.push('/vendor');
             }
@@ -197,20 +197,20 @@ const Vendor_Edit = () => {
                                             <Form.Item
                                                 label="Customer Name"
                                                 name="customer_name"
-                                                className="vender-input"                                            
+                                                className="vender-input"
                                             >
                                                 <Input onChange={({ target: { value } }) => onChange('customer_name', value)} />
                                             </Form.Item>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="create-another">
                                         <Space style={{ display: 'flex', flexDirection: 'column', marginBottom: 8 }} align="baseline" className="vendor-ant-form re-peator-vendorr">
                                             {
                                                 formData.contact_info?.slice(1).map((contact, index) => {
-                                                    return(
+                                                    return (
                                                         <>
-                                                            <div className="repeator-row" style={{display: 'flex', columnGap: '8px'}}>
+                                                            <div className="repeator-row" style={{ display: 'flex', columnGap: '8px' }}>
                                                                 <div className="wrap-box" key={index}>
                                                                     <input
                                                                         htmlFor="id"
@@ -227,7 +227,7 @@ const Vendor_Edit = () => {
                                                                         name="name"
                                                                         type="text"
                                                                         value={contact.name}
-                                                                        onChange={(e) => onChange('contact_info', {'name': e.target.value}, index + 1)}
+                                                                        onChange={(e) => onChange('contact_info', { 'name': e.target.value }, index + 1)}
                                                                     />
                                                                 </div>
                                                                 <div className="wrap-box" key={index}>
@@ -237,7 +237,7 @@ const Vendor_Edit = () => {
                                                                         name="email"
                                                                         type="text"
                                                                         value={contact.email}
-                                                                        onChange={(e) => onChange('contact_info', {'email': e.target.value}, index + 1)}
+                                                                        onChange={(e) => onChange('contact_info', { 'email': e.target.value }, index + 1)}
                                                                     />
                                                                 </div>
                                                                 <div className="minus-wraper1 wrap-box">
@@ -247,9 +247,15 @@ const Vendor_Edit = () => {
                                                                         name="phone_number"
                                                                         type="text"
                                                                         value={contact.phone_number}
-                                                                        onChange={(e) => onChange('contact_info', {'phone_number': e.target.value}, index + 1)}
+                                                                        onChange={(e) => onChange('contact_info', { 'phone_number': e.target.value }, index + 1)}
                                                                     />
                                                                 </div>
+
+
+
+                                                                
+
+
                                                                 <MinusOutlined className="minus-wrap" onClick={() => {
                                                                     setFormData({
                                                                         ...formData,
@@ -263,14 +269,14 @@ const Vendor_Edit = () => {
                                             }
                                             <Form.Item className="vendor-edit-input">
                                                 <div className="row">
-                                                <Button className="add-more-btn edit-vendor-btn" type="dashed" onClick={() => {
-                                                    setFormData({
-                                                        ...formData,
-                                                        contact_info: [...formData.contact_info, repeatorData]
-                                                    });
-                                                }} icon={<PlusOutlined />}>
-                                                    <span >Add Another Contact Person</span>
-                                                </Button>
+                                                    <Button className="add-more-btn edit-vendor-btn" type="dashed" onClick={() => {
+                                                        setFormData({
+                                                            ...formData,
+                                                            contact_info: [...formData.contact_info, repeatorData]
+                                                        });
+                                                    }} icon={<PlusOutlined />}>
+                                                        <span >Add Another Contact Person</span>
+                                                    </Button>
                                                 </div>
                                             </Form.Item>
                                         </Space>
@@ -288,4 +294,4 @@ const Vendor_Edit = () => {
     );
 };
 export { getServerSideProps }
-export default withAuth(['admin','accounting', 'project manager'])(Vendor_Edit)
+export default withAuth(['admin', 'accounting', 'project manager'])(Vendor_Edit)
