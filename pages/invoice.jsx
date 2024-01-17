@@ -30,6 +30,11 @@ function Invoice() {
                     </div>
                     <div className="bottom-wrapp-purchase">
                         <ul className="list-icons">
+                        <li class="me-4 ">
+                                  <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
+                                    {/* <i class="fa-solid fa-plus mb-3"></i> */}
+                                    <span>Add Invoice</span>
+                                </li>
                             <li className="me-4">
                                 <span className="text-sizes mb-3">5</span>
 

@@ -2405,6 +2405,370 @@ button.ant-btn.edit-vendor-btn {
 .selectwrap.edit-rental-po span.ant-select-arrow {
     /* display: none; */
 }
+
+
+
+
+.Amendments-wrap {
+    padding: 25px 40px;
+    background-color: #EEF0F8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    margin-top: 50px;
+}
+ 
+.Amendments-wrap span {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+}
+ 
+.Amendments-wrap i {
+    font-size: 24px;
+}
+ 
+.inner-data span {
+    display: block;
+}
+ 
+.small-span {
+    color: rgb(17, 47, 92, 0.5);
+    font-size: 16px;
+    font-weight: 500;
+}
+ 
+span.medium-span {
+    color: #112F5C;
+    font-size: 18px;
+    font-weight: 500;
+}
+ 
+.bottom-po {
+    padding: 30px 40px 60px;
+    background-color: #fff;
+}
+ 
+.form-dot span {
+    width: 30px;
+    height: 30px;
+    background-color: #1DBF8E;
+    display: block;
+    border-radius: 50px;
+    position: absolute;
+    left: -16px;
+    border: 6px solid #fff;
+    top: 0;
+}
+ 
+.top-data {
+    border-left: 1.5px solid #707070;
+    padding-left: 25px;
+    position: relative;
+}
+ 
+.raw-data-btm {
+    padding-bottom: 60px;
+}
+ 
+span.pending-text {
+    color: #F1D520;
+}
+ 
+/* view purchase */
+/* INVOICE */
+.vendor-wrap .td-color {
+    color: #627693;
+}
+ 
+/* INVOICE */
+/* PO Report */
+ul.list-icons.text-list-icons li {
+    padding: 15px 13px 15px;
+    border-radius: 6px;
+    width: 249px;
+}
+ 
+ul.list-icons.text-list-icons li:first-child {
+    background-color: #EEF0F8;
+}
+ 
+ul.list-icons.text-list-icons li:nth-child(1) span.text-size {
+    background-color: #659CEE;
+}
+ 
+ul.list-icons.text-list-icons li:nth-child(2) {
+    background-color: #F8F0E7;
+}
+ 
+ul.list-icons.text-list-icons li:nth-child(2) span.text-size {
+    background-color: #E6AA69;
+}
+ 
+ul.list-icons.text-list-icons li:nth-child(3) {
+    background-color: #E6F2E2;
+}
+ 
+ul.list-icons.text-list-icons li:nth-child(3) span.text-size {
+    background-color: #92D268;
+}
+ 
+ul.list-icons.text-list-icons li:nth-child(4) {
+    background-color: #F2F1E2;
+}
+ 
+ul.list-icons.text-list-icons li:nth-child(4) span.text-size {
+    background-color: #D8D075;
+}
+ 
+ul.list-icons.text-list-icons li:nth-child(5) {
+    background-color: #e2f2ee;
+}
+ 
+ul.list-icons.text-list-icons li:nth-child(5) span.text-size {
+    background-color: #75d8d8;
+}
+ 
+.filter-po-report {
+    background-color: #fff;
+    margin-top: 30px;
+    padding: 10px 10px;
+}
+ 
+.input-date {
+    padding: 6px 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #7E8EA7;
+    border-radius: 20px;
+    background-color: transparent;
+    max-width: 148px !important;
+    position: relative;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+}
+ 
+.input-date::before {
+    content: "";
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    width: 1.3px;
+    height: 16px;
+    transform: translateY(-50%);
+    background-color: #6a6a6a;
+}
+ 
+.poreport-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ 
+.date-wrapp label {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 14px;
+    background-color: #fff !important;
+    z-index: 1;
+    width: 100px;
+}
+ 
+.date-wrapp {
+    position: relative;
+}
+ 
+.file-wrap-select.po-report-icon span.select2.select2-container.select2-container--default {
+    width: 150px !important;
+}
+ 
+button.export-btn {
+    border: none;
+    font-size: 15px;
+    padding: 10px 32px;
+    border-radius: 50px;
+    background-color: #e91d26;
+    color: #fff;
+    margin-left: 10px;
+}
+div#space-report {
+    background-color: #fff;
+    padding: 10px 8px;
+    border-radius: 5px;
+}
+ 
+.firstly-wrap {
+    display: flex;
+    align-items: center;
+}
+ 
+.dropdown-reoprt {
+    background-color: #f7f8f8;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    display: none;
+    margin-top: -1px;
+    top: 46px;
+}
+ 
+li.report-li:hover .dropdown-reoprt {
+    display: block;
+}
+li.report-li li:hover li.report-li li i {
+    transform: rotate(360deg);
+}
+.dropdown-reoprt li {
+    background-color: #f7f8f8 !important;
+}
+ 
+.dropdown-reoprt li a {
+    color: #0D0D0D;
+    font-weight: 700;
+}
+ 
+.dropdown-reoprt li a:hover,
+ul.dropdown-reoprt li a:active {
+    color: #e91d26;
+}
+li.report-li:hover {
+    background-color: #f7f8f8;
+}
+li.report-li {
+    position: relative;
+}
+ 
+ul.dropdown-reoprt li {
+    padding: 14px 40px 0px;
+}
+ 
+/* PO Report */
+/* subcontractor po */
+textarea.text-area {
+    border: 1px solid #70707054;
+    width: 100%;
+    padding: 9px 20px;
+    outline: none;
+    font-size: 16px;
+    color: #112F5C;
+    border-radius: 2px;
+}
+.sub-line span {
+    color: #112F5C;
+    font-size: 20px;
+    font-weight: 500;
+    width: 29%;
+}
+.sub-line hr {
+    border: 1px solid #1DBF8E;
+    width: 100%;
+}
+.inner-para {
+    border: 1px solid #70707054;
+    border-radius: 2px;
+    padding: 30px 25px;
+}
+.top-first p {
+    color: #112F5C;
+    font-weight: 500;
+}
+.bottom-second {
+    margin-top: 40px;
+}
+.sub-line {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+.new-existing button {
+    border: 1.4px solid #00000063;
+    background-color: transparent;
+    padding: 7px 20px;
+    border-radius: 26px;
+    color: #112F5C;
+    font-weight: 500;
+}
+button.exist-btn {
+    border: 1.4px solid #1DBF8E;
+    box-shadow: 0px 3px 2px #00000029;
+}
+.exist-row {
+    align-items: flex-end;
+}
+/* subcontractor po */
+/* rental po */
+.text-to p {
+    font-weight: 700;
+    color: #112F5C;
+    margin-bottom: 0;
+    font-size: 18px;
+}
+/* rental po */
+/* invoice table */
+button.invoice-btn {
+    border: none;
+    display: block;
+    padding: 6px 15px;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    width: 140px;
+}
+form.form-invoice {
+    display: flex;
+    justify-content: space-between;
+}
+.wrapper-selected   .select2-container {
+    margin-right: 10px !important;
+}
+/* invoice table */
+/* select po invoice   */
+.choose-file {
+    padding: 30px 21px;
+    background-color: #fff;
+    margin-top: 30px;
+    border-radius: 6px;
+}
+.inner-file-input {
+    padding: 30px 30px;
+    border: 1px dashed #818b96;
+    border-radius: 6px;
+}
+.inner-file-input h6 {
+    font-size: 20px;
+    color: #000;
+    margin-bottom: 18px;
+}
+.note-wrap {
+    margin-top: 24px;
+}
+.note-wrap p {
+    font-weight: 500;
+    font-size: 16px;
+    padding: 13px 15px;
+    border-left: 2px solid #e91d26;
+    background-color: #f3f3f3;
+    margin-bottom: 0;
+}
+button#btn-submit {
+    border: none;
+    padding: 10px 42px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 20px;
+    background-color: #e91d26;
+    color: #fff;
+}
+
+
+
+
 /* 15-jan-2024 */
 /* responsive */
 @media (max-width: 1299px) {
