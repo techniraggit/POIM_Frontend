@@ -123,7 +123,7 @@ const Vendor = ({ base_url }) => {
                         </ul>
                         <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Users"
+                                <input className="vendor-input" placeholder="Search Vendor"
                                  value={inputValue} onChange={handleInputChange}
                                  />
                                 <button className="vendor-search-butt"
