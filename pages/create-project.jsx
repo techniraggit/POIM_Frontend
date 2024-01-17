@@ -173,7 +173,7 @@ const Create_Vendor = ({ base_url }) => {
                                 <div className="row mb-4">
                                     <div className="col-lg-4 col-md-12 shipment-caret">
                                         <div className="selectwrap bg-border-select">
-                                            <Form.Item label="Project Maneger" name="project_manager_id" initialValue="" className="vender-input">
+                                            <Form.Item label="Project Manager" name="project_manager_id" initialValue="" className="vender-input">
                                                 <Select onChange={(value) => project(value)}>
                                                     {Array.isArray(managers) &&
                                                         managers.map((manager) => (

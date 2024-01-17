@@ -122,7 +122,7 @@ const Edit_Rental_Po = () => {
                     amount: data.amount,
                     company_name: data.vendor_contact.company.company_name,
                     vendor_id: data.vendor_contact.company.vendor_id,
-                    project_id:data.vendor_contact.company.project_id,
+                    project_id: data.vendor_contact.company.project_id,
                     vendor_contact_id: data.vendor_contact.vendor_contact_id,
                     hst_amount: data.hst_amount,
                     total_amount: data.total_amount,
@@ -540,7 +540,7 @@ const Edit_Rental_Po = () => {
                                         </div>
                                         <div class="col-md-6 col-lg-4 all-wrap-box">
                                             {formData.shipment_type === 'project related' && (
-                                                <div class="selectwrap columns-select shipment-caret">
+                                                <div class="selectwrap columns-select shipment-caret w-100">
                                                     <Form.Item
                                                         label="Project  "
                                                         name="project_id"
@@ -742,29 +742,30 @@ const Edit_Rental_Po = () => {
                                                         }
                                                         {formData.shipment_type === 'project related' && (
                                                             <div class="col-sm-4">
-                                                                <Form.Item
-                                                                    label="Select Site"
-                                                                    name="project_site_id"
-                                                                    htmlFor="file"
-                                                                    class="same-clr"
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            message: "Please choose site",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Select id="singlesa" class="js-states form-control file-wrap-select">
-                                                                        {Array.isArray(siteOptions) &&
-                                                                            siteOptions.map((site) =>
-                                                                            (
-                                                                                <Select.Option key={site.site_id} value={site.site_id}>
-                                                                                    {site.name}
-                                                                                </Select.Option>
-                                                                            )
-                                                                            )}
-                                                                    </Select>
-                                                                </Form.Item>
+                                                                <div className="selectwrap  shipment-caret aligned-text">
+                                                                    <Form.Item
+                                                                        label="Select Site"
+                                                                        name="project_site_id"
+                                                                        htmlFor="file"
+                                                                        class="same-clr"
+                                                                        rules={[
+                                                                            {
+                                                                                required: true,
+                                                                                message: "Please choose site",
+                                                                            },
+                                                                        ]}
+                                                                    >
+                                                                        <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                                            {Array.isArray(siteOptions) &&
+                                                                                siteOptions.map((site) =>
+                                                                                (
+                                                                                    <Select.Option key={site.site_id} value={site.site_id}>
+                                                                                        {site.name}
+                                                                                    </Select.Option>
+                                                                                )
+                                                                                )}
+                                                                        </Select>
+                                                                    </Form.Item></div>
                                                             </div>
                                                         )}
                                                         <MinusOutlined className="minus-wrap" onClick={() => {

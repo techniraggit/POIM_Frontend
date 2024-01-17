@@ -680,7 +680,7 @@ div#forspce {
 }
 
 .order-choose {
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 30px;
 }
 
@@ -730,7 +730,7 @@ button.ant-btn.ant-btn-default.vendor-search-butt:hover{
 
 .linewrap {
     margin-bottom: 35px;
-    margin-top: 60px;
+    margin-top: 20px;
 }
 
 .wrap-box label {
@@ -963,7 +963,7 @@ span.select2-selection__clear {
 .left-wrap input {
     color: #112F5C;
     font-weight: 500;
-    font-size: 22px;
+    font-size: 16px;
     border: none;
 }
 
@@ -1368,7 +1368,7 @@ button.ant-btn.create-ven-butt:hover {
 .wrap-number .ant-picker input {
     color: #112F5C !important;
     font-weight: 500;
-    font-size: 22px;
+    font-size: 16px;
     border: none;
 }
 
@@ -1909,7 +1909,7 @@ button.user-pop-up-butt {
 }
 
 .vendor-rowgap {
-    margin-bottom: 70px !important;
+    margin-bottom: 50px !important;
 }
 
 /* 29 dec */
@@ -2101,7 +2101,7 @@ button.ant-btn.ant-btn-default.set-btn:hover span {
 }
 
 .create-another.minuswrap-img {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .vendor-rowgap .selectwrap .ant-form-item {
     margin-bottom: 0px !important;
@@ -2778,7 +2778,7 @@ ul.list-icons.board-list  li {
     padding: 22px 19px 17px;
 }
 .to-wrap-datepicker > .wrap-box {
-    width: 89%;
+    width: 95%;
 }
 .wid-projects > div {
     width: 100%;
@@ -2791,6 +2791,20 @@ ul.list-icons.board-list  li {
     width: 100%;
 }
 /* 16-jan-2024 */
+/* 17-jan-2024 */
+.left-wrap.wrap-number.sub-po-typee input:-internal-autofill-selected {
+    background-color: transparent !important;
+}
+.left-wrap .ant-form-item.css-dev-only-do-not-override-p7e5j5 {
+    margin-bottom: 0px !important;
+}
+.ant-form-item.css-dev-only-do-not-override-p7e5j5 {
+    margin-bottom: 0px !important;
+}
+.row.mt-rentalpo {
+    margin-top: 35px;
+}
+/* 17-jan-2024 */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
