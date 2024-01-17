@@ -61,7 +61,7 @@ const CreateSubContractorPo = () => {
                 setFormData({
                     ...formData,
                     po_type: 'subcontractor',
-                    po_date: moment().format('DD-MM-YYYY')
+                    po_date: moment().format('YYYY-MM-DD')
                 })
             }
         })

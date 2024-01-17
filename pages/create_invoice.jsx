@@ -1,23 +1,51 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
-import { Form, Input, Button, Select } from 'antd';
+import { Form, Input, Button, Select, Upload, message } from 'antd';
 import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { fetchPoNumbers, fetchPoNumbr } from "@/apis/apis/adminApis";
+import { fetchPoNumbers, fetchPoNumbr, invoiceSubmit } from "@/apis/apis/adminApis";
 import Material_invoice from "@/components/material_invoice";
+import Rental_invoice from "@/components/rental_invoice";
+import { UploadOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
+import { InboxOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { Dragger } = Upload;
+const { TextArea } = Input;
 
 const { Option } = Select;
 
 const Create_Invoice = () => {
     const [poNumber, setPoNumber] = useState([]);
-    const [responseData,setResponseData]=useState([]);
-    
+    const [responseData, setResponseData] = useState([]);
+    const [poId, setPoId] = useState('')
+    const router = useRouter();
+
 
     const onFinish = (values) => {
         // Handle form submission here
         console.log('Received values:', values);
+        const formData = new FormData();
+        formData.append('po_id', poId);
+
+        // Check if a file is present before appending to FormData
+        if (values.invoice_file && values.invoice_file.length > 0) {
+            const file = values.invoice_file[0].originFileObj;
+            formData.append('invoice_file', file);
+        }
+
+        console.log(formData, 'FormData object');
+        const response = invoiceSubmit(formData)
+        console.log(response,'ddddddddddddd');
+        response.then((res) => {
+            console.log(res.data, 'qqqqqqqqqqqqqqqq');
+            if(res.data.status_code == 201){
+                message.success(res.data.message);
+                router.push('/invoice');
+            }
+        })
     };
     useEffect(() => {
         const response = fetchPoNumbr()
@@ -35,13 +63,32 @@ const Create_Invoice = () => {
         const response = fetchPoNumbers(id)
         console.log(response, 'iiiiiiiiiiiiiiii');
         response.then((res) => {
-            console.log(res.data.data, 'wwwwwwwwww');
-            const data=res.data.data;
+
+            console.log(res.data.data.po_id, 'wwwwwwwwww');
+            const data = res.data.data;
+            setPoId(data.po_id)
             setResponseData(data)
-            
+
         })
     }
-   
+
+    const props = {
+        name: 'file',
+        multiple: false,
+        showUploadList: false,
+        beforeUpload: () => false, // Prevent default upload behavior
+    };
+
+    const beforeUpload = (file) => {
+        // Validate file type or size if needed
+        const isPDF = file.type === 'application/pdf';
+        if (!isPDF) {
+            message.error('Only PDF files are allowed!');
+        }
+        // Returning false prevents file upload
+        return isPDF;
+    };
+
     return (
         <>
             <div class="wrapper-main">
@@ -49,8 +96,7 @@ const Create_Invoice = () => {
                 <div className="inner-wrapper">
                     <Header heading='Invoice' />
                     <div class="bottom-wrapp-purchase">
-                        <div class="invoicedropdown-warp">
-                        </div>
+
                         <div class="wrapp-in-voice">
                             <ul class="bg-colored-ul">
                                 <li class="bg-li">
@@ -59,6 +105,7 @@ const Create_Invoice = () => {
                                 </li>
 
                             </ul>
+
 
                             <div className="row">
                                 <div className="col-lg-4">
@@ -78,107 +125,48 @@ const Create_Invoice = () => {
                                 </div>
                             </div>
                             {
-                                responseData.po_type== 'material'&&(
+                                responseData.po_type == 'material' && (
                                     <>
-                                    <Material_invoice data={responseData}/>
+                                        <Material_invoice data={responseData} />
                                     </>
                                 )
                             }
-                            {/* <div class="row space-raw  btm-space">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <label>
-                                            Company Name
-                                        </label>
-                                        <input
-                                            label="Company Name"
-                                            for="name"
-                                            name="company_name"
-                                            type="text"
-                                            value={vendorForm.company_name}
-                                            onChange={handleChange}
-                                        />
-                                    </div>
-                                </div>
+                            {
+                                responseData.po_type == 'rental' && (
+                                    <>
+                                        <Rental_invoice data={responseData} />
+                                    </>
+                                )
+                            }
+                            <Form
+                                name="antdForm"
+                                className="choose-file"
+                                onFinish={onFinish}
+                            >
+                                <Form.Item
+                                    name="invoice_file"
+                                    valuePropName="fileList"
+                                    getValueFromEvent={(e) => e.fileList}
+                                >
+                                    <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
+                                        <Button icon={<UploadOutlined />}>Select File</Button>
+                                    </Upload>
+                                </Form.Item>
+                                {/* <Form.Item name="invoice_file" valuePropName="fileList" getValueFromEvent={() => null}>
+                                    <Input type='file' />   
+                                </Form.Item> */}
 
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <label>
-                                            Email
-                                        </label>
-                                        <input
-                                            for="name"
-                                            name="email"
-                                            type="text"
-                                            value={vendorForm.email}
+                                <Form.Item name="note">
+                                    <TextArea rows={8} placeholder="Please enter a note here." />
+                                </Form.Item>
 
-                                            onChange={handleChange}
-                                        />
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box">
-                                        <label>Contact Number</label>
-                                        <input
-                                            for="name"
-                                            name="phone"
-                                            type="text"
-                                            value={vendorForm.phone}
-
-                                            onChange={handleChange}
-                                        />
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box mb-0">
-                                        <label>Address</label>
-                                        <input
-                                            for="name"
-                                            name="address"
-                                            type="text"
-                                            value={vendorForm.address}
-
-                                            onChange={handleChange}
-                                        />
-
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box mb-0">
-                                        <label>State / Province</label>
-                                        <input
-                                            for="name"
-                                            name="state"
-                                            type="text"
-                                            value={vendorForm.state}
-
-                                            onChange={handleChange}
-                                        />
-
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="wrap-box mb-0">
-                                        <label>Country</label>
-                                        <input
-                                            for="name"
-                                            name="country"
-                                            type="text"
-                                            value={vendorForm.country}
-
-                                            onChange={handleChange}
-                                        />
-
-
-                                    </div>
-                                </div>
-
-                            </div> */}
-                            <form class="choose-file">
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit" id="btn-submit">
+                                        Submit
+                                    </Button>
+                                </Form.Item>
+                            </Form>
+                            {/* <form class="choose-file">
                                 <div class="inner-file-input">
                                     <h6>Drag & drop any file here</h6>
                                     <input type="file" name="" id="" />
@@ -192,7 +180,7 @@ const Create_Invoice = () => {
                                     <textarea name="" id="" cols="30" rows="8" placeholder="Please enter a note here."></textarea>
                                 </div>
                                 <button type="submit" id="btn-submit">Submit</button>
-                            </form>
+                            </form> */}
                         </div>
                     </div>
                 </div>
