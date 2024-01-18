@@ -63,7 +63,7 @@ const Project_Edit = ({ base_url }) => {
                 const response = await axios.get(`${base_url}/api/admin/projects?project_id=${id}`, {
                     headers: headers,
                 });
-                console.log(response.data.projects ,'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+                console.log(response.data.projects, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
                 setRepeaterData(response.data.projects.sites);
                 const projectData = response.data.projects;
                 console.log(projectData.name, 'fffffffffffffffffff');
@@ -178,7 +178,7 @@ const Project_Edit = ({ base_url }) => {
     // }
 
     const removeField = async (id) => {
-        
+
         try {
 
             const headers = {
@@ -250,11 +250,11 @@ const Project_Edit = ({ base_url }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row">
+                                <div className="row mb-4">
                                     <div className="col-lg-4 col-md-12">
                                         <div className="selectwrap bg-border-select">
 
-                                            <Form.Item label="Project Maneger" name="project_manager_id" className="vender-input">
+                                            <Form.Item label="Project Manager" name="project_manager_id" className="vender-input">
                                                 <Select onChange={(value) => project(value)}>
                                                     {Array.isArray(managers) &&
                                                         managers.map((manager) => (
@@ -307,56 +307,58 @@ const Project_Edit = ({ base_url }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <Space style={{ display: 'block', marginBottom: 8 }} align="baseline" className="vendor-ant-form re-peator-project">
+                                <div classsName="create-another">
+                                    <Space style={{ display: 'block', marginBottom: 8 }} align="baseline" className="vendor-ant-form re-peator-project">
                                         {Array.isArray(repeaterData) &&
                                             repeaterData.map((repeater, index) => (
-                                                
+
                                                 index !== 0 && (
                                                     <>
-                                                    <div className="repeator-row" style={{display: 'flex', columnGap: '8px', alignItems: 'center' }}>
-                                                        <div className="wrap-box kt" key={index}>
-                                                            <label>Site Name</label>
-                                                            <input
-                                                                htmlFor="name"
-                                                                name="name"
-                                                                type="text"
-                                                                value={repeater.name}
-                                                                onChange={(e) => handleChange(index, 'name', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div className="wrap-box" key={index}>
+                                                        <div className="repeator-row" style={{ display: 'flex', columnGap: '8px', alignItems: 'center' }}>
+                                                            <div className="wrap-box kt" key={index}>
+                                                                <label>Site Name</label>
+                                                                <input
+                                                                    htmlFor="name"
+                                                                    name="name"
+                                                                    type="text"
+                                                                    value={repeater.name}
+                                                                    onChange={(e) => handleChange(index, 'name', e.target.value)}
+                                                                />
+                                                            </div>
+                                                            <div className="wrap-box" key={index}>
 
-                                                            <label>Site Address</label>
-                                                            <input
-                                                                htmlFor="address"
-                                                                name="address"
-                                                                type="text"
-                                                                value={repeater.address}
-                                                                onChange={(e) => handleChange(index, 'address', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div className="minus-wraper1 wrap-box">
-                                                            <label>State</label>
-                                                            <input
-                                                                htmlFor="state"
-                                                                name="state"
-                                                                type="text"
-                                                                value={repeater.state}
-                                                                onChange={(e) => handleChange(index, 'state', e.target.value)}
-                                                            />
+                                                                <label>Site Address</label>
+                                                                <input
+                                                                    htmlFor="address"
+                                                                    name="address"
+                                                                    type="text"
+                                                                    value={repeater.address}
+                                                                    onChange={(e) => handleChange(index, 'address', e.target.value)}
+                                                                />
+                                                            </div>
+                                                            <div className="minus-wraper1 wrap-box">
+                                                                <label>State</label>
+                                                                <input
+                                                                    htmlFor="state"
+                                                                    name="state"
+                                                                    type="text"
+                                                                    value={repeater.state}
+                                                                    onChange={(e) => handleChange(index, 'state', e.target.value)}
+                                                                />
 
-                                                        </div>
-                                                        <div className="wrap-minus" >
-                                                            <MinusOutlined className="minus-wrap" 
-                                                            onClick={()=>removeField(repeater.site_id)}
-                                                            style={{ marginLeft: '8px' }} />
-                                                        </div>
+                                                            </div>
+                                                            <div className="wrap-minus" >
+                                                                <MinusOutlined className="minus-wrap"
+                                                                    onClick={() => removeField(repeater.site_id)}
+                                                                    style={{ marginLeft: '8px' }} />
+                                                            </div>
                                                         </div>
                                                     </>
                                                 )
                                             ))}
                                     </Space>
-                              
+                                </div>
+
                                 <div className="create-another">
                                     <Form.List name="items">
 
@@ -364,42 +366,53 @@ const Project_Edit = ({ base_url }) => {
                                             <>
                                                 {fields.map(({ key, name, fieldKey, ...restField }) => (
                                                     <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                                        <div className="wrap-box">
-                                                            <Form.Item
-                                                                {...restField}
-                                                                name={[name, 'name']}
-                                                                fieldKey={[fieldKey, 'itemName']}
-                                                                label="Site Name"
-                                                                rules={[{ required: true, message: 'Please enter name' }]}
-                                                            >
-                                                                <Input placeholder="Name" />
-                                                            </Form.Item>
+
+                                                        <div className="repeator-row row" style={{ display: 'flex', columnGap: '0px', alignItems: 'center' }}>
+                                                            <div className="col-sm-4">
+                                                                <div className="wrap-box mb-0">
+                                                                    <Form.Item
+                                                                        {...restField}
+                                                                        name={[name, 'name']}
+                                                                        fieldKey={[fieldKey, 'itemName']}
+                                                                        label="Site Name"
+                                                                        rules={[{ required: true, message: 'Please enter name' }]}
+                                                                    >
+                                                                        <Input placeholder="Name" />
+                                                                    </Form.Item>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-sm-4">
+                                                                <div className="wrap-box mb-0">
+                                                                    <Form.Item
+                                                                        {...restField}
+                                                                        name={[name, 'address']}
+                                                                        fieldKey={[fieldKey, 'itemAddress']}
+                                                                        label="Site Address"
+                                                                        rules={[{ required: true, message: 'Please enter address' }]}
+                                                                    >
+                                                                        <Input placeholder="address" />
+                                                                    </Form.Item>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-sm-4">
+                                                                <div className="wrap-box mb-0">
+                                                                    <Form.Item
+                                                                        {...restField}
+                                                                        name={[name, 'state']}
+                                                                        fieldKey={[fieldKey, 'site']}
+                                                                        label="Site"
+                                                                        rules={[{ required: true, message: 'Please enter site' }]}
+                                                                    >
+                                                                        <Input placeholder="Site State" />
+                                                                    </Form.Item>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+
+                                                            <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
                                                         </div>
 
-                                                        <div className="wrap-box">
-                                                            <Form.Item
-                                                                {...restField}
-                                                                name={[name, 'address']}
-                                                                fieldKey={[fieldKey, 'itemAddress']}
-                                                                label="Site Address"
-                                                                rules={[{ required: true, message: 'Please enter address' }]}
-                                                            >
-                                                                <Input placeholder="address" />
-                                                            </Form.Item>
-                                                        </div>
-
-                                                        <div className="wrap-box">
-                                                            <Form.Item
-                                                                {...restField}
-                                                                name={[name, 'state']}
-                                                                fieldKey={[fieldKey, 'site']}
-                                                                label="Site"
-                                                                rules={[{ required: true, message: 'Please enter site' }]}
-                                                            >
-                                                                <Input placeholder="Site State" />
-                                                            </Form.Item>
-                                                        </div>
-                                                        <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
                                                     </Space>
                                                 ))}
                                                 <Form.Item>
@@ -410,7 +423,7 @@ const Project_Edit = ({ base_url }) => {
                                             </>
                                         )}
                                     </Form.List>
-                                    <div className="col-lg-4 col-md-12">
+                                    <div className="col-lg-4 col-md-12 mt-4">
                                         <div className="wrap-box">
                                             <Form.Item
                                                 label="Customer Name"
@@ -429,8 +442,8 @@ const Project_Edit = ({ base_url }) => {
                             </Form>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     );
 };

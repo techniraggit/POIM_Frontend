@@ -616,7 +616,7 @@ const EditPo = () => {
                                         </div>
                                         <div class="row space-col-spc mb-0">
                                             <div class="col-sm-4">
-                                                <div className="wrap-box">
+                                                <div className="wrap-box mb-0">
                                                     <Form.Item
                                                         label="Description"
                                                         for="name"

@@ -489,8 +489,8 @@ const EditSubContractorPo = () => {
                                         <span class="d-block me-4">Ship To</span>
                                         <hr />
                                     </div>
-                                    <div class="row space-bottom mb-0">
-                                        <div class="col-md-6 col-lg-12 all-wrap-box">
+                                    <div class="row space-bottom mb-3">
+                                        <div class="col-md-6 col-lg-4 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
                                                     label="Shipment Type"
@@ -511,8 +511,9 @@ const EditSubContractorPo = () => {
                                                     </Select>
                                                 </Form.Item>
                                             </div>
+                                            </div>
                                             {formData.shipment_type === 'project related' && (
-                                                <div className="col-lg-6">
+                                                <div className="col-lg-4 col-md-6">
                                                     <div class="selectwrap columns-select shipment-caret">
                                                         <Form.Item
                                                             label="Project  "
@@ -547,9 +548,9 @@ const EditSubContractorPo = () => {
                                                     </div>
                                                 </div>
                                             )}
-                                        </div>
+                                        
                                     </div>
-                                    <div class="linewrap d-flex">
+                                    <div class="linewrap d-flex mt-5">
                                         <span class="d-block me-4">Material</span>
                                         <hr />
                                     </div>
@@ -648,7 +649,7 @@ const EditSubContractorPo = () => {
                                                                     }
                                                                     if(key === 'description' || key === "amount") {
                                                                         return(
-                                                                            <div key={key} className="wrap-box col-sm-3">
+                                                                            <div key={key} className="wrap-box col-sm-3 kt">
                                                                                 <Form.Item
                                                                                     label={upperKey}
                                                                                     rules={[{ required: true, message: `Please enter ${upperKey}` }]}
@@ -684,10 +685,11 @@ const EditSubContractorPo = () => {
                                                                             </div>
                                                                         )
                                                                     } else if (key === 'project_site_id' && formData.shipment_type === 'project related') {
+                                                                        
                                                                         return (
                                                                             <div class="col-sm-4">
                                                                                 <div className="selectwrap columns-select shipment-caret ">
-                                                                                    <select className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({target: { value }}) => onChange('material_details', {project_site_id: value}, index + 1)}>
+                                                                                    <Select className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({target: { value }}) => onChange('material_details', {project_site_id: value}, index + 1)}>
                                                                                         {Array.isArray(siteOptions) &&
                                                                                             siteOptions.map((site) => (
                                                                                                 <option key={site.site_id} value={site.site_id}>
@@ -695,7 +697,7 @@ const EditSubContractorPo = () => {
                                                                                                 </option>
                                                                                             ))
                                                                                         }
-                                                                                    </select>
+                                                                                    </Select>
                                                                                 </div>
                                                                             </div>
                                                                         )

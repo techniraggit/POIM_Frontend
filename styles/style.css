@@ -1686,8 +1686,11 @@ button.ant-btn.ant-btn-dashed.add-more-btn:hover  {
     top: 50%;
     transform: translateY(-50%);
     left: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 160px;
 }
-
 .shipment-caret .form-control {
     border: none;
     padding: 0;
@@ -1843,9 +1846,9 @@ p.detail-para3 {
 }
 
 .cross-icon {
-    float: right;
-
+    text-align: right;
     font-size: 19px;
+    cursor: pointer;
 }
 
 .detail-para1 {
@@ -2776,6 +2779,7 @@ button#btn-submit {
 /* 16-jan-2024 */
 ul.list-icons.board-list  li {
     padding: 22px 19px 17px;
+    cursor: pointer;
 }
 .to-wrap-datepicker > .wrap-box {
     width: 95%;
@@ -2805,6 +2809,17 @@ ul.list-icons.board-list  li {
     margin-top: 35px;
 }
 /* 17-jan-2024 */
+/* 18 jan work */
+.rc-virtual-list-scrollbar.rc-virtual-list-scrollbar-vertical.rc-virtual-list-scrollbar-visible {
+    width: 3px !important;
+    top: 0px;
+    bottom: 0px;
+    right: -14px !important;
+}
+.edit-po-rental .ant-form-item-explain .ant-form-item-explain-error {
+    margin-top: 11px;
+}
+/* 18 jan work */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {

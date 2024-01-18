@@ -566,8 +566,8 @@ const Create_po = () => {
                                         <span class="d-block me-4">Ship To</span>
                                         <hr />
                                     </div>
-                                    <div class="row space-bottom mb-0">
-                                        <div class="col-md-6 col-lg-5 all-wrap-box">
+                                    <div class="row space-bottom mb-5">
+                                        <div class="col-md-6 col-lg-4 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
                                                     label="Shipment Type"
@@ -591,7 +591,7 @@ const Create_po = () => {
                                                 </Form.Item>
                                             </div>
                                         </div>
-                                        <div className="col-lg-5 col-md-6">
+                                        <div className="col-lg-4 col-md-6">
                                             {shipmentType === 'Project Related' && (
                                                 <div class="selectwrap columns-select shipment-caret">
                                                     <Form.Item
