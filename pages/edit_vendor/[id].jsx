@@ -75,6 +75,7 @@ const Vendor_Edit = () => {
             vendor_id: id
         });
         response.then((res) => {
+            // console.log(res,'gggggggggggggg');
             if (res?.data?.status) {
                 message.success('Vendor updated successfully');
                 router.push('/vendor');
@@ -112,7 +113,7 @@ const Vendor_Edit = () => {
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
-                                                <Input onChange={({ target: { value } }) => onChange('contact_indo', { company_name: value }, 0)} />
+                                                <Input onChange={({ target: { value } }) => onChange('contact_info', { company_name: value }, 0)} />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -124,7 +125,7 @@ const Vendor_Edit = () => {
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
-                                                <Input onChange={({ target: { value } }) => onChange('contact_indo', { name: value }, 0)} />
+                                                <Input onChange={({ target: { value } }) => onChange('contact_info', { name: value }, 0)} />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -136,7 +137,7 @@ const Vendor_Edit = () => {
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your company name!' }]}
                                             >
-                                                <Input onChange={({ target: { value } }) => onChange('contact_indo', { phone_number: value }, 0)} />
+                                                <Input onChange={({ target: { value } }) => onChange('contact_info', { phone_number: value }, 0)} />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -148,7 +149,7 @@ const Vendor_Edit = () => {
                                                 className="vender-input"
                                                 rules={[{ required: true, message: 'Please enter your email address!' }]}
                                             >
-                                                <Input onChange={({ target: { value } }) => onChange('contact_indo', { email: value }, 0)} />
+                                                <Input onChange={({ target: { value } }) => onChange('contact_info', { email: value }, 0)} />
                                             </Form.Item>
                                         </div>
                                     </div>
@@ -250,12 +251,6 @@ const Vendor_Edit = () => {
                                                                         onChange={(e) => onChange('contact_info', { 'phone_number': e.target.value }, index + 1)}
                                                                     />
                                                                 </div>
-
-
-
-                                                                
-
-
                                                                 <MinusOutlined className="minus-wrap" onClick={() => {
                                                                     setFormData({
                                                                         ...formData,

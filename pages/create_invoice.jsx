@@ -11,6 +11,7 @@ import Rental_invoice from "@/components/rental_invoice";
 import { UploadOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { InboxOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import Subcontractor_invoice from "@/components/subcontractor_invoice";
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -135,6 +136,13 @@ const Create_Invoice = () => {
                                 responseData.po_type == 'rental' && (
                                     <>
                                         <Rental_invoice data={responseData} />
+                                    </>
+                                )
+                            }
+                            {
+                                responseData.po_type == 'subcontractor' && (
+                                    <>
+                                        <Subcontractor_invoice data={responseData} />
                                     </>
                                 )
                             }
