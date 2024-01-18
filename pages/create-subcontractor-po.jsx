@@ -254,7 +254,7 @@ const CreateSubContractorPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Select defaultValue="existing" onChange={(value) => setISNew(value === 'new')} placeholder="Select PO Type" id="single1"
+                                                        <Select  onChange={(value) => setISNew(value === 'new')} placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
                                                         >
                                                             <Option value="existing">Existing</Option>
