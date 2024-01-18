@@ -15,7 +15,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
     const [vendors, setVendors] = useState([]);
 
     useEffect(() => {
-        form.setFieldValue('po_type', 'material');
+        form.setFieldValue('po_type', 'subcontractor');
         form.setFieldValue('poDate', moment());
         const response = fetchVendorContact();
         response.then((res) => {
@@ -23,7 +23,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 setVendors([...res.data.vendors]);
                 setFormData({
                     ...formData,
-                    po_type: 'material',
+                    po_type: 'subcontractor',
                     po_date: moment().format('YYYY-MM-DD')
                 })
             }
