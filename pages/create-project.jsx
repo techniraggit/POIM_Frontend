@@ -280,8 +280,8 @@ const Create_Vendor = ({ base_url }) => {
                                             </>
                                         )}
                                     </Form.List>
-                                    <div className="col-lg-4 col-md-12 mt-4">
-                                        <div className="wrap-box">
+                                    <div className="col-lg-4 col-md-12 mt-5">
+                                        <div className="wrap-box mb-2">
                                             <Form.Item
                                                 label="Customer Name"
                                                 name="customer_name"  // Add a name to link the input to the form values

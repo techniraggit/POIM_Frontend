@@ -865,7 +865,7 @@ const ViewPO = () => {
                                             )}
                                         </Form.List>
                                     </div>
-                                    <div className="row">
+                                    <div className="row mt-5">
                                         <div className="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item

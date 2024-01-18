@@ -398,7 +398,7 @@ const Rental = () => {
                     <span class="d-block me-0">To</span>
                     <hr />
                 </div>
-                <div class="row vendor-rowgap">
+                <div class="row vendor-rowgap mb-0">
                     <div class="col-lg-4 col-md-6">
                         <div class="selectwrap react-select" id="vendor-selector">
                             <div class="selectwrap  shipment-caret select-site aligned-text">
