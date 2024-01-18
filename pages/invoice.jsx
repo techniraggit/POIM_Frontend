@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
-import { EyeFilled, EditFilled } from '@ant-design/icons'
+import { CheckCircleFilled, CloseCircleFilled, EyeFilled, EditFilled } from '@ant-design/icons'
 import { Button, Select, } from 'antd';
 import Sidebar from "@/components/sidebar";
 import Link from "next/link";
@@ -99,12 +99,19 @@ const Invoice = () => {
                                             <th className="hedaings-tb">PO Amount</th>
                                             <th className="hedaings-tb td-color">PO Vendor</th>
                                             <th className="hedaings-tb">PO Status</th>
+                                            <th className="hedaings-tb">PM</th>
+                                            <th className="hedaings-tb">DM</th>
+                                            <th className="hedaings-tb">Site Supervisor</th>
                                             <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {Array.isArray(invoiceTable) &&
-                                            invoiceTable.map((invoice, index) => (
+                                            invoiceTable.map((invoice, index) =>
+                                            // {
+                                            //     console.log(invoice.site_supervisor_approved,'invoiceeeeeeeee');
+                                            // }
+                                            (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{invoice.invoice_number}</td>
@@ -113,140 +120,24 @@ const Invoice = () => {
                                                     <td>{invoice.purchase_order.total_amount}</td>
                                                     <td>{invoice.purchase_order.vendor_contact.name}</td>
                                                     <td>{invoice.purchase_order.status}</td>
+                                                    {/* <td style={{ color: invoice.pm_approved ? 'green' : 'red' }}>
+                                                        {invoice.pm_approved ? '✔' : '❌'}
+                                                    </td> */}
+                                                    {/* <td>
+                                                        {invoice.pm_approved ? <CheckCircleFilled style={{ color: 'green' }} /> : <CloseCircleFilled style={{ color: 'red' }} />}
+                                                    </td> */}
+                                                    <td>{invoice.pm_approved ? "true" : "false"}</td>
+                                                    {/* <td>{invoice.pm_approved|| "N/A"}</td> */}
+                                                    <td>{invoice.dm_approved ? "true" : "false"}</td>
+                                                    <td>{invoice.site_supervisor_approved ? "true" : "false"}</td>
                                                     <td>
                                                         <EyeFilled />
                                                         <EditFilled />
                                                     </td>
-                                                    {/* <td className="td-color">{user.last_name}</td>
-                                                    <td>{user.user_role.name}</td>
-                                                    <td>{user.email}</td>
-                                                    <td>{user.phone_number}</td>
-                                                    <td className="td-icon-color">
-                                                        <EyeFilled onClick={() => handleIconClick(user.id)} />
-                                                        {isViewUserVisible === user.id && <UserPopUp user_id={user.id} />}
-                                                        <Popconfirm
-                                                            title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(user.id)}
-                                                            okText="Yes"
-                                                            cancelText="No"
 
-                                                        >
-                                                            <DeleteFilled />
-                                                        </Popconfirm>
-                                                        <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link>
-                                                    </td> */}
                                                 </tr>
-                                            ))}
-                                        {/* <tr>
-                                            <td>1</td>
-                                            <td>#45488</td>
-                                            <td>#45488</td>
-                                            <td>Darell</td>
-                                            <td>$2400</td>
-                                            <td className="td-color">Teri Dactyl</td>
-                                            <td>Approved</td>
-                                            <td>
-                                                <EyeFilled />
-                                                <EditFilled />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>#45488</td>
-                                            <td>#45488</td>
-                                            <td>Darell</td>
-                                            <td>$2400</td>
-                                            <td className="td-color">Lynn O’leeum</td>
-                                            <td>Approved</td>
-                                            <td>
-                                                <EyeFilled />
-                                                <EditFilled />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>#45488</td>
-                                            <td>#45488</td>
-                                            <td>Darell</td>
-                                            <td>$2400</td>
-                                            <td className="td-color">Lynn O’leeum</td>
-                                            <td>Approved</td>
-                                            <td>
-                                                <EyeFilled />
-                                                <EditFilled />
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>#45488</td>
-                                            <td>#45488</td>
-                                            <td>Darell</td>
-                                            <td>$2400</td>
-                                            <td className="td-color">Olive Yew</td>
-                                            <td>Approved</td>
-                                            <td>
-                                                <EyeFilled />
-                                                <EditFilled />
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>#45488</td>
-                                            <td>#45488</td>
-                                            <td>Darell</td>
-                                            <td>$2400</td>
-                                            <td className="td-color">Lynn O’leeum</td>
-                                            <td>Approved</td>
-                                            <td>
-                                                <EyeFilled />
-
-                                                <EditFilled />
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>#45488</td>
-                                            <td>#45488</td>
-                                            <td>Darell</td>
-                                            <td>$2400</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>Approved</td>
-                                            <td>
-                                                <EyeFilled />
-                                                <EditFilled />
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>#45488</td>
-                                            <td>#45488</td>
-                                            <td>Darell</td>
-                                            <td>Rental</td>
-                                            <td className="td-color">Sam Billings</td>
-                                            <td>Approved</td>
-                                            <td>
-                                                <EyeFilled />
-                                                <EditFilled />
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>#45488</td>
-                                            <td>#45488</td>
-                                            <td>Darell</td>
-                                            <td>$2400</td>
-                                            <td className="td-color">Lynn O’leeum</td>
-                                            <td>Approved</td>
-                                            <td>
-                                                <EyeFilled />
-                                                <EditFilled />
-                                            </td>
-                                        </tr> */}
+                                            )
+                                            )}
                                     </tbody>
                                 </table>
 

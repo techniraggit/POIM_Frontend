@@ -190,9 +190,6 @@ const Vendor_Edit = ({ base_url }) => {
                                     wrapperCol={{ span: 16 }}
                                 >
                                     <div className="row">
-                                        {/* <div className="Role">
-                    <p>Role</p>
-                  </div> */}
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap react-select">
 
@@ -267,30 +264,6 @@ const Vendor_Edit = ({ base_url }) => {
                                                 </Form.Item>
                                             </div>
                                         </div>
-                                        {/* <div className="col-lg-4 col-md-6">
-                      <div class="wrap-box">
-                        <Form.Item
-                          label="Edit Password"
-                          name="address"  // Add a name to link the input to the form values
-                          className="vender-input"
-                          rules={[{ required: true, message: 'Please enter your address !' }]}
-                        >
-                          <Input />
-                        </Form.Item>
-                      </div>
-                    </div> */}
-                                        {/* <div className="col-lg-4 col-md-6">
-                      <div class="wrap-box">
-                        <Form.Item
-                          label="Confirm New Password"
-                          name="state"  // Add a name to link the input to the form values
-                          className="vender-input"
-                          rules={[{ required: true, message: 'Please enter your state!' }]}
-                        >
-                          <Input />
-                        </Form.Item>
-                      </div>
-                    </div> */}
                                         <div className="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
@@ -330,11 +303,6 @@ const Vendor_Edit = ({ base_url }) => {
                                             </div>
                                         </div>
                                         <div className="col-12">
-                                            {/* <Form.Item>
-                          <Button type="primary" htmlType="submit" loading={loading}>
-                            Submit
-                          </Button>
-                        </Form.Item> */}
                                             <Form.Item >
                                                 <button type="submit" className="create-ven-butt" loading={loading}>Update</button>
                                             </Form.Item>
