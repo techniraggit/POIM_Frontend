@@ -174,25 +174,6 @@ const CreateSubContractorPo = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="order-choose d-flex">
-                                        <div className="left-wrap wrap-number sub-po-typee">
-                                            <Form.Item
-                                                label="Purchase Order Number"
-                                                name="poNumber"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: 'Please enter Purchase Order Number',
-                                                    },
-                                                    {
-                                                        pattern: /^\d{6,}$/, // Regular expression to ensure at least six digits
-                                                        message: 'Purchase Order Number must be at least six digits',
-                                                    },
-                                                ]}
-                                            >
-                                                <Input placeholder="Enter Po Number" onChange={({ target: { value } }) => onChange('po_number', value)} readOnly={isNew} />
-                                            </Form.Item>
-                                        </div>
 
                                     <PoForm formData={formData} isNew={isNew} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                     
