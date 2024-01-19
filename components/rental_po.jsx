@@ -342,7 +342,6 @@ const Rental = () => {
                     <div className="col-lg-4 col-md-6">
                         <div className="selectwrap react-select">
                             <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
-                                {/* <CaretDownFilled className="caret-icon" /> */}
                                 <Form.Item
                                     label="Choose PO Type"
                                     name="po_type"
@@ -356,7 +355,6 @@ const Rental = () => {
                                 >
                                     <Select placeholder="Select PO Type" id="single1"
                                         class="js-states form-control file-wrap-select bold-select"
-                                    // onChange={handlePoTypeChange}
                                     >
                                         <Option value="material">Material PO</Option>
                                         <Option value="rental">Rental PO</Option>
@@ -598,8 +596,6 @@ const Rental = () => {
                                     onChange={handlePoTypeChange}
                                 >
                                     <Option value="Project Related">Project Related</Option>
-                                    {/* <Option value="Non Project Related">Non Project Related</Option>
-                                    <Option value="Combined">Combined</Option> */}
                                 </Select>
                             </Form.Item>
                         </div>
@@ -658,8 +654,6 @@ const Rental = () => {
                             >
                                 <Input.TextArea rows={4} cols={50} />
                             </Form.Item>
-                            {/* <label for="name">Description</label>
-                            <textarea className="text-area" rows="4" cols="50"></textarea> */}
                         </div>
                     </div>
                 </div>
@@ -677,14 +671,7 @@ const Rental = () => {
                                         },
                                     ]}
                                 >
-                                    {/* <DatePicker
-                                    style={{ width: "100%" }}
-                                    suffixIcon={<CalendarOutlined />}
-                                    format="YYYY-MM-DD"
-                                    onChange={(date, dateString) => {
-                                        console.log('Selected date:', dateString);
-                                      }}
-                                /> */}
+                                   
                                     <Input type="date"></Input>
                                 </Form.Item>
                             </div>
@@ -699,7 +686,6 @@ const Rental = () => {
                             <Form.Item
                                 label="To"
                                 name="end_date"
-                                //  initialValue={moment(formattedDate, "YYYY-MM-DD")}
                                 rules={[
                                     {
                                         required: true,
@@ -708,17 +694,9 @@ const Rental = () => {
                                 ]}
                             >
                                 <Input type="date"></Input>
-                                {/* <DatePicker
-                                    style={{ width: "100%" }}
-                                    format="YYYY-MM-DD"
-                                    suffixIcon={<CalendarOutlined />}
-                                    onChange={(date, dateString) => {
-                                        console.log('Selected date:', dateString);
-                                      }}
-                                /> */}
+                               
                             </Form.Item>
-                            {/* <label for="name">To</label>
-                            <input type="date" /> */}
+                            
                         </div>
                     </div>
                     <div className="col-sm-4">
@@ -821,11 +799,7 @@ const Rental = () => {
                                                                         value={repeator[index].start_date}
                                                                         onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'start_date', index)}
                                                                     />
-                                                                    {/* <DatePicker
-                                                                style={{ width: "100%" }}
-                                                                suffixIcon={<CalendarOutlined />}
-                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'date', index)}
-                                                            /> */}
+                                                                
                                                                 </Form.Item>
                                                             </div>
                                                             <div className="text-to ps-3"><p className='mt-1'>To</p></div>
@@ -853,11 +827,7 @@ const Rental = () => {
                                                                     onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'end_date', index)}
 
                                                                 />
-                                                                {/* <DatePicker
-                                                                style={{ width: "100%" }}
-                                                                suffixIcon={<CalendarOutlined />}
-                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'to', index)}
-                                                            /> */}
+                                                               
                                                             </Form.Item>
                                                         </div>
                                                     </div>
@@ -879,7 +849,6 @@ const Rental = () => {
                                                                 ]}
                                                             >
                                                                 <Input
-                                                                    // value={repeator[index].amount}
                                                                     onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'amount', index)}
                                                                 />
 
@@ -899,7 +868,6 @@ const Rental = () => {
                                                                     name={[name, 'project_site_id']}
                                                                     fieldKey={[fieldKey, 'site_id']}
                                                                     value={repeator[index].site_id}
-                                                                    // name="site_id"
                                                                     htmlFor="file"
                                                                     class="same-clr"
                                                                     rules={[
@@ -929,7 +897,6 @@ const Rental = () => {
                                                             remove(name);
                                                             handleRemoveItem(index); // Call the function to handle item removal
                                                         }} style={{ marginLeft: '8px' }} />
-                                                        {/* <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} /> */}
                                                     </div>
                                                 </div>
                                             </div>

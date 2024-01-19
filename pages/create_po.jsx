@@ -296,7 +296,8 @@ const Create_po = () => {
         // const rentalPoPageUrl = "/rental-po";
 
         if (selectedValue === "rental") {
-            router.push('/rental-po');
+            router.push('/create-rental-po')
+            // router.push('/rental-po');
         } else if (selectedValue === 'subcontractor') {
             router.push('/create-subcontractor-po');
         }

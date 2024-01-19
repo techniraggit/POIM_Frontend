@@ -5,24 +5,26 @@ import { Form, Input, Select, Button, Space } from "antd";
 
 const repeatorData = {
     description: '',
-    date: '',
+    start_date: '',
+    end_date:'',
     amount: 0,
     project_site_id: ''
 }
 
-function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, form, edit }) {
+function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, edit }) {
   useEffect(() => {
     if(edit) {
-        form.setFieldValue('date', formData.material_details[0]?.date);
+        form.setFieldValue('start_date', formData.material_details[0]?.start_date);
+        form.setFieldValue('end_date', formData.material_details[0]?.end_date);
     }
-  }, [formData.material_details[0]?.date, edit]);
+  }, [formData.material_details[0]?.start_date, edit,formData.material_details[0]?.end_date]);
 
   return (
     <div class="row">
         <div class="col-12 space-col-spc mb-3">
             <div class="wrap-box">
                 <Form.Item
-                    label="Scope Of Work"
+                    label="Description"
                     for="name"
                     name="description"
                     rules={[
@@ -41,7 +43,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                 <div className="wrap-box">
                     <Form.Item
                         label="Date"
-                        name="date"
+                        name="start_date"
                         rules={[
                             {
                                 required: true,
@@ -49,7 +51,23 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                             },
                         ]}
                     >
-                        <Input onChange={({ target: { value } }) => onChange('material_details', { date: value }, 0)} type="date"></Input>
+                        <Input onChange={({ target: { value } }) => onChange('material_details', { start_date: value }, 0)} type="date"></Input>
+                    </Form.Item>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div className="wrap-box">
+                    <Form.Item
+                        label="To"
+                        name="end_date"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please enter date",
+                            },
+                        ]}
+                    >
+                        <Input onChange={({ target: { value } }) => onChange('material_details', { end_date: value }, 0)} type="date"></Input>
                     </Form.Item>
                 </div>
             </div>
@@ -145,7 +163,32 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                 </Form.Item>
                                             </div>
                                         )
-                                    } else if (key === 'date') {
+                                    }
+                                     else if (key === 'start_date') {
+                                        return (
+
+                                            <div className="col-sm-4">
+                                                <div className="wrap-box">
+                                                    <Form.Item
+                                                        label={upperKey}
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please enter date",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input type="date"
+                                                            placeholder={upperKey}
+                                                            value={data[key]}
+                                                            onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+                                                        ></Input>
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                        )
+                                    } 
+                                    else if (key === 'end_date') {
                                         return (
 
                                             <div className="col-sm-4">
@@ -224,4 +267,4 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
   )
 }
 
-export default SubcontractorRepeator;
+export default RentalRepeator;

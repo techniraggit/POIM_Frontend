@@ -13,15 +13,16 @@ const { Option } = Select;
 
 const repeatorData = {
     description: '',
-    date: '',
+    start_date: '',
+    end_date:'',
     amount: 0,
     project_site_id: ''
 }
 
-const CreateSubContractorPo = () => {
+const CreateRentalPo = () => {
     const [formData, setFormData] = useState({
         po_number: '',
-        po_type: 'subcontractor',
+        po_type: 'rental',
         amount: 0,
         company_name: '',
         vendor_id: '',
@@ -35,17 +36,17 @@ const CreateSubContractorPo = () => {
         address: '',
         phone: '',
         email: '',
-        delivery_address: '',
-        quantity: 0,
+        // delivery_address: '',
+        // quantity: 0,
         material_details: [{ ...repeatorData }]
     });
 
-    const [isNew, setISNew] = useState(false);
+    // const [isNew, setISNew] = useState(false);
     const router = useRouter();
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (isNew) {
+        // if (isNew) {
             const poNumberResponse = getPoNumber();
             poNumberResponse.then((res) => {
                 if (res?.data?.status) {
@@ -56,8 +57,8 @@ const CreateSubContractorPo = () => {
                     });
                 }
             })
-        }
-    }, [isNew]);
+        // }
+    }, []);
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
@@ -70,7 +71,6 @@ const CreateSubContractorPo = () => {
     const onFinish = () => {
         createPO({
             ...formData,
-            subcontractor_type: isNew ? 'new' : 'existing'
         }).then((res) => {
             if (res?.data?.status) {
                 router.push('/po_list');
@@ -149,33 +149,12 @@ const CreateSubContractorPo = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div className="selectwrap react-select">
-                                                <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
-                                                    <Form.Item
-                                                        label="Choose PO Type"
-                                                        name="subcontractor_type"
-                                                        class="bold-label"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please choose PO Type",
-                                                            },
-                                                        ]}
-                                                    >
-                                                        <Select  onChange={(value) => setISNew(value === 'new')} placeholder="Select PO Type" id="single1"
-                                                            class="js-states form-control file-wrap-select bold-select"
-                                                        >
-                                                            <Option value="existing">Existing</Option>
-                                                            <Option value="new">New</Option>
-                                                        </Select>
-                                                    </Form.Item>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
 
-                                    <PoForm formData={formData} isNew={isNew} form={form}  onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+                                    <PoForm formData={formData} 
+                                    // isNew={isNew} 
+                                    form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
@@ -196,4 +175,4 @@ const CreateSubContractorPo = () => {
 
 export { getServerSideProps };
 
-export default CreateSubContractorPo;
+export default CreateRentalPo;

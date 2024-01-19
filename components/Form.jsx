@@ -4,7 +4,9 @@ import { Form, Input, Select, DatePicker } from "antd";
 import { fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
-import MaterialRepeator from "./MaterialRepeator";
+import RentalRepeator from "./rentalRepeator";
+import MaterialRepeator from "./materialRepeator";
+// import MaterialRepeator from "./MaterialRepeator";
 
 const { Option } = Select;
 
@@ -15,7 +17,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
     const [vendors, setVendors] = useState([]);
 
     useEffect(() => {
-        form.setFieldValue('po_type', 'subcontractor');
+        form.setFieldValue('po_type', formData.po_type);
         form.setFieldValue('poDate', moment());
         const response = fetchVendorContact();
         response.then((res) => {
@@ -23,7 +25,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 setVendors([...res.data.vendors]);
                 setFormData({
                     ...formData,
-                    po_type: 'subcontractor',
                     po_date: moment().format('YYYY-MM-DD')
                 })
             }
@@ -433,8 +434,16 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 formData.po_type === 'subcontractor' ? <SubcontractorRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
             }
             {
-                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
+                formData.po_type === 'rental' ? <RentalRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange}/>:<></>
             }
+            {
+                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} projects={projects} setFormData={setFormData} form={form} onChange={onChange}/>:<></>
+            }
+            {/* {
+                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
+
+            } */}
+
             <div className="row top-btm-space mb-0">
                 <div className="col-lg-4 col-md-6">
                     <div class="wrap-box">
