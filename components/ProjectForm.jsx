@@ -4,7 +4,6 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { removeProjectSite } from "@/apis/apis/adminApis";
 
 function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData, repeatorData }) {
-    console.log(formData)
   return (
     <Form onFinish={onFinish} form={form} layout="vertical"
         labelCol={{ span: 8 }}
@@ -61,7 +60,6 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                         label="Site Name"
                         name="name0"
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your site address!' }]}
                     >
                         <Input onChange={({ target: { value } }) => onChange('project_sites', {name: value}, 0)} />
                     </Form.Item>

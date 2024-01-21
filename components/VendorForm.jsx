@@ -41,7 +41,6 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         label="Contact Person Name"
                         name="name"
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your company name!' }]}
                     >
                         <Input value={formData.contact_info[0]?.name} onChange={({ target: { value } }) => onChange('contact_info', {name: value}, 0)} />
                     </Form.Item>
@@ -52,9 +51,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                     <Form.Item
                         label="Contact No"
                         name="phone_number"
-                        // Add a name to link the input to the form values
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your contact no.!' }]}
                     >
                         <Input value={formData.contact_info[0]?.phone_number} onChange={({ target: { value } }) => onChange('contact_info', {phone_number: value}, 0)} />
                     </Form.Item>
@@ -116,19 +113,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         <Input value={formData.address} onChange={({ target: { value } }) => onChange('address', value)} />
                     </Form.Item>
                 </div>
-            </div>
-            <div className="col-lg-4 col-md-12">
-                <div className="wrap-box">
-                    <Form.Item
-                        label="Customer Name"
-                        name="customer_name"  // Add a name to link the input to the form values
-                        className="vender-input"
-                    >
-                        <Input value={formData.customer_name} onChange={({ target: { value } }) => onChange('customer_name', value)} />
-                    </Form.Item>
-                </div>
-            </div>
-            
+            </div>            
             <div className="create-another">
                 {
                     formData.contact_info.slice(1).map((contact, index) => {

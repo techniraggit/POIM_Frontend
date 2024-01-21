@@ -203,7 +203,6 @@ const EditUser = ({ base_url }) => {
                                                     label="Address"
                                                     name="address"  // Add a name to link the input to the form values
                                                     className="vender-input"
-                                                    rules={[{ required: true, message: 'Please enter your address!' }]}
                                                 >
                                                     <Input />
                                                 </Form.Item>
