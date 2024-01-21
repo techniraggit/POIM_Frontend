@@ -40,12 +40,9 @@ const CreateMaterialPo = () => {
         address: '',
         phone: '',
         email: '',
-        // delivery_address: '',
-        // quantity: 0,
         material_details: [{ ...repeatorData }]
     });
 
-    // const [isNew, setISNew] = useState(false);
     const router = useRouter();
     const [form] = Form.useForm();
 
@@ -157,7 +154,7 @@ const CreateMaterialPo = () => {
                                     </div>
 
                                     <PoForm formData={formData} 
-                                    // isNew={isNew} 
+                                    isNew={true} 
                                     form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">

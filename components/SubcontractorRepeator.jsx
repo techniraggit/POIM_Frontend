@@ -193,7 +193,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                             </div>
                                         )
                                     }
-                                    return 
+                                    return <></>
                                 })
                             }
                             <MinusOutlined className="minus-wrap" onClick={() => {

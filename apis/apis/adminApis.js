@@ -91,3 +91,35 @@ export const invoiceSubmit=(data)=>{
 export const invoiceList=()=>{
     return Axios.get(`/api/admin/invoice`)
 }
+
+export const createVendor = (data) => {
+    return Axios.post('/api/admin/vendors', data);
+}
+
+export const updateVendor = (data) => {
+    return Axios.put('/api/admin/vendors', data);
+}
+
+export const fetchManagers = () => {
+    return Axios.get('/api/helping/project-managers');
+}
+
+export const createProject = (data) => {
+    return Axios.post('/api/admin/projects', data);
+}
+
+export const fetchProjectDetails = (id) => {
+    return Axios.get(`/api/admin/projects?project_id=${id}`);
+}
+
+export const removeProjectSite = (data) => {
+    return Axios.delete('/api/admin/project-sites', {data});
+}
+
+export const updateProject = (data) => {
+    return Axios.patch('/api/admin/projects', data);
+}
+
+export const fetchRoles = () => {
+    return Axios.get('/api/admin/roles');
+}

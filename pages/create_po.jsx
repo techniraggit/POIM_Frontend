@@ -263,7 +263,6 @@ const Create_po = () => {
 
     const handleRepeatorChange = (value, name, index) => {
         const values = repeator[index];
-        console.log(values, 'jjjjjjjjjjjjjjjjjjjjjjjjj');
         if (values) {
             repeator[index] = {
                 ...repeator[index],

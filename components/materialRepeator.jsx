@@ -107,36 +107,8 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                         </Form.Item>
                     </div>
                 </div>
-                {formData.shipment_type === 'project related' && (
-                    <div class="col-sm-4">
-                        <div className="selectwrap columns-select shipment-caret ">
-                            <Form.Item
-                                label="Select Site"
-                                name="project_site_id"
-                                htmlFor="file"
-                                class="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose site",
-                                    },
-                                ]}
-                            >
-                                <Select id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
-                                    {Array.isArray(siteOptions) &&
-                                        siteOptions.map((site) => (
-                                            <Select.Option key={site.site_id} value={site.site_id}>
-                                                {site.name}
-                                            </Select.Option>
-                                        )
-                                        )}
-                                </Select>
-                            </Form.Item>
-                        </div>
-                    </div>
-                )}
 
-                {(formData.shipment_type === 'Non Project Related' || formData.shipment_type === 'Combined') && (
+                {(formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined') && (
                     <div class="col-sm-4 ">
                         <div className="selectwrap add-dropdown-wrap shipment-caret">
                             <Form.Item
@@ -155,7 +127,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => onChange('material_details', { material_for: value }, 0)}
                                 >
-                                    {formData.shipment_type === 'Combined' && <option value="project">Project</option>}
+                                    {formData.shipment_type.toLowerCase() === 'combined' && <option value="project">Project</option>}
                                     <Option value="inventory">Inventory</Option>
                                     <Option value="supplies">Supplies/Expenses</Option>
 
@@ -204,7 +176,6 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                     <div class="selectwrap columns-select shipment-caret ">
                                         <Form.Item
                                             label="Project"
-                                            name="project_id"
                                             htmlFor="file"
                                             class="same-clr"
                                             rules={[
@@ -216,13 +187,14 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                         >
                                             <Select id="single406"
                                                 class="js-states form-control file-wrap-select"
-                                                onChange={(value) => list(value)}
-
+                                                onChange={(value) => {
+                                                    list(value);
+                                                    onChange('material_details', { project_id: value }, 0);
+                                                }}
                                             >
                                                 {Array.isArray(projects) &&
                                                     projects.map((project) => (
-                                                        <Select.Option key={project.project_id} value={project.project_id}
-
+                                                        <Select.Option key={project.project_id} value={formData.material_details[0].project_id}
                                                         >
                                                             {project.name}
                                                         </Select.Option>
@@ -250,7 +222,6 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                 {
                                     Object.keys(data).map((key) => {
                                         let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
-                                        console.log(key === 'material_for' && (formData.shipment_type === 'Non Project Related' || formData.shipment_type === 'Combined'), 'formData');
                                         if (key.includes('_')) {
                                             upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');
                                         }
@@ -270,8 +241,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     </Form.Item>
                                                 </div>
                                             )
-                                        }
-                                        else if (key === 'unit_price') {
+                                        } else if (key === 'unit_price') {
                                             return (
                                                 <div key={key} className="wrap-box col-12">
                                                     <Form.Item
@@ -295,8 +265,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     </Form.Item>
                                                 </div>
                                             )
-                                        }
-                                        else if (key === 'amount') {
+                                        } else if (key === 'amount') {
                                             return (
 
                                                 <div className="col-sm-4">
@@ -320,8 +289,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     </div>
                                                 </div>
                                             )
-                                        }
-                                        else if (key === 'description') {
+                                        } else if (key === 'description') {
                                             return (
 
                                                 <div className="col-sm-4">
@@ -345,9 +313,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     </div>
                                                 </div>
                                             )
-                                        }
-
-                                        else if (key === 'project_site_id' && formData.shipment_type === 'project related') {
+                                        } else if (key === 'project_site_id' && formData.shipment_type.toLowerCase() === 'project related') {
                                             return (
                                                 <div class="col-sm-4">
                                                     <div className="selectwrap columns-select shipment-caret ">
@@ -370,37 +336,12 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     </div>
                                                 </div>
                                             )
-                                        }
-                                        else if (key === 'project_site_id' && formData.shipment_type === 'project related') {
-                                            return (
-                                                <div class="col-sm-4">
-                                                    <div className="selectwrap columns-select shipment-caret ">
-                                                        <Form.Item
-                                                            label="Select Site"
-                                                            name={`project_site_id_${index + 1}`}
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                        >
-                                                            <Select id="singlesa" defaultValue={formData.material_details[0].project_site_id} onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
-                                                                {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) => (
-                                                                        <Select.Option key={site.site_id} value={site.site_id}>
-                                                                            {site.name}
-                                                                        </Select.Option>
-                                                                    )
-                                                                    )}
-                                                            </Select>
-                                                        </Form.Item>
-                                                    </div>
-                                                </div>
-                                            )
-                                        } else if (key === 'material_for' && (formData.shipment_type === 'Non Project Related' || formData.shipment_type === 'Combined')) {
+                                        } else if (key === 'material_for' && (formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined')) {
                                             return (
                                                 <div class="col-sm-4 ">
                                                     <div className="selectwrap add-dropdown-wrap shipment-caret">
                                                         <Form.Item
                                                             label="Material For"
-                                                            name={`material_for_${index + 1}`}
                                                             htmlFor="file"
                                                             class="same-clr"
                                                             rules={[
@@ -412,6 +353,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                         >
                                                             <Select id="single90"
                                                                 class="js-states form-control file-wrap-select"
+                                                                value={formData.material_details[index + 1].material_for}
                                                                 onChange={(value) => onChange('material_details', { material_for: value }, 0)}
                                                             >
                                                                 {formData.shipment_type === 'Combined' && <option value="project">Project</option>}
@@ -423,9 +365,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     </div>
                                                 </div>
                                             )
-
-                                        } 
-                                        else if (key === 'code' && (formData.material_details[0].material_for === 'inventory')) {
+                                        } else if (key === 'code' && (formData.material_details[0].material_for === 'inventory') || formData.material_details[0].material_for === 'supplies') {
                                             return(
                                                 <Form.Item
                                                 label="Inventory Code"
@@ -439,32 +379,11 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     },
                                                 ]}
                                             >
-                                                <Input />
+                                                <Input defaultValue={formData.material_details[index + 1].code} onChange={({ target: { value } }) => onChange('material_details', { code: value }, index + 1)} />
                                             </Form.Item>
                                             )
-                                            
                                         }
-                                        else if (key === 'code' && (formData.material_details[0].material_for === 'supplies')) {
-                                            return(
-                                                <Form.Item
-                                                label="GL Code"
-                                                name={`code_${index + 1}`}
-                                                htmlFor="file"
-                                                className="same-clr"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please enter Inventory Code",
-                                                    },
-                                                ]}
-                                            >
-                                                <Input />
-                                            </Form.Item>
-                                            )
-                                            
-                                        }
-
-                                        return
+                                        return <></>
                                     })
                                 }
                                 <MinusOutlined className="minus-wrap" onClick={() => {
