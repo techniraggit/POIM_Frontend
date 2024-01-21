@@ -36,28 +36,23 @@ const CreateRentalPo = () => {
         address: '',
         phone: '',
         email: '',
-        // delivery_address: '',
-        // quantity: 0,
         material_details: [{ ...repeatorData }]
     });
 
-    // const [isNew, setISNew] = useState(false);
     const router = useRouter();
     const [form] = Form.useForm();
 
     useEffect(() => {
-        // if (isNew) {
-            const poNumberResponse = getPoNumber();
-            poNumberResponse.then((res) => {
-                if (res?.data?.status) {
-                    form.setFieldValue('poNumber', res.data?.po_number);
-                    setFormData({
-                        ...formData,
-                        po_number: res.data.po_number
-                    });
-                }
-            })
-        // }
+        const poNumberResponse = getPoNumber();
+        poNumberResponse.then((res) => {
+            if (res?.data?.status) {
+                form.setFieldValue('poNumber', res.data?.po_number);
+                setFormData({
+                    ...formData,
+                    po_number: res.data.po_number
+                });
+            }
+        })
     }, []);
 
     const getTotalAmount = () => {
@@ -149,12 +144,16 @@ const CreateRentalPo = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                     </div>
 
-                                    <PoForm formData={formData} 
-                                    // isNew={isNew} 
-                                    form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+                                    <PoForm 
+                                        formData={formData} 
+                                        isNew={true} 
+                                        form={form} 
+                                        onChange={onChange} 
+                                        onFinish={onFinish} 
+                                        setFormData={setFormData} 
+                                    />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
