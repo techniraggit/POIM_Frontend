@@ -1,11 +1,8 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Select, message, Space, } from 'antd';
-import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons';
+import { Form, Input, Select, message } from 'antd';
 import axios from 'axios';
-import Link from "next/link";
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { getServerSideProps } from "@/components/mainVariable";
 import DynamicTitle from '@/components/dynamic-title.jsx';
@@ -14,16 +11,12 @@ import withAuth from "@/components/PrivateRoute";
 
 const { Option } = Select;
 
-const Vendor_Edit = ({ base_url }) => {
+const EditUser = ({ base_url }) => {
     const [form] = Form.useForm();
-
     const router = useRouter();
     const { id } = router.query;
     const [loading, setLoading] = useState(false);
     const [roles, setRoles] = useState([]);
-    // const [vendors, setVendors] = useState([]);
-    // const [totalVendor, setTotalVendor] = useState(0);
-    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         const fetchroles = async () => {
@@ -32,18 +25,17 @@ const Vendor_Edit = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/roles`, { headers: headers });
-                console.log(response, 'ddddddddddd');
-                setRoles(response.data.data); // Assuming the API response is an array of projects
+                setRoles(response.data.data);
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
         }
         fetchroles();
         return () => {
-            // Cleanup function to reset loading when the component unmounts
             setLoading(false);
         };
     }, [])
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -52,17 +44,11 @@ const Vendor_Edit = ({ base_url }) => {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 };
-                // const data = {
-                //     ...values,
-                // }
-
                 const response = await axios.get(`${base_url}/api/admin/users?id=${id}`, {
                     headers: headers,
                 });
-                console.log(response.data.data.user_role.id, 'jjjjjjjjjjjjjj');
 
                 const userData = response.data.data;
-                console.log(userData, '$$$$$$$$$$$$$$$$$');
 
                 form.setFieldsValue({
                     role_id: response.data.data.user_role.id,
@@ -82,91 +68,38 @@ const Vendor_Edit = ({ base_url }) => {
         }
         fetchUserData();
     })
-    // const handleEditClick = (vendor) => {
-    //     setSelectedVendor(vendor);
-    // };
 
     const onFinish = async (values) => {
-        console.log(values, 'user values');
-        //     if (values.items?.length > 0) {
-        //         const dynamicItems = values.items.map(item => ({
-        //             id: item.id,
-        //             name: item.name,
-        //             phone_number: item.phone_number,
-        //             email: item.email,
-        //         }));
-        //         var data = {
-        //             ...values,
-        //             vendor_id: itemsData[0].vendor_id,
-        //             contact_info: [...dynamicItems]
-        //         };
-        //         console.log(data, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhh');
-        //     }
-        //     else {
-        //         var data = {
-        //             ...values,
-        //             vendor_id: id,
-        //             contact_info: [
-        //                 {
-        //                     id: values.id,
-        //                     name: values.name,
-        //                     phone_number: values.phone_number,
-        //                     email: values.email,
-        //                 }
-        //             ]
-        //         };
-        //     }
         const data = {
             id: id,
             ...values,
         }
-        // console.log(data,'00000000000000000');
-        // return
-
-
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             };
 
-            // Make a PUT request to update the vendor
-            const response = await axios.patch(`${base_url}/api/admin/users`, data,
-                {
-                    headers: headers,
-
-                }
-            );
-            console.log(response, 'vendor edit rsponse');
-
-            // Display a success message
+            const response = await axios.patch(`${base_url}/api/admin/users`, data, { headers: headers });
             message.success('User updated successfully');
             router.push('/user-list')
-
-            // Reset the selected vendor and refetch the updated list
-            setSelectedUser(null);
-            // fetchRoles();
         } catch (error) {
             console.error('Error updating user:', error);
-            // Display an error message
             message.error('Error updating user');
         }
     };
 
     const handlePhoneNumberChange = (value) => {
-        // If the value is exactly 10 or 11 digits, automatically add the appropriate prefix
         if (isValidPhone(value)) {
-          // Do something with the valid phone number
           console.log('Valid phone number:', value);
         } else {
           console.log('Invalid phone number:', value);
         }
-      };
+    };
     
-    
-      function isValidPhone(phoneNumber) {
+    function isValidPhone(phoneNumber) {
         const pattern = /^\+(?:[0-9] ?){6,11}[0-9]$/;
         return phoneNumber && pattern.test(phoneNumber);
-      }
+    }
 
     return (
         <>
@@ -270,7 +203,6 @@ const Vendor_Edit = ({ base_url }) => {
                                                     label="Address"
                                                     name="address"  // Add a name to link the input to the form values
                                                     className="vender-input"
-                                                    rules={[{ required: true, message: 'Please enter your address!' }]}
                                                 >
                                                     <Input />
                                                 </Form.Item>
@@ -319,6 +251,7 @@ const Vendor_Edit = ({ base_url }) => {
         </>
     );
 };
+
 export { getServerSideProps }
-export default withAuth(['admin','accounting'])(Vendor_Edit);
-// export default Vendor_Edit;
+
+export default withAuth(['admin','accounting'])(EditUser);

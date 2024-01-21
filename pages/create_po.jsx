@@ -62,11 +62,11 @@ const Create_po = () => {
     const handleUnitPriceRepeaterChange = () => {
         const totalAmount = getTotalAmount();
         const hstAmount = (totalAmount * 0.13).toFixed(2) || 0;
-    const totalAmountWithHst = (parseFloat(hstAmount) + totalAmount).toFixed(2) || 0;
+        const totalAmountWithHst = (parseFloat(hstAmount) + totalAmount).toFixed(2) || 0;
 
-    form.setFieldsValue({ HST_Amount: hstAmount });
-    form.setFieldsValue({ Total_amount: totalAmountWithHst });
-    
+        form.setFieldsValue({ HST_Amount: hstAmount });
+        form.setFieldsValue({ Total_amount: totalAmountWithHst });
+
         // form.setFieldsValue({ HST_Amount: totalAmount * 0.13 });
         // form.setFieldsValue({ Total_amount: totalAmount * 0.13 + totalAmount });
     };
@@ -114,14 +114,14 @@ const Create_po = () => {
         const calculatedAmount = quantity * unitPrice;
         const hstAmount = calculatedAmount * 0.13;
         const totalAmount = calculatedAmount + hstAmount;
-    
+
         setAmount(calculatedAmount);
-        
+
         // Format the calculatedAmount, HST amount, and Total amount to have 2 decimal places
         form.setFieldsValue({
-            Amount: calculatedAmount.toFixed(2) || 0,
-            HST_Amount: hstAmount.toFixed(2) || 0,
-            Total_amount: totalAmount.toFixed(2) || 0,
+            Amount: `$${calculatedAmount.toFixed(2) || 0}`,
+            HST_Amount: `$${hstAmount.toFixed(2) || 0}`,
+            Total_amount: `$${totalAmount.toFixed(2) || 0}`,
         });
     };
 
@@ -147,7 +147,7 @@ const Create_po = () => {
                 amount: values.Amount,
                 vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
-                po_number:values.poNumber,
+                po_number: values.poNumber,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
                 project_site_id: values.site_id,
@@ -158,7 +158,7 @@ const Create_po = () => {
                 po_type: values.po_type,
                 vendor_contact_id: values.vendor_contact_id,
                 shipment_type: values.shipment_type,
-                po_number:values.poNumber,
+                po_number: values.poNumber,
                 hst_amount: values.HST_Amount,
                 total_amount: values.Total_amount,
                 project_site_id: values.site_id,
@@ -177,7 +177,7 @@ const Create_po = () => {
         }
 
         const response = createPO(data);
-        console.log(response,'ggggggggg');
+        console.log(response, 'ggggggggg');
 
         response.then((res) => {
             if (res?.data?.status) {
@@ -263,7 +263,6 @@ const Create_po = () => {
 
     const handleRepeatorChange = (value, name, index) => {
         const values = repeator[index];
-        console.log(values, 'jjjjjjjjjjjjjjjjjjjjjjjjj');
         if (values) {
             repeator[index] = {
                 ...repeator[index],
@@ -283,25 +282,35 @@ const Create_po = () => {
         setRepeator([...repeator]);
     }
 
+
+    const handleRemoveItem = (index) => {
+        const updatedRepeator = [...repeator];
+        updatedRepeator.splice(index, 1); // Remove the item at the specified index
+        setRepeator(updatedRepeator);
+
+        handleUnitPriceRepeaterChange(); // Recalculate HST and total amount after removing an item
+    };
+
     const handleSelectChange = (selectedValue) => {
         // const rentalPoPageUrl = "/rental-po";
 
         if (selectedValue === "rental") {
-            router.push('/rental-po');
-        } else if(selectedValue === 'subcontractor') {
+            router.push('/create-rental-po')
+            // router.push('/rental-po');
+        } else if (selectedValue === 'subcontractor') {
             router.push('/create-subcontractor-po');
         }
     }
 
     useEffect(() => {
-            const poNumberResponse = getPoNumber();
-            // console.log(poNumberResponse,'poNumberResponse');
-            poNumberResponse.then((response) => {
-                // console.log(response,'response');
-                if(response?.data?.status) {
-                    form.setFieldValue('poNumber', response.data.po_number);
-                }
-            })
+        const poNumberResponse = getPoNumber();
+        // console.log(poNumberResponse,'poNumberResponse');
+        poNumberResponse.then((response) => {
+            // console.log(response,'response');
+            if (response?.data?.status) {
+                form.setFieldValue('poNumber', response.data.po_number);
+            }
+        })
     }, []);
 
     return (
@@ -566,7 +575,7 @@ const Create_po = () => {
                                         <span class="d-block me-4">Ship To</span>
                                         <hr />
                                     </div>
-                                    <div class="row space-bottom mb-5">
+                                    <div class="row space-bottom mb-0">
                                         <div class="col-md-6 col-lg-4 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
@@ -687,6 +696,10 @@ const Create_po = () => {
                                                             required: true,
                                                             message: "Please enter quantity",
                                                         },
+                                                        {
+                                                            pattern: /^(?:\d+|\d*\.\d+)$/,
+                                                            message: "Please enter a valid number only",
+                                                        },
                                                     ]}
                                                 >
                                                     <Input placeholder="Quantity" onChange={(e) => handleQuantityChange(e.target.value)} />
@@ -704,6 +717,10 @@ const Create_po = () => {
                                                         {
                                                             required: true,
                                                             message: "Please enter unit price",
+                                                        },
+                                                        {
+                                                            pattern: /^(?:\d+|\d*\.\d+)$/,
+                                                            message: "Please enter a valid number only",
                                                         },
                                                     ]}
                                                 >
@@ -1084,17 +1101,72 @@ const Create_po = () => {
                                                                     </div>
 
                                                                     <div className="row">
-                                                                        {/* <div class="col-sm-4"> */}
+                                                                        <div class="col-sm-4">
 
-                                                                        <div className="wrap-box col-sm-4 mb">
-                                                                            {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (materialFor === 'inventory' || materialFor === 'supplies') && (
+                                                                            <div className="wrap-box select-po-non  mb">
+                                                                                {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
+                                                                                    <>
+                                                                                        <label>Material For</label>
+                                                                                        <select onChange={({ target: { value } }) => {
+                                                                                            handleRepeatorChange(value, 'materialFor', index)
+                                                                                        }} value={repeator[index].materialFor}>
+                                                                                            {shipmentType === 'Combined' && <option value="project">Project</option>}
+                                                                                            <option value="inventory">Inventory</option>
+                                                                                            <option value="supplies">Supplies/Expenses</option>
+                                                                                        </select>
+                                                                                    </>
+                                                                                    // <div class="col-sm-4 ">
+                                                                                    //     <div className="selectwrap add-dropdown-wrap shipment-caret">
+                                                                                    //         <Form.Item
+                                                                                    //             {...restField}
+                                                                                    //             label="Material For"
+                                                                                    //             name={[name, 'materialFor']}
+                                                                                    //             value={repeator[index].materialFor}
+                                                                                    //             onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'materialFor', index)}
+                                                                                    //             htmlFor="file"
+                                                                                    //             class="same-clr"
+                                                                                    //             rules={[
+                                                                                    //                 {
+                                                                                    //                     required: true,
+                                                                                    //                     message: "Please choose Material For",
+                                                                                    //                 },
+                                                                                    //             ]}
+                                                                                    //         >
+                                                                                    //             <Select id="single90"
+                                                                                    //                 class="js-states form-control file-wrap-select"
+                                                                                    //                 onChange={(value) => setMaterialFor(value)}
+                                                                                    //             >
+                                                                                    //                 {shipmentType === 'Combined' && <option value="project">Project</option>}
+                                                                                    //                 <Option value="inventory">Inventory</Option>
+                                                                                    //                 <Option value="supplies">Supplies/Expenses</Option>
+
+                                                                                    //             </Select>
+                                                                                    //         </Form.Item>
+                                                                                    //     </div>
+                                                                                    // </div>
+                                                                                )}
+
+
+
+                                                                                {/* <div className="wrap-box mb-0"> */}
+                                                                                {/* {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
+                                                                                    <>
+                                                                                        <label>
+                                                                                            {repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
+                                                                                        </label>
+                                                                                        <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
+                                                                                    </>
+                                                                                )} */}
+                                                                                {/* </div> */}
+
+
+                                                                                {/* {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (materialFor === 'inventory' || materialFor === 'supplies') && (
                                                                                 <>
-                                                                                    {/* {shipmentType === 'Combined' && <label value="project">Project</label>} */}
                                                                                     <label>{materialFor === 'inventory' ? "Inventory Code" : "GL Code"}</label>
                                                                                     <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
                                                                                 </>
-                                                                            )}
-                                                                            {((shipmentType == 'Combined')) && (materialFor == 'project') && (
+                                                                            )} */}
+                                                                                {/* {((shipmentType == 'Combined')) && (materialFor == 'project') && (
                                                                                 <div class="selectwrap add-dropdown-wrap">
                                                                                     <div className="selectwrap columns-select shipment-caret ">
                                                                                         <Form.Item
@@ -1126,56 +1198,62 @@ const Create_po = () => {
                                                                                 </div>
                                                                             )
 
-                                                                            }
-                                                                            {shipmentType === 'Project Related' && (
-                                                                                <>
-                                                                                    <div className="selectwrap columns-select shipment-caret ">
-                                                                                        <Form.Item
-                                                                                            {...restField}
-                                                                                            label="Select Site"
+                                                                            } */}
+                                                                                {shipmentType === 'Project Related' && (
+                                                                                    <>
+                                                                                        <div className="selectwrap columns-select shipment-caret ">
+                                                                                            <Form.Item
+                                                                                                {...restField}
+                                                                                                label="Select Site"
 
-                                                                                            name={[name, 'site_id']}
-                                                                                            value={repeator[index].site_id}
-                                                                                            onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
-                                                                                            htmlFor="file"
-                                                                                            class="same-clr"
-                                                                                            rules={[
-                                                                                                {
-                                                                                                    required: true,
-                                                                                                    message: "Please choose site",
-                                                                                                },
-                                                                                            ]}
-                                                                                        >
-                                                                                            <Select id="singlesa" class="js-states form-control file-wrap-select"
+                                                                                                name={[name, 'site_id']}
+                                                                                                value={repeator[index].site_id}
+                                                                                                onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'site_id', index)}
+                                                                                                htmlFor="file"
+                                                                                                class="same-clr"
+                                                                                                rules={[
+                                                                                                    {
+                                                                                                        required: true,
+                                                                                                        message: "Please choose site",
+                                                                                                    },
+                                                                                                ]}
                                                                                             >
-                                                                                                {Array.isArray(siteOptions) &&
-                                                                                                    siteOptions.map((site) => (
-                                                                                                        <Select.Option key={site.site_id} value={site.site_id}>
-                                                                                                            {site.name}
-                                                                                                        </Select.Option>
-                                                                                                    )
-                                                                                                    )}
-                                                                                            </Select>
-                                                                                        </Form.Item>
-                                                                                    </div>
-                                                                                </>
-                                                                            )}
-                                                                            {/* </div> */}
+                                                                                                <Select id="singlesa" class="js-states form-control file-wrap-select"
+                                                                                                >
+                                                                                                    {Array.isArray(siteOptions) &&
+                                                                                                        siteOptions.map((site) => (
+                                                                                                            <Select.Option key={site.site_id} value={site.site_id}>
+                                                                                                                {site.name}
+                                                                                                            </Select.Option>
+                                                                                                        )
+                                                                                                        )}
+                                                                                                </Select>
+                                                                                            </Form.Item>
+                                                                                        </div>
+                                                                                    </>
+                                                                                )}
+                                                                            </div>
+                                                                            </div>
+
+                                                                            <div className="col-sm-4">
+                                                                                <div className="wrap-box">
+                                                                                    {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
+                                                                                        <>
+                                                                                            <label>
+                                                                                                {repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
+                                                                                            </label>
+                                                                                            <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
+                                                                                        </>
+                                                                                    )}
+                                                                                </div>
+                                                                            </div>
+
                                                                             {/* </div> */}
 
 
                                                                             {/* <div className="col-sm-4"> */}
-                                                                            {/* <div className="wrap-box mb-0">
-                                                                            {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
-                                                                            <>
-                                                                                <label>
-                                                                                    {repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
-                                                                                </label>
-                                                                                <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
-                                                                            </>
-                                                                            )}
-                                                                         </div> */}
-                                                                            {repeator[index].materialFor === 'project' && (
+
+                                                                            {/* {repeator[index].materialFor === 'project' && (
                                                                                 <>
                                                                                     <div class="top-project">
                                                                                         <div class="selectwrap columns-select shipment-caret ">
@@ -1198,7 +1276,7 @@ const Create_po = () => {
 
                                                                                     </div>
                                                                                 </>
-                                                                            )}
+                                                                            )} */}
 
                                                                             {/* <div className="col-sm-4 "> */}
                                                                             {repeator[index].materialFor === 'project' && (
@@ -1219,19 +1297,25 @@ const Create_po = () => {
                                                                                 </div>
 
                                                                             )}
-                                                                        </div>
+                                                                        
                                                                         {/* </div> */}
                                                                         <div className="col-sm-4">
-                                                                        <div className="hide-wrap">
-                                                                            <MinusOutlined className="minus-wrap" onClick={() => remove(name)} style={{ marginLeft: '8px' }} />
+                                                                            <div className="hide-wrap">
+                                                                                <MinusOutlined className="minus-wrap" onClick={() => {
+                                                                                    remove(name);
+                                                                                    handleRemoveItem(index); // Call the function to handle item removal
+                                                                                }} style={{ marginLeft: '8px' }} />
+                                                                                {/* <MinusOutlined className="minus-wrap" onClick={() => 
+                                                                            remove(name)
+                                                                          
+
+                                                                            }
+                                                                            
+                                                                            style={{ marginLeft: '8px' }} /> */}
                                                                             </div>
-                                                                        
+
                                                                         </div>
                                                                     </div>
-
-
-
-
                                                                 </Space>
                                                             )
                                                         }
@@ -1314,4 +1398,4 @@ const Create_po = () => {
     );
 };
 
-export default withAuth(['admin','project manager','supervisor','project coordinate','marketing','health & safety','estimator','shop'])(Create_po);
+export default withAuth(['admin', 'project manager', 'supervisor', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])(Create_po);

@@ -3,7 +3,7 @@ import Header from '@/components/header';
 import Sidebar from '@/components/sidebar';
 import React, { useEffect, useState } from 'react';
 import '../styles/style.css'
-import { Form, Input, Button, Select, message, } from 'antd';
+import { Form, Input, Select, message, } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -11,7 +11,6 @@ import { Spin } from 'antd';
 import withAuth from '@/components/PrivateRoute';
 
 const { Option } = Select;
-
 
 const AddUser = ({ base_url }) => {
   const [roles, setRoles] = useState([]);
@@ -26,7 +25,6 @@ const AddUser = ({ base_url }) => {
           Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
         }
         const response = await axios.get(`${base_url}/api/admin/roles`, { headers: headers });
-        console.log(response, 'ddddddddddd');
         setRoles(response.data.data); // Assuming the API response is an array of projects
       } catch (error) {
         console.error('Error fetching projects:', error);
@@ -47,17 +45,13 @@ const AddUser = ({ base_url }) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       };
-      console.log("values === ", values)
       const data = {
         ...values,
       }
-      // console.log(data,'99999999999999999999999999');
-      // return
 
       const response = await axios.post(`${base_url}/api/admin/users`, data, {
         headers: headers,
       });
-      console.log(response.status, 'jjjjjjjjjjjjjj');
 
       if (response.status == 201) {
         message.success(response.data.message);
@@ -66,7 +60,6 @@ const AddUser = ({ base_url }) => {
       
     }
     catch (error) {
-      console.log(error,'userError');
       setLoading(false);
       message.error(error.response.data.message)
     }
@@ -80,7 +73,6 @@ const AddUser = ({ base_url }) => {
       console.log('Invalid phone number:', value);
     }
   };
-
 
   function isValidPhone(phoneNumber) {
     const pattern = /^\+(?:[0-9] ?){6,11}[0-9]$/;
@@ -189,7 +181,6 @@ const AddUser = ({ base_url }) => {
                           label="Address"
                           name="address"  // Add a name to link the input to the form values
                           className="vender-input"
-                          rules={[{ required: true, message: 'Please enter your address!' }]}
                         >
                           <Input />
                         </Form.Item>
@@ -241,4 +232,3 @@ const AddUser = ({ base_url }) => {
 }
 export { getServerSideProps };
 export default withAuth(['admin','accounting'])(AddUser);
-// export default AddUser
