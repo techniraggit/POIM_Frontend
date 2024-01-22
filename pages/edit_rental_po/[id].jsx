@@ -692,7 +692,7 @@ const Edit_Rental_Po = () => {
                                         <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                                             {
                                                 formData.material_details.slice(1).map((data, index) => {
-                                                    return <div className="row">
+                                                    return <div className="row align-items-center">
                                                         {
                                                             Object.keys(data).map((key) => {
                                                                 let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
@@ -701,17 +701,19 @@ const Edit_Rental_Po = () => {
                                                                 }
                                                                 if (key === 'description' || key === "amount") {
                                                                     return (
-                                                                        <div key={key} className="wrap-box col-sm-3">
-                                                                            <Form.Item
-                                                                                label={upperKey}
-                                                                                rules={[{ required: true, message: `Please enter ${upperKey}` }]}
-                                                                            >
-                                                                                <Input
-                                                                                    placeholder={upperKey}
-                                                                                    value={data[key]}
-                                                                                    onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
-                                                                                />
-                                                                            </Form.Item>
+                                                                        <div className="col-sm-4">
+                                                                            <div key={key} className="wrap-box mb-0">
+                                                                                <Form.Item
+                                                                                    label={upperKey}
+                                                                                    rules={[{ required: true, message: `Please enter ${upperKey}` }]}
+                                                                                >
+                                                                                    <Input
+                                                                                        placeholder={upperKey}
+                                                                                        value={data[key]}
+                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+                                                                                    />
+                                                                                </Form.Item>
+                                                                            </div>
                                                                         </div>
                                                                     )
                                                                 } else if (key === 'date' || key === 'to') {
@@ -768,12 +770,14 @@ const Edit_Rental_Po = () => {
                                                                     </Form.Item></div>
                                                             </div>
                                                         )}
-                                                        <MinusOutlined className="minus-wrap" onClick={() => {
-                                                            setFormData({
-                                                                ...formData,
-                                                                material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 2)]
-                                                            });
-                                                        }} style={{ marginLeft: '8px' }} />
+                                                        <div className="col-sm-4">
+                                                            <MinusOutlined className="minus-wrap" onClick={() => {
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 2)]
+                                                                });
+                                                            }} style={{ marginLeft: '8px' }} />
+                                                        </div>
                                                     </div>
                                                 })
                                             }

@@ -109,7 +109,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                 </div>
 
                 {(formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined') && (
-                    <div class="col-sm-4 ">
+                    <div class="col-sm-4">
                         <div className="selectwrap add-dropdown-wrap shipment-caret">
                             <Form.Item
                                 label="Material For"
@@ -137,7 +137,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                     </div>
                 )}
                 <div className="col-md-4">
-                    <div className="wrap-box">
+                    <div className="wrap-box mb-0">
                         {formData.material_details[0].material_for === 'inventory' && (
                             <Form.Item
                                 label="Inventory Code"
@@ -217,7 +217,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                 <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                     {
                         formData.material_details.slice(1).map((data, index) => {
-                            return <div className="row">
+                            return <div className="row align-items-center">
 
                                 {
                                     Object.keys(data).map((key) => {
@@ -227,34 +227,37 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                         }
                                         if (key === "quantity") {
                                             return (
-                                                <div key={key} className="wrap-box col-sm-3">
-                                                    <Form.Item
-                                                        label={upperKey}
-                                                        rules={[{ required: true, message: `Please enter ${upperKey}` }]}
-                                                    >
-                                                        <Input
-                                                            placeholder={upperKey}
-                                                            value={data[key]}
-                                                            name={key + index}
-                                                            onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
-                                                        />
-                                                    </Form.Item>
+                                                <div className="col-sm-4">
+                                                    <div key={key} className="wrap-box">
+                                                        <Form.Item
+                                                            label={upperKey}
+                                                            rules={[{ required: true, message: `Please enter ${upperKey}` }]}
+                                                        >
+                                                            <Input
+                                                                placeholder={upperKey}
+                                                                value={data[key]}
+                                                                name={key + index}
+                                                                onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+                                                            />
+                                                        </Form.Item>
+                                                    </div>
                                                 </div>
                                             )
                                         } else if (key === 'unit_price') {
                                             return (
-                                                <div key={key} className="wrap-box col-12">
-                                                    <Form.Item
-                                                        label={"Unit price"}
-                                                        rules={[{ required: true, message: `Please enter Scope Of Work` }]}
-                                                    >
-                                                        <Input
-                                                            placeholder={upperKey}
-                                                            value={data[key]}
-                                                            name={key + index}
-                                                            onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
-                                                        />
-                                                        {/* <Input.TextArea
+                                                <div className=" col-sm-4">
+                                                    <div key={key} className="wrap-box">
+                                                        <Form.Item
+                                                            label={"Unit price"}
+                                                            rules={[{ required: true, message: `Please enter Scope Of Work` }]}
+                                                        >
+                                                            <Input
+                                                                placeholder={upperKey}
+                                                                value={data[key]}
+                                                                name={key + index}
+                                                                onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+                                                            />
+                                                            {/* <Input.TextArea
                                                             rows={4}
                                                             cols={50}
                                                             placeholder={"Enter Scope Of Work"}
@@ -262,14 +265,15 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                             name={key + index}
                                                             onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                         /> */}
-                                                    </Form.Item>
+                                                        </Form.Item>
+                                                    </div>
                                                 </div>
                                             )
                                         } else if (key === 'amount') {
                                             return (
 
                                                 <div className="col-sm-4">
-                                                    <div className="wrap-box">
+                                                    <div className="wrap-box mb">
                                                         <Form.Item
                                                             label={upperKey}
                                                             rules={[
@@ -313,85 +317,96 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     </div>
                                                 </div>
                                             )
-                                        } else if (key === 'project_site_id' && formData.shipment_type.toLowerCase() === 'project related') {
+                                        }
+                                        else if (key === 'project_site_id' && formData.shipment_type.toLowerCase() === 'project related') {
                                             return (
                                                 <div class="col-sm-4">
-                                                    <div className="selectwrap columns-select shipment-caret ">
-                                                        <Form.Item
-                                                            label="Select Site"
-                                                            name={`project_site_id_${index + 1}`}
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                        >
-                                                            <Select id="singlesa" defaultValue={formData.material_details[0].project_site_id} onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
-                                                                {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) => (
-                                                                        <Select.Option key={site.site_id} value={site.site_id}>
-                                                                            {site.name}
-                                                                        </Select.Option>
-                                                                    )
-                                                                    )}
-                                                            </Select>
-                                                        </Form.Item>
+                                                    <div className="wrap-box">
+                                                        <div className="selectwrap columns-select shipment-caret ">
+                                                            <Form.Item
+                                                                label="Select Site"
+                                                                name={`project_site_id_${index + 1}`}
+                                                                htmlFor="file"
+                                                                class="same-clr"
+                                                            >
+                                                                <Select id="singlesa" defaultValue={formData.material_details[0].project_site_id} onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
+                                                                    {Array.isArray(siteOptions) &&
+                                                                        siteOptions.map((site) => (
+                                                                            <Select.Option key={site.site_id} value={site.site_id}>
+                                                                                {site.name}
+                                                                            </Select.Option>
+                                                                        )
+                                                                        )}
+                                                                </Select>
+                                                            </Form.Item>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )
                                         } else if (key === 'material_for' && (formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined')) {
                                             return (
-                                                <div class="col-sm-4 ">
-                                                    <div className="selectwrap add-dropdown-wrap shipment-caret">
-                                                        <Form.Item
-                                                            label="Material For"
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose Material For",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select id="single90"
-                                                                class="js-states form-control file-wrap-select"
-                                                                value={formData.material_details[index + 1].material_for}
-                                                                onChange={(value) => onChange('material_details', { material_for: value }, 0)}
+                                                <div class="col-sm-4">
+                                                    <div className="wrap-box">
+                                                        <div className="selectwrap add-dropdown-wrap shipment-caret">
+                                                            <Form.Item
+                                                                label="Material For"
+                                                                htmlFor="file"
+                                                                class="same-clr"
+                                                                rules={[
+                                                                    {
+                                                                        required: true,
+                                                                        message: "Please choose Material For",
+                                                                    },
+                                                                ]}
                                                             >
-                                                                {formData.shipment_type === 'Combined' && <option value="project">Project</option>}
-                                                                <Option value="inventory">Inventory</Option>
-                                                                <Option value="supplies">Supplies/Expenses</Option>
+                                                                <Select id="single90"
+                                                                    class="js-states form-control file-wrap-select"
+                                                                    value={formData.material_details[index + 1].material_for}
+                                                                    onChange={(value) => onChange('material_details', { material_for: value }, 0)}
+                                                                >
+                                                                    {formData.shipment_type === 'Combined' && <option value="project">Project</option>}
+                                                                    <Option value="inventory">Inventory</Option>
+                                                                    <Option value="supplies">Supplies/Expenses</Option>
 
-                                                            </Select>
-                                                        </Form.Item>
+                                                                </Select>
+                                                            </Form.Item>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )
                                         } else if (key === 'code' && (formData.material_details[0].material_for === 'inventory') || formData.material_details[0].material_for === 'supplies') {
-                                            return(
-                                                <Form.Item
-                                                label="Inventory Code"
-                                                name={`code_${index + 1}`}
-                                                htmlFor="file"
-                                                className="same-clr"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please enter Inventory Code",
-                                                    },
-                                                ]}
-                                            >
-                                                <Input defaultValue={formData.material_details[index + 1].code} onChange={({ target: { value } }) => onChange('material_details', { code: value }, index + 1)} />
-                                            </Form.Item>
+                                            return (
+                                                <div className="col-sm-4">
+                                                    <div className="wrap-box">
+                                                        <Form.Item
+                                                            label="Inventory Code"
+                                                            name={`code_${index + 1}`}
+                                                            htmlFor="file"
+                                                            className="same-clr"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please enter Inventory Code",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input defaultValue={formData.material_details[index + 1].code} onChange={({ target: { value } }) => onChange('material_details', { code: value }, index + 1)} />
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
                                             )
                                         }
                                         return <></>
                                     })
                                 }
-                                <MinusOutlined className="minus-wrap" onClick={() => {
-                                    setFormData({
-                                        ...formData,
-                                        material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                    });
-                                }} style={{ marginLeft: '8px' }} />
+                                <div className="col-sm-4">
+                                    <MinusOutlined className="minus-wrap" onClick={() => {
+                                        setFormData({
+                                            ...formData,
+                                            material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                        });
+                                    }} style={{ marginLeft: '8px' }} />
+                                </div>
                             </div>
                         })
                     }
