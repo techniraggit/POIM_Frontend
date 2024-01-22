@@ -12,7 +12,6 @@ import PoForm from '../components/Form';
 const { Option } = Select;
 
 const repeatorData = {
-    
         quantity:'',
         unit_price:'',
         description: '',
@@ -20,7 +19,6 @@ const repeatorData = {
         amount: 0,
         project_site_id: '',
         material_for:''
-   
 }
 
 const CreateMaterialPo = () => {
@@ -47,7 +45,6 @@ const CreateMaterialPo = () => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        // if (isNew) {
             const poNumberResponse = getPoNumber();
             poNumberResponse.then((res) => {
                 if (res?.data?.status) {
@@ -58,7 +55,6 @@ const CreateMaterialPo = () => {
                     });
                 }
             })
-        // }
     }, []);
 
     const getTotalAmount = () => {
@@ -78,7 +74,6 @@ const CreateMaterialPo = () => {
             }
         });
     }
-
     const onChange = (name, value, index) => {
         if (name === 'material_details') {
             let totalAmount = 0;
@@ -106,7 +101,6 @@ const CreateMaterialPo = () => {
             ...formData
         });
     }
-
     return (
         <>
             <div className="wrapper-main">
@@ -154,7 +148,7 @@ const CreateMaterialPo = () => {
                                     </div>
 
                                     <PoForm formData={formData} 
-                                    isNew={true} 
+                                    // isNew={true} 
                                     form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">
@@ -173,6 +167,5 @@ const CreateMaterialPo = () => {
         </>
     );
 };
-
 export { getServerSideProps };
 export default CreateMaterialPo;

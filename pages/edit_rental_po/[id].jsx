@@ -532,8 +532,6 @@ const Edit_Rental_Po = () => {
                                                         onChange={(value) => { onChange('shipment_type', value) }}
                                                     >
                                                         <Option value="project related">Project Related</Option>
-                                                        {/* <Option value="non project related">Non Project Related</Option>
-                                                        <Option value="combined">Combined</Option> */}
                                                     </Select>
                                                 </Form.Item>
                                             </div>

@@ -2,7 +2,7 @@ import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import React, { useState, useEffect } from "react";
 import DynamicTitle from '@/components/dynamic-title.jsx';
-import { Form } from 'antd';
+import { Form, message } from 'antd';
 import { useRouter } from 'next/router';
 import withAuth from "@/components/PrivateRoute";
 import { createProject, fetchManagers } from "@/apis/apis/adminApis";
@@ -38,8 +38,11 @@ const CreateProject = () => {
     const onFinish = () => {
         createProject(formData).then((response) => {
             if(response?.data?.status) {
+                message.success("Project created successfully");
                 router.push('/project');
             }
+        }).catch((error)=>{
+            message.error(error.response.data.message)
         })
     }
 

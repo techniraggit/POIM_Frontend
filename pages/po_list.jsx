@@ -46,7 +46,7 @@ const PO_list = () => {
                     <div className="bottom-wrapp">
                         <ul className="list-icons">
                             <li className="me-4">
-                                <Link href="/create_po" className="d-block mb-2"><PlusOutlined /></Link>
+                                <Link href="/create-material-po" className="d-block mb-2"><PlusOutlined /></Link>
                                 <span>Create PO</span>
                             </li>
                             <li className="me-4">
@@ -99,6 +99,9 @@ const PO_list = () => {
                                                         
                                                         {purchase.po_type === 'rental' && (
                                                             <Link href={`/view_rental_po/${purchase.po_id}`}><EyeFilled /></Link>
+                                                        )}
+                                                         {purchase.po_type === 'subcontractor' && (
+                                                            <Link href={`/view_subcontractor_po/${purchase.po_id}`}><EyeFilled /></Link>
                                                         )}
                                                         <Popconfirm
                                                             title="Are you sure you want to delete this item?"

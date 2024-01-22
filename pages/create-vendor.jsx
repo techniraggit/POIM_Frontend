@@ -31,9 +31,11 @@ const CreateVendor = () => {
         console.log(formData)
         createVendor(formData).then((response) => {
             if(response.data?.status) {
-                message("Vendor Created");
+                message.success("Vendor Created");
                 router.push('/vendor');
             }
+        }).catch((error)=>{
+            message.error(error.response.data.message)
         })
     }
 
