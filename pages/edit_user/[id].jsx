@@ -122,7 +122,7 @@ const EditUser = ({ base_url }) => {
                                     labelCol={{ span: 8 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    <div className="row">
+                                    <div className="row mb-4">
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap react-select">
 

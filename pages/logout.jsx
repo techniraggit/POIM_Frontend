@@ -3,9 +3,11 @@ import axios from 'axios';
 import { message } from 'antd';
 import { useRouter } from 'next/router';
 import {getServerSideProps} from '../components/mainVariable'
+import { useGlobalContext } from '@/app/Context/UserContext';
 
 const Logout = ({ base_url }) => {
   const router = useRouter();
+  const { setUser } = useGlobalContext();
 
   useEffect(() => {
     const logoutUser = async () => {
@@ -37,6 +39,12 @@ const Logout = ({ base_url }) => {
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
           message.success('Logout successful');
+          setUser({
+            first_name: '',
+            last_name: '',
+            permissions: [],
+            role: ''
+          })
           router.push('/');
         } else {
           message.error('Logout failed');

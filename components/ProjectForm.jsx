@@ -105,7 +105,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                                         <Form.Item
                                             label={upperKey}
                                             name={key + (index + 1)}
-                                            rules={[{ required: true, message: 'Please enter name' }]}
+                                            rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                         >
                                             <Input onChange={({ target: { value } }) => onChange('project_sites', { [key]: value }, index + 1)} placeholder={upperKey} />
                                         </Form.Item>

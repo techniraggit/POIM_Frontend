@@ -121,7 +121,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
             <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                 {
                     formData.material_details.slice(1).map((data, index) => {
-                        return <div className="row">
+                        return <div className="row align-items-center mt-4">
                             
                             {
                                 Object.keys(data).map((key) => {
@@ -131,7 +131,8 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     }
                                     if (key === "amount") {
                                         return (
-                                            <div key={key} className="wrap-box col-sm-3">
+                                            <div className="col-sm-4">
+                                            <div key={key} className="wrap-box">
                                                 <Form.Item
                                                     label={upperKey}
                                                     rules={[{ required: true, message: `Please enter ${upperKey}` }]}
@@ -144,10 +145,12 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                     />
                                                 </Form.Item>
                                             </div>
+                                            </div>
                                         )
                                     } else if (key === 'description') {
                                         return (
-                                            <div key={key} className="wrap-box col-12">
+                                            <div clclassName="col-sm-12">
+                                            <div key={key} className="wrap-box">
                                                 <Form.Item
                                                     label={"Scope Of Work"}
                                                     rules={[{ required: true, message: `Please enter Scope Of Work` }]}
@@ -161,6 +164,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                         onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                     />
                                                 </Form.Item>
+                                            </div>
                                             </div>
                                         )
                                     }
@@ -239,16 +243,18 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     return 
                                 })
                             }
+                            <div className="col-sm-4">
                             <MinusOutlined className="minus-wrap" onClick={() => {
                                 setFormData({
                                     ...formData,
                                     material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                 });
                             }} style={{ marginLeft: '8px' }} />
+                            </div>
                         </div>
                     })
                 }
-                <Form.Item>
+                <Form.Item className="mt-3">
                     <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                         setFormData({
                             ...formData,

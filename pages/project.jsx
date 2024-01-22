@@ -3,21 +3,21 @@ import Sidebar from "@/components/sidebar";
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import axios from 'axios';
-import { Table, Button, message, Popconfirm, Input } from 'antd';
+import { message, Popconfirm } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
 import ProjectPopup from "@/components/project-popup";
 import { projectSearch,projectClear} from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
+import Roles from "@/components/Roles";
 
 const Vendor = ({ base_url }) => {
-    
     const [projects, setProjects] = useState([]);
     const [isViewProjectVisible, setProjectVisible] = useState(false);
-    // const [addresses,setAddresses]=useState([]);
     const [totalProjects, setTotalProjects] = useState(0)
     const [inputValue, setInputValue] = useState('');
+
     useEffect(() => {
         const fetchroles = async () => {
             try {
@@ -25,10 +25,8 @@ const Vendor = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
-                console.log(response.data.projects, '55555555555555555555555555');
                 setProjects(response.data.projects)
-                // setAddresses(response.data.address)
-                setTotalProjects(response.data.total_projects); // Assuming the API response is an array of projects
+                setTotalProjects(response.data.total_projects);
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
@@ -36,67 +34,54 @@ const Vendor = ({ base_url }) => {
         fetchroles();
     }, [])
 
-    const siteAddress = projects?.map((project) => {
-        return project.sites.map((site) => {
-            return (site.address)
-        })
-    })
-
     const handleDelete = async (id) => {
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 Accept: 'application/json',
-                'Content-Type': 'application/json', // Set content type to JSON
+                'Content-Type': 'application/json',
             };
 
-            const body = JSON.stringify({ project_id: id }); // Use 'category_id' in the request body
-
-            // console.log('Deleting category with ID:', );
+            const body = JSON.stringify({ project_id: id });
             console.log('Request Headers:', headers);
             console.log('Request Body:', body);
 
             const response = await axios.delete(`${base_url}/api/admin/projects`, {
                 headers,
-                data: body, // Send the body as data
+                data: body,
             });
 
             console.log('Delete response:', response);
             message.success('project deleted successfully.');
             setTotalProjects(prevTotalProjects => prevTotalProjects - 1);
             setProjects(preproject => preproject.filter(project => project.project_id !== id));
-            // Reload the categories after deleting
         } catch (error) {
             console.error('Error deleting category:', error);
             message.error('Failed to delete the item. Please try again later.');
         }
     };
+
     const handleIconClick = (id) => {
-        console.log(id,'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
         setProjectVisible((prevVisible) => (prevVisible === id ? null : id));
     };
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
-      };
+    };
 
-      const handleButtonClick = async  (event) => {
+    const handleButtonClick = async  (event) => {
         event.preventDefault();
         projectSearch(inputValue).then((response)=>{
-            console.log(response,'pppppppppppppp');
-            setProjects(response.data.search_project_data)
-
+            setProjects(response.data.search_project_data);
         })
-        
-      };
-      const handleClearButtonClick = () => {
+    };
+
+    const handleClearButtonClick = () => {
         setInputValue('');
         projectClear().then((res)=>{
-            console.log(res,'apppppppppppp');
-            setProjects(res.data.projects)
-
+            setProjects(res.data.projects);
         })
-      };
+    };
 
     return (
         <>
@@ -108,7 +93,6 @@ const Vendor = ({ base_url }) => {
                         <ul className="list-icons">
                             <li className="me-4 create-projects">
                                 <Link href="/create-project" className="d-block mb-2"><PlusOutlined /></Link>
-                                {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
                                 <span>Create New Projects</span>
                             </li>
                             <li className="me-4">
@@ -141,67 +125,30 @@ const Vendor = ({ base_url }) => {
                                     </thead>
                                     <tbody>
                                         {Array.isArray(projects) &&
-                                            projects.map((project, index) => 
-                                            // {
-                                            //     console.log(project,'project namesssssssssssss');
-                                                (
-                                                
+                                            projects.map((project, index) => (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{project.name}</td>
-                                                    {/* <td className="td-color">{vendor.name}</td> */}
-                                                    {/* <td>
-                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
-                                                            <td>{vendor_contact.name}<br /></td>
-                                                        ))}
-                                                    </td> */}
                                                     <td>{project.customer_name}</td>
-                                                    {/* <td>{project.address}</td> */}
-                                                    <td>
-                                                    {project.sites[0].address}
-                                                        
-                                                        {/* {
-                                                            siteAddress.flat().map((siteAddress) => {
-                                                                return (
-                                                                    <td key={siteAddress} value={siteAddress}
-                                                                    >
-                                                                        {siteAddress}
-                                                                    </td>)
-                                                            }
-
-
-                                                            )} */}
-                                                    </td>
-
-                                                    {/* <td>
-                                                        {vendor.vendor_contact.map((vendor_contact, index) => (
-                                                            <td>{vendor_contact.name}<br /></td>
-                                                        ))}
-                                                    </td> */}
+                                                    <td>{project.sites[0].address}</td>
                                                     <td className="td-icon-color">
                                                     <EyeFilled onClick={() => handleIconClick(project.project_id)} />
-                                                        {isViewProjectVisible === project.project_id && <ProjectPopup project_id={project.project_id} />} 
-                                                        
-                                                        
-
-                                                        <Popconfirm
-                                                            title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(project.project_id)}
-                                                            okText="Yes"
-                                                            cancelText="No"
-                                                            
-                                                        >
-                                                            
-                                                            <DeleteFilled />
-                                                            
-                                                        </Popconfirm>
+                                                        {isViewProjectVisible === project.project_id && <ProjectPopup project_id={project.project_id} />}
+                                                        <Roles action="delete_project">
+                                                            <Popconfirm
+                                                                title="Are you sure you want to delete this item?"
+                                                                onConfirm={() => handleDelete(project.project_id)}
+                                                                okText="Yes"
+                                                                cancelText="No"
+                                                            >
+                                                                <DeleteFilled />
+                                                            </Popconfirm>
+                                                        </Roles>
                                                         <Link href={`/edit_project/${project.project_id}`} className="me-2"><EditFilled /></Link>
                                                     </td>
                                                 </tr>
                                             )
-                                        // }
-                                            )}
-
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -216,4 +163,3 @@ export { getServerSideProps }
 export default withAuth(['admin','accounting','project manager','department manager',
 'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])
 (Vendor)
-// export default Vendor

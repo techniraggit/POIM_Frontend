@@ -79,50 +79,50 @@ const PO_list = () => {
                                     </thead>
                                     <tbody>
                                         {Array.isArray(rows) && rows.length > 0 ? (
-                                            rows.map((purchase, index) => (
-                                                <tr key={index}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{purchase.po_number}</td>
-                                                    <td className="td-color">{purchase.po_type}</td>
-                                                    <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
-                                                        year: 'numeric',
-                                                        month: 'short',
-                                                        day: 'numeric',
-                                                    })}</td>
-                                                    <td>{purchase.total_amount}</td>
-                                                    <td>{purchase.status}</td>
-                                                    <td>{purchase.vendor_contact?.name}</td>
-                                                    <td className="td-icon-color">
+                                            rows.map((purchase, index) => {
+                                                console.log(purchase.po_type === "subcontractor")
+                                                return <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td>{purchase.po_number}</td>
+                                                <td className="td-color">{purchase.po_type}</td>
+                                                <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                })}</td>
+                                                <td>{purchase.total_amount}</td>
+                                                <td>{purchase.status}</td>
+                                                <td>{purchase.vendor_contact?.name}</td>
+                                                <td className="td-icon-color">
                                                     {purchase.po_type === 'material' && (
                                                         <Link href={`/view-po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
+                                                    )} 
+                                                    {purchase.po_type === 'rental' && (
+                                                        <Link href={`/view_rental_po/${purchase.po_id}`}><EyeFilled /></Link>
                                                     )}
-                                                        
-                                                        {purchase.po_type === 'rental' && (
-                                                            <Link href={`/view_rental_po/${purchase.po_id}`}><EyeFilled /></Link>
-                                                        )}
-                                                         {purchase.po_type === 'subcontractor' && (
-                                                            <Link href={`/view_subcontractor_po/${purchase.po_id}`}><EyeFilled /></Link>
-                                                        )}
-                                                        <Popconfirm
-                                                            title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(purchase.po_id)}
-                                                            okText="Yes"
-                                                            cancelText="No"
-                                                        >
-                                                            <DeleteFilled />
-                                                        </Popconfirm>
-                                                        {purchase.po_type === "material" && (
-                                                            <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
-                                                        )}
-                                                        {purchase.po_type === "rental" && (
-                                                            <Link href={`/edit_rental_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
-                                                        )}
-                                                        {purchase.po_type === "subcontractor" && (
-                                                            <Link href={`/edit_subcontractor_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
-                                                        )}
-                                                    </td>
-                                                </tr>
-                                            ))
+                                                    {purchase.po_type === "subcontractor" && (
+                                                        <Link href={`/view_subcontractor_po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
+                                                    )}
+                                                    <Popconfirm
+                                                        title="Are you sure you want to delete this item?"
+                                                        onConfirm={() => handleDelete(purchase.po_id)}
+                                                        okText="Yes"
+                                                        cancelText="No"
+                                                    >
+                                                        <DeleteFilled />
+                                                    </Popconfirm>
+                                                    {purchase.po_type === "material" && (
+                                                        <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                    )}
+                                                    {purchase.po_type === "rental" && (
+                                                        <Link href={`/edit_rental_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                    )}
+                                                    {purchase.po_type === "subcontractor" && (
+                                                        <Link href={`/edit_subcontractor_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                            })
                                         ) : (
                                             <tr>
                                                 <td colSpan="8">No purchase orders available</td>

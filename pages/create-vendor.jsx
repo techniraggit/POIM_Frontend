@@ -28,7 +28,6 @@ const CreateVendor = () => {
     });
 
     const onFinish = () => {
-        console.log(formData)
         createVendor(formData).then((response) => {
             if(response.data?.status) {
                 message.success("Vendor Created");
