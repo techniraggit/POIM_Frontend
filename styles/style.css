@@ -2820,6 +2820,44 @@ ul.list-icons.board-list  li {
     margin-top: 11px;
 }
 /* 18 jan work */
+/* 22 jan work */
+select.non-po-select {
+    height: 44px;
+    border: 1px solid #70707054;
+    border-radius: 20px !important;
+    width: 100%;
+    padding: 9px 16px;
+    outline: none;
+    font-size: 16px;
+    color: #112F5C;
+    font-weight: 500;
+}
+select.non-po-select {
+    position: relative;
+    /* appearance: none; */
+    cursor: pointer;
+    -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+}
+/* select::-ms-expand {
+    display: none;
+} */
+select.non-po-select::after {
+    position: absolute;
+    right: 12px;
+    top: 42%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #818B96;
+    z-index: 999;
+    visibility: visible !important;
+    content: "" !important;
+    border-radius: 4px;
+    transform: translateY(-50%) !important;
+    transform: rotateX(180deg) !important;
+}
+/* 22 jan work */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {

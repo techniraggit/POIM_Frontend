@@ -3,7 +3,7 @@ import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import '../styles/style.css'
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined, CaretDownOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { createPO, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails, getPoNumber } from "@/apis/apis/adminApis";
@@ -575,7 +575,7 @@ const Create_po = () => {
                                         <span class="d-block me-4">Ship To</span>
                                         <hr />
                                     </div>
-                                    <div class="row space-bottom mb-0">
+                                    <div class="row space-bottom mb-5">
                                         <div class="col-md-6 col-lg-4 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
@@ -965,7 +965,7 @@ const Create_po = () => {
                                             </div>
                                         </div>
 
-                                        <div className="row select-sitee mt-3">
+                                        <div className="row select-sitee mt-3 mb-3">
 
                                             <div className="col-md-4">
                                                 {materialFor === 'project' && (
@@ -1107,12 +1107,13 @@ const Create_po = () => {
                                                                                 {(shipmentType === 'Non Project Related' || shipmentType === 'Combined') && (
                                                                                     <>
                                                                                         <label>Material For</label>
-                                                                                        <select onChange={({ target: { value } }) => {
+                                                                                        <select className="non-po-select" onChange={({ target: { value } }) => {
                                                                                             handleRepeatorChange(value, 'materialFor', index)
                                                                                         }} value={repeator[index].materialFor}>
                                                                                             {shipmentType === 'Combined' && <option value="project">Project</option>}
                                                                                             <option value="inventory">Inventory</option>
                                                                                             <option value="supplies">Supplies/Expenses</option>
+                                                                                            <CaretDownOutlined />
                                                                                         </select>
                                                                                     </>
                                                                                     // <div class="col-sm-4 ">
@@ -1233,27 +1234,48 @@ const Create_po = () => {
                                                                                     </>
                                                                                 )}
                                                                             </div>
-                                                                            </div>
+                                                                        </div>
 
-                                                                            <div className="col-sm-4">
-                                                                                <div className="wrap-box">
-                                                                                    {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
-                                                                                        <>
-                                                                                            <label>
-                                                                                                {repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
-                                                                                            </label>
-                                                                                            <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
-                                                                                        </>
-                                                                                    )}
+                                                                        <div className="col-sm-4">
+                                                                            <div className="wrap-box mb-0">
+                                                                                {(repeator[index].materialFor === 'inventory' || repeator[index].materialFor === 'supplies') && (
+                                                                                    <>
+                                                                                        <label>
+                                                                                            {repeator[index].materialFor === 'inventory' ? "Inventory Code" : "GL Code"}
+                                                                                        </label>
+                                                                                        <input onChange={({ target: { value, name } }) => handleRepeatorChange(value, 'code', index)} value={repeator[index].code} />
+                                                                                    </>
+                                                                                )}
+                                                                            </div>
+                                                                            {repeator[index].materialFor === 'project' && (
+                                                                            
+                                                                            <div class="selectwrap shipment-caret add-dropdown-wrap">
+                                                                                <div className="selectwrap columns-select shipment-caret ">
+                                                                                    <label>Project Site</label>
+
+                                                                                    <select className="js-states form-control custom-wrap-selector ant-select-selector" onChange={({ target: { value } }) => handleRepeatorChange(value, 'site', index)}>
+                                                                                        {Array.isArray(siteOptions) &&
+                                                                                            siteOptions.map((site) => (
+                                                                                                <option key={site.site_id} value={site.site_id}>
+                                                                                                    {site.name}
+                                                                                                </option>
+                                                                                            ))
+                                                                                        }
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
+                                                                       
 
-                                                                            {/* </div> */}
+                                                                    )}
+
+                                                                        </div>
+
+                                                                        {/* </div> */}
 
 
-                                                                            {/* <div className="col-sm-4"> */}
+                                                                        {/* <div className="col-sm-4"> */}
 
-                                                                            {/* {repeator[index].materialFor === 'project' && (
+                                                                        {/* {repeator[index].materialFor === 'project' && (
                                                                                 <>
                                                                                     <div class="top-project">
                                                                                         <div class="selectwrap columns-select shipment-caret ">
@@ -1278,8 +1300,9 @@ const Create_po = () => {
                                                                                 </>
                                                                             )} */}
 
-                                                                            {/* <div className="col-sm-4 "> */}
-                                                                            {repeator[index].materialFor === 'project' && (
+                                                                        {/* <div className="col-sm-4 "> */}
+                                                                        {/* {repeator[index].materialFor === 'project' && (
+                                                                            
                                                                                 <div class="selectwrap shipment-caret add-dropdown-wrap">
                                                                                     <div className="selectwrap columns-select shipment-caret ">
                                                                                         <label>Project Site</label>
@@ -1295,9 +1318,10 @@ const Create_po = () => {
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>
+                                                                           
 
-                                                                            )}
-                                                                        
+                                                                        )} */}
+
                                                                         {/* </div> */}
                                                                         <div className="col-sm-4">
                                                                             <div className="hide-wrap">
