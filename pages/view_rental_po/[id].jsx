@@ -130,12 +130,10 @@ const ViewRentalPO = () => {
                 form.setFieldValue('company_name', data.vendor_contact.company.company_name)
                 form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
                 form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
-                form.setFieldValue('shipment_type', data.shipment_type);
                 form.setFieldValue('project_id', data.project_id);
                 form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
                 form.setFieldValue('total_amount', data.total_amount);
-                form.setFieldValue('project_id', data.project_site?.project?.project_id);
-                form.setFieldValue('project_site_id', data.project_site?.project_site_id);
+                form.setFieldValue('project_id', data.project);
                 form.setFieldValue('poDate', moment(data.po_date));
                 form.setFieldValue('country', data.vendor_contact.company.country);
                 form.setFieldValue('state', data.vendor_contact.company.state);
@@ -151,6 +149,9 @@ const ViewRentalPO = () => {
                 form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                 form.setFieldValue('first_name', data.created_by.first_name)
                 form.setFieldValue('last_name', data.created_by.last_name)
+                data?.material_details.forEach((material, index) => {
+                    form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
+                })
             }
         });
     }, []);
@@ -648,7 +649,7 @@ const ViewRentalPO = () => {
                                                 {/* <div className="selectwrap columns-select shipment-caret "> */}
                                                 <Form.Item
                                                     label="Select Site"
-                                                    name="project_site_id"
+                                                    name="project_site_id0"
                                                     htmlFor="file"
                                                     class="same-clr"
                                                     rules={[
@@ -660,15 +661,15 @@ const ViewRentalPO = () => {
                                                 >
 
                                                     <div class="selectwrap  shipment-caret aligned-text">
-                                                        <Select disabled id="singles-edit-po" class="selectwrap react-select edit-rental-po">
+                                                        <Select defaultValue={formData.material_details[0]?.project_site?.site_id} disabled id="singles-edit-po" class="selectwrap react-select edit-rental-po">
                                                             {Array.isArray(siteOptions) &&
-                                                                siteOptions.map((site) =>
-                                                                (
-                                                                    <Select.Option key={site.site_id} value={site.site_id}>
-                                                                        {site.name}
-                                                                    </Select.Option>
-                                                                )
-                                                                )}
+                                                                siteOptions.map((site) => {
+                                                                    return (
+                                                                        <Select.Option key={site.site_id} value={site.site_id}>
+                                                                            {site.name}
+                                                                        </Select.Option>
+                                                                    )
+                                                                })}
                                                         </Select>
                                                     </div>
                                                 </Form.Item>
@@ -753,7 +754,7 @@ const ViewRentalPO = () => {
                                                                 <div className="selectwrap  shipment-caret aligned-text">
                                                                     <Form.Item
                                                                         label="Select Site"
-                                                                        name="project_site_id"
+                                                                        name={`project_site_id` + (index + 1)}
                                                                         htmlFor="file"
                                                                         class="same-clr"
                                                                         rules={[

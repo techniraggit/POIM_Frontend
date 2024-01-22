@@ -52,8 +52,6 @@ const Edit_Rental_Po = () => {
         phone: '',
         email: '',
         shipment_type: '',
-        // delivery_address: '',
-        // quantity: 0,
         material_details: []
     });
 
@@ -114,32 +112,31 @@ const Edit_Rental_Po = () => {
             if (res?.data?.status) {
                 const data = res.data.data;
                 console.log(data, 'rental data');
-                fetchVendorContactDropdown(data.vendor_contact.company.vendor_id);
+                fetchVendorContactDropdown(data.vendor_contact?.company.vendor_id);
                 fetchSites();
                 setFormData({
                     ...formData,
                     po_type: data.po_type,
                     amount: data.amount,
-                    company_name: data.vendor_contact.company.company_name,
-                    vendor_id: data.vendor_contact.company.vendor_id,
-                    project_id: data.vendor_contact.company.project_id,
-                    vendor_contact_id: data.vendor_contact.vendor_contact_id,
+                    company_name: data.vendor_contact?.company.company_name,
+                    vendor_id: data.vendor_contact?.company.vendor_id,
+                    project_id: data.vendor_contact?.company.project_id,
+                    vendor_contact_id: data.vendor_contact?.vendor_contact_id,
                     hst_amount: data.hst_amount,
                     total_amount: data.total_amount,
                     project_site_id: data.project_site,
-                    country: data.vendor_contact.company.country,
-                    state: data.vendor_contact.company.state,
-                    address: data.vendor_contact.company.address,
-                    phone: data.vendor_contact.phone_number,
-                    email: data.vendor_contact.email,
+                    country: data.vendor_contact?.company.country,
+                    state: data.vendor_contact?.company.state,
+                    address: data.vendor_contact?.company.address,
+                    phone: data.vendor_contact?.phone_number,
+                    email: data.vendor_contact?.email,
                     shipment_type: data.shipment_type,
-                    // delivery_address: data.delivery_address || '1860 Shawson',
                     material_details: [...data.material_details]
                 });
                 form.setFieldValue('po_type', data.po_type);
-                form.setFieldValue('company_name', data.vendor_contact.company.company_name)
-                form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
-                form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
+                form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
+                form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
+                form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                 form.setFieldValue('shipment_type', data.shipment_type);
                 form.setFieldValue('project_id', data.project_id);
                 form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
@@ -147,11 +144,11 @@ const Edit_Rental_Po = () => {
                 form.setFieldValue('project_id', data.project_site?.project?.project_id);
                 form.setFieldValue('project_site_id', data.project_site?.project_site_id);
                 form.setFieldValue('poDate', moment(data.po_date));
-                form.setFieldValue('country', data.vendor_contact.company.country);
-                form.setFieldValue('state', data.vendor_contact.company.state);
-                form.setFieldValue('address', data.vendor_contact.company.address);
-                form.setFieldValue('phone', data.vendor_contact.phone_number);
-                form.setFieldValue('email', data.vendor_contact.email);
+                form.setFieldValue('country', data.vendor_contact?.company.country);
+                form.setFieldValue('state', data.vendor_contact?.company.state);
+                form.setFieldValue('address', data.vendor_contact?.company.address);
+                form.setFieldValue('phone', data.vendor_contact?.phone_number);
+                form.setFieldValue('email', data.vendor_contact?.email);
                 form.setFieldValue('poNumber', data.po_number)
                 form.setFieldValue('shipment_type', data.shipment_type)
                 form.setFieldValue('amount', data.material_details[0]?.amount)

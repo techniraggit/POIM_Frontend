@@ -31,7 +31,6 @@ const ViewPO = () => {
         company_name: '',
         vendor_id: '',
         vendor_contact_id: '',
-        shipment_type: '',
         hst_amount: '',
         total_amount: '',
         project_site_id: '',
@@ -89,10 +88,9 @@ const ViewPO = () => {
                 form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
                 form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
                 form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
-                form.setFieldValue('shipment_type', data.shipment_type);
                 form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
                 form.setFieldValue('total_amount', data.total_amount);
-                form.setFieldValue('project_id', data.project_site?.project?.project_id);
+                form.setFieldValue('project_id', data.project);
                 form.setFieldValue('project_site_id', data.project_site?.site_id);
                 form.setFieldValue('poDate', moment(data.po_date));
                 form.setFieldValue('country', data.vendor_contact?.company.country);
@@ -113,6 +111,9 @@ const ViewPO = () => {
                 form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
                 form.setFieldValue('first_name', data.created_by.first_name)
                 form.setFieldValue('last_name', data.created_by.last_name)
+                data?.material_details.forEach((material, index) => {
+                    form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
+                })
             }
         });
     }, []);
