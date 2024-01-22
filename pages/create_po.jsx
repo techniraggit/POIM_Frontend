@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect } from "react";
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 import Sidebar from "@/components/sidebar";
@@ -8,6 +9,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { createPO, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails, getPoNumber } from "@/apis/apis/adminApis";
 import withAuth from '../components/PrivateRoute';
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const { Option } = Select;
 const repeatorData = {
@@ -31,11 +33,6 @@ const Create_po = () => {
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
 
-    const [userName, setUserName] = useState({
-        firstName: '',
-        lastName: ''
-    });
-
     const [contactId, setContactId] = useState('');
     const [repeator, setRepeator] = useState([]);
     const [quantity, setQuantity] = useState(0);
@@ -49,6 +46,8 @@ const Create_po = () => {
         state: '',
         country: ''
     })
+
+    const { user } = useGlobalContext();
 
     const handleChange = ({ target: { name, value } }) => {
         setVendorForm({
@@ -204,10 +203,6 @@ const Create_po = () => {
             if (res?.data?.status) {
                 setVendors([...res.data.vendors]);
             }
-        })
-        setUserName({
-            firstName: localStorage.getItem('user_first_name'),
-            lastName: localStorage.getItem('user_last_name')
         })
     }, [])
 
@@ -1393,14 +1388,14 @@ const Create_po = () => {
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <label htmlFor="">First Name</label>
-                                                <input type="text" value={userName.firstName} />
+                                                <input type="text" value={user.first_name} />
 
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <label htmlFor="">Last Name</label>
-                                                <input type="text" value={userName.lastName} />
+                                                <input type="text" value={user.last_name} />
 
                                             </div>
                                         </div>

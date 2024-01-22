@@ -27,12 +27,13 @@ export const GlobalContextProvider = ({ children }) => {
     if(token) {
         getUserData().then((response) => {
             if(response?.data?.status) {
-                setUser({
-                    first_name: response.data.user_first_name,
-                    last_name: response.data.user_last_name,
-                    permissions: response.data.user_permissions,
-                    role: response.data.user_role
-                })
+              const data = response.data.data;
+              setUser({
+                  first_name: data.first_name,
+                  last_name: data.last_name,
+                  permissions: data.permissions || [],
+                  role: data.role
+              })
             }
         })
     }

@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { Form, Input, Select, DatePicker } from "antd";
@@ -6,6 +7,7 @@ import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
 import RentalRepeator from "./rentalRepeator";
 import MaterialRepeator from "./materialRepeator";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const { Option } = Select;
 
@@ -14,6 +16,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
+    const { user } = useGlobalContext();
 
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
@@ -33,8 +36,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
             fetchSites();
         }
 
-        form.setFieldValue('first_name', localStorage.getItem('user_first_name'))
-        form.setFieldValue('last_name', localStorage.getItem('user_last_name'))
+        form.setFieldValue('first_name', user.first_name)
+        form.setFieldValue('last_name', user.last_name)
     }, []);
 
     useEffect(() => {
