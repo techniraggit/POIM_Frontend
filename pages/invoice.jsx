@@ -44,7 +44,7 @@ const Invoice = () => {
                             <li class="me-4 ">
                                 <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
                                 {/* <i class="fa-solid fa-plus mb-3"></i> */}
-                                <span>Add Invoice</span>
+                                <span  className="mt-3">Add Invoice</span>
                             </li>
                             <li className="me-4">
                                 <span className="text-sizes mb-3">5</span>
@@ -59,7 +59,7 @@ const Invoice = () => {
                         </ul>
                         <div className="searchbar-wrapper">
                             <div className="Purchase-form">
-                                <form className="search-purchase">
+                                <form className="search-purchase gap-0">
                                     <input className="vendor-input" placeholder="Search Invoice" />
                                     <Button className="vendor-search-butt">Search</Button>
                                 </form>

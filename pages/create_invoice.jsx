@@ -99,32 +99,14 @@ const Create_Invoice = () => {
                     <div class="bottom-wrapp-purchase">
 
                         <div class="wrapp-in-voice">
-                            <ul class="bg-colored-ul">
-                                <li class="bg-li">
-                                    <i class="fa-solid fa-plus me-3 mt-0"></i>
+                            <ul class="bg-colored-ul mb-4">
+                                <li class="bg-li-invoice">
+                                    {/* <i class="fa-solid fa-plus me-3 mt-0"></i> */}
+                                    <PlusOutlined className="me-3" />
                                     <span>View Purchase Order</span>
                                 </li>
 
                             </ul>
-
-
-                            <div className="row">
-                                <div className="col-lg-4">
-                                    <div className="selectwrap  shipment-caret aligned-tex">
-                                        <Select placeholder="Select PO Type" id="create-invoice"
-                                            class="js-states form-control file-wrap-select bold-select"
-                                            onChange={(value) => fetchPoNumber(value)}
-                                        >
-                                            {poNumber.map((entry) => (
-                                                <Select.Option key={entry.po_id} value={entry.po_id}>
-                                                    {entry.po_number}
-                                                </Select.Option>
-
-                                            ))}
-                                        </Select>
-                                    </div>
-                                </div>
-                            </div>
                             {
                                 responseData.po_type == 'material' && (
                                     <>
@@ -146,25 +128,45 @@ const Create_Invoice = () => {
                                     </>
                                 )
                             }
+                            <div className="choose-file">
+                            <div className="row mb-4">
+                                <div className="col-lg-4 col-md-6">
+                                    <div className="selectwrap  shipment-caret invoice-select aligned-text">
+                                        <Select placeholder="Select PO Type" id="create-invoice"
+                                            class="js-states form-control file-wrap-select bold-select"
+                                            onChange={(value) => fetchPoNumber(value)}
+                                        >
+                                            {poNumber.map((entry) => (
+                                                <Select.Option key={entry.po_id} value={entry.po_id}>
+                                                    {entry.po_number}
+                                                </Select.Option>
+
+                                            ))}
+                                        </Select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <Form
                                 name="antdForm"
-                                className="choose-file"
+                                className="mt-5"
                                 onFinish={onFinish}
                             >
                                 <Form.Item
                                     name="invoice_file"
+                                    className="select-file-invoice"
                                     valuePropName="fileList"
                                     getValueFromEvent={(e) => e.fileList}
                                 >
                                     <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
-                                        <Button icon={<UploadOutlined />}>Select File</Button>
+                                        <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
                                     </Upload>
                                 </Form.Item>
                                 {/* <Form.Item name="invoice_file" valuePropName="fileList" getValueFromEvent={() => null}>
                                     <Input type='file' />   
                                 </Form.Item> */}
 
-                                <Form.Item name="note">
+                                <Form.Item name="note" className="note-wrap wrap-box">
                                     <TextArea rows={8} placeholder="Please enter a note here." />
                                 </Form.Item>
 
@@ -174,6 +176,7 @@ const Create_Invoice = () => {
                                     </Button>
                                 </Form.Item>
                             </Form>
+                            </div>
                             {/* <form class="choose-file">
                                 <div class="inner-file-input">
                                     <h6>Drag & drop any file here</h6>
