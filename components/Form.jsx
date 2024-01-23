@@ -35,11 +35,15 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
         if (edit) {
             fetchSites();
         }
-
+        console.log(user, 'firstname');
+        
+    }, []);
+    useEffect(()=>{
         form.setFieldValue('first_name', user.first_name)
         form.setFieldValue('last_name', user.last_name)
-    }, []);
 
+    },[user])
+   
     useEffect(() => {
         if (edit) {
             fetchVendorContactDropdown(formData.vendor_id);
@@ -47,7 +51,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
     }, [formData.vendor_id])
 
     useEffect(() => {
-        if ((form.getFieldValue('shipment_type') === 'project related')||(form.getFieldValue('shipment_type') === 'combined')) {
+        if ((form.getFieldValue('shipment_type') === 'project related') || (form.getFieldValue('shipment_type') === 'combined')) {
             const response = fetchProjects();
             response.then((res) => {
                 if (res?.data?.status) {
@@ -110,6 +114,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
             company_name: vendor.company_name,
         };
     });
+
+
 
     return (
         <>
@@ -412,23 +418,23 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 )}
                 {formData.shipment_type === 'non project related' && (
                     <div class="col-md-6 col-lg-4">
-                    <div class="selectwrap non-project-wrap">
-                        <Form.Item
-                            label="Delivery Address"
-                            name="deliveryAddress"
-                            for="file"
-                            class="same-clr"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please choose Delivery Address",
-                                },
-                            ]}
-                            initialValue='1860 Shawson'
-                        >
-                            <Input readOnly />
-                        </Form.Item>
-                    </div>
+                        <div class="selectwrap non-project-wrap">
+                            <Form.Item
+                                label="Delivery Address"
+                                name="deliveryAddress"
+                                for="file"
+                                class="same-clr"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please choose Delivery Address",
+                                    },
+                                ]}
+                                initialValue='1860 Shawson'
+                            >
+                                <Input readOnly />
+                            </Form.Item>
+                        </div>
                     </div>
                 )}
             </div>
@@ -443,7 +449,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 formData.po_type === 'rental' ? <RentalRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
             }
             {
-                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} projects={projects} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
+                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} list={list} projects={projects} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
             }
             <div className="row top-btm-space mb-0">
                 <div className="col-lg-4 col-md-6">

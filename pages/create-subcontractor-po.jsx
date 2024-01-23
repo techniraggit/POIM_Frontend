@@ -106,6 +106,18 @@ const CreateSubContractorPo = () => {
         });
     }
 
+    const handlePoTypeChange = (value) => {
+        if(value=== 'material'){
+            router.push('/create-material-po')
+        }
+        if (value === 'rental') {
+            router.push('/create-rental-po'); 
+        }
+        if(value=== 'subcontractor'){
+            router.push('/create-subcontractor-po');
+        }
+    };
+
     return (
         <>
             <div className="wrapper-main">
@@ -138,8 +150,9 @@ const CreateSubContractorPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Select disabled placeholder="Select PO Type" id="single1"
+                                                        <Select  placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
+                                                            onChange={handlePoTypeChange} 
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>

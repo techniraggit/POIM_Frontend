@@ -13,12 +13,12 @@ const repeatorData = {
     project_site_id: '',
     site_id: ''
 }
-function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projects, form, edit }) {
-    const list = (value) => {
-        if (formData.shipment_type === 'project related' || formData.shipment_type === 'combined') {
-            fetchSites(value);
-        }
-    };
+function MaterialRepeator({ onChange, siteOptions,list, formData, setFormData, projects, form, edit }) {
+    // const list = (value) => {
+    //     if (formData.shipment_type === 'project related' || formData.shipment_type === 'combined') {
+    //         fetchSites(value);
+    //     }
+    // };
     return (
         <div class="row">
             <div class="col-sm-4">
@@ -70,7 +70,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                     <Form.Item
                         label="Amount"
                         for="name"
-                        name="amount"
+                        name="amount0"
                         rules={[
                             {
                                 required: true,
@@ -302,6 +302,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     <div className="wrap-box mb">
                                                         <Form.Item
                                                             label={upperKey}
+                                                            name={`amount` + (index + 1)}
                                                             rules={[
                                                                 {
                                                                     required: true,

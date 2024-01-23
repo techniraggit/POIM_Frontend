@@ -64,7 +64,6 @@ const CreateMaterialPo = () => {
 
         return totalAmount;
     };
-
     const onFinish = () => {
         createPO({
             ...formData,
@@ -74,26 +73,38 @@ const CreateMaterialPo = () => {
             }
         });
     }
+    const calculateAmount = (quantity, unit_price, index) => {
+        const amount = parseFloat(quantity) * parseFloat(unit_price);
+        const materialDetails = formData.material_details[index];
+        materialDetails.amount = amount;
+        formData.material_details[index] = {
+            ...materialDetails
+        };
+        const totalAmount = getTotalAmount();
+        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
+        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
+        if (totalAmount > 0) {
+            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+        }
+    }
+
     const onChange = (name, value, index) => {
         if (name === 'material_details') {
-            let totalAmount = 0;
             const materalDetails = formData.material_details[index];
             Object.keys(value).forEach((key) => {
                 materalDetails[key] = value[key];
             });
 
-            if (value.amount) {
-                totalAmount = getTotalAmount();
+            if (value.unit_price) {
+                calculateAmount(formData.material_details[index].quantity, value.unit_price, index);
+            }
+            if(value.quantity) {
+                calculateAmount(value.quantity, formData.material_details[index].unit_price, index);
             }
             formData.material_details[index] = {
                 ...materalDetails
             };
-            formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
-            if (totalAmount > 0) {
-                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
-                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
-            }
         } else {
             formData[name] = value;
         }
@@ -101,6 +112,22 @@ const CreateMaterialPo = () => {
             ...formData
         });
     }
+
+
+    formData?.material_details.forEach((data, index) => {
+        form.setFieldValue(('amount' + (index)), data.amount)})
+
+    const handlePoTypeChange = (value) => {
+        if(value=== 'material'){
+            router.push('/create-material-po')
+        }
+        if (value === 'rental') {
+            router.push('/create-rental-po'); 
+        }
+        if(value=== 'subcontractor'){
+            router.push('/create-subcontractor-po');
+        }
+    };
     return (
         <>
             <div className="wrapper-main">
@@ -133,8 +160,9 @@ const CreateMaterialPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Select disabled placeholder="Select PO Type" id="single1"
+                                                        <Select  placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
+                                                            onChange={handlePoTypeChange} 
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
