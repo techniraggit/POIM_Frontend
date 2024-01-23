@@ -26,7 +26,7 @@ const Settings = () => {
             value: value
         })
             .then((res) => {
-                if(res.status){
+                if (res.status) {
                     message.success(res.data.message)
                 }
                 console.log(res.data.message, 'sssssssssssssssss');
@@ -74,9 +74,11 @@ const Settings = () => {
                                                 <p className="mb-0 set-thre me-1">Set Threshold Limit</p><span>i</span>
                                             </div>
                                             <div className="dollars-input d-flex align-items-center">
-
+                                                <span className="dollar-sign">$</span>
                                                 <input placeholder="Enter value in dollars"
-                                                  value={`$ ${thresholdData[index].value}`}
+                                                // value={`$${thresholdData[index].value}`}
+                                                    // value={thresholdData[index].value}
+                                                    //   value={`$ ${thresholdData[index].value}`}
                                                     onChange={(e) => handleInputChange(index, e.target.value)}
                                                 />
                                             </div>

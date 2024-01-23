@@ -2412,7 +2412,9 @@ button.ant-btn.edit-vendor-btn {
     /* display: none; */
 }
 
-
+.dollar-sign {
+    margin-right: 0px; /* Adjust spacing as needed */
+}
 
 
 .Amendments-wrap {
