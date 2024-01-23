@@ -597,7 +597,7 @@ const Edit_Rental_Po = () => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-sm-4 d-flex align-items-center">
+                                        <div className="col-sm-4 d-flex align-items-center justify-content-between">
                                             <div className="wrap-box">
                                                 <Form.Item
                                                     label="Date Range"
@@ -741,30 +741,32 @@ const Edit_Rental_Po = () => {
                                                         }
                                                         {formData.shipment_type === 'project related' && (
                                                             <div class="col-sm-4">
-                                                                <div className="selectwrap  shipment-caret aligned-text">
-                                                                    <Form.Item
-                                                                        label="Select Site"
-                                                                        name="project_site_id"
-                                                                        htmlFor="file"
-                                                                        class="same-clr"
-                                                                        rules={[
-                                                                            {
-                                                                                required: true,
-                                                                                message: "Please choose site",
-                                                                            },
-                                                                        ]}
-                                                                    >
-                                                                        <Select id="singlesa" class="js-states form-control file-wrap-select">
-                                                                            {Array.isArray(siteOptions) &&
-                                                                                siteOptions.map((site) =>
-                                                                                (
-                                                                                    <Select.Option key={site.site_id} value={site.site_id}>
-                                                                                        {site.name}
-                                                                                    </Select.Option>
-                                                                                )
-                                                                                )}
-                                                                        </Select>
-                                                                    </Form.Item></div>
+                                                                <div class="wrap-box mb-0">
+                                                                    <div className="selectwrap  shipment-caret aligned-text">
+                                                                        <Form.Item
+                                                                            label="Select Site"
+                                                                            name="project_site_id"
+                                                                            htmlFor="file"
+                                                                            class="same-clr"
+                                                                            rules={[
+                                                                                {
+                                                                                    required: true,
+                                                                                    message: "Please choose site",
+                                                                                },
+                                                                            ]}
+                                                                        >
+                                                                            <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                                                {Array.isArray(siteOptions) &&
+                                                                                    siteOptions.map((site) =>
+                                                                                    (
+                                                                                        <Select.Option key={site.site_id} value={site.site_id}>
+                                                                                            {site.name}
+                                                                                        </Select.Option>
+                                                                                    )
+                                                                                    )}
+                                                                            </Select>
+                                                                        </Form.Item></div>
+                                                                </div>
                                                             </div>
                                                         )}
                                                         <div className="col-sm-4">

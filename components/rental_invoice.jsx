@@ -516,8 +516,8 @@ const Rental_invoice = ({ data }) => {
                             <span class="d-block me-4">Ship To</span>
                             <hr />
                         </div>
-                        <div class="row space-bottom mb-0">
-                            <div class="col-lg-4 col-md-6 all-wrap-box">
+                        <div class="row space-bottom">
+                            <div class="col-lg-4 col-md-6 all-wrap-box mb-3">
                                 <div class="selectwrap  shipment-caret aligned-text">
                                     <Form.Item
                                         label="Shipment Type"
@@ -827,7 +827,7 @@ const Rental_invoice = ({ data }) => {
                                                 </Space>
                                             )
                                         })}
-                                        <Form.Item>
+                                        <Form.Item className="">
                                             <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                                                 setRepeator([...repeator, repeatorData]);
                                                 add();
@@ -839,7 +839,7 @@ const Rental_invoice = ({ data }) => {
                                 )}
                             </Form.List>
                         </div>
-                        <div className="row">
+                        <div className="row mt-5">
                             <div className="col-lg-4 col-md-6">
                                 <div class="wrap-box">
                                     <Form.Item
