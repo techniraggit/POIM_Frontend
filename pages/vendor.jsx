@@ -9,8 +9,9 @@ import { getServerSideProps } from "@/components/mainVariable";
 import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
 import View_Vendor from "@/components/view-vendor";
-import { vendorSearch,vendorClear} from "@/apis/apis/adminApis";
+import { vendorSearch, vendorClear } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
+import Roles from "@/components/Roles";
 
 const Vendor = ({ base_url }) => {
     const [vendors, setVendors] = useState([]);
@@ -80,29 +81,29 @@ const Vendor = ({ base_url }) => {
         setViewVendorVisible((prevVisible) => (prevVisible === id ? null : id));
         setIsModalOpen(true);
         setClickedIndex(index);
-       
+
     };
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
-      };
+    };
 
-      const handleButtonClick = async  (event) => {
+    const handleButtonClick = async (event) => {
         event.preventDefault();
-        vendorSearch(inputValue).then((response)=>{
-            console.log(response,'pppppppppppppp');
+        vendorSearch(inputValue).then((response) => {
+            console.log(response, 'pppppppppppppp');
             setVendors(response.data.search_vendors_data)
 
         })
-        
-      };
-      const handleClearButtonClick = () => {
+
+    };
+    const handleClearButtonClick = () => {
         setInputValue('');
-        vendorClear().then((res)=>{
-            console.log(res,'apppppppppppp');
+        vendorClear().then((res) => {
+            console.log(res, 'apppppppppppp');
             setVendors(res.data.vendors)
 
         })
-      };
+    };
     return (
         <>
             <div className="wrapper-main">
@@ -111,11 +112,12 @@ const Vendor = ({ base_url }) => {
                     <Header heading="Vendors" />
                     <div className="bottom-wrapp">
                         <ul className="list-icons">
-                            <li className="me-4">
-                                <Link href="/create-vendor" className="mb-2 d-block"><PlusOutlined /></Link>
-                                {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
-                                <span>Create New Vendor</span>
-                            </li>
+                            <Roles action='add_vendor'>
+                                <li className="me-4">
+                                    <Link href="/create-vendor" className="mb-2 d-block"><PlusOutlined /></Link>
+                                    <span>Create New Vendor</span>
+                                </li>
+                            </Roles>
                             <li className="me-4">
                                 <span className="text-size mt-0">{totalVendor}</span>
                                 <span>Total Vendors</span>
@@ -124,10 +126,10 @@ const Vendor = ({ base_url }) => {
                         <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
                                 <input className="vendor-input" placeholder="Search Vendor"
-                                 value={inputValue} onChange={handleInputChange}
-                                 />
+                                    value={inputValue} onChange={handleInputChange}
+                                />
                                 <button className="vendor-search-butt"
-                                 onClick={handleButtonClick}
+                                    onClick={handleButtonClick}
                                 >Search</button>
                             </form>
                             <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
@@ -154,19 +156,22 @@ const Vendor = ({ base_url }) => {
                                                     <td>{vendor.country}</td>
                                                     <td>{vendor.state}</td>
                                                     <td className="td-icon-color">
-                                                        {/* <Link href="#" className="me-2"> */}
-                                                        <EyeFilled onClick={() => handleIconClick(vendor.vendor_id, index)} />
-
-                                                        {/* </Link> */}
-                                                        <Popconfirm
-                                                            title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(vendor.vendor_id)}
-                                                            okText="Yes"
-                                                            cancelText="No"
-                                                        >
-                                                            <DeleteFilled />
-                                                        </Popconfirm>
+                                                        <Roles action='view_vendor'>
+                                                            <EyeFilled onClick={() => handleIconClick(vendor.vendor_id, index)} />
+                                                        </Roles>
+                                                        <Roles action='delete_vendor'>
+                                                            <Popconfirm
+                                                                title="Are you sure you want to delete this item?"
+                                                                onConfirm={() => handleDelete(vendor.vendor_id)}
+                                                                okText="Yes"
+                                                                cancelText="No"
+                                                            >
+                                                                <DeleteFilled />
+                                                            </Popconfirm>
+                                                        </Roles>
+                                                        <Roles action='edit_vendor'>
                                                         <Link href={`/edit_vendor/${vendor.vendor_id}`} className="me-2"><EditFilled /></Link>
+                                                        </Roles>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -176,15 +181,15 @@ const Vendor = ({ base_url }) => {
                         </div>
                     </div>
                 </div>
-                <View_Vendor setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible} 
-                clickedIndex={clickedIndex}
+                <View_Vendor setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible}
+                    clickedIndex={clickedIndex}
                 />
             </div>
         </>
     )
 }
 export { getServerSideProps }
-export default withAuth(['admin','accounting','project manager','department manager',
-'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])
-(Vendor)
+export default withAuth(['admin', 'accounting', 'project manager', 'department manager',
+    'director', 'supervisor', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])
+    (Vendor)
 // export default Vendor

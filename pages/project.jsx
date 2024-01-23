@@ -8,7 +8,7 @@ import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
 import ProjectPopup from "@/components/project-popup";
-import { projectSearch,projectClear} from "@/apis/apis/adminApis";
+import { projectSearch, projectClear } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
 
@@ -69,16 +69,16 @@ const Vendor = ({ base_url }) => {
         setInputValue(event.target.value);
     };
 
-    const handleButtonClick = async  (event) => {
+    const handleButtonClick = async (event) => {
         event.preventDefault();
-        projectSearch(inputValue).then((response)=>{
+        projectSearch(inputValue).then((response) => {
             setProjects(response.data.search_project_data);
         })
     };
 
     const handleClearButtonClick = () => {
         setInputValue('');
-        projectClear().then((res)=>{
+        projectClear().then((res) => {
             setProjects(res.data.projects);
         })
     };
@@ -91,10 +91,13 @@ const Vendor = ({ base_url }) => {
                     <Header heading="Project" />
                     <div className="bottom-wrapp">
                         <ul className="list-icons">
-                            <li className="me-4 create-projects">
-                                <Link href="/create-project" className="d-block mb-2"><PlusOutlined /></Link>
-                                <span>Create New Projects</span>
-                            </li>
+                            <Roles action="add_project">
+                                <li className="me-4 create-projects">
+                                    <Link href="/create-project" className="d-block mb-2"><PlusOutlined /></Link>
+                                    <span>Create New Projects</span>
+                                </li>
+                            </Roles>
+
                             <li className="me-4">
                                 <span className="text-size mt-0">{totalProjects}</span>
                                 <span>Total Projects</span>
@@ -103,10 +106,10 @@ const Vendor = ({ base_url }) => {
                         <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
                                 <input className="vendor-input" placeholder="Search Projects"
-                                 value={inputValue} onChange={handleInputChange}
-                                 />
+                                    value={inputValue} onChange={handleInputChange}
+                                />
                                 <button className="vendor-search-butt"
-                                 onClick={handleButtonClick}
+                                    onClick={handleButtonClick}
                                 >Search</button>
                             </form>
                             <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
@@ -132,8 +135,10 @@ const Vendor = ({ base_url }) => {
                                                     <td>{project.customer_name}</td>
                                                     <td>{project.sites[0].address}</td>
                                                     <td className="td-icon-color">
-                                                    <EyeFilled onClick={() => handleIconClick(project.project_id)} />
-                                                        {isViewProjectVisible === project.project_id && <ProjectPopup project_id={project.project_id} />}
+                                                        <Roles action="view_project">
+                                                            <EyeFilled onClick={() => handleIconClick(project.project_id)} />
+                                                            {isViewProjectVisible === project.project_id && <ProjectPopup project_id={project.project_id} />}
+                                                        </Roles>
                                                         <Roles action="delete_project">
                                                             <Popconfirm
                                                                 title="Are you sure you want to delete this item?"
@@ -144,11 +149,13 @@ const Vendor = ({ base_url }) => {
                                                                 <DeleteFilled />
                                                             </Popconfirm>
                                                         </Roles>
-                                                        <Link href={`/edit_project/${project.project_id}`} className="me-2"><EditFilled /></Link>
+                                                        <Roles action='edit_project'>
+                                                            <Link href={`/edit_project/${project.project_id}`} className="me-2"><EditFilled /></Link>
+                                                        </Roles>
                                                     </td>
                                                 </tr>
                                             )
-                                        )}
+                                            )}
                                     </tbody>
                                 </table>
                             </div>
@@ -160,6 +167,6 @@ const Vendor = ({ base_url }) => {
     )
 }
 export { getServerSideProps }
-export default withAuth(['admin','accounting','project manager','department manager',
-'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])
-(Vendor)
+export default withAuth(['admin', 'accounting', 'project manager', 'department manager',
+    'director', 'supervisor', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])
+    (Vendor)

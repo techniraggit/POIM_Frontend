@@ -7,8 +7,9 @@ import { Popconfirm, Input, message } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
 import UserPopUp from "@/components/user-popup";
-import { userSearch , userClear} from "@/apis/apis/adminApis";
+import { userSearch, userClear } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
+import Roles from "@/components/Roles";
 const User_list = ({ base_url }) => {
     const [users, setUsers] = useState([]);
     const [isViewUserVisible, setUserVisible] = useState(false);
@@ -32,7 +33,7 @@ const User_list = ({ base_url }) => {
         }
         fetchroles();
     }, [])
-    
+
 
     const handleDelete = async (id) => {
         try {
@@ -70,22 +71,22 @@ const User_list = ({ base_url }) => {
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
-      };
-    
-      const handleButtonClick = async  (event) => {
+    };
+
+    const handleButtonClick = async (event) => {
         event.preventDefault();
-        userSearch(inputValue).then((response)=>{
+        userSearch(inputValue).then((response) => {
             setUsers(response.data.search_query_data)
 
         })
-      };
-      const handleClearButtonClick = () => {
+    };
+    const handleClearButtonClick = () => {
         setInputValue('');
-        userClear().then((res)=>{
+        userClear().then((res) => {
             setUsers(res.data.data);
 
         })
-      };
+    };
     return (
         <>
             <div className="wrapper-main">
@@ -95,11 +96,13 @@ const User_list = ({ base_url }) => {
 
                     <div className="bottom-wrapp">
                         <ul className="list-icons">
-                            <li className="me-4">
-                                <Link href="/add-user" className="d-block mb-2"><PlusOutlined /></Link>
-                                {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
-                                <span>Create New User</span>
-                            </li>
+                            <Roles action='add_user'>
+                                <li className="me-4">
+                                    <Link href="/add-user" className="d-block mb-2"><PlusOutlined /></Link>
+                                    <span>Create New User</span>
+                                </li>
+                            </Roles>
+
                             <li className="me-4">
                                 <span className="text-size mt-0">{totalUser}</span>
                                 <span>Total Users</span>
@@ -108,10 +111,10 @@ const User_list = ({ base_url }) => {
                         <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
                                 <input className="vendor-input" placeholder="Search Users"
-                                 value={inputValue} onChange={handleInputChange}
-                                 />
+                                    value={inputValue} onChange={handleInputChange}
+                                />
                                 <button className="vendor-search-butt"
-                                 onClick={handleButtonClick}
+                                    onClick={handleButtonClick}
                                 >Search</button>
                             </form>
                             <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
@@ -141,19 +144,24 @@ const User_list = ({ base_url }) => {
                                                     <td>{user.email}</td>
                                                     <td>{user.phone_number}</td>
                                                     <td className="td-icon-color">
-                                                        <EyeFilled onClick={() => handleIconClick(user.id)} />
-                                                        {isViewUserVisible === user.id && <UserPopUp user_id={user.id} />}
-                                                        <Popconfirm
-                                                            title="Are you sure you want to delete this item?"
-                                                            onConfirm={() => handleDelete(user.id)}
-                                                            okText="Yes"
-                                                            cancelText="No"
+                                                        <Roles action='view_user'>
+                                                            <EyeFilled onClick={() => handleIconClick(user.id)} />
+                                                            {isViewUserVisible === user.id && <UserPopUp user_id={user.id} />}
+                                                        </Roles>
+                                                        <Roles action='delete_user'>
+                                                            <Popconfirm
+                                                                title="Are you sure you want to delete this item?"
+                                                                onConfirm={() => handleDelete(user.id)}
+                                                                okText="Yes"
+                                                                cancelText="No"
 
-                                                        >
-                                                            <DeleteFilled />
-                                                        </Popconfirm>
-                                                        {/* <Link></> */}
-                                                        <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link>
+                                                            >
+                                                                <DeleteFilled />
+                                                            </Popconfirm>
+                                                        </Roles>
+                                                        <Roles action='edit_user'>
+                                                            <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link>
+                                                        </Roles>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -169,5 +177,5 @@ const User_list = ({ base_url }) => {
     )
 }
 export { getServerSideProps }
-export default withAuth(['admin','accounting','project manager','director','department manager'])(User_list);
+export default withAuth(['admin', 'accounting', 'project manager', 'director', 'department manager'])(User_list);
 // export default User_list

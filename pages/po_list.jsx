@@ -7,6 +7,7 @@ import { message, Popconfirm } from 'antd';
 import Link from "next/link";
 import { deletePO, getPoList } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
+import Roles from "@/components/Roles";
 
 const PO_list = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
@@ -45,10 +46,13 @@ const PO_list = () => {
 
                     <div className="bottom-wrapp">
                         <ul className="list-icons">
-                            <li className="me-4">
-                                <Link href="/create-material-po" className="d-block mb-2"><PlusOutlined /></Link>
-                                <span>Create PO</span>
-                            </li>
+                            <Roles action='add_purchase_order'>
+                                <li className="me-4">
+                                    <Link href="/create-material-po" className="d-block mb-2"><PlusOutlined /></Link>
+                                    <span>Create PO</span>
+                                </li>
+                            </Roles>
+
                             <li className="me-4">
                                 <span className="text-size mt-0 mb-2">{purchaseOrders?.length || 0}</span>
                                 <span>Total POs</span>
@@ -82,46 +86,53 @@ const PO_list = () => {
                                             rows.map((purchase, index) => {
                                                 console.log(purchase.po_type === "subcontractor")
                                                 return <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{purchase.po_number}</td>
-                                                <td className="td-color">{purchase.po_type}</td>
-                                                <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
-                                                    year: 'numeric',
-                                                    month: 'short',
-                                                    day: 'numeric',
-                                                })}</td>
-                                                <td>{purchase.total_amount}</td>
-                                                <td>{purchase.status}</td>
-                                                <td>{purchase.vendor_contact?.name}</td>
-                                                <td className="td-icon-color">
-                                                    {purchase.po_type === 'material' && (
-                                                        <Link href={`/view-po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
-                                                    )} 
-                                                    {purchase.po_type === 'rental' && (
-                                                        <Link href={`/view_rental_po/${purchase.po_id}`}><EyeFilled /></Link>
-                                                    )}
-                                                    {purchase.po_type === "subcontractor" && (
-                                                        <Link href={`/view_subcontractor_po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
-                                                    )}
-                                                    <Popconfirm
-                                                        title="Are you sure you want to delete this item?"
-                                                        onConfirm={() => handleDelete(purchase.po_id)}
-                                                        okText="Yes"
-                                                        cancelText="No"
-                                                    >
-                                                        <DeleteFilled />
-                                                    </Popconfirm>
-                                                    {purchase.po_type === "material" && (
-                                                        <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
-                                                    )}
-                                                    {purchase.po_type === "rental" && (
-                                                        <Link href={`/edit_rental_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
-                                                    )}
-                                                    {purchase.po_type === "subcontractor" && (
-                                                        <Link href={`/edit_subcontractor_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
-                                                    )}
-                                                </td>
-                                            </tr>
+                                                    <td>{index + 1}</td>
+                                                    <td>{purchase.po_number}</td>
+                                                    <td className="td-color">{purchase.po_type}</td>
+                                                    <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                    })}</td>
+                                                    <td>{purchase.total_amount}</td>
+                                                    <td>{purchase.status}</td>
+                                                    <td>{purchase.vendor_contact?.name}</td>
+                                                    <td className="td-icon-color">
+                                                        <Roles action='view_purchase_order'>
+                                                        {purchase.po_type === 'material' && (
+                                                            <Link href={`/view-po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
+                                                        )}
+                                                        {purchase.po_type === 'rental' && (
+                                                            <Link href={`/view_rental_po/${purchase.po_id}`}><EyeFilled /></Link>
+                                                        )}
+                                                        {purchase.po_type === "subcontractor" && (
+                                                            <Link href={`/view_subcontractor_po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
+                                                        )}
+                                                        </Roles>
+                                                        
+                                                        <Roles action='delete_purchase_order'>
+                                                            <Popconfirm
+                                                                title="Are you sure you want to delete this item?"
+                                                                onConfirm={() => handleDelete(purchase.po_id)}
+                                                                okText="Yes"
+                                                                cancelText="No"
+                                                            >
+                                                                <DeleteFilled />
+                                                            </Popconfirm>
+                                                        </Roles>
+                                                        <Roles action='edit_purchase_order'>
+                                                            {purchase.po_type === "material" && (
+                                                                <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                            )}
+                                                            {purchase.po_type === "rental" && (
+                                                                <Link href={`/edit_rental_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                            )}
+                                                            {purchase.po_type === "subcontractor" && (
+                                                                <Link href={`/edit_subcontractor_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
+                                                            )}
+                                                        </Roles>
+                                                    </td>
+                                                </tr>
                                             })
                                         ) : (
                                             <tr>
@@ -140,6 +151,6 @@ const PO_list = () => {
 };
 
 export { getServerSideProps };
-export default withAuth(['project manager','supervisor','project coordinate','marketing','health & safety','estimator','shop','admin'])(PO_list)
+export default withAuth(['project manager', 'supervisor', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
 
 // export default PO_list;
