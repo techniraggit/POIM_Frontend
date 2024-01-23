@@ -12,7 +12,7 @@ const withAuth = (allowedRoles) => (WrappedComponent) => {
       if (!isLoggedIn()) {
         router.push('/');
       } else {
-        const userRoles = user.roles;
+        const userRoles = user.role;
         const hasRequiredRole = allowedRoles.some(role => userRoles.includes(role));
         if (!hasRequiredRole) {
           router.push('/dashboard');

@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import moment from "moment";
 import { fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails, updatePo } from "@/apis/apis/adminApis";
 import { Form, Input, Select, DatePicker, Space } from "antd";
-import moment from "moment";
 
 const { Option } = Select;
 
