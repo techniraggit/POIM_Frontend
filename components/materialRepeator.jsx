@@ -13,15 +13,12 @@ const repeatorData = {
     project_site_id: '',
     site_id: ''
 }
-
 function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projects, form, edit }) {
-    // useEffect(() => {
-    //     if (edit) {
-    //         form.setFieldValue('start_date', formData.material_details[0]?.start_date);
-    //         form.setFieldValue('end_date', formData.material_details[0]?.end_date);
-    //     }
-    // }, [formData.material_details[0]?.start_date, edit, formData.material_details[0]?.end_date]);
-
+    const list = (value) => {
+        if (formData.shipment_type === 'project related' || formData.shipment_type === 'combined') {
+            fetchSites(value);
+        }
+    };
     return (
         <div class="row">
             <div class="col-sm-4">
@@ -83,7 +80,6 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                     >
                         <Input placeholder="Amount"
                             readOnly
-                        // onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} 
                         />
                     </Form.Item>
 
@@ -107,6 +103,34 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                         </Form.Item>
                     </div>
                 </div>
+                {(formData.shipment_type === 'project related') && (
+                    <div class="col-sm-4">
+                        <div className="selectwrap columns-select shipment-caret ">
+                            <Form.Item
+                                label="Select Site"
+                                name="project_site_id"
+                                htmlFor="file"
+                                class="same-clr"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please choose site",
+                                    },
+                                ]}
+                            >
+                                <Select id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
+                                    {Array.isArray(siteOptions) &&
+                                        siteOptions.map((site) => (
+                                            <Select.Option key={site.site_id} value={site.site_id}>
+                                                {site.name}
+                                            </Select.Option>
+                                        )
+                                        )}
+                                </Select>
+                            </Form.Item>
+                        </div>
+                    </div>
+                )}
 
                 {(formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined') && (
                     <div class="col-sm-4">
@@ -137,10 +161,11 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                     </div>
                 )}
                 <div className="col-md-4">
-                    <div className="wrap-box mb-0">
-                        {formData.material_details[0].material_for === 'inventory' && (
+                    <div className="wrap-box">
+                        {(formData.material_details[0].material_for === 'inventory' || formData.material_details[0].material_for === 'supplies') && (
                             <Form.Item
-                                label="Inventory Code"
+                                label={formData.material_details[0].material_for === 'inventory' ? "Inventory Code" : "GL Code"}
+                                // label="Inventory Code"
                                 name="code"
                                 htmlFor="file"
                                 className="same-clr"
@@ -154,22 +179,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                 <Input />
                             </Form.Item>
                         )}
-                        {formData.material_details[0].material_for === 'supplies' && (
-                            <Form.Item
-                                label="GL Code"
-                                name="code"
-                                htmlFor="file"
-                                className="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please enter GL Code",
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        )}
+
                         {formData.material_details[0].material_for === 'project' && (
                             <>
                                 <div class="selectwrap add-dropdown-wrap">
@@ -204,21 +214,48 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                     </div>
 
                                 </div>
+
                             </>
                         )}
 
                     </div>
                 </div>
             </div>
-
-
-
+            <div className="row">
+            {formData.material_details[0].material_for === 'project' && (
+                <div class="col-sm-4">
+                    <div className="selectwrap columns-select shipment-caret ">
+                        <Form.Item
+                            label="Select Site"
+                            name="project_site_id"
+                            htmlFor="file"
+                            class="same-clr"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please choose site",
+                                },
+                            ]}
+                        >
+                            <Select id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
+                                {Array.isArray(siteOptions) &&
+                                    siteOptions.map((site) => (
+                                        <Select.Option key={site.site_id} value={site.site_id}>
+                                            {site.name}
+                                        </Select.Option>
+                                    )
+                                    )}
+                            </Select>
+                        </Form.Item>
+                    </div>
+                </div>
+                )}
+            </div>
             <div className="create-another minuswrap-img">
                 <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                     {
                         formData.material_details.slice(1).map((data, index) => {
                             return <div className="row align-items-center">
-
                                 {
                                     Object.keys(data).map((key) => {
                                         let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
@@ -245,33 +282,22 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                             )
                                         } else if (key === 'unit_price') {
                                             return (
-                                                <div className=" col-sm-4">
-                                                    <div key={key} className="wrap-box">
-                                                        <Form.Item
-                                                            label={"Unit price"}
-                                                            rules={[{ required: true, message: `Please enter Scope Of Work` }]}
-                                                        >
-                                                            <Input
-                                                                placeholder={upperKey}
-                                                                value={data[key]}
-                                                                name={key + index}
-                                                                onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
-                                                            />
-                                                            {/* <Input.TextArea
-                                                            rows={4}
-                                                            cols={50}
-                                                            placeholder={"Enter Scope Of Work"}
+                                                <div key={key} className="wrap-box col-12">
+                                                    <Form.Item
+                                                        label={"Unit price"}
+                                                        rules={[{ required: true, message: `Please enter Scope Of Work` }]}
+                                                    >
+                                                        <Input
+                                                            placeholder={upperKey}
                                                             value={data[key]}
                                                             name={key + index}
                                                             onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
-                                                        /> */}
-                                                        </Form.Item>
-                                                    </div>
+                                                        />
+                                                    </Form.Item>
                                                 </div>
                                             )
                                         } else if (key === 'amount') {
                                             return (
-
                                                 <div className="col-sm-4">
                                                     <div className="wrap-box mb">
                                                         <Form.Item
@@ -284,7 +310,6 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                             ]}
                                                         >
                                                             <Input
-                                                                // type="date"
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
@@ -295,7 +320,6 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                             )
                                         } else if (key === 'description') {
                                             return (
-
                                                 <div className="col-sm-4">
                                                     <div className="wrap-box">
                                                         <Form.Item
@@ -308,7 +332,6 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                             ]}
                                                         >
                                                             <Input
-                                                                // type="date"
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
@@ -317,8 +340,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     </div>
                                                 </div>
                                             )
-                                        }
-                                        else if (key === 'project_site_id' && formData.shipment_type.toLowerCase() === 'project related') {
+                                        } else if (key === 'project_site_id' && formData.shipment_type.toLowerCase() === 'project related') {
                                             return (
                                                 <div class="col-sm-4">
                                                     <div className="wrap-box">
@@ -343,7 +365,8 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                     </div>
                                                 </div>
                                             )
-                                        } else if (key === 'material_for' && (formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined')) {
+                                        }
+                                        else if (key === 'material_for' && (formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined')) {
                                             return (
                                                 <div class="col-sm-4">
                                                     <div className="wrap-box">
@@ -394,6 +417,24 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, projec
                                                         </Form.Item>
                                                     </div>
                                                 </div>
+                                            )
+                                        }
+                                        else if (key === 'code' && (formData.material_details[0].material_for === 'supplies')) {
+                                            return (
+                                                <Form.Item
+                                                    label="GL Code"
+                                                    name={`code_${index + 1}`}
+                                                    htmlFor="file"
+                                                    className="same-clr"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please enter Inventory Code",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input defaultValue={formData.material_details[index + 1].code} onChange={({ target: { value } }) => onChange('material_details', { code: value }, index + 1)} />
+                                                </Form.Item>
                                             )
                                         }
                                         return <></>

@@ -30,8 +30,11 @@ const CreateVendor = () => {
     const onFinish = () => {
         createVendor(formData).then((response) => {
             if(response.data?.status) {
+                message.success("Vendor Created");
                 router.push('/vendor');
             }
+        }).catch((error)=>{
+            message.error(error.response.data.message)
         })
     }
 

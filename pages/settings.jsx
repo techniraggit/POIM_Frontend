@@ -67,7 +67,6 @@ const Settings = () => {
                                             <span className="img-clr me-3">
                                                 <img src="./images/to-do-list.svg" alt="" className="" />
                                             </span>
-                                            {/* <span>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</span> */}
                                             <span style={{ textTransform: 'capitalize' }}>{item.name}</span>
                                         </div>
                                         <div className="lists-items me-2">
@@ -78,10 +77,8 @@ const Settings = () => {
 
                                                 <input placeholder="Enter value in dollars"
                                                   value={`$ ${thresholdData[index].value}`}
-                                                    // value={thresholdData[index].value}
                                                     onChange={(e) => handleInputChange(index, e.target.value)}
                                                 />
-                                                {/* <Button className="set-btn">Set</Button> */}
                                             </div>
                                             <hr className="mt-4" />
                                             <Button className="save-Button" onClick={() => handleSaveClick(item.th_id, item.value)}>save</Button>

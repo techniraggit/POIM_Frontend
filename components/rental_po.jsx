@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect } from "react";
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 // import { getServerSideProps } from "@/components/mainVariable";
@@ -7,6 +8,7 @@ import { base_url } from './constant';
 import { CalendarOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const { Option } = Select;
 const repeatorData = {
@@ -35,10 +37,9 @@ const Rental = () => {
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
     const [materialFor, setMaterialFor] = useState('');
-    const [userFirstName, setUserFirstName] = useState('');
-    const [userLastName, setUserLastName] = useState('');
     const [repeator, setRepeator] = useState([]);
     const [amount, setAmount] = useState(0)
+    const { user } = useGlobalContext();
 
     const fetchVendorContactDropdown = async (id) => {
         try {
@@ -154,16 +155,6 @@ const Rental = () => {
             console.error('Error fetching projects:', error);
         }
     };
-    useEffect(() => {
-        const storedFirstName = localStorage.getItem('user_first_name');
-        const storedLastName = localStorage.getItem('user_last_name');
-
-        setUserFirstName(storedFirstName || '');
-        setUserLastName(storedLastName || '');
-    }, []);
-
-
-
 
     const handleAmountChange = (value) => {
         console.log(value, 'amount');
@@ -1189,13 +1180,13 @@ const Rental = () => {
                     <div class="col-lg-4 col-md-6">
                         <div class="wrap-box">
                             <label htmlFor="">First Name</label>
-                            <input type="text" value={userFirstName} />
+                            <input type="text" value={user.first_name} />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="wrap-box">
                             <label htmlFor="">Last Name</label>
-                            <input type="text" value={userLastName} />
+                            <input type="text" value={user.last_name} />
                         </div>
                     </div>
                 </div>

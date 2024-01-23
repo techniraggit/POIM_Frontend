@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { Form, Input, Select, DatePicker } from "antd";
@@ -6,7 +7,7 @@ import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
 import RentalRepeator from "./rentalRepeator";
 import MaterialRepeator from "./materialRepeator";
-// import MaterialRepeator from "./MaterialRepeator";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const { Option } = Select;
 
@@ -15,6 +16,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
+    const { user } = useGlobalContext();
 
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
@@ -30,22 +32,22 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
             }
         });
 
-        if(edit) {
+        if (edit) {
             fetchSites();
         }
 
-        form.setFieldValue('first_name', localStorage.getItem('user_first_name'))
-        form.setFieldValue('last_name', localStorage.getItem('user_last_name'))
+        form.setFieldValue('first_name', user.first_name)
+        form.setFieldValue('last_name', user.last_name)
     }, []);
 
     useEffect(() => {
-        if(edit) {
+        if (edit) {
             fetchVendorContactDropdown(formData.vendor_id);
         }
     }, [formData.vendor_id])
 
     useEffect(() => {
-        if (form.getFieldValue('shipment_type') === 'project related') {
+        if ((form.getFieldValue('shipment_type') === 'project related')||(form.getFieldValue('shipment_type') === 'combined')) {
             const response = fetchProjects();
             response.then((res) => {
                 if (res?.data?.status) {
@@ -346,7 +348,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 <hr />
             </div>
             <div class="row space-bottom">
-                <div class="col-md-6 col-lg-4 all-wrap-box">
+                <div class="col-md-6 col-lg-4">
                     <div class="selectwrap  shipment-caret aligned-text">
                         <Form.Item
                             label="Shipment Type"
@@ -364,8 +366,10 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                                 onChange={(value) => { onChange('shipment_type', value) }}
                             >
                                 <Option value="project related">Project Related</Option>
-                                <Option value="Non Project Related">Non Project Related</Option>
-                                <Option value="Combined">Combined</Option>
+                                {formData.po_type !== 'rental' && <Option value="non project related">Non Project Related</Option>}
+                                {formData.po_type !== 'rental' && <Option value="combined">Combined</Option>}
+                                {/* <Option value="Non Project Related">Non Project Related</Option>
+                                <Option value="Combined">Combined</Option> */}
                             </Select>
                         </Form.Item>
                     </div>
@@ -407,6 +411,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                     </div>
                 )}
                 {formData.shipment_type === 'non project related' && (
+                    <div class="col-md-6 col-lg-4">
                     <div class="selectwrap non-project-wrap">
                         <Form.Item
                             label="Delivery Address"
@@ -424,6 +429,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                             <Input readOnly />
                         </Form.Item>
                     </div>
+                    </div>
                 )}
             </div>
             <div class="linewrap d-flex">
@@ -434,16 +440,11 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 formData.po_type === 'subcontractor' ? <SubcontractorRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
             }
             {
-                formData.po_type === 'rental' ? <RentalRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange}/>:<></>
+                formData.po_type === 'rental' ? <RentalRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
             }
             {
-                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} projects={projects} setFormData={setFormData} form={form} onChange={onChange}/>:<></>
+                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} projects={projects} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
             }
-            {/* {
-                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
-
-            } */}
-
             <div className="row top-btm-space mb-0">
                 <div className="col-lg-4 col-md-6">
                     <div class="wrap-box">
@@ -499,5 +500,4 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
         </>
     )
 }
-
 export default PoForm;

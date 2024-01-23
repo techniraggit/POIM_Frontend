@@ -3,8 +3,9 @@ import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import '../../styles/style.css'
-import {PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
+import moment from "moment";
 import { fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails, updatePo } from "@/apis/apis/adminApis";
 import { Form, Input, Select, DatePicker, Space } from "antd";
 import moment from "moment";
@@ -52,7 +53,7 @@ const ViewSubContractorPo = () => {
             }
         })
         fetchPo(id).then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 const data = res.data.data;
                 fetchVendorContactDropdown(data.vendor_contact.company.vendor_id);
                 fetchSites();
@@ -105,7 +106,7 @@ const ViewSubContractorPo = () => {
         if (form.getFieldValue('shipment_type') === 'project related') {
             const response = fetchProjects();
             response.then((res) => {
-                if(res?.data?.status) {
+                if (res?.data?.status) {
                     setProjects(res.data.projects);
                 }
             });
@@ -115,7 +116,7 @@ const ViewSubContractorPo = () => {
     const fetchVendorContactDropdown = (id) => {
         const response = fetchVendorContacts(id);
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 setContactId([...res.data.vendors])
             }
         })
@@ -185,19 +186,19 @@ const ViewSubContractorPo = () => {
             po_id: id,
             project_site_id: formData.project_site_id?.site_id
         }).then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 router.push('/po_list');
             }
         });
     }
-    
+
     const onChange = (name, value, index) => {
-        if(name === 'material_details') {
+        if (name === 'material_details') {
             const materialDetails = formData.material_details;
             Object.keys(value).map((key) => {
                 materialDetails[index][key] = value[key];
             });
-            if(value.amount) {
+            if (value.amount) {
                 updateAmount(index);
             }
             setFormData({
@@ -210,7 +211,7 @@ const ViewSubContractorPo = () => {
                 [name]: value
             });
         }
-        if(value.amount || name === "amount") {
+        if (value.amount || name === "amount") {
             handleUnitPriceRepeaterChange();
         }
     }
@@ -219,7 +220,7 @@ const ViewSubContractorPo = () => {
         const response = fetchProjectSites();
 
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 const sitesArray = res.data.sites;
                 setSiteOptions(sitesArray);
             }
@@ -342,7 +343,7 @@ const ViewSubContractorPo = () => {
                                                                 onChange('vendor_id', value);
                                                             }}
                                                         >
-                                                            {names.map((entry) =>(
+                                                            {names.map((entry) => (
                                                                 <Select.Option key={entry.vendorId} value={entry.vendorId}>
                                                                     {entry.company_name}
                                                                 </Select.Option>
@@ -397,15 +398,15 @@ const ViewSubContractorPo = () => {
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
-                                                        label="Company name"
-                                                        name="company_name"
-                                                        class="bold-label"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please Enter Company name",
-                                                            },
-                                                        ]}
+                                                    label="Company name"
+                                                    name="company_name"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Company name",
+                                                        },
+                                                    ]}
                                                 >
                                                     <Input readOnly onChange={({ target: { value } }) => onChange('company_name', value)} />
                                                 </Form.Item>
@@ -415,15 +416,15 @@ const ViewSubContractorPo = () => {
                                         <div class="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
-                                                        label="Email"
-                                                        name="email"
-                                                        class="bold-label"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please Enter Email",
-                                                            },
-                                                        ]}
+                                                    label="Email"
+                                                    name="email"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please Enter Email",
+                                                        },
+                                                    ]}
                                                 >
                                                     <Input readOnly onChange={({ target: { value } }) => onChange('email', value)} />
                                                 </Form.Item>
@@ -519,7 +520,7 @@ const ViewSubContractorPo = () => {
                                                     ]}
                                                 >
                                                     <Select disabled id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
-                                                        onChange={(value) => {onChange('shipment_type', value)}}
+                                                        onChange={(value) => { onChange('shipment_type', value) }}
                                                     >
                                                         <Option value="project related">Project Related</Option>
                                                     </Select>
@@ -568,7 +569,7 @@ const ViewSubContractorPo = () => {
                                         <hr />
                                     </div>
                                     <div class="row">
-                                        
+
                                         <div class="col-sm-4 space-col-spc">
                                             <div class="wrap-box">
                                                 <Form.Item
@@ -582,7 +583,7 @@ const ViewSubContractorPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input readOnly placeholder="Description" onChange={(e) => onChange('description', {project_site_id: value}, 0)} />
+                                                    <Input readOnly placeholder="Description" onChange={(e) => onChange('description', { project_site_id: value }, 0)} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -598,7 +599,7 @@ const ViewSubContractorPo = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input readOnly onChange={({ target: { value } }) => onChange('material_details', {date: value}, 0)} type="date"></Input>
+                                                    <Input readOnly onChange={({ target: { value } }) => onChange('material_details', { date: value }, 0)} type="date"></Input>
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -616,7 +617,7 @@ const ViewSubContractorPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Input readOnly placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', {amount: value}, 0)} />
+                                                        <Input readOnly placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
                                                     </Form.Item>
                                                 </div>
                                             </div>
@@ -635,9 +636,9 @@ const ViewSubContractorPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Select disabled id="singlesa" onChange={(value) => onChange('material_details', {project_site_id: value}, 0)} class="js-states form-control file-wrap-select">
+                                                            <Select disabled id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) =>(
+                                                                    siteOptions.map((site) => (
                                                                         <Select.Option key={site.site_id} value={site.site_id}>
                                                                             {site.name}
                                                                         </Select.Option>
@@ -657,11 +658,11 @@ const ViewSubContractorPo = () => {
                                                             {
                                                                 Object.keys(data).map((key) => {
                                                                     let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
-                                                                    if(key.includes('_')) {
+                                                                    if (key.includes('_')) {
                                                                         upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');
                                                                     }
-                                                                    if(key === 'description' || key === "amount") {
-                                                                        return(
+                                                                    if (key === 'description' || key === "amount") {
+                                                                        return (
                                                                             <div key={key} className="wrap-box col-sm-3">
                                                                                 <Form.Item
                                                                                     label={upperKey}
@@ -671,7 +672,7 @@ const ViewSubContractorPo = () => {
                                                                                         disabled
                                                                                         placeholder={upperKey}
                                                                                         value={data[key]}
-                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', {[key]: value}, index + 1)}
+                                                                                        onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                                                     />
                                                                                 </Form.Item>
                                                                             </div>
@@ -702,7 +703,7 @@ const ViewSubContractorPo = () => {
                                                                         return (
                                                                             <div class="col-sm-4">
                                                                                 <div className="selectwrap columns-select shipment-caret ">
-                                                                                    <select disabled className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({target: { value }}) => onChange('material_details', {project_site_id: value}, index + 1)}>
+                                                                                    <select disabled className="js-states form-control custom-wrap-selector" value={formData.material_details[index + 1].project_site_id} onChange={({ target: { value } }) => onChange('material_details', { project_site_id: value }, index + 1)}>
                                                                                         {Array.isArray(siteOptions) &&
                                                                                             siteOptions.map((site) => (
                                                                                                 <option key={site.site_id} value={site.site_id}>

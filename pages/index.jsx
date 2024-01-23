@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import axios from 'axios';
@@ -6,13 +7,14 @@ import '../styles/popup.css';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
 import { isLoggedIn } from "@/apis/apis/shared";
-import withAuth from "@/components/PrivateRoute";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const Login = ({ base_url }) => {
     const [email, setEmail] = useState('');
     const [forgotEmail, setforgotEmail] = useState('')
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
+    const { setUser, user } = useGlobalContext();
     const [showForgotPasswordPopup, setShowForgotPasswordPopup] = useState(false);
     const [forgotPasswordErrors, setForgotPasswordErrors] = useState({});
 
@@ -30,9 +32,6 @@ const Login = ({ base_url }) => {
         if (!email) {
             errors.email = 'Please enter your email address';
         }
-        // if (!forgotEmail) {
-        //   errors.forgotEmail = 'Please enter your email address';
-        // }
 
         if (!password) {
             errors.password = 'Please enter your password';
@@ -57,13 +56,10 @@ const Login = ({ base_url }) => {
 
 
     const handleForgotPassword = () => {
-
-        // Open the forgot password popup
         setShowForgotPasswordPopup(true);
     };
 
     const handlePopupClose = () => {
-        // Close the forgot password popup
         setShowForgotPasswordPopup(false);
     };
 
@@ -90,8 +86,6 @@ const Login = ({ base_url }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-
         if (validateForm()) {
             const values = {
                 email: email,
@@ -99,21 +93,21 @@ const Login = ({ base_url }) => {
                 forgotEmail: forgotEmail,
             }
             try {
-
                 const response = await axios.post(`${base_url}/api/accounts/login`, values
                 );
                 if (response.status === 200) {
                     localStorage.setItem('access_token', response.data.access_token)
                     localStorage.setItem('refresh_token', response.data.refresh_token)
-                    localStorage.setItem('user_first_name', response.data.user_first_name)
-                    localStorage.setItem('user_last_name', response.data.user_last_name)
-                    localStorage.setItem("roles", response.data.user_role)
+                    setUser({
+                        first_name: response.data.user_first_name,
+                        last_name: response.data.user_last_name,
+                        permissions: response.data.user_permissions,
+                        role: response.data.user_role
+                    });
                     router.push('/dashboard');
                     message.success('Login successful');
-                    // Handle successful login
                     console.log('Login successful');
                 } else {
-                    // Handle login failure
                     console.log('Login failed');
                 }
             } catch (error) {
@@ -145,10 +139,6 @@ const Login = ({ base_url }) => {
                                             placeholder="Email Address"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                        // type="email"
-                                        // name=""
-                                        // id=""
-                                        // placeholder="Email Address"
                                         />
                                         {errors.email && <span className="error">{errors.email}</span>}
                                     </div>
@@ -160,23 +150,10 @@ const Login = ({ base_url }) => {
                                         placeholder="Password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                    //  type="password" name="" id="" placeholder="Password" 
                                     />
                                     {errors.password && <span className="error">{errors.password}</span>}
                                 </div>
                                 <div className="col-md-12 chekbox-wrap">
-
-                                    {/* <label className="label-div mb-2">
-                                        <span>Employee</span>
-                                        <input
-                                            type="checkbox"
-                                            name="isEmployee"
-                                            checked={isEmployee}
-                                            onChange={(e) => setIsEmployee(e.target.checked)}
-                                        // type="checkbox" name="" id="" placeholder="" 
-                                        />
-                                        <span class="checkmark"></span>
-                                    </label> */}
 
                                     <div ><a href="javascript:void(0)"><span onClick={handleForgotPassword}>Forgot Password?</span></a></div>
 
@@ -201,7 +178,6 @@ const Login = ({ base_url }) => {
                                             </div>
                                         </div>
                                     )}
-
                                 </div>
                                 <div className="col-md-12">
                                     <button type="submit" className="submit-btn">Login</button>
@@ -214,6 +190,6 @@ const Login = ({ base_url }) => {
         </>
     )
 }
+
 export { getServerSideProps };
-export default Login
-// export default withAuth(['admin'])(Login);
+export default Login;

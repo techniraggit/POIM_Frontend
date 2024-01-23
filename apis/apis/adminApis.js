@@ -123,3 +123,7 @@ export const updateProject = (data) => {
 export const fetchRoles = () => {
     return Axios.get('/api/admin/roles');
 }
+
+export const getUserData = () => {
+    return Axios.get('/api/admin/profile');
+}

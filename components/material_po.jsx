@@ -1,5 +1,5 @@
+'use client'
 import React, { useState, useEffect } from "react";
-
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 import { getServerSideProps } from "@/components/mainVariable";
 import axios from 'axios';
@@ -7,7 +7,7 @@ import '../styles/style.css'
 import { MinusOutlined, PlusOutlined, CaretDownFilled } from '@ant-design/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const { Option } = Select;
 const repeatorData = {
@@ -37,8 +37,6 @@ const Material = ({ base_url }) => {
     const [contacts, setContacts] = useState([]);
     const [contactId, setContactId] = useState('');
 
-    const [userFirstName, setUserFirstName] = useState('');
-    const [userLastName, setUserLastName] = useState('');
     const [repeator, setRepeator] = useState([]);
     const [quantity, setQuantity] = useState(0);
     const [unitPrice, setUnitPrice] = useState(0);
@@ -52,6 +50,8 @@ const Material = ({ base_url }) => {
         state: '',
         country: ''
     })
+
+    const { user } = useGlobalContext();
 
 
     const [items, setItems] = useState([]);
@@ -128,15 +128,6 @@ const Material = ({ base_url }) => {
         setshipmentType(value);
     };
 
-    useEffect(() => {
-        // Get user information from localStorage when the component mounts
-        const storedFirstName = localStorage.getItem('user_first_name');
-        const storedLastName = localStorage.getItem('user_last_name');
-
-        // Update state with the stored information
-        setUserFirstName(storedFirstName || '');
-        setUserLastName(storedLastName || '');
-    }, []);
     const onFinish = async (values) => {
         console.log(values.items)
         if (values.items?.length > 0) {
@@ -1407,7 +1398,7 @@ const Material = ({ base_url }) => {
                     <div class="col-lg-4 col-md-6">
                         <div class="wrap-box">
                             <label htmlFor="">First Name</label>
-                            <input type="text" value={userFirstName} />
+                            <input type="text" value={user.first_name} />
                             {/* <Form.Item
 
                                                     name='first_name'
@@ -1422,7 +1413,7 @@ const Material = ({ base_url }) => {
                     <div class="col-lg-4 col-md-6">
                         <div class="wrap-box">
                             <label htmlFor="">Last Name</label>
-                            <input type="text" value={userLastName} />
+                            <input type="text" value={user.last_name} />
                             {/* <Form.Item
 
                                                     name='last_name'
