@@ -4,11 +4,3 @@ export const isLoggedIn = () => {
     }
     return false;
 }
-
-export const getUserRoles = () => {
-    if (typeof window !== 'undefined') {
-        const roles = localStorage.getItem('roles');
-        return roles || '';
-    }
-    return '';
-}
