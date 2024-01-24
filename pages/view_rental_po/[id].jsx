@@ -591,7 +591,7 @@ const ViewRentalPO = () => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-sm-4 d-flex align-items-center">
+                                        <div className="col-sm-4 d-flex align-items-center to-wrap-datepicker justify-content-between">
                                             <div className="wrap-box">
                                                 <Form.Item
                                                     label="Start Date"

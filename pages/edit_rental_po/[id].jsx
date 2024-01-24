@@ -595,7 +595,7 @@ const Edit_Rental_Po = () => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-sm-4 d-flex align-items-center justify-content-between">
+                                        <div className="col-sm-4 d-flex align-items-center to-wrap-datepicker justify-content-between">
                                             <div className="wrap-box">
                                                 <Form.Item
                                                     label="Date Range"
@@ -687,7 +687,7 @@ const Edit_Rental_Po = () => {
                                         <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                                             {
                                                 formData.material_details.slice(1).map((data, index) => {
-                                                    return <div className="row align-items-center">
+                                                    return <div className="row align-items-center mt-4">
                                                         {
                                                             Object.keys(data).map((key) => {
                                                                 let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
@@ -714,7 +714,7 @@ const Edit_Rental_Po = () => {
                                                                 } else if (key === 'date' || key === 'to') {
                                                                     return (
                                                                         <div className="col-sm-4">
-                                                                            <div className="wrap-box">
+                                                                            <div className="wrap-box mb-0">
                                                                                 <Form.Item
                                                                                     label={upperKey}
                                                                                     rules={[
@@ -738,8 +738,9 @@ const Edit_Rental_Po = () => {
 
                                                         }
                                                         {formData.shipment_type === 'project related' && (
-                                                            <div class="col-sm-4">
-                                                                <div class="wrap-box mb-0">
+                                                            
+                                                            <div class="col-sm-4 pt-4">
+                                                                <div class="wrap- mb-0">
                                                                     <div className="selectwrap  shipment-caret aligned-text">
                                                                         <Form.Item
                                                                             label="Select Site"

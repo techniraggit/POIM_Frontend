@@ -282,7 +282,7 @@ function MaterialRepeator({ onChange, siteOptions,list, formData, setFormData, p
                                             )
                                         } else if (key === 'unit_price') {
                                             return (
-                                                <div key={key} className="wrap-box col-12">
+                                                <div key={key} className="wrap-box col-sm-4">
                                                     <Form.Item
                                                         label={"Unit price"}
                                                         rules={[{ required: true, message: `Please enter Scope Of Work` }]}
