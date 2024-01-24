@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
@@ -23,6 +23,9 @@ const CreateSubContractorPo = () => {
         po_number: '',
         po_type: 'subcontractor',
         amount: 0,
+        po_date: '',
+        original_po_amount: '',
+        invoice_amount: '',
         company_name: '',
         vendor_id: '',
         project_id: '',
@@ -42,9 +45,10 @@ const CreateSubContractorPo = () => {
     });
     const router = useRouter();
     const [form] = Form.useForm();
+    const originalAmount = useRef(0);
 
     useEffect(() => {
-        if (formData.subcontractor_type==='new') {
+        if (formData.subcontractor_type === 'new') {
             const poNumberResponse = getPoNumber();
             poNumberResponse.then((res) => {
                 if (res?.data?.status) {
@@ -55,6 +59,12 @@ const CreateSubContractorPo = () => {
                     });
                 }
             })
+        } else {
+            form.setFieldValue('poNumber', '');
+            setFormData({
+                ...formData,
+                po_number: ''
+            });
         }
     }, [formData.subcontractor_type]);
 
@@ -96,8 +106,24 @@ const CreateSubContractorPo = () => {
                 form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
                 form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
             }
+            if(totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {
+                form.setFieldValue('original_po_amount', (totalAmount * 0.13 + totalAmount).toFixed(2) || 0);
+                setFormData({
+                    ...formData,
+                    original_po_amount: (totalAmount * 0.13).toFixed(2) || 0
+                })
+            } else {
+                form.setFieldValue('original_po_amount', originalAmount.current);
+                setFormData({
+                    ...formData,
+                    original_po_amount: originalAmount.current
+                })
+            }
         } else {
             formData[name] = value;
+        }
+        if(name === 'original_po_amount') {
+            originalAmount.current = value;
         }
         setFormData({
             ...formData
@@ -107,12 +133,8 @@ const CreateSubContractorPo = () => {
     const handlePoTypeChange = (value) => {
         if (value === 'material') {
             router.push('/create-material-po')
-        }
-        if (value === 'rental') {
+        } else if (value === 'rental') {
             router.push('/create-rental-po');
-        }
-        if (value === 'subcontractor') {
-            router.push('/create-subcontractor-po');
         }
     };
 
@@ -174,7 +196,7 @@ const CreateSubContractorPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Select onChange={(value) => onChange('subcontractor_type',value)} placeholder="Select PO Type" id="single1"
+                                                        <Select onChange={(value) => onChange('subcontractor_type', value)} placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
                                                         >
                                                             <Option value="existing">Existing</Option>
@@ -188,34 +210,34 @@ const CreateSubContractorPo = () => {
                                     {(formData.subcontractor_type === 'existing') && (
                                         <>
                                             <Form.Item
-                                                label="Original PO"
-                                                name="original_po"
+                                                label="Original PO Amount"
+                                                name="original_po_amount"
                                                 rules={[
                                                     {
                                                         required: true,
-                                                        message: "Please enter Original PO",
+                                                        message: "Please enter Original PO Amount",
                                                     },
                                                 ]}
                                             >
-                                                <Input placeholder="Original PO" />
+                                                <Input onChange={({ target: { value } }) => onChange('original_po_amount', value)} placeholder="Original PO Amount" />
                                             </Form.Item>
                                             <Form.Item
-                                                label="Invoice"
-                                                name="invoice"
+                                                label="Invoice Recieved Amount"
+                                                name="invoice_amount"
                                                 rules={[
                                                     {
                                                         required: true,
-                                                        message: "Please enter Invoice",
+                                                        message: "Please enter Invoice Recieved Amount",
                                                     },
                                                 ]}
                                             >
-                                                <Input placeholder="Invoice" />
+                                                <Input onChange={({ target: { value } }) => onChange('invoice_amount', value)} placeholder="Invoice Recieved Amount" />
                                             </Form.Item>
                                         </>
 
                                     )
                                     }
-                                    <PoForm formData={formData} isNew={formData.subcontractor_type==='new'}  form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+                                    <PoForm formData={formData} isNew={formData.subcontractor_type === 'new'}  form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
 
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>

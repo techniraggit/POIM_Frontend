@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons'
 import axios from 'axios';
-import { Table, Button, message, Popconfirm, Input } from 'antd';
+import { message, Popconfirm } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
@@ -20,9 +20,6 @@ const Vendor = ({ base_url }) => {
     const [isViewVendorVisible, setViewVendorVisible] = useState(false);
     const [clickedIndex, setClickedIndex] = useState(null);
     const [inputValue, setInputValue] = useState('');
-    // const [serialNumber, setSerialNumber] = useState(null);
-
-
 
     useEffect(() => {
         const fetchroles = async () => {
@@ -31,9 +28,8 @@ const Vendor = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/vendors`, { headers: headers });
-                console.log(response.data, '55555555555555555555555555');
                 setTotalVendor(response.data.total_vendors)
-                setVendors(response.data.vendors); // Assuming the API response is an array of projects
+                setVendors(response.data.vendors);
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
@@ -41,41 +37,30 @@ const Vendor = ({ base_url }) => {
         fetchroles();
     }, [])
 
-    // useEffect(() => {
-
-    // }, [totalVendor])
-
-
     const handleDelete = async (id) => {
         try {
             const headers = {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 Accept: 'application/json',
-                'Content-Type': 'application/json', // Set content type to JSON
+                'Content-Type': 'application/json',
             };
 
-            const body = JSON.stringify({ vendor_id: id }); // Use 'category_id' in the request body
-
-            // console.log('Deleting category with ID:', );
-            console.log('Request Headers:', headers);
-            console.log('Request Body:', body);
+            const body = JSON.stringify({ vendor_id: id });
 
             const response = await axios.delete(`${base_url}/api/admin/vendors`, {
                 headers,
-                data: body, // Send the body as data
+                data: body,
             });
 
             console.log('Delete response:', response);
             message.success('vendor deleted successfully.');
             setTotalVendor(prevTotalVendor => prevTotalVendor - 1);
             setVendors(prevVendors => prevVendors.filter(vendor => vendor.vendor_id !== id));
-            // Reload the categories after deleting
         } catch (error) {
             console.error('Error deleting category:', error);
             message.error('Failed to delete the item. Please try again later.');
         }
     };
-
 
     const handleIconClick = (id, index) => {
         setViewVendorVisible((prevVisible) => (prevVisible === id ? null : id));
@@ -83,6 +68,7 @@ const Vendor = ({ base_url }) => {
         setClickedIndex(index);
 
     };
+
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
@@ -90,20 +76,19 @@ const Vendor = ({ base_url }) => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         vendorSearch(inputValue).then((response) => {
-            console.log(response, 'pppppppppppppp');
             setVendors(response.data.search_vendors_data)
 
         })
 
     };
+
     const handleClearButtonClick = () => {
         setInputValue('');
         vendorClear().then((res) => {
-            console.log(res, 'apppppppppppp');
             setVendors(res.data.vendors)
-
         })
     };
+
     return (
         <>
             <div className="wrapper-main">
@@ -181,9 +166,9 @@ const Vendor = ({ base_url }) => {
                         </div>
                     </div>
                 </div>
-                <View_Vendor setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible}
+                {isModalOpen && <View_Vendor setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible}
                     clickedIndex={clickedIndex}
-                />
+                />}
             </div>
         </>
     )
@@ -191,5 +176,4 @@ const Vendor = ({ base_url }) => {
 export { getServerSideProps }
 export default withAuth(['admin', 'accounting', 'project manager', 'department manager',
     'director', 'supervisor', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])
-    (Vendor)
-// export default Vendor
+(Vendor)
