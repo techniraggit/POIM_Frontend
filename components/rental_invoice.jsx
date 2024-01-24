@@ -908,11 +908,11 @@ const Rental_invoice = ({ data }) => {
                             </div>
                         </div>
                         <div className="po-wrap create-wrap-butt m-0">
-                            <Form.Item>
+                            {/* <Form.Item>
                                 <Button type="primary" htmlType="submit" className="create-ven-butt">
                                     Create PO
                                 </Button>
-                            </Form.Item>
+                            </Form.Item> */}
                         </div>
                     </Form >
                 </div>

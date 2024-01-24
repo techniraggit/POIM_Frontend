@@ -15,7 +15,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                             label="Customer Name"
                             name="customer_name"  // Add a name to link the input to the form values
                             className="vender-input"
-                            rules={[{ required: true, message: 'Please enter customer name!' }]}
+                            // rules={[{ required: true, message: 'Please enter customer name!' }]}
                         >
                             <Input onChange={({ target: { value } }) => onChange('customer_name', value)} />
                         </Form.Item>
