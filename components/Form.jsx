@@ -11,7 +11,7 @@ import { useGlobalContext } from "@/app/Context/UserContext";
 
 const { Option } = Select;
 
-function PoForm({ onChange, formData, form, isNew,existing, setFormData, edit }) {
+function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
     const [contactId, setContactId] = useState('');
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
@@ -163,36 +163,6 @@ function PoForm({ onChange, formData, form, isNew,existing, setFormData, edit })
                     </Form.Item>
                 </div>
             </div>
-            {/* {(formData.subcontractor_type === 'existing') && (
-                <>
-                    <Form.Item
-                        label="Original PO"
-                        name="original_po"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please enter Original PO",
-                            },
-                        ]}
-                    >
-                        <Input placeholder="Original PO" />
-                    </Form.Item>
-                    <Form.Item
-                        label="Invoice"
-                        name="invoice"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please enter Invoice",
-                            },
-                        ]}
-                    >
-                        <Input placeholder="Invoice" />
-                    </Form.Item>
-                </>
-
-            )
-            } */}
             <div class="linewrap d-flex" id="w-small">
                 <span class="d-block me-0">To</span>
                 <hr />

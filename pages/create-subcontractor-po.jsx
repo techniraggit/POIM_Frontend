@@ -40,13 +40,11 @@ const CreateSubContractorPo = () => {
         quantity: 0,
         material_details: [{ ...repeatorData }]
     });
-console.log(formData,'formData');
-    const [isNew, setISNew] = useState(false);
     const router = useRouter();
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (isNew) {
+        if (formData.subcontractor_type==='new') {
             const poNumberResponse = getPoNumber();
             poNumberResponse.then((res) => {
                 if (res?.data?.status) {
@@ -58,7 +56,7 @@ console.log(formData,'formData');
                 }
             })
         }
-    }, [isNew]);
+    }, [formData.subcontractor_type]);
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
