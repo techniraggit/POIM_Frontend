@@ -36,14 +36,14 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
             fetchSites();
         }
         console.log(user, 'firstname');
-        
+
     }, []);
-    useEffect(()=>{
+    useEffect(() => {
         form.setFieldValue('first_name', user.first_name)
         form.setFieldValue('last_name', user.last_name)
 
-    },[user])
-   
+    }, [user])
+
     useEffect(() => {
         if (edit) {
             fetchVendorContactDropdown(formData.vendor_id);
@@ -439,7 +439,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 )}
             </div>
             <div class="linewrap d-flex">
-                <span class="d-block me-4">Material</span>
+                <span class="d-block me-4">Details</span>
                 <hr />
             </div>
             {

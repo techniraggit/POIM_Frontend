@@ -9,7 +9,7 @@ import { createProject, fetchManagers } from "@/apis/apis/adminApis";
 import ProjectForm from "@/components/ProjectForm";
 
 const repeatorData = {
-    name: '',
+    // name: '',
     address: '',
     state: ''
 }

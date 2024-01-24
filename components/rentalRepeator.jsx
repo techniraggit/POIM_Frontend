@@ -107,7 +107,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 {Array.isArray(siteOptions) &&
                                     siteOptions.map((site) => (
                                         <Select.Option key={site.site_id} value={site.site_id}>
-                                            {site.name}
+                                            {site.address}
                                         </Select.Option>
                                     )
                                     )}

@@ -2,6 +2,7 @@ import DynamicTitle from '@/components/dynamic-title';
 import Header from '@/components/header';
 import Sidebar from '@/components/sidebar';
 import React, { useEffect, useState } from 'react';
+import { PlusOutlined } from '@ant-design/icons'
 import '../styles/style.css'
 import { Form, Input, Select, message, } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
@@ -105,7 +106,15 @@ const AddUser = ({ base_url }) => {
                     <div className="col-lg-4 col-md-6">
                       <div className="selectwrap react-select">
 
-                        <Form.Item label="Select Role" name="role_id" initialValue="select role" className='dropdown vender-input'>
+                        <Form.Item label="Select Role" name="role_id" initialValue="select role" 
+                        className='dropdown vender-input'
+                        rules={[
+                          {
+                              required: true,
+                              message: "Please choose role",
+                          },
+                      ]}
+                        >
                           <Select className='arrow-wrap-user'>
                             {Array.isArray(roles) &&
                               roles.map((role) => (
@@ -169,9 +178,11 @@ const AddUser = ({ base_url }) => {
                           ]}
                         
                         >
-                          <Input
+                          <Input className='plus-wrap-input'
                             onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                            defaultValue="+"
                           />
+                   {/* <PlusOutlined  className='plus-in-input'/> */}
                         </Form.Item>
                       </div>
                     </div>
