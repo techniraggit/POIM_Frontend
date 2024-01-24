@@ -470,8 +470,8 @@ const Material_invoice = ({data}) => {
                             <hr />
                         </div>
                         <div class="row space-bottom mb-0">
-                            <div class="col-md-6 col-lg-4 all-wrap-box">
-                                <div class="selectwrap  shipment-caret aligned-text">
+                            <div className="col-lg-4 col-md-6">
+                            <div class="selectwrap  shipment-caret aligned-text">
                                     <Form.Item
                                         label="Shipment Type"
                                         name="shipment_type"
@@ -493,6 +493,9 @@ const Material_invoice = ({data}) => {
                                         </Select>
                                     </Form.Item>
                                 </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 all-wrap-box">
+                                
                                 {formData.shipment_type === 'project related' && (
                                     <div class="selectwrap columns-select shipment-caret">
                                         <Form.Item
