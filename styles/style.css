@@ -1662,8 +1662,11 @@ button.ant-btn.ant-btn-dashed.add-more-btn:hover  {
 
 .shipment-caret {
     position: relative;
+    cursor: pointer;
 }
-
+.react-select {
+    cursor: pointer;
+}
 .shipment-caret span.ant-select-arrow {
     display: none;
 }
@@ -2765,13 +2768,16 @@ form.form-invoice {
 }
 button#btn-submit {
     border: none;
-    padding: 10px 42px;
+    padding: 20px 42px;
     border-radius: 6px;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     margin-top: 20px;
     background-color: #e91d26;
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -2873,6 +2879,50 @@ span.anticon.anticon-plus.plus-in-input {
 span.anticon.anticon-plus.plus-in-input svg {
     color: #000;
 }
+/* 23 jan work */
+.invoice-select .ant-select {
+    width: 100%;
+    min-width: 100%;
+}
+.bg-colored-ul {
+    display: flex;
+    align-items: center;
+    background-color: #EEF0F8;
+    border-radius: 6px;
+    padding: 10px 12px;
+    justify-content: space-between;
+}
+li.bg-li-invoice 
+ span.anticon.anticon-plus {
+    font-size: 20px;
+    color: #fff;
+    background-color: #659CEE;
+    padding: 14px 14px;
+    border-radius: 16px;
+}
+li.bg-li-invoice  .anticon svg {
+    color: #ffffff;
+}
+li.bg-li-invoice  {
+    font-size: 16px;
+    color: #313F4E;
+    font-weight: 600;
+}
+button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn:active, 
+button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn:hover {
+    color: #313F4E;
+    border-color: #313F4E ;
+}
+button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn {
+    border: 1px solid #1f1f1f;
+    color: #1f1f1f;
+    padding: 2px 15px;
+    height: 38px;
+}
+.invoice-select {
+    cursor: pointer;
+}
+/* 23 jan work */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {

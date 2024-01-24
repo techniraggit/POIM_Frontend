@@ -493,7 +493,7 @@ const Subcontractor_invoice = ({data}) => {
                             <hr />
                         </div>
                         <div class="row space-bottom mb-0">
-                            <div class="col-md-6 col-lg-12 all-wrap-box">
+                            <div class="col-md-6 col-lg-12 all-wrap-box mb-3">
                                 <div class="selectwrap  shipment-caret aligned-text">
                                     <Form.Item
                                         label="Shipment Type"
@@ -713,7 +713,7 @@ const Subcontractor_invoice = ({data}) => {
                                 </Space>
                             </div>
                         </div>
-                        <div className="row top-btm-space mb-0">
+                        <div className="row top-btm-space mb-0 mt-4">
                             <div className="col-lg-4 col-md-6">
                                 <div class="wrap-box">
                                     <Form.Item
