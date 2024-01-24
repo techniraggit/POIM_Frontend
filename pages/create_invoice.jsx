@@ -39,10 +39,10 @@ const Create_Invoice = () => {
 
         console.log(formData, 'FormData object');
         const response = invoiceSubmit(formData)
-        console.log(response,'ddddddddddddd');
+        console.log(response, 'ddddddddddddd');
         response.then((res) => {
             console.log(res.data, 'qqqqqqqqqqqqqqqq');
-            if(res.data.status_code == 201){
+            if (res.data.status_code == 201) {
                 message.success(res.data.message);
                 router.push('/invoice');
             }
@@ -129,53 +129,52 @@ const Create_Invoice = () => {
                                 )
                             }
                             <div className="choose-file">
-                            <div className="row mb-4">
-                                <div className="col-lg-4 col-md-6">
-                                    <div className="selectwrap  shipment-caret invoice-select aligned-text">
-                                        <Select placeholder="Select PO Type" id="create-invoice"
-                                            class="js-states form-control file-wrap-select bold-select"
-                                            onChange={(value) => fetchPoNumber(value)}
-                                        >
-                                            {poNumber.map((entry) => (
-                                                <Select.Option key={entry.po_id} value={entry.po_id}>
-                                                    {entry.po_number}
-                                                </Select.Option>
+                                <div className="row mb-4">
+                                    <div className="col-lg-4 col-md-6">
+                                        <div className="selectwrap  shipment-caret invoice-select aligned-text">
+                                            <Select placeholder="Select PO Type" id="create-invoice"
+                                                class="js-states form-control file-wrap-select bold-select"
+                                                onChange={(value) => fetchPoNumber(value)}
+                                            >
+                                                {poNumber.map((entry) => (
+                                                    <Select.Option key={entry.po_id} value={entry.po_id}>
+                                                        {entry.po_number}
+                                                    </Select.Option>
 
-                                            ))}
-                                        </Select>
+                                                ))}
+                                            </Select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <Form
-                                name="antdForm"
-                                className="mt-5"
-                                onFinish={onFinish}
-                            >
-                                <Form.Item
-                                    name="invoice_file"
-                                    className="select-file-invoice"
-                                    valuePropName="fileList"
-                                    getValueFromEvent={(e) => e.fileList}
+                                <Form
+                                    name="antdForm"
+                                    className="mt-5"
+                                    onFinish={onFinish}
                                 >
-                                    <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
-                                        <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
-                                    </Upload>
-                                </Form.Item>
-                                {/* <Form.Item name="invoice_file" valuePropName="fileList" getValueFromEvent={() => null}>
+                                    <Form.Item
+                                        name="invoice_file"
+                                        className="select-file-invoice"
+                                        valuePropName="fileList"
+                                        getValueFromEvent={(e) => e.fileList}
+                                    >
+                                        <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
+                                            <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
+                                        </Upload>
+                                    </Form.Item>
+                                    {/* <Form.Item name="invoice_file" valuePropName="fileList" getValueFromEvent={() => null}>
                                     <Input type='file' />   
                                 </Form.Item> */}
 
-                                <Form.Item name="note" className="note-wrap wrap-box">
-                                    <TextArea rows={8} placeholder="Please enter a note here." />
-                                </Form.Item>
+                                    <Form.Item name="note" className="note-wrap wrap-box">
+                                        <TextArea rows={8} placeholder="Please enter a note here." />
+                                    </Form.Item>
 
-                                <Form.Item>
-                                    <Button type="primary" htmlType="submit" id="btn-submit">
-                                        Submit
-                                    </Button>
-                                </Form.Item>
-                            </Form>
+                                    <Form.Item>
+                                        <Button type="primary" htmlType="submit" id="btn-submit">
+                                            Submit
+                                        </Button>
+                                    </Form.Item>
+                                </Form>
                             </div>
                             {/* <form class="choose-file">
                                 <div class="inner-file-input">
