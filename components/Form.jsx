@@ -11,7 +11,7 @@ import { useGlobalContext } from "@/app/Context/UserContext";
 
 const { Option } = Select;
 
-function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
+function PoForm({ onChange, formData, form, isNew,existing, setFormData, edit }) {
     const [contactId, setContactId] = useState('');
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
@@ -36,14 +36,14 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
             fetchSites();
         }
         console.log(user, 'firstname');
-        
+
     }, []);
-    useEffect(()=>{
+    useEffect(() => {
         form.setFieldValue('first_name', user.first_name)
         form.setFieldValue('last_name', user.last_name)
 
-    },[user])
-   
+    }, [user])
+
     useEffect(() => {
         if (edit) {
             fetchVendorContactDropdown(formData.vendor_id);
@@ -163,6 +163,36 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                     </Form.Item>
                 </div>
             </div>
+            {/* {(formData.subcontractor_type === 'existing') && (
+                <>
+                    <Form.Item
+                        label="Original PO"
+                        name="original_po"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please enter Original PO",
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Original PO" />
+                    </Form.Item>
+                    <Form.Item
+                        label="Invoice"
+                        name="invoice"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Please enter Invoice",
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Invoice" />
+                    </Form.Item>
+                </>
+
+            )
+            } */}
             <div class="linewrap d-flex" id="w-small">
                 <span class="d-block me-0">To</span>
                 <hr />
@@ -439,7 +469,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 )}
             </div>
             <div class="linewrap d-flex">
-                <span class="d-block me-4">Material</span>
+                <span class="d-block me-4">Details</span>
                 <hr />
             </div>
             {

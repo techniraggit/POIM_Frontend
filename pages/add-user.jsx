@@ -2,6 +2,7 @@ import DynamicTitle from '@/components/dynamic-title';
 import Header from '@/components/header';
 import Sidebar from '@/components/sidebar';
 import React, { useEffect, useState } from 'react';
+import { PlusOutlined } from '@ant-design/icons'
 import '../styles/style.css'
 import { Form, Input, Select, message, } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
@@ -169,9 +170,11 @@ const AddUser = ({ base_url }) => {
                           ]}
                         
                         >
-                          <Input
+                          <Input className='plus-wrap-input'
                             onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                            defaultValue="+"
                           />
+                   {/* <PlusOutlined  className='plus-in-input'/> */}
                         </Form.Item>
                       </div>
                     </div>

@@ -6,7 +6,7 @@ import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
-import { Form, Select, Button } from "antd";
+import { Form, Select, Button,Input } from "antd";
 import PoForm from '../components/Form';
 
 const { Option } = Select;
@@ -28,6 +28,7 @@ const CreateSubContractorPo = () => {
         project_id: '',
         vendor_contact_id: '',
         shipment_type: '',
+        subcontractor_type: '',
         hst_amount: '',
         total_amount: '',
         country: '',
@@ -39,7 +40,7 @@ const CreateSubContractorPo = () => {
         quantity: 0,
         material_details: [{ ...repeatorData }]
     });
-
+console.log(formData,'formData');
     const [isNew, setISNew] = useState(false);
     const router = useRouter();
     const [form] = Form.useForm();
@@ -70,7 +71,6 @@ const CreateSubContractorPo = () => {
     const onFinish = () => {
         createPO({
             ...formData,
-            subcontractor_type: isNew ? 'new' : 'existing'
         }).then((res) => {
             if (res?.data?.status) {
                 router.push('/po_list');
@@ -107,13 +107,13 @@ const CreateSubContractorPo = () => {
     }
 
     const handlePoTypeChange = (value) => {
-        if(value=== 'material'){
+        if (value === 'material') {
             router.push('/create-material-po')
         }
         if (value === 'rental') {
-            router.push('/create-rental-po'); 
+            router.push('/create-rental-po');
         }
-        if(value=== 'subcontractor'){
+        if (value === 'subcontractor') {
             router.push('/create-subcontractor-po');
         }
     };
@@ -150,9 +150,9 @@ const CreateSubContractorPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Select  placeholder="Select PO Type" id="single1"
+                                                        <Select placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
-                                                            onChange={handlePoTypeChange} 
+                                                            onChange={handlePoTypeChange}
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
@@ -176,7 +176,7 @@ const CreateSubContractorPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Select  onChange={(value) => setISNew(value === 'new')} placeholder="Select PO Type" id="single1"
+                                                        <Select onChange={(value) => onChange('subcontractor_type',value)} placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
                                                         >
                                                             <Option value="existing">Existing</Option>
@@ -187,9 +187,38 @@ const CreateSubContractorPo = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    {(formData.subcontractor_type === 'existing') && (
+                                        <>
+                                            <Form.Item
+                                                label="Original PO"
+                                                name="original_po"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "Please enter Original PO",
+                                                    },
+                                                ]}
+                                            >
+                                                <Input placeholder="Original PO" />
+                                            </Form.Item>
+                                            <Form.Item
+                                                label="Invoice"
+                                                name="invoice"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "Please enter Invoice",
+                                                    },
+                                                ]}
+                                            >
+                                                <Input placeholder="Invoice" />
+                                            </Form.Item>
+                                        </>
 
-                                    <PoForm formData={formData} isNew={isNew} form={form}  onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
-                                    
+                                    )
+                                    }
+                                    <PoForm formData={formData} isNew={formData.subcontractor_type==='new'}  form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
                                             <Button type="primary" htmlType="submit" className="create-ven-butt">

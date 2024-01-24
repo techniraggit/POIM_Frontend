@@ -2860,6 +2860,19 @@ select.non-po-select::after {
     transform: rotateX(180deg) !important;
 }
 /* 22 jan work */
+input.ant-input.plus-wrap-input {
+    position: relative;
+    padding: 9px 12px 9px 35px;
+}
+span.anticon.anticon-plus.plus-in-input {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+span.anticon.anticon-plus.plus-in-input svg {
+    color: #000;
+}
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
