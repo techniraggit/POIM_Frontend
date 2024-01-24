@@ -115,8 +115,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
         };
     });
 
-
-
     return (
         <>
             <div class="order-choose d-flex">
@@ -142,7 +140,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 <div className="left-wrap wrap-number" id="forspce">
                     <Form.Item
                         label="Date"
-                        name="poDate"
                         rules={[
                             {
                                 validator: (_, value) => {
@@ -156,8 +153,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                     >
                         <DatePicker
                             style={{ width: "100%" }}
-                            disabled
-                            placeholder="18 Oct 2023"
+                            disabled={isNew}
+                            onChange={(date) => onChange('po_date', date)}
+                            placeholder="Select Date"
                             suffixIcon={null}
                         />
                     </Form.Item>

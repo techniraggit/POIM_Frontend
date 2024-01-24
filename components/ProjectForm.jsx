@@ -13,7 +13,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                     <div className="wrap-box mb-2">
                         <Form.Item
                             label="Customer Name"
-                            name="customer_name"  // Add a name to link the input to the form values
+                            name="customer_name"
                             className="vender-input"
                             // rules={[{ required: true, message: 'Please enter customer name!' }]}
                         >
