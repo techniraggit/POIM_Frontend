@@ -10,17 +10,17 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
             wrapperCol={{ span: 16 }}
         >
             <div className="col-lg-4 col-md-12 mb-3">
-                <div className="wrap-box mb-2">
-                    <Form.Item
-                        label="Customer Name"
-                        name="customer_name"  // Add a name to link the input to the form values
-                        className="vender-input"
-                        rules={[{ required: true, message: 'Please enter your State Province!' }]}
-                    >
-                        <Input onChange={({ target: { value } }) => onChange('customer_name', value)} />
-                    </Form.Item>
+                    <div className="wrap-box mb-2">
+                        <Form.Item
+                            label="Customer Name"
+                            name="customer_name"  // Add a name to link the input to the form values
+                            className="vender-input"
+                            rules={[{ required: true, message: 'Please enter customer name!' }]}
+                        >
+                            <Input onChange={({ target: { value } }) => onChange('customer_name', value)} />
+                        </Form.Item>
+                    </div>
                 </div>
-            </div>
             <div className="row">
                 <div className="col-lg-4 col-md-12">
                     <div className="wrap-box">
@@ -50,7 +50,10 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
             <div className="row mb-4">
                 <div className="col-lg-4 col-md-12 shipment-caret">
                     <div className="selectwrap bg-border-select">
-                        <Form.Item label="Project Manager" name="project_manager_id" initialValue="" className="vender-input">
+                        <Form.Item label="Project Manager" name="project_manager_id" initialValue="" 
+                        className="vender-input"
+                        rules={[{ required: true, message: 'Please choose project manager!' }]}
+                        >
                             <Select onChange={(value) => onChange('project_manager_id', value)}>
                                 {Array.isArray(managers) &&
                                     managers.map((manager) => (
@@ -69,24 +72,22 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                 <div className="col-lg-4 col-md-12">
                     <div className="wrap-box">
                         <Form.Item
-                            label="Address"
+                            label=" Address"
                             name="address0"
                             className="vender-input"
-                            rules={[{ required: true, message: 'Please enter your site address!' }]}
+                            rules={[{ required: true, message: 'Please enter your address!' }]}
                         >
                             <Input onChange={({ target: { value } }) => onChange('project_sites', { address: value }, 0)} />
                         </Form.Item>
                     </div>
                 </div>
-
                 <div className="col-lg-4 col-md-12">
                     <div className="wrap-box">
                         <Form.Item
-                            label="State"
-                            name="state0"  // Add a name to link the input to the form values
+                            label=" State"
+                            name="state0"
                             className="vender-input"
-                            rules={[{ required: true, message: 'Please enter your State Province!' }]}
-                            initialValue='Ontario'
+                            rules={[{ required: true, message: 'Please enter your address!' }]}
                         >
                             <Input onChange={({ target: { value } }) => onChange('project_sites', { state: value }, 0)} />
                         </Form.Item>
@@ -154,7 +155,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                         <span >Add One More Site</span>
                     </Button>
                 </Form.Item>
-
+                
             </div>
             <Form.Item >
                 <button type="submit" className="create-ven-butt">Submit</button>

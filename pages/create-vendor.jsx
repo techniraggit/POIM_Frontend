@@ -23,6 +23,7 @@ const CreateVendor = () => {
         country: 'Canada',
         customer_name: '',
         state: 'Ontario',
+        city:'',
         address: '',
         contact_info: [repeatorData]
     });

@@ -90,12 +90,12 @@ const EditUser = ({ base_url }) => {
 
     const handlePhoneNumberChange = (value) => {
         if (isValidPhone(value)) {
-          console.log('Valid phone number:', value);
+            console.log('Valid phone number:', value);
         } else {
-          console.log('Invalid phone number:', value);
+            console.log('Invalid phone number:', value);
         }
     };
-    
+
     function isValidPhone(phoneNumber) {
         const pattern = /^\+(?:[0-9] ?){6,11}[0-9]$/;
         return phoneNumber && pattern.test(phoneNumber);
@@ -126,7 +126,10 @@ const EditUser = ({ base_url }) => {
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap react-select">
 
-                                                <Form.Item label="Role" name="role_id" initialValue="select role" className='dropdown vender-input'>
+                                                <Form.Item label="Role" name="role_id" initialValue="select role"
+                                                    className='dropdown vender-input'
+                                                    rules={[{ required: true, message: 'Please choose role!' }]}
+                                                >
                                                     <Select >
                                                         {Array.isArray(roles) &&
                                                             roles.map((role) => (
@@ -254,4 +257,4 @@ const EditUser = ({ base_url }) => {
 
 export { getServerSideProps }
 
-export default withAuth(['admin','accounting'])(EditUser);
+export default withAuth(['admin', 'accounting'])(EditUser);

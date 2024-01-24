@@ -23,6 +23,7 @@ const VendorEdit = () => {
         company_name: '',
         state: '',
         country: '',
+        city:'',
         address: '',
         customer_name: '',
         contact_info: []
@@ -33,11 +34,13 @@ const VendorEdit = () => {
         response.then((res) => {
             if (res?.data?.status) {
                 const data = res.data?.vendors_details;
+                console.log(data,'jjjjjjjjj');
                 setFormData({
                     company_name: data.company_name,
                     state: data.state,
                     country: data.country,
                     address: data.address,
+                    city:data.city,
                     customer_name: data.customer_name,
                     contact_info: [...data.vendor_contact]
                 })
@@ -49,6 +52,7 @@ const VendorEdit = () => {
                 form.setFieldValue('company_name', data.company_name);
                 form.setFieldValue('state', data.state);
                 form.setFieldValue('country', data.country);
+                form.setFieldValue('city', data.city);
                 form.setFieldValue('customer_name', data.customer_name);
                 form.setFieldValue('address', data.address);
                 form.setFieldValue('name', data.vendor_contact[0]?.name);

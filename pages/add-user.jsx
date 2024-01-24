@@ -106,7 +106,15 @@ const AddUser = ({ base_url }) => {
                     <div className="col-lg-4 col-md-6">
                       <div className="selectwrap react-select">
 
-                        <Form.Item label="Select Role" name="role_id" initialValue="select role" className='dropdown vender-input'>
+                        <Form.Item label="Select Role" name="role_id" initialValue="select role" 
+                        className='dropdown vender-input'
+                        rules={[
+                          {
+                              required: true,
+                              message: "Please choose role",
+                          },
+                      ]}
+                        >
                           <Select className='arrow-wrap-user'>
                             {Array.isArray(roles) &&
                               roles.map((role) => (
