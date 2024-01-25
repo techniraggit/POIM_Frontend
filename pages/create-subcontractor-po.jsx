@@ -186,13 +186,13 @@ const CreateSubContractorPo = () => {
                                             <div className="selectwrap react-select">
                                                 <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
                                                     <Form.Item
-                                                        label="Choose PO Type"
+                                                        label="Choose Subcontractor Type"
                                                         name="subcontractor_type"
                                                         class="bold-label"
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message: "Please choose PO Type",
+                                                                message: "Please choose subcontractor Type",
                                                             },
                                                         ]}
                                                     >
