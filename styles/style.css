@@ -517,6 +517,7 @@ button.click-btn:not(:last-child) {
     max-width: 280px;
     display: flex;
     position: relative;
+    flex-direction: row;
 }
 
 .vendor-search-butt {
@@ -1331,6 +1332,7 @@ li.react-icon {
     border-radius: 6px !important;
     box-shadow: none !important;
     padding: 4px 20px;
+    /* transition: 0.4s ease; */
 }
 
 button.ant-btn.add-more-btn {
@@ -2923,6 +2925,14 @@ button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn {
     cursor: pointer;
 }
 /* 23 jan work */
+/* 24 jan work */
+.rc-virtual-list-scrollbar-thumb {
+    transition: 0.8s ease;
+}
+.selectwrap {
+cursor: pointer;
+}
+/* 24 jan work */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
@@ -3005,8 +3015,16 @@ span.text-sizes {
         padding: 14px 6px 12px;
     }
  }
-
+ @media (max-width: 992px) {
+    .shipment-caret .ant-select-selector span.ant-select-selection-item {
+        width: 108px;
+    }
+}
 @media (min-width: 768px) and (max-width: 991px) {
+    .ant-select-selector {
+        height: 38px !important;
+    }
+    
     ul.list-icons.board-list li {
         width: 100%;
         padding: 14px 6px 12px;
