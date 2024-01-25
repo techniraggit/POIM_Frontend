@@ -87,7 +87,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                             label=" State"
                             name="state0"
                             className="vender-input"
-                            rules={[{ required: true, message: 'Please enter your address!' }]}
+                            rules={[{ required: true, message: 'Please enter your State!' }]}
                         >
                             <Input onChange={({ target: { value } }) => onChange('project_sites', { state: value }, 0)} />
                         </Form.Item>
