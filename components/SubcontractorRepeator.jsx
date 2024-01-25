@@ -91,7 +91,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                     {Array.isArray(siteOptions) &&
                                         siteOptions.map((site) => (
                                             <Select.Option key={site.site_id} value={site.site_id}>
-                                                {site.name}
+                                                {site.address}
                                             </Select.Option>
                                         )
                                         )}
@@ -188,7 +188,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                                 {Array.isArray(siteOptions) &&
                                                                     siteOptions.map((site) => (
                                                                         <Select.Option key={site.site_id} value={site.site_id}>
-                                                                            {site.name}
+                                                                            {site.address}
                                                                         </Select.Option>
                                                                     )
                                                                     )}
