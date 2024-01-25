@@ -1381,8 +1381,12 @@ button.ant-btn.create-ven-butt:hover {
 .wrap-number label {
     color: rgb(17, 47, 92, 0.5) !important;
     font-size: 16px !important;
+    height: unset !important;
 }
-
+.left-wrap.wrap-number input.ant-input {
+    border-radius: 0px;
+    background-color: transparent !important;
+}
 /* 19/12/2023 */
 /* date 19/12/2023 */
 ul.list-icons li a span {
@@ -1906,7 +1910,7 @@ button.user-pop-up-butt {
     border-radius: 20px;
     background: #E91D26;
     border: none;
-    width: 213px;
+    width: 240px;
     color: white;
     padding: 8px 37px;
     margin-bottom: 30px;
@@ -2207,13 +2211,14 @@ select.custom-wrap-selector option {
     margin-bottom: 10px;
 }
 .lists-items .dollars-input > input {
-    width: 75%;
+    width: 100%;
     border: none;
     background-color: #FAFAFA;
-    padding: 6px 13px;
+    padding: 6px 18px;
     font-size: 14px;
     outline: none;
     height: 35px;
+    position: relative;
 }
 .lists-items .dollars-input > input::placeholder {
     color: hsl(211, 23%, 25%, 0.51);
@@ -2238,6 +2243,7 @@ button.ant-btn.ant-btn-default.save-Button:hover {
 }
 button.ant-btn.ant-btn-default.save-Button:hover span {
     color: #fff;
+    border-color: #e91d26;
 }
 .lists-items > hr {
     color: rgb(112, 112, 112, 0.32);
@@ -2933,6 +2939,21 @@ button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn {
 cursor: pointer;
 }
 /* 24 jan work */
+/* 25 jan work */
+.dollars-input span.dollar-sign {
+    position: absolute;
+    z-index: 999;
+    /* left: 0; */
+    transform: translateY(0%);
+    display: block;
+    margin-left: 7px;
+    font-size: 15px;
+}
+button.ant-btn.ant-btn-default.save-Button:active {
+    color: #fff;
+    border-color: #e91d26;
+}
+/* 25 jan work */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
