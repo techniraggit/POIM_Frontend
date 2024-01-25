@@ -84,7 +84,9 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             },
                         ]}
                     >
-                        <Input placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
+                        <Input 
+                        addonBefore="$"
+                        placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
                     </Form.Item>
                 </div>
             </div>
@@ -138,6 +140,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                     rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                 >
                                                     <Input
+                                                    addonBefore="$"
                                                         placeholder={upperKey}
                                                         value={data[key]}
                                                         name={key + index}

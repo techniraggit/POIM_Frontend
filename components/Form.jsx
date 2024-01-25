@@ -457,7 +457,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                             label="HST Amount"
                             rules={[{ required: true, message: 'Please enter phone number' }]}
                         >
-                            <Input readOnly placeholder="HST Amount" />
+                            <Input 
+                            addonBefore="$"
+                            readOnly placeholder="HST Amount" />
                         </Form.Item>
                     </div>
                 </div>
@@ -468,7 +470,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                             label="Total Amount"
                             rules={[{ required: true, message: 'Please enter phone number' }]}
                         >
-                            <Input readOnly placeholder="Total Amount" />
+                            <Input
+                            addonBefore="$"
+                             readOnly placeholder="Total Amount" />
                         </Form.Item>
                     </div>
                 </div>

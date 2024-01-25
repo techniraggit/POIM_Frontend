@@ -85,7 +85,7 @@ const CreateMaterialPo = () => {
         formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
         if (totalAmount > 0) {
             form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0});
         }
     }
 
@@ -115,7 +115,9 @@ const CreateMaterialPo = () => {
 
 
     formData?.material_details.forEach((data, index) => {
-        form.setFieldValue(('amount' + (index)), data.amount)})
+        // form.setFieldValue(('amount' + (index)), `$${parseFloat(data.amount).toFixed(2) || '0.00'}`);
+        form.setFieldValue(('amount' + (index)), data.amount)
+    })
 
     const handlePoTypeChange = (value) => {
         if (value === 'rental') {

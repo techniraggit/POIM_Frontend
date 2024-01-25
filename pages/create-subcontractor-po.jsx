@@ -104,7 +104,7 @@ const CreateSubContractorPo = () => {
             formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
             if (totalAmount > 0) {
                 form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
-                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+                form.setFieldsValue({ 'total_amount':(totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
             }
             if(totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {
                 form.setFieldValue('original_po_amount', (totalAmount * 0.13 + totalAmount).toFixed(2) || 0);

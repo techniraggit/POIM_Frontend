@@ -66,7 +66,9 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 },
                             ]}
                         >
-                            <Input placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
+                            <Input placeholder="Amount" 
+                            addonBefore="$"
+                            onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -120,6 +122,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                         >
                                                             <Input
+                                                            addonBefore="$"
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 name={key + index}
