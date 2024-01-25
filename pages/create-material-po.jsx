@@ -118,9 +118,6 @@ const CreateMaterialPo = () => {
         form.setFieldValue(('amount' + (index)), data.amount)})
 
     const handlePoTypeChange = (value) => {
-        if(value=== 'material'){
-            router.push('/create-material-po')
-        }
         if (value === 'rental') {
             router.push('/create-rental-po'); 
         }
