@@ -6,7 +6,7 @@ import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
-import { Form, Select, Button,Input } from "antd";
+import { Form, Select, Button, Input } from "antd";
 import PoForm from '../components/Form';
 
 const { Option } = Select;
@@ -106,7 +106,7 @@ const CreateSubContractorPo = () => {
                 form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
                 form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
             }
-            if(totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {
+            if (totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {
                 form.setFieldValue('original_po_amount', (totalAmount * 0.13 + totalAmount).toFixed(2) || 0);
                 setFormData({
                     ...formData,
@@ -122,7 +122,7 @@ const CreateSubContractorPo = () => {
         } else {
             formData[name] = value;
         }
-        if(name === 'original_po_amount') {
+        if (name === 'original_po_amount') {
             originalAmount.current = value;
         }
         setFormData({
@@ -155,7 +155,7 @@ const CreateSubContractorPo = () => {
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
                                 <Form onFinish={onFinish} form={form} className="file-form">
-                                    <div className="row po-typeraw">
+                                    <div className="row po-typeraw mb-5">
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap react-select">
                                                 <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
@@ -209,35 +209,45 @@ const CreateSubContractorPo = () => {
                                     </div>
                                     {(formData.subcontractor_type === 'existing') && (
                                         <>
-                                            <Form.Item
-                                                label="Original PO Amount"
-                                                name="original_po_amount"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please enter Original PO Amount",
-                                                    },
-                                                ]}
-                                            >
-                                                <Input onChange={({ target: { value } }) => onChange('original_po_amount', value)} placeholder="Original PO Amount" />
-                                            </Form.Item>
-                                            <Form.Item
-                                                label="Invoice Recieved Amount"
-                                                name="invoice_amount"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please enter Invoice Recieved Amount",
-                                                    },
-                                                ]}
-                                            >
-                                                <Input onChange={({ target: { value } }) => onChange('invoice_amount', value)} placeholder="Invoice Recieved Amount" />
-                                            </Form.Item>
+                                            <div className="row mt-5 mb-3">
+                                                <div class="col-lg-4 col-md-6">
+                                                    <div class="wrap-box">
+                                                        <Form.Item
+                                                            label="Original PO Amount"
+                                                            name="original_po_amount"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please enter Original PO Amount",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input onChange={({ target: { value } }) => onChange('original_po_amount', value)} placeholder="Original PO Amount" />
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6">
+                                                    <div class="wrap-box">
+                                                        <Form.Item
+                                                            label="Invoice Recieved Amount"
+                                                            name="invoice_amount"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please enter Invoice Recieved Amount",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input onChange={({ target: { value } }) => onChange('invoice_amount', value)} placeholder="Invoice Recieved Amount" />
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </>
 
                                     )
                                     }
-                                    <PoForm formData={formData} isNew={formData.subcontractor_type === 'new'}  form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+                                    <PoForm formData={formData} isNew={formData.subcontractor_type === 'new'} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
 
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
