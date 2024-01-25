@@ -14,11 +14,6 @@ const repeatorData = {
     site_id: ''
 }
 function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, projects, form, edit }) {
-    // const list = (value) => {
-    //     if (formData.shipment_type === 'project related' || formData.shipment_type === 'combined') {
-    //         fetchSites(value);
-    //     }
-    // };
     return (
         <div class="row">
             <div class="col-sm-4">
@@ -177,7 +172,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                     },
                                 ]}
                             >
-                                <Input />
+                                <Input onChange={({ target: { value } }) => onChange('material_details', { code: value },0)}/>
                             </Form.Item>
                         )}
 
@@ -286,7 +281,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                 <div key={key} className="wrap-box col-sm-4">
                                                     <Form.Item
                                                         label={"Unit price"}
-                                                        rules={[{ required: true, message: `Please enter Scope Of Work` }]}
+                                                        rules={[{ required: true, message: `Please enter unit price` }]}
                                                     >
                                                         <Input
                                                             placeholder={upperKey}
@@ -402,7 +397,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                 </div>
                                             )
                                         }
-                                        else if (key === 'code' && (formData.material_details[0].material_for === 'inventory') || formData.material_details[0].material_for === 'supplies') {
+                                        else if (key === 'code' && (formData.material_details[0].material_for === 'inventory') ) {
                                             return (
                                                 <div className="col-sm-4">
                                                     <div className="wrap-box">

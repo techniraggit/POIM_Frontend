@@ -161,7 +161,7 @@ const CreateMaterialPo = () => {
                                                     >
                                                         <Select  placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
-                                                            onChange={handlePoTypeChange} 
+                                                            onChange={handlePoTypeChange}                                                                                                                               nge={handlePoTypeChange} 
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
@@ -175,7 +175,7 @@ const CreateMaterialPo = () => {
                                     </div>
 
                                     <PoForm formData={formData} 
-                                    // isNew={true} 
+                                    isNew={true} 
                                     form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">

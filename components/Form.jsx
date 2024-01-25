@@ -214,7 +214,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                                 rules={[
                                     {
                                         required: true,
-                                        message: "Please choose site",
+                                        message: "Please choose vendor contact person",
                                     },
                                 ]}
                             >
@@ -455,7 +455,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                         <Form.Item
                             name='hst_amount'
                             label="HST Amount"
-                            rules={[{ required: true, message: 'Please enter phone number' }]}
                         >
                             <Input 
                             addonBefore="$"
@@ -468,7 +467,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                         <Form.Item
                             name='total_amount'
                             label="Total Amount"
-                            rules={[{ required: true, message: 'Please enter phone number' }]}
                         >
                             <Input
                             addonBefore="$"
