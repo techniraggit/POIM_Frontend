@@ -17,7 +17,6 @@ const repeatorData = {
     to: "",
     amount: '',
     project_site_id: ''
-
 }
 const Edit_Rental_Po = () => {
     const [form] = Form.useForm();
@@ -127,13 +126,13 @@ const Edit_Rental_Po = () => {
                     vendor_contact_id: data.vendor_contact?.vendor_contact_id,
                     hst_amount: data.hst_amount,
                     total_amount: data.total_amount,
-                    project_site_id: data.project_site,
                     country: data.vendor_contact?.company.country,
                     state: data.vendor_contact?.company.state,
                     address: data.vendor_contact?.company.address,
                     phone: data.vendor_contact?.phone_number,
                     email: data.vendor_contact?.email,
                     shipment_type: data.shipment_type,
+                    project_id: data.project,
                     material_details: data.material_details.map((details) => {
                         return {...details, project_site: details.project_site?.site_id}
                     })
@@ -162,7 +161,7 @@ const Edit_Rental_Po = () => {
                 form.setFieldValue('first_name', data.created_by.first_name)
                 form.setFieldValue('last_name', data.created_by.last_name)
                 data?.material_details.forEach((material, index) => {
-                    form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
+                    form.setFieldValue('project_site_id' + index, material.project_site?.site_id)
                 })
             }
         });
@@ -620,7 +619,9 @@ const Edit_Rental_Po = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input.TextArea rows={4} cols={50} />
+                                                    <Input.TextArea onChange={({ target: { value } }) => {
+                                                        onChange('material_details', { description: value }, 0)
+                                                    }} rows={4} cols={50} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -638,7 +639,7 @@ const Edit_Rental_Po = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input type="date"></Input>
+                                                    <Input onChange={(date) => onChange('material_details', { date: date }, 0)} type="date"></Input>
                                                 </Form.Item>
                                             </div>
                                             <div className="text-to ps-2"><p className='mb-2'>To</p></div>
@@ -655,7 +656,7 @@ const Edit_Rental_Po = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input type="date"></Input>
+                                                    <Input onChange={(date) => onChange('material_details', { end_date: date }, 0)} type="date"></Input>
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -673,8 +674,10 @@ const Edit_Rental_Po = () => {
                                                         },
                                                     ]}
                                                 >
-                                                    <Input onChange={(e) => handleAmountChange(e.target.value)} />
-
+                                                    <Input onChange={(e) => {
+                                                        handleAmountChange(e.target.value);
+                                                        onChange('material_details', { amount: e.target.value }, 0)
+                                                    }} />
                                                 </Form.Item>
                                             </div>
                                         </div>
@@ -689,16 +692,12 @@ const Edit_Rental_Po = () => {
                                                     name="project_site_id0"
                                                     htmlFor="file"
                                                     class="same-clr"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please choose site",
-                                                        },
-                                                    ]}
                                                 >
 
                                                     <div class="selectwrap  shipment-caret aligned-text">
-                                                        <Select id="singles-edit-po" class="selectwrap react-select edit-rental-po">
+                                                        <Select onChange={(value) => {
+                                                            onChange('material_details', { project_site_id: value }, 0)
+                                                        }} id="singles-edit-po" class="selectwrap react-select edit-rental-po">
                                                             {Array.isArray(siteOptions) &&
                                                                 siteOptions.map((site) =>
                                                                 (
@@ -785,12 +784,14 @@ const Edit_Rental_Po = () => {
                                                                                 },
                                                                             ]}
                                                                         >
-                                                                            <Select id="singlesa" class="js-states form-control file-wrap-select">
+                                                                            <Select onChange={(value) => {
+                                                                                onChange('material_details', { project_site_id: value }, index + 1)
+                                                                            }} id="singlesa" class="js-states form-control file-wrap-select">
                                                                                 {Array.isArray(siteOptions) &&
                                                                                     siteOptions.map((site) =>
                                                                                     (
                                                                                         <Select.Option key={site.site_id} value={site.site_id}>
-                                                                                            {site.name}
+                                                                                            {site.address}
                                                                                         </Select.Option>
                                                                                     )
                                                                                     )}
