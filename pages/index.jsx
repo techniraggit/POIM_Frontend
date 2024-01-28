@@ -93,6 +93,7 @@ const Login = ({ base_url }) => {
                 forgotEmail: forgotEmail,
             }
             try {
+                console.log(base_url)
                 const response = await axios.post(`${base_url}/api/accounts/login`, values
                 );
                 if (response.status === 200) {

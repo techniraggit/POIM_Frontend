@@ -21,6 +21,10 @@ export const fetchProjectSites = () => {
     return Axios.get(`/api/admin/project-sites`);
 }
 
+export const fetchSitesProject = (project_id) => {
+    return Axios.get(`/api/admin/project-sites?project_id=${project_id}`);
+}
+
 export const getVendorDetails = (id) => {
     return Axios.get(`/api/helping/vendor-details?vendor_contact_id=${id}`)
 }
@@ -126,4 +130,8 @@ export const fetchRoles = () => {
 
 export const getUserData = () => {
     return Axios.get('/api/admin/profile');
+}
+
+export const changeStatus = (data) => {
+    return Axios.put('/api/admin/purchase-order', data);
 }

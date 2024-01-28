@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
-import { CheckCircleFilled, CloseCircleFilled, EyeFilled, EditFilled } from '@ant-design/icons'
+import { EyeFilled, EditFilled } from '@ant-design/icons'
 import { Button, Select, } from 'antd';
 import Sidebar from "@/components/sidebar";
 import Link from "next/link";
 import { PlusOutlined } from '@ant-design/icons'
 import { invoiceList } from "@/apis/apis/adminApis";
-
 
 const { Option } = Select;
 
@@ -15,11 +14,12 @@ const Invoice = () => {
     useEffect(() => {
         const response = invoiceList();
         response.then((res) => {
-            console.log(res.data.invoice_data, 'lllllllllllllllll');
-            setInvoiceTable(res.data.invoice_data)
+            if(res?.data?.status) {
+                setInvoiceTable(res.data.data)
+            }
         })
-
     }, [])
+
     return (
         <>
             <div className="wrapper-main">
@@ -87,7 +87,7 @@ const Invoice = () => {
                             </div>
                         </div>
                         <div className="table-wrap vendor-wrap">
-                            <h5>Purchase Orders</h5>
+                            <h5>Invoices</h5>
                             <div className="inner-table" id="inner-purchase">
                                 <table id="" className="table-hover">
                                     <thead>
@@ -102,7 +102,7 @@ const Invoice = () => {
                                             <th className="hedaings-tb">PM</th>
                                             <th className="hedaings-tb">DM</th>
                                             <th className="hedaings-tb">Site Supervisor</th>
-                                            <th className="hedaings-tb">Action</th>
+                                            {/* <th className="hedaings-tb">Action</th> */}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -130,10 +130,10 @@ const Invoice = () => {
                                                     {/* <td>{invoice.pm_approved|| "N/A"}</td> */}
                                                     <td>{invoice.dm_approved ? "true" : "false"}</td>
                                                     <td>{invoice.site_supervisor_approved ? "true" : "false"}</td>
-                                                    <td>
+                                                    {/* <td>
                                                         <EyeFilled />
                                                         <EditFilled />
-                                                    </td>
+                                                    </td> */}
 
                                                 </tr>
                                             )

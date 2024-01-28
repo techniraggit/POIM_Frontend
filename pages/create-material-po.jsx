@@ -12,13 +12,14 @@ import PoForm from '../components/Form';
 const { Option } = Select;
 
 const repeatorData = {
-        quantity:'',
-        unit_price:'',
-        description: '',
-        code:'',
-        amount: 0,
-        project_site_id: '',
-        material_for:''
+    quantity:'',
+    unit_price:'',
+    amount: 0,
+    description: '',
+    material_for:'',
+    code:'',
+    project_id: '',
+    project_site_id: '',
 }
 
 const CreateMaterialPo = () => {
@@ -176,7 +177,7 @@ const CreateMaterialPo = () => {
 
                                     <PoForm formData={formData} 
                                     isNew={true} 
-                                    form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+                                    form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} calculateAmount={calculateAmount} />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>

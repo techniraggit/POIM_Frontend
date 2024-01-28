@@ -5,10 +5,11 @@ import Header from "@/components/header";
 import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
-import { fetchPo, updatePo } from "@/apis/apis/adminApis";
+import { changeStatus, fetchPo, updatePo } from "@/apis/apis/adminApis";
 import { Form, Select, Button } from "antd";
 import moment from "moment";
 import PoForm from "@/components/Form";
+import ChangeStatus from "@/components/PoChangeStatus";
 
 const { Option } = Select;
 
@@ -34,6 +35,8 @@ const EditSubContractorPo = () => {
         quantity: 0,
         material_details: []
     });
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const router = useRouter();
     const [form] = Form.useForm();
@@ -137,6 +140,21 @@ const EditSubContractorPo = () => {
         });
     }
 
+    const handleStatusChange = (event, action, data) => {
+        event.preventDefault()
+        const response = changeStatus({
+            po_id: id,
+            status: action,
+            approval_notes: data?.approval_notes,
+            approve_amount: data?.approve_amount
+        });
+        response.then((res) => {
+            if(res?.data?.status) {
+                setRefetch(true);
+            }
+        })
+    }
+
     return (
         <>
             <div className="wrapper-main">
@@ -150,6 +168,18 @@ const EditSubContractorPo = () => {
                                 <PlusOutlined />
                                 <span>Create Purchase Order</span>
                             </li>
+                            {
+                                formData.status === 'pending' && <Roles action="approve_po">
+                                <li>
+                                    <Button type="primary" onClick={() => {
+                                        setIsModalOpen(true);
+                                    }}>Approve</Button>
+                                    <Button type="primary" danger onClick={(event) => {
+                                        handleStatusChange(event, 'reject')
+                                    }}>Reject</Button>
+                                </li>
+                            </Roles>
+                            }
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
@@ -196,6 +226,7 @@ const EditSubContractorPo = () => {
                     </div>
                 </div>
             </div>
+            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
         </>
     );
 };

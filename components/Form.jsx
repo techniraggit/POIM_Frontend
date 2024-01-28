@@ -2,16 +2,17 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { Form, Input, Select, DatePicker } from "antd";
-import { fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
+import { fetchProjects, fetchSitesProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
 import RentalRepeator from "./rentalRepeator";
 import MaterialRepeator from "./materialRepeator";
 import { useGlobalContext } from "@/app/Context/UserContext";
+import dayjs from "dayjs";
 
 const { Option } = Select;
 
-function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
+function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateAmount }) {
     const [contactId, setContactId] = useState('');
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
@@ -21,6 +22,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
         form.setFieldValue('poDate', moment());
+        form.setFieldValue('shipment_type', formData.shipment_type)
         const response = fetchVendorContact();
         response.then((res) => {
             if (res?.data?.status) {
@@ -35,13 +37,11 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
         if (edit) {
             fetchSites();
         }
-        console.log(user, 'firstname');
-
     }, []);
+
     useEffect(() => {
         form.setFieldValue('first_name', user.first_name)
         form.setFieldValue('last_name', user.last_name)
-
     }, [user])
 
     useEffect(() => {
@@ -72,9 +72,19 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
         })
     };
 
-    const list = (value) => {
+    const fetchProjectSites = (project_id, index) => {
+        const response = fetchSitesProject(project_id);
+        response.then((res) => {
+            if(res?.data?.status) {
+                siteOptions[index] = [...res.data.sites];
+                setSiteOptions([...siteOptions]);
+            }
+        })
+    }
+
+    const list = (value, index) => {
         if (formData.shipment_type === 'project related' || formData.shipment_type === 'combined') {
-            fetchSites(value);
+            fetchProjectSites(value, index);
         }
     };
 
@@ -154,6 +164,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                         <DatePicker
                             style={{ width: "100%" }}
                             disabled={isNew}
+                            defaultValue={dayjs()}
                             onChange={(date) => onChange('po_date', date)}
                             placeholder="Select Date"
                             suffixIcon={null}
@@ -370,10 +381,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                                 onChange={(value) => { onChange('shipment_type', value) }}
                             >
                                 <Option value="project related">Project Related</Option>
-                                {formData.po_type !== 'rental' && <Option value="non project related">Non Project Related</Option>}
-                                {formData.po_type !== 'rental' && <Option value="combined">Combined</Option>}
-                                {/* <Option value="Non Project Related">Non Project Related</Option>
-                                <Option value="Combined">Combined</Option> */}
+                                {formData.po_type !== 'rental' && formData.po_type !== 'subcontractor' && <Option value="non project related">Non Project Related</Option>}
+                                {formData.po_type !== 'rental' && formData.po_type !== 'subcontractor' && <Option value="combined">Combined</Option>}
                             </Select>
                         </Form.Item>
                     </div>
@@ -396,7 +405,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                                 <Select id="single456"
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => {
-                                        list(value)
+                                        list(value, 0)
                                         onChange('project_id', value)
                                     }}
                                 >
@@ -447,7 +456,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit }) {
                 formData.po_type === 'rental' ? <RentalRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
             }
             {
-                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} list={list} projects={projects} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
+                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} list={list} projects={projects} setFormData={setFormData} form={form} onChange={onChange} calculateAmount={calculateAmount} /> : <></>
             }
             <div className="row top-btm-space mb-0">
                 <div className="col-lg-4 col-md-6">

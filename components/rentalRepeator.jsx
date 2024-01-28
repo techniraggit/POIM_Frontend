@@ -95,7 +95,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     <div className="selectwrap columns-select shipment-caret ">
                         <Form.Item
                             label="Select Site"
-                            name="project_site_id"
+                            name="project_site_id0"
                             htmlFor="file"
                             class="same-clr"
                             rules={[
@@ -106,8 +106,8 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             ]}
                         >
                             <Select id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
-                                {Array.isArray(siteOptions) &&
-                                    siteOptions.map((site) => (
+                                {Array.isArray(siteOptions[0]) &&
+                                    siteOptions[0].map((site) => (
                                         <Select.Option key={site.site_id} value={site.site_id}>
                                             {site.address}
                                         </Select.Option>
@@ -225,13 +225,13 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                 <div className="selectwrap columns-select shipment-caret ">
                                                     <Form.Item
                                                         label="Select Site"
-                                                        name={`project_site_id_${index + 1}`}
+                                                        name={`project_site_id${index + 1}`}
                                                         htmlFor="file"
                                                         class="same-clr"
                                                     >
-                                                        <Select id="singlesa" defaultValue={formData.material_details[0].project_site_id} onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
-                                                            {Array.isArray(siteOptions) &&
-                                                                siteOptions.map((site) => (
+                                                        <Select id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
+                                                            {Array.isArray(siteOptions[0]) &&
+                                                                siteOptions[0].map((site) => (
                                                                     <Select.Option key={site.site_id} value={site.site_id}>
                                                                         {site.address}
                                                                     </Select.Option>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Space } from 'antd';
+import { Form, Input, Button, Space, message } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { updateVendor } from "@/apis/apis/adminApis";
 
@@ -8,6 +8,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
   const handleRemoveContact = (id, index) => {
     updateVendor({vendor_contact_id: id}).then((response) => {
         if(response?.data?.status) {
+            message.success('Vendor Contact removed');
             setFormData({
                 ...formData,
                 contact_info: [...formData.contact_info.slice(0, index + 1), ...formData.contact_info.slice(index + 1 + 1)]

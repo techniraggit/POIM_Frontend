@@ -3,10 +3,12 @@ import Sidebar from "@/components/sidebar";
 import React, { useEffect, useState } from "react";
 import { getServerSideProps } from "@/components/mainVariable";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, updatePo } from "@/apis/apis/adminApis";
+import { changeStatus, fetchPo, fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, updatePo } from "@/apis/apis/adminApis";
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
+import Roles from "@/components/Roles";
+import ChangeStatus from "@/components/PoChangeStatus";
 
 const { Option } = Select;
 const repeatorData = {
@@ -35,6 +37,7 @@ const Edit_Rental_Po = () => {
     });
 
     const [vendors, setVendors] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         po_type: '',
         amount: 0,
@@ -131,18 +134,18 @@ const Edit_Rental_Po = () => {
                     phone: data.vendor_contact?.phone_number,
                     email: data.vendor_contact?.email,
                     shipment_type: data.shipment_type,
-                    material_details: [...data.material_details]
+                    material_details: data.material_details.map((details) => {
+                        return {...details, project_site: details.project_site?.site_id}
+                    })
                 });
                 form.setFieldValue('po_type', data.po_type);
                 form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
                 form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
                 form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                 form.setFieldValue('shipment_type', data.shipment_type);
-                form.setFieldValue('project_id', data.project_id);
+                form.setFieldValue('project_id', data.project);
                 form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
                 form.setFieldValue('total_amount', data.total_amount);
-                form.setFieldValue('project_id', data.project_site?.project?.project_id);
-                form.setFieldValue('project_site_id', data.project_site?.project_site_id);
                 form.setFieldValue('poDate', moment(data.po_date));
                 form.setFieldValue('country', data.vendor_contact?.company.country);
                 form.setFieldValue('state', data.vendor_contact?.company.state);
@@ -158,16 +161,17 @@ const Edit_Rental_Po = () => {
                 form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                 form.setFieldValue('first_name', data.created_by.first_name)
                 form.setFieldValue('last_name', data.created_by.last_name)
+                data?.material_details.forEach((material, index) => {
+                    form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
+                })
             }
         });
     }, []);
 
-
     const onFinish = () => {
         updatePo({
             ...formData,
-            po_id: id,
-            project_site_id: formData.project_site_id?.site_id
+            po_id: id
         }).then((res) => {
             if (res?.data?.status) {
                 router.push('/po_list');
@@ -242,6 +246,21 @@ const Edit_Rental_Po = () => {
         }
     }
 
+    const handleStatusChange = (event, action, data) => {
+        event.preventDefault()
+        const response = changeStatus({
+            po_id: id,
+            status: action,
+            approval_notes: data?.approval_notes,
+            approve_amount: data?.approve_amount
+        });
+        response.then((res) => {
+            if(res?.data?.status) {
+                setRefetch(true);
+            }
+        })
+    }
+
     return (
         <>
 
@@ -255,6 +274,18 @@ const Edit_Rental_Po = () => {
                                 <PlusOutlined />
                                 <span>Edit Purchase Order</span>
                             </li>
+                            {
+                                formData.status === 'pending' && <Roles action="approve_po">
+                                <li>
+                                    <Button type="primary" onClick={() => {
+                                        setIsModalOpen(true);
+                                    }}>Approve</Button>
+                                    <Button type="primary" danger onClick={(event) => {
+                                        handleStatusChange(event, 'reject')
+                                    }}>Reject</Button>
+                                </li>
+                            </Roles>
+                            }
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
@@ -655,7 +686,7 @@ const Edit_Rental_Po = () => {
                                                 {/* <div className="selectwrap columns-select shipment-caret "> */}
                                                 <Form.Item
                                                     label="Select Site"
-                                                    name="project_site_id"
+                                                    name="project_site_id0"
                                                     htmlFor="file"
                                                     class="same-clr"
                                                     rules={[
@@ -672,7 +703,7 @@ const Edit_Rental_Po = () => {
                                                                 siteOptions.map((site) =>
                                                                 (
                                                                     <Select.Option key={site.site_id} value={site.site_id}>
-                                                                        {site.name}
+                                                                        {site.address}
                                                                     </Select.Option>
                                                                 )
                                                                 )}
@@ -744,7 +775,7 @@ const Edit_Rental_Po = () => {
                                                                     <div className="selectwrap  shipment-caret aligned-text">
                                                                         <Form.Item
                                                                             label="Select Site"
-                                                                            name="project_site_id"
+                                                                            name={"project_site_id" + (index + 1)}
                                                                             htmlFor="file"
                                                                             class="same-clr"
                                                                             rules={[
@@ -857,6 +888,7 @@ const Edit_Rental_Po = () => {
                     </div>
                 </div >
             </div >
+            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
         </>
     )
 }

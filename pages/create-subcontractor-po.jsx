@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
 import { Form, Select, Button, Input } from "antd";
 import PoForm from '../components/Form';
+import dayjs from "dayjs";
 
 const { Option } = Select;
 
@@ -30,7 +31,7 @@ const CreateSubContractorPo = () => {
         vendor_id: '',
         project_id: '',
         vendor_contact_id: '',
-        shipment_type: '',
+        shipment_type: 'project related',
         subcontractor_type: '',
         hst_amount: '',
         total_amount: '',
@@ -55,7 +56,8 @@ const CreateSubContractorPo = () => {
                     form.setFieldValue('poNumber', res.data?.po_number);
                     setFormData({
                         ...formData,
-                        po_number: res.data.po_number
+                        po_number: res.data.po_number,
+                        po_date: dayjs().format('YYYY-MM-DD')
                     });
                 }
             })
