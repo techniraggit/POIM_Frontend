@@ -70,10 +70,9 @@ const Login = ({ base_url }) => {
             }
         )
             .then((response) => {
-                console.log(response, 'yyyyyyyyyyyyyyyyyyyyy');
             })
             .catch((error) => {
-                console.log(error, 'jjjjjjjjjjjjjjjjjjjjj');
+                console.log(error);
             })
         if (validateForgotPasswordForm()) {
             handlePopupClose();
@@ -93,7 +92,6 @@ const Login = ({ base_url }) => {
                 forgotEmail: forgotEmail,
             }
             try {
-                console.log(base_url)
                 const response = await axios.post(`${base_url}/api/accounts/login`, values
                 );
                 if (response.status === 200) {
@@ -107,19 +105,15 @@ const Login = ({ base_url }) => {
                     });
                     router.push('/dashboard');
                     message.success('Login successful');
-                    console.log('Login successful');
                 } else {
-                    console.log('Login failed');
                 }
             } catch (error) {
                 console.error('Error during login:', error);
                 if (error.response && error.response.status === 401) {
-                    console.log('Token expired. Redirecting to login page...');
                     router.push('/');
                 } 
             }
         } else {
-            console.log('Form validation failed');
         }
     };
 

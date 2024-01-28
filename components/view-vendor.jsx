@@ -22,9 +22,7 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) =
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         };
         const response = await axios.get(`${base_url}/api/admin/vendors?vendor_id=${vendor_id}`, { headers });
-        console.log(response,'sssssssssssssssss');
         setvendorcontact(response.data.vendors_details.vendor_contact[0])
-        console.log(response.data.vendors_details.vendor_contact[0],'response.data.vendors_details');
         setVenndorData(response.data.vendors_details)
       } catch (error) {
         console.error('Error fetching vendors:', error);

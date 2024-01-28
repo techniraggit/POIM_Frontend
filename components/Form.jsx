@@ -22,7 +22,14 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
         form.setFieldValue('poDate', moment());
-        form.setFieldValue('shipment_type', formData.shipment_type)
+        if(formData.shipment_type) {
+            form.setFieldValue('shipment_type', formData.shipment_type)
+        }
+        if(edit && formData.shipment_type === 'project related' && formData.po_type === 'material') {
+            formData.material_details.forEach((data, index) => {
+                fetchSitesProject(form.getFieldValue('project_id'), index);
+            })
+        }
         const response = fetchVendorContact();
         response.then((res) => {
             if (res?.data?.status) {
@@ -48,7 +55,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         if (edit) {
             fetchVendorContactDropdown(formData.vendor_id);
         }
-    }, [formData.vendor_id])
+    }, [formData.vendor_id, edit])
 
     useEffect(() => {
         if ((form.getFieldValue('shipment_type') === 'project related') || (form.getFieldValue('shipment_type') === 'combined')) {
@@ -122,7 +129,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
-    console.log(siteOptions)
     return (
         <>
             <div class="order-choose d-flex">
@@ -376,7 +382,12 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             ]}
                         >
                             <Select id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
-                                onChange={(value) => { onChange('shipment_type', value) }}
+                                onChange={(value) => { 
+                                    onChange('shipment_type', value);
+                                    if(value === 'combined' || value === 'non project related') {
+                                        setSiteOptions([])
+                                    }
+                                 }}
                             >
                                 <Option value="project related">Project Related</Option>
                                 {formData.po_type !== 'rental' && formData.po_type !== 'subcontractor' && <Option value="non project related">Non Project Related</Option>}

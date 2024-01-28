@@ -5,7 +5,7 @@ import Header from "@/components/header";
 import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
-import { changeStatus, createPO, fetchPo, getPoNumber } from "@/apis/apis/adminApis";
+import { changeStatus, createPO, fetchPo } from "@/apis/apis/adminApis";
 import { Form, Select, Button } from "antd";
 import PoForm from '../../components/Form';
 import moment from "moment";
@@ -71,6 +71,7 @@ const EditMaterialPo = () => {
                         phone: data.vendor_contact?.phone_number,
                         email: data.vendor_contact?.email,
                         shipment_type: data.shipment_type,
+                        project_id: data.project,
                         delivery_address: data.delivery_address || '1860 Shawson',
                         material_details: [...data.material_details],
                         status: data.status
@@ -102,7 +103,7 @@ const EditMaterialPo = () => {
                     form.setFieldValue('first_name', data.created_by.first_name)
                     form.setFieldValue('last_name', data.created_by.last_name)
                     data?.material_details.forEach((material, index) => {
-                        form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
+                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                     })
                 }
             });
@@ -241,7 +242,7 @@ const EditMaterialPo = () => {
                                         
                                     </div>
 
-                                    <PoForm formData={formData} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />
+                                    <PoForm formData={formData} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>

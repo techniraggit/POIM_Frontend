@@ -129,7 +129,6 @@ const Material = ({ base_url }) => {
     };
 
     const onFinish = async (values) => {
-        console.log(values.items)
         if (values.items?.length > 0) {
             const dynamicItems = repeator?.map((item) => ({
                 quantity: item.quantity,
@@ -253,7 +252,6 @@ const Material = ({ base_url }) => {
             const response = await axios.post(`${base_url}/api/admin/purchase-order`, data, {
                 headers: headers,
             });
-            console.log(response.data, 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
             // setShipmentAddress(response.data.shipment_address)
             if (response.data.status == true) {
                 message.success(response.data.message)
@@ -384,7 +382,6 @@ const Material = ({ base_url }) => {
             }
 
             if (repeator[index].quantity && repeator[index].unit_price) {
-                console.log(parseFloat(repeator[index].quantity) * parseFloat(repeator[index].unit_price))
                 repeator[index] = {
                     ...repeator[index],
                     amount: parseFloat(repeator[index].quantity) * parseFloat(repeator[index].unit_price)
@@ -394,7 +391,6 @@ const Material = ({ base_url }) => {
         if (name === 'unit_price' || name === 'quantity') {
             handleUnitPriceRepeaterChange();
         }
-        console.log(repeator, "============repa")
         setRepeator([...repeator]);
     }
 
@@ -503,9 +499,6 @@ const Material = ({ base_url }) => {
                                         onChange={(value) => fetchVendorContactDropdown(value)}
                                     >
                                         {names.map((entry) =>
-                                        // {
-                                        //     console.log(entry,'vendordd');
-                                        // }
                                         (
                                             <Select.Option key={entry.vendorId} value={entry.vendorId}>
                                                 {entry.company_name}
@@ -515,38 +508,6 @@ const Material = ({ base_url }) => {
                                     </Select>
 
                                 </Form.Item>
-
-                                {/* <Form.Item
-                                                        label="Vendor Contact"
-                                                        name="vendor_contact_id"
-                                                        for="file"
-                                                        className="same-clr"
-                                                        rules={[
-                                                            {
-                                                                required: true,
-
-                                                                message: "Please choose Vendor contact",
-
-                                                            },
-
-                                                        ]}
-                                                    >
-                                                        <Select
-                                                            id="single2"
-                                                            className="js-states form-control file-wrap-select"
-                                                            onChange={(value) => handleVendorContactChange(value)}
-                                                        >
-                                                            {namesContact.map((entry) =>
-                                                             {
-                                                                console.log(entry,'entry contact id');
-
-
-                                                            }
-                                                            
-                                                            )}
-                                                        </Select>
-
-                                                    </Form.Item> */}
                             </div>
                         </div>
                     </div>
@@ -900,12 +861,7 @@ const Material = ({ base_url }) => {
                                     >
                                         <Select id="singlesa" class="js-states form-control file-wrap-select">
                                             {Array.isArray(siteOptions) &&
-                                                siteOptions.map((site) =>
-                                                // {
-                                                //     console.log(site,'siteeeeeeeeeee');
-                                                // }
-
-                                                (
+                                                siteOptions.map((site) =>(
                                                     <Select.Option key={site.site_id} value={site.site_id}>
                                                         {site.name}
                                                     </Select.Option>

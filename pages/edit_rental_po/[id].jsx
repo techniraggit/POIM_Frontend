@@ -45,7 +45,6 @@ const Edit_Rental_Po = () => {
             fetchPo(id).then((res) => {
                 if (res?.data?.status) {
                     const data = res.data.data;
-                    console.log(data, 'rental data');
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
@@ -130,7 +129,6 @@ const Edit_Rental_Po = () => {
         if (value.amount || name === 'amount') {
             handleRepeaterAmountChange();
         }
-        console.log(formData);
     }
 
     const getTotalAmount = () => {

@@ -52,7 +52,6 @@ const Vendor = ({ base_url }) => {
                 data: body,
             });
 
-            console.log('Delete response:', response);
             message.success('vendor deleted successfully.');
             setTotalVendor(prevTotalVendor => prevTotalVendor - 1);
             setVendors(prevVendors => prevVendors.filter(vendor => vendor.vendor_id !== id));

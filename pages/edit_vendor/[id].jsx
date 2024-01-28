@@ -34,7 +34,6 @@ const VendorEdit = () => {
         response.then((res) => {
             if (res?.data?.status) {
                 const data = res.data?.vendors_details;
-                console.log(data,'jjjjjjjjj');
                 setFormData({
                     company_name: data.company_name,
                     state: data.state,

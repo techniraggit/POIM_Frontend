@@ -385,8 +385,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 class="same-clr"
                                                             >
                                                                 <Select id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
-                                                                    {Array.isArray(siteOptions[index + 1]) &&
-                                                                        siteOptions[index + 1].map((site) => (
+                                                                    {Array.isArray(siteOptions[0]) &&
+                                                                        siteOptions[0].map((site) => (
                                                                             <Select.Option key={site.site_id} value={site.site_id}>
                                                                                 {site.address}
                                                                             </Select.Option>

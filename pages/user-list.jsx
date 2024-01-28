@@ -24,7 +24,6 @@ const User_list = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/users`, { headers: headers });
-                console.log(response, 'aaaaaaaaaaaaa');
                 setTotalUser(response.data.total_users)
                 setUsers(response.data.data);
             } catch (error) {
@@ -45,16 +44,12 @@ const User_list = ({ base_url }) => {
 
             const body = JSON.stringify({ user_id: id }); // Use 'category_id' in the request body
 
-            // console.log('Deleting category with ID:', );
-            console.log('Request Headers:', headers);
-            console.log('Request Body:', body);
 
             const response = await axios.delete(`${base_url}/api/admin/users`, {
                 headers,
                 data: body, // Send the body as data
             });
 
-            console.log('Delete response:', response);
             message.success('user deleted successfully.');
             setTotalUser(prevTotalUser => prevTotalUser - 1);
             setUsers(preuser => preuser.filter(user => user.id !== id));

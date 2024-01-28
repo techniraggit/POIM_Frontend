@@ -43,15 +43,12 @@ const Vendor = ({ base_url }) => {
             };
 
             const body = JSON.stringify({ project_id: id });
-            console.log('Request Headers:', headers);
-            console.log('Request Body:', body);
 
             const response = await axios.delete(`${base_url}/api/admin/projects`, {
                 headers,
                 data: body,
             });
 
-            console.log('Delete response:', response);
             message.success('project deleted successfully.');
             setTotalProjects(prevTotalProjects => prevTotalProjects - 1);
             setProjects(preproject => preproject.filter(project => project.project_id !== id));

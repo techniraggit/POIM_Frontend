@@ -93,9 +93,7 @@ const Rental = () => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/helping/vendors-and-contacts`, { headers: headers });
-                console.log(response, 'ggggggggggggggggggg');
                 setVendors(response.data.vendors);
-                // Assuming the API response is an array of projects
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
@@ -157,7 +155,6 @@ const Rental = () => {
     };
 
     const handleAmountChange = (value) => {
-        console.log(value, 'amount');
         setAmount(value);
         updateAmount(value || 0);
     };
@@ -185,7 +182,6 @@ const Rental = () => {
         form.setFieldsValue({ Amount: calculatedAmount || 0 });
         form.setFieldsValue({ HST_Amount: hstAmount });
         form.setFieldsValue({ Total_amount: totalAmount || 0 });
-        console.log(calculateAmount, hstAmount, totalAmount)
         // setAmount(calculatedAmount);
         // form.setFieldsValue({ Amount: calculatedAmount });
         // form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
@@ -238,7 +234,6 @@ const Rental = () => {
             }
 
             if (repeator[index].amount) {
-                console.log(parseFloat(repeator[index].amount, 'arseFloat(repeator[index].amount'))
                 repeator[index] = {
                     ...repeator[index],
                     amount: parseFloat(repeator[index].amount)
@@ -248,7 +243,6 @@ const Rental = () => {
         if (name === 'amount') {
             handleRepeaterAmountChange();
         }
-        console.log(repeator, "============repa")
         setRepeator([...repeator]);
     }
 
@@ -307,7 +301,6 @@ const Rental = () => {
         }
 
         const response = createPO(data);
-        console.log(response, 'ttttttttttttt');
 
         response.then((res) => {
             if (res?.data?.status) {

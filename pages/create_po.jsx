@@ -176,7 +176,6 @@ const Create_po = () => {
         }
 
         const response = createPO(data);
-        console.log(response, 'ggggggggg');
 
         response.then((res) => {
             if (res?.data?.status) {
@@ -299,9 +298,7 @@ const Create_po = () => {
 
     useEffect(() => {
         const poNumberResponse = getPoNumber();
-        // console.log(poNumberResponse,'poNumberResponse');
         poNumberResponse.then((response) => {
-            // console.log(response,'response');
             if (response?.data?.status) {
                 form.setFieldValue('poNumber', response.data.po_number);
             }

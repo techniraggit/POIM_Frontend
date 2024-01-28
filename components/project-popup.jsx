@@ -14,7 +14,6 @@ const ProjectPopup = ({ project_id }) => {
         setIsModalOpen(false);
     };
     useEffect(() => {
-        console.log(project_id, '@@@@@@@@@@@@@@@@@@@@');
         const fetchRoles = async () => {
             try {
                 const headers = {
@@ -22,7 +21,6 @@ const ProjectPopup = ({ project_id }) => {
                 };
 
                 const response = await axios.get(`${base_url}/api/admin/projects?project_id=${project_id}`, { headers });
-                console.log(response.data.projects.project_manager.email, 'hereeeeeeeeee');
                 setProjectData(response.data.projects)
                 // setUserRoles(response.data.data.user_role.name);
                 //   setvendorcontact(response.data.vendors_details.vendor_contact[0])

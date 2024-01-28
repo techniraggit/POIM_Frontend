@@ -84,7 +84,6 @@ const PO_list = () => {
                                     <tbody>
                                         {Array.isArray(rows) && rows.length > 0 ? (
                                             rows.map((purchase, index) => {
-                                                console.log(purchase.po_type === "subcontractor")
                                                 return <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{purchase.po_number}</td>

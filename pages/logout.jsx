@@ -33,7 +33,6 @@ const Logout = ({ base_url }) => {
             // { refresh_token: access_refresh },
           { headers }
         );
-        console.log(response,'logout response');
 
         if (response.status === 200) {
           localStorage.removeItem('access_token');

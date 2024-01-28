@@ -15,14 +15,6 @@ const ChangePasswordForm = ({ base_url }) => {
   const onFinish = async (values) => {
     const { new_password, confirm_password } = values;
 
-    // if(!id || !token){
-    //     message.error('Invalid url')
-    // }
-    console.log(id, 'idddddddddd');
-    console.log(token, 'token');
-    console.log(new_password, 'newpaas');
-    console.log(confirm_password, 'confrmpass');
-
     try {
       const response = await axios.post(`${base_url}/api/accounts/verify-token-make-password`, {
         id: id,
@@ -30,7 +22,7 @@ const ChangePasswordForm = ({ base_url }) => {
         new_password: new_password,
         confirm_password: confirm_password // Include password2 in the request body
       });
-      console.log(response.data, 'ooooooooooooooooooooo');
+
       if (response.status === 200) {
         message.success(response.data.message);
         router.push('/login'); // Redirect to login page or any other page
@@ -42,11 +34,10 @@ const ChangePasswordForm = ({ base_url }) => {
       message.error('Password reset failed');
     }
     // Add your form submission logic here
-    console.log('Received values:', values);
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+   
   };
 
   return (

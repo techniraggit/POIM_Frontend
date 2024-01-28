@@ -78,12 +78,10 @@ const ViewRentalPO = () => {
 
     const fetchSites = () => {
         const response = fetchProjectSites();
-        console.log(response, 'fetchProjectSites');
 
         response.then((res) => {
             if (res?.data?.status) {
                 const sitesArray = res.data.sites;
-                console.log(sitesArray, 'sitesArray');
                 setSiteOptions(sitesArray);
             }
         })
@@ -104,7 +102,6 @@ const ViewRentalPO = () => {
         fetchPo(id).then((res) => {
             if (res?.data?.status) {
                 const data = res.data.data;
-                console.log(data, 'rental data');
                 fetchVendorContactDropdown(data.vendor_contact.company.vendor_id);
                 fetchSites();
                 setFormData({
@@ -216,7 +213,6 @@ const ViewRentalPO = () => {
                 Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
             }
             const response = await axios.get(`${base_url}/api/helping/vendor-details?vendor_contact_id=${id}`, { headers: headers });
-            console.log(response, 'vendorContactDetails');
 
             setVendorForm({
                 ...vendorForm,

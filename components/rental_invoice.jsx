@@ -47,8 +47,6 @@ const Rental_invoice = ({ data }) => {
         });
         if (data) {
             if (data?.status) {
-                // const data = res.data.data;
-                // console.log(data,'ghfhhggdgh');
                 fetchVendorContactDropdown(data.vendor_contact.company.vendor_id);
                 fetchSites();
                 setFormData({
@@ -129,13 +127,11 @@ const Rental_invoice = ({ data }) => {
 
 
     const handleAmountChange = (value) => {
-        console.log(value, 'amount');
         setAmount(value);
         updateAmount(value);
     };
     const updateAmount = (amount) => {
         const calculatedAmount = amount;
-        console.log(calculatedAmount, 'calculatedAmount');
         setAmount(calculatedAmount);
         form.setFieldsValue({ Amount: calculatedAmount });
         form.setFieldsValue({ HST_Amount: calculatedAmount * 0.13 });
@@ -179,7 +175,6 @@ const Rental_invoice = ({ data }) => {
             }
 
             if (repeator[index].amount) {
-                console.log(parseFloat(repeator[index].amount, 'arseFloat(repeator[index].amount'))
                 repeator[index] = {
                     ...repeator[index],
                     amount: parseFloat(repeator[index].amount)
@@ -189,7 +184,6 @@ const Rental_invoice = ({ data }) => {
         if (name === 'amount') {
             handleRepeaterAmountChange();
         }
-        console.log(repeator, "============repa")
         setRepeator([...repeator]);
     }
 

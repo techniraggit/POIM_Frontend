@@ -11,7 +11,6 @@ const Dashboard = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     useEffect(() => {
         const response = getPoList();
-        console.log(response, 'getPoList');
         response.then((res) => {
             if (res?.data?.status) {
                 setPurchaseOrders(res.data.data || []);

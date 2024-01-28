@@ -128,10 +128,6 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                                             ...formData,
                                             project_sites: [...formData.project_sites.slice(0, index + 1), ...formData.project_sites.slice(index + 1 + 1)]
                                         });
-                                        console.log({
-                                            ...formData,
-                                            project_sites: [...formData.project_sites.slice(0, index + 1), ...formData.project_sites.slice(index + 1 + 1)]
-                                        })
                                     }
                                 })
                             } else {

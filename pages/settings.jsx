@@ -10,7 +10,6 @@ const Settings = () => {
     useEffect(() => {
         const response = threshold();
         response.then((res) => {
-            console.log(res.data.data, 'pppppppppppppppppp');
             setThresholdData(res.data.data || []);
         });
     }, [])
@@ -20,7 +19,6 @@ const Settings = () => {
         setThresholdData(updatedThresholdData);
     };
     const handleSaveClick = (id, value) => {
-        console.log(id, value, 'idvalue');
         updateThreshold({
             th_id: id,
             value: value
@@ -29,8 +27,6 @@ const Settings = () => {
                 if (res.status) {
                     message.success(res.data.message)
                 }
-                console.log(res.data.message, 'sssssssssssssssss');
-
             })
     }
     return (

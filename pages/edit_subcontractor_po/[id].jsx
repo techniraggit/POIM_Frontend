@@ -118,7 +118,6 @@ const EditSubContractorPo = () => {
     
     const onChange = (name, value, index) => {
         if(name === 'material_details') {
-            console.log(value, index)
             let totalAmount = 0;
             const materalDetails = formData.material_details[index];
             Object.keys(value).forEach((key) => {
