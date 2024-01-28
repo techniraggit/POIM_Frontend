@@ -21,7 +21,7 @@ export const fetchProjectSites = () => {
     return Axios.get(`/api/admin/project-sites`);
 }
 
-export const fetchSitesProject = (project_id) => {
+export const fetchSiteProject = (project_id) => {
     return Axios.get(`/api/admin/project-sites?project_id=${project_id}`);
 }
 

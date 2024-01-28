@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { Form, Input, Select, DatePicker } from "antd";
-import { fetchProjectSites, fetchProjects, fetchSitesProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
+import { fetchProjectSites, fetchProjects, fetchSiteProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
 import RentalRepeator from "./rentalRepeator";
@@ -71,7 +71,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     };
 
     const fetchSitesProject = (project_id, index) => {
-        const response = fetchSitesProject(project_id);
+        const response = fetchSiteProject(project_id);
         response.then((res) => {
             if(res?.data?.status) {
                 siteOptions[index] = [...res.data.sites];
