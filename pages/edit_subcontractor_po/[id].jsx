@@ -37,60 +37,65 @@ const EditSubContractorPo = () => {
     });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [refetch, setRefetch] = useState(true);
 
     const router = useRouter();
     const [form] = Form.useForm();
     const { id } = router.query;
 
     useEffect(() => {
-        form.setFieldValue('po_type', 'subcontractor');
-        fetchPo(id).then((res) => {
-            if(res?.data?.status) {
-                const data = res.data.data;
-                setFormData({
-                    ...formData,
-                    po_type: data.po_type,
-                    amount: data.total_amount,
-                    company_name: data.vendor_contact.company.company_name,
-                    vendor_id: data.vendor_contact.company.vendor_id,
-                    vendor_contact_id: data.vendor_contact.vendor_contact_id,
-                    hst_amount: data.hst_amount,
-                    total_amount: data.total_amount,
-                    project_site_id: data.project_site,
-                    country: data.vendor_contact.company.country,
-                    state: data.vendor_contact.company.state,
-                    address: data.vendor_contact.company.address,
-                    phone: data.vendor_contact.phone_number,
-                    email: data.vendor_contact.email,
-                    shipment_type: data.shipment_type || 'project related',
-                    material_details: [...data.material_details]
-                });
-                form.setFieldValue('po_type', data.po_type);
-                form.setFieldValue('company_name', data.vendor_contact.company.company_name)
-                form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
-                form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
-                form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
-                form.setFieldValue('total_amount', data.total_amount);
-                form.setFieldValue('project_id', data.project);
-                form.setFieldValue('poDate', moment(data.po_date));
-                form.setFieldValue('country', data.vendor_contact.company.country);
-                form.setFieldValue('state', data.vendor_contact.company.state);
-                form.setFieldValue('address', data.vendor_contact.company.address);
-                form.setFieldValue('phone', data.vendor_contact.phone_number);
-                form.setFieldValue('email', data.vendor_contact.email);
-                form.setFieldValue('poNumber', data.po_number)
-                form.setFieldValue('shipment_type', data.shipment_type || 'project related')
-                form.setFieldValue('amount', data.material_details[0]?.amount)
-                form.setFieldValue('description', data.material_details[0]?.description)
-                form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
-                form.setFieldValue('first_name', data.created_by.first_name)
-                form.setFieldValue('last_name', data.created_by.last_name)
-                data?.material_details.forEach((material, index) => {
-                    form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
-                })
-            }
-        });
-    }, []);
+        if(refetch) {
+
+            form.setFieldValue('po_type', 'subcontractor');
+            fetchPo(id).then((res) => {
+                if(res?.data?.status) {
+                    const data = res.data.data;
+                    setFormData({
+                        ...formData,
+                        po_type: data.po_type,
+                        amount: data.total_amount,
+                        company_name: data.vendor_contact.company.company_name,
+                        vendor_id: data.vendor_contact.company.vendor_id,
+                        vendor_contact_id: data.vendor_contact.vendor_contact_id,
+                        hst_amount: data.hst_amount,
+                        total_amount: data.total_amount,
+                        project_site_id: data.project_site,
+                        country: data.vendor_contact.company.country,
+                        state: data.vendor_contact.company.state,
+                        address: data.vendor_contact.company.address,
+                        phone: data.vendor_contact.phone_number,
+                        email: data.vendor_contact.email,
+                        shipment_type: data.shipment_type || 'project related',
+                        material_details: [...data.material_details]
+                    });
+                    form.setFieldValue('po_type', data.po_type);
+                    form.setFieldValue('company_name', data.vendor_contact.company.company_name)
+                    form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
+                    form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
+                    form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
+                    form.setFieldValue('total_amount', data.total_amount);
+                    form.setFieldValue('project_id', data.project);
+                    form.setFieldValue('poDate', moment(data.po_date));
+                    form.setFieldValue('country', data.vendor_contact.company.country);
+                    form.setFieldValue('state', data.vendor_contact.company.state);
+                    form.setFieldValue('address', data.vendor_contact.company.address);
+                    form.setFieldValue('phone', data.vendor_contact.phone_number);
+                    form.setFieldValue('email', data.vendor_contact.email);
+                    form.setFieldValue('poNumber', data.po_number)
+                    form.setFieldValue('shipment_type', data.shipment_type || 'project related')
+                    form.setFieldValue('amount', data.material_details[0]?.amount)
+                    form.setFieldValue('description', data.material_details[0]?.description)
+                    form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
+                    form.setFieldValue('first_name', data.created_by.first_name)
+                    form.setFieldValue('last_name', data.created_by.last_name)
+                    data?.material_details.forEach((material, index) => {
+                        form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
+                    })
+                }
+            });
+            setRefetch(false);
+        }
+    }, [refetch]);
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
@@ -169,7 +174,7 @@ const EditSubContractorPo = () => {
                                 <span>Create Purchase Order</span>
                             </li>
                             {
-                                formData.status === 'pending' && <Roles action="approve_po">
+                                formData.status === 'pending' && <Roles action="approve_purchase_order">
                                 <li>
                                     <Button type="primary" onClick={() => {
                                         setIsModalOpen(true);

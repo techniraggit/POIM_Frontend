@@ -135,3 +135,11 @@ export const getUserData = () => {
 export const changeStatus = (data) => {
     return Axios.put('/api/admin/purchase-order', data);
 }
+
+export const updateInvoice = (data) => {
+    return Axios.put('/api/admin/invoice', data);
+}
+
+export const getInvoiceData = (id) => {
+    return Axios.get(`/api/admin/invoice?invoice_id=${id}`);
+}

@@ -6,6 +6,7 @@ import Sidebar from "@/components/sidebar";
 import Link from "next/link";
 import { PlusOutlined } from '@ant-design/icons'
 import { invoiceList } from "@/apis/apis/adminApis";
+import Roles from "@/components/Roles";
 
 const { Option } = Select;
 
@@ -41,11 +42,15 @@ const Invoice = () => {
                     </div>
                     <div className="bottom-wrapp-purchase">
                         <ul className="list-icons">
-                            <li class="me-4 ">
-                                <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
-                                {/* <i class="fa-solid fa-plus mb-3"></i> */}
-                                <span  className="mt-3">Add Invoice</span>
-                            </li>
+                            {
+                                <Roles action="add_invoice">
+                                    <li class="me-4 ">
+                                        <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
+                                        {/* <i class="fa-solid fa-plus mb-3"></i> */}
+                                        <span  className="mt-3">Add Invoice</span>
+                                    </li>
+                                </Roles>
+                            }
                             <li className="me-4">
                                 <span className="text-sizes mb-3">5</span>
 
@@ -102,16 +107,12 @@ const Invoice = () => {
                                             <th className="hedaings-tb">PM</th>
                                             <th className="hedaings-tb">DM</th>
                                             <th className="hedaings-tb">Site Supervisor</th>
-                                            {/* <th className="hedaings-tb">Action</th> */}
+                                            <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {Array.isArray(invoiceTable) &&
-                                            invoiceTable.map((invoice, index) =>
-                                            // {
-                                            //     console.log(invoice.site_supervisor_approved,'invoiceeeeeeeee');
-                                            // }
-                                            (
+                                            invoiceTable.map((invoice, index) =>(
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{invoice.invoice_number}</td>
@@ -130,10 +131,14 @@ const Invoice = () => {
                                                     {/* <td>{invoice.pm_approved|| "N/A"}</td> */}
                                                     <td>{invoice.dm_approved ? "true" : "false"}</td>
                                                     <td>{invoice.site_supervisor_approved ? "true" : "false"}</td>
-                                                    {/* <td>
-                                                        <EyeFilled />
-                                                        <EditFilled />
-                                                    </td> */}
+                                                    <td>
+                                                        <Link href={`/view-invoice/${invoice.invoice_id}`} className="me-1"><EyeFilled /></Link>
+                                                        {
+                                                            <Roles action="edit_invoice">
+                                                                <Link href={`/edit-invoice/${invoice.invoice_id}`} className="me-1"><EditFilled /></Link>
+                                                            </Roles>
+                                                        }
+                                                    </td>
 
                                                 </tr>
                                             )

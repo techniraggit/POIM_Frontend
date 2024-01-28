@@ -197,7 +197,7 @@ const EditMaterialPo = () => {
                                 <span>Edit Purchase Order</span>
                             </li>
                             {
-                                formData.status === 'pending' && <Roles action="approve_po">
+                                formData.status === 'pending' && <Roles action="approve_purchase_order">
                                 <li>
                                     <Button type="primary" onClick={() => {
                                         setIsModalOpen(true);
