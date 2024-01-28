@@ -156,13 +156,13 @@ const CreateInvoice = () => {
                                                                 )
                                                             } else if(key === 'comment') {
                                                                 return(
-                                                                    <Form.Item name="note" className="note-wrap wrap-box">
+                                                                    <Form.Item name={"note" + index} className="note-wrap wrap-box">
                                                                         <TextArea onChange={({ target: { value } }) => onChange('comment', value, index)} rows={8} placeholder={`Please enter a note`} />
                                                                     </Form.Item>
                                                                 )
                                                             } else {
                                                                 return(
-                                                                    <Form.Item name="amount" className="note-wrap wrap-box">
+                                                                    <Form.Item name={"amount" + index} className="note-wrap wrap-box">
                                                                         <Input onChange={({ target: { value } }) => onChange('invoice_amount', value, index)} placeholder={`Please enter amount`} />
                                                                     </Form.Item>
                                                                 )
