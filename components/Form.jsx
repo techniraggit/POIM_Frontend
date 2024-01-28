@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { Form, Input, Select, DatePicker } from "antd";
-import { fetchProjects, fetchSitesProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
+import { fetchProjectSites, fetchProjects, fetchSitesProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
 import RentalRepeator from "./rentalRepeator";
@@ -63,16 +63,14 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
 
     const fetchSites = () => {
         const response = fetchProjectSites();
-
         response.then((res) => {
             if (res?.data?.status) {
-                const sitesArray = res.data.sites;
-                setSiteOptions(sitesArray);
+                setSiteOptions([[...res.data.sites]]);
             }
         })
     };
 
-    const fetchProjectSites = (project_id, index) => {
+    const fetchSitesProject = (project_id, index) => {
         const response = fetchSitesProject(project_id);
         response.then((res) => {
             if(res?.data?.status) {
@@ -84,7 +82,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
 
     const list = (value, index) => {
         if (formData.shipment_type === 'project related' || formData.shipment_type === 'combined') {
-            fetchProjectSites(value, index);
+            fetchSitesProject(value, index);
         }
     };
 
@@ -124,7 +122,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
-
+    console.log(siteOptions)
     return (
         <>
             <div class="order-choose d-flex">
