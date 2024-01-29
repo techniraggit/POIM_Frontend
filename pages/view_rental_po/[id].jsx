@@ -500,7 +500,7 @@ const ViewRentalPO = () => {
                                         <span class="d-block me-4">Ship To</span>
                                         <hr />
                                     </div>
-                                    <div class="row space-bottom">
+                                    <div class="row space-bottom mb-5">
                                         <div class="col-md-6 col-lg-4 all-wrap-box">
                                             <div class="selectwrap  shipment-caret aligned-text">
                                                 <Form.Item
