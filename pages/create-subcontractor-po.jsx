@@ -224,7 +224,9 @@ const CreateSubContractorPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input onChange={({ target: { value } }) => onChange('original_po_amount', value)} placeholder="Original PO Amount" />
+                                                            <Input 
+                                                             addonBefore="$"
+                                                            onChange={({ target: { value } }) => onChange('original_po_amount', value)} placeholder="Original PO Amount" />
                                                         </Form.Item>
                                                     </div>
                                                 </div>
@@ -240,7 +242,9 @@ const CreateSubContractorPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input onChange={({ target: { value } }) => onChange('invoice_amount', value)} placeholder="Invoice Recieved Amount" />
+                                                            <Input 
+                                                             addonBefore="$"
+                                                            onChange={({ target: { value } }) => onChange('invoice_amount', value)} placeholder="Invoice Recieved Amount" />
                                                         </Form.Item>
                                                     </div>
                                                 </div>
