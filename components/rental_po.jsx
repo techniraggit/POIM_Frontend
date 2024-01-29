@@ -660,7 +660,7 @@ const Rental = () => {
                                 </Form.Item>
                             </div>
                             <div className="text-to ps-3">
-                                <p className='mb-1'>To</p>
+                                <p className='mb-0'>To</p>
                             </div>
                         </div>
                     </div>

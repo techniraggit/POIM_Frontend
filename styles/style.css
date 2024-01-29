@@ -2876,7 +2876,7 @@ select.non-po-select::after {
 /* 22 jan work */
 input.ant-input.plus-wrap-input {
     position: relative;
-    padding: 9px 12px 9px 35px;
+    padding: 9px 12px 9px 15px;
 }
 span.anticon.anticon-plus.plus-in-input {
     position: absolute;
@@ -2952,6 +2952,11 @@ cursor: pointer;
 button.ant-btn.ant-btn-default.save-Button:active {
     color: #fff;
     border-color: #e91d26;
+}
+.wrap-box.dollor-inputs input {
+    border: 1px solid #d9d9d9;
+    border-start-start-radius: 3px;
+    border-end-start-radius: 3px;
 }
 /* 25 jan work */
 /* responsive */
@@ -3143,6 +3148,10 @@ span.text-sizes {
     .wrap-box input {
         padding: 6px 8px;
         font-size: 15px;
+    }
+    input.ant-input.plus-wrap-input {
+        position: relative;
+        padding: 6px 8px 6px 8px;
     }
     .search-vendor {
         max-width: 300px;
