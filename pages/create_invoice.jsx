@@ -34,7 +34,7 @@ const CreateInvoice = () => {
         repeator.forEach((invoice, index) => {
             // formData.append(`invoice_data[${index}][comment]`, invoice.comment);
             // formData.append(`invoice_data[${index}][invoice_amount]`, invoice.invoice_amount);
-            formData.append(`invoice_data[${index}][invoice_file]`, invoice.invoice_file);
+            formData.append(`invoice_file[${index}]`, invoice.invoice_file);
         });
         const response = invoiceSubmit(formData)
         console.log(response,'response');

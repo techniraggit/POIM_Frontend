@@ -73,6 +73,7 @@ const PO_list = () => {
                                         <tr id="header-row">
                                             <th className="hedaings-tb">S No.</th>
                                             <th className="hedaings-tb">PO No.</th>
+                                            <th className="hedaings-tb">Project Number</th>
                                             <th className="hedaings-tb">Purchase Order Type</th>
                                             <th className="hedaings-tb">PO Creation date</th>
                                             <th className="hedaings-tb">PO Amount</th>
@@ -84,9 +85,11 @@ const PO_list = () => {
                                     <tbody>
                                         {Array.isArray(rows) && rows.length > 0 ? (
                                             rows.map((purchase, index) => {
+                                                // console.log(purchase,'');
                                                 return <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{purchase.po_number}</td>
+                                                    <td>{purchase.project?.project_no|| '-'}</td>
                                                     <td className="td-color">{purchase.po_type}</td>
                                                     <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
                                                         year: 'numeric',
