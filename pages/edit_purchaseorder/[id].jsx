@@ -97,6 +97,7 @@ const EditMaterialPo = () => {
                     form.setFieldValue('amount0', data.material_details[0]?.amount)
                     form.setFieldValue('description', data.material_details[0]?.description)
                     form.setFieldValue('material_for', data.material_details[0]?.material_for)
+                    // form.setFieldValue('project_site_id', data.material_details[0]?.project_site)
                     form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                     form.setFieldValue('code', data.material_details[0]?.code)
                     form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
@@ -106,7 +107,6 @@ const EditMaterialPo = () => {
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                         form.setFieldValue('material_for' + (index), material.material_for)
                         form.setFieldValue('project_id' + (index), material.project?.project_id)
-                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                     })
                 }
                 setRefetch(false);
@@ -190,7 +190,6 @@ const EditMaterialPo = () => {
         })
     }
     console.log(formData, 'formData');
-
     return (
         <>
             <div className="wrapper-main">
@@ -245,7 +244,6 @@ const EditMaterialPo = () => {
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <PoForm formData={formData} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />

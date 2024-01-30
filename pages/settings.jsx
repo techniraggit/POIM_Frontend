@@ -23,11 +23,11 @@ const Settings = () => {
             th_id: id,
             value: value
         })
-            .then((res) => {
-                if (res.status) {
-                    message.success(res.data.message)
-                }
-            })
+        .then((res) => {
+            if (res.status) {
+                message.success(res.data.message)
+            }
+        })
     }
     return (
         <>
@@ -72,9 +72,9 @@ const Settings = () => {
                                             <div className="dollars-input d-flex align-items-center">
                                                 <span className="dollar-sign">$</span>
                                                 <input placeholder="Enter value in dollars"
-                                                // value={`$${thresholdData[index].value}`}
+                                                    // value={`$${thresholdData[index].value}`}
                                                     // value={thresholdData[index].value}
-                                                    //   value={`$ ${thresholdData[index].value}`}
+                                                      value={` ${thresholdData[index].value}`}
                                                     onChange={(e) => handleInputChange(index, e.target.value)}
                                                 />
                                             </div>
@@ -84,52 +84,7 @@ const Settings = () => {
                                     </div>
                                 </div>
                             ))}
-                            {/* <div className="col-lg-4 col-md-6">
-                                <div className="wrapp-box">
-                                    <div className="lists-items me-2 d-flex align-items-center">
-                                        <span className="img-clr me-3">
-                                            <img src="./images/to-do-list.svg" alt="" className="" />
-                                        </span>
-                                        <span>Rental PO</span>
-                                    </div>
-                                    <div className="lists-items me-2">
-                                        <div className="card-thre-wrap d-flex align-items-center">
-                                            <p className="mb-0 set-thre me-1">Set Threshold Limit</p><span>i</span>
-                                        </div>
-                                        <div className="dollars-input d-flex align-items-center">
-                                            <input placeholder="Enter value in dollars" 
-                                             value={thresholdData[1].value}
-                                            />
-                                            <Button className="set-btn">Set</Button>
-                                        </div>
-                                        <hr className="mt-4" />
-                                        <Button className="save-Button">save</Button>
-                                    </div>
-                                </div>
-                            </div> */}
-                            {/* <div className="col-lg-4 col-md-6">
-                                <div className="wrapp-box">
-                                    <div className="lists-items me-2 d-flex align-items-center">
-                                        <span className="img-clr me-3">
-                                            <img src="./images/to-do-list.svg" alt="" className="" />
-                                        </span>
-                                        <span>Subcontractor PO</span>
-                                    </div>
-                                    <div className="lists-items me-2">
-                                        <div className="card-thre-wrap d-flex align-items-center">
-                                            <p className="mb-0 set-thre me-1">Set Threshold Limit</p><span>i</span>
-                                        </div>
-                                        <div className="dollars-input d-flex align-items-center">
-                                            <input placeholder="Enter value in dollars"
-                                             value={thresholdData[1].value} 
-                                            />
-                                            <Button className="set-btn">Set</Button>
-                                        </div>
-                                        <hr className="mt-4" />
-                                        <Button className="save-Button">save</Button>
-                                    </div>
-                                </div>
-                            </div> */}
+                            
                         </div>
                     </div>
                 </div>

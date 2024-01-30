@@ -19,7 +19,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
     return (
         <div class="row">
             <div class="col-sm-4">
-                <div class="wrap-box">
+                <div class="wrap-box dollor-inputs">
                     <Form.Item
                         label="Quantity"
                         for="name"
@@ -226,7 +226,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                         <div className="selectwrap columns-select shipment-caret ">
                             <Form.Item
                                 label="Select Site"
-                                name={"project_site_id0"}
+                                name="project_site_id0"
                                 htmlFor="file"
                                 class="same-clr"
                                 rules={[
