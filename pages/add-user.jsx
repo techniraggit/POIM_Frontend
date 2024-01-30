@@ -192,6 +192,7 @@ const AddUser = ({ base_url }) => {
                           label="Address"
                           name="address"  // Add a name to link the input to the form values
                           className="vender-input"
+                          initialValue='1860 Shawson'
                         >
                           <Input />
                         </Form.Item>
