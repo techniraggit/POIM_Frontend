@@ -59,7 +59,7 @@ const EditInvoice = () => {
             invoicePromise.then((res) => {
                 if(res?.data?.status) {
                     const data = res.data.data;
-                    setInvoice({...data});
+                    setInvoice({...data, can_change_status: res.data?.can_change_status});
                     form.setFieldValue('amount', data.invoice_amount);
                     form.setFieldValue('note', data.comment);
                     fetchPoNumber(res.data?.data?.purchase_order?.po_id);
@@ -124,7 +124,7 @@ const EditInvoice = () => {
                                     <span>Edit Invoice</span>
                                 </li>
                                 {
-                                (!invoice.dm_approved && !invoice.pm_approved && !invoice.site_superintendent_approved) && <Roles action="approve_invoice">
+                                invoice.status === 'pending' && invoice.status && <Roles action="approve_invoice">
                                 <li>
                                     <Button type="primary" onClick={(event) => {
                                         handleStatusChange(event, 'approve')
