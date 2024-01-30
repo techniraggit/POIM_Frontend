@@ -6,7 +6,7 @@ import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { fetchPo, updatePo } from "@/apis/apis/adminApis";
-import { Form, Select, Button } from "antd";
+import { Form, Input, Select } from "antd";
 import moment from "moment";
 import PoForm from "@/components/Form";
 
@@ -48,6 +48,9 @@ const ViewSubContractorPo = () => {
                     ...formData,
                     po_type: data.po_type,
                     amount: data.total_amount,
+                    subcontractor_type: data.subcontractor_type,
+                    invoice_amount: data.invoice_received_amount,
+                    original_po_amount: data.total_amount,
                     company_name: data.vendor_contact.company.company_name,
                     vendor_id: data.vendor_contact.company.vendor_id,
                     vendor_contact_id: data.vendor_contact.vendor_contact_id,
@@ -81,12 +84,15 @@ const ViewSubContractorPo = () => {
                 form.setFieldValue('description', data.material_details[0]?.description)
                 form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                 form.setFieldValue('first_name', data.created_by.first_name)
-                form.setFieldValue('last_name', data.created_by.last_name)
+                form.setFieldValue('last_name', data.created_by.last_name);
+                form.setFieldValue('original_po_amount', data.total_amount);
+                form.setFieldValue('last_name', data.created_by.last_name);
+                form.setFieldValue('subcontractor_type', data.subcontractor_type);
+                form.setFieldValue('invoice_amount', data.invoice_received_amount);
                 data?.material_details.forEach((material, index) => {
                     form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                     form.setFieldValue('material_for' + (index), material.material_for)
                     form.setFieldValue('project_id' + (index), material.project?.project_id)
-                    form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                 })
             }
         });
@@ -182,8 +188,77 @@ const ViewSubContractorPo = () => {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className="col-lg-4 col-md-6">
+                                            <div className="selectwrap react-select">
+                                                <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
+                                                    <Form.Item
+                                                        label="Choose Subcontractor Type"
+                                                        name="subcontractor_type"
+                                                        class="bold-label"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose subcontractor Type",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select disabled onChange={(value) => onChange('subcontractor_type', value)} placeholder="Select PO Type" id="single1"
+                                                            class="js-states form-control file-wrap-select bold-select"
+                                                        >
+                                                            <Option value="existing">Existing</Option>
+                                                            <Option value="new">New</Option>
+                                                        </Select>
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <PoForm formData={formData} view={true} edit={false} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+                                    {(formData.subcontractor_type === 'existing') && (
+                                        <>
+                                            <div className="row mt-5 mb-3">
+                                                <div class="col-lg-4 col-md-6">
+                                                    <div class="wrap-box">
+                                                        <Form.Item
+                                                            label="Original PO Amount"
+                                                            name="original_po_amount"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please enter Original PO Amount",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input 
+                                                                readOnly
+                                                                addonBefore="$"
+                                                                onChange={({ target: { value } }) => onChange('original_po_amount', value)} placeholder="Original PO Amount" />
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6">
+                                                    <div class="wrap-box">
+                                                        <Form.Item
+                                                            label="Invoice Recieved Amount"
+                                                            name="invoice_amount"
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please enter Invoice Recieved Amount",
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input 
+                                                                readOnly
+                                                                addonBefore="$"
+                                                                onChange={({ target: { value } }) => onChange('invoice_amount', value)} placeholder="Invoice Recieved Amount" />
+                                                        </Form.Item>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                    }
+                                    <PoForm formData={formData} view={true} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                 </Form>
                             </div>
                         </div>

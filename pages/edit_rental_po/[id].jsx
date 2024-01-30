@@ -47,6 +47,7 @@ const Edit_Rental_Po = () => {
                     const data = res.data.data;
                     setFormData({
                         ...formData,
+                        can_change_status: res.data?.can_change_status,
                         po_type: data.po_type,
                         amount: data.amount,
                         company_name: data.vendor_contact?.company.company_name,
@@ -182,7 +183,7 @@ const Edit_Rental_Po = () => {
                                 <span>Edit Purchase Order</span>
                             </li>
                             {
-                                formData.status === 'pending' && <Roles action="approve_purchase_order">
+                                formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
                                 <li>
                                     <Button type="primary" onClick={() => {
                                         setIsModalOpen(true);

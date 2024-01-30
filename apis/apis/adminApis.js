@@ -146,3 +146,11 @@ export const updateInvoice = (data) => {
 export const getInvoiceData = (id) => {
     return Axios.get(`/api/admin/invoice?invoice_id=${id}`);
 }
+
+export const downloadInvoice = (id) => {
+    return Axios.get('/api/admin/invoice');
+}
+
+export const removeInvoiceFile = (id) => {
+    return Axios.put('/api/admin', id);
+}

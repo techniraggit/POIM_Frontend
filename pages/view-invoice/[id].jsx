@@ -1,21 +1,17 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
-import { Form, Input, Button, Select, Upload } from 'antd';
+import { Form, Input, Select, Upload } from 'antd';
 import '../../styles/style.css'
 import React, { useEffect, useState } from "react";
-import { fetchPoNumbers, fetchPoNumbr, getInvoiceData } from "@/apis/apis/adminApis";
+import { downloadInvoice, fetchPoNumbers, fetchPoNumbr, getInvoiceData } from "@/apis/apis/adminApis";
 import Material_invoice from "@/components/material_invoice";
 import Rental_invoice from "@/components/rental_invoice";
-import { UploadOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import Subcontractor_invoice from "@/components/subcontractor_invoice";
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { saveAs } from "file-saver";
 
 const { TextArea } = Input;
-
-const repeatorData = {
-    invoice_file: ''
-}
 
 const ViewInvoice = () => {
     const [poNumber, setPoNumber] = useState([]);
@@ -59,7 +55,16 @@ const ViewInvoice = () => {
             form.setFieldValue('po_id', id)
         })
     }
-    console.log(invoice.comment)
+
+    const handleDownload = (id) => {
+        downloadInvoice({id: id}).then((res) => {
+            const fileName = `invoice_${id}.pdf`;
+            if(res?.data) {
+              saveAs(res.data, fileName);
+            }
+        })
+    }
+
     return (
         <>
             <div class="wrapper-main">
@@ -106,16 +111,18 @@ const ViewInvoice = () => {
                                     <div className="row mb-4">
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap  shipment-caret invoice-select aligned-text">
-                                                <Select name="po_id" disabled placeholder="Select PO Type" id="create-invoice"
-                                                    class="js-states form-control file-wrap-select bold-select"
-                                                    onChange={(value) => fetchPoNumber(value)}
-                                                >
-                                                    {poNumber.map((entry) => (
-                                                        <Select.Option key={entry.po_id} value={entry.po_id}>
-                                                            {entry.po_number}
-                                                        </Select.Option>
-                                                    ))}
-                                                </Select>
+                                                <Form.Item name={"note"}>
+                                                    <Select name="po_id" disabled placeholder="Select PO Type" id="create-invoice"
+                                                        class="js-states form-control file-wrap-select bold-select"
+                                                        onChange={(value) => fetchPoNumber(value)}
+                                                    >
+                                                        {poNumber.map((entry) => (
+                                                            <Select.Option key={entry.po_id} value={entry.po_id}>
+                                                                {entry.po_number}
+                                                            </Select.Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
                                             </div>
                                         </div>
                                     </div>
@@ -125,9 +132,9 @@ const ViewInvoice = () => {
                                             const fileName = invoice_file_split[invoice_file_split.length - 1];
                                             return (
                                                 <>
-                                                    <Upload disabled accept=".pdf" maxCount={1}>
-                                                        <div>{fileName}</div>
-                                                    </Upload>
+                                                    <div>
+                                                        {fileName} <DownloadOutlined onClick={() => handleDownload(index)} />
+                                                    </div>
                                                 </>
                                             )
                                         })

@@ -11,7 +11,6 @@ import ProjectForm from "@/components/ProjectForm";
 
 const repeatorData = {
     site_id: '',
-    name: '',
     address: '',
     state: ''
 }

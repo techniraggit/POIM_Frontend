@@ -54,9 +54,10 @@ const EditMaterialPo = () => {
         if (true) {
             fetchPo(id).then((res) => {
                 if (res?.data?.status) {
-                    const data = res.data.data;
+                    const data = res.data?.data;
                     setFormData({
                         ...formData,
+                        can_change_status: res.data?.can_change_status,
                         po_type: data.po_type,
                         amount: data.total_amount,
                         company_name: data.vendor_contact?.company.company_name,
@@ -189,7 +190,7 @@ const EditMaterialPo = () => {
             }
         })
     }
-    console.log(formData, 'formData');
+
     return (
         <>
             <div className="wrapper-main">
@@ -203,7 +204,7 @@ const EditMaterialPo = () => {
                                 <span>Edit Purchase Order</span>
                             </li>
                             {
-                                formData.status === 'pending' && <Roles action="approve_purchase_order">
+                                formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
                                     <li>
                                         <Button type="primary" onClick={() => {
                                             setIsModalOpen(true);

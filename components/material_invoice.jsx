@@ -5,10 +5,10 @@ import moment from "moment";
 
 import { fetchProjectSites, fetchProjects, fetchVendorContact, fetchVendorContacts, updatePo } from "@/apis/apis/adminApis";
 import { Form, Input, Select, Button, DatePicker, Space, message } from "antd";
+import Sidebar from "./sidebar";
 
 
 const Material_invoice = ({data}) => {
-
     const [vendors, setVendors] = useState([]);
     const [formData, setFormData] = useState({
         po_type: '',
@@ -16,7 +16,6 @@ const Material_invoice = ({data}) => {
         company_name: '',
         vendor_id: '',
         vendor_contact_id: '',
-        shipment_type: '',
         hst_amount: '',
         total_amount: '',
         project_site_id: '',
@@ -40,72 +39,68 @@ const Material_invoice = ({data}) => {
     const { id } = router.query;
 
     useEffect(() => {
-        const response = fetchVendorContact();
-        response.then((res) => {
-            if(res?.data?.status) {
-                setVendors([...res.data.vendors]);
-            }
-        });
-        if(data){
-            if(data?.status) {
-                fetchVendorContactDropdown(data.vendor_contact.company.vendor_id);
-                fetchSites();
-                setFormData({
-                    ...formData,
-                    po_type: data.po_type,
-                    amount: data.total_amount,
-                    company_name: data.vendor_contact.company.company_name,
-                    vendor_id: data.vendor_contact.company.vendor_id,
-                    vendor_contact_id: data.vendor_contact.vendor_contact_id,
-                    hst_amount: data.hst_amount,
-                    total_amount: data.total_amount,
-                    project_site_id: data.project_site,
-                    country: data.vendor_contact.company.country,
-                    state: data.vendor_contact.company.state,
-                    address: data.vendor_contact.company.address,
-                    phone: data.vendor_contact.phone_number,
-                    email: data.vendor_contact.email,
-                    shipment_type: data.shipment_type,
-                    delivery_address: data.delivery_address || '1860 Shawson',
-                    material_details: [...data.material_details]
-                });
-                form.setFieldValue('po_type', data.po_type);
-                form.setFieldValue('company_name', data.vendor_contact.company.company_name)
-                form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
-                form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
-                form.setFieldValue('shipment_type', data.shipment_type);
-                form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2));
-                form.setFieldValue('total_amount', data.total_amount);
-                form.setFieldValue('project_id', data.project_site?.project?.project_id);
-                form.setFieldValue('project_site_id', data.project_site?.site_id);
-                form.setFieldValue('poDate', moment(data.po_date));
-                form.setFieldValue('country', data.vendor_contact.company.country);
-                form.setFieldValue('state', data.vendor_contact.company.state);
-                form.setFieldValue('address', data.vendor_contact.company.address);
-                form.setFieldValue('phone', data.vendor_contact.phone_number);
-                form.setFieldValue('email', data.vendor_contact.email);
-                form.setFieldValue('poNumber', data.po_number)
-                form.setFieldValue('shipment_type', data.shipment_type)
-                form.setFieldValue('delivery_address', data.delivery_address || '1860 Shawson')
-                form.setFieldValue('quantity', data.material_details[0]?.quantity)
-                form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
-                form.setFieldValue('amount', data.material_details[0]?.amount)
-                form.setFieldValue('description', data.material_details[0]?.description)
-                form.setFieldValue('material_for', data.material_details[0]?.material_for)
-                form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
-                form.setFieldValue('code', data.material_details[0]?.code)
-                form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
-                form.setFieldValue('first_name', data.created_by.first_name)
-                form.setFieldValue('last_name', data.created_by.last_name)
-            }
+        if(data && data?.status) {
+            fetchVendorContactDropdown(data.vendor_contact.company.vendor_id);
+            fetchSites();
+            setFormData({
+                ...formData,
+                po_type: data.po_type,
+                amount: data.total_amount,
+                company_name: data.vendor_contact.company.company_name,
+                vendor_id: data.vendor_contact.company.vendor_id,
+                vendor_contact_id: data.vendor_contact.vendor_contact_id,
+                hst_amount: data.hst_amount,
+                total_amount: data.total_amount,
+                project_site_id: data.project_site,
+                country: data.vendor_contact.company.country,
+                state: data.vendor_contact.company.state,
+                address: data.vendor_contact.company.address,
+                phone: data.vendor_contact.phone_number,
+                email: data.vendor_contact.email,
+                shipment_type: data.shipment_type,
+                delivery_address: data.delivery_address || '1860 Shawson',
+                material_details: [...data.material_details]
+            });
+            form.setFieldValue('po_type', data.po_type);
+            form.setFieldValue('company_name', data.vendor_contact.company.company_name)
+            form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
+            form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
+            form.setFieldValue('shipment_type', data.shipment_type);
+            form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2));
+            form.setFieldValue('total_amount', data.total_amount);
+            form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
+            form.setFieldValue('poDate', moment(data.po_date));
+            form.setFieldValue('country', data.vendor_contact.company.country);
+            form.setFieldValue('state', data.vendor_contact.company.state);
+            form.setFieldValue('address', data.vendor_contact.company.address);
+            form.setFieldValue('phone', data.vendor_contact.phone_number);
+            form.setFieldValue('email', data.vendor_contact.email);
+            form.setFieldValue('poNumber', data.po_number)
+            form.setFieldValue('shipment_type', data.shipment_type)
+            form.setFieldValue('delivery_address', data.delivery_address || '1860 Shawson')
+            form.setFieldValue('quantity', data.material_details[0]?.quantity)
+            form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
+            form.setFieldValue('amount', data.material_details[0]?.amount)
+            form.setFieldValue('description', data.material_details[0]?.description)
+            form.setFieldValue('material_for', data.material_details[0]?.material_for)
+            form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
+            form.setFieldValue('code', data.material_details[0]?.code)
+            form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
+            form.setFieldValue('first_name', data.created_by.first_name)
+            form.setFieldValue('last_name', data.created_by.last_name)
+            data?.material_details.forEach((material, index) => {
+                form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                form.setFieldValue('material_for' + (index), material.material_for)
+                form.setFieldValue('project_id' + (index), material.project?.project_id)
+            })
         }
-    }, []);
+    }, [data]);
 
     useEffect(() => {
         if (form.getFieldValue('shipment_type') === 'project related' || form.getFieldValue('shipment_type') === 'combined') {
             const response = fetchProjects();
             response.then((res) => {
-                if(res?.data?.status) {
+                if (res?.data?.status) {
                     setProjects(res.data.projects);
                 }
             });
@@ -115,7 +110,7 @@ const Material_invoice = ({data}) => {
     const fetchVendorContactDropdown = (id) => {
         const response = fetchVendorContacts(id);
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 setContactId([...res.data.vendors])
             }
         })
@@ -153,8 +148,8 @@ const Material_invoice = ({data}) => {
             hst_amount: totalAmount * 0.13,
             total_amount: totalAmount * 0.13 + totalAmount
         })
-        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) });
-        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) });
+        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
+        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
     };
 
     const onFinish = () => {
@@ -163,21 +158,21 @@ const Material_invoice = ({data}) => {
             po_id: id,
             project_site_id: formData.project_site_id?.site_id
         }).then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 router.push('/po_list');
             }
         });
     }
-    
+
     const onChange = (name, value, index) => {
-        if(name === 'material_details') {
+        if (name === 'material_details') {
             const materialDetails = formData.material_details;
             Object.keys(value).map((key) => {
                 materialDetails[index][key] = value[key];
             });
-            if(value.unit_price) {
+            if (value.unit_price) {
                 updateAmount(materialDetails[index].quantity, value.unit_price, index);
-            } else if(value.quantity) {
+            } else if (value.quantity) {
                 updateAmount(quantity, materialDetails[index].unit_price, index);
             }
             setFormData({
@@ -190,7 +185,7 @@ const Material_invoice = ({data}) => {
                 [name]: value
             });
         }
-        if(value.unit_price || value.quantity || name === 'unit_price' || name === 'quantity') {
+        if (value.unit_price || value.quantity || name === 'unit_price' || name === 'quantity') {
             handleUnitPriceRepeaterChange();
         }
     }
@@ -199,7 +194,7 @@ const Material_invoice = ({data}) => {
         const response = fetchProjectSites();
 
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 const sitesArray = res.data.sites;
                 setSiteOptions(sitesArray);
             }
@@ -211,6 +206,7 @@ const Material_invoice = ({data}) => {
             fetchSites(value);
         }
     };
+
     return (
         <>
             <div className="choose-potype round-wrap">
@@ -470,8 +466,8 @@ const Material_invoice = ({data}) => {
                             <hr />
                         </div>
                         <div class="row space-bottom mb-0">
-                            <div className="col-lg-4 col-md-6">
-                            <div class="selectwrap  shipment-caret aligned-text">
+                            <div class="col-md-6 col-lg-4 all-wrap-box">
+                                <div class="selectwrap  shipment-caret aligned-text">
                                     <Form.Item
                                         label="Shipment Type"
                                         name="shipment_type"
@@ -494,9 +490,8 @@ const Material_invoice = ({data}) => {
                                     </Form.Item>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-4 all-wrap-box">
-                                
-                                {formData.shipment_type === 'project related' && (
+                            {formData.shipment_type === 'project related' && (
+                                <div class="col-md-6 col-lg-4 all-wrap-box">
                                     <div class="selectwrap columns-select shipment-caret">
                                         <Form.Item
                                             label="Project  "
@@ -527,8 +522,10 @@ const Material_invoice = ({data}) => {
                                             </Select>
                                         </Form.Item>
                                     </div>
-                                )}
-                                {formData.shipment_type === 'non project related' && (
+                                </div>
+                            )}
+                            {formData.shipment_type === 'non project related' && (
+                                <div class="col-md-6 col-lg-4 all-wrap-box">
                                     <div class="selectwrap non-project-wrap">
                                         <Form.Item
                                             label="Delivery Address"
@@ -547,11 +544,12 @@ const Material_invoice = ({data}) => {
 
                                         </Form.Item>
                                     </div>
-                                )}
+                                </div>
+                            )}
 
 
-                            </div>
                         </div>
+
                         <div class="linewrap d-flex">
                             <span class="d-block me-4">Material</span>
                             <hr />
@@ -611,7 +609,7 @@ const Material_invoice = ({data}) => {
                             </div>
                             <div class="row space-col-spc mb-0">
                                 <div class="col-sm-4">
-                                    <div className="wrap-box">
+                                    <div className="wrap-box mb-0">
                                         <Form.Item
                                             label="Description"
                                             for="name"
@@ -632,7 +630,7 @@ const Material_invoice = ({data}) => {
                                         <div className="selectwrap columns-select shipment-caret ">
                                             <Form.Item
                                                 label="Select Site"
-                                                name="project_site_id"
+                                                name="project_site_id0"
                                                 htmlFor="file"
                                                 class="same-clr"
                                                 rules={[
@@ -660,7 +658,7 @@ const Material_invoice = ({data}) => {
                                         <div className="selectwrap add-dropdown-wrap shipment-caret">
                                             <Form.Item
                                                 label="Material For"
-                                                name="material_for"
+                                                name="material_for0"
                                                 htmlFor="file"
                                                 class="same-clr"
                                                 rules={[
@@ -689,7 +687,7 @@ const Material_invoice = ({data}) => {
                                             <div class="selectwrap columns-select shipment-caret select-sites">
                                                 <Form.Item
                                                     label="Material For"
-                                                    name="material_for"
+                                                    name="material_for0"
                                                     htmlFor="file"
                                                     class="same-clr"
                                                     rules={[
@@ -752,7 +750,7 @@ const Material_invoice = ({data}) => {
                                                     <div class="selectwrap columns-select shipment-caret ">
                                                         <Form.Item
                                                             label="Project"
-                                                            name="project_id"
+                                                            name="project_id0"
                                                             htmlFor="file"
                                                             class="same-clr"
                                                             rules={[
@@ -786,7 +784,7 @@ const Material_invoice = ({data}) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row select-sitee">
+                            <div className="row select-sitee mt-3">
                                 <div className="col-md-4">
                                     {formData.material_details[0]?.material_for === 'projects' && (
                                         <div class="selectwrap add-dropdown-wrap">
@@ -1014,7 +1012,7 @@ const Material_invoice = ({data}) => {
                 </div>
             </div>
         </>
-
-    )
+    );
 }
-export default Material_invoice
+
+export default Material_invoice;
