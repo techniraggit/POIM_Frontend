@@ -150,7 +150,8 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                     <Form.Item
                                                         label={upperKey}
                                                         name={key + index}
-                                                        rules={[{ required: true, message: 'Please enter name' }]}
+                                                        rules={[{ required: true, message: `Please enter ${upperKey}` }]}
+                                                        // rules={[{ required: true, message: 'Please enter name' }]}
                                                     >
                                                         <Input value={contact[key]} onChange={({ target: { value } }) => onChange('contact_info', { [key]: value }, index + 1)} placeholder={upperKey} />
                                                     </Form.Item>
