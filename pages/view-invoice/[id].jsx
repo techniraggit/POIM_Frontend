@@ -1,40 +1,36 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
-import { Form, Input, Button, Select, Upload, message } from 'antd';
+import { Form, Input, Button, Select, Upload } from 'antd';
 import '../../styles/style.css'
 import React, { useEffect, useState } from "react";
-import { fetchPoNumbers, fetchPoNumbr, getInvoiceData, updateInvoice } from "@/apis/apis/adminApis";
+import { fetchPoNumbers, fetchPoNumbr, getInvoiceData } from "@/apis/apis/adminApis";
 import Material_invoice from "@/components/material_invoice";
 import Rental_invoice from "@/components/rental_invoice";
 import { UploadOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import Subcontractor_invoice from "@/components/subcontractor_invoice";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import Roles from "@/components/Roles";
 
 const { TextArea } = Input;
 
 const repeatorData = {
-    invoice_file: '',
-    comment: '',
-    invoice_amount: 0
+    invoice_file: ''
 }
 
 const ViewInvoice = () => {
     const [poNumber, setPoNumber] = useState([]);
     const [invoice, setInvoice] = useState({});
     const [responseData, setResponseData] = useState([]);
-    const [repeator, setRepeator] = useState([repeatorData]);
-    const [refetch, setRefetch] = useState(true);
     const router = useRouter();
     const { id } = router.query;
+    const [form] = Form.useForm();
 
     const onFinish = () => {
         
     };
 
     useEffect(() => {
-        if(id && refetch) {
+        if(id) {
             const response = fetchPoNumbr()
             response.then((res) => {
                 if (res?.data?.status) {
@@ -45,47 +41,25 @@ const ViewInvoice = () => {
 
             invoicePromise.then((res) => {
                 if(res?.data?.status) {
-                    setInvoice({...res.data.data});
+                    const data = res.data?.data
+                    setInvoice({...data});
+                    form.setFieldValue('amount', data.invoice_amount);
+                    form.setFieldValue('note', data.comment);
                     fetchPoNumber(res.data?.data?.purchase_order?.po_id);
                 }
             })
         }
-    }, [id, refetch]);
+    }, [id]);
 
     const fetchPoNumber = (id) => {
         const response = fetchPoNumbers(id)
         response.then((res) => {
             const data = res.data.data;
             setResponseData(data)
+            form.setFieldValue('po_id', id)
         })
     }
-
-    const beforeUpload = (file) => {
-        const isPDF = file.type === 'application/pdf';
-        if (!isPDF) {
-            message.error('Only PDF files are allowed!');
-        }
-        return isPDF;
-    };
-
-    const onChange = (name, value, index) => {
-        repeator[index][name] = value;
-        setRepeator([...repeator]);
-    }
-
-    const handleStatusChange = (event, action) => {
-        event.preventDefault()
-        const response = updateInvoice({
-            invoice_id: id,
-            status: action
-        });
-        response.then((res) => {
-            if(res?.data?.status) {
-                setRefetch(true);
-            }
-        })
-    }
-
+    console.log(invoice.comment)
     return (
         <>
             <div class="wrapper-main">
@@ -98,20 +72,8 @@ const ViewInvoice = () => {
                             <ul class="bg-colored-ul mb-4">
                                 <li class="bg-li-invoice">
                                     <PlusOutlined className="me-3" />
-                                    <span>Edit Invoice</span>
+                                    <span>View Invoice</span>
                                 </li>
-                                {
-                                invoice.status === 'pending' && <Roles action="approve_invoice">
-                                <li>
-                                    <Button type="primary" onClick={(event) => {
-                                        handleStatusChange(event, 'approve')
-                                    }}>Approve</Button>
-                                    <Button type="primary" danger onClick={(event) => {
-                                        handleStatusChange(event, 'reject')
-                                    }}>Reject</Button>
-                                </li>
-                            </Roles>
-                            }
                             </ul>
                             {
                                 responseData.po_type == 'material' && (
@@ -135,82 +97,46 @@ const ViewInvoice = () => {
                                 )
                             }
                             <div className="choose-file">
-                                <div className="row mb-4">
-                                    <div className="col-lg-4 col-md-6">
-                                        <div className="selectwrap  shipment-caret invoice-select aligned-text">
-                                            <Select disabled placeholder="Select PO Type" id="create-invoice"
-                                                class="js-states form-control file-wrap-select bold-select"
-                                                onChange={(value) => fetchPoNumber(value)}
-                                            >
-                                                {poNumber.map((entry) => (
-                                                    <Select.Option key={entry.po_id} value={entry.po_id}>
-                                                        {entry.po_number}
-                                                    </Select.Option>
-
-                                                ))}
-                                            </Select>
-                                        </div>
-                                    </div>
-                                </div>
                                 <Form
                                     name="antdForm"
                                     className="mt-5"
                                     onFinish={onFinish}
+                                    form={form}
                                 >
+                                    <div className="row mb-4">
+                                        <div className="col-lg-4 col-md-6">
+                                            <div className="selectwrap  shipment-caret invoice-select aligned-text">
+                                                <Select name="po_id" disabled placeholder="Select PO Type" id="create-invoice"
+                                                    class="js-states form-control file-wrap-select bold-select"
+                                                    onChange={(value) => fetchPoNumber(value)}
+                                                >
+                                                    {poNumber.map((entry) => (
+                                                        <Select.Option key={entry.po_id} value={entry.po_id}>
+                                                            {entry.po_number}
+                                                        </Select.Option>
+                                                    ))}
+                                                </Select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {
-                                        repeator.map((data, index) => {
+                                        invoice.invoice_files?.map((data, index) => {
+                                            const invoice_file_split = data.invoice_file?.split('/')
+                                            const fileName = invoice_file_split[invoice_file_split.length - 1];
                                             return (
                                                 <>
-                                                    {
-                                                        Object.keys(data).map((key) => {
-                                                            if(key === 'invoice_file') {
-                                                                return(
-                                                                    <Form.Item
-                                                                        name={`invoice_file` + index}
-                                                                        className="select-file-invoice"
-                                                                        valuePropName="fileList"
-                                                                        getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
-                                                                    >
-                                                                        <Upload disabled beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
-                                                                            <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
-                                                                        </Upload>
-                                                                    </Form.Item>
-                                                                )
-                                                            } else if(key === 'comment') {
-                                                                return(
-                                                                    <Form.Item name={"note" + index} className="note-wrap wrap-box">
-                                                                        <TextArea disabled onChange={({ target: { value } }) => onChange('comment', value, index)} rows={8} placeholder={`Please enter a note`} />
-                                                                    </Form.Item>
-                                                                )
-                                                            } else {
-                                                                return(
-                                                                    <Form.Item name={"amount" + index} className="note-wrap wrap-box">
-                                                                        <Input disabled onChange={({ target: { value } }) => onChange('invoice_amount', value, index)} placeholder={`Please enter amount`} />
-                                                                    </Form.Item>
-                                                                )
-                                                            }
-                                                        })
-                                                    }
-                                                    {
-                                                        index > 0 && <MinusOutlined className="minus-wrap" onClick={() => {
-                                                            setRepeator([...repeator.slice(0, index), ...repeator.slice(index + 1)]);
-                                                        }} style={{ marginLeft: '8px' }} />
-                                                    }
+                                                    <Upload disabled accept=".pdf" maxCount={1}>
+                                                        <div>{fileName}</div>
+                                                    </Upload>
                                                 </>
                                             )
                                         })
                                     }
-                                    {/* <Form.Item>
-                                        <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
-                                            setRepeator([...repeator, {...repeatorData}]);
-                                        }} icon={<PlusOutlined />}>
-                                            Add Invoice
-                                        </Button>
-                                    </Form.Item> */}
-                                    <Form.Item>
-                                        <Button type="primary" htmlType="submit" id="btn-submit">
-                                            Submit
-                                        </Button>
+                                    <Form.Item name={"note"} className="note-wrap wrap-box">
+                                        <TextArea disabled />
+                                    </Form.Item>
+                                    <Form.Item name={"amount"} className="note-wrap wrap-box">
+                                        <Input disabled  />
                                     </Form.Item>
                                 </Form>
                             </div>

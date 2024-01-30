@@ -71,7 +71,7 @@ const EditMaterialPo = () => {
                         phone: data.vendor_contact?.phone_number,
                         email: data.vendor_contact?.email,
                         shipment_type: data.shipment_type,
-                        project_id: data.project,
+                        project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         delivery_address: data.delivery_address || '1860 Shawson',
                         material_details: [...data.material_details],
                         status: data.status
@@ -82,7 +82,7 @@ const EditMaterialPo = () => {
                     form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                     form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
                     form.setFieldValue('total_amount', data.total_amount);
-                    form.setFieldValue('project_id', data.project);
+                    form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
                     form.setFieldValue('poDate', moment(data.po_date));
                     form.setFieldValue('country', data.vendor_contact?.company.country);
                     form.setFieldValue('state', data.vendor_contact?.company.state);

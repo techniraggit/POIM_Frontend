@@ -61,7 +61,7 @@ const Edit_Rental_Po = () => {
                         phone: data.vendor_contact?.phone_number,
                         email: data.vendor_contact?.email,
                         shipment_type: data.shipment_type,
-                        project_id: data.project,
+                        project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         material_details: data.material_details.map((details) => {
                             return {...details, project_site_id: details.project_site?.site_id, start_date: details.date}
                         })
@@ -71,7 +71,7 @@ const Edit_Rental_Po = () => {
                     form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
                     form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                     form.setFieldValue('shipment_type', data.shipment_type);
-                    form.setFieldValue('project_id', data.project);
+                    form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
                     form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
                     form.setFieldValue('total_amount', data.total_amount);
                     form.setFieldValue('poDate', moment(data.po_date));
