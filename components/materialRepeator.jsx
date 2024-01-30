@@ -19,7 +19,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
     return (
         <div class="row">
             <div class="col-sm-4">
-                <div class="wrap-box">
+                <div class="wrap-box dollor-inputs">
                     <Form.Item
                         label="Quantity"
                         for="name"

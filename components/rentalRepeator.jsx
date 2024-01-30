@@ -72,7 +72,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                 </div>
             </div>
             <div class="col-sm-4">
-                <div className="wrap-box">
+                <div className="wrap-box dollor-inputs">
                     <Form.Item
                         label="Amount"
                         for="name"
