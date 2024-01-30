@@ -15,8 +15,8 @@ const { TextArea } = Input;
 
 const repeatorData = {
     invoice_file: '',
-    comment: '',
-    invoice_amount: 0
+    // comment: '',
+    // invoice_amount: 0
 }
 
 const CreateInvoice = () => {
@@ -29,14 +29,17 @@ const CreateInvoice = () => {
 
     const onFinish = () => {
         const formData = new FormData();
+        console.log(formData,'formData');
         formData.append('po_id', poId);
         repeator.forEach((invoice, index) => {
-            formData.append(`invoice_data[${index}][comment]`, invoice.comment);
-            formData.append(`invoice_data[${index}][invoice_amount]`, invoice.invoice_amount);
+            // formData.append(`invoice_data[${index}][comment]`, invoice.comment);
+            // formData.append(`invoice_data[${index}][invoice_amount]`, invoice.invoice_amount);
             formData.append(`invoice_data[${index}][invoice_file]`, invoice.invoice_file);
         });
         const response = invoiceSubmit(formData)
+        console.log(response,'response');
         response.then((res) => {
+            console.log(res,'res');
             if (res.data.status_code == 201) {
                 message.success(res.data.message);
                 router.push('/invoice');
@@ -72,6 +75,7 @@ const CreateInvoice = () => {
 
     const onChange = (name, value, index) => {
         repeator[index][name] = value;
+        // repeator[index] = value;
         setRepeator([...repeator]);
     }
 
@@ -141,8 +145,8 @@ const CreateInvoice = () => {
                                                 <>
                                                     {
                                                         Object.keys(data).map((key) => {
-                                                            if(key === 'invoice_file') {
-                                                                return(
+                                                            if (key === 'invoice_file') {
+                                                                return (
                                                                     <Form.Item
                                                                         name={`invoice_file` + index}
                                                                         className="select-file-invoice"
@@ -154,19 +158,8 @@ const CreateInvoice = () => {
                                                                         </Upload>
                                                                     </Form.Item>
                                                                 )
-                                                            } else if(key === 'comment') {
-                                                                return(
-                                                                    <Form.Item name={"note" + index} className="note-wrap wrap-box">
-                                                                        <TextArea onChange={({ target: { value } }) => onChange('comment', value, index)} rows={8} placeholder={`Please enter a note`} />
-                                                                    </Form.Item>
-                                                                )
-                                                            } else {
-                                                                return(
-                                                                    <Form.Item name={"amount" + index} className="note-wrap wrap-box">
-                                                                        <Input onChange={({ target: { value } }) => onChange('invoice_amount', value, index)} placeholder={`Please enter amount`} />
-                                                                    </Form.Item>
-                                                                )
                                                             }
+                                                            
                                                         })
                                                     }
                                                     {
@@ -178,13 +171,26 @@ const CreateInvoice = () => {
                                             )
                                         })
                                     }
-                                    <Form.Item>
+                                     <Form.Item>
                                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
-                                            setRepeator([...repeator, {...repeatorData}]);
+                                            setRepeator([...repeator, { ...repeatorData }]);
                                         }} icon={<PlusOutlined />}>
-                                            Add Invoice
+                                            Add File
                                         </Button>
                                     </Form.Item>
+                                    <Form.Item name="note" className="note-wrap wrap-box">
+                                        <TextArea 
+                                        // onChange={({ target: { value } }) => onChange('comment', value)} 
+                                        rows={8} 
+                                        placeholder={`Please enter a note`} />
+                                    </Form.Item>
+                                    <Form.Item name={"amount"} className="note-wrap wrap-box">
+                                        <Input 
+                                        // onChange={({ target: { value } }) => onChange('invoice_amount', value)} 
+                                        placeholder={`Please enter amount`} />
+                                    </Form.Item>
+                                    
+                                   
                                     <Form.Item>
                                         <Button type="primary" htmlType="submit" id="btn-submit">
                                             Submit
