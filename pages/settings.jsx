@@ -57,7 +57,7 @@ const Settings = () => {
                     <div className="outer-div">
                         <div className="listclips row">
                             {Array.isArray(thresholdData) && thresholdData.map((item, index) => (
-                                <div className="col-lg-4 col-md-6">
+                                <div className="col-lg-4 col-md-6 mb-md-3">
                                     <div className="wrapp-box">
                                         <div className="lists-items me-2 d-flex align-items-center">
                                             <span className="img-clr me-3">
