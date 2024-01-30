@@ -101,7 +101,7 @@ const EditInvoice = () => {
                                     <span>Edit Invoice</span>
                                 </li>
                                 {
-                                invoice.status === 'pending' && <Roles action="approve_invoice">
+                                (!invoice.dm_approved && !invoice.pm_approved && !invoice.site_superintendent_approved) && <Roles action="approve_invoice">
                                 <li>
                                     <Button type="primary" onClick={(event) => {
                                         handleStatusChange(event, 'approve')

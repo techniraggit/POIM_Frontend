@@ -50,7 +50,6 @@ const EditSubContractorPo = () => {
             fetchPo(id).then((res) => {
                 if(res?.data?.status) {
                     const data = res.data.data;
-                    console.log(data.hst_amount,'sub');
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
@@ -75,7 +74,7 @@ const EditSubContractorPo = () => {
                     form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
                     form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
                     form.setFieldValue('total_amount', data.total_amount);
-                    form.setFieldValue('project_id', data.project);
+                    form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
                     form.setFieldValue('poDate', moment(data.po_date));
                     form.setFieldValue('country', data.vendor_contact.company.country);
                     form.setFieldValue('state', data.vendor_contact.company.state);
@@ -135,7 +134,7 @@ const EditSubContractorPo = () => {
                 ...materalDetails
             };
             formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : totalAmount.hst_amount;
+            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
             if(totalAmount > 0) {
                 form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
                 form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });

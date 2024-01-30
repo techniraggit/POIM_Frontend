@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 
 const { Option } = Select;
 
-function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateAmount }) {
+function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateAmount, view }) {
     const [contactId, setContactId] = useState('');
     const [projects, setProjects] = useState([]);
     const [siteOptions, setSiteOptions] = useState([]);
@@ -147,7 +147,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             },
                         ]}
                     >
-                        <Input placeholder="Enter Po Number" onChange={({ target: { value } }) => onChange('po_number', value)} readOnly={isNew} />
+                        <Input placeholder="Enter Po Number" onChange={({ target: { value } }) => onChange('po_number', value)} readOnly={isNew || view} />
                     </Form.Item>
                 </div>
 
@@ -167,7 +167,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                     >
                         <DatePicker
                             style={{ width: "100%" }}
-                            disabled={isNew}
+                            disabled={isNew || view}
                             defaultValue={dayjs()}
                             onChange={(date) => onChange('po_date', date)}
                             placeholder="Select Date"
@@ -199,6 +199,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             >
                                 <Select
                                     id="single2"
+                                    disabled={view}
                                     placeholder="Select"
                                     className="js-states form-control file-wrap-select"
                                     onChange={(value) => {
@@ -236,6 +237,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 <Select
                                     id="singlesa"
                                     placeholder="Select"
+                                    disabled={view}
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => {
                                         vendorContactDetails(value);
@@ -270,7 +272,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input onChange={({ target: { value } }) => onChange('company_name', value)} />
+                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('company_name', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -288,7 +290,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input onChange={({ target: { value } }) => onChange('email', value)} />
+                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('email', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -305,7 +307,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input onChange={({ target: { value } }) => onChange('phone', value)} />
+                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('phone', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -322,7 +324,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input onChange={({ target: { value } }) => onChange('address', value)} />
+                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('address', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -340,7 +342,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input onChange={({ target: { value } }) => onChange('state', value)} />
+                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('state', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -357,7 +359,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input onChange={({ target: { value } }) => onChange('country', value)} />
+                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('country', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -381,7 +383,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Select id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
+                            <Select disabled={view} id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
                                 onChange={(value) => { 
                                     onChange('shipment_type', value);
                                     if(value === 'combined' || value === 'non project related') {
@@ -411,7 +413,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     },
                                 ]}
                             >
-                                <Select id="single456"
+                                <Select disabled={view} id="single456"
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => {
                                         list(value, 0)
@@ -459,10 +461,10 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                 <hr />
             </div>
             {
-                formData.po_type === 'subcontractor' ? <SubcontractorRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
+                formData.po_type === 'subcontractor' ? <SubcontractorRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} view={view} /> : <></>
             }
             {
-                formData.po_type === 'rental' ? <RentalRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
+                formData.po_type === 'rental' ? <RentalRepeator view={view} formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
             }
             {
                 formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} list={list} projects={projects} setFormData={setFormData} form={form} onChange={onChange} calculateAmount={calculateAmount} /> : <></>

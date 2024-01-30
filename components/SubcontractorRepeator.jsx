@@ -10,7 +10,7 @@ const repeatorData = {
     project_site_id: ''
 }
 
-function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, form, edit }) {
+function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, form, edit, view }) {
     useEffect(() => {
         if (edit) {
             form.setFieldValue('date', formData.material_details[0]?.date);
@@ -32,7 +32,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                             },
                         ]}
                     >
-                        <Input.TextArea rows={4} cols={50} placeholder="Scope Of Work" onChange={(e) => onChange('material_details', { description: e.target.value }, 0)} />
+                        <Input.TextArea disabled={view} rows={4} cols={50} placeholder="Scope Of Work" onChange={(e) => onChange('material_details', { description: e.target.value }, 0)} />
                     </Form.Item>
                 </div>
             </div>
@@ -49,7 +49,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 },
                             ]}
                         >
-                            <Input onChange={({ target: { value } }) => onChange('material_details', { date: value }, 0)} type="date"></Input>
+                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { date: value }, 0)} type="date"></Input>
                         </Form.Item>
                     </div>
                 </div>
@@ -66,9 +66,9 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 },
                             ]}
                         >
-                            <Input placeholder="Amount" 
-                            addonBefore="$"
-                            onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
+                            <Input placeholder="Amount" readOnly={view}
+                                addonBefore="$"
+                                onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -87,7 +87,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                     },
                                 ]}
                             >
-                                <Select id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
+                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
                                     {Array.isArray(siteOptions[0]) &&
                                         siteOptions[0].map((site) => (
                                             <Select.Option key={site.site_id} value={site.site_id}>
@@ -122,7 +122,8 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                         >
                                                             <Input
-                                                            addonBefore="$"
+                                                                readOnly={view}
+                                                                addonBefore="$"
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 name={key + index}
@@ -141,6 +142,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                     >
                                                         <Input.TextArea
                                                             rows={4}
+                                                            readOnly={view}
                                                             cols={50}
                                                             placeholder={"Enter Scope Of Work"}
                                                             value={data[key]}
@@ -165,6 +167,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                             ]}
                                                         >
                                                             <Input type="date"
+                                                                readOnly={view}
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
@@ -184,7 +187,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                             htmlFor="file"
                                                             class="same-clr"
                                                         >
-                                                            <Select id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
+                                                            <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions[0]) &&
                                                                     siteOptions[0].map((site) => (
                                                                         <Select.Option key={site.site_id} value={site.site_id}>
@@ -201,28 +204,32 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                         return <></>
                                     })
                                 }
-                                <MinusOutlined className="minus-wrap" onClick={() => {
-                                    setFormData({
-                                        ...formData,
-                                        material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                    });
-                                }} style={{ marginLeft: '8px' }} />
+                                {
+                                    !view && <MinusOutlined className="minus-wrap" onClick={() => {
+                                        setFormData({
+                                            ...formData,
+                                            material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                        });
+                                    }} style={{ marginLeft: '8px' }} />
+                                }
                             </div>
                         })
                     }
-                    <Form.Item>
-                        <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
-                            setFormData({
-                                ...formData,
-                                material_details: [...formData.material_details, {
-                                    ...repeatorData,
-                                    project_site_id: formData.material_details[0].project_site_id
-                                }]
-                            });
-                        }} icon={<PlusOutlined />}>
-                            Add More Material
-                        </Button>
-                    </Form.Item>
+                    {
+                        !view && <Form.Item>
+                            <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
+                                setFormData({
+                                    ...formData,
+                                    material_details: [...formData.material_details, {
+                                        ...repeatorData,
+                                        project_site_id: formData.material_details[0].project_site_id
+                                    }]
+                                });
+                            }} icon={<PlusOutlined />}>
+                                Add More Material
+                            </Button>
+                        </Form.Item>
+                    }
                 </Space>
             </div>
         </div>

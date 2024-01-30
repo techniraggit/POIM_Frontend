@@ -185,6 +185,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                         <Form.Item
                                             label="Project"
                                             htmlFor="file"
+                                            name="project_id0"
                                             class="same-clr"
                                             rules={[
                                                 {

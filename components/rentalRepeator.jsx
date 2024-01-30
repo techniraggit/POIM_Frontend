@@ -11,7 +11,7 @@ const repeatorData = {
     project_site_id: ''
 }
 
-function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, edit }) {
+function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, edit, view }) {
   useEffect(() => {
     if(edit) {
         form.setFieldValue('start_date', formData.material_details[0]?.start_date);
@@ -34,7 +34,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                         },
                     ]}
                 >
-                    <Input.TextArea rows={4} cols={50} placeholder="Scope Of Work" onChange={(e) => onChange('material_details', { description: e.target.value }, 0)} />
+                    <Input.TextArea readOnly={view} rows={4} cols={50} placeholder="Scope Of Work" onChange={(e) => onChange('material_details', { description: e.target.value }, 0)} />
                 </Form.Item>
             </div>
         </div>
@@ -51,7 +51,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             },
                         ]}
                     >
-                        <Input onChange={({ target: { value } }) => onChange('material_details', { start_date: value }, 0)} type="date"></Input>
+                        <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { start_date: value }, 0)} type="date"></Input>
                     </Form.Item>
                 </div>
             </div>
@@ -67,7 +67,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             },
                         ]}
                     >
-                        <Input onChange={({ target: { value } }) => onChange('material_details', { end_date: value }, 0)} type="date"></Input>
+                        <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { end_date: value }, 0)} type="date"></Input>
                     </Form.Item>
                 </div>
             </div>
@@ -85,6 +85,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                         ]}
                     >
                         <Input 
+                        readOnly={view}
                         addonBefore="$"
                         placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
                     </Form.Item>
@@ -105,7 +106,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 },
                             ]}
                         >
-                            <Select id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
+                            <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
                                 {Array.isArray(siteOptions[0]) &&
                                     siteOptions[0].map((site) => (
                                         <Select.Option key={site.site_id} value={site.site_id}>
@@ -140,6 +141,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                     rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                 >
                                                     <Input
+                                                    readOnly={view}
                                                     addonBefore="$"
                                                         placeholder={upperKey}
                                                         value={data[key]}
@@ -159,6 +161,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                     rules={[{ required: true, message: `Please enter Scope Of Work` }]}
                                                 >
                                                     <Input.TextArea
+                                                        readOnly={view}
                                                         rows={4}
                                                         cols={50}
                                                         placeholder={"Enter Scope Of Work"}
@@ -185,7 +188,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                             },
                                                         ]}
                                                     >
-                                                        <Input type="date"
+                                                        <Input type="date" readOnly={view}
                                                             placeholder={upperKey}
                                                             value={data[key]}
                                                             onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
@@ -209,7 +212,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                             },
                                                         ]}
                                                     >
-                                                        <Input type="date"
+                                                        <Input type="date" readOnly={view}
                                                             placeholder={upperKey}
                                                             value={data[key]}
                                                             onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
@@ -229,7 +232,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                         htmlFor="file"
                                                         class="same-clr"
                                                     >
-                                                        <Select id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
+                                                        <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
                                                             {Array.isArray(siteOptions[0]) &&
                                                                 siteOptions[0].map((site) => (
                                                                     <Select.Option key={site.site_id} value={site.site_id}>

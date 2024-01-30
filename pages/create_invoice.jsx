@@ -14,32 +14,32 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 
 const repeatorData = {
-    invoice_file: '',
-    // comment: '',
-    // invoice_amount: 0
+    invoice_file: ''
 }
 
 const CreateInvoice = () => {
     const [poNumber, setPoNumber] = useState([]);
     const [responseData, setResponseData] = useState([]);
-    const [poId, setPoId] = useState('');
-    const [repeator, setRepeator] = useState([repeatorData]);
+    const [form, setForm] = useState({
+        comment: '',
+        po_id: '',
+        invoice_amount: '',
+        invoice_files: [repeatorData]
+    });
 
     const router = useRouter();
 
     const onFinish = () => {
         const formData = new FormData();
-        console.log(formData,'formData');
-        formData.append('po_id', poId);
-        repeator.forEach((invoice, index) => {
-            // formData.append(`invoice_data[${index}][comment]`, invoice.comment);
-            // formData.append(`invoice_data[${index}][invoice_amount]`, invoice.invoice_amount);
-            formData.append(`invoice_data[${index}][invoice_file]`, invoice.invoice_file);
-        });
+        formData.append('comment', form.comment);
+        formData.append('invoice_amount', form.invoice_amount);
+        formData.append('po_id', form.po_id);
+        form.invoice_files?.forEach((file, index) => {
+            formData.append(`invoice_file_${index}`, file.invoice_file);
+        })
+
         const response = invoiceSubmit(formData)
-        console.log(response,'response');
         response.then((res) => {
-            console.log(res,'res');
             if (res.data.status_code == 201) {
                 message.success(res.data.message);
                 router.push('/invoice');
@@ -60,7 +60,10 @@ const CreateInvoice = () => {
         const response = fetchPoNumbers(id)
         response.then((res) => {
             const data = res.data.data;
-            setPoId(data.po_id)
+            setForm({
+                ...form,
+                po_id: data.po_id
+            })
             setResponseData(data)
         })
     }
@@ -74,9 +77,14 @@ const CreateInvoice = () => {
     };
 
     const onChange = (name, value, index) => {
-        repeator[index][name] = value;
-        // repeator[index] = value;
-        setRepeator([...repeator]);
+        if(typeof index !== 'undefined') {
+            form.invoice_files[index][name] = value;
+        } else {
+            form[name] = value;
+        }
+        setForm({
+            ...form
+        });
     }
 
     return (
@@ -140,31 +148,25 @@ const CreateInvoice = () => {
                                     onFinish={onFinish}
                                 >
                                     {
-                                        repeator.map((data, index) => {
+                                        form.invoice_files?.map((data, index) => {
                                             return (
                                                 <>
-                                                    {
-                                                        Object.keys(data).map((key) => {
-                                                            if (key === 'invoice_file') {
-                                                                return (
-                                                                    <Form.Item
-                                                                        name={`invoice_file` + index}
-                                                                        className="select-file-invoice"
-                                                                        valuePropName="fileList"
-                                                                        getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
-                                                                    >
-                                                                        <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
-                                                                            <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
-                                                                        </Upload>
-                                                                    </Form.Item>
-                                                                )
-                                                            }
-                                                            
-                                                        })
-                                                    }
+                                                    <Form.Item
+                                                        name={`invoice_file` + index}
+                                                        className="select-file-invoice"
+                                                        valuePropName="fileList"
+                                                        getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
+                                                    >
+                                                        <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
+                                                            <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
+                                                        </Upload>
+                                                    </Form.Item>
                                                     {
                                                         index > 0 && <MinusOutlined className="minus-wrap" onClick={() => {
-                                                            setRepeator([...repeator.slice(0, index), ...repeator.slice(index + 1)]);
+                                                            setForm({
+                                                                ...form,
+                                                                invoice_files: [...form.invoice_files.slice(0, index), ...form.invoice_files.slice(index + 1)]
+                                                            });
                                                         }} style={{ marginLeft: '8px' }} />
                                                     }
                                                 </>
@@ -173,20 +175,23 @@ const CreateInvoice = () => {
                                     }
                                      <Form.Item>
                                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
-                                            setRepeator([...repeator, { ...repeatorData }]);
+                                            setForm({
+                                                ...form,
+                                                invoice_files: [...form.invoice_files, { ...repeatorData }]
+                                            });
                                         }} icon={<PlusOutlined />}>
                                             Add File
                                         </Button>
                                     </Form.Item>
                                     <Form.Item name="note" className="note-wrap wrap-box">
                                         <TextArea 
-                                        // onChange={({ target: { value } }) => onChange('comment', value)} 
+                                        onChange={({ target: { value } }) => onChange('comment', value)} 
                                         rows={8} 
                                         placeholder={`Please enter a note`} />
                                     </Form.Item>
                                     <Form.Item name={"amount"} className="note-wrap wrap-box">
                                         <Input 
-                                        // onChange={({ target: { value } }) => onChange('invoice_amount', value)} 
+                                        onChange={({ target: { value } }) => onChange('invoice_amount', value)} 
                                         placeholder={`Please enter amount`} />
                                     </Form.Item>
                                     
