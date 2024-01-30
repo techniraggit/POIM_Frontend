@@ -63,7 +63,7 @@ const Edit_Rental_Po = () => {
                         shipment_type: data.shipment_type,
                         project_id: data.project,
                         material_details: data.material_details.map((details) => {
-                            return {...details, project_site: details.project_site?.site_id}
+                            return {...details, project_site_id: details.project_site?.site_id}
                         })
                     });
                     form.setFieldValue('po_type', data.po_type);
@@ -90,7 +90,10 @@ const Edit_Rental_Po = () => {
                     form.setFieldValue('first_name', data.created_by.first_name)
                     form.setFieldValue('last_name', data.created_by.last_name)
                     data?.material_details.forEach((material, index) => {
-                        form.setFieldValue('project_site_id' + index, material.project_site?.site_id)
+                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                        form.setFieldValue('material_for' + (index), material.material_for)
+                        form.setFieldValue('project_id' + (index), material.project?.project_id)
+                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                     })
                 }
             });

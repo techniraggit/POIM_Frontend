@@ -5,7 +5,7 @@ import Header from "@/components/header";
 import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
-import { changeStatus, createPO, fetchPo } from "@/apis/apis/adminApis";
+import { changeStatus, updatePO, fetchPo } from "@/apis/apis/adminApis";
 import { Form, Select, Button } from "antd";
 import PoForm from '../../components/Form';
 import moment from "moment";
@@ -15,13 +15,13 @@ import ChangeStatus from "@/components/PoChangeStatus";
 const { Option } = Select;
 
 const repeatorData = {
-    quantity:'',
-    unit_price:'',
+    quantity: '',
+    unit_price: '',
     description: '',
-    code:'',
+    code: '',
     amount: 0,
     project_site_id: '',
-    material_for:''
+    material_for: ''
 }
 
 const EditMaterialPo = () => {
@@ -51,7 +51,7 @@ const EditMaterialPo = () => {
     const [refetch, setRefetch] = useState(true);
 
     useEffect(() => {
-        if(refetch) {
+        if (true) {
             fetchPo(id).then((res) => {
                 if (res?.data?.status) {
                     const data = res.data.data;
@@ -94,7 +94,7 @@ const EditMaterialPo = () => {
                     form.setFieldValue('delivery_address', data.delivery_address || '1860 Shawson')
                     form.setFieldValue('quantity', data.material_details[0]?.quantity)
                     form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
-                    form.setFieldValue('amount', data.material_details[0]?.amount)
+                    form.setFieldValue('amount0', data.material_details[0]?.amount)
                     form.setFieldValue('description', data.material_details[0]?.description)
                     form.setFieldValue('material_for', data.material_details[0]?.material_for)
                     form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
@@ -104,13 +104,17 @@ const EditMaterialPo = () => {
                     form.setFieldValue('last_name', data.created_by.last_name)
                     data?.material_details.forEach((material, index) => {
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                        form.setFieldValue('material_for' + (index), material.material_for)
+                        form.setFieldValue('project_id' + (index), material.project?.project_id)
+                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                     })
                 }
+                setRefetch(false);
             });
-            setRefetch(false);
+
         }
     }, [refetch]);
-    
+
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
             return total + parseFloat(item.amount);
@@ -132,13 +136,14 @@ const EditMaterialPo = () => {
         formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
         if (totalAmount > 0) {
             form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0});
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
         }
     }
 
     const onFinish = () => {
-        createPO({
+        updatePO({
             ...formData,
+            po_id:id,
         }).then((res) => {
             if (res?.data?.status) {
                 router.push('/po_list');
@@ -156,7 +161,7 @@ const EditMaterialPo = () => {
             if (value.unit_price) {
                 calculateAmount(formData.material_details[index].quantity, value.unit_price, index);
             }
-            if(value.quantity) {
+            if (value.quantity) {
                 calculateAmount(value.quantity, formData.material_details[index].unit_price, index);
             }
             formData.material_details[index] = {
@@ -179,11 +184,12 @@ const EditMaterialPo = () => {
             approve_amount: data?.approve_amount
         });
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 setRefetch(true);
             }
         })
     }
+    console.log(formData, 'formData');
 
     return (
         <>
@@ -199,15 +205,15 @@ const EditMaterialPo = () => {
                             </li>
                             {
                                 formData.status === 'pending' && <Roles action="approve_purchase_order">
-                                <li>
-                                    <Button type="primary" onClick={() => {
-                                        setIsModalOpen(true);
-                                    }}>Approve</Button>
-                                    <Button type="primary" danger onClick={(event) => {
-                                        handleStatusChange(event, 'reject')
-                                    }}>Reject</Button>
-                                </li>
-                            </Roles>
+                                    <li>
+                                        <Button type="primary" onClick={() => {
+                                            setIsModalOpen(true);
+                                        }}>Approve</Button>
+                                        <Button type="primary" danger onClick={(event) => {
+                                            handleStatusChange(event, 'reject')
+                                        }}>Reject</Button>
+                                    </li>
+                                </Roles>
                             }
                         </ul>
                         <div className="choose-potype round-wrap">
@@ -239,11 +245,11 @@ const EditMaterialPo = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
 
                                     <PoForm formData={formData} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />
-                                    
+
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
                                             <Button type="primary" htmlType="submit" className="create-ven-butt">

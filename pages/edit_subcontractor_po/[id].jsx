@@ -50,6 +50,7 @@ const EditSubContractorPo = () => {
             fetchPo(id).then((res) => {
                 if(res?.data?.status) {
                     const data = res.data.data;
+                    console.log(data.hst_amount,'sub');
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
@@ -89,7 +90,10 @@ const EditSubContractorPo = () => {
                     form.setFieldValue('first_name', data.created_by.first_name)
                     form.setFieldValue('last_name', data.created_by.last_name)
                     data?.material_details.forEach((material, index) => {
-                        form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
+                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                        form.setFieldValue('material_for' + (index), material.material_for)
+                        form.setFieldValue('project_id' + (index), material.project?.project_id)
+                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                     })
                 }
             });
