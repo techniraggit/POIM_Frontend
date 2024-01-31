@@ -106,12 +106,13 @@ const AddUser = ({ base_url }) => {
                     <div className="col-lg-4 col-md-6">
                       <div className="selectwrap react-select">
 
-                        <Form.Item label="Select Role" name="role_id" initialValue="select role" 
+                        <Form.Item label="Select Role" name="role_id" 
+                        // initialValue="select role" 
                         className='dropdown vender-input'
                         rules={[
                           {
                               required: true,
-                              message: "Please choose role",
+                              message: "Please Choose Role",
                           },
                       ]}
                         >

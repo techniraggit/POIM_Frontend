@@ -11,7 +11,7 @@ import ProjectForm from "@/components/ProjectForm";
 const repeatorData = {
     // name: '',
     address: '',
-    state: ''
+    state: 'ON',
 }
 
 const CreateProject = () => {
@@ -21,7 +21,7 @@ const CreateProject = () => {
         customer_name: '',
         project_manager_id: '',
         project_sites: [repeatorData],
-        project_number: ''
+        project_number: '',
     })
 
     const [form] = Form.useForm();
@@ -63,6 +63,7 @@ const CreateProject = () => {
             ...formData
         });
     }
+    console.log(formData,'aaaaaaaaa');
 
     return (
         <>
