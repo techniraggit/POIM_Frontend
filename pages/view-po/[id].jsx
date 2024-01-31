@@ -111,8 +111,14 @@ const ViewPO = () => {
                 form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
                 form.setFieldValue('first_name', data.created_by.first_name)
                 form.setFieldValue('last_name', data.created_by.last_name)
+                // data?.material_details.forEach((material, index) => {
+                //     form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
+                // })
                 data?.material_details.forEach((material, index) => {
-                    form.setFieldValue(('project_site_id' + (index)), material.project_site?.site_id)
+                    form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                    form.setFieldValue('material_for' + (index), material.material_for)
+                    form.setFieldValue('project_id' + (index), material.project?.project_id)
+                    form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                 })
             }
         });
