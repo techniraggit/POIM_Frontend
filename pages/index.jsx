@@ -153,7 +153,7 @@ const Login = ({ base_url }) => {
                                     <div ><a href="javascript:void(0)"><span onClick={handleForgotPassword}>Forgot Password?</span></a></div>
 
                                     {showForgotPasswordPopup && (
-                                        <div className="forgot-password-popup">
+                                        <div className="forgot-password-popup forgot-popup-custom">
                                             <div className="popup-content">
                                                 <span className="close-popup" onClick={handlePopupClose}>
                                                     &times;
