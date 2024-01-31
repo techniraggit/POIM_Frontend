@@ -3,7 +3,7 @@ import Sidebar from "@/components/sidebar";
 import { Form, Input, Button, Select, Upload, message } from 'antd';
 import '../../styles/style.css'
 import React, { useEffect, useState } from "react";
-import { fetchPoNumbers, fetchPoNumbr, getInvoiceData, removeInvoiceFile, updateInvoice } from "@/apis/apis/adminApis";
+import { changeInvoiceStatus, downloadInvoice, fetchPoNumbers, fetchPoNumbr, getInvoiceData, removeInvoiceFile, updateInvoice } from "@/apis/apis/adminApis";
 import Material_invoice from "@/components/material_invoice";
 import Rental_invoice from "@/components/rental_invoice";
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 import Subcontractor_invoice from "@/components/subcontractor_invoice";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import Roles from "@/components/Roles";
+import { saveAs } from "file-saver";
+import useInvoice from "@/hooks/useInvoice";
 
 const { TextArea } = Input;
 
@@ -23,6 +25,7 @@ const EditInvoice = () => {
     const [invoice, setInvoice] = useState({});
     const [responseData, setResponseData] = useState([]);
     const [refetch, setRefetch] = useState(true);
+    const { approval_enabled } = useInvoice(invoice);
     const router = useRouter();
     const { id } = router.query;
     const [form] = Form.useForm();
@@ -33,7 +36,8 @@ const EditInvoice = () => {
         formData.append('po_id', invoice.purchase_order?.po_id);
         formData.append('comment', invoice.comment);
         formData.append('invoice_amount', invoice.invoice_amount);
-        form.invoice_files?.forEach((file, index) => {
+        formData.append('invoice_id', invoice.invoice_id);
+        invoice.invoice_files?.forEach((file, index) => {
             if(typeof file.invoice_file === 'string') return;
             formData.append(`invoice_file_${index}`, file.invoice_file);
         });
@@ -98,13 +102,22 @@ const EditInvoice = () => {
 
     const handleStatusChange = (event, action) => {
         event.preventDefault()
-        const response = updateInvoice({
+        const response = changeInvoiceStatus({
             invoice_id: id,
             status: action
         });
         response.then((res) => {
             if(res?.data?.status) {
                 setRefetch(true);
+            }
+        })
+    }
+
+    const handleDownload = (id) => {
+        downloadInvoice(id).then((res) => {
+            if(res?.data) {
+                const fileName = `invoice_${id}.pdf`;
+                saveAs(res.data, fileName);
             }
         })
     }
@@ -124,7 +137,7 @@ const EditInvoice = () => {
                                     <span>Edit Invoice</span>
                                 </li>
                                 {
-                                invoice.status === 'pending' && invoice.status && <Roles action="approve_invoice">
+                                approval_enabled && <Roles action="approve_invoice">
                                 <li>
                                     <Button type="primary" onClick={(event) => {
                                         handleStatusChange(event, 'approve')
@@ -194,7 +207,7 @@ const EditInvoice = () => {
                                                     {
                                                         fileName ? <>
                                                             <div>
-                                                                {fileName} <DownloadOutlined onClick={() => handleDownload(index)} />
+                                                                {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
                                                             </div>
                                                         </> : 
                                                         <Form.Item
@@ -210,12 +223,14 @@ const EditInvoice = () => {
                                                     }
                                                     {
                                                         <MinusOutlined className="minus-wrap" onClick={() => {
-                                                            removeInvoiceFile(index).then((res) => {
+                                                            removeInvoiceFile({ file_id: data.file_id }).then((res) => {
                                                                 if(res?.data?.status) {
                                                                     setInvoice({
                                                                         ...invoice,
                                                                         invoice_files: [...invoice.invoice_files.slice(0, index), ...invoice.invoice_files.slice(index + 1)]
                                                                     });
+                                                                    message.success('File removed successfully');
+                                                                    setRefetch(true);
                                                                 }
                                                             })
                                                         }} style={{ marginLeft: '8px' }} />

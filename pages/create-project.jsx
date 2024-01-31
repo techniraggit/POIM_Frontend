@@ -63,7 +63,6 @@ const CreateProject = () => {
             ...formData
         });
     }
-    console.log(formData,'aaaaaaaaa');
 
     return (
         <>

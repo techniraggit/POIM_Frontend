@@ -17,7 +17,6 @@ const Invoice = () => {
     useEffect(() => {
         const response = invoiceList();
         response.then((res) => {
-            console.log(res.data,'response');
             if(res?.data?.status) {
                 setInvoiceTable(res.data.data)
                 setInvoice(res.data.total_invoice)

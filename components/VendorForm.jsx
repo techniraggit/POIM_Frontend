@@ -144,7 +144,6 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                             <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                 {
                                     Object.keys(contact).map((key) => {
-                                        console.log(key,'ggggggggg');
                                         let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
                                         if (key.includes('_')) {
                                             upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');

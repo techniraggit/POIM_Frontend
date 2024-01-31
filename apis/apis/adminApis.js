@@ -139,8 +139,12 @@ export const changeStatus = (data) => {
     return Axios.put('/api/admin/purchase-order', data);
 }
 
-export const updateInvoice = (data) => {
+export const changeInvoiceStatus = (data) => {
     return Axios.put('/api/admin/invoice', data);
+}
+
+export const updateInvoice = (data) => {
+    return Axios.patch('/api/admin/invoice', data);
 }
 
 export const getInvoiceData = (id) => {
@@ -148,9 +152,9 @@ export const getInvoiceData = (id) => {
 }
 
 export const downloadInvoice = (id) => {
-    return Axios.get('/api/admin/invoice');
+    return Axios.get(`/api/admin/invoice-download?file_id=${id}`, {responseType: 'blob'});
 }
 
-export const removeInvoiceFile = (id) => {
-    return Axios.put('/api/admin', id);
+export const removeInvoiceFile = (data) => {
+    return Axios.put('/api/admin/invoice-remove', data);
 }
