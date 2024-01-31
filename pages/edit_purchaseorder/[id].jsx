@@ -74,7 +74,9 @@ const EditMaterialPo = () => {
                         shipment_type: data.shipment_type,
                         project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         delivery_address: data.delivery_address || '1860 Shawson',
-                        material_details: [...data.material_details],
+                        material_details: data.material_details.map((detail) => {
+                            return { ...detail, project_site_id: detail.project_site.site_id }
+                        }),
                         status: data.status
                     });
                     form.setFieldValue('po_type', data.po_type);
@@ -95,9 +97,7 @@ const EditMaterialPo = () => {
                     form.setFieldValue('delivery_address', data.delivery_address || '1860 Shawson')
                     form.setFieldValue('quantity', data.material_details[0]?.quantity)
                     form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
-                    form.setFieldValue('amount0', data.material_details[0]?.amount)
                     form.setFieldValue('description', data.material_details[0]?.description)
-                    form.setFieldValue('material_for', data.material_details[0]?.material_for)
                     // form.setFieldValue('project_site_id', data.material_details[0]?.project_site)
                     form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                     form.setFieldValue('code', data.material_details[0]?.code)
@@ -108,6 +108,7 @@ const EditMaterialPo = () => {
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                         form.setFieldValue('material_for' + (index), material.material_for)
                         form.setFieldValue('project_id' + (index), material.project?.project_id)
+                        form.setFieldValue('amount' + (index), material.amount)
                     })
                 }
                 setRefetch(false);
