@@ -22,10 +22,10 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
         form.setFieldValue('poDate', moment());
-        if(formData.shipment_type) {
+        if (formData.shipment_type) {
             form.setFieldValue('shipment_type', formData.shipment_type)
         }
-        if(edit && formData.shipment_type === 'project related' && formData.po_type === 'material') {
+        if (edit && formData.shipment_type === 'project related' && formData.po_type === 'material') {
             formData.material_details.forEach((data, index) => {
                 fetchSitesProject(form.getFieldValue('project_id'), index);
             })
@@ -80,7 +80,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const fetchSitesProject = (project_id, index) => {
         const response = fetchSiteProject(project_id);
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 siteOptions[index] = [...res.data.sites];
                 setSiteOptions([...siteOptions]);
             }
@@ -384,12 +384,12 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             ]}
                         >
                             <Select disabled={view} id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
-                                onChange={(value) => { 
+                                onChange={(value) => {
                                     onChange('shipment_type', value);
-                                    if(value === 'combined' || value === 'non project related') {
+                                    if (value === 'combined' || value === 'non project related') {
                                         setSiteOptions([])
                                     }
-                                 }}
+                                }}
                             >
                                 <Option value="project related">Project Related</Option>
                                 {formData.po_type !== 'rental' && formData.po_type !== 'subcontractor' && <Option value="non project related">Non Project Related</Option>}
@@ -413,7 +413,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     },
                                 ]}
                             >
-                                <Select disabled={view} id="single456"
+                                <Select
+                                    disabled={view}
+                                    id="single456"
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => {
                                         list(value, 0)
@@ -476,9 +478,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             name='hst_amount'
                             label="HST Amount"
                         >
-                            <Input 
-                            addonBefore="$"
-                            readOnly placeholder="HST Amount" />
+                            <Input
+                                addonBefore="$"
+                                readOnly placeholder="HST Amount" />
                         </Form.Item>
                     </div>
                 </div>
@@ -489,8 +491,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             label="Total Amount"
                         >
                             <Input
-                            addonBefore="$"
-                             readOnly placeholder="Total Amount" />
+                                addonBefore="$"
+                                readOnly placeholder="Total Amount" />
                         </Form.Item>
                     </div>
                 </div>
