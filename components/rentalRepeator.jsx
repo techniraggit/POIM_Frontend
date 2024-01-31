@@ -30,11 +30,14 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     rules={[
                         {
                             required: true,
-                            message: "Please enter Scope Of Work",
+                            message: "Please enter description",
                         },
                     ]}
                 >
-                    <Input.TextArea readOnly={view} rows={4} cols={50} placeholder="Scope Of Work" onChange={(e) => onChange('material_details', { description: e.target.value }, 0)} />
+                    <Input.TextArea 
+                    readOnly={view} rows={4} cols={50} 
+                    placeholder="description" 
+                    onChange={(e) => onChange('material_details', { description: e.target.value }, 0)} />
                 </Form.Item>
             </div>
         </div>
@@ -157,14 +160,14 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                             <div clclassName="col-sm-12">
                                             <div key={key} className="wrap-box">
                                                 <Form.Item
-                                                    label={"Scope Of Work"}
-                                                    rules={[{ required: true, message: `Please enter Scope Of Work` }]}
+                                                    label={"Description"}
+                                                    rules={[{ required: true, message: `Please enter description` }]}
                                                 >
                                                     <Input.TextArea
                                                         readOnly={view}
                                                         rows={4}
                                                         cols={50}
-                                                        placeholder={"Enter Scope Of Work"}
+                                                        placeholder={"description"}
                                                         value={data[key]}
                                                         name={key + index}
                                                         onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}

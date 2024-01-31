@@ -44,7 +44,8 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         className="vender-input"
                         rules={[{ required: true, message: 'Please enter your contact person name!' }]}
                     >
-                        <Input value={formData.contact_info[0]?.name} onChange={({ target: { value } }) => onChange('contact_info', {name: value}, 0)} />
+                        <Input 
+                        value={formData.contact_info[0]?.name} onChange={({ target: { value } }) => onChange('contact_info', {name: value}, 0)} />
                     </Form.Item>
                 </div>
             </div>
@@ -54,8 +55,12 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         label="Contact No"
                         name="phone_number"
                         className="vender-input"
-                        rules={[{ required: true, message: 'Please enter phone number!' }]}
-
+                        rules={[{ required: true, message: 'Please enter phone number!' },
+                        {
+                            pattern: /^(\+91|\+1)\d{10}$/,
+                            message: 'Please enter a valid phone number starting with +1, followed by 10 digits!',
+                        },
+                    ]}
                     >
                         <Input value={formData.contact_info[0]?.phone_number} 
                         onChange={({ target: { value } }) => onChange('contact_info', {phone_number: value}, 0)}

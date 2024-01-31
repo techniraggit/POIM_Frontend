@@ -35,7 +35,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                             },
                         ]}
                     >
-                        <Input placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { quantity: value }, 0)} />
+                        <Input placeholder="Quantity" onChange={({ target: { value } }) => onChange('material_details', { quantity: value }, 0)} />
                     </Form.Item>
 
                 </div>
@@ -57,7 +57,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                             },
                         ]}
                     >
-                        <Input placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { unit_price: value }, 0)} />
+                        <Input placeholder="Unit Price" onChange={({ target: { value } }) => onChange('material_details', { unit_price: value }, 0)} />
                     </Form.Item>
 
                 </div>
@@ -97,7 +97,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                 },
                             ]}
                         >
-                            <Input placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { description: value }, 0)} />
+                            <Input placeholder="description" onChange={({ target: { value } }) => onChange('material_details', { description: value }, 0)} />
                         </Form.Item>
                     </div>
                 </div>
