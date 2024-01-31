@@ -151,8 +151,8 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                         }
                                         if(key === 'phone_number'){
                                             return(
-                                                <div className="col-sm-4">
-                                                <div key={key} className="wrap-box">
+                                                // <div className="col-sm-4">
+                                                <div key={key} className="wrap-box mb-0">
                                                     <Form.Item
                                                         label={"Phone Number"}
                                                         name={key + index}
@@ -170,7 +170,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                         />
                                                     </Form.Item>
                                                 </div>
-                                            </div>
+                                            // </div>
                                             )
                                           
                                         }
@@ -181,7 +181,6 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                         label={upperKey}
                                                         name={key + index}
                                                         rules={[{ required: true, message: `Please enter ${upperKey}` }]}
-                                                        // rules={[{ required: true, message: 'Please enter name' }]}
                                                     >
                                                         <Input value={contact[key]} onChange={({ target: { value } }) => onChange('contact_info', { [key]: value }, index + 1)} placeholder={upperKey} />
                                                     </Form.Item>

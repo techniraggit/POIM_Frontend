@@ -69,8 +69,12 @@ const EditSubContractorPo = () => {
                         address: data.vendor_contact.company.address,
                         phone: data.vendor_contact.phone_number,
                         email: data.vendor_contact.email,
+                        project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         shipment_type: data.shipment_type || 'project related',
-                        material_details: [...data.material_details]
+                        // material_details: [...data.material_details]
+                        material_details: data.material_details.map((detail) => {
+                            return { ...detail, project_site_id: detail.project_site.site_id }
+                        })
                     });
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact.company.company_name)

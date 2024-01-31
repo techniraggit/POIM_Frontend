@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space } from "antd";
+import { Form, Input, Select, Button, Space, DatePicker } from "antd";
+// import { DatePicker } from 'antd';
+import dayjs from "dayjs";
 
 const repeatorData = {
     description: '',
@@ -49,7 +51,13 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 },
                             ]}
                         >
-                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { date: value }, 0)} type="date"></Input>
+                            {/* <DatePicker
+                                format="YYYY-MM-DD"
+                                picker="month"
+                                readOnly={view}
+                                onChange={(date, dateString) => onChange('material_details', { date: dateString }, 0)}
+                            /> */}
+                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { date: dayjs(value).format('YYYY-MM-DD') }, 0)} type="date"></Input>
                         </Form.Item>
                     </div>
                 </div>
@@ -152,7 +160,8 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                     </Form.Item>
                                                 </div>
                                             )
-                                        } else if (key === 'date') {
+                                        }
+                                        else if (key === 'date') {
                                             return (
 
                                                 <div className="col-sm-4">
@@ -170,7 +179,8 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                                 readOnly={view}
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
-                                                                onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+                                                                onChange={({ target: { value, name } }) => onChange('material_details', { [key]: dayjs(value).format('YYYY-MM-DD') }, index + 1)}
+                                                            // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             ></Input>
                                                         </Form.Item>
                                                     </div>
