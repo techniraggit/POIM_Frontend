@@ -88,7 +88,10 @@ const VendorEdit = () => {
                 message.success('Vendor updated successfully');
                 router.push('/vendor');
             }
-        });
+        })
+        .catch((error)=>{
+            message.error(error.response.data.message)
+        })
     };
 
     return (

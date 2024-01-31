@@ -148,6 +148,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                                 ...repeatorData
                             }]
                         });
+                        form.setFieldValue('state'+(formData.project_sites.length),'ON')
                     }} icon={<PlusOutlined />}>
                         <span >Add One More Site</span>
                     </Button>

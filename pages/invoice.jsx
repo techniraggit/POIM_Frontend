@@ -12,11 +12,16 @@ const { Option } = Select;
 
 const Invoice = () => {
     const [invoiceTable, setInvoiceTable] = useState([]);
+    const [invoice,setInvoice]=useState(0);
+    const [pendingInvoice,setPendingInvoice]=useState(0)
     useEffect(() => {
         const response = invoiceList();
         response.then((res) => {
+            console.log(res.data,'response');
             if(res?.data?.status) {
                 setInvoiceTable(res.data.data)
+                setInvoice(res.data.total_invoice)
+                setPendingInvoice(res.data.total_pending_invoice)
             }
         })
     }, [])
@@ -52,13 +57,13 @@ const Invoice = () => {
                                 </Roles>
                             }
                             <li className="me-4">
-                                <span className="text-sizes mb-3">5</span>
+                                <span className="text-sizes mb-3">{pendingInvoice}</span>
 
                                 {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
                                 <span>Pending Invoice</span>
                             </li>
                             <li className="me-4">
-                                <span className="text-size mb-3">224</span>
+                                <span className="text-size mb-3">{invoice}</span>
                                 <span>Total Invoice</span>
                             </li>
                         </ul>

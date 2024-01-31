@@ -144,12 +144,37 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                             <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                 {
                                     Object.keys(contact).map((key) => {
+                                        console.log(key,'ggggggggg');
                                         let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
                                         if (key.includes('_')) {
                                             upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');
                                         }
-
-                                        if(key !== 'company' && key !== 'vendor_contact_id' && key !== 'id') {
+                                        if(key === 'phone_number'){
+                                            return(
+                                                <div className="col-sm-4">
+                                                <div key={key} className="wrap-box">
+                                                    <Form.Item
+                                                        label={"Phone Number"}
+                                                        name={key + index}
+                                                        rules={[{ required: true, message: `Please enter phone number` },
+                                                        {
+                                                            pattern: /^(\+91|\+1)\d{10}$/,
+                                                            message: 'Please enter a valid phone number starting with +1, followed by 10 digits!',
+                                                        },
+                                                    ]}
+                                                    >
+                                                        <Input
+                                                            placeholder={upperKey}
+                                                            value={contact[key]}
+                                                            onChange={({ target: { value, name } }) => onChange('contact_info', { [key]: value }, index + 1)}
+                                                        />
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                            )
+                                          
+                                        }
+                                        else if(key !== 'company' && key !== 'vendor_contact_id' && key !== 'id') {
                                             return(
                                                 <div className="wrap-box mb-0">
                                                     <Form.Item

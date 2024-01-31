@@ -34,7 +34,8 @@ const CreateVendor = () => {
                 message.success("Vendor Created");
                 router.push('/vendor');
             }
-        }).catch((error)=>{
+        })
+        .catch((error)=>{
             message.error(error.response.data.message)
         })
     }
