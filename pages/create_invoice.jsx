@@ -151,9 +151,10 @@ const CreateInvoice = () => {
                                         form.invoice_files?.map((data, index) => {
                                             return (
                                                 <>
+                                                <div className="both-wrapinone d-flex align-items-center mb-3">
                                                     <Form.Item
                                                         name={`invoice_file` + index}
-                                                        className="select-file-invoice"
+                                                        className="select-file-invoice mb-custom"
                                                         valuePropName="fileList"
                                                         getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
                                                     >
@@ -169,6 +170,7 @@ const CreateInvoice = () => {
                                                             });
                                                         }} style={{ marginLeft: '8px' }} />
                                                     }
+                                                    </div>
                                                 </>
                                             )
                                         })
@@ -189,10 +191,11 @@ const CreateInvoice = () => {
                                         rows={8} 
                                         placeholder={`Please enter a note`} />
                                     </Form.Item>
-                                    <Form.Item name={"amount"} className="note-wrap wrap-box">
+                                    <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
+                                    {/* <span class="ant-input-group-addon">$</span> */}
                                         <Input 
                                         onChange={({ target: { value } }) => onChange('invoice_amount', value)} 
-                                        placeholder={`Please enter amount`} />
+                                        placeholder={`Please enter amount`}  addonBefore="$" />
                                     </Form.Item>
                                     
                                    

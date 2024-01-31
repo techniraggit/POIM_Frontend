@@ -54,9 +54,12 @@ ul.list-dboard li a {
     text-decoration: none;
 }
 
-ul.list-dboard li:first-child {
-    /* padding: 10px 40px; */
+ul.list-dboard li.active {
     background: #F7F8F8;
+}
+ul.list-dboard li.active span.anticon.right-outline {
+    transform: rotate(180deg);
+    transition: 0.5s ease;
 }
 
 ul.list-dboard li {
@@ -2959,6 +2962,37 @@ button.ant-btn.ant-btn-default.save-Button:active {
     border-end-start-radius: 3px;
 }
 /* 25 jan work */
+/* 31jan-work */
+.forgot-password-popup.forgot-popup-custom h2 {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+.forgot-password-popup.forgot-popup-custom  input[type="email"] {
+    font-size: 16px;
+    color: #112F5C;
+    font-weight: 500;
+}
+/* .ant-form-item.select-file-invoice.mb-custom {
+    margin-bottom: 30px !important;
+} */
+img.img-colored {
+    position: absolute;
+    left: 0;
+}
+ul.list-dboard li 
+ img.img-colored {
+    opacity: 0;
+}
+ul.list-dboard li.active  
+ img.img-colored {
+    opacity: 7;
+}
+ul.list-dboard li.active 
+ img.default-img {
+    opacity: 0;
+}
+/* 31jan-work */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
