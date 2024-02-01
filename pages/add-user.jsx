@@ -175,15 +175,18 @@ const AddUser = ({ base_url }) => {
                           className="vender-input"
                           rules={[
                             { required: true, message: 'Please enter your contact number!' },
+                            {
+                              pattern: /^(?:\+91|\+1)[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
+                              message: 'Please enter a valid phone number with +1 and without spaces!',
+                            },
                            
                           ]}
                         
                         >
                           <Input className='plus-wrap-input'
-                            onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                            // onChange={(e) => handlePhoneNumberChange(e.target.value)}
                             defaultValue="+"
                           />
-                   {/* <PlusOutlined  className='plus-in-input'/> */}
                         </Form.Item>
                       </div>
                     </div>

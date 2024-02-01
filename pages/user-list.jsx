@@ -3,7 +3,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
-import { Popconfirm, Input, message } from 'antd';
+import { Popconfirm, Input, message, Pagination } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
 import UserPopUp from "@/components/user-popup";
@@ -79,7 +79,6 @@ const User_list = ({ base_url }) => {
         setInputValue('');
         userClear().then((res) => {
             setUsers(res.data.data);
-
         })
     };
     return (

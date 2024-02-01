@@ -3,7 +3,7 @@ import { Form, Input, Button, Space, message } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { updateVendor } from "@/apis/apis/adminApis";
 
-function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formData }) {
+function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formData,loading }) {
 
   const handleRemoveContact = (id, index) => {
     updateVendor({vendor_contact_id: id}).then((response) => {
@@ -217,7 +217,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                 </Form.Item>
             </div> 
             <Form.Item>
-                <button type="submit" className="create-ven-butt">Submit</button>
+                <button type="submit" className="create-ven-butt" loading>Submit</button>
             </Form.Item>
         </div>
     </Form>
