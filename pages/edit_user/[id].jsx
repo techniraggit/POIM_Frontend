@@ -83,8 +83,9 @@ const EditUser = ({ base_url }) => {
             message.success('User updated successfully');
             router.push('/user-list')
         } catch (error) {
+            message.error(error.response.data.message)
             console.error('Error updating user:', error);
-            message.error('Error updating user');
+           
         }
     };
 

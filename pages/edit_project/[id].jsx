@@ -68,6 +68,9 @@ const EditProject = () => {
                 router.push('/project');
             }
         })
+        .catch((error)=>{
+            message.error(error.response.data.message)
+        })
     };
 
     const onChange = (name, value, index) => {

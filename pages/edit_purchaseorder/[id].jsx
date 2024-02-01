@@ -150,7 +150,10 @@ const EditMaterialPo = () => {
             if (res?.data?.status) {
                 router.push('/po_list');
             }
-        });
+        })
+        .catch((error)=>{
+            message.error(error.response.data.message)
+        })
     }
 
     const onChange = (name, value, index) => {

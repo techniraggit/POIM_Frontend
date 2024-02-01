@@ -199,7 +199,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             >
                                 <Select
                                     id="single2"
-                                    disabled={view}
+                                    disabled={view || edit}
                                     placeholder="Select"
                                     className="js-states form-control file-wrap-select"
                                     onChange={(value) => {
@@ -227,6 +227,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 name="vendor_contact_id"
                                 htmlFor="file"
                                 class="same-clr"
+                               
                                 rules={[
                                     {
                                         required: true,
@@ -237,7 +238,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 <Select
                                     id="singlesa"
                                     placeholder="Select"
-                                    disabled={view}
+                                    disabled={view || edit}
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => {
                                         vendorContactDetails(value);
@@ -272,7 +273,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('company_name', value)} />
+                            <Input readOnly={view || edit} onChange={({ target: { value } }) => onChange('company_name', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -290,7 +291,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('email', value)} />
+                            <Input readOnly={view || edit} onChange={({ target: { value } }) => onChange('email', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -307,7 +308,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('phone', value)} />
+                            <Input readOnly={view || edit} onChange={({ target: { value } }) => onChange('phone', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -324,7 +325,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('address', value)} />
+                            <Input readOnly={view || edit} onChange={({ target: { value } }) => onChange('address', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -342,7 +343,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('state', value)} />
+                            <Input readOnly={view || edit} onChange={({ target: { value } }) => onChange('state', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -359,7 +360,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('country', value)} />
+                            <Input readOnly={view || edit} onChange={({ target: { value } }) => onChange('country', value)} />
                         </Form.Item>
                     </div>
                 </div>
