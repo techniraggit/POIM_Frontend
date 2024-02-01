@@ -174,5 +174,5 @@ const Vendor = ({ base_url }) => {
 }
 export { getServerSideProps }
 export default withAuth(['admin', 'accounting', 'project manager', 'department manager',
-    'director', 'supervisor', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])
+    'director', 'site superintendent', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])
 (Vendor)

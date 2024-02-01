@@ -57,6 +57,7 @@ const ViewMaterialPo = () => {
                     amount: data.total_amount,
                     company_name: data.vendor_contact?.company.company_name,
                     vendor_id: data.vendor_contact?.company.vendor_id,
+                    project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                     vendor_contact_id: data.vendor_contact?.vendor_contact_id,
                     hst_amount: data.hst_amount,
                     total_amount: data.total_amount,
