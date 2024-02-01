@@ -124,7 +124,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                         if (key === "amount") {
                                             return (
                                                 <div className="col-sm-4">
-                                                    <div key={key} className="wrap-box">
+                                                    <div key={key} className="wrap-box dollor-inputs">
                                                         <Form.Item
                                                             label={upperKey}
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}

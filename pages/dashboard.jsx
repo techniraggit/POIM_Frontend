@@ -53,7 +53,7 @@ const Dashboard = () => {
                     <div className="table-wrap">
                         <h5>Purchase Orders</h5>
                         <div className="inner-table">
-                            <table id="resizeMe" className="table-hover">
+                            <table id="dash-board-table" className="table-hover">
                                 <thead>
                                     <tr id="header-row">
                                         <th className="hedaings-tb">S No.</th>
