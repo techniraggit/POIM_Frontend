@@ -374,13 +374,6 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                             onChange('material_details', { project_id: value }, index + 1);
                                                         }}
                                                     >
-                                                        <Select id="single406"
-                                                            class="js-states form-control file-wrap-select"
-                                                            onChange={(value) => {
-                                                                list(value, index + 1);
-                                                                onChange('material_details', { project_id: value }, index + 1);
-                                                            }}
-                                                        >
                                                             {Array.isArray(projects) &&
                                                                 projects.map((project) => (
                                                                     <Select.Option key={project.project_id}
