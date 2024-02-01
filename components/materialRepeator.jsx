@@ -14,7 +14,7 @@ const repeatorData = {
     project_site_id: '',
 }
 
-function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, projects, calculateAmount }) {
+function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, projects, calculateAmount, view }) {
 
     return (
         <div class="row">
@@ -35,7 +35,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                             },
                         ]}
                     >
-                        <Input placeholder="Quantity" onChange={({ target: { value } }) => onChange('material_details', { quantity: value }, 0)} />
+                        <Input readOnly={view} placeholder="Quantity" onChange={({ target: { value } }) => onChange('material_details', { quantity: value }, 0)} />
                     </Form.Item>
 
                 </div>
@@ -57,7 +57,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                             },
                         ]}
                     >
-                        <Input placeholder="Unit Price" onChange={({ target: { value } }) => onChange('material_details', { unit_price: value }, 0)} />
+                        <Input readOnly={view} placeholder="Unit Price" onChange={({ target: { value } }) => onChange('material_details', { unit_price: value }, 0)} />
                     </Form.Item>
 
                 </div>
@@ -97,7 +97,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                 },
                             ]}
                         >
-                            <Input placeholder="description" onChange={({ target: { value } }) => onChange('material_details', { description: value }, 0)} />
+                            <Input readOnly={view} placeholder="description" onChange={({ target: { value } }) => onChange('material_details', { description: value }, 0)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -116,7 +116,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                     },
                                 ]}
                             >
-                                <Select id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
+                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
                                     {Array.isArray(siteOptions[0]) &&
                                         siteOptions[0].map((site) => (
                                             <Select.Option key={site.site_id} value={site.site_id}>
@@ -145,7 +145,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                     },
                                 ]}
                             >
-                                <Select id="single90"
+                                <Select disabled={view} id="single90"
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => onChange('material_details', { material_for: value }, 0)}
                                 >
@@ -174,7 +174,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                     },
                                 ]}
                             >
-                                <Input onChange={({ target: { value } }) => onChange('material_details', { code: value },0)}/>
+                                <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { code: value },0)}/>
                             </Form.Item>
                         )}
 
@@ -195,6 +195,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                             ]}
                                         >
                                             <Select id="single406"
+                                                disabled={view}
                                                 class="js-states form-control file-wrap-select"
                                                 onChange={(value) => {
                                                     list(value, 0);
@@ -236,7 +237,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                     },
                                 ]}
                             >
-                                <Select id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
+                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
                                     {Array.isArray(siteOptions[0]) &&
                                         siteOptions[0].map((site) => (
                                             <Select.Option key={site.site_id} value={site.site_id}>
@@ -270,6 +271,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                         >
                                                             <Input
+                                                                readOnly={view}
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 name={key + index}
@@ -287,6 +289,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                         rules={[{ required: true, message: `Please enter unit price` }]}
                                                     >
                                                         <Input
+                                                            readOnly={view}
                                                             placeholder={upperKey}
                                                             value={data[key]}
                                                             name={key + index}
@@ -310,6 +313,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                             ]}
                                                         >
                                                             <Input
+                                                                readOnly={view}
                                                                 addonBefore="$"
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
@@ -333,6 +337,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                             ]}
                                                         >
                                                             <Input
+                                                                readOnly={view}
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
@@ -356,7 +361,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                         },
                                                     ]}
                                                 >
-                                                    <Select id="single406"
+                                                    <Select disabled={view} id="single406"
                                                         class="js-states form-control file-wrap-select"
                                                         onChange={(value) => {
                                                             list(value, index + 1);
@@ -385,7 +390,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 htmlFor="file"
                                                                 class="same-clr"
                                                             >
-                                                                <Select id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
+                                                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
                                                                     {Array.isArray(siteOptions[0]) &&
                                                                         siteOptions[0].map((site) => (
                                                                             <Select.Option key={site.site_id} value={site.site_id}>
@@ -410,7 +415,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 htmlFor="file"
                                                                 class="same-clr"
                                                             >
-                                                                <Select id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
+                                                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
                                                                     {Array.isArray(siteOptions[index + 1]) &&
                                                                         siteOptions[index + 1].map((site) => (
                                                                             <Select.Option key={site.site_id} value={site.site_id}>
@@ -441,7 +446,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                     },
                                                                 ]}
                                                             >
-                                                                <Select id="single90"
+                                                                <Select disabled={view} id="single90"
                                                                     class="js-states form-control file-wrap-select"
                                                                     value={formData.material_details[index + 1].material_for}
                                                                     onChange={(value) => onChange('material_details', { material_for: value }, index + 1)}
@@ -472,7 +477,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input defaultValue={formData.material_details[index + 1].code} onChange={({ target: { value } }) => onChange('material_details', { code: value }, index + 1)} />
+                                                            <Input readOnly={view} defaultValue={formData.material_details[index + 1].code} onChange={({ target: { value } }) => onChange('material_details', { code: value }, index + 1)} />
                                                         </Form.Item>
                                                     </div>
                                                 </div>
@@ -493,7 +498,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input defaultValue={formData.material_details[index + 1].code} onChange={({ target: { value } }) => onChange('material_details', { code: value }, index + 1)} />
+                                                            <Input readOnly={view} defaultValue={formData.material_details[index + 1].code} onChange={({ target: { value } }) => onChange('material_details', { code: value }, index + 1)} />
                                                         </Form.Item>
                                                     </div>
                                                 </div>
@@ -503,7 +508,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                     })
 
                                 }
-                                <div className="col-sm-4">
+                                {
+                                    !view && <div className="col-sm-4">
                                     <MinusOutlined className="minus-wrap" onClick={() => {
                                         setFormData({
                                             ...formData,
@@ -514,10 +520,12 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                         }
                                     }} style={{ marginLeft: '8px' }} />
                                 </div>
+                                }
                             </div>
                         })
                     }
-                    <Form.Item>
+                    {
+                        !view && <Form.Item>
                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                             setFormData({
                                 ...formData,
@@ -530,6 +538,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                             Add More Material
                         </Button>
                     </Form.Item>
+                    }
                 </Space>
             </div>
         </div>
