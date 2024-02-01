@@ -68,7 +68,7 @@ const PO_list = () => {
                         </div>
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
-                                <table id="resizeMe" className="table-hover">
+                                <table id="po-table" className="table-hover">
                                     <thead>
                                         <tr id="header-row">
                                             <th className="hedaings-tb">S No.</th>

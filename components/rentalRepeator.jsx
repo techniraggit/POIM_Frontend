@@ -37,7 +37,8 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     <Input.TextArea 
                     readOnly={view} rows={4} cols={50} 
                     placeholder="description" 
-                    onChange={(e) => onChange('material_details', { description: e.target.value }, 0)} />
+                    onChange={(e) => onChange('material_details',
+                     { description: e.target.value }, 0)} />
                 </Form.Item>
             </div>
         </div>
@@ -138,7 +139,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     if (key === "amount") {
                                         return (
                                             <div className="col-sm-4">
-                                            <div key={key} className="wrap-box">
+                                            <div key={key} className="wrap-box dollor-inputs">
                                                 <Form.Item
                                                     label={upperKey}
                                                     rules={[{ required: true, message: `Please enter ${upperKey}` }]}

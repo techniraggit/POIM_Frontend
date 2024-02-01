@@ -56,13 +56,13 @@ const Invoice = () => {
                                 </Roles>
                             }
                             <li className="me-4">
-                                <span className="text-sizes mb-3">{pendingInvoice}</span>
+                                <span className="text-size mb-3">{pendingInvoice}</span>
 
                                 {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
                                 <span>Pending Invoice</span>
                             </li>
                             <li className="me-4">
-                                <span className="text-size mb-3">{invoice}</span>
+                                <span className="text-size green-bg-span mb-3">{invoice}</span>
                                 <span>Total Invoice</span>
                             </li>
                         </ul>
