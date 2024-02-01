@@ -51,7 +51,7 @@ const EditMaterialPo = () => {
     const [refetch, setRefetch] = useState(true);
 
     useEffect(() => {
-        if (true) {
+        if (refetch) {
             fetchPo(id).then((res) => {
                 if (res?.data?.status) {
                     const data = res.data?.data;
