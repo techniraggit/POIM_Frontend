@@ -3,7 +3,7 @@ import { Form, Input, Button, Select, Space } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { removeProjectSite } from "@/apis/apis/adminApis";
 
-function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData, repeatorData }) {
+function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData, repeatorData,loading }) {
     return (
         <Form onFinish={onFinish} form={form} layout="vertical"
             labelCol={{ span: 8 }}
@@ -156,7 +156,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                 
             </div>
             <Form.Item >
-                <button type="submit" className="create-ven-butt">Submit</button>
+                <button type="submit" className="create-ven-butt" loading>Submit</button>
             </Form.Item>
         </Form>
     )

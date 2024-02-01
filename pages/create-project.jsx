@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import withAuth from "@/components/PrivateRoute";
 import { createProject, fetchManagers } from "@/apis/apis/adminApis";
 import ProjectForm from "@/components/ProjectForm";
+import { Spin } from 'antd';
 
 const repeatorData = {
     // name: '',
@@ -16,6 +17,7 @@ const repeatorData = {
 
 const CreateProject = () => {
     const [managers, setManagers] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         project_name: '',
         customer_name: '',
@@ -29,19 +31,21 @@ const CreateProject = () => {
 
     useEffect(() => {
         fetchManagers().then((response) => {
-            if(response?.data?.status) {
+            if (response?.data?.status) {
                 setManagers(response.data.managers);
             }
         })
     }, [])
 
     const onFinish = () => {
+        setLoading(true);
         createProject(formData).then((response) => {
-            if(response?.data?.status) {
+            if (response?.data?.status) {
                 message.success("Project created successfully");
                 router.push('/project');
             }
-        }).catch((error)=>{
+        }).catch((error) => {
+            setLoading(false);
             message.error(error.response.data.message)
         })
     }
@@ -80,7 +84,13 @@ const CreateProject = () => {
                         </ul>
 
                         <div className="vendor-form-create">
-                            <ProjectForm onFinish={onFinish} onChange={onChange} form={form} formData={formData} setFormData={setFormData} managers={managers} repeatorData={repeatorData} />
+                            <Spin spinning={loading}>
+                                <ProjectForm onFinish={onFinish}
+                                    onChange={onChange} form={form} formData={formData}
+                                    setFormData={setFormData} managers={managers}
+                                    repeatorData={repeatorData}
+                                    loading={loading} />
+                            </Spin>
                         </div>
                     </div>
                 </div>
@@ -89,4 +99,4 @@ const CreateProject = () => {
     )
 }
 
-export default withAuth(['admin','accounting'])(CreateProject);
+export default withAuth(['admin', 'accounting'])(CreateProject);
