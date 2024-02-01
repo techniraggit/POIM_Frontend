@@ -71,6 +71,7 @@ const ViewPO = () => {
                     amount: data.total_amount,
                     company_name: data.vendor_contact?.company.company_name,
                     vendor_id: data.vendor_contact?.company.vendor_id,
+                    project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                     vendor_contact_id: data.vendor_contact?.vendor_contact_id,
                     hst_amount: data.hst_amount,
                     total_amount: data.total_amount,
@@ -82,7 +83,11 @@ const ViewPO = () => {
                     email: data.vendor_contact?.email,
                     shipment_type: data.shipment_type,
                     delivery_address: data.delivery_address || '1860 Shawson',
-                    material_details: [...data.material_details]
+                    material_details: data.material_details.map((detail) => {
+                        return { ...detail, project_site_id: detail.project_site.site_id }
+                    }),
+                    status: data.status
+                    // material_details: [...data.material_details]
                 });
                 form.setFieldValue('po_type', data.po_type);
                 form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
@@ -90,8 +95,9 @@ const ViewPO = () => {
                 form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                 form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
                 form.setFieldValue('total_amount', data.total_amount);
-                form.setFieldValue('project_id', data.project);
-                form.setFieldValue('project_site_id', data.project_site?.site_id);
+                // form.setFieldValue('project_id', data.project);
+                // form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
+                // form.setFieldValue('project_site_id', data.project_site?.site_id);
                 form.setFieldValue('poDate', moment(data.po_date));
                 form.setFieldValue('country', data.vendor_contact?.company.country);
                 form.setFieldValue('state', data.vendor_contact?.company.state);
@@ -106,7 +112,8 @@ const ViewPO = () => {
                 form.setFieldValue('amount', data.material_details[0]?.amount)
                 form.setFieldValue('description', data.material_details[0]?.description)
                 form.setFieldValue('material_for', data.material_details[0]?.material_for)
-                form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
+                // form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
+                form.setFieldValue('project_site_id', data.material_details[0]?.project_site_id)
                 form.setFieldValue('code', data.material_details[0]?.code)
                 form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
                 form.setFieldValue('first_name', data.created_by.first_name)
@@ -118,7 +125,6 @@ const ViewPO = () => {
                     form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                     form.setFieldValue('material_for' + (index), material.material_for)
                     form.setFieldValue('project_id' + (index), material.project?.project_id)
-                    form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                 })
             }
         });
@@ -535,7 +541,7 @@ const ViewPO = () => {
                                                 <div class="selectwrap columns-select shipment-caret">
                                                     <Form.Item
                                                         label="Project  "
-                                                        name="project_id"
+                                                        name="project_id0"
                                                         for="file"
                                                         class="same-clr"
                                                         rules={[
@@ -553,12 +559,16 @@ const ViewPO = () => {
                                                             }}
                                                         >
                                                             {Array.isArray(projects) &&
-                                                                projects.map((project) => (
+                                                                projects.map((project) => 
+                                                                
+                                                                (
+                                                                    
                                                                     <Select.Option key={project.project_id} value={project.project_id}
                                                                     >
                                                                         {project.name}
                                                                     </Select.Option>
-                                                                ))}
+                                                                )
+                                                                )}
                                                         </Select>
                                                     </Form.Item>
                                                 </div>
@@ -682,11 +692,13 @@ const ViewPO = () => {
                                                         >
                                                             <Select disabled id="singlesa" onChange={(value) => onChange('project_site_id', value)} class="js-states form-control file-wrap-select">
                                                                 {Array.isArray(siteOptions) &&
-                                                                    siteOptions.map((site) => (
-                                                                        <Select.Option key={site.site_id} value={site.site_id}>
-                                                                            {site.name}
-                                                                        </Select.Option>
-                                                                    )
+                                                                    siteOptions.map((site) => 
+                                                                    {console.log(site.address,'address');}
+                                                                    // (
+                                                                    //     <Select.Option key={site.site_id} value={site.site_id}>
+                                                                    //         {site.address}
+                                                                    //     </Select.Option>
+                                                                    // )
                                                                     )}
                                                             </Select>
                                                         </Form.Item>
@@ -1060,6 +1072,6 @@ const ViewPO = () => {
 
 export { getServerSideProps };
 export default withAuth(['admin', 'accounting', 'project manager', 'department manager',
-    'director', 'supervisor', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])(ViewPO)
+    'director', 'site superintendent', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])(ViewPO)
 
 // export default ViewPO;
