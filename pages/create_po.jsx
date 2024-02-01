@@ -1414,4 +1414,4 @@ const Create_po = () => {
     );
 };
 
-export default withAuth(['admin', 'project manager', 'supervisor', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])(Create_po);
+export default withAuth(['admin', 'project manager', 'site superintendent', 'project coordinate', 'marketing', 'health & safety', 'estimator', 'shop'])(Create_po);

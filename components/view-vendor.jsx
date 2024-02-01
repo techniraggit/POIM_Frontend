@@ -86,6 +86,6 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) =
 };
 // export { getServerSideProps }
 export default withAuth(['admin','accounting','project manager','department manager',
-'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])
+'director','site superintendent','project coordinate','marketing','health & safety','estimator','shop'])
 (View_Vendor)
 // export default View_Vendor;

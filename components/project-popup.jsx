@@ -103,6 +103,6 @@ const ProjectPopup = ({ project_id }) => {
     );
 };
 export default withAuth(['admin','accounting','project manager','department manager',
-'director','supervisor','project coordinate','marketing','health & safety','estimator','shop'])
+'director','site superintendent','project coordinate','marketing','health & safety','estimator','shop'])
 (ProjectPopup)
 // export default ProjectPopup;

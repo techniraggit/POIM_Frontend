@@ -6,7 +6,7 @@ const useInvoice = (invoice) => {
   const { user } = useGlobalContext();
 
   if(invoice?.purchase_order?.po_type === 'material' || invoice?.purchase_order?.po_type === 'rental') {
-    if(user?.role === 'supervisor') {
+    if(user?.role === 'site superintendent') {
         approval_enabled = !invoice?.site_superintendent_approved
     } else if(user?.role === 'project manager') {
         approval_enabled = !invoice?.pm_approved

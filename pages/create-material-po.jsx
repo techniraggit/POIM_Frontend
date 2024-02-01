@@ -8,16 +8,17 @@ import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
 import { Form, Select, Button } from "antd";
 import PoForm from '../components/Form';
+import { Spin } from 'antd';
 
 const { Option } = Select;
 
 const repeatorData = {
-    quantity:'',
-    unit_price:'',
+    quantity: '',
+    unit_price: '',
     amount: 0,
     description: '',
-    material_for:'',
-    code:'',
+    material_for: '',
+    code: '',
     project_id: '',
     project_site_id: '',
 }
@@ -41,21 +42,22 @@ const CreateMaterialPo = () => {
         email: '',
         material_details: [{ ...repeatorData }]
     });
+    const [loading, setLoading] = useState(false);
 
     const router = useRouter();
     const [form] = Form.useForm();
 
     useEffect(() => {
-            const poNumberResponse = getPoNumber();
-            poNumberResponse.then((res) => {
-                if (res?.data?.status) {
-                    form.setFieldValue('poNumber', res.data?.po_number);
-                    setFormData({
-                        ...formData,
-                        po_number: res.data.po_number
-                    });
-                }
-            })
+        const poNumberResponse = getPoNumber();
+        poNumberResponse.then((res) => {
+            if (res?.data?.status) {
+                form.setFieldValue('poNumber', res.data?.po_number);
+                setFormData({
+                    ...formData,
+                    po_number: res.data.po_number
+                });
+            }
+        })
     }, []);
 
     const getTotalAmount = () => {
@@ -66,13 +68,18 @@ const CreateMaterialPo = () => {
         return totalAmount;
     };
     const onFinish = () => {
+        setLoading(true);
         createPO({
             ...formData,
         }).then((res) => {
             if (res?.data?.status) {
                 router.push('/po_list');
             }
-        });
+        })
+            .catch((error) => {
+                setLoading(false);
+                message.error(error.response.data.message)
+            })
     }
     const calculateAmount = (quantity, unit_price, index) => {
         const amount = parseFloat(quantity) * parseFloat(unit_price);
@@ -86,7 +93,7 @@ const CreateMaterialPo = () => {
         formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
         if (totalAmount > 0) {
             form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0});
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
         }
     }
 
@@ -100,7 +107,7 @@ const CreateMaterialPo = () => {
             if (value.unit_price) {
                 calculateAmount(formData.material_details[index].quantity, value.unit_price, index);
             }
-            if(value.quantity) {
+            if (value.quantity) {
                 calculateAmount(value.quantity, formData.material_details[index].unit_price, index);
             }
             formData.material_details[index] = {
@@ -122,9 +129,9 @@ const CreateMaterialPo = () => {
 
     const handlePoTypeChange = (value) => {
         if (value === 'rental') {
-            router.push('/create-rental-po'); 
+            router.push('/create-rental-po');
         }
-        if(value=== 'subcontractor'){
+        if (value === 'subcontractor') {
             router.push('/create-subcontractor-po');
         }
     };
@@ -144,6 +151,7 @@ const CreateMaterialPo = () => {
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
+                            <Spin spinning={loading}>
                                 <Form onFinish={onFinish} form={form} className="file-form">
                                     <div className="row po-typeraw">
                                         <div className="col-lg-4 col-md-6">
@@ -160,9 +168,9 @@ const CreateMaterialPo = () => {
                                                             },
                                                         ]}
                                                     >
-                                                        <Select  placeholder="Select PO Type" id="single1"
+                                                        <Select placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
-                                                            onChange={handlePoTypeChange}                                                                                                                               nge={handlePoTypeChange} 
+                                                            onChange={handlePoTypeChange} nge={handlePoTypeChange}
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
@@ -172,21 +180,25 @@ const CreateMaterialPo = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                    </div>
 
-                                    <PoForm formData={formData} 
-                                    isNew={true} 
-                                    form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} calculateAmount={calculateAmount} />
+                                    </div>
                                     
+
+                                        <PoForm formData={formData}
+                                            isNew={true}
+                                            form={form} onChange={onChange} onFinish={onFinish}
+                                            setFormData={setFormData} calculateAmount={calculateAmount} />
+                                    
+
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
-                                            <Button type="primary" htmlType="submit" className="create-ven-butt">
+                                            <Button type="primary" htmlType="submit" className="create-ven-butt" loading={loading}>
                                                 Create PO
                                             </Button>
                                         </Form.Item>
                                     </div>
                                 </Form>
+                                </Spin>
                             </div>
                         </div>
                     </div>

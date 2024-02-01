@@ -469,7 +469,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                 formData.po_type === 'rental' ? <RentalRepeator view={view} formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
             }
             {
-                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} list={list} projects={projects} setFormData={setFormData} form={form} onChange={onChange} calculateAmount={calculateAmount} /> : <></>
+                formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} list={list} projects={projects} setFormData={setFormData} form={form} onChange={onChange} view={view} calculateAmount={calculateAmount} /> : <></>
             }
             <div className="row top-btm-space mb-0">
                 <div className="col-lg-4 col-md-6">
