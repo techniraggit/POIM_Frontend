@@ -75,7 +75,7 @@ const EditMaterialPo = () => {
                         project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         delivery_address: data.delivery_address || '1860 Shawson',
                         material_details: data.material_details.map((detail) => {
-                            return { ...detail, project_site_id: detail.project_site.site_id }
+                            return { ...detail, project_site_id: detail.project_site?.site_id }
                         }),
                         status: data.status
                     });
