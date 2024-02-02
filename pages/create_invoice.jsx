@@ -12,6 +12,7 @@ import Subcontractor_invoice from "@/components/subcontractor_invoice";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const repeatorData = {
     invoice_file: ''
@@ -20,6 +21,7 @@ const repeatorData = {
 const CreateInvoice = () => {
     const [poNumber, setPoNumber] = useState([]);
     const [responseData, setResponseData] = useState([]);
+    const[po,setPo]=useState('')
     const [form, setForm] = useState({
         comment: '',
         po_id: '',
@@ -48,13 +50,16 @@ const CreateInvoice = () => {
     };
 
     useEffect(() => {
-        const response = fetchPoNumbr()
-        response.then((res) => {
-            if (res?.data?.status) {
-                setPoNumber([...res.data.data]);
-            }
-        })
-    }, [])
+        if(po){
+            const response = fetchPoNumbr(po)
+            response.then((res) => {
+                if (res?.data?.status) {
+                    setPoNumber([...res.data.data]);
+                }
+            })
+        }
+       
+    }, [po])
 
     const fetchPoNumber = (id) => {
         const response = fetchPoNumbers(id)
@@ -62,12 +67,17 @@ const CreateInvoice = () => {
             const data = res.data.data;
             setForm({
                 ...form,
-                po_id: data.po_id
+                po_id: data.po_id,
             })
             setResponseData(data)
         })
-    }
 
+    }
+const handlePoTypeChange =(value)=>{
+    setPo(value)
+    // console.log(value,'ffffffffff');
+
+}
     const beforeUpload = (file) => {
         const isPDF = file.type === 'application/pdf';
         if (!isPDF) {
@@ -77,7 +87,8 @@ const CreateInvoice = () => {
     };
 
     const onChange = (name, value, index) => {
-        if(typeof index !== 'undefined') {
+        
+        if (typeof index !== 'undefined') {
             form.invoice_files[index][name] = value;
         } else {
             form[name] = value;
@@ -127,21 +138,62 @@ const CreateInvoice = () => {
                             <div className="choose-file">
                                 <div className="row mb-4">
                                     <div className="col-lg-4 col-md-6">
-                                        <div className="selectwrap  shipment-caret invoice-select aligned-text">
-                                            <Select placeholder="Select PO Type" id="create-invoice"
-                                                class="js-states form-control file-wrap-select bold-select"
-                                                onChange={(value) => fetchPoNumber(value)}
-                                            >
-                                                {poNumber.map((entry) => (
-                                                    <Select.Option key={entry.po_id} value={entry.po_id}>
-                                                        {entry.po_number}
-                                                    </Select.Option>
-
-                                                ))}
-                                            </Select>
+                                        <div className="selectwrap react-select">
+                                            <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
+                                                <Form.Item
+                                                    label="Choose PO Type"
+                                                    name="po_type"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please choose PO Type",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Select placeholder="Select PO Type" id="single1"
+                                                        class="js-states form-control file-wrap-select bold-select"
+                                                        onChange={(value) => handlePoTypeChange(value)}
+                                                    // onChange={handlePoTypeChange} 
+                                                    >
+                                                        <Option value="material">Material PO</Option>
+                                                        <Option value="rental">Rental PO</Option>
+                                                        <Option value="subcontractor">Sub Contractor PO</Option>
+                                                    </Select>
+                                                </Form.Item>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <div className="col-lg-4 col-md-6">
+                                        <div className="selectwrap  shipment-caret invoice-select aligned-text">
+                                            <Form.Item
+                                                label="Choose PO Number"
+                                                name="po_number"
+                                                class="bold-label"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "Please choose PO Number",
+                                                    },
+                                                ]}
+                                            >
+                                                <Select placeholder="Select PO Type" id="create-invoice"
+                                                    class="js-states form-control file-wrap-select bold-select"
+                                                    onChange={(value) => fetchPoNumber(value)}
+                                                >
+                                                    {poNumber.map((entry) => (
+                                                        <Select.Option key={entry.po_id} value={entry.po_id}>
+                                                            {entry.po_number}
+                                                        </Select.Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+
                                 </div>
+
                                 <Form
                                     name="antdForm"
                                     className="mt-5"
@@ -151,31 +203,31 @@ const CreateInvoice = () => {
                                         form.invoice_files?.map((data, index) => {
                                             return (
                                                 <>
-                                                <div className="both-wrapinone d-flex align-items-center mb-3">
-                                                    <Form.Item
-                                                        name={`invoice_file` + index}
-                                                        className="select-file-invoice mb-custom"
-                                                        valuePropName="fileList"
-                                                        getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
-                                                    >
-                                                        <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
-                                                            <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
-                                                        </Upload>
-                                                    </Form.Item>
-                                                    {
-                                                        index > 0 && <MinusOutlined className="minus-wrap" onClick={() => {
-                                                            setForm({
-                                                                ...form,
-                                                                invoice_files: [...form.invoice_files.slice(0, index), ...form.invoice_files.slice(index + 1)]
-                                                            });
-                                                        }} style={{ marginLeft: '8px' }} />
-                                                    }
+                                                    <div className="both-wrapinone d-flex align-items-center mb-3">
+                                                        <Form.Item
+                                                            name={`invoice_file` + index}
+                                                            className="select-file-invoice mb-custom"
+                                                            valuePropName="fileList"
+                                                            getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
+                                                        >
+                                                            <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
+                                                                <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
+                                                            </Upload>
+                                                        </Form.Item>
+                                                        {
+                                                            index > 0 && <MinusOutlined className="minus-wrap" onClick={() => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    invoice_files: [...form.invoice_files.slice(0, index), ...form.invoice_files.slice(index + 1)]
+                                                                });
+                                                            }} style={{ marginLeft: '8px' }} />
+                                                        }
                                                     </div>
                                                 </>
                                             )
                                         })
                                     }
-                                     <Form.Item>
+                                    <Form.Item>
                                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                                             setForm({
                                                 ...form,
@@ -186,19 +238,19 @@ const CreateInvoice = () => {
                                         </Button>
                                     </Form.Item>
                                     <Form.Item name="note" className="note-wrap wrap-box">
-                                        <TextArea 
-                                        onChange={({ target: { value } }) => onChange('comment', value)} 
-                                        rows={8} 
-                                        placeholder={`Please enter a note`} />
+                                        <TextArea
+                                            onChange={({ target: { value } }) => onChange('comment', value)}
+                                            rows={8}
+                                            placeholder={`Please enter a note`} />
                                     </Form.Item>
                                     <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
-                                    {/* <span class="ant-input-group-addon">$</span> */}
-                                        <Input 
-                                        onChange={({ target: { value } }) => onChange('invoice_amount', value)} 
-                                        placeholder={`Please enter amount`}  addonBefore="$" />
+                                        {/* <span class="ant-input-group-addon">$</span> */}
+                                        <Input
+                                            onChange={({ target: { value } }) => onChange('invoice_amount', value)}
+                                            placeholder={`Please enter amount`} addonBefore="$" />
                                     </Form.Item>
-                                    
-                                   
+
+
                                     <Form.Item>
                                         <Button type="primary" htmlType="submit" id="btn-submit">
                                             Submit

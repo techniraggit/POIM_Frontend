@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Button, Select, Space } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { removeProjectSite } from "@/apis/apis/adminApis";
+import { fetchPoNumbers, removeProjectSite } from "@/apis/apis/adminApis";
 
-function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData, repeatorData,loading }) {
+function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData, repeatorData,loading,edit }) {
+    
     return (
         <Form onFinish={onFinish} form={form} layout="vertical"
             labelCol={{ span: 8 }}
@@ -40,10 +41,11 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                             label="Project Number"
                             name="project_number"
                             className="vender-input"
+                            // disabled={edit}
                             rules={[{ required: true, message: 'Please enter your project number!' }]}
                         >
                             <Input placeholder="00854" 
-                            readOnly
+                            readOnly={edit}
                             onChange={({ target: { value } }) => onChange('project_number', value)} />
                         </Form.Item>
                     </div>
