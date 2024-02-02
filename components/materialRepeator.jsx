@@ -84,7 +84,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 </div>
             </div>
             <div class="row space-col-spc mb-0">
-                <div class="col-sm-4">
+                <div class="col-sm-12">
                     <div className="wrap-box mb-0">
                         <Form.Item
                             label="Description"
@@ -97,7 +97,13 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                 },
                             ]}
                         >
-                            <Input readOnly={view} placeholder="description" onChange={({ target: { value } }) => onChange('material_details', { description: value }, 0)} />
+                            {/* <Input placeholder="description"
+                                onChange={({ target: { value } }) => onChange('material_details', 
+                                { description: value }, 0)} /> */}
+                                 <Input.TextArea 
+                   placeholder="description" rows="4" cols="50"
+                   onChange={({ target: { value } }) => onChange('material_details', 
+                   { description: value }, 0)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -301,7 +307,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                         } else if (key === 'amount') {
                                             return (
                                                 <div className="col-sm-4">
-                                                    <div className="wrap-box mb">
+                                                    <div className="wrap-box mb dollor-inputs">
                                                         <Form.Item
                                                             label={upperKey}
                                                             name={`amount` + (index + 1)}
@@ -325,7 +331,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                             )
                                         } else if (key === 'description') {
                                             return (
-                                                <div className="col-sm-4">
+                                                <div className="col-sm-12">
                                                     <div className="wrap-box">
                                                         <Form.Item
                                                             label={upperKey}
@@ -336,12 +342,12 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input
-                                                                readOnly={view}
+                                                            <Input.TextArea
                                                                 placeholder={upperKey}
+                                                                rows="3" cols="40"
                                                                 value={data[key]}
                                                                 onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
-                                                            ></Input>
+                                                              />
                                                         </Form.Item>
                                                     </div>
                                                 </div>
@@ -368,17 +374,17 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                             onChange('material_details', { project_id: value }, index + 1);
                                                         }}
                                                     >
-                                                        {Array.isArray(projects) &&
-                                                            projects.map((project) => (
-                                                                <Select.Option key={project.project_id}
-                                                                >
-                                                                    {project.name}
-                                                                </Select.Option>
-                                                            ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </div>
-                                        </div>)
+                                                            {Array.isArray(projects) &&
+                                                                projects.map((project) => (
+                                                                    <Select.Option key={project.project_id}
+                                                                    >
+                                                                        {project.name}
+                                                                    </Select.Option>
+                                                                ))}
+                                                        </Select>
+                                                    </Form.Item>
+                                                </div>
+                                            </div>)
                                         } else if (key === 'project_site_id' && (formData.shipment_type.toLowerCase() === 'project related')) {
                                             return (
                                                 <div class="col-sm-4">
@@ -397,14 +403,14 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                                 {site.address}
                                                                             </Select.Option>
                                                                         )
-                                                                    )}
+                                                                        )}
                                                                 </Select>
                                                             </Form.Item>
                                                         </div>
                                                     </div>
                                                 </div>
                                             )
-                                        } else if(key === 'project_site_id' && formData.material_details[index + 1].material_for === 'project') {
+                                        } else if (key === 'project_site_id' && formData.material_details[index + 1].material_for === 'project') {
                                             return (
                                                 <div class="col-sm-4">
                                                     <div className="wrap-box">
@@ -422,7 +428,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                                 {site.address}
                                                                             </Select.Option>
                                                                         )
-                                                                    )}
+                                                                        )}
                                                                 </Select>
                                                             </Form.Item>
                                                         </div>
@@ -461,7 +467,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                     </div>
                                                 </div>
                                             )
-                                        } else if (key === 'code' && (formData.material_details[index + 1].material_for === 'inventory') ) {
+                                        } else if (key === 'code' && (formData.material_details[index + 1].material_for === 'inventory')) {
                                             return (
                                                 <div className="col-sm-4">
                                                     <div className="wrap-box">
@@ -515,7 +521,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                             ...formData,
                                             material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         });
-                                        if(calculateAmount) {
+                                        if (calculateAmount) {
                                             calculateAmount(0, 0, index + 1)
                                         }
                                     }} style={{ marginLeft: '8px' }} />
