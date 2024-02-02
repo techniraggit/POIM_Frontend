@@ -3011,6 +3011,9 @@ span.green-bg-span {
 table#resizeMe {
     max-width: 1100px;
 }
+.download-wrap span.anticon.anticon-download {
+    font-size: 17px;
+}
 /* feb */
 /* responsive */
 @media (max-width: 1299px) {

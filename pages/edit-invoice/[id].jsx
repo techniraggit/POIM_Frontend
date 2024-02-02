@@ -204,12 +204,14 @@ const EditInvoice = () => {
                                             }
                                             return (
                                                 <>
+                                                <div className="download-wrap d-flex gap-2 mb-4">
                                                     {
                                                         fileName ? <>
                                                             <div>
                                                                 {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
                                                             </div>
-                                                        </> : 
+                                                        </>
+                                                         : 
                                                         <Form.Item
                                                             name={`invoice_file` + index}
                                                             className="select-file-invoice"
@@ -222,7 +224,7 @@ const EditInvoice = () => {
                                                         </Form.Item>
                                                     }
                                                     {
-                                                        <MinusOutlined className="minus-wrap" onClick={() => {
+                                                        <MinusOutlined className="minus-wrap kt" onClick={() => {
                                                             removeInvoiceFile({ file_id: data.file_id }).then((res) => {
                                                                 if(res?.data?.status) {
                                                                     setInvoice({
@@ -235,6 +237,7 @@ const EditInvoice = () => {
                                                             })
                                                         }} style={{ marginLeft: '8px' }} />
                                                     }
+                                                    </div>
                                                 </>
                                             )
                                         })
