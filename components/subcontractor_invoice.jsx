@@ -515,9 +515,9 @@ const Subcontractor_invoice = ({data}) => {
                                     </Form.Item>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-12 all-wrap-box mb-3">
+                            <div class="col-md-6 col-lg-4 all-wrap-box mb-3">
                                 {formData.shipment_type === 'project related' && (
-                                    <div className="col-lg-6">
+                                    <div className="wrap-box mb-0">
                                         <div class="selectwrap columns-select shipment-caret">
                                             <Form.Item
                                                 label="Project  "
