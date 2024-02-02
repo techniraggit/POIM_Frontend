@@ -2919,10 +2919,15 @@ li.bg-li-invoice  {
     color: #313F4E;
     font-weight: 600;
 }
-button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn:active, 
-button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn:hover {
-    color: #313F4E;
-    border-color: #313F4E ;
+button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn:active,
+ button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn:hover {
+    color: #313F4E !important;
+    border-color: #313F4E !important;
+    background-color: transparent !important;
+}
+button.ant-btn.css-p7e5j5.ant-btn-default.file-btn {
+    color: #1f1f1f !important;
+    border-color: 1px solid #1f1f1f !important;
 }
 button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn {
     border: 1px solid #1f1f1f;
@@ -3004,7 +3009,7 @@ span.green-bg-span {
     overflow-x: auto;
 }
 table#resizeMe {
-    max-width: 400px;
+    max-width: 1100px;
 }
 /* feb */
 /* responsive */
