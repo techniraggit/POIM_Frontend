@@ -5,7 +5,7 @@ import DynamicTitle from '@/components/dynamic-title.jsx';
 import { Form, message } from 'antd';
 import { useRouter } from 'next/router';
 import withAuth from "@/components/PrivateRoute";
-import { createProject, fetchManagers,fetchPoNumbers } from "@/apis/apis/adminApis";
+import { createProject, fetchManagers } from "@/apis/apis/adminApis";
 import ProjectForm from "@/components/ProjectForm";
 import { Spin } from 'antd';
 
@@ -67,15 +67,6 @@ const CreateProject = () => {
             ...formData
         });
     }
-    useEffect(()=>{
-        const response=fetchPoNumbers()
-        response.then((res) => {
-            console.log(res,'jjjjjjjjjjj');
-            // if (res?.data?.status) {
-            // }
-        })
-
-    },[])
 
     return (
         <>

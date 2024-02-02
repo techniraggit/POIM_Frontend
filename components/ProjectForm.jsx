@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Form, Input, Button, Select, Space } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { fetchPoNumbers, removeProjectSite } from "@/apis/apis/adminApis";
+import { removeProjectSite } from "@/apis/apis/adminApis";
 
 function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData, repeatorData,loading,edit }) {
     
