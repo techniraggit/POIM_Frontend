@@ -66,7 +66,7 @@ const Login = ({ base_url }) => {
     const handleSendEmail = async () => {
         axios.post(`${base_url}/api/accounts/forget-password`,
             {
-                email: email,
+                email: forgotEmail,
             }
         )
             .then((response) => {
@@ -79,7 +79,6 @@ const Login = ({ base_url }) => {
         } else {
             console.log('Forgot Password form validation failed');
         }
-
     };
 
 

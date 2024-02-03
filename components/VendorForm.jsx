@@ -3,8 +3,7 @@ import { Form, Input, Button, Space, message } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { updateVendor } from "@/apis/apis/adminApis";
 
-function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formData,loading }) {
-
+function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formData }) {
   const handleRemoveContact = (id, index) => {
     updateVendor({vendor_contact_id: id}).then((response) => {
         if(response?.data?.status) {
@@ -160,6 +159,19 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                             pattern: /^(\+91|\+1)\d{10}$/,
                                                             message: 'Please enter a valid phone number starting with +1, followed by 10 digits!',
                                                         },
+                                                        {
+                                                            validator(_, value) {
+                                                                const otherAddresses = formData.contact_info
+                                                                    .filter((_, i) => i !== index + 1)
+                                                                    .map((otherSite) => otherSite[key]);
+                                                                console.log(otherAddresses)
+                                                                if (otherAddresses.includes(value)) {
+                                                                    return Promise.reject(`${upperKey} must be unique.`);
+                                                                }
+                            
+                                                                return Promise.resolve();
+                                                            },
+                                                        }
                                                     ]}
                                                     >
                                                         <Input
@@ -171,7 +183,6 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                 </div>
                                             // </div>
                                             )
-                                          
                                         }
                                         else if(key !== 'company' && key !== 'vendor_contact_id' && key !== 'id') {
                                             return(
@@ -179,7 +190,21 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                     <Form.Item
                                                         label={upperKey}
                                                         name={key + index}
-                                                        rules={[{ required: true, message: `Please enter ${upperKey}` }]}
+                                                        rules={[{ required: true, message: `Please enter ${upperKey}` },
+                                                        (key === 'email') && {
+                                                            validator(_, value) {
+                                                                const otherAddresses = formData.contact_info
+                                                                    .filter((_, i) => i !== index + 1)
+                                                                    .map((otherSite) => otherSite[key]);
+                            
+                                                                if (otherAddresses.includes(value)) {
+                                                                    return Promise.reject(`${upperKey} must be unique.`);
+                                                                }
+                            
+                                                                return Promise.resolve();
+                                                            },
+                                                        },
+                                                    ]}
                                                     >
                                                         <Input value={contact[key]} onChange={({ target: { value } }) => onChange('contact_info', { [key]: value }, index + 1)} placeholder={upperKey} />
                                                     </Form.Item>

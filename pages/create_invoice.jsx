@@ -21,7 +21,7 @@ const repeatorData = {
 const CreateInvoice = () => {
     const [poNumber, setPoNumber] = useState([]);
     const [responseData, setResponseData] = useState([]);
-    const[po,setPo]=useState('')
+    const [po, setPo] = useState('')
     const [form, setForm] = useState({
         comment: '',
         po_id: '',
@@ -58,7 +58,6 @@ const CreateInvoice = () => {
                 }
             })
         }
-       
     }, [po])
 
     const fetchPoNumber = (id) => {
@@ -73,11 +72,11 @@ const CreateInvoice = () => {
         })
 
     }
-const handlePoTypeChange =(value)=>{
-    setPo(value)
-    // console.log(value,'ffffffffff');
 
-}
+    const handlePoTypeChange =(value)=>{
+        setPo(value)
+    }
+
     const beforeUpload = (file) => {
         const isPDF = file.type === 'application/pdf';
         if (!isPDF) {
@@ -154,7 +153,6 @@ const handlePoTypeChange =(value)=>{
                                                     <Select placeholder="Select PO Type" id="single1"
                                                         class="js-states form-control file-wrap-select bold-select"
                                                         onChange={(value) => handlePoTypeChange(value)}
-                                                    // onChange={handlePoTypeChange} 
                                                     >
                                                         <Option value="material">Material PO</Option>
                                                         <Option value="rental">Rental PO</Option>
@@ -191,7 +189,6 @@ const handlePoTypeChange =(value)=>{
                                             </Form.Item>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <Form
