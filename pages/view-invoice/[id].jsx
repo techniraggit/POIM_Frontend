@@ -12,6 +12,7 @@ import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { saveAs } from "file-saver";
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const ViewInvoice = () => {
     const [poNumber, setPoNumber] = useState([]);

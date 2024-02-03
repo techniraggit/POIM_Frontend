@@ -15,6 +15,7 @@ import { saveAs } from "file-saver";
 import useInvoice from "@/hooks/useInvoice";
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const repeatorData = {
     invoice_file: ''
