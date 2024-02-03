@@ -40,11 +40,13 @@ const Material_invoice = ({data}) => {
 
     useEffect(() => {
         if(data && data?.status) {
+            console.log(data,'kkkkk');
             fetchVendorContactDropdown(data.vendor_contact.company.vendor_id);
             fetchSites();
             setFormData({
                 ...formData,
                 po_type: data.po_type,
+                po_number:data.po_number,
                 amount: data.total_amount,
                 company_name: data.vendor_contact.company.company_name,
                 vendor_id: data.vendor_contact.company.vendor_id,
@@ -62,6 +64,7 @@ const Material_invoice = ({data}) => {
                 material_details: [...data.material_details]
             });
             form.setFieldValue('po_type', data.po_type);
+            form.setFieldValue('po_number', data.po_number);
             form.setFieldValue('company_name', data.vendor_contact.company.company_name)
             form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
             form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);

@@ -3,7 +3,7 @@ import { Form, Input, Button, Select, Space } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { removeProjectSite } from "@/apis/apis/adminApis";
 
-function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData, repeatorData,loading }) {
+function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData, repeatorData, edit }) {
     return (
         <Form onFinish={onFinish} form={form} layout="vertical"
             labelCol={{ span: 8 }}
@@ -40,10 +40,11 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                             label="Project Number"
                             name="project_number"
                             className="vender-input"
+                            // disabled={edit}
                             rules={[{ required: true, message: 'Please enter your project number!' }]}
                         >
                             <Input placeholder="00854" 
-                            readOnly
+                            readOnly={edit}
                             onChange={({ target: { value } }) => onChange('project_number', value)} />
                         </Form.Item>
                     </div>
@@ -74,7 +75,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                 <div className="col-lg-4 col-md-12">
                     <div className="wrap-box">
                         <Form.Item
-                            label=" Address"
+                            label="Address"
                             name="address0"
                             className="vender-input"
                             rules={[{ required: true, message: 'Please enter your address!' }]}
@@ -113,7 +114,21 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                                             <Form.Item
                                                 label={upperKey}
                                                 name={key + (index + 1)}
-                                                rules={[{ required: true, message: `Please enter ${upperKey}` }]}
+                                                rules={[{ required: true, message: `Please enter ${upperKey}` },
+                                                    key === 'address' && {
+                                                        validator(_, value) {
+                                                            const otherAddresses = formData.project_sites
+                                                                .filter((_, i) => i !== index + 1)
+                                                                .map((otherSite) => otherSite[key]);
+                        
+                                                            if (otherAddresses.includes(value)) {
+                                                                return Promise.reject(`${upperKey} must be unique.`);
+                                                            }
+                        
+                                                            return Promise.resolve();
+                                                        },
+                                                    },
+                                                ]}
                                             >
                                                 <Input onChange={({ target: { value } }) => onChange('project_sites', { [key]: value }, index + 1)} placeholder={upperKey} />
                                             </Form.Item>

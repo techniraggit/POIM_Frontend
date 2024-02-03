@@ -10,7 +10,6 @@ import ProjectForm from "@/components/ProjectForm";
 import { Spin } from 'antd';
 
 const repeatorData = {
-    // name: '',
     address: '',
     state: 'ON',
 }

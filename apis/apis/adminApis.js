@@ -86,11 +86,14 @@ export const updateVendorDetails = (data) => {
 export const projectNumber=()=>{
     return Axios.get(`/api/admin/project-number`);
 }
-export const fetchPoNumbr=()=>{
-    return Axios.get(`/api/helping/purchase-orders-list`)
+export const fetchPoNumbr=(type)=>{
+    return Axios.get(`/api/helping/purchase-orders-list?po_type=${type}`)
 }
 export const fetchPoNumbers=(id)=>{
     return Axios.get(`/api/admin/purchase-order?po_id=${id}`)
+}
+export const fetchProjectNumber=(number)=>{
+    return Axios.get(`/api/helping/is-registered-project-number?project_number=${number}`)
 }
 export const invoiceSubmit=(data)=>{
     return Axios.post(`/api/admin/invoice`,data)
