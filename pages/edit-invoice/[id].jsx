@@ -64,7 +64,7 @@ const EditInvoice = () => {
             invoicePromise.then((res) => {
                 if(res?.data?.status) {
                     const data = res.data.data;
-                    setInvoice({...data, can_change_status: res.data?.can_change_status});
+                    setInvoice({...data, po_creator: res.data?.po_creator});
                     form.setFieldValue('amount', data.invoice_amount);
                     form.setFieldValue('note', data.comment);
                     form.setFieldValue('po_type', res.data?.data?.purchase_order?.po_type);
@@ -155,10 +155,10 @@ const EditInvoice = () => {
                                 approval_enabled && <Roles action="approve_invoice">
                                 <li>
                                     <Button type="primary" onClick={(event) => {
-                                        handleStatusChange(event, 'approve')
+                                        handleStatusChange(event, 'approved')
                                     }}>Approve</Button>
                                     <Button type="primary" danger onClick={(event) => {
-                                        handleStatusChange(event, 'reject')
+                                        handleStatusChange(event, 'rejected')
                                     }}>Reject</Button>
                                 </li>
                             </Roles>
@@ -272,12 +272,14 @@ const EditInvoice = () => {
                                             }
                                             return (
                                                 <>
+                                                <div className="download-wrap d-flex gap-2 mb-4">
                                                     {
                                                         fileName ? <>
                                                             <div>
                                                                 {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
                                                             </div>
-                                                        </> : 
+                                                        </>
+                                                         : 
                                                         <Form.Item
                                                             name={`invoice_file` + index}
                                                             className="select-file-invoice"
@@ -290,7 +292,7 @@ const EditInvoice = () => {
                                                         </Form.Item>
                                                     }
                                                     {
-                                                        <MinusOutlined className="minus-wrap" onClick={() => {
+                                                        <MinusOutlined className="minus-wrap kt" onClick={() => {
                                                             removeInvoiceFile({ file_id: data.file_id }).then((res) => {
                                                                 if(res?.data?.status) {
                                                                     setInvoice({
@@ -303,6 +305,7 @@ const EditInvoice = () => {
                                                             })
                                                         }} style={{ marginLeft: '8px' }} />
                                                     }
+                                                    </div>
                                                 </>
                                             )
                                         })

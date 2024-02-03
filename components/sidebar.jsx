@@ -98,9 +98,8 @@ const Sidebar = () => {
                 <span className="db-span">
                   <span class="active-img position-relative">
                     <img src="/images/Purchase.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/purchase-colored.svg" alt="" class="img-colored me-4" />
+                    <img src="/images/Purchase-colored.svg" alt="" class="img-colored me-4" />
                     Purchase Orders
-                  </span>
                 </span>
                 <RightOutlined className='right-outline' />
               </Link>
@@ -152,5 +151,5 @@ const Sidebar = () => {
     </>
   )
 }
-export default Sidebar
+export default Sidebar;
 

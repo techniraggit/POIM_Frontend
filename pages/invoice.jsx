@@ -102,7 +102,6 @@ const Invoice = () => {
                                     <thead>
                                         <tr id="header-row">
                                             <th className="hedaings-tb">S. No</th>
-                                            <th className="hedaings-tb">Invoice No.</th>
                                             <th className="hedaings-tb">PO No.</th>
                                             <th className="hedaings-tb">Created By</th>
                                             <th className="hedaings-tb">PO Amount</th>
@@ -119,7 +118,6 @@ const Invoice = () => {
                                             invoiceTable.map((invoice, index) =>(
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
-                                                    <td>{invoice.invoice_number}</td>
                                                     <td>{invoice.purchase_order.po_number}</td>
                                                     <td>{invoice.purchase_order.created_by.first_name} {invoice.purchase_order.created_by.last_name}</td>
                                                     <td>{invoice.purchase_order.total_amount}</td>
