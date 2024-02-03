@@ -88,7 +88,6 @@ const Login = ({ base_url }) => {
             const values = {
                 email: email,
                 password: password,
-                forgotEmail: forgotEmail,
             }
             try {
                 const response = await axios.post(`${base_url}/api/accounts/login`, values
