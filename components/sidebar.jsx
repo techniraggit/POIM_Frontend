@@ -100,6 +100,7 @@ const Sidebar = () => {
                     <img src="/images/Purchase.svg" alt="" className="me-4 default-img" />
                     <img src="/images/Purchase-colored.svg" alt="" class="img-colored me-4" />
                     Purchase Orders
+                  </span>
                 </span>
                 <RightOutlined className='right-outline' />
               </Link>
