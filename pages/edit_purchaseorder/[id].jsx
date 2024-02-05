@@ -209,11 +209,11 @@ const EditMaterialPo = () => {
                             </li>
                             {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
-                                    <li>
-                                        <Button type="primary" onClick={() => {
+                                    <li className="mt-3 apr-rej-li d-flex">
+                                        <Button type="primary" className="approved-btn me-3" onClick={() => {
                                             setIsModalOpen(true);
                                         }}>Approve</Button>
-                                        <Button type="primary" danger onClick={(event) => {
+                                        <Button type="primary" className="reject-btn" danger onClick={(event) => {
                                             handleStatusChange(event, 'reject')
                                         }}>Reject</Button>
                                     </li>

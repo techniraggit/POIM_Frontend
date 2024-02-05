@@ -74,7 +74,7 @@ const Settings = () => {
                                                 <input placeholder="Enter value in dollars"
                                                     // value={`$${thresholdData[index].value}`}
                                                     // value={thresholdData[index].value}
-                                                      value={` ${thresholdData[index].value}`}
+                                                      value={`${thresholdData[index].value}`}
                                                     onChange={(e) => handleInputChange(index, e.target.value)}
                                                 />
                                             </div>
