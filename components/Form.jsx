@@ -129,6 +129,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
+
     return (
         <>
             <div class="order-choose d-flex">
@@ -169,7 +170,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             style={{ width: "100%" }}
                             disabled={isNew || view}
                             defaultValue={dayjs()}
-                            onChange={(date) => onChange('po_date', date)}
+                            onChange={(date) => onChange('po_date', dayjs(date).format('YYYY-MM-DD'))}
                             placeholder="Select Date"
                             suffixIcon={null}
                         />

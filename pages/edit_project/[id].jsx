@@ -111,6 +111,7 @@ const EditProject = () => {
                                 onFinish={onFinish} 
                                 onChange={onChange} 
                                 form={form} 
+                                edit={true}
                                 formData={formData} 
                                 setFormData={setFormData} 
                                 managers={managers} 

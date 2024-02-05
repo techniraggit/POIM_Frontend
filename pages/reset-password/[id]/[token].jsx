@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../../styles/change-password.css'; // Make sure to import your CSS file
 import { useRouter } from 'next/router';
 import { getServerSideProps } from "@/components/mainVariable";
@@ -6,8 +6,6 @@ import { Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 
 const ChangePasswordForm = ({ base_url }) => {
-  //   const [new_password, setPassword] = useState('');
-  //   const [confirm_password, setConfirmPassword] = useState('');
 
   const router = useRouter();
   const { id, token } = router.query;
@@ -20,12 +18,12 @@ const ChangePasswordForm = ({ base_url }) => {
         id: id,
         token: token,
         new_password: new_password,
-        confirm_password: confirm_password // Include password2 in the request body
+        confirm_password: confirm_password
       });
 
       if (response.status === 200) {
         message.success(response.data.message);
-        router.push('/login'); // Redirect to login page or any other page
+        router.push('/');
       } else {
         message.error('Password reset failed');
       }
@@ -33,11 +31,6 @@ const ChangePasswordForm = ({ base_url }) => {
       console.error('An error occurred:', error);
       message.error('Password reset failed');
     }
-    // Add your form submission logic here
-  };
-
-  const onFinishFailed = (errorInfo) => {
-   
   };
 
   return (
@@ -47,7 +40,6 @@ const ChangePasswordForm = ({ base_url }) => {
           name="signupForm"
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
         >
           <img src="/images/logo.png" id="signupLogo" alt="Logo" />
 
@@ -59,7 +51,6 @@ const ChangePasswordForm = ({ base_url }) => {
               name="new_password"
               className="inputLabel"
               htmlFor="new_password"
-              // value={password}
               rules={[{ required: true, message: 'Please input your new password!' }]}
             >
               <Input.Password />
@@ -71,7 +62,6 @@ const ChangePasswordForm = ({ base_url }) => {
               label="Confirm Password"
               name="confirm_password"
               htmlFor="confirm_password"
-              // value={confirmPassword}
               id="confirmPassword"
               rules={[
                 { required: true, message: 'Please confirm your password!' },
@@ -104,7 +94,6 @@ const ChangePasswordForm = ({ base_url }) => {
             </Form.Item>
           </div>
         </Form>
-        {/* </form> */}
       </div>
     </div>
   );

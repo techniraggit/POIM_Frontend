@@ -15,6 +15,7 @@ import { saveAs } from "file-saver";
 import useInvoice from "@/hooks/useInvoice";
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const repeatorData = {
     invoice_file: ''
@@ -24,6 +25,7 @@ const EditInvoice = () => {
     const [poNumber, setPoNumber] = useState([]);
     const [invoice, setInvoice] = useState({});
     const [responseData, setResponseData] = useState([]);
+    const [po, setPo] = useState('');
     const [refetch, setRefetch] = useState(true);
     const { approval_enabled } = useInvoice(invoice);
     const router = useRouter();
@@ -63,14 +65,28 @@ const EditInvoice = () => {
             invoicePromise.then((res) => {
                 if(res?.data?.status) {
                     const data = res.data.data;
-                    setInvoice({...data, can_change_status: res.data?.can_change_status});
+                    setInvoice({...data, po_creator: res.data?.po_creator});
                     form.setFieldValue('amount', data.invoice_amount);
                     form.setFieldValue('note', data.comment);
+                    form.setFieldValue('po_type', res.data?.data?.purchase_order?.po_type);
+                    form.setFieldValue('po_number', res.data?.data?.purchase_order?.po_number);
+                    setPo(res.data?.data?.purchase_order?.po_type)
                     fetchPoNumber(res.data?.data?.purchase_order?.po_id);
                 }
             })
         }
     }, [id, refetch]);
+
+    useEffect(() => {
+        if(po){
+            const response = fetchPoNumbr(po)
+            response.then((res) => {
+                if (res?.data?.status) {
+                    setPoNumber([...res.data.data]);
+                }
+            })
+        }
+    }, [po])
 
     const fetchPoNumber = (id) => {
         const response = fetchPoNumbers(id)
@@ -140,10 +156,10 @@ const EditInvoice = () => {
                                 approval_enabled && <Roles action="approve_invoice">
                                 <li>
                                     <Button type="primary" onClick={(event) => {
-                                        handleStatusChange(event, 'approve')
+                                        handleStatusChange(event, 'approved')
                                     }}>Approve</Button>
                                     <Button type="primary" danger onClick={(event) => {
-                                        handleStatusChange(event, 'reject')
+                                        handleStatusChange(event, 'rejected')
                                     }}>Reject</Button>
                                 </li>
                             </Roles>
@@ -171,6 +187,59 @@ const EditInvoice = () => {
                                 )
                             }
                             <div className="choose-file">
+                                <div className="row mb-4">
+                                    <div className="col-lg-4 col-md-6">
+                                        <div className="selectwrap react-select">
+                                            <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
+                                                <Form.Item
+                                                    label="Choose PO Type"
+                                                    name="po_type"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please choose PO Type",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Select disabled placeholder="Select PO Type" id="single1"
+                                                        class="js-states form-control file-wrap-select bold-select"
+                                                    >
+                                                        <Option value="material">Material PO</Option>
+                                                        <Option value="rental">Rental PO</Option>
+                                                        <Option value="subcontractor">Sub Contractor PO</Option>
+                                                    </Select>
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-4 col-md-6">
+                                        <div className="selectwrap  shipment-caret invoice-select aligned-text">
+                                            <Form.Item
+                                                label="Choose PO Number"
+                                                name="po_number"
+                                                class="bold-label"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "Please choose PO Number",
+                                                    },
+                                                ]}
+                                            >
+                                                <Select disabled placeholder="Select PO Type" id="create-invoice"
+                                                    class="js-states form-control file-wrap-select bold-select"
+                                                >
+                                                    {poNumber.map((entry) => (
+                                                        <Select.Option key={entry.po_id} value={entry.po_id}>
+                                                            {entry.po_number}
+                                                        </Select.Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                </div>
                                 <Form
                                     name="antdForm"
                                     className="mt-5"
