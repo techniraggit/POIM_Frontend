@@ -140,7 +140,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                 {
                     formData.contact_info.slice(1).map((contact, index) => {
                         return (
-                            <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                <div className="row" style={{ display: 'flex', marginBottom: 8 }}>
                                 {
                                     Object.keys(contact).map((key) => {
                                         let upperKey = key.charAt(0).toUpperCase() + key.slice(1);
@@ -150,7 +150,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                         if(key === 'phone_number'){
                                             return(
                                                 // <div className="col-sm-4">
-                                                <div key={key} className="wrap-box mb-0">
+                                                <div key={key} className="wrap-box mb-0 col-lg-3 col-md-12">
                                                     <Form.Item
                                                         label={"Phone Number"}
                                                         name={key + index}
@@ -186,7 +186,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                         }
                                         else if(key !== 'company' && key !== 'vendor_contact_id' && key !== 'id') {
                                             return(
-                                                <div className="wrap-box mb-0">
+                                                <div className="wrap-box mb-0 col-lg-3 col-md-12">
                                                     <Form.Item
                                                         label={upperKey}
                                                         name={key + index}
@@ -214,7 +214,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                         return <></>
                                     })
                                 }
-                                <MinusOutlined className="minus-wrap" onClick={() => {
+                                <MinusOutlined className="minus-wrap col-lg-1" onClick={() => {
                                     if(contact.vendor_contact_id) {
                                         handleRemoveContact(contact.vendor_contact_id, index);
                                     } else {
@@ -224,7 +224,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                         });
                                     }
                                 }} style={{ marginLeft: '8px' }} />
-                            </Space>
+                            </div>
                         )
                     })
                 }

@@ -109,7 +109,7 @@ const CreateInvoice = () => {
                             <ul class="bg-colored-ul mb-4">
                                 <li class="bg-li-invoice">
                                     <PlusOutlined className="me-3" />
-                                    <span>View Purchase Order</span>
+                                    <span>Create Invoice</span>
                                 </li>
 
                             </ul>
@@ -135,67 +135,67 @@ const CreateInvoice = () => {
                                 )
                             }
                             <div className="choose-file">
-                                <div className="row mb-4">
-                                    <div className="col-lg-4 col-md-6">
-                                        <div className="selectwrap react-select">
-                                            <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
-                                                <Form.Item
-                                                    label="Choose PO Type"
-                                                    name="po_type"
-                                                    class="bold-label"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please choose PO Type",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Select placeholder="Select PO Type" id="single1"
-                                                        class="js-states form-control file-wrap-select bold-select"
-                                                        onChange={(value) => handlePoTypeChange(value)}
-                                                    >
-                                                        <Option value="material">Material PO</Option>
-                                                        <Option value="rental">Rental PO</Option>
-                                                        <Option value="subcontractor">Sub Contractor PO</Option>
-                                                    </Select>
-                                                </Form.Item>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-lg-4 col-md-6">
-                                        <div className="selectwrap  shipment-caret invoice-select aligned-text">
-                                            <Form.Item
-                                                label="Choose PO Number"
-                                                name="po_number"
-                                                class="bold-label"
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Please choose PO Number",
-                                                    },
-                                                ]}
-                                            >
-                                                <Select placeholder="Select PO Type" id="create-invoice"
-                                                    class="js-states form-control file-wrap-select bold-select"
-                                                    onChange={(value) => fetchPoNumber(value)}
-                                                >
-                                                    {poNumber.map((entry) => (
-                                                        <Select.Option key={entry.po_id} value={entry.po_id}>
-                                                            {entry.po_number}
-                                                        </Select.Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <Form
                                     name="antdForm"
                                     className="mt-5"
                                     onFinish={onFinish}
                                 >
+                                    <div className="row mb-4">
+                                        <div className="col-lg-4 col-md-6">
+                                            <div className="selectwrap react-select">
+                                                <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
+                                                    <Form.Item
+                                                        label="Choose PO Type"
+                                                        name="po_type"
+                                                        class="bold-label"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: "Please choose PO Type",
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Select placeholder="Select PO Type" id="single1"
+                                                            class="js-states form-control file-wrap-select bold-select"
+                                                            onChange={(value) => handlePoTypeChange(value)}
+                                                        >
+                                                            <Option value="material">Material PO</Option>
+                                                            <Option value="rental">Rental PO</Option>
+                                                            <Option value="subcontractor">Sub Contractor PO</Option>
+                                                        </Select>
+                                                    </Form.Item>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-lg-4 col-md-6">
+                                            <div className="selectwrap  shipment-caret invoice-select aligned-text">
+                                                <Form.Item
+                                                    label="Choose PO Number"
+                                                    name="po_number"
+                                                    class="bold-label"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Please choose PO Number",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Select placeholder="Select PO Number" id="create-invoice"
+                                                        class="js-states form-control file-wrap-select bold-select"
+                                                        onChange={(value) => fetchPoNumber(value)}
+                                                    >
+                                                        {poNumber.map((entry) => (
+                                                            <Select.Option key={entry.po_id} value={entry.po_id}>
+                                                                {entry.po_number}
+                                                            </Select.Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {
                                         form.invoice_files?.map((data, index) => {
                                             return (

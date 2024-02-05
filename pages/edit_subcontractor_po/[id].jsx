@@ -74,7 +74,8 @@ const EditSubContractorPo = () => {
                         // material_details: [...data.material_details]
                         material_details: data.material_details.map((detail) => {
                             return { ...detail, project_site_id: detail.project_site.site_id }
-                        })
+                        }),
+                        status: data.status
                     });
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact.company.company_name)
@@ -171,6 +172,7 @@ const EditSubContractorPo = () => {
         });
         response.then((res) => {
             if(res?.data?.status) {
+                setIsModalOpen(false);
                 setRefetch(true);
             }
         })

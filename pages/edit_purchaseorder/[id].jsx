@@ -190,6 +190,7 @@ const EditMaterialPo = () => {
         });
         response.then((res) => {
             if (res?.data?.status) {
+                setIsModalOpen(false);
                 setRefetch(true);
             }
         })

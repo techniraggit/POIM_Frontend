@@ -125,6 +125,7 @@ const Vendor = ({ base_url }) => {
                                         <tr id="header-row">
                                             <th className="hedaings-tb">S No.</th>
                                             <th className="hedaings-tb">Company Name</th>
+                                            <th className="hedaings-tb">Vendor Name</th>
                                             <th className="hedaings-tb">Country</th>
                                             <th className="hedaings-tb">State</th>
                                             <th className="hedaings-tb">Action</th>
@@ -136,7 +137,7 @@ const Vendor = ({ base_url }) => {
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{vendor.company_name}</td>
-
+                                                    <td>{vendor.vendor_contact[0].name}</td>
                                                     <td>{vendor.country}</td>
                                                     <td>{vendor.state}</td>
                                                     <td className="td-icon-color">

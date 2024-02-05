@@ -20,10 +20,10 @@ const Sidebar = () => {
     }
   }, [initialVisit]);
 
-
   useEffect(() => {
     setActiveMenuItem(router.pathname);
   }, [router.pathname]);
+  
   return (
     <>
       <div className="aside-dashboard">
@@ -47,66 +47,66 @@ const Sidebar = () => {
 
           </li>
 
-          <li className={activeMenuItem === '/user-list' ? 'active' : ''}>
             <Roles action='view_user'>
-              <Link href="/user-list">
-                <span className="db-span">
-                  <span class="active-img position-relative">
-                    <img src="/images/user.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/user-svg-active.svg" alt="" class="img-colored me-4" />
-                    Users
+              <li className={activeMenuItem === '/user-list' ? 'active' : ''}>
+                <Link href="/user-list">
+                  <span className="db-span">
+                    <span class="active-img position-relative">
+                      <img src="/images/user.svg" alt="" className="me-4 default-img" />
+                      <img src="/images/user-svg-active.svg" alt="" class="img-colored me-4" />
+                      Users
+                    </span>
                   </span>
-                </span>
-                <RightOutlined className='right-outline' />
-              </Link>
+                  <RightOutlined className='right-outline' />
+                </Link>
+              </li>
             </Roles>
 
-          </li>
-          <li className={activeMenuItem === '/vendor' ? 'active' : ''}>
             <Roles action='view_vendor'>
-              <Link href="/vendor">
-                <span className="db-span">
-                  <span class="active-img position-relative">
-                    <img src="/images/vendors.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/vendors-colored.svg" alt="" class="img-colored me-4" />
-                    Vendors
+              <li className={activeMenuItem === '/vendor' ? 'active' : ''}>
+                <Link href="/vendor">
+                  <span className="db-span">
+                    <span class="active-img position-relative">
+                      <img src="/images/vendors.svg" alt="" className="me-4 default-img" />
+                      <img src="/images/vendors-colored.svg" alt="" class="img-colored me-4" />
+                      Vendors
+                    </span>
                   </span>
-                </span>
-                <RightOutlined className='right-outline' />
-              </Link>
+                  <RightOutlined className='right-outline' />
+                </Link>
+              </li>
             </Roles>
 
-          </li>
-          <li className={activeMenuItem === '/project' ? 'active' : ''}>
             <Roles action='view_project'>
-              <Link href="/project">
-                <span className="db-span">
-                  <span class="active-img position-relative">
-                    <img src="/images/Projects.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/Projects-colored.svg" alt="" class="img-colored me-4" />
-                    Projects
+              <li className={activeMenuItem === '/project' ? 'active' : ''}>
+                <Link href="/project">
+                  <span className="db-span">
+                    <span class="active-img position-relative">
+                      <img src="/images/Projects.svg" alt="" className="me-4 default-img" />
+                      <img src="/images/Projects-colored.svg" alt="" class="img-colored me-4" />
+                      Projects
+                    </span>
                   </span>
-                </span>
-                <RightOutlined className='right-outline' />
-              </Link>
+                  <RightOutlined className='right-outline' />
+                </Link>
+              </li>
             </Roles>
 
-          </li>
-          <li className={activeMenuItem === '/po_list' ? 'active' : ''}>
             <Roles action='view_purchase_order'>
-              <Link href='/po_list'>
-                <span className="db-span">
-                  <span class="active-img position-relative">
-                    <img src="/images/Purchase.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/Purchase-colored.svg" alt="" class="img-colored me-4" />
-                    Purchase Orders
+              <li className={activeMenuItem === '/po_list' ? 'active' : ''}>
+                <Link href='/po_list'>
+                  <span className="db-span">
+                    <span class="active-img position-relative">
+                      <img src="/images/Purchase.svg" alt="" className="me-4 default-img" />
+                      <img src="/images/Purchase-colored.svg" alt="" class="img-colored me-4" />
+                      Purchase Orders
+                    </span>
                   </span>
-                </span>
-                <RightOutlined className='right-outline' />
-              </Link>
+                  <RightOutlined className='right-outline' />
+                </Link>
+              </li>
             </Roles>
 
-          </li>
           <li className={activeMenuItem === '/invoice' ? 'active' : ''}>
             <Link href='/invoice'>
               <span className="db-span">
@@ -133,20 +133,20 @@ const Sidebar = () => {
             </Link>
 
           </li>
-          <li className={activeMenuItem === '/settings' ? 'active' : ''}>
             <Roles action='view_threshold'>
-              <Link href='settings'>
-                <span className="db-span">
-                  <span class="active-img position-relative">
-                    <img src="/images/Settings.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/Settings-colored.svg" alt="" class="img-colored me-4" />
-                    Settings
+              <li className={activeMenuItem === '/settings' ? 'active' : ''}>
+                <Link href='settings'>
+                  <span className="db-span">
+                    <span class="active-img position-relative">
+                      <img src="/images/Settings.svg" alt="" className="me-4 default-img" />
+                      <img src="/images/Settings-colored.svg" alt="" class="img-colored me-4" />
+                      Settings
+                    </span>
                   </span>
-                </span>
-                <RightOutlined className='right-outline' />
-              </Link>
+                  <RightOutlined className='right-outline' />
+                </Link>
+              </li>
             </Roles>
-          </li>
         </ul>
       </div>
     </>

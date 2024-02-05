@@ -106,10 +106,7 @@ const Login = ({ base_url }) => {
                 } else {
                 }
             } catch (error) {
-                console.error('Error during login:', error);
-                if (error.response && error.response.status === 401) {
-                    router.push('/');
-                } 
+                message.error(error?.response?.data?.message);
             }
         } else {
         }

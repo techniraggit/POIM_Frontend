@@ -3,6 +3,7 @@ import Sidebar from "@/components/sidebar";
 import '../styles/style.css'
 import { Button, message } from "antd";
 import { threshold, updateThreshold } from "@/apis/apis/adminApis";
+import Header from "@/components/header";
 
 
 const Settings = () => {
@@ -40,20 +41,7 @@ const Settings = () => {
                     <Sidebar />
                 </div>
                 <div className="inner-wrapper">
-                    <div className="top-wrapp">
-                        <div className="text-wrap">
-                            <h5>Settings</h5>
-                        </div>
-                        <div className="notify">
-                            <div className="leftwrap">
-                                <img src="./images/notification.svg" alt="" />
-                                <span>1</span>
-                            </div>
-                            <div className="user">
-                                <span>John Smith</span><img src="./images/profile.png" alt="" className="ms-2" />
-                            </div>
-                        </div>
-                    </div>
+                    <Header heading="Settings" />
                     <div className="outer-div">
                         <div className="listclips row">
                             {Array.isArray(thresholdData) && thresholdData.map((item, index) => (

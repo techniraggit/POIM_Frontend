@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React from "react";
 import '../styles/style.css'
 import Link from "next/link";
 import { useGlobalContext } from "@/app/Context/UserContext";

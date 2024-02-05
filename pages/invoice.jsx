@@ -7,6 +7,7 @@ import Link from "next/link";
 import { PlusOutlined } from '@ant-design/icons'
 import { invoiceList } from "@/apis/apis/adminApis";
 import Roles from "@/components/Roles";
+import Header from "@/components/header";
 
 const { Option } = Select;
 
@@ -30,20 +31,7 @@ const Invoice = () => {
             <div className="wrapper-main">
                 <Sidebar />
                 <div className="inner-wrapper">
-                    <div className="top-wrapp">
-                        <div className="text-wrap">
-                            <h5>Invoice</h5>
-                        </div>
-                        <div className="notify">
-                            <div className="leftwrap">
-                                <img src="./images/notification.svg" alt="" />
-                                <span>1</span>
-                            </div>
-                            <div className="user">
-                                <span>John Smith</span><img src="./images/profile.png" alt="" className="ms-2" />
-                            </div>
-                        </div>
-                    </div>
+                    <Header heading='Invoice' />
                     <div className="bottom-wrapp-purchase">
                         <ul className="list-icons">
                             {
@@ -109,7 +97,7 @@ const Invoice = () => {
                                             <th className="hedaings-tb">PO Status</th>
                                             <th className="hedaings-tb">PM</th>
                                             <th className="hedaings-tb">DM</th>
-                                            <th className="hedaings-tb">Site Supervisor</th>
+                                            <th className="hedaings-tb">Po Creator</th>
                                             <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
@@ -129,10 +117,10 @@ const Invoice = () => {
                                                     {/* <td>
                                                         {invoice.pm_approved ? <CheckCircleFilled style={{ color: 'green' }} /> : <CloseCircleFilled style={{ color: 'red' }} />}
                                                     </td> */}
-                                                    <td>{invoice.pm_approved ? "true" : "false"}</td>
+                                                    <td>{invoice.pm_approval_status}</td>
                                                     {/* <td>{invoice.pm_approved|| "N/A"}</td> */}
-                                                    <td>{invoice.dm_approved ? "true" : "false"}</td>
-                                                    <td>{invoice.site_supervisor_approved ? "true" : "false"}</td>
+                                                    <td>{invoice.dm_approval_status}</td>
+                                                    <td>{invoice.po_creator_approval_status}</td>
                                                     <td>
                                                         <Link href={`/view-invoice/${invoice.invoice_id}`} className="me-1"><EyeFilled /></Link>
                                                         {

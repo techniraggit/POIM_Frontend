@@ -65,7 +65,8 @@ const Edit_Rental_Po = () => {
                         project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         material_details: data.material_details.map((details) => {
                             return {...details, project_site_id: details.project_site?.site_id, start_date: details.date}
-                        })
+                        }),
+                        status: data.status
                     });
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
@@ -167,6 +168,7 @@ const Edit_Rental_Po = () => {
         });
         response.then((res) => {
             if(res?.data?.status) {
+                setIsModalOpen(false);
                 setRefetch(true);
             }
         })
