@@ -3014,6 +3014,23 @@ table#resizeMe {
 .download-wrap span.anticon.anticon-download {
     font-size: 17px;
 }
+li.apr-rej-li button {
+    padding: 8px 12px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-primary.approved-btn {
+    background-color: #659cee;
+}
+li.apr-rej-li button span {
+    color: #fff;
+    font-size: 16px;
+    display: block;
+}
+button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-primary.ant-btn-dangerous.reject-btn {
+    background-color: #e91d26;
+}
 /* feb */
 /* responsive */
 @media (max-width: 1299px) {
