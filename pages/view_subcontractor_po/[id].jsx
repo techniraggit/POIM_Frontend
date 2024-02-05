@@ -48,6 +48,7 @@ const ViewSubContractorPo = () => {
                     ...formData,
                     po_type: data.po_type,
                     amount: data.total_amount,
+                    po_date: data.po_date,
                     subcontractor_type: data.subcontractor_type,
                     invoice_amount: data.invoice_received_amount,
                     original_po_amount: data.total_amount,

@@ -14,7 +14,7 @@ const Login = ({ base_url }) => {
     const [forgotEmail, setforgotEmail] = useState('')
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
-    const { setUser, user } = useGlobalContext();
+    const { setUser } = useGlobalContext();
     const [showForgotPasswordPopup, setShowForgotPasswordPopup] = useState(false);
     const [forgotPasswordErrors, setForgotPasswordErrors] = useState({});
 
@@ -64,23 +64,23 @@ const Login = ({ base_url }) => {
     };
 
     const handleSendEmail = async () => {
-        axios.post(`${base_url}/api/accounts/forget-password`,
-            {
-                email: forgotEmail,
-            }
-        )
-            .then((response) => {
-            })
-            .catch((error) => {
-                console.log(error);
-            })
         if (validateForgotPasswordForm()) {
             handlePopupClose();
+            axios.post(`${base_url}/api/accounts/forget-password`, { email: forgotEmail })
+            .then((response) => {
+                if(response?.data?.status) {
+                    message.success(response.data?.message);
+                }
+                setforgotEmail('');
+            })
+            .catch((error) => {
+                setforgotEmail('');
+                message.error(error?.response?.data?.message)
+            })
         } else {
             console.log('Forgot Password form validation failed');
         }
     };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();

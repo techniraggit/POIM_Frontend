@@ -169,7 +169,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                         <DatePicker
                             style={{ width: "100%" }}
                             disabled={isNew || view}
-                            defaultValue={dayjs()}
+                            defaultValue={(formData.po_date && dayjs(formData.po_date)) || dayjs()}
                             onChange={(date) => onChange('po_date', dayjs(date).format('YYYY-MM-DD'))}
                             placeholder="Select Date"
                             suffixIcon={null}
