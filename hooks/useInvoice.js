@@ -7,17 +7,17 @@ const useInvoice = (invoice) => {
 
   if(invoice?.purchase_order?.po_type === 'material' || invoice?.purchase_order?.po_type === 'rental') {
     if(invoice?.po_creator) {
-        approval_enabled = !invoice?.po_creator_approval_status === 'pending';
+        approval_enabled = invoice?.po_creator_approval_status === 'pending';
     } else if(user?.role === 'project manager') {
-        approval_enabled = !invoice?.pm_approval_status  === 'pending';
+        approval_enabled = invoice?.po_creator_approval_status !== 'pending' && invoice?.pm_approval_status  === 'pending';
     } else if(user?.role === 'department manager') {
-        approval_enabled = !invoice?.dm_approval_status === 'pending';
+        approval_enabled = invoice?.pm_approval_status !== 'pending' && invoice?.dm_approval_status === 'pending';
     }
   } else if(invoice?.purchase_order?.po_type === 'subcontractor') {
     if(user?.role === 'project manager') {
-        approval_enabled = !invoice?.pm_approval_status === 'pending';
+        approval_enabled = invoice?.pm_approval_status === 'pending';
     } else if(user?.role === 'department manager') {
-        approval_enabled = !invoice?.dm_approval_status === 'pending';
+        approval_enabled = invoice?.pm_approval_status !== 'pending' && invoice?.dm_approval_status === 'pending';
     }
   } else {
     approval_enabled = false;
