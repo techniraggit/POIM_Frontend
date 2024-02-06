@@ -258,7 +258,7 @@ const EditInvoice = () => {
                                                 <div className="download-wrap d-flex gap-2 mb-4">
                                                     {
                                                         fileName ? <>
-                                                            <div>
+                                                            <div className="download-fine-invoice">
                                                                 {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
                                                             </div>
                                                         </>
@@ -269,7 +269,7 @@ const EditInvoice = () => {
                                                             valuePropName="fileList"
                                                             getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
                                                         >
-                                                            <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
+                                                            <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
                                                                 <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
                                                             </Upload>
                                                         </Form.Item>
@@ -306,8 +306,8 @@ const EditInvoice = () => {
                                     <Form.Item name={"note"} className="note-wrap wrap-box">
                                         <TextArea onChange={({target: { value }}) => onChange('comment', value)} />
                                     </Form.Item>
-                                    <Form.Item name={"amount"} className="note-wrap wrap-box">
-                                        <Input onChange={({target: { value }}) => onChange('invoice_amount', value)} />
+                                    <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
+                                        <Input onChange={({target: { value }}) => onChange('invoice_amount', value)} addonBefore="$" />
                                     </Form.Item>
                                     <Form.Item>
                                         <Button type="primary" htmlType="submit" id="btn-submit">
