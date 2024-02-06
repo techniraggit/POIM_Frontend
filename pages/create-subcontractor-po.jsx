@@ -6,7 +6,7 @@ import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
-import { Form, Select, Button, Input } from "antd";
+import { Form, Select, Button, Input, message } from "antd";
 import PoForm from '../components/Form';
 import dayjs from "dayjs";
 import { Spin } from 'antd';

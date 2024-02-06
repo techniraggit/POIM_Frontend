@@ -43,51 +43,57 @@ const Material_invoice = ({ data }) => {
     const router = useRouter();
     const [form] = Form.useForm();
     const { id } = router.query;
+
+
     useEffect(() => {
         if (data && data?.status) {
+            console.log( data.project,'fffff');
             setFormData({
                 ...formData,
                 po_type: data.po_type,
-                po_number: data.po_number,
                 amount: data.total_amount,
-                company_name: data.vendor_contact.company.company_name,
-                vendor_id: data.vendor_contact.company.vendor_id,
-                vendor_contact_id: data.vendor_contact.vendor_contact_id,
+                company_name: data.vendor_contact?.company.company_name,
+                vendor_id: data.vendor_contact?.company.vendor_id,
+                // project_id: data.vendor_contact?.company.project_id,
+                project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
+                vendor_contact_id: data.vendor_contact?.vendor_contact_id,
                 hst_amount: data.hst_amount,
                 total_amount: data.total_amount,
                 project_site_id: data.project_site,
-                country: data.vendor_contact.company.country,
-                state: data.vendor_contact.company.state,
-                address: data.vendor_contact.company.address,
-                phone: data.vendor_contact.phone_number,
-                email: data.vendor_contact.email,
+                country: data.vendor_contact?.company.country,
+                state: data.vendor_contact?.company.state,
+                address: data.vendor_contact?.company.address,
+                phone: data.vendor_contact?.phone_number,
+                email: data.vendor_contact?.email,
                 shipment_type: data.shipment_type,
+                project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                 delivery_address: data.delivery_address || '1860 Shawson',
-                material_details: [...data.material_details]
+                material_details: [...data.material_details],
+                // material_details: data.material_details.map((detail) => {
+                //     return { ...detail, project_site_id: detail.project_site?.site_id }
+                // }),
+                status: data.status
             });
             form.setFieldValue('po_type', data.po_type);
-            form.setFieldValue('po_number', data.po_number);
-            form.setFieldValue('company_name', data.vendor_contact.company.company_name)
-            form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
-            form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
-            form.setFieldValue('shipment_type', data.shipment_type);
-            form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2));
+            form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
+            form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
+            form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
+            form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
             form.setFieldValue('total_amount', data.total_amount);
             form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
             form.setFieldValue('poDate', moment(data.po_date));
-            form.setFieldValue('country', data.vendor_contact.company.country);
-            form.setFieldValue('state', data.vendor_contact.company.state);
-            form.setFieldValue('address', data.vendor_contact.company.address);
-            form.setFieldValue('phone', data.vendor_contact.phone_number);
-            form.setFieldValue('email', data.vendor_contact.email);
+            form.setFieldValue('country', data.vendor_contact?.company.country);
+            form.setFieldValue('state', data.vendor_contact?.company.state);
+            form.setFieldValue('address', data.vendor_contact?.company.address);
+            form.setFieldValue('phone', data.vendor_contact?.phone_number);
+            form.setFieldValue('email', data.vendor_contact?.email);
             form.setFieldValue('poNumber', data.po_number)
             form.setFieldValue('shipment_type', data.shipment_type)
             form.setFieldValue('delivery_address', data.delivery_address || '1860 Shawson')
             form.setFieldValue('quantity', data.material_details[0]?.quantity)
             form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
-            form.setFieldValue('amount', data.material_details[0]?.amount)
             form.setFieldValue('description', data.material_details[0]?.description)
-            form.setFieldValue('material_for', data.material_details[0]?.material_for)
+            // form.setFieldValue('project_site_id', data.material_details[0]?.project_site)
             form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
             form.setFieldValue('code', data.material_details[0]?.code)
             form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
@@ -97,10 +103,10 @@ const Material_invoice = ({ data }) => {
                 form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                 form.setFieldValue('material_for' + (index), material.material_for)
                 form.setFieldValue('project_id' + (index), material.project?.project_id)
+                form.setFieldValue('amount' + (index), material.amount)
             })
         }
     }, [data]);
-
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
             return total + parseFloat(item.amount);
@@ -160,6 +166,7 @@ const Material_invoice = ({ data }) => {
             ...formData
         });
     }
+    console.log(formData,'llllll');
 
     return (
         <>
