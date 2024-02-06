@@ -213,7 +213,6 @@ const ViewMaterialPo = () => {
                                             </div>
                                         </div>
                                     </div>
-
                                     <PoForm formData={formData} view={true} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />
                                 </Form>
                             </div>
