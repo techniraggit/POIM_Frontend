@@ -207,7 +207,7 @@ const CreateInvoice = () => {
                                                             valuePropName="fileList"
                                                             getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
                                                         >
-                                                            <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1}>
+                                                            <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
                                                                 <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
                                                             </Upload>
                                                         </Form.Item>

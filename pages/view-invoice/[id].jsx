@@ -183,8 +183,10 @@ const ViewInvoice = () => {
                                             const fileName = invoice_file_split[invoice_file_split.length - 1];
                                             return (
                                                 <>
-                                                    <div>
+                                                <div className="download-wrap d-flex">
+                                                    <div className="download-fine-invoice">
                                                         {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
+                                                    </div>
                                                     </div>
                                                 </>
                                             )
@@ -193,8 +195,8 @@ const ViewInvoice = () => {
                                     <Form.Item name={"note"} className="note-wrap wrap-box">
                                         <TextArea disabled />
                                     </Form.Item>
-                                    <Form.Item name={"amount"} className="note-wrap wrap-box">
-                                        <Input disabled  />
+                                    <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
+                                        <Input disabled  addonBefore="$" />
                                     </Form.Item>
                                 </Form>
                             </div>

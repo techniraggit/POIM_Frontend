@@ -204,11 +204,29 @@ const EditMaterialPo = () => {
                     <Header heading='Purchase Orders' />
                     <div className="bottom-wrapp">
                         <ul class=" create-icons">
-                            <li class="icon-text react-icon">
+                            {/* <li class="icon-text react-icon">
                                 <PlusOutlined />
                                 <span>Edit Purchase Order</span>
+                            </li> */}
+                            <li class="icon-text react-icon justify-content-between">
+                                <div className="plus-wraptext d-flex align-items-center">
+                                <PlusOutlined />
+                                <span>Edit Purchase Order</span>
+                                </div>
+                                {
+                                formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
+                                <div className="mt-0 apr-rej-li d-flex">
+                                        <Button type="primary" className="approved-btn me-3" onClick={() => {
+                                            setIsModalOpen(true);
+                                        }}>Approve</Button>
+                                        <Button type="primary" className="reject-btn" danger onClick={(event) => {
+                                            handleStatusChange(event, 'reject')
+                                        }}>Reject</Button>
+                                    </div>
+                                    </Roles>
+                            }
                             </li>
-                            {
+                            {/* {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
                                     <li className="mt-3 apr-rej-li d-flex">
                                         <Button type="primary" className="approved-btn me-3" onClick={() => {
@@ -219,7 +237,7 @@ const EditMaterialPo = () => {
                                         }}>Reject</Button>
                                     </li>
                                 </Roles>
-                            }
+                            } */}
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">

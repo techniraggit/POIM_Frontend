@@ -70,7 +70,7 @@ const ChangePasswordForm = ({ base_url }) => {
                     if (!value || getFieldValue('new_password') === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error('The two passwords do not match!'));
+                    return Promise.reject(new Error('The confirm password do not match!'));
                   },
                 }),
               ]}
@@ -79,7 +79,7 @@ const ChangePasswordForm = ({ base_url }) => {
             </Form.Item>
           </div>
 
-          <div className="buttonWrapper">
+          <div className="buttonWrapper mt-2">
             <Form.Item>
               <div className="buttonWrapper">
                 <Button

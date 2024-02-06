@@ -164,7 +164,7 @@ const Login = ({ base_url }) => {
                                                 {forgotPasswordErrors.forgotEmail && (
                                                     <span className="error">{forgotPasswordErrors.forgotEmail}</span>
                                                 )}
-                                                <button onClick={handleSendEmail}>Send Email</button>
+                                                <button className="sendemail-btn" onClick={handleSendEmail}>Send Email</button>
                                             </div>
                                         </div>
                                     )}
