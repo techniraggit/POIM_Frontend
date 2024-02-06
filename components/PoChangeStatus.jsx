@@ -44,7 +44,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange }) => {
             <div>
                 <button type="button" onClick={handleCloseModal}>Cancel</button>
                 <button type="submit" onClick={(event) => {
-                    handleStatusChange(event, 'approve', form)
+                    handleStatusChange(event, 'approved', form)
                 }}>Approve</button>
             </div>
           </form>

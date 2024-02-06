@@ -12,6 +12,11 @@ ul {
 body {
     background-color: #FAFAFA;
 }
+span.d-block.admin-menu {
+    color: red;
+    font-weight: 700;
+    font-size: 13px;
+}
 
 .inner-wrapper {
     width: calc(100% - 320px);

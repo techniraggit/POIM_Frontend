@@ -194,7 +194,7 @@ const Edit_Rental_Po = () => {
                                         setIsModalOpen(true);
                                     }}>Approve</Button>
                                     <Button type="primary" danger onClick={(event) => {
-                                        handleStatusChange(event, 'reject')
+                                        handleStatusChange(event, 'rejected')
                                     }}>Reject</Button>
                                 </li>
                             </Roles>
