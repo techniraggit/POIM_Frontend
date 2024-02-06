@@ -84,7 +84,7 @@ const Login = ({ base_url }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm()) {
+        if (validateForm() && !forgotEmail) {
             const values = {
                 email: email,
                 password: password,
@@ -164,7 +164,7 @@ const Login = ({ base_url }) => {
                                                 {forgotPasswordErrors.forgotEmail && (
                                                     <span className="error">{forgotPasswordErrors.forgotEmail}</span>
                                                 )}
-                                                <button className="sendemail-btn" onClick={handleSendEmail}>Send Email</button>
+                                                <button className="sendemail-btn" disabled={!forgotEmail} onClick={handleSendEmail}>Send Email</button>
                                             </div>
                                         </div>
                                     )}
