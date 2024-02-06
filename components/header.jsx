@@ -16,7 +16,9 @@ const Header = ({ heading }) => {
             <img src="/images/notification.svg" alt="" />
             <span>1</span>
           </li>
-          <li class="ms-2"><span>{user.first_name} {user.last_name}</span></li>
+          <li class="ms-2"><span>{user.first_name} {user.last_name}</span>
+          <span className="d-block admin-menu">{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</span></li>
+          
           <li class="user">
             <span></span>
             <Link href="#"
