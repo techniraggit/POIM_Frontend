@@ -171,7 +171,7 @@ const Vendor = ({ base_url }) => {
                                 nextIcon={<Button>Next</Button>}
                                 onShowSizeChange={() => setCurrentPage(+1)}
                                 total={count}
-                                pageSize={2} // Number of items per page
+                                pageSize={20} // Number of items per page
 
                             />
                         </div>
