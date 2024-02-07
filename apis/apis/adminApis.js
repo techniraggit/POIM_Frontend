@@ -62,6 +62,9 @@ export const userClear=()=>{
 export const vendorSearch=(inputValue)=>{
     return Axios.get(`/api/search/vendors?query=${inputValue}`)
 }
+export const poSearch=(inputValue)=>{
+    return Axios.get(`/api/search/purchase-order?query=${inputValue}`)
+}
 export const invoiceSearch=(inputValue)=>{
     return Axios.get(`/api/search/invoices?query=${inputValue}`)
 }
