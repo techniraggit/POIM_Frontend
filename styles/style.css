@@ -3290,6 +3290,15 @@ button.sendemail-btn {
 .download-fine-invoice span.anticon.anticon-download {
     margin-left: 10px;
 }
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+ .pagination-container  li.ant-pagination-options {
+    display: none !important;
+}
 /* feb */
 /* responsive */
 @media (max-width: 1299px) {

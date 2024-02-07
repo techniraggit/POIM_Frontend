@@ -65,8 +65,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         if ((form.getFieldValue('shipment_type') === 'project related') || (form.getFieldValue('shipment_type') === 'combined')) {
             const response = fetchProjects();
             response.then((res) => {
-                if (res?.data?.status) {
-                    setProjects(res.data.projects);
+                if (res?.data?.results.status) {
+                    setProjects(res.data.results.projects);
                 }
             });
         }

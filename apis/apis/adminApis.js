@@ -3,6 +3,7 @@ import { Axios } from '../config/axiosConfig';
 
 export const fetchProjects = () => {
     return Axios.get(`/api/admin/projects`);
+    // ?page=${currentPage}
 }
 
 export const fetchVendorContact = () => {

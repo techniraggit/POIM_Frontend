@@ -11,6 +11,7 @@ import PoForm from '../../components/Form';
 import moment from "moment";
 import Roles from "@/components/Roles";
 import ChangeStatus from "@/components/PoChangeStatus";
+import withAuth from "@/components/PrivateRoute";
 
 const { Option } = Select;
 
@@ -290,4 +291,5 @@ const EditMaterialPo = () => {
     );
 };
 export { getServerSideProps };
-export default EditMaterialPo;
+export default withAuth(['admin', 'project coordinator','project manager','site superintendent','marketing','health $ safety','estimator','shop'])(EditMaterialPo)
+// export default EditMaterialPo;

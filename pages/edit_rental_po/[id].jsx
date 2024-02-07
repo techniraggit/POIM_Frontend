@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import Roles from "@/components/Roles";
 import ChangeStatus from "@/components/PoChangeStatus";
 import PoForm from "@/components/Form";
+import withAuth from "@/components/PrivateRoute";
 
 const { Option } = Select;
 
@@ -252,5 +253,6 @@ const Edit_Rental_Po = () => {
 }
 
 export { getServerSideProps };
+export default withAuth(['admin', 'project coordinator','project manager','site superintendent','marketing','health $ safety','estimator','shop'])(Edit_Rental_Po)
 
-export default Edit_Rental_Po;
+// export default Edit_Rental_Po;
