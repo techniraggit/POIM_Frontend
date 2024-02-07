@@ -62,6 +62,9 @@ export const userClear=()=>{
 export const vendorSearch=(inputValue)=>{
     return Axios.get(`/api/search/vendors?query=${inputValue}`)
 }
+export const invoiceSearch=(inputValue)=>{
+    return Axios.get(`/api/search/invoices?query=${inputValue}`)
+}
 export const vendorClear=()=>{
     return Axios.get(`/api/admin/vendors`)
 }
@@ -99,6 +102,9 @@ export const invoiceSubmit=(data)=>{
     return Axios.post(`/api/admin/invoice`,data)
 }
 export const invoiceList=()=>{
+    return Axios.get(`/api/admin/invoice`)
+}
+export const invoiceClear=()=>{
     return Axios.get(`/api/admin/invoice`)
 }
 

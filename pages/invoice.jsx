@@ -8,23 +8,45 @@ import { PlusOutlined } from '@ant-design/icons'
 import { invoiceList } from "@/apis/apis/adminApis";
 import Roles from "@/components/Roles";
 import Header from "@/components/header";
+import { invoiceClear,invoiceSearch } from "@/apis/apis/adminApis";
 
 const { Option } = Select;
 
 const Invoice = () => {
     const [invoiceTable, setInvoiceTable] = useState([]);
-    const [invoice,setInvoice]=useState(0);
-    const [pendingInvoice,setPendingInvoice]=useState(0)
+    const [invoice, setInvoice] = useState(0);
+    const [pendingInvoice, setPendingInvoice] = useState(0);
+    const [inputValue, setInputValue] = useState('');
     useEffect(() => {
         const response = invoiceList();
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 setInvoiceTable(res.data.data)
                 setInvoice(res.data.total_invoice)
                 setPendingInvoice(res.data.total_pending_invoice)
             }
         })
     }, [])
+
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+    };
+
+    const handleButtonClick = async (event) => {
+        event.preventDefault();
+        invoiceSearch(inputValue).then((response) => {
+            console.log(response,'kkkkkk');
+            setInvoiceTable(response.data.search_invoice_data)
+
+        })
+
+    };
+    const handleClearButtonClick = () => {
+        setInputValue('');
+        invoiceClear().then((res) => {
+            setInvoiceTable(res.data.data)
+        })
+    };
 
     return (
         <>
@@ -39,7 +61,7 @@ const Invoice = () => {
                                     <li class="me-4 ">
                                         <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
                                         {/* <i class="fa-solid fa-plus mb-3"></i> */}
-                                        <span  className="mt-3">Add Invoice</span>
+                                        <span className="mt-3">Add Invoice</span>
                                     </li>
                                 </Roles>
                             }
@@ -56,10 +78,21 @@ const Invoice = () => {
                         </ul>
                         <div className="searchbar-wrapper">
                             <div className="Purchase-form">
-                                <form className="search-purchase gap-0">
-                                    <input className="vendor-input" placeholder="Search Invoice" />
-                                    <Button className="vendor-search-butt">Search</Button>
-                                </form>
+                                <div className="wrapin-form add-clear-wrap">
+                                    <form className="search-vendor">
+                                        <input className="vendor-input" placeholder="Search Vendor"
+                                            value={inputValue} onChange={handleInputChange}
+                                        />
+                                        <button className="vendor-search-butt"
+                                            onClick={handleButtonClick}
+                                        >Search</button>
+                                    </form>
+                                    <button type="submit" className="clear-button ms-3"
+                                     onClick={handleClearButtonClick}
+                                     >
+                                        Clear
+                                        </button>
+                                </div>
                                 <div className="purchase-filter">
                                     <span className="filter-span">Filter :</span>
                                     <Select className="line-select me-2" placeholder="Type">
@@ -103,7 +136,7 @@ const Invoice = () => {
                                     </thead>
                                     <tbody>
                                         {Array.isArray(invoiceTable) &&
-                                            invoiceTable.map((invoice, index) =>(
+                                            invoiceTable.map((invoice, index) => (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{invoice.purchase_order.po_number}</td>
