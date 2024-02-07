@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
-import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
+import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled, LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
-import { Popconfirm, Input, message, Pagination } from 'antd';
+import { Popconfirm, Input, message, Pagination, Button } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
 import UserPopUp from "@/components/user-popup";
@@ -18,21 +18,26 @@ const User_list = ({ base_url }) => {
     const [searchValue, setSearchValue] = useState('');
     const [inputValue, setInputValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState('')
+    // console.log(currentPage);
+
     useEffect(() => {
         const fetchroles = async () => {
+            // setCurrentPage(page);
             try {
                 const headers = {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
-                const response = await axios.get(`${base_url}/api/admin/users`, { headers: headers });
-                setTotalUser(response.data.total_users)
-                setUsers(response.data.data);
+                const response = await axios.get(`${base_url}/api/admin/users?page=${currentPage}`, { headers: headers });
+                setCount(response.data.count)
+                setTotalUser(response.data.results.total_users)
+                setUsers(response.data.results.data);
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
         }
         fetchroles();
-    }, [])
+    }, [currentPage])
 
 
     const handleDelete = async (id) => {
@@ -54,7 +59,6 @@ const User_list = ({ base_url }) => {
             message.success('user deleted successfully.');
             setTotalUser(prevTotalUser => prevTotalUser - 1);
             setUsers(preuser => preuser.filter(user => user.id !== id));
-            // Reload the categories after deleting
         } catch (error) {
             console.error('Error deleting category:', error);
             message.error('Failed to delete the item. Please try again later.');
@@ -82,6 +86,7 @@ const User_list = ({ base_url }) => {
             setUsers(res.data.data);
         })
     };
+
     return (
         <>
             <div className="wrapper-main">
@@ -161,14 +166,23 @@ const User_list = ({ base_url }) => {
                                                 </tr>
                                             ))}
                                     </tbody>
-                                    <Pagination
-                                        current={currentPage}
-                                        total={100} // Total number of items
-                                        pageSize={10} // Number of items per page
-                                        onChange={handlePageChange} // Callback function triggered when page changes
-                                    />
+
                                 </table>
                             </div>
+                        </div>
+                        <div className="pagination-container">
+                            <Pagination
+                                // defaultCurrent={2}
+                                current={currentPage}
+                                onChange={setCurrentPage}
+                                showSizeChanger={true}
+                                prevIcon={<Button>Previous</Button>}
+                                nextIcon={<Button>Next</Button>}
+                                onShowSizeChange={() => setCurrentPage(+1)}
+                                total={count}
+                                pageSize={20} // Number of items per page
+
+                            />
                         </div>
                     </div>
                 </div>
