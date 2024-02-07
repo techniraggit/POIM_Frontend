@@ -17,6 +17,7 @@ const User_list = ({ base_url }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [inputValue, setInputValue] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
     useEffect(() => {
         const fetchroles = async () => {
             try {
@@ -160,6 +161,12 @@ const User_list = ({ base_url }) => {
                                                 </tr>
                                             ))}
                                     </tbody>
+                                    <Pagination
+                                        current={currentPage}
+                                        total={100} // Total number of items
+                                        pageSize={10} // Number of items per page
+                                        onChange={handlePageChange} // Callback function triggered when page changes
+                                    />
                                 </table>
                             </div>
                         </div>

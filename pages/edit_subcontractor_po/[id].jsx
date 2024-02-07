@@ -10,6 +10,7 @@ import { Form, Select, Button, Input } from "antd";
 import moment from "moment";
 import PoForm from "@/components/Form";
 import ChangeStatus from "@/components/PoChangeStatus";
+import dayjs from "dayjs";
 
 const { Option } = Select;
 
@@ -17,6 +18,7 @@ const EditSubContractorPo = () => {
     const [formData, setFormData] = useState({
         po_number: '',
         po_type: '',
+        po_date:'',
         amount: 0,
         company_name: '',
         vendor_id: '',
@@ -50,9 +52,11 @@ const EditSubContractorPo = () => {
             fetchPo(id).then((res) => {
                 if(res?.data?.status) {
                     const data = res.data.data;
+                    console.log(data.po_date,'data');
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
+                        // po_date:data.po_date,
                         can_change_status: res.data?.can_change_status,
                         amount: data.total_amount,
                         subcontractor_type: data.subcontractor_type,
@@ -85,7 +89,8 @@ const EditSubContractorPo = () => {
                     form.setFieldValue('total_amount', data.total_amount);
                     form.setFieldValue('original_po_amount', data.total_amount);
                     form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
-                    form.setFieldValue('poDate', moment(data.po_date));
+                    form.setFieldValue('poDate', dayjs(data.po_date));
+                    // form.setFieldValue('poDate', data.po_date);
                     form.setFieldValue('country', data.vendor_contact.company.country);
                     form.setFieldValue('state', data.vendor_contact.company.state);
                     form.setFieldValue('address', data.vendor_contact.company.address);
@@ -177,6 +182,7 @@ const EditSubContractorPo = () => {
             }
         })
     }
+    console.log(formData,'formDataqqqq');
 
     return (
         <>
