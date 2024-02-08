@@ -96,7 +96,6 @@ const CreateInvoice = () => {
             ...form
         });
     }
-
     return (
         <>
             <div class="wrapper-main">

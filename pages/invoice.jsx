@@ -20,7 +20,6 @@ const Invoice = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
     useEffect(() => {
-        // const response = invoiceList();
         invoiceList(currentPage).then((res) => {
             if (res?.data?.results.status) {
                 setInvoiceTable(res.data.results.data)

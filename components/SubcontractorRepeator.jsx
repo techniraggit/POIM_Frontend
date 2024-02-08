@@ -13,6 +13,7 @@ const repeatorData = {
 }
 
 function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, form, edit, view }) {
+    console.log(formData);
     useEffect(() => {
         if (edit) {
             form.setFieldValue('date', formData.material_details[0]?.date);

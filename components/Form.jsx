@@ -18,7 +18,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
     const { user } = useGlobalContext();
-
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
         if(!edit && !view){
@@ -133,6 +132,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
+    console.log(formData,'formdarara');
 
     return (
         <>

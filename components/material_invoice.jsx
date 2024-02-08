@@ -47,7 +47,7 @@ const Material_invoice = ({ data }) => {
 
     useEffect(() => {
         if (data && data?.status) {
-            console.log( data.project,'fffff');
+
             setFormData({
                 ...formData,
                 po_type: data.po_type,
@@ -166,8 +166,6 @@ const Material_invoice = ({ data }) => {
             ...formData
         });
     }
-    console.log(formData,'llllll');
-
     return (
         <>
             <div className="choose-potype round-wrap">

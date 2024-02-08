@@ -31,6 +31,7 @@ const EditInvoice = () => {
     const router = useRouter();
     const { id } = router.query;
     const [form] = Form.useForm();
+    console.log(repeatorData,'ggggggggggggggggggggggggg');
 
     const onFinish = () => {
         const formData = new FormData();
