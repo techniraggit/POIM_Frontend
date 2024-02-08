@@ -192,10 +192,10 @@ const Edit_Rental_Po = () => {
                             {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
                                 <div className="mt-0 apr-rej-li d-flex">
-                                    <Button type="primary" onClick={() => {
+                                    <Button type="primary" className="approved-btn me-3"  onClick={() => {
                                         setIsModalOpen(true);
                                     }}>Approve</Button>
-                                    <Button type="primary" danger onClick={(event) => {
+                                    <Button type="primary" className="reject-btn"   danger onClick={(event) => {
                                         handleStatusChange(event, 'rejected')
                                     }}>Reject</Button>
                                 </div>
