@@ -3,6 +3,7 @@ import { Axios } from '../config/axiosConfig';
 
 export const fetchProjects = () => {
     return Axios.get(`/api/admin/projects`);
+    // ?page=${currentPage}
 }
 
 export const fetchVendorContact = () => {
@@ -32,8 +33,8 @@ export const getVendorDetails = (id) => {
     return Axios.get(`/api/helping/vendor-details?vendor_contact_id=${id}`)
 }
 
-export const getPoList = () => {
-    return Axios.get('/api/admin/purchase-order');
+export const getPoList = (currentPage) => {
+    return Axios.get(`/api/admin/purchase-order?page=${currentPage}`);
 }
 
 export const deletePO = (data) => {
@@ -61,6 +62,12 @@ export const userClear=()=>{
 }
 export const vendorSearch=(inputValue)=>{
     return Axios.get(`/api/search/vendors?query=${inputValue}`)
+}
+export const poSearch=(inputValue)=>{
+    return Axios.get(`/api/search/purchase-order?query=${inputValue}`)
+}
+export const invoiceSearch=(inputValue)=>{
+    return Axios.get(`/api/search/invoices?query=${inputValue}`)
 }
 export const vendorClear=()=>{
     return Axios.get(`/api/admin/vendors`)
@@ -98,7 +105,10 @@ export const fetchProjectNumber=(number)=>{
 export const invoiceSubmit=(data)=>{
     return Axios.post(`/api/admin/invoice`,data)
 }
-export const invoiceList=()=>{
+export const invoiceList=(currentPage)=>{
+    return Axios.get(`/api/admin/invoice?page=${currentPage}`)
+}
+export const invoiceClear=()=>{
     return Axios.get(`/api/admin/invoice`)
 }
 

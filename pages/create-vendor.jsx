@@ -94,4 +94,4 @@ const CreateVendor = () => {
     )
 }
 export { getServerSideProps }
-export default withAuth(['admin', 'project manager', 'accounting', 'site superintendent','project coordinate'])(CreateVendor)
+export default withAuth(['admin', 'project manager', 'accounting', 'site superintendent','project coordinator'])(CreateVendor)

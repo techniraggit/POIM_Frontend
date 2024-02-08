@@ -18,10 +18,13 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
     const { user } = useGlobalContext();
-
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
-        form.setFieldValue('poDate', moment());
+        if(!edit && !view){
+            form.setFieldValue('poDate', dayjs());
+
+        }
+        // form.setFieldValue('poDate',formData.po_date);
         if (formData.shipment_type) {
             form.setFieldValue('shipment_type', formData.shipment_type)
         }
@@ -61,8 +64,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         if ((form.getFieldValue('shipment_type') === 'project related') || (form.getFieldValue('shipment_type') === 'combined')) {
             const response = fetchProjects();
             response.then((res) => {
-                if (res?.data?.status) {
-                    setProjects(res.data.projects);
+                if (res?.data?.results.status) {
+                    setProjects(res.data.results.projects);
                 }
             });
         }
@@ -129,7 +132,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
-
     return (
         <>
             <div class="order-choose d-flex">
@@ -155,6 +157,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                 <div className="left-wrap wrap-number" id="forspce">
                     <Form.Item
                         label="Date"
+                        name='poDate'
                         rules={[
                             {
                                 validator: (_, value) => {

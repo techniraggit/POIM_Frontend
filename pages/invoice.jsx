@@ -1,30 +1,54 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { EyeFilled, EditFilled } from '@ant-design/icons'
-import { Button, Select, } from 'antd';
+import { Button, Select,Pagination } from 'antd';
 import Sidebar from "@/components/sidebar";
 import Link from "next/link";
 import { PlusOutlined } from '@ant-design/icons'
 import { invoiceList } from "@/apis/apis/adminApis";
 import Roles from "@/components/Roles";
 import Header from "@/components/header";
+import { invoiceClear,invoiceSearch } from "@/apis/apis/adminApis";
 
 const { Option } = Select;
 
 const Invoice = () => {
     const [invoiceTable, setInvoiceTable] = useState([]);
-    const [invoice,setInvoice]=useState(0);
-    const [pendingInvoice,setPendingInvoice]=useState(0)
+    const [invoice, setInvoice] = useState(0);
+    const [pendingInvoice, setPendingInvoice] = useState(0);
+    const [inputValue, setInputValue] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState('')
     useEffect(() => {
-        const response = invoiceList();
-        response.then((res) => {
-            if(res?.data?.status) {
-                setInvoiceTable(res.data.data)
-                setInvoice(res.data.total_invoice)
-                setPendingInvoice(res.data.total_pending_invoice)
+        invoiceList(currentPage).then((res) => {
+            if (res?.data?.results.status) {
+                setInvoiceTable(res.data.results.data)
+                setInvoice(res.data.results.total_invoice)
+                setPendingInvoice(res.data.results.total_pending_invoice)
             }
+            setCount(res.data.count)
         })
     }, [])
+
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+    };
+
+    const handleButtonClick = async (event) => {
+        event.preventDefault();
+        invoiceSearch(inputValue).then((response) => {
+            console.log(response,'kkkkkk');
+            setInvoiceTable(response.data.search_invoice_data)
+
+        })
+
+    };
+    const handleClearButtonClick = () => {
+        setInputValue('');
+        invoiceClear().then((res) => {
+            setInvoiceTable(res.data.data)
+        })
+    };
 
     return (
         <>
@@ -39,7 +63,7 @@ const Invoice = () => {
                                     <li class="me-4 ">
                                         <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
                                         {/* <i class="fa-solid fa-plus mb-3"></i> */}
-                                        <span  className="mt-3">Add Invoice</span>
+                                        <span className="mt-3">Add Invoice</span>
                                     </li>
                                 </Roles>
                             }
@@ -56,10 +80,21 @@ const Invoice = () => {
                         </ul>
                         <div className="searchbar-wrapper">
                             <div className="Purchase-form">
-                                <form className="search-purchase gap-0">
-                                    <input className="vendor-input" placeholder="Search Invoice" />
-                                    <Button className="vendor-search-butt">Search</Button>
-                                </form>
+                                <div className="wrapin-form add-clear-wrap">
+                                    <form className="search-vendor">
+                                        <input className="vendor-input" placeholder="Search Vendor"
+                                            value={inputValue} onChange={handleInputChange}
+                                        />
+                                        <button className="vendor-search-butt"
+                                            onClick={handleButtonClick}
+                                        >Search</button>
+                                    </form>
+                                    <button type="submit" className="clear-button ms-3"
+                                     onClick={handleClearButtonClick}
+                                     >
+                                        Clear
+                                        </button>
+                                </div>
                                 <div className="purchase-filter">
                                     <span className="filter-span">Filter :</span>
                                     <Select className="line-select me-2" placeholder="Type">
@@ -96,14 +131,14 @@ const Invoice = () => {
                                             <th className="hedaings-tb td-color">PO Vendor</th>
                                             <th className="hedaings-tb">PO Status</th>
                                             <th className="hedaings-tb">PM</th>
-                                            <th className="hedaings-tb">DM</th>
+                                            <th className="hedaings-tb">DM/Admin</th>
                                             <th className="hedaings-tb">Po Creator</th>
                                             <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {Array.isArray(invoiceTable) &&
-                                            invoiceTable.map((invoice, index) =>(
+                                            invoiceTable.map((invoice, index) => (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{invoice.purchase_order.po_number}</td>
@@ -138,6 +173,20 @@ const Invoice = () => {
 
                             </div>
                         </div>
+                    </div>
+                    <div className="pagination-container">
+                        <Pagination
+                            // defaultCurrent={2}
+                            current={currentPage}
+                            onChange={setCurrentPage}
+                            showSizeChanger={true}
+                            prevIcon={<Button>Previous</Button>}
+                            nextIcon={<Button>Next</Button>}
+                            onShowSizeChange={() => setCurrentPage(+1)}
+                            total={count}
+                            pageSize={10} // Number of items per page
+
+                        />
                     </div>
                 </div>
             </div>

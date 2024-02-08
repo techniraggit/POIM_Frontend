@@ -3,24 +3,31 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
-import { message, Popconfirm } from 'antd';
+import { message, Popconfirm,Pagination,Button } from 'antd';
 import Link from "next/link";
-import { deletePO, getPoList } from "@/apis/apis/adminApis";
+import { deletePO, getPoList, poSearch } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
 
 const PO_list = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [search, setSearch] = useState('');
-
+    const [inputValue, setInputValue] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState('')
+    
     useEffect(() => {
-        const response = getPoList();
-        response.then((res) => {
-            if (res?.data?.status) {
-                setPurchaseOrders(res.data.data || []);
+        // const response = getPoList();
+        getPoList(currentPage).then((res) => {
+            console.log(res.data.count,'count');
+            if (res?.data?.results?.status) {
+               
+                setPurchaseOrders(res.data.results.data || []);
             }
+            setCount(res.data.count)
+           
         })
-    }, []);
+    }, [currentPage]);
 
     const handleDelete = (id) => {
         const response = deletePO({ po_id: id });
@@ -36,6 +43,24 @@ const PO_list = () => {
         return order.po_type.toLowerCase().includes(search.toLowerCase()) ||
             order.vendor_contact.name.toLowerCase().includes(search.toLowerCase())
     }) || [];
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+    };
+    const handleButtonClick = async (event) => {
+        event.preventDefault();
+        poSearch(inputValue).then((response) => {
+            console.log(response, 'res');
+            setPurchaseOrders(response.data.search_query_data)
+
+        })
+
+    };
+    const handleClearButtonClick = () => {
+        setInputValue('');
+        getPoList().then((res) => {
+            setPurchaseOrders(res.data.data);
+        })
+    };
 
     return (
         <>
@@ -58,13 +83,23 @@ const PO_list = () => {
                                 <span>Total POs</span>
                             </li>
                         </ul>
-                        <div className="wrapin-form">
+                        {/* <div className="wrapin-form"> */}
+                        <div className="wrapin-form add-clear-wrap">
                             <form className="search-vendor">
+                                <input className="vendor-input" placeholder="Search Vendor"
+                                    value={inputValue} onChange={handleInputChange}
+                                />
+                                <button className="vendor-search-butt"
+                                    onClick={handleButtonClick}
+                                >Search</button>
+                            </form>
+                            <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
+                            {/* <form className="search-vendor">
                                 <input value={search} onChange={({ target: { value } }) => {
                                     setSearch(value);
                                 }} className="vendor-input" placeholder="Search Purchase Order" />
                                 <button className="vendor-search-butt">Search</button>
-                            </form>
+                            </form> */}
                         </div>
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
@@ -75,7 +110,7 @@ const PO_list = () => {
                                             <th className="hedaings-tb">PO No.</th>
                                             <th className="hedaings-tb">Project Number</th>
                                             <th className="hedaings-tb">Purchase Order Type</th>
-                                            <th className="hedaings-tb">PO Creation date</th>
+                                            <th className="hedaings-tb">PO Date</th>
                                             <th className="hedaings-tb">PO Amount</th>
                                             <th className="hedaings-tb">PO Status</th>
                                             <th className="hedaings-tb">PO Vendor</th>
@@ -88,9 +123,9 @@ const PO_list = () => {
                                                 return <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{purchase.po_number}</td>
-                                                    <td>{purchase.project?.project_no|| '-'}</td>
+                                                    <td>{purchase.project?.project_no || '-'}</td>
                                                     <td className="td-color">{purchase.po_type}</td>
-                                                    <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
+                                                    <td>{new Date(purchase.po_date).toLocaleDateString('en-US', {
                                                         year: 'numeric',
                                                         month: 'short',
                                                         day: 'numeric',
@@ -100,17 +135,17 @@ const PO_list = () => {
                                                     <td>{purchase.vendor_contact?.name}</td>
                                                     <td className="td-icon-color">
                                                         <Roles action='view_purchase_order'>
-                                                        {purchase.po_type === 'material' && (
-                                                            <Link href={`/view-po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
-                                                        )}
-                                                        {purchase.po_type === 'rental' && (
-                                                            <Link href={`/view_rental_po/${purchase.po_id}`}><EyeFilled /></Link>
-                                                        )}
-                                                        {purchase.po_type === "subcontractor" && (
-                                                            <Link href={`/view_subcontractor_po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
-                                                        )}
+                                                            {purchase.po_type === 'material' && (
+                                                                <Link href={`/view-po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
+                                                            )}
+                                                            {purchase.po_type === 'rental' && (
+                                                                <Link href={`/view_rental_po/${purchase.po_id}`}><EyeFilled /></Link>
+                                                            )}
+                                                            {purchase.po_type === "subcontractor" && (
+                                                                <Link href={`/view_subcontractor_po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
+                                                            )}
                                                         </Roles>
-                                                        
+
                                                         <Roles action='delete_purchase_order'>
                                                             <Popconfirm
                                                                 title="Are you sure you want to delete this item?"
@@ -145,6 +180,20 @@ const PO_list = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="pagination-container">
+                        <Pagination
+                            // defaultCurrent={2}
+                            current={currentPage}
+                            onChange={setCurrentPage}
+                            showSizeChanger={true}
+                            prevIcon={<Button>Previous</Button>}
+                            nextIcon={<Button>Next</Button>}
+                            onShowSizeChange={() => setCurrentPage(+1)}
+                            total={count}
+                            pageSize={10} // Number of items per page
+
+                        />
+                    </div>
                 </div>
             </div>
         </>
@@ -152,6 +201,6 @@ const PO_list = () => {
 };
 
 export { getServerSideProps };
-export default withAuth(['project manager', 'site superintendent', 'accounting','department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
+export default withAuth(['project manager', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
 
 // export default PO_list;

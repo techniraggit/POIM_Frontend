@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons'
 import axios from 'axios';
-import { message, Popconfirm } from 'antd';
+import { message, Popconfirm , Pagination, Button} from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
@@ -20,6 +20,8 @@ const Vendor = ({ base_url }) => {
     const [isViewVendorVisible, setViewVendorVisible] = useState(false);
     const [clickedIndex, setClickedIndex] = useState(null);
     const [inputValue, setInputValue] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState('')
 
     useEffect(() => {
         const fetchroles = async () => {
@@ -27,15 +29,16 @@ const Vendor = ({ base_url }) => {
                 const headers = {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
-                const response = await axios.get(`${base_url}/api/admin/vendors`, { headers: headers });
-                setTotalVendor(response.data.total_vendors)
-                setVendors(response.data.vendors);
+                const response = await axios.get(`${base_url}/api/admin/vendors?page=${currentPage}`, { headers: headers });
+                setCount(response.data.count)
+                setTotalVendor(response.data.results.total_vendors)
+                setVendors(response.data.results.vendors);
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
         }
         fetchroles();
-    }, [])
+    }, [currentPage])
 
     const handleDelete = async (id) => {
         try {
@@ -163,6 +166,20 @@ const Vendor = ({ base_url }) => {
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div className="pagination-container">
+                            <Pagination
+                                // defaultCurrent={2}
+                                current={currentPage}
+                                onChange={setCurrentPage}
+                                showSizeChanger={true}
+                                prevIcon={<Button>Previous</Button>}
+                                nextIcon={<Button>Next</Button>}
+                                onShowSizeChange={() => setCurrentPage(+1)}
+                                total={count}
+                                pageSize={10} // Number of items per page
+
+                            />
                         </div>
                     </div>
                 </div>

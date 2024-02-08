@@ -3,7 +3,7 @@ import Sidebar from "@/components/sidebar";
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import axios from 'axios';
-import { message, Popconfirm } from 'antd';
+import { message, Popconfirm ,Pagination,Button} from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
@@ -17,6 +17,8 @@ const Vendor = ({ base_url }) => {
     const [isViewProjectVisible, setProjectVisible] = useState(false);
     const [totalProjects, setTotalProjects] = useState(0)
     const [inputValue, setInputValue] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState('')
 
     useEffect(() => {
         const fetchroles = async () => {
@@ -24,15 +26,17 @@ const Vendor = ({ base_url }) => {
                 const headers = {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
-                const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
-                setProjects(response.data.projects)
-                setTotalProjects(response.data.total_projects);
+                const response = await axios.get(`${base_url}/api/admin/projects?page=${currentPage}`, { headers: headers });
+                console.log(response.data.results.projects,'apirespose');
+                setCount(response.data.count)
+                setProjects(response.data.results.projects)
+                setTotalProjects(response.data.results.total_projects);
             } catch (error) {
                 console.error('Error fetching projects:', error);
             }
         }
         fetchroles();
-    }, [])
+    }, [currentPage])
 
     const handleDelete = async (id) => {
         try {
@@ -156,6 +160,20 @@ const Vendor = ({ base_url }) => {
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div className="pagination-container">
+                            <Pagination
+                                // defaultCurrent={2}
+                                current={currentPage}
+                                onChange={setCurrentPage}
+                                showSizeChanger={true}
+                                prevIcon={<Button>Previous</Button>}
+                                nextIcon={<Button>Next</Button>}
+                                onShowSizeChange={() => setCurrentPage(+1)}
+                                total={count}
+                                pageSize={10} // Number of items per page
+
+                            />
                         </div>
                     </div>
                 </div>

@@ -2533,9 +2533,9 @@ button.ant-btn.edit-vendor-btn {
     min-width: 100% !important;
 }
 
-.selectwrap.edit-rental-po span.ant-select-arrow {
-    /* display: none; */
-}
+/* .selectwrap.edit-rental-po span.ant-select-arrow {
+    display: none; 
+} */
 
 .dollar-sign {
     margin-right: 0px;
@@ -3290,6 +3290,7 @@ button.sendemail-btn {
 .download-fine-invoice span.anticon.anticon-download {
     margin-left: 10px;
 }
+
 /* 7 feb  */
 .sidebar-wrapp {
     position: fixed;
@@ -3381,6 +3382,16 @@ span.anticon.anticon-down svg {
 }
 
 /* 8feb */
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+ .pagination-container  li.ant-pagination-options {
+    display: none !important;
+}
+
 /* feb */
 /* responsive */
 @media (max-width: 1299px) {

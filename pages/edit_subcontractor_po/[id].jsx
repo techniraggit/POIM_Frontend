@@ -10,6 +10,9 @@ import { Form, Select, Button, Input } from "antd";
 import moment from "moment";
 import PoForm from "@/components/Form";
 import ChangeStatus from "@/components/PoChangeStatus";
+import dayjs from "dayjs";
+import withAuth from "@/components/PrivateRoute";
+import Roles from "@/components/Roles";
 
 const { Option } = Select;
 
@@ -17,6 +20,7 @@ const EditSubContractorPo = () => {
     const [formData, setFormData] = useState({
         po_number: '',
         po_type: '',
+        po_date:'',
         amount: 0,
         company_name: '',
         vendor_id: '',
@@ -53,6 +57,7 @@ const EditSubContractorPo = () => {
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
+                        // po_date:data.po_date,
                         can_change_status: res.data?.can_change_status,
                         amount: data.total_amount,
                         subcontractor_type: data.subcontractor_type,
@@ -85,7 +90,8 @@ const EditSubContractorPo = () => {
                     form.setFieldValue('total_amount', data.total_amount);
                     form.setFieldValue('original_po_amount', data.total_amount);
                     form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
-                    form.setFieldValue('poDate', moment(data.po_date));
+                    form.setFieldValue('poDate', dayjs(data.po_date));
+                    // form.setFieldValue('poDate', data.po_date);
                     form.setFieldValue('country', data.vendor_contact.company.country);
                     form.setFieldValue('state', data.vendor_contact.company.state);
                     form.setFieldValue('address', data.vendor_contact.company.address);
@@ -177,7 +183,6 @@ const EditSubContractorPo = () => {
             }
         })
     }
-
     return (
         <>
             <div className="wrapper-main">
@@ -187,22 +192,24 @@ const EditSubContractorPo = () => {
                     <div className="bottom-wrapp">
 
                         <ul class=" create-icons">
-                            <li class="icon-text react-icon">
+                        <li class="icon-text react-icon justify-content-between">
+                        <div className="plus-wraptext d-flex align-items-center">
                                 <PlusOutlined />
                                 <span>Create Purchase Order</span>
-                            </li>
+                            </div>
                             {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
-                                <li>
-                                    <Button type="primary" onClick={() => {
+                                <div className="mt-0 apr-rej-li d-flex">
+                                    <Button type="primary" className="approved-btn me-3"  onClick={() => {
                                         setIsModalOpen(true);
                                     }}>Approve</Button>
-                                    <Button type="primary" danger onClick={(event) => {
+                                    <Button type="primary" className="reject-btn"  danger onClick={(event) => {
                                         handleStatusChange(event, 'rejected')
                                     }}>Reject</Button>
-                                </li>
+                                </div>
                             </Roles>
                             }
+                            </li>
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
@@ -322,5 +329,7 @@ const EditSubContractorPo = () => {
 };
 
 export { getServerSideProps };
+export default withAuth(['admin', 'project coordinator','project manager','site superintendent','marketing','health $ safety','estimator','shop'])(EditSubContractorPo)
+// withAuth
 
-export default EditSubContractorPo;
+// export default EditSubContractorPo;

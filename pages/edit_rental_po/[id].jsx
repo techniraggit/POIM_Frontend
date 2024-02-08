@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import Roles from "@/components/Roles";
 import ChangeStatus from "@/components/PoChangeStatus";
 import PoForm from "@/components/Form";
+import withAuth from "@/components/PrivateRoute";
 
 const { Option } = Select;
 
@@ -183,22 +184,25 @@ const Edit_Rental_Po = () => {
                     <Header heading='Purchase Orders' />
                     <div className="bottom-wrapp">
                         <ul class=" create-icons">
-                            <li class="icon-text react-icon">
+                        <li class="icon-text react-icon justify-content-between">
+                        <div className="plus-wraptext d-flex align-items-center">
                                 <PlusOutlined />
                                 <span>Edit Purchase Order</span>
-                            </li>
+                                </div>
                             {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
-                                <li>
-                                    <Button type="primary" onClick={() => {
+                                <div className="mt-0 apr-rej-li d-flex">
+                                    <Button type="primary" className="approved-btn me-3"  onClick={() => {
                                         setIsModalOpen(true);
                                     }}>Approve</Button>
-                                    <Button type="primary" danger onClick={(event) => {
+                                    <Button type="primary" className="reject-btn"   danger onClick={(event) => {
                                         handleStatusChange(event, 'rejected')
                                     }}>Reject</Button>
-                                </li>
+                                </div>
+                                
                             </Roles>
                             }
+                            </li>   
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
@@ -252,5 +256,6 @@ const Edit_Rental_Po = () => {
 }
 
 export { getServerSideProps };
+export default withAuth(['admin', 'project coordinator','project manager','site superintendent','marketing','health $ safety','estimator','shop'])(Edit_Rental_Po)
 
-export default Edit_Rental_Po;
+// export default Edit_Rental_Po;
