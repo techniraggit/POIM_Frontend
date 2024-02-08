@@ -19,7 +19,6 @@ const PO_list = () => {
     useEffect(() => {
         // const response = getPoList();
         getPoList(currentPage).then((res) => {
-            console.log(res.data.count,'count');
             if (res?.data?.results?.status) {
                
                 setPurchaseOrders(res.data.results.data || []);
@@ -49,7 +48,6 @@ const PO_list = () => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         poSearch(inputValue).then((response) => {
-            console.log(response, 'res');
             setPurchaseOrders(response.data.search_query_data)
 
         })

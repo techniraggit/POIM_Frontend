@@ -14,16 +14,12 @@ const User_list = ({ base_url }) => {
     const [users, setUsers] = useState([]);
     const [isViewUserVisible, setUserVisible] = useState(false);
     const [totalUser, setTotalUser] = useState(0)
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchValue, setSearchValue] = useState('');
     const [inputValue, setInputValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
-    // console.log(currentPage);
 
     useEffect(() => {
         const fetchroles = async () => {
-            // setCurrentPage(page);
             try {
                 const headers = {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,

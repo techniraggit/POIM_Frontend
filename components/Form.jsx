@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
-import { Form, Input, Select, DatePicker } from "antd";
+import { Form, Input, Select, DatePicker} from "antd";
 import { fetchProjectSites, fetchProjects, fetchSiteProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";

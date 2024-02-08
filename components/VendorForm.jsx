@@ -164,7 +164,6 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                                 const otherAddresses = formData.contact_info
                                                                     .filter((_, i) => i !== index + 1)
                                                                     .map((otherSite) => otherSite[key]);
-                                                                console.log(otherAddresses)
                                                                 if (otherAddresses.includes(value)) {
                                                                     return Promise.reject(`${upperKey} must be unique.`);
                                                                 }

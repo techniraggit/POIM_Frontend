@@ -6,8 +6,7 @@ import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { changeStatus, fetchPo, updatePo } from "@/apis/apis/adminApis";
-import { Form, Select, Button, Input } from "antd";
-import moment from "moment";
+import { Form, Select, Button, Input,message } from "antd";
 import PoForm from "@/components/Form";
 import ChangeStatus from "@/components/PoChangeStatus";
 import dayjs from "dayjs";
@@ -323,13 +322,10 @@ const EditSubContractorPo = () => {
                     </div>
                 </div>
             </div>
-            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+            {isModalOpen && <ChangeStatus po_id={id} poType={"subcontractor"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
         </>
     );
 };
 
 export { getServerSideProps };
 export default withAuth(['admin', 'project coordinator','project manager','site superintendent','marketing','health $ safety','estimator','shop'])(EditSubContractorPo)
-// withAuth
-
-// export default EditSubContractorPo;

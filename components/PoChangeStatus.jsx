@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/style.css';
 import { CloseOutlined } from '@ant-design/icons';
 
-const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange }) => {
+const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -27,10 +27,12 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange }) => {
             <CloseOutlined />
           </div>
           <form class="details-main">
-            <div class="projct-details">
+            {
+              poType === 'subcontractor' && <div class="projct-details">
               <p class="detail-para1">CO Approved Amount</p>
               <input type="text" value={form.approve_amount} onChange={({ target: { value } }) => handleFormChange('approve_amount', value)} className="detail-para"></input>
             </div>
+            }
 
             <div class="projct-details">
               <div class="pop-up-flex row">
