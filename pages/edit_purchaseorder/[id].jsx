@@ -5,8 +5,8 @@ import Header from "@/components/header";
 import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
-import { changeStatus, updatePO, fetchPo } from "@/apis/apis/adminApis";
-import { Form, Select, Button } from "antd";
+import { changeStatus, fetchPo, updatePo } from "@/apis/apis/adminApis";
+import { Form, Select, Button,message } from "antd";
 import PoForm from '../../components/Form';
 import moment from "moment";
 import Roles from "@/components/Roles";
@@ -144,7 +144,7 @@ const EditMaterialPo = () => {
     }
 
     const onFinish = () => {
-        updatePO({
+        updatePo({
             ...formData,
             po_id:id,
         }).then((res) => {
@@ -196,6 +196,7 @@ const EditMaterialPo = () => {
             }
         })
     }
+    console.log(formData,'ccccccccccccccccccccc');
 
     return (
         <>
