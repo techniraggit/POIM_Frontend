@@ -77,7 +77,6 @@ const User_list = ({ base_url }) => {
         event.preventDefault();
         userSearch(inputValue).then((response) => {
             setUsers(response.data.search_query_data)
-
         })
     };
     const handleClearButtonClick = () => {
@@ -180,7 +179,7 @@ const User_list = ({ base_url }) => {
                                 nextIcon={<Button>Next</Button>}
                                 onShowSizeChange={() => setCurrentPage(+1)}
                                 total={count}
-                                pageSize={20} // Number of items per page
+                                pageSize={10} // Number of items per page
 
                             />
                         </div>

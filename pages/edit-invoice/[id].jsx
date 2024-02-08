@@ -31,7 +31,6 @@ const EditInvoice = () => {
     const router = useRouter();
     const { id } = router.query;
     const [form] = Form.useForm();
-
     const onFinish = () => {
         const formData = new FormData();
 
