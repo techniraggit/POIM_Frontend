@@ -132,8 +132,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
-    console.log(formData,'formdarara');
-
     return (
         <>
             <div class="order-choose d-flex">

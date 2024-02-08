@@ -12,6 +12,7 @@ import PoForm from "@/components/Form";
 import ChangeStatus from "@/components/PoChangeStatus";
 import dayjs from "dayjs";
 import withAuth from "@/components/PrivateRoute";
+import Roles from "@/components/Roles";
 
 const { Option } = Select;
 
@@ -53,7 +54,6 @@ const EditSubContractorPo = () => {
             fetchPo(id).then((res) => {
                 if(res?.data?.status) {
                     const data = res.data.data;
-                    console.log(data.po_date,'data');
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
@@ -183,8 +183,6 @@ const EditSubContractorPo = () => {
             }
         })
     }
-    console.log(formData,'formDataqqqq');
-
     return (
         <>
             <div className="wrapper-main">

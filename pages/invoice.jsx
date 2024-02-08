@@ -131,7 +131,7 @@ const Invoice = () => {
                                             <th className="hedaings-tb td-color">PO Vendor</th>
                                             <th className="hedaings-tb">PO Status</th>
                                             <th className="hedaings-tb">PM</th>
-                                            <th className="hedaings-tb">DM</th>
+                                            <th className="hedaings-tb">DM/Admin</th>
                                             <th className="hedaings-tb">Po Creator</th>
                                             <th className="hedaings-tb">Action</th>
                                         </tr>
