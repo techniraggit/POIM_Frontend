@@ -33,8 +33,8 @@ export const getVendorDetails = (id) => {
     return Axios.get(`/api/helping/vendor-details?vendor_contact_id=${id}`)
 }
 
-export const getPoList = () => {
-    return Axios.get('/api/admin/purchase-order');
+export const getPoList = (currentPage) => {
+    return Axios.get(`/api/admin/purchase-order?page=${currentPage}`);
 }
 
 export const deletePO = (data) => {
@@ -105,8 +105,8 @@ export const fetchProjectNumber=(number)=>{
 export const invoiceSubmit=(data)=>{
     return Axios.post(`/api/admin/invoice`,data)
 }
-export const invoiceList=()=>{
-    return Axios.get(`/api/admin/invoice`)
+export const invoiceList=(currentPage)=>{
+    return Axios.get(`/api/admin/invoice?page=${currentPage}`)
 }
 export const invoiceClear=()=>{
     return Axios.get(`/api/admin/invoice`)

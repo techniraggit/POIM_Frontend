@@ -87,7 +87,7 @@ const Subcontractor_invoice = ({data}) => {
                 form.setFieldValue('last_name', data.created_by.last_name)
             }
         }
-    }, []);
+    }, [id]);
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
             return total + parseFloat(item.amount);
