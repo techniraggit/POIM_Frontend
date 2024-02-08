@@ -37,7 +37,6 @@ const Invoice = () => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         invoiceSearch(inputValue).then((response) => {
-            console.log(response,'kkkkkk');
             setInvoiceTable(response.data.search_invoice_data)
 
         })

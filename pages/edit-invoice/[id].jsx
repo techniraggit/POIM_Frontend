@@ -123,6 +123,7 @@ const EditInvoice = () => {
         });
         response.then((res) => {
             if(res?.data?.status) {
+                message.success(res.data?.message);
                 setRefetch(true);
             }
         })

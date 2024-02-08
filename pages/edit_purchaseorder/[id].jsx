@@ -196,7 +196,6 @@ const EditMaterialPo = () => {
             }
         })
     }
-    console.log(formData,'ccccccccccccccccccccc');
 
     return (
         <>
