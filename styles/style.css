@@ -2533,9 +2533,9 @@ button.ant-btn.edit-vendor-btn {
     min-width: 100% !important;
 }
 
-.selectwrap.edit-rental-po span.ant-select-arrow {
-    /* display: none; */
-}
+/* .selectwrap.edit-rental-po span.ant-select-arrow {
+    display: none; 
+} */
 
 .dollar-sign {
     margin-right: 0px;
@@ -3291,6 +3291,98 @@ button.sendemail-btn {
     margin-left: 10px;
 }
 
+/* 7 feb  */
+.sidebar-wrapp {
+    position: fixed;
+    z-index: 999;
+    /* margin-top: 91px; */
+    /* margin-right: 5px; */
+    right: 0;
+    background-color: #fff;
+    width: 360px;
+    height: 100%;
+    top: 0;
+    padding: 30px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+}
+.icon-cross {
+    display: flex;
+    text-align: right;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+/* .sidebar-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+} */
+.sidebar-right img {
+    max-width: 30px;
+}
+.sidebar-main {
+    padding: 13px;
+    background: #f1f2f3;
+    border-radius: 10px;
+}
+.drop-down-icons a span {
+    font-size: 11px;
+    background-color: #fff;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.drop-down-icons a span  svg { 
+    color: #000;
+}
+span.anticon.anticon-down svg {
+    color: black;
+    font-size: 12px;
+    /* font-weight: 600 !important; */
+}
+.scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+    padding: 20px;
+  }
+/* 7 feb  */
+/* 8feb */
+.min{
+    font-size: 14px;
+    color: gray;
+}
+.inputDiv  .ant-col.ant-form-item-control.css-p7e5j5 {
+    min-height: unset !important;
+}
+.inputDiv .ant-form-item.css-p7e5j5 {
+    margin-bottom: 0px !important;
+}
+.inputDiv span.ant-input-affix-wrapper.ant-input-password.css-p7e5j5.css-p7e5j5:focus,
+ .inputDiv span.ant-input-affix-wrapper.ant-input-password.css-p7e5j5.css-p7e5j5:hover {
+    background-color: transparent!important;
+    box-shadow: none!important;
+    border: 1px solid #0d0d0d36!important;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  button#myBtn {
+    border: none;
+    background: white;
+    border-radius: 30px;
+}
+
+/* 8feb */
+
 .pagination-container {
     display: flex;
     justify-content: space-between;
@@ -3299,6 +3391,7 @@ button.sendemail-btn {
  .pagination-container  li.ant-pagination-options {
     display: none !important;
 }
+
 /* feb */
 /* responsive */
 @media (max-width: 1299px) {
