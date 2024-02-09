@@ -22,30 +22,34 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
   return (
     <>
       {isModalOpen && (
-        <div class="approve-po">
+        <div class="approve-po-popup">
           <div className="cross-icon" onClick={handleCloseModal}>
             <CloseOutlined />
           </div>
           <form class="details-main">
+          <div className='approve'>
+              <p>Approved PO</p>
+            </div>
             {
-              poType === 'subcontractor' && <div class="projct-details">
+              poType === 'subcontractor' && <div class="projct-details notes">
               <p class="detail-para1">CO Approved Amount</p>
-              <input type="text" value={form.approve_amount} onChange={({ target: { value } }) => handleFormChange('approve_amount', value)} className="detail-para"></input>
+              <input id='input-po'  type="text" value={form.approve_amount} onChange={({ target: { value } }) => handleFormChange('approve_amount', value)} className="detail-para "></input>
             </div>
             }
+          
 
             <div class="projct-details">
               <div class="pop-up-flex row">
-                <div class="projct-details col-md-9">
-                  <p class="detail-para1">Notes(Optional)</p>
-                  <input type="textarea" value={form.approval_notes} onChange={({ target: { value } }) => handleFormChange('approval_notes', value)} class="detail-para"></input>
+                <div id='approve-input' class="projct-details notes col-md-10">
+                  <p class="detail-para ">Notes(Optional)</p>
+                  <input id='input-po1' type="textarea" value={form.approval_notes} onChange={({ target: { value } }) => handleFormChange('approval_notes', value)} class="detail-para1"></input>
                 </div>
               </div>
             </div>
 
-            <div>
-                <button type="button" onClick={handleCloseModal}>Cancel</button>
-                <button type="submit" onClick={(event) => {
+            <div className='approve'>
+                <button className='button1' type="button" onClick={handleCloseModal}>Cancel</button>
+                <button className='button2' type="submit" onClick={(event) => {
                     handleStatusChange(event, 'approved', form)
                 }}>Approve</button>
             </div>

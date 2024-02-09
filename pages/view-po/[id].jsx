@@ -9,6 +9,8 @@ import { updatePO, fetchPo } from "@/apis/apis/adminApis";
 import { Form, Select } from "antd";
 import PoForm from '../../components/Form';
 import moment from "moment";
+import Po_status from "@/components/Po_status";
+import Link from "next/link";
 
 const { Option } = Select;
 
@@ -41,6 +43,8 @@ const ViewMaterialPo = () => {
         email: '',
         material_details: [{ ...repeatorData }]
     });
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isViewVendorVisible, setViewVendorVisible] = useState(false);
 
     const router = useRouter();
     const [form] = Form.useForm();
@@ -138,7 +142,7 @@ const ViewMaterialPo = () => {
     const onFinish = () => {
         updatePO({
             ...formData,
-            po_id:id,
+            po_id: id,
         }).then((res) => {
             if (res?.data?.status) {
                 router.push('/po_list');
@@ -169,6 +173,12 @@ const ViewMaterialPo = () => {
             ...formData
         });
     }
+    const handleIconClick = (id, index) => {
+        // setViewVendorVisible((prevVisible) => (prevVisible === id ? null : id));
+        setIsModalOpen(true);
+        // setClickedIndex(index);
+
+    };
 
     return (
         <>
@@ -178,11 +188,23 @@ const ViewMaterialPo = () => {
                     <Header heading='Purchase Orders' />
                     <div className="bottom-wrapp">
                         <ul class=" create-icons">
-                            <li class="icon-text react-icon">
-                                <PlusOutlined />
-                                <span>View Purchase Order</span>
+                            <li class="icon-text react-icon justify-content-between">
+                                <div className="plus-wraptext d-flex align-items-center">
+                                    <PlusOutlined />
+                                    <span>View Purchase Order</span>
+                                </div>
+                                <div>
+                                    {/* <Link>
+                                    <Po_status/>
+                                    </Link> */}
+                               <button className="po-status-btn" onClick={() => handleIconClick()}>
+                               
+                               </button>
+                                </div>
                             </li>
+
                         </ul>
+
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
                                 <Form onFinish={onFinish} form={form} className="file-form">
@@ -206,7 +228,7 @@ const ViewMaterialPo = () => {
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
-                                                            <Option value="subcontractor">Sub Contractor PO</Option>
+                                                            {/* <Option value="subcontractor">Sub Contractor PO</Option> */}
                                                         </Select>
                                                     </Form.Item>
                                                 </div>
@@ -219,6 +241,7 @@ const ViewMaterialPo = () => {
                         </div>
                     </div>
                 </div>
+                {isModalOpen && <Po_status setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}/>}
             </div>
         </>
     );
