@@ -1908,6 +1908,7 @@ p.detail-para3 {
     /* margin: 0px; */
     color: rgb(17, 47, 92);
     font-size: 17px;
+    /* background: blue; */
     font-weight: 600;
     outline: none;
     border: 0;
@@ -3383,6 +3384,138 @@ span.anticon.anticon-down svg {
 
 /* 8feb */
 
+/* 9 feb */
+.button1{
+    background: white;
+    padding: 11px 63px;
+    border-radius: 25px;
+    font-size: 17px;
+    color: #000000;
+    font-weight: 700;
+    border: 1px solid #000000;
+    margin-right: 6.5px;
+}
+.button2 {
+    background: #E91D26;
+    padding: 11px 63px;
+    border-radius: 25px;
+    color: #FFFFFF;
+    border: none;
+    font-size: 17px;
+    outline: none;
+    font-weight: 700;
+    margin-left: 6.5px;
+}
+
+.approve p {
+    text-align: center;
+    color: #112F5C;
+    font-weight: 600;
+    font-size: 21px;
+}
+
+.notes p {
+    margin-top: 12px;
+    color: #112F5C;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.apporve-input {
+    outline: none;
+    background-color: #FAFAFA;
+    border: none;
+    width: 560px;
+    height: 294px;
+   
+}
+
+#input-po{
+    background-color: #FAFAFA;
+    height: 40px;
+
+}
+
+#input-po1{
+    background-color: #FAFAFA;
+    height: 180px;
+
+}
+
+.approve {
+    text-align: center;
+}
+
+.detail-para::placeholder{
+    color: grey !important;
+    font-size: 12px;
+    
+}
+
+#approve-input{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.approve-po-popup {
+    box-shadow: 0px 3px 39px #00000021;
+    width: 486px;
+    margin: 0 auto;
+    background-color: #fff;
+    position: absolute;
+    left: 50%;
+    border-radius: 5px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 25px 30px 30px 30px;
+    z-index: 99999;
+}
+
+
+.save-changes-butt {
+    text-align: center;
+    background-color: #E91D26;
+    color: white;
+    padding: 10px 50px;
+    border: none;
+    font-size: 19px;
+    border-radius: 37px;
+    width: 442px;
+}
+
+.save-main {
+    margin-top: 70px;
+    text-align: center;
+}
+
+.vender-input label {
+    margin-bottom: 11px;
+    margin-top: 25px;
+    font-weight: 500;
+    color: #112F5C;
+    opacity: 50%;
+}
+
+.vender-input input {
+    border: 1px solid #70707054;
+    border-radius: 2px;
+    height: 50px;
+    padding: 6px 12px;
+    outline: none;
+}
+
+.po-status-btn {
+    height: 40px;
+    font-size: 15px;
+    padding: 6px 32px;
+    border-radius: 20px;
+    border: none;
+    background-color: #659CEE;
+    color:white;
+}
+/* 9feb */
+
 .pagination-container {
     display: flex;
     justify-content: space-between;
@@ -3391,7 +3524,16 @@ span.anticon.anticon-down svg {
  .pagination-container  li.ant-pagination-options {
     display: none !important;
 }
-
+.detail-para1 {
+    /* margin: 0px; */
+    color: rgb(17, 47, 92);
+    font-size: 17px;
+    /* background: blue; */
+    font-weight: 600;
+    outline: none;
+    border: 0;
+    margin-bottom: 20px;
+}
 /* feb */
 /* responsive */
 @media (max-width: 1299px) {
