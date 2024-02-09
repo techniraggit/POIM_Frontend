@@ -17,10 +17,6 @@ export const fetchVendorContacts = (id) => {
 export const createPO = (data) => {
     return Axios.post(`/api/admin/purchase-order`, data);
 }
-// export const updatePO = (data) => {
-//     return Axios.patch(`/api/admin/purchase-order`, data);
-// }
-
 export const fetchProjectSites = () => {
     return Axios.get(`/api/admin/project-sites`);
 }
@@ -81,6 +77,12 @@ export const projectClear=()=>{
 
 export const getPoNumber = () => {
     return Axios.get('/api/admin/po_number');
+}
+export const getNotification=()=>{
+    return Axios.get(`/api/admin/notifications`)
+}
+export const toggleButton=(data)=>{
+    return Axios.put('/api/admin/notifications', data);
 }
 
 export const fetchVendorDetails = (id) => {
@@ -171,3 +173,10 @@ export const downloadInvoice = (id) => {
 export const removeInvoiceFile = (data) => {
     return Axios.put('/api/admin/invoice-remove', data);
 }
+
+export const profileSave = (data) => {
+    return Axios.post(`/api/accounts/change-password`, data);
+}
+// export const getUserData = () => {
+//     return Axios.get('/api/admin/profile');
+// }
