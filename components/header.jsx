@@ -8,6 +8,10 @@ import Notification from "@/pages/notification";
 const Header = ({ heading }) => {
   const { user } = useGlobalContext();
  const [show, setShow] = useState(false)
+ const [falseCount,setFalseCount]=useState(0)
+ const closeNotification = () => {
+  setShow(false);
+};
   return (
     <>
       <div className="top-wrapp">
@@ -17,8 +21,9 @@ const Header = ({ heading }) => {
         <ul class="notify">
           <li class="leftwrap" onClick={()=>setShow(true)}>
             <img src="/images/notification.svg" alt="" />
-            <span>1</span>
+            <span>{falseCount}</span>
           </li>
+        
           
           <li class="ms-2"><span>{user.first_name} {user.last_name}</span>
             <span className="d-block admin-menu">{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</span></li>
@@ -35,7 +40,7 @@ const Header = ({ heading }) => {
           </li>
         </ul>
         {show &&
-        <Notification/>
+        <Notification   falseCount={falseCount} setFalseCount={setFalseCount} closeNotification={closeNotification}/>
 }
       </div>
     </>
