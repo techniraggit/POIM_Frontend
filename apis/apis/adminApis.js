@@ -173,3 +173,10 @@ export const downloadInvoice = (id) => {
 export const removeInvoiceFile = (data) => {
     return Axios.put('/api/admin/invoice-remove', data);
 }
+
+export const profileSave = (data) => {
+    return Axios.post(`/api/accounts/change-password`, data);
+}
+// export const getUserData = () => {
+//     return Axios.get('/api/admin/profile');
+// }

@@ -34,7 +34,7 @@ const Header = ({ heading }) => {
             ><img src="/images/profile.png" alt="" class="ms-2"
               /></Link>
             <ul class="dropdown-content">
-              <li class="mb-1"><a href="#">My profile</a></li>
+              <li class="mb-1"><Link href="/profile">My profile</Link></li>
               <li><Link href="/logout">Log Out</Link></li>
             </ul>
           </li>
