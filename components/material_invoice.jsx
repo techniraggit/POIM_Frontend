@@ -6,7 +6,6 @@ import { Form, Select } from "antd";
 import moment from "moment";
 import '../styles/style.css'
 import PoForm from "./Form";
-import { fetchProjectSites, fetchVendorContacts } from "@/apis/apis/adminApis";
 
 const { Option } = Select;
 
@@ -46,8 +45,7 @@ const Material_invoice = ({ data }) => {
 
 
     useEffect(() => {
-        if (data && data?.status) {
-            console.log( data.project,'fffff');
+        if (data) {
             setFormData({
                 ...formData,
                 po_type: data.po_type,
@@ -93,7 +91,6 @@ const Material_invoice = ({ data }) => {
             form.setFieldValue('quantity', data.material_details[0]?.quantity)
             form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
             form.setFieldValue('description', data.material_details[0]?.description)
-            // form.setFieldValue('project_site_id', data.material_details[0]?.project_site)
             form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
             form.setFieldValue('code', data.material_details[0]?.code)
             form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
@@ -166,8 +163,6 @@ const Material_invoice = ({ data }) => {
             ...formData
         });
     }
-    console.log(formData,'llllll');
-
     return (
         <>
             <div className="choose-potype round-wrap">
@@ -200,7 +195,7 @@ const Material_invoice = ({ data }) => {
                                 </div>
                             </div>
                         </div>
-                        <PoForm formData={formData} view={true} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />
+                        <PoForm formData={formData} view={true} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={() => {}} />
                     </Form>
                 </div>
             </div>

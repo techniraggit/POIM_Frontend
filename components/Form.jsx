@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
-import { Form, Input, Select, DatePicker } from "antd";
+import { Form, Input, Select, DatePicker} from "antd";
 import { fetchProjectSites, fetchProjects, fetchSiteProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
@@ -18,7 +18,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
     const { user } = useGlobalContext();
-
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
         if(!edit && !view){
@@ -133,7 +132,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
-
     return (
         <>
             <div class="order-choose d-flex">

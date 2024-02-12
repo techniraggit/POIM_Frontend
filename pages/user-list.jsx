@@ -14,16 +14,12 @@ const User_list = ({ base_url }) => {
     const [users, setUsers] = useState([]);
     const [isViewUserVisible, setUserVisible] = useState(false);
     const [totalUser, setTotalUser] = useState(0)
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchValue, setSearchValue] = useState('');
     const [inputValue, setInputValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
-    // console.log(currentPage);
 
     useEffect(() => {
         const fetchroles = async () => {
-            // setCurrentPage(page);
             try {
                 const headers = {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
@@ -77,7 +73,6 @@ const User_list = ({ base_url }) => {
         event.preventDefault();
         userSearch(inputValue).then((response) => {
             setUsers(response.data.search_query_data)
-
         })
     };
     const handleClearButtonClick = () => {
@@ -180,7 +175,7 @@ const User_list = ({ base_url }) => {
                                 nextIcon={<Button>Next</Button>}
                                 onShowSizeChange={() => setCurrentPage(+1)}
                                 total={count}
-                                pageSize={20} // Number of items per page
+                                pageSize={10} // Number of items per page
 
                             />
                         </div>

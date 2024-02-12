@@ -45,7 +45,7 @@ const ChangePasswordForm = ({ base_url }) => {
 
           <h2 className="formTitle">Login to your account</h2>
 
-          <div className="inputDiv">
+          <div className="inputDiv mb-3">
             <Form.Item
               label="New Password"
               name="new_password"

@@ -3,9 +3,9 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
-import { message, Popconfirm } from 'antd';
+import { message, Popconfirm,Pagination,Button } from 'antd';
 import Link from "next/link";
-import { deletePO, getPoList,poSearch } from "@/apis/apis/adminApis";
+import { deletePO, getPoList, poSearch } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
 
@@ -13,15 +13,20 @@ const PO_list = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [search, setSearch] = useState('');
     const [inputValue, setInputValue] = useState('');
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState('')
+    
     useEffect(() => {
-        const response = getPoList();
-        response.then((res) => {
-            if (res?.data?.status) {
-                setPurchaseOrders(res.data.data || []);
+        // const response = getPoList();
+        getPoList(currentPage).then((res) => {
+            if (res?.data?.results?.status) {
+               
+                setPurchaseOrders(res.data.results.data || []);
             }
+            setCount(res.data.count)
+           
         })
-    }, []);
+    }, [currentPage]);
 
     const handleDelete = (id) => {
         const response = deletePO({ po_id: id });
@@ -43,7 +48,6 @@ const PO_list = () => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         poSearch(inputValue).then((response) => {
-            console.log(response,'res');
             setPurchaseOrders(response.data.search_query_data)
 
         })
@@ -173,6 +177,20 @@ const PO_list = () => {
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div className="pagination-container">
+                        <Pagination
+                            // defaultCurrent={2}
+                            current={currentPage}
+                            onChange={setCurrentPage}
+                            showSizeChanger={true}
+                            prevIcon={<Button>Previous</Button>}
+                            nextIcon={<Button>Next</Button>}
+                            onShowSizeChange={() => setCurrentPage(+1)}
+                            total={count}
+                            pageSize={10} // Number of items per page
+
+                        />
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  updatePo, fetchVendorContact} from "@/apis/apis/adminApis";
+import {  updatePo} from "@/apis/apis/adminApis";
 import { Form, Select } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
@@ -30,61 +30,56 @@ const Rental_invoice = ({ data }) => {
         shipment_type: '',
         material_details: []
     });
-    const [vendors, setVendors] = useState([]);
     useEffect(() => {
-                const response = fetchVendorContact();
-                response.then((res) => {
-                    if (res?.data?.status) {
-                        setVendors([...res.data.vendors]);
-                    }
-                });
-                if (data) {
-                    if (data?.status) {
-                        setFormData({
-                            ...formData,
-                            po_type: data.po_type,
-                            amount: data.total_amount,
-                            company_name: data.vendor_contact.company.company_name,
-                            vendor_id: data.vendor_contact.company.vendor_id,
-                            vendor_contact_id: data.vendor_contact.vendor_contact_id,
-                            hst_amount: data.hst_amount,
-                            total_amount: data.total_amount,
-                            project_site_id: data.project_site,
-                            country: data.vendor_contact.company.country,
-                            state: data.vendor_contact.company.state,
-                            address: data.vendor_contact.company.address,
-                            phone: data.vendor_contact.phone_number,
-                            email: data.vendor_contact.email,
-                            shipment_type: data.shipment_type,
-                            material_details: [...data.material_details]
-                        });
-                        form.setFieldValue('po_type', data.po_type);
-                        form.setFieldValue('company_name', data.vendor_contact.company.company_name)
-                        form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
-                        form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
-                        form.setFieldValue('shipment_type', data.shipment_type);
-                        form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
-                        form.setFieldValue('total_amount', data.total_amount);
-                        form.setFieldValue('project_id', data.project_site?.project?.project_id);
-                        form.setFieldValue('project_site_id', data.project_site?.site_id);
-                        form.setFieldValue('poDate', moment(data.po_date));
-                        form.setFieldValue('country', data.vendor_contact.company.country);
-                        form.setFieldValue('state', data.vendor_contact.company.state);
-                        form.setFieldValue('address', data.vendor_contact.company.address);
-                        form.setFieldValue('phone', data.vendor_contact.phone_number);
-                        form.setFieldValue('email', data.vendor_contact.email);
-                        form.setFieldValue('poNumber', data.po_number)
-                        form.setFieldValue('shipment_type', data.shipment_type)
-                        form.setFieldValue('amount', data.material_details[0]?.amount)
-                        form.setFieldValue('description', data.material_details[0]?.description)
-                        form.setFieldValue('start_date', data.material_details[0]?.date)
-                        form.setFieldValue('end_date', data.material_details[0]?.end_date)
-                        form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
-                        form.setFieldValue('first_name', data.created_by.first_name)
-                        form.setFieldValue('last_name', data.created_by.last_name)
-                    }
-                }
-            }, []);
+        if (data) {
+            setFormData({
+                ...formData,
+                po_type: data.po_type,
+                amount: data.total_amount,
+                company_name: data.vendor_contact.company.company_name,
+                vendor_id: data.vendor_contact.company.vendor_id,
+                vendor_contact_id: data.vendor_contact.vendor_contact_id,
+                hst_amount: data.hst_amount,
+                total_amount: data.total_amount,
+                project_site_id: data.project_site,
+                country: data.vendor_contact.company.country,
+                state: data.vendor_contact.company.state,
+                address: data.vendor_contact.company.address,
+                phone: data.vendor_contact.phone_number,
+                email: data.vendor_contact.email,
+                shipment_type: data.shipment_type,
+                material_details: [...data.material_details]
+            });
+            form.setFieldValue('po_type', data.po_type);
+            form.setFieldValue('company_name', data.vendor_contact.company.company_name)
+            form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
+            form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
+            form.setFieldValue('shipment_type', data.shipment_type);
+            form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
+            form.setFieldValue('total_amount', data.total_amount);
+            form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
+            form.setFieldValue('poDate', moment(data.po_date));
+            form.setFieldValue('country', data.vendor_contact.company.country);
+            form.setFieldValue('state', data.vendor_contact.company.state);
+            form.setFieldValue('address', data.vendor_contact.company.address);
+            form.setFieldValue('phone', data.vendor_contact.phone_number);
+            form.setFieldValue('email', data.vendor_contact.email);
+            form.setFieldValue('poNumber', data.po_number)
+            form.setFieldValue('amount', data.material_details[0]?.amount)
+            form.setFieldValue('description', data.material_details[0]?.description)
+            form.setFieldValue('start_date', data.material_details[0]?.date)
+            form.setFieldValue('end_date', data.material_details[0]?.end_date)
+            form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
+            form.setFieldValue('first_name', data.created_by.first_name)
+            form.setFieldValue('last_name', data.created_by.last_name)
+            data?.material_details.forEach((material, index) => {
+                form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                form.setFieldValue('material_for' + (index), material.material_for)
+                form.setFieldValue('project_id' + (index), material.project?.project_id)
+                form.setFieldValue('amount' + (index), material.amount)
+            })
+        }
+    }, []);
     const onFinish = () => {
         updatePo({
             ...formData,
@@ -169,7 +164,7 @@ const Rental_invoice = ({ data }) => {
                                 </div>
                             </div>
                         </div>
-                        <PoForm formData={formData} view={true} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+                        <PoForm formData={formData} view={true} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={() => {}} />
                     </Form>
                 </div>
             </div>

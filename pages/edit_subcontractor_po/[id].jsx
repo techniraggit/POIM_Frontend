@@ -6,12 +6,12 @@ import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { changeStatus, fetchPo, updatePo } from "@/apis/apis/adminApis";
-import { Form, Select, Button, Input } from "antd";
-import moment from "moment";
+import { Form, Select, Button, Input,message } from "antd";
 import PoForm from "@/components/Form";
 import ChangeStatus from "@/components/PoChangeStatus";
 import dayjs from "dayjs";
 import withAuth from "@/components/PrivateRoute";
+import Roles from "@/components/Roles";
 
 const { Option } = Select;
 
@@ -53,7 +53,6 @@ const EditSubContractorPo = () => {
             fetchPo(id).then((res) => {
                 if(res?.data?.status) {
                     const data = res.data.data;
-                    console.log(data.po_date,'data');
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
@@ -183,8 +182,6 @@ const EditSubContractorPo = () => {
             }
         })
     }
-    console.log(formData,'formDataqqqq');
-
     return (
         <>
             <div className="wrapper-main">
@@ -194,22 +191,24 @@ const EditSubContractorPo = () => {
                     <div className="bottom-wrapp">
 
                         <ul class=" create-icons">
-                            <li class="icon-text react-icon">
+                        <li class="icon-text react-icon justify-content-between">
+                        <div className="plus-wraptext d-flex align-items-center">
                                 <PlusOutlined />
                                 <span>Create Purchase Order</span>
-                            </li>
+                            </div>
                             {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
-                                <li>
-                                    <Button type="primary" onClick={() => {
+                                <div className="mt-0 apr-rej-li d-flex">
+                                    <Button type="primary" className="approved-btn me-3"  onClick={() => {
                                         setIsModalOpen(true);
                                     }}>Approve</Button>
-                                    <Button type="primary" danger onClick={(event) => {
+                                    <Button type="primary" className="reject-btn"  danger onClick={(event) => {
                                         handleStatusChange(event, 'rejected')
                                     }}>Reject</Button>
-                                </li>
+                                </div>
                             </Roles>
                             }
+                            </li>
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
@@ -323,13 +322,10 @@ const EditSubContractorPo = () => {
                     </div>
                 </div>
             </div>
-            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+            {isModalOpen && <ChangeStatus po_id={id} poType={"subcontractor"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
         </>
     );
 };
 
 export { getServerSideProps };
 export default withAuth(['admin', 'project coordinator','project manager','site superintendent','marketing','health $ safety','estimator','shop'])(EditSubContractorPo)
-// withAuth
-
-// export default EditSubContractorPo;
