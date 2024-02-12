@@ -39,7 +39,6 @@ const Subcontractor_invoice = ({data}) => {
         form.setFieldValue('po_type', 'subcontractor');
 
         if (data) {
-            console.log(data,'ffffffffffff');
             setFormData({
                 ...formData,
                 po_type: data.po_type,
@@ -146,7 +145,6 @@ const Subcontractor_invoice = ({data}) => {
             ...formData
         });
     }
-    console.log(formData,'bbbbbbbbbbbbbbbbb');
 
     return (
         <>

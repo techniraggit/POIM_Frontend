@@ -3,7 +3,7 @@ import { CloseOutlined, DownOutlined } from "@ant-design/icons";
 import '../styles/style.css';
 import { getNotification, toggleButton } from "@/apis/apis/adminApis";
 
-const Notification = ({ closeNotification,setFalseCount }) => {
+const Notification = ({ closeNotification,setFalseCount ,falseCount}) => {
     const [showMore, setShowMore] = useState(false);
     const [notificationData, setNotificationData] = useState([]);
     const toggleShowMore = (id) => {
@@ -21,6 +21,7 @@ const Notification = ({ closeNotification,setFalseCount }) => {
     const [isActive, setIsActive] = useState(false);
     useEffect(() => {
         const response = getNotification()
+        console.log('hdgdfgs');
         response.then((res) => {
             if (res?.data?.status) {
                 setNotificationData(res.data.data);
@@ -29,7 +30,7 @@ const Notification = ({ closeNotification,setFalseCount }) => {
             }
 
         })
-    }, [])
+    }, [falseCount])
 
     const formatTime = (time) => {
         const currentTime = new Date();
