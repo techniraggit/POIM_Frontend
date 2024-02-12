@@ -3435,27 +3435,24 @@ span.anticon.anticon-down svg {
     height: 40px;
 
 }
-
-#input-po1{
+#input-po1 {
     background-color: #FAFAFA;
     height: 180px;
-
+    padding: 10px 12px;
 }
-
 .approve {
     text-align: center;
 }
 
-.detail-para::placeholder{
-    color: grey !important;
-    font-size: 12px;
-    
+textarea#input-po1::placeholder {
+    font-size: 15px;
+    font-weight: 300;
 }
 
 #approve-input{
-    display: flex;
+    /* display: flex; */
     width: 100%;
-    flex-direction: column;
+    /* flex-direction: column; */
 }
 
 .approve-po-popup {
@@ -3534,6 +3531,51 @@ span.anticon.anticon-down svg {
     border: 0;
     margin-bottom: 20px;
 }
+
+/* 12feb */
+.po-status-p p {
+    background-color: #f5f5f5;
+    color: black;
+    font-size: 17px;
+    /* border-radius: 5px; */
+    /* width: 500px; */
+    border-left: 1px solid #716e6e;
+    padding: 10px 10px;
+}
+.po-status-p h1 {
+
+    font-size: 25px;
+    /* width: 500px; */
+}
+/* .po-status-p {
+    text-align: center;
+} */
+.po-status h1{
+    /* text-align: center; */
+    font-weight: 700;
+    font-size: 32px;
+    color: #E91D26;
+
+}
+.po-span {
+    text-align: end;
+    cursor: pointer;
+}
+.po-status-main {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px 20px;
+}
+span.po-span {
+    font-size: 15px;
+    color: gray;
+    font-weight: 600;
+}
+h5.sub-show.sub-hide {
+    display: none;
+}
+/* 12feb */
 /* feb */
 /* responsive */
 @media (max-width: 1299px) {
