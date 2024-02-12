@@ -3,7 +3,7 @@ import { CloseOutlined, DownOutlined } from "@ant-design/icons";
 import '../styles/style.css';
 import { getNotification, toggleButton } from "@/apis/apis/adminApis";
 
-const Notification = ({ closeNotification,setFalseCount ,falseCount}) => {
+const Notification = ({ closeNotification}) => {
     const [showMore, setShowMore] = useState(false);
     const [notificationData, setNotificationData] = useState([]);
     const toggleShowMore = (id) => {
@@ -25,12 +25,11 @@ const Notification = ({ closeNotification,setFalseCount ,falseCount}) => {
         response.then((res) => {
             if (res?.data?.status) {
                 setNotificationData(res.data.data);
-                setFalseCount(res.data.is_read_false_count)
 
             }
 
         })
-    }, [falseCount])
+    }, [])
 
     const formatTime = (time) => {
         const currentTime = new Date();
@@ -38,13 +37,28 @@ const Notification = ({ closeNotification,setFalseCount ,falseCount}) => {
         const timeDiff = Math.abs(currentTime - notificationTime);
         const minutes = Math.floor(timeDiff / (1000 * 60));
         const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
         if (minutes < 1) {
             return 'just now';
-        } else if (hours > 0) {
-            return `${hours}hours ago`;
+        } else if (hours > 0 && hours < 24) {
+            return `${hours} hours ago`;
+        } else if (days > 0 && days <= 5) {
+            return `${days} days ago`;
         } else {
-            return `${minutes}minutes ago`;
+            // If the notification was received more than 7 days ago, show the date
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return notificationTime.toLocaleDateString(undefined, options);
         }
+        // if (minutes < 1) {
+        //     return 'just now';
+        // } else if (hours > 0 && hours < 24) {
+        //     return `${hours} hours ago`;
+        // } else if (days > 0) {
+        //     return `${days} days ago`;
+        // } else {
+        //     return `${minutes} minutes ago`;
+        // }
     };
     console.log(notificationData,'notificationData');
 

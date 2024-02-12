@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import Link from "next/link";
 import { useGlobalContext } from "@/app/Context/UserContext";
 import Notification from "@/pages/notification";
+import { getNotificationCount } from "@/apis/apis/adminApis";
 
 
 const Header = ({ heading }) => {
@@ -12,6 +13,30 @@ const Header = ({ heading }) => {
  const closeNotification = () => {
   setShow(false);
 };
+
+
+
+useEffect(()=>{
+  async function getNotification() {
+    const response= await getNotificationCount();
+
+    if(response.status==200){
+      console.log(response.data,'kkkkkkkkkkk'); 
+
+      setFalseCount(response.data.unread_notification_count)
+  
+    }
+    else{
+      console.log("something is wrong");
+    }
+  
+  }
+  getNotification()
+ 
+},[falseCount])
+
+
+
   return (
     <>
       <div className="top-wrapp">
@@ -40,7 +65,7 @@ const Header = ({ heading }) => {
           </li>
         </ul>
         {show &&
-        <Notification   falseCount={falseCount} setFalseCount={setFalseCount} closeNotification={closeNotification}/>
+        <Notification  closeNotification={closeNotification}/>
 }
       </div>
     </>

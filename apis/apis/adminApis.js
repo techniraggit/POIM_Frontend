@@ -84,6 +84,9 @@ export const getPoNumber = () => {
 export const getNotification=()=>{
     return Axios.get(`/api/admin/notifications`)
 }
+export const getNotificationCount=()=>{
+    return Axios.get(`/api/helping/get-count`)
+}
 export const toggleButton=(data)=>{
     return Axios.put('/api/admin/notifications', data);
 }
