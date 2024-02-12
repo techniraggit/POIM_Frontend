@@ -353,7 +353,10 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                 </div>
                                             )
                                         } else if(key === 'project_id' && formData.material_details[index + 1].material_for === 'project') {
-                                            return(<div class="selectwrap add-dropdown-wrap">
+                                            return(
+                                                <div class="col-sm-4">
+                                                    <div className="wrap-box">
+                                            <div class="selectwrap add-dropdown-wrap kt">
                                             <div class="selectwrap columns-select shipment-caret ">
                                                 <Form.Item
                                                     label="Project"
@@ -383,6 +386,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 ))}
                                                         </Select>
                                                     </Form.Item>
+                                                </div>
+                                                </div>
                                                 </div>
                                             </div>)
                                         } else if (key === 'project_site_id' && (formData.shipment_type.toLowerCase() === 'project related')) {
