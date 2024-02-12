@@ -198,7 +198,7 @@ const ViewMaterialPo = () => {
                                     <Po_status/>
                                     </Link> */}
                                <button className="po-status-btn" onClick={() => handleIconClick()}>
-                               
+                               PO Status
                                </button>
                                 </div>
                             </li>
