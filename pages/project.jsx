@@ -93,7 +93,7 @@ const Vendor = ({ base_url }) => {
                 <Sidebar />
                 <div className="inner-wrapper">
                     <Header heading="Project" />
-                    <div className="bottom-wrapp">
+                    <div className="bottom-wrapp users-list-wrapin">
                         <ul className="list-icons">
                             <Roles action="add_project">
                                 <li className="me-4 create-projects">
