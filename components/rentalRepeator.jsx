@@ -96,7 +96,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                 </div>
             </div>
             {formData.shipment_type === 'project related' && (
-                <div class="col-sm-4">
+                <div class="col-lg-4 col-md-6">
                     <div className="selectwrap columns-select shipment-caret ">
                         <Form.Item
                             label="Select Site"
@@ -138,7 +138,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     }
                                     if (key === "amount") {
                                         return (
-                                            <div className="col-sm-4">
+                                            <div className="col-lg-4 col-md-6">
                                             <div key={key} className="wrap-box dollor-inputs">
                                                 <Form.Item
                                                     label={upperKey}
@@ -181,7 +181,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                      else if (key === 'start_date') {
                                         return (
 
-                                            <div className="col-sm-4">
+                                            <div className="col-lg-4 col-md-6">
                                                 <div className="wrap-box">
                                                     <Form.Item
                                                         label={upperKey}
@@ -205,7 +205,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     else if (key === 'end_date') {
                                         return (
 
-                                            <div className="col-sm-4">
+                                            <div className="col-lg-4 col-md-6">
                                                 <div className="wrap-box">
                                                     <Form.Item
                                                         label={upperKey}
@@ -228,8 +228,9 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     } 
                                     else if (key === 'project_site_id' && formData.shipment_type === 'project related') {
                                         return (
-                                            <div class="col-sm-4">
-                                                <div className="selectwrap columns-select shipment-caret ">
+                                            <div class="col-lg-4 col-md-6">
+                                                <div className="wrap-box">
+                                                <div className="selectwrap columns-select shipment-caret">
                                                     <Form.Item
                                                         label="Select Site"
                                                         name={`project_site_id${index + 1}`}
@@ -246,6 +247,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                             )}
                                                         </Select>
                                                     </Form.Item>
+                                                </div>
                                                 </div>
                                             </div>
                                         )

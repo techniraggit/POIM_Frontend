@@ -4,6 +4,7 @@ import Header from '@/components/header';
 import { getUserData, profileSave } from '@/apis/apis/adminApis';
 import { Form, Input, Select, message, } from 'antd';
 import { useRouter } from "next/router";
+import { PlusOutlined } from '@ant-design/icons';
 
 const Profile = () => {
     const [profileData, setProfiledata] = useState('')
@@ -40,17 +41,17 @@ const Profile = () => {
                     <Header heading="Profile" />
                     <div className="bottom-wrapp">
                         <ul className=" create-icons">
-                            <li className="me-0 icon-text">
-                                <i className="fa-solid fa-plus me-3 mt-0"></i>
-                                <span>My Profile</span>
+                        <li class="icon-text react-icon">
+                                <PlusOutlined />
+                                <span>Create New Profile</span>
                             </li>
                         </ul>
                         <div className="vendor-form">
-                            <div className="row first-section ">
+                            <div className="row first-section align-items-center">
 
                                 <div className="col-lg-4 col-md-12 ">
                                     <div className="user-image">
-                                        <img src="./images/avtar.png" />
+                                        <img src='/images/avtar.png' class="user-img" />
                                     </div>
                                 </div>
 
@@ -77,7 +78,7 @@ const Profile = () => {
                                 </div>
                                 <div className="col-lg-4 col-md-12">
                                     <div className="vender-input">
-                                        <label for="">Pnone No</label>
+                                        <label for="">Phone No</label>
                                         <p>{profileData.phone_number}</p>
                                     </div>
                                 </div>
@@ -100,8 +101,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                             </div>
-                            <hr />
-                            <Form
+                            <Form className='profile-wrapp-form'
                                 onFinish={onFinish} layout="vertical" form={form}
                                 labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 16 }}
