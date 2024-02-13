@@ -12,6 +12,7 @@ ul {
 body {
     background-color: #FAFAFA;
 }
+
 span.d-block.admin-menu {
     color: red;
     font-weight: 700;
@@ -3204,6 +3205,7 @@ button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-primary.approved-btn 
     box-shadow: none;
     border: 1px solid #000;
 }
+
 button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-primary.approved-btn span {
     color: #000;
 }
@@ -3217,12 +3219,14 @@ button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-primary.approved-btn 
 button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-primary.ant-btn-dangerous.reject-btn {
     background-color: #e91d26;
 }
+
 .react-icon .apr-rej-li button span {
     background-color: transparent;
     height: unset;
     width: unset;
     margin: 0;
 }
+
 span.ant-upload-wrapper.upload-filewrap .ant-upload-list.ant-upload-list-text .ant-upload-list-item-container {
     margin-top: 20px;
     padding: 6px 10px;
@@ -3251,17 +3255,19 @@ span.ant-upload-wrapper.upload-filewrap .ant-upload-list.ant-upload-list-text .a
     color: #e91d26;
 }
 
-.ant-upload-wrapper.upload-filewrap  .ant-upload-list .ant-upload-list-item 
-.ant-upload-list-item-actions .ant-upload-list-item-action {
+.ant-upload-wrapper.upload-filewrap .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action {
     opacity: 7;
 }
+
 .ant-upload-wrapper.upload-filewrap .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action .anticon svg {
     color: #e61e24;
 }
+
 span.ant-upload-list-item-name {
     color: #112f5c;
     font-weight: 500;
 }
+
 button.sendemail-btn {
     padding: 7px 12px;
     font-size: 14px;
@@ -3271,18 +3277,17 @@ button.sendemail-btn {
     margin-top: 18px;
     width: 100%;
 }
-button.sendemail-btn:hover {
-    background-color: #f50e0e !important;
-}
 .forgot-password-popup.forgot-popup-custom h2 {
     font-size: 22px;
     font-weight: 700;
 }
+
 .forgot-password-popup.forgot-popup-custom .popup-content {
     padding: 30px;
     position: relative;
 }
-.forgot-password-popup.forgot-popup-custom  span.close-popup {
+
+.forgot-password-popup.forgot-popup-custom span.close-popup {
     line-height: 1;
     font-size: 24px;
     background-color: #fff;
@@ -3290,11 +3295,13 @@ button.sendemail-btn:hover {
     border-radius: 50%;
     padding: 5px 10px;
 }
+
 .download-fine-invoice {
     padding: 8px 12px;
     border: 1px solid;
     border-radius: 4px;
 }
+
 .download-fine-invoice span.anticon.anticon-download {
     margin-left: 10px;
 }
@@ -3313,6 +3320,7 @@ button.sendemail-btn:hover {
     padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
 }
+
 .icon-cross {
     display: flex;
     text-align: right;
@@ -3329,11 +3337,13 @@ button.sendemail-btn:hover {
 .sidebar-right img {
     max-width: 30px;
 }
+
 .sidebar-main {
     padding: 13px;
     background: #f1f2f3;
     border-radius: 10px;
 }
+
 .drop-down-icons a span {
     font-size: 11px;
     background-color: #fff;
@@ -3344,55 +3354,63 @@ button.sendemail-btn:hover {
     justify-content: center;
     align-items: center;
 }
-.drop-down-icons a span  svg { 
+
+.drop-down-icons a span svg {
     color: #000;
 }
+
 span.anticon.anticon-down svg {
     color: black;
     font-size: 12px;
     /* font-weight: 600 !important; */
 }
+
 .scroll {
     overflow-x: hidden;
     overflow-y: auto;
     text-align: center;
     padding: 20px;
-  }
+}
+
 /* 7 feb  */
 /* 8feb */
-.min{
+.min {
     font-size: 14px;
     color: gray;
 }
-.inputDiv  .ant-col.ant-form-item-control.css-p7e5j5 {
+
+.inputDiv .ant-col.ant-form-item-control.css-p7e5j5 {
     min-height: unset !important;
 }
+
 .inputDiv .ant-form-item.css-p7e5j5 {
     margin-bottom: 0px !important;
 }
+
 .inputDiv span.ant-input-affix-wrapper.ant-input-password.css-p7e5j5.css-p7e5j5:focus,
- .inputDiv span.ant-input-affix-wrapper.ant-input-password.css-p7e5j5.css-p7e5j5:hover {
-    background-color: transparent!important;
-    box-shadow: none!important;
-    border: 1px solid #0d0d0d36!important;
+.inputDiv span.ant-input-affix-wrapper.ant-input-password.css-p7e5j5.css-p7e5j5:hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: 1px solid #0d0d0d36 !important;
 }
 
 .sticky {
     position: fixed;
     top: 0;
     width: 100%;
-  }
+}
 
-  button#myBtn {
+button#myBtn {
     border: none;
     background: white;
-    border-radius: 30px;
+    height: 26px;
+    border-radius: 60px;
 }
 
 /* 8feb */
 
 /* 9 feb */
-.button1{
+.button1 {
     background: white;
     padding: 11px 63px;
     border-radius: 25px;
@@ -3402,6 +3420,7 @@ span.anticon.anticon-down svg {
     border: 1px solid #000000;
     margin-right: 6.5px;
 }
+
 .button2 {
     background: #E91D26;
     padding: 11px 63px;
@@ -3434,19 +3453,21 @@ span.anticon.anticon-down svg {
     border: none;
     width: 560px;
     height: 294px;
-   
+
 }
 
-#input-po{
+#input-po {
     background-color: #FAFAFA;
     height: 40px;
 
 }
+
 #input-po1 {
     background-color: #FAFAFA;
     height: 180px;
     padding: 10px 12px;
 }
+
 .approve {
     text-align: center;
 }
@@ -3456,7 +3477,7 @@ textarea#input-po1::placeholder {
     font-weight: 300;
 }
 
-#approve-input{
+#approve-input {
     /* display: flex; */
     width: 100%;
     /* flex-direction: column; */
@@ -3497,14 +3518,14 @@ textarea#input-po1::placeholder {
     margin-bottom: 11px;
     margin-top: 25px;
     font-weight: 500;
-    color: #112F5C;
-    opacity: 50%;
+    color: #112F5C !important;
+    opacity: 70% !important;
 }
 
 .vender-input input {
     border: 1px solid #70707054;
     border-radius: 2px;
-    height: 50px;
+    height: 40px;
     padding: 6px 12px;
     outline: none;
 }
@@ -3516,8 +3537,28 @@ textarea#input-po1::placeholder {
     border-radius: 20px;
     border: none;
     background-color: #659CEE;
-    color:white;
+    color: white;
 }
+
+form.ant-form.ant-form-vertical.css-dev-only-do-not-override-p7e5j5.profile-wrapp-form {
+    padding-bottom: 20px !important;
+    border-top: 1px solid rgb(233 227 227);
+    margin-top: 30px;
+}
+
+.top-border {
+    margin-bottom: 60px;
+    margin-top: 40px;
+}
+
+label.ant-form-item-required.aaa {
+    margin-bottom: 11px;
+    margin-top: 25px;
+    font-weight: 500;
+    color: #112F5C !important;
+    opacity: 70% !important;
+}
+
 /* 9feb */
 
 .pagination-container {
@@ -3526,9 +3567,11 @@ textarea#input-po1::placeholder {
     align-items: center;
     margin-top: 30px;
 }
- .pagination-container  li.ant-pagination-options {
+
+.pagination-container li.ant-pagination-options {
     display: none !important;
 }
+
 li.ant-pagination-prev button {
     background-color: transparent !important;
     border: 1px solid #000 !important;
@@ -3536,11 +3579,17 @@ li.ant-pagination-prev button {
     font-weight: 500;
     /* display: none !important; */
 }
+
 li.ant-pagination-next button {
     background-color: #000 !important;
     color: #fff !important;
     font-size: 14px !important;
     font-weight: 500;
+}
+
+li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active {
+    background-color: #fff !important;
+    border: 1px solid #d2d2d2 !important;
 }
 /* li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active {
     background-color: #fff !important;
@@ -3557,10 +3606,16 @@ li.ant-pagination-item {
 .inputDiv .ant-col {
     min-height: unset !important;
 }
-.inputDiv span.ant-input-affix-wrapper.ant-input-password.css-p7e5j5.css-p7e5j5:focus, .inputDiv span.ant-input-affix-wrapper.ant-input-password.css-p7e5j5.css-p7e5j5:hover {
-    background-color: transparent!important;
+
+.inputDiv span.ant-input-affix-wrapper.ant-input-password.css-p7e5j5.css-p7e5j5:focus,
+.inputDiv span.ant-input-affix-wrapper.ant-input-password.css-p7e5j5.css-p7e5j5:hover {
+    background-color: transparent !important;
     box-shadow: none !important;
-    border: 1px solid #0d0d0d36!important;
+    border: 1px solid #0d0d0d36 !important;
+}
+
+.buttonWrapper {
+    margin-top: 20px;
 }
 
 .detail-para1 {
@@ -3584,39 +3639,46 @@ li.ant-pagination-item {
     border-left: 1px solid #716e6e;
     padding: 10px 10px;
 }
+
 .po-status-p h1 {
 
     font-size: 25px;
     /* width: 500px; */
 }
+
 /* .po-status-p {
     text-align: center;
 } */
-.po-status h1{
+.po-status h1 {
     /* text-align: center; */
     font-weight: 700;
     font-size: 32px;
     color: #E91D26;
 
 }
+
 .po-span {
     text-align: end;
     cursor: pointer;
 }
+
 .po-status-main {
     max-width: 600px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px 20px;
 }
+
 span.po-span {
     font-size: 15px;
     color: gray;
     font-weight: 600;
 }
+
 h5.sub-show.sub-hide {
     display: none;
 }
+
 /* 12feb */
 /* feb */
 /* accordian */
@@ -3624,24 +3686,56 @@ h5.sub-show.sub-hide {
     border-radius: 0px !important;
     border: none !important;
 }
+
 .ant-collapse-header {
     flex-direction: row-reverse;
     background-color: #EEF0F8;
     border-radius: 6px;
 }
+
 .ant-collapse-content.ant-collapse-content-active {
     /* margin-top: 20px; */
     background-color: transparent;
     border: 0;
 }
+
 .ant-collapse-item {
     border: none;
 }
+
 span.ant-collapse-header-text {
     font-size: 20px;
     font-weight: 600;
     color: #000;
 }
+
+/* 13 feb */
+.vendor-form {
+    margin-top: 20px;
+    padding: 0px 25px 25px 25px;
+    background-color: white;
+}
+
+.vender-input p {
+    border: 1px solid #70707054;
+    border-radius: 2px;
+    height: 40px;
+    padding: 6px 12px;
+    outline: none;
+}
+
+.ant-form-item.vender-input label.ant-form-item-required {
+    font-weight: 500;
+    color: #112F5C !important;
+    opacity: 70% !important;
+}
+
+.user-image img {
+    height: 154px;
+    width: 220px;
+}
+
+/* 13 feb */
 /* responsive */
 @media (max-width: 1299px) {
     .table-hover tbody tr td {
@@ -3762,9 +3856,30 @@ span.text-sizes {
     .shipment-caret .ant-select-selector span.ant-select-selection-item {
         width: 108px;
     }
+
+    div#vendor-selector {
+        margin-bottom: 30px;
+    }
+
+    .vendor-rowgap {
+        margin-bottom: 10px !important;
+    }
+    .row.top-border .col-md-6 {
+        width: 100%;
+    }
+    .space-raw {
+        margin-top: 20px;
+    }
 }
 
+
+
 @media (min-width: 768px) and (max-width: 991px) {
+
+    .user-image {
+        text-align: center;
+    }
+
     .ant-select-selector {
         height: 38px !important;
     }
