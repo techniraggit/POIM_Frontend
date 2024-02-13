@@ -127,6 +127,9 @@ export const createVendor = (data) => {
 export const updateVendor = (data) => {
     return Axios.put('/api/admin/vendors', data);
 }
+export const updatematerialPo = (data) => {
+    return Axios.patch('/api/admin/remove-material', data);
+}
 
 export const fetchManagers = () => {
     return Axios.get('/api/helping/project-managers');

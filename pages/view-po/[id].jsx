@@ -9,7 +9,8 @@ import { updatePO, fetchPo } from "@/apis/apis/adminApis";
 import { Form, Select } from "antd";
 import PoForm from '../../components/Form';
 import moment from "moment";
-import Po_status from "@/components/Po_status";
+import Po_status from "../Po_status";
+//import Po_status from "@/components/Po_status";
 import Link from "next/link";
 
 const { Option } = Select;
