@@ -219,6 +219,6 @@ const PO_list = () => {
 };
 
 export { getServerSideProps };
-export default withAuth(['project manager', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
+export default withAuth(['project manager','director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
 
 // export default PO_list;
