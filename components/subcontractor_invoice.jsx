@@ -25,6 +25,7 @@ const Subcontractor_invoice = ({data}) => {
         phone: '',
         email: '',
         shipment_type: '',
+        subcontractor_type: '',
         delivery_address: '',
         quantity: 0,
         material_details: []
@@ -42,6 +43,7 @@ const Subcontractor_invoice = ({data}) => {
                 ...formData,
                 po_type: data.po_type,
                 amount: data.total_amount,
+                subcontractor_type: data.subcontractor_type,
                 company_name: data.vendor_contact.company.company_name,
                 vendor_id: data.vendor_contact.company.vendor_id,
                 vendor_contact_id: data.vendor_contact.vendor_contact_id,
@@ -54,6 +56,8 @@ const Subcontractor_invoice = ({data}) => {
                 phone: data.vendor_contact.phone_number,
                 email: data.vendor_contact.email,
                 shipment_type: data.shipment_type,
+                original_po_amount:data.original_amount,
+                invoice_amount:data.invoice_received_amount,
                 material_details: [...data.material_details]
             });
             form.setFieldValue('po_type', data.po_type);
@@ -76,6 +80,9 @@ const Subcontractor_invoice = ({data}) => {
             form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
             form.setFieldValue('first_name', data.created_by.first_name)
             form.setFieldValue('last_name', data.created_by.last_name)
+            form.setFieldValue('subcontractor_type', data.subcontractor_type);
+            form.setFieldValue('original_po_amount',data.original_amount);
+            form.setFieldValue('invoice_amount',data.invoice_received_amount);
             data?.material_details.forEach((material, index) => {
                 form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                 form.setFieldValue('material_for' + (index), material.material_for)
@@ -96,7 +103,47 @@ const Subcontractor_invoice = ({data}) => {
     }
 
     const onChange = (name, value, index) => {
-        
+        if (name === 'material_details') {
+            let totalAmount = 0;
+            const materalDetails = formData.material_details[index];
+            Object.keys(value).forEach((key) => {
+                materalDetails[key] = value[key];
+            });
+
+            if (value.amount) {
+                totalAmount = getTotalAmount();
+            }
+            formData.material_details[index] = {
+                ...materalDetails
+            };
+            formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
+            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
+            if (totalAmount > 0) {
+                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
+                form.setFieldsValue({ 'total_amount':(totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+            }
+            if (totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {
+                form.setFieldValue('original_po_amount', (totalAmount * 0.13 + totalAmount).toFixed(2) || 0);
+                setFormData({
+                    ...formData,
+                    original_po_amount: (totalAmount * 0.13).toFixed(2) || 0
+                })
+            } else {
+                form.setFieldValue('original_po_amount', originalAmount.current);
+                setFormData({
+                    ...formData,
+                    original_po_amount: originalAmount.current
+                })
+            }
+        } else {
+            formData[name] = value;
+        }
+        if (name === 'original_po_amount') {
+            originalAmount.current = value;
+        }
+        setFormData({
+            ...formData
+        });
     }
 
     return (
@@ -200,7 +247,10 @@ const Subcontractor_invoice = ({data}) => {
                             </>
                         )
                         }
-                        <PoForm formData={formData} view={true} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={() => {}} />
+                        <PoForm formData={formData} view={true} edit={true}
+                        //  isNew={true} 
+                        isNew={formData.subcontractor_type === 'new'}
+                         form={form} onChange={onChange} onFinish={onFinish} setFormData={() => {}} />
                     </Form>
                 </div>
             </div>

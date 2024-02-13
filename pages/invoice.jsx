@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { EyeFilled, EditFilled } from '@ant-design/icons'
-import { Button, Select,Pagination } from 'antd';
+import { Button, Select, Pagination } from 'antd';
 import Sidebar from "@/components/sidebar";
 import Link from "next/link";
 import { PlusOutlined } from '@ant-design/icons'
-import { invoiceList } from "@/apis/apis/adminApis";
+import { fetchVendorContact, filterSearch, invoiceList } from "@/apis/apis/adminApis";
 import Roles from "@/components/Roles";
 import Header from "@/components/header";
-import { invoiceClear,invoiceSearch } from "@/apis/apis/adminApis";
+import { invoiceClear, invoiceSearch } from "@/apis/apis/adminApis";
 
 const { Option } = Select;
 
@@ -19,6 +19,13 @@ const Invoice = () => {
     const [inputValue, setInputValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
+    const [companyName, setCompanyName] = useState([]);
+
+    const [query,setQuery]=useState({filter_by_po_type:"",
+    filter_by_po_vendor:"",
+    filter_by_po_status:""
+})
+    console.log(query)
     useEffect(() => {
         invoiceList(currentPage).then((res) => {
             if (res?.data?.results.status) {
@@ -48,6 +55,27 @@ const Invoice = () => {
             setInvoiceTable(res.data.data)
         })
     };
+   
+    useEffect(() => {
+
+        const response = fetchVendorContact();
+        response.then((res) => {
+            setCompanyName([...res.data.vendors])
+        })
+
+    }, [])
+    
+    
+    useEffect(()=>{
+        if(query){
+            const queryString = new URLSearchParams(query).toString();
+            console.log(queryString);
+            const response=   filterSearch(queryString);    
+            response.then((res)=>{
+                setInvoiceTable(res.data.search_invoice_data)
+            })
+        }
+    },[query])
 
     return (
         <>
@@ -61,7 +89,6 @@ const Invoice = () => {
                                 <Roles action="add_invoice">
                                     <li class="me-4 ">
                                         <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
-                                        {/* <i class="fa-solid fa-plus mb-3"></i> */}
                                         <span className="mt-3">Add Invoice</span>
                                     </li>
                                 </Roles>
@@ -89,31 +116,61 @@ const Invoice = () => {
                                         >Search</button>
                                     </form>
                                     <button type="submit" className="clear-button ms-3"
-                                     onClick={handleClearButtonClick}
-                                     >
+                                        onClick={handleClearButtonClick}
+                                    >
                                         Clear
-                                        </button>
+                                    </button>
                                 </div>
                                 <div className="purchase-filter">
                                     <span className="filter-span">Filter :</span>
-                                    <Select className="line-select me-2" placeholder="Type">
-                                        <Option>Invoice</Option>
-                                        <Option>Invoice</Option>
+                                    
+                                    <Select placeholder="Select PO Type" id="single1"
+                                        class="js-states form-control file-wrap-select bold-select"
+                                        onChange={(value) => 
+                                    
+                                        setQuery(prevState => ({
+                                            ...prevState,
+                                            ['filter_by_po_type']: value
+                                        }))
+                                    }
+                                    >
+                                        <Option value="material">Material PO</Option>
+                                        <Option value="rental">Rental PO</Option>
+                                        <Option value="subcontractor">Sub Contractor PO</Option>
                                     </Select>
-                                    {/* -------------------------- */}
+                                    <Select className="line-select me-2" placeholder="PO Vendor"
+                                        onChange={(value) =>
+                                        setQuery(prevState => ({
+                                            ...prevState,
+                                            ['filter_by_po_vendor']: value
+                                        }))}
+                                    
+                                    >
+                                        {companyName.map((entry) =>
+                                       
+                                        (
+                                            <Select.Option key={entry.vendor_id} value={entry.vendorId}>
+                                                {entry.company_name}
+                                            </Select.Option>
+                                        )
+                                        )}
+                                       
+                                    </Select>
+                                    <Select className="line-select me-2" placeholder="PO Status"
+                                        onChange={(value) => 
+                                            setQuery(prevState => ({
+                                                ...prevState,
+                                                ['filter_by_po_status']: value
+                                            }))}
+                                            
+                                            
+                                    >
+                                        <Option value="pending">Pending</Option>
+                                        <Option value="approved">Approved</Option>
+                                        <Option value="rejected">Rejected</Option>
+                                    </Select>
 
-                                    <Select className="line-select me-2" placeholder="PO Vendor" >
-                                        <Option>Invoice</Option>
-                                        <Option>Invoice</Option>
-                                    </Select>
-                                    <Select className="line-select" placeholder="PO Status" >
-                                        <Option>Invoice</Option>
-                                        <Option>Invoice</Option>
-                                    </Select>
-
-                                    {/* <Button className="click-btn"><span>Type</span><i className="fa-solid fa-chevron-down"></i></Button>
-                                    <Button className="click-btn"><span>PO Vendor</span><i className="fa-solid fa-chevron-down"></i></Button>
-                                    <Button className="click-btn"><span>PO Status</span><i className="fa-solid fa-chevron-down"></i></Button> */}
+                                    
                                 </div>
                             </div>
                         </div>
