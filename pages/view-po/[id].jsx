@@ -242,7 +242,7 @@ const ViewMaterialPo = () => {
                         </div>
                     </div>
                 </div>
-                {isModalOpen && <Po_status setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}/>}
+                {/* {isModalOpen && <Po_status setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}/>} */}
             </div>
         </>
     );
