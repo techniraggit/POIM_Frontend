@@ -46,21 +46,10 @@ const Notification = ({ closeNotification}) => {
         } else if (days > 0 && days <= 5) {
             return `${days} days ago`;
         } else {
-            // If the notification was received more than 7 days ago, show the date
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             return notificationTime.toLocaleDateString(undefined, options);
         }
-        // if (minutes < 1) {
-        //     return 'just now';
-        // } else if (hours > 0 && hours < 24) {
-        //     return `${hours} hours ago`;
-        // } else if (days > 0) {
-        //     return `${days} days ago`;
-        // } else {
-        //     return `${minutes} minutes ago`;
-        // }
     };
-    console.log(notificationData,'notificationData');
 
     return (
         <div className="sidebar-wrapp scroll">
