@@ -137,7 +137,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 )}
 
                 {(formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined') && (
-                    <div class="col-sm-4">
+                    <div class="col-lg-4 col-md-6">
                         <div className="selectwrap add-dropdown-wrap shipment-caret">
                             <Form.Item
                                 label="Material For"
@@ -164,7 +164,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                         </div>
                     </div>
                 )}
-                <div className="col-md-4">
+                <div className="col-lg-4 col-md-6">
                     <div className="wrap-box">
                         {(formData.material_details[0].material_for === 'inventory' || formData.material_details[0].material_for === 'supplies') && (
                             <Form.Item

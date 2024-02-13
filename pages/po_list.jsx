@@ -177,8 +177,7 @@ const PO_list = () => {
                                 </table>
                             </div>
                         </div>
-                    </div>
-                    <div className="pagination-container">
+                        <div className="pagination-container">
                         <Pagination
                             // defaultCurrent={2}
                             current={currentPage}
@@ -192,6 +191,8 @@ const PO_list = () => {
 
                         />
                     </div>
+                    </div>
+                   
                 </div>
             </div>
         </>

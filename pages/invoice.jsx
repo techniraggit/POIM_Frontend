@@ -79,7 +79,7 @@ const Invoice = () => {
                         </ul>
                         <div className="searchbar-wrapper">
                             <div className="Purchase-form">
-                                <div className="wrapin-form add-clear-wrap">
+                                <div className="wrapin-form add-clear-wrap mt-0">
                                     <form className="search-vendor">
                                         <input className="vendor-input" placeholder="Search Vendor"
                                             value={inputValue} onChange={handleInputChange}
@@ -172,8 +172,7 @@ const Invoice = () => {
 
                             </div>
                         </div>
-                    </div>
-                    <div className="pagination-container">
+                        <div className="pagination-container">
                         <Pagination
                             // defaultCurrent={2}
                             current={currentPage}
@@ -187,6 +186,8 @@ const Invoice = () => {
 
                         />
                     </div>
+                    </div>
+                   
                 </div>
             </div>
 

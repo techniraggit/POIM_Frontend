@@ -97,7 +97,7 @@ const Vendor = ({ base_url }) => {
                 <Sidebar />
                 <div className="inner-wrapper">
                     <Header heading="Vendors" />
-                    <div className="bottom-wrapp">
+                    <div className="bottom-wrapp users-list-wrapin">
                         <ul className="list-icons">
                             <Roles action='add_vendor'>
                                 <li className="me-4">

@@ -1185,7 +1185,7 @@ input.vendor-input::placeholder {
 }
 
 .wrapin-form {
-    margin-top: 30px;
+    margin-top: 0px;
     background-color: #FFFFFF;
     padding: 27px;
 }
@@ -2439,7 +2439,10 @@ span.anticon.anticon-home.home-sidebar>svg {
     display: flex;
     align-items: center;
 }
-
+.wrapin-form.add-clear-wrap {
+    margin-top: 30px;
+    padding: 27px;
+}
 button.vendor-search-butt:hover {
     background-color: #e91d26;
 }
@@ -3268,12 +3271,16 @@ button.sendemail-btn {
     margin-top: 18px;
     width: 100%;
 }
+button.sendemail-btn:hover {
+    background-color: #f50e0e !important;
+}
 .forgot-password-popup.forgot-popup-custom h2 {
     font-size: 22px;
     font-weight: 700;
 }
 .forgot-password-popup.forgot-popup-custom .popup-content {
     padding: 30px;
+    position: relative;
 }
 .forgot-password-popup.forgot-popup-custom  span.close-popup {
     line-height: 1;
@@ -3534,10 +3541,18 @@ li.ant-pagination-next button {
     font-size: 14px !important;
     font-weight: 500;
 }
-li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active {
+/* li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active {
+    background-color: #fff !important;
+    border: 1px solid #d2d2d2 !important;
+} */
+.ant-pagination .ant-pagination-item-active {
     background-color: #fff !important;
     border: 1px solid #d2d2d2 !important;
 }
+li.ant-pagination-item {
+    background-color: #e8e8e8 !important;
+}
+
 .inputDiv .ant-col {
     min-height: unset !important;
 }
@@ -3546,9 +3561,7 @@ li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active {
     box-shadow: none !important;
     border: 1px solid #0d0d0d36!important;
 }
-.buttonWrapper {
-    margin-top: 20px;
-}
+
 .detail-para1 {
     /* margin: 0px; */
     color: rgb(17, 47, 92);
@@ -3634,6 +3647,25 @@ span.ant-collapse-header-text {
         /* margin-left: 10px; */
         color: #112F5C;
         padding: 10px 10px;
+    }
+    .Purchase-form {
+        flex-direction: column;
+    }
+    .purchase-filter {
+        width: 100%;
+    }
+    .wrapin-form {
+        margin-top: 0px;
+        padding: 27px 0px;
+    }
+    .ant-select.line-select.ant-select-show-arrow {
+        width: 28%;
+    }
+    .wrapin-form.add-clear-wrap {
+        padding: 27px 0px;
+    }
+    .bottom-wrapp.users-list-wrapin .wrapin-form.add-clear-wrap {
+        padding: 27px;
     }
 }
 
