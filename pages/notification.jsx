@@ -64,7 +64,8 @@ const Notification = ({ closeNotification}) => {
                 {Array.isArray(notificationData) &&
                     notificationData.map((notification, index) =>
                     (
-                        <div className="sidebar-main mb-3" key={index}>
+                        <div className={`sidebar-main mb-3 ${notification.is_read ? 'read' : 'unread'}`} key={index}>
+                        {/* // <div className="sidebar-main mb-3" key={index}> */}
                             <div className="sidebar-right mb-2 ">
                                 <div className="text-sm-span">
 
