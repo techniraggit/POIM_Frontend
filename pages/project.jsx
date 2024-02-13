@@ -83,6 +83,9 @@ const Vendor = ({ base_url }) => {
             setProjects(res.data.projects);
         })
     };
+    const calculateStartingSerialNumber = () => {
+        return (currentPage - 1) * 10 + 1;
+    };
 
     return (
         <>
@@ -90,7 +93,7 @@ const Vendor = ({ base_url }) => {
                 <Sidebar />
                 <div className="inner-wrapper">
                     <Header heading="Project" />
-                    <div className="bottom-wrapp">
+                    <div className="bottom-wrapp users-list-wrapin">
                         <ul className="list-icons">
                             <Roles action="add_project">
                                 <li className="me-4 create-projects">
@@ -131,7 +134,7 @@ const Vendor = ({ base_url }) => {
                                         {Array.isArray(projects) &&
                                             projects.map((project, index) => (
                                                 <tr key={index}>
-                                                    <td>{index + 1}</td>
+                                                   <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{project.name}</td>
                                                     <td>{project.customer_name}</td>
                                                     <td>{project.sites[0].address}</td>
@@ -167,8 +170,24 @@ const Vendor = ({ base_url }) => {
                                 current={currentPage}
                                 onChange={setCurrentPage}
                                 showSizeChanger={true}
-                                prevIcon={<Button>Previous</Button>}
-                                nextIcon={<Button>Next</Button>}
+                                prevIcon={
+                                    <Button 
+                                        style={currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                        disabled={currentPage === 1}
+                                        onClick={() => setCurrentPage(currentPage - 1)}
+                                    >
+                                        Previous
+                                    </Button>
+                                }
+                                nextIcon={
+                                    <Button 
+                                        style={currentPage === Math.ceil(count / 10) ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                        disabled={currentPage === Math.ceil(count / 10)}
+                                        onClick={() => setCurrentPage(currentPage + 1)}
+                                    >
+                                        Next
+                                    </Button>
+                                }
                                 onShowSizeChange={() => setCurrentPage(+1)}
                                 total={count}
                                 pageSize={10} // Number of items per page

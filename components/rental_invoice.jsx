@@ -32,6 +32,7 @@ const Rental_invoice = ({ data }) => {
     });
     useEffect(() => {
         if (data) {
+            console.log(data.material_details[0].date,'sssssssssssss');
             setFormData({
                 ...formData,
                 po_type: data.po_type,
@@ -131,6 +132,9 @@ const Rental_invoice = ({ data }) => {
         form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
         form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
     };
+
+
+    console.log(formData,'jjjjjjjjjjjjjjjj');
 
     return (
         <>

@@ -1186,7 +1186,7 @@ input.vendor-input::placeholder {
 }
 
 .wrapin-form {
-    margin-top: 30px;
+    margin-top: 0px;
     background-color: #FFFFFF;
     padding: 27px;
 }
@@ -2440,7 +2440,10 @@ span.anticon.anticon-home.home-sidebar>svg {
     display: flex;
     align-items: center;
 }
-
+.wrapin-form.add-clear-wrap {
+    margin-top: 30px;
+    padding: 27px;
+}
 button.vendor-search-butt:hover {
     background-color: #e91d26;
 }
@@ -3274,7 +3277,6 @@ button.sendemail-btn {
     margin-top: 18px;
     width: 100%;
 }
-
 .forgot-password-popup.forgot-popup-custom h2 {
     font-size: 22px;
     font-weight: 700;
@@ -3282,6 +3284,7 @@ button.sendemail-btn {
 
 .forgot-password-popup.forgot-popup-custom .popup-content {
     padding: 30px;
+    position: relative;
 }
 
 .forgot-password-popup.forgot-popup-custom span.close-popup {
@@ -3574,6 +3577,7 @@ li.ant-pagination-prev button {
     border: 1px solid #000 !important;
     color: #000 !important;
     font-weight: 500;
+    /* display: none !important; */
 }
 
 li.ant-pagination-next button {
@@ -3586,6 +3590,17 @@ li.ant-pagination-next button {
 li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active {
     background-color: #fff !important;
     border: 1px solid #d2d2d2 !important;
+}
+/* li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active {
+    background-color: #fff !important;
+    border: 1px solid #d2d2d2 !important;
+} */
+.ant-pagination .ant-pagination-item-active {
+    background-color: #fff !important;
+    border: 1px solid #d2d2d2 !important;
+}
+li.ant-pagination-item {
+    background-color: #e8e8e8 !important;
 }
 
 .inputDiv .ant-col {
@@ -3728,6 +3743,25 @@ span.ant-collapse-header-text {
         color: #112F5C;
         padding: 10px 10px;
     }
+    .Purchase-form {
+        flex-direction: column;
+    }
+    .purchase-filter {
+        width: 100%;
+    }
+    .wrapin-form {
+        margin-top: 0px;
+        padding: 27px 0px;
+    }
+    .ant-select.line-select.ant-select-show-arrow {
+        width: 28%;
+    }
+    .wrapin-form.add-clear-wrap {
+        padding: 27px 0px;
+    }
+    .bottom-wrapp.users-list-wrapin .wrapin-form.add-clear-wrap {
+        padding: 27px;
+    }
 }
 
 @media (max-width: 1199px) {
@@ -3766,6 +3800,17 @@ span.text-sizes {
     width: 55px;
     text-align: center;
 }
+
+
+
+
+/* .read {
+    background-color: green;
+}
+
+.unread {
+    background-color: red;
+} */
 
 @media (max-width: 1024px) {
     .Purchase-form {

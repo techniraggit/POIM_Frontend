@@ -19,6 +19,19 @@ const Profile = () => {
     }, [])
 
     const onFinish = (values) => {
+
+        // const { new_password, confirm_password } = values;
+
+        // if (new_password !== confirm_password) {
+        //     form.setFields({
+        //         confirm_password: {
+        //             value: confirm_password,
+        //             errors: ['Confirm password does not match with the new password'],
+        //         },
+        //     });
+        //     return;
+        // }
+
         profileSave({
             ...values,
         }).then((res) => {
@@ -137,7 +150,18 @@ const Profile = () => {
                                                 label="Confirm Password"
                                                 name="confirm_password"  // Add a name to link the input to the form values
                                                 className="vender-input"
-                                                rules={[{ required: true, message: 'Please enter your confirm password!' }]}
+                                                rules={[
+                                                    { required: true, message: 'Please enter your confirm password!' },
+                                                    ({getFieldValue}) => ({
+                                                        validator(_, value) {
+                                                            if (!value || getFieldValue('new_password') === value) {
+                                                                return Promise.resolve();
+                                                            }
+                                                            return Promise.reject(new Error('This password not match with new password!'));
+                                                        },
+                                                    }),
+                                                ]}
+                                                // rules={[{ required: true, message: 'Please enter your confirm password!' }]}
                                             >
                                                 <Input />
                                             </Form.Item>

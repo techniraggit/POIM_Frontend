@@ -65,6 +65,9 @@ export const poSearch=(inputValue)=>{
 export const invoiceSearch=(inputValue)=>{
     return Axios.get(`/api/search/invoices?query=${inputValue}`)
 }
+export const filterSearch=(params)=>{
+    return Axios.get(`/api/search/invoices?${params}`)
+}
 export const vendorClear=()=>{
     return Axios.get(`/api/admin/vendors`)
 }
@@ -80,6 +83,9 @@ export const getPoNumber = () => {
 }
 export const getNotification=()=>{
     return Axios.get(`/api/admin/notifications`)
+}
+export const getNotificationCount=()=>{
+    return Axios.get(`/api/helping/get-count`)
 }
 export const toggleButton=(data)=>{
     return Axios.put('/api/admin/notifications', data);
@@ -120,6 +126,9 @@ export const createVendor = (data) => {
 
 export const updateVendor = (data) => {
     return Axios.put('/api/admin/vendors', data);
+}
+export const updatematerialPo = (data) => {
+    return Axios.patch('/api/admin/remove-material', data);
 }
 
 export const fetchManagers = () => {

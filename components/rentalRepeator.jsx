@@ -14,10 +14,10 @@ const repeatorData = {
 function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, edit, view }) {
   useEffect(() => {
     if(edit) {
-        form.setFieldValue('start_date', formData.material_details[0]?.start_date);
+        form.setFieldValue('start_date', formData.material_details[0]?.date);
         form.setFieldValue('end_date', formData.material_details[0]?.end_date);
     }
-  }, [formData.material_details[0]?.start_date, edit,formData.material_details[0]?.end_date]);
+  }, [formData.material_details[0]?.date, edit,formData.material_details[0]?.end_date]);
 
   return (
     <div class="row">

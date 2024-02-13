@@ -213,7 +213,8 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                         return <></>
                                     })
                                 }
-                                <MinusOutlined className="minus-wrap col-lg-1" onClick={() => {
+                                <MinusOutlined className="minus-wrap col-lg-1"
+                                 onClick={() => {
                                     if(contact.vendor_contact_id) {
                                         handleRemoveContact(contact.vendor_contact_id, index);
                                     } else {
