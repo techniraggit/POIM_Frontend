@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { EyeFilled, EditFilled } from '@ant-design/icons'
-import { Button, Select,Pagination } from 'antd';
+import { Button, Select, Pagination } from 'antd';
 import Sidebar from "@/components/sidebar";
 import Link from "next/link";
 import { PlusOutlined } from '@ant-design/icons'
-import { invoiceList } from "@/apis/apis/adminApis";
+import { fetchVendorContact, filterSearch, invoiceList } from "@/apis/apis/adminApis";
 import Roles from "@/components/Roles";
 import Header from "@/components/header";
-import { invoiceClear,invoiceSearch } from "@/apis/apis/adminApis";
+import { invoiceClear, invoiceSearch } from "@/apis/apis/adminApis";
 
 const { Option } = Select;
 
@@ -19,6 +19,14 @@ const Invoice = () => {
     const [inputValue, setInputValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
+    const [companyName, setCompanyName] = useState([]);
+
+    const [query, setQuery] = useState({
+        filter_by_po_type: "",
+        filter_by_po_vendor: "",
+        filter_by_po_status: ""
+    })
+    console.log(query)
     useEffect(() => {
         invoiceList(currentPage).then((res) => {
             if (res?.data?.results.status) {
@@ -28,7 +36,7 @@ const Invoice = () => {
             }
             setCount(res.data.count)
         })
-    }, [])
+    }, [currentPage])
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
@@ -49,6 +57,36 @@ const Invoice = () => {
         })
     };
 
+    useEffect(() => {
+
+        const response = fetchVendorContact();
+        response.then((res) => {
+            setCompanyName([...res.data.vendors])
+        })
+
+    }, [])
+
+
+    useEffect(() => {
+        if (query) {
+            const queryString = new URLSearchParams(query).toString();
+            console.log(queryString, 'tttttttt');
+            const response = filterSearch(queryString);
+            console.log(response, 'ggggggggg');
+            response.then((res) => {
+                console.log(res.data.count, 'xxxxxxxxxxxxxxxxxxx');
+                setCount(res.data.count)
+                setInvoiceTable(res.data.results.data)
+                setInvoiceTable(res.data.results.search_invoice_data)
+            })
+            // setCount(res.data.count)
+        }
+    }, [query])
+    const calculateStartingSerialNumber = () => {
+        return (currentPage - 1) * 10 + 1;
+    };
+
+
     return (
         <>
             <div className="wrapper-main">
@@ -61,7 +99,6 @@ const Invoice = () => {
                                 <Roles action="add_invoice">
                                     <li class="me-4 ">
                                         <Link href='/create_invoice'>  <PlusOutlined class="fa-solid fa-plus mb-3" /></Link>
-                                        {/* <i class="fa-solid fa-plus mb-3"></i> */}
                                         <span className="mt-3">Add Invoice</span>
                                     </li>
                                 </Roles>
@@ -89,31 +126,61 @@ const Invoice = () => {
                                         >Search</button>
                                     </form>
                                     <button type="submit" className="clear-button ms-3"
-                                     onClick={handleClearButtonClick}
-                                     >
+                                        onClick={handleClearButtonClick}
+                                    >
                                         Clear
-                                        </button>
+                                    </button>
                                 </div>
                                 <div className="purchase-filter">
                                     <span className="filter-span">Filter :</span>
-                                    <Select className="line-select me-2" placeholder="Type">
-                                        <Option>Invoice</Option>
-                                        <Option>Invoice</Option>
-                                    </Select>
-                                    {/* -------------------------- */}
 
-                                    <Select className="line-select me-2" placeholder="PO Vendor" >
-                                        <Option>Invoice</Option>
-                                        <Option>Invoice</Option>
+                                    <Select placeholder="Select PO Type" id="single1"
+                                        class="js-states form-control file-wrap-select bold-select"
+                                        onChange={(value) =>
+
+                                            setQuery(prevState => ({
+                                                ...prevState,
+                                                ['filter_by_po_type']: value
+                                            }))
+                                        }
+                                    >
+                                        <Option value="material">Material PO</Option>
+                                        <Option value="rental">Rental PO</Option>
+                                        <Option value="subcontractor">Sub Contractor PO</Option>
                                     </Select>
-                                    <Select className="line-select" placeholder="PO Status" >
-                                        <Option>Invoice</Option>
-                                        <Option>Invoice</Option>
+                                    <Select className="line-select me-2" placeholder="PO Vendor"
+                                        onChange={(value) =>
+                                            setQuery(prevState => ({
+                                                ...prevState,
+                                                ['filter_by_po_vendor']: value
+                                            }))}
+
+                                    >
+                                        {companyName.map((entry) =>
+
+                                        (
+                                            <Select.Option key={entry.vendor_id} value={entry.vendorId}>
+                                                {entry.company_name}
+                                            </Select.Option>
+                                        )
+                                        )}
+
+                                    </Select>
+                                    <Select className="line-select me-2" placeholder="PO Status"
+                                        onChange={(value) =>
+                                            setQuery(prevState => ({
+                                                ...prevState,
+                                                ['filter_by_po_status']: value
+                                            }))}
+
+
+                                    >
+                                        <Option value="pending">Pending</Option>
+                                        <Option value="approved">Approved</Option>
+                                        <Option value="rejected">Rejected</Option>
                                     </Select>
 
-                                    {/* <Button className="click-btn"><span>Type</span><i className="fa-solid fa-chevron-down"></i></Button>
-                                    <Button className="click-btn"><span>PO Vendor</span><i className="fa-solid fa-chevron-down"></i></Button>
-                                    <Button className="click-btn"><span>PO Status</span><i className="fa-solid fa-chevron-down"></i></Button> */}
+
                                 </div>
                             </div>
                         </div>
@@ -139,7 +206,7 @@ const Invoice = () => {
                                         {Array.isArray(invoiceTable) &&
                                             invoiceTable.map((invoice, index) => (
                                                 <tr key={index}>
-                                                    <td>{index + 1}</td>
+                                                    <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{invoice.purchase_order.po_number}</td>
                                                     <td>{invoice.purchase_order.created_by.first_name} {invoice.purchase_order.created_by.last_name}</td>
                                                     <td>{invoice.purchase_order.total_amount}</td>
@@ -176,10 +243,28 @@ const Invoice = () => {
                         <Pagination
                             // defaultCurrent={2}
                             current={currentPage}
+                            //  onChange={handlePaginationChange}
                             onChange={setCurrentPage}
                             showSizeChanger={true}
-                            prevIcon={<Button>Previous</Button>}
-                            nextIcon={<Button>Next</Button>}
+                            prevIcon={
+                                <Button 
+                                    style={currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                    disabled={currentPage === 1}
+                                    onClick={() => setCurrentPage(currentPage - 1)}
+                                >
+                                    Previous
+                                </Button>
+                            }
+                            nextIcon={
+                                <Button 
+                                    style={currentPage === Math.ceil(count / 10) ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                    disabled={currentPage === Math.ceil(count / 10)}
+                                    onClick={() => setCurrentPage(currentPage + 1)}
+                                >
+                                    Next
+                                </Button>
+                            }
+
                             onShowSizeChange={() => setCurrentPage(+1)}
                             total={count}
                             pageSize={10} // Number of items per page

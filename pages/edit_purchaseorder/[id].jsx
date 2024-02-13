@@ -22,7 +22,7 @@ const repeatorData = {
     code: '',
     amount: 0,
     project_site_id: '',
-    material_for: ''
+    material_for: '',
 }
 
 const EditMaterialPo = () => {
@@ -56,6 +56,7 @@ const EditMaterialPo = () => {
             fetchPo(id).then((res) => {
                 if (res?.data?.status) {
                     const data = res.data?.data;
+                    console.log(data,'aaaaaaaaaaaaaaaaaa');
                     setFormData({
                         ...formData,
                         can_change_status: res.data?.can_change_status,
@@ -76,6 +77,7 @@ const EditMaterialPo = () => {
                         project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         delivery_address: data.delivery_address || '1860 Shawson',
                         material_details: data.material_details.map((detail) => {
+                            console.log(detail,'detail');
                             return { ...detail, project_site_id: detail.project_site?.site_id }
                         }),
                         status: data.status
@@ -117,6 +119,7 @@ const EditMaterialPo = () => {
 
         }
     }, [refetch]);
+
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
@@ -196,6 +199,7 @@ const EditMaterialPo = () => {
             }
         })
     }
+    console.log(formData,'editPurchase order');
 
     return (
         <>

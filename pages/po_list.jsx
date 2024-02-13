@@ -59,6 +59,10 @@ const PO_list = () => {
             setPurchaseOrders(res.data.data);
         })
     };
+    const calculateStartingSerialNumber = () => {
+        return (currentPage - 1) * 10 + 1;
+    };
+
 
     return (
         <>
@@ -119,7 +123,7 @@ const PO_list = () => {
                                         {Array.isArray(rows) && rows.length > 0 ? (
                                             rows.map((purchase, index) => {
                                                 return <tr key={index}>
-                                                    <td>{index + 1}</td>
+                                                   <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{purchase.po_number}</td>
                                                     <td>{purchase.project?.project_no || '-'}</td>
                                                     <td className="td-color">{purchase.po_type}</td>
@@ -183,8 +187,24 @@ const PO_list = () => {
                             current={currentPage}
                             onChange={setCurrentPage}
                             showSizeChanger={true}
-                            prevIcon={<Button>Previous</Button>}
-                            nextIcon={<Button>Next</Button>}
+                            prevIcon={
+                                <Button 
+                                    style={currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                    disabled={currentPage === 1}
+                                    onClick={() => setCurrentPage(currentPage - 1)}
+                                >
+                                    Previous
+                                </Button>
+                            }
+                            nextIcon={
+                                <Button 
+                                    style={currentPage === Math.ceil(count / 10) ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                    disabled={currentPage === Math.ceil(count / 10)}
+                                    onClick={() => setCurrentPage(currentPage + 1)}
+                                >
+                                    Next
+                                </Button>
+                            }
                             onShowSizeChange={() => setCurrentPage(+1)}
                             total={count}
                             pageSize={10} // Number of items per page
@@ -200,6 +220,6 @@ const PO_list = () => {
 };
 
 export { getServerSideProps };
-export default withAuth(['project manager', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
+export default withAuth(['project manager','director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
 
 // export default PO_list;

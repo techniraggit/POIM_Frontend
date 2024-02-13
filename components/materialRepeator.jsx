@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space } from "antd";
+import { Form, Input, Select, Button, Space,message } from "antd";
+import { updatematerialPo } from "@/apis/apis/adminApis";
 
 const repeatorData = {
     quantity: '',
@@ -16,6 +17,19 @@ const repeatorData = {
 
 function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, projects, calculateAmount, view }) {
 
+    const handleRemoveDetail = (id, index) => {  
+        console.log(id,'dddddddd');      
+        updatematerialPo({md_id: id}).then((response) => {
+            console.log(response,'hhhhhhhhhhhhhhhhhhhh');
+            if(response?.data?.status) {
+                message.success(response.data.message);
+                setFormData({
+                    ...formData,
+                    material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                });
+            }
+        })
+      }
     return (
         <div class="row">
             <div class="col-sm-4">
@@ -261,6 +275,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                     {
                         formData.material_details.slice(1).map((data, index) => {
+                            console.log(data.md_id,'pppppppppppssssssssss');
                             return <div className="row align-items-center">
                                 {
                                     Object.keys(data).map((key) => {
@@ -521,15 +536,31 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                 }
                                 {
                                     !view && <div className="col-sm-4">
-                                    <MinusOutlined className="minus-wrap" onClick={() => {
-                                        setFormData({
-                                            ...formData,
-                                            material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                        });
-                                        if (calculateAmount) {
-                                            calculateAmount(0, 0, index + 1)
+                                    <MinusOutlined className="minus-wrap" 
+                                     onClick={() => {
+                                        if(data.md_id) {
+                                            console.log(data.md_id,'llllllllll');
+                                            handleRemoveDetail(data.md_id, index);
+                                        } else {
+                                            setFormData({
+                                                ...formData,
+                                                material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                            });
+                                            if (calculateAmount) {
+                                                calculateAmount(0, 0, index + 1)
+                                            }
                                         }
-                                    }} style={{ marginLeft: '8px' }} />
+                                    }}
+                                    // onClick={() => {
+                                        // setFormData({
+                                        //     ...formData,
+                                        //     material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                        // });
+                                        // if (calculateAmount) {
+                                        //     calculateAmount(0, 0, index + 1)
+                                        // }
+                                    // }} 
+                                    style={{ marginLeft: '8px' }} />
                                 </div>
                                 }
                             </div>

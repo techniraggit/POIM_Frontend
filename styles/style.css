@@ -3534,6 +3534,7 @@ li.ant-pagination-prev button {
     border: 1px solid #000 !important;
     color: #000 !important;
     font-weight: 500;
+    /* display: none !important; */
 }
 li.ant-pagination-next button {
     background-color: #000 !important;
@@ -3705,6 +3706,17 @@ span.text-sizes {
     width: 55px;
     text-align: center;
 }
+
+
+
+
+/* .read {
+    background-color: green;
+}
+
+.unread {
+    background-color: red;
+} */
 
 @media (max-width: 1024px) {
     .Purchase-form {
