@@ -18,9 +18,7 @@ const repeatorData = {
 function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, projects, calculateAmount, view }) {
 
     const handleRemoveDetail = (id, index) => {  
-        console.log(id,'dddddddd');      
         updatematerialPo({md_id: id}).then((response) => {
-            console.log(response,'hhhhhhhhhhhhhhhhhhhh');
             if(response?.data?.status) {
                 message.success(response.data.message);
                 setFormData({
@@ -29,7 +27,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 });
             }
         })
-      }
+    }
+
     return (
         <div class="row">
             <div class="col-sm-4">
@@ -150,7 +149,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                     </div>
                 )}
 
-                {(formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined') && (
+                {(formData.shipment_type?.toLowerCase() === 'non project related' || formData.shipment_type?.toLowerCase() === 'combined') && (
                     <div class="col-lg-4 col-md-6">
                         <div className="selectwrap add-dropdown-wrap shipment-caret">
                             <Form.Item
@@ -169,7 +168,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => onChange('material_details', { material_for: value }, 0)}
                                 >
-                                    {formData.shipment_type.toLowerCase() === 'combined' && <option value="project">Project</option>}
+                                    {formData.shipment_type?.toLowerCase() === 'combined' && <option value="project">Project</option>}
                                     <Option value="inventory">Inventory</Option>
                                     <Option value="supplies">Supplies/Expenses</Option>
 
@@ -180,11 +179,10 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 )}
                 <div className="col-lg-4 col-md-6">
                     <div className="wrap-box">
-                        {(formData.material_details[0].material_for === 'inventory' || formData.material_details[0].material_for === 'supplies') && (
+                        {(formData.material_details[0].material_for?.toLowerCase() === 'inventory' || formData.material_details[0].material_for?.toLowerCase() === 'supplies') && (
                             <Form.Item
-                                label={formData.material_details[0].material_for === 'inventory' ? "Inventory Code" : "GL Code"}
-                                // label="Inventory Code"
-                                name="code"
+                                label={formData.material_details[0].material_for?.toLowerCase() === 'inventory' ? "Inventory Code" : "GL Code"}
+                                name="code_0"
                                 htmlFor="file"
                                 className="same-clr"
                                 rules={[
@@ -198,7 +196,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                             </Form.Item>
                         )}
 
-                        {formData.material_details[0].material_for === 'project' && (
+                        {formData.material_details[0].material_for?.toLowerCase() === 'project' && (
                             <>
                                 <div class="selectwrap add-dropdown-wrap">
                                     <div class="selectwrap columns-select shipment-caret ">
@@ -242,7 +240,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 </div>
             </div>
             <div className="row">
-                {formData.material_details[0].material_for === 'project' && (
+                {formData.material_details[0].material_for?.toLowerCase() === 'project' && (
                     <div class="col-sm-4">
                         <div className="selectwrap columns-select shipment-caret ">
                             <Form.Item
@@ -275,7 +273,6 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                     {
                         formData.material_details.slice(1).map((data, index) => {
-                            console.log(data.md_id,'pppppppppppssssssssss');
                             return <div className="row align-items-center">
                                 {
                                     Object.keys(data).map((key) => {
@@ -367,7 +364,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                     </div>
                                                 </div>
                                             )
-                                        } else if(key === 'project_id' && formData.material_details[index + 1].material_for === 'project') {
+                                        } else if(key === 'project_id' && formData.material_details[index + 1].material_for?.toLowerCase() === 'project') {
                                             return(
                                                 <div class="col-sm-4">
                                                     <div className="wrap-box">
@@ -405,7 +402,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                 </div>
                                                 </div>
                                             </div>)
-                                        } else if (key === 'project_site_id' && (formData.shipment_type.toLowerCase() === 'project related')) {
+                                        } else if (key === 'project_site_id' && (formData.shipment_type?.toLowerCase() === 'project related')) {
                                             return (
                                                 <div class="col-sm-4">
                                                     <div className="wrap-box">
@@ -430,7 +427,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                     </div>
                                                 </div>
                                             )
-                                        } else if (key === 'project_site_id' && formData.material_details[index + 1].material_for === 'project') {
+                                        } else if (key === 'project_site_id' && formData.material_details[index + 1].material_for?.toLowerCase() === 'project') {
                                             return (
                                                 <div class="col-sm-4">
                                                     <div className="wrap-box">
@@ -455,7 +452,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                     </div>
                                                 </div>
                                             )
-                                        } else if (key === 'material_for' && (formData.shipment_type.toLowerCase() === 'non project related' || formData.shipment_type.toLowerCase() === 'combined')) {
+                                        } else if (key === 'material_for' && (formData.shipment_type?.toLowerCase() === 'non project related' || formData.shipment_type?.toLowerCase() === 'combined')) {
                                             return (
                                                 <div class="col-lg-4 col-md-6">
                                                     <div className="wrap-box">
@@ -487,7 +484,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                     </div>
                                                 </div>
                                             )
-                                        } else if (key === 'code' && (formData.material_details[index + 1].material_for === 'inventory')) {
+                                        } else if (key === 'code' && (formData.material_details[index + 1].material_for?.toLowerCase() === 'inventory')) {
                                             return (
                                                 <div className="col-lg-4 col-md-6">
                                                     <div className="wrap-box">
@@ -508,7 +505,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                     </div>
                                                 </div>
                                             )
-                                        } else if (key === 'code' && (formData.material_details[index + 1].material_for === 'supplies')) {
+                                        } else if (key === 'code' && (formData.material_details[index + 1].material_for?.toLowerCase() === 'supplies')) {
                                             return (
                                                 <div className="col-sm-4">
                                                     <div className="wrap-box">
@@ -520,7 +517,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                             rules={[
                                                                 {
                                                                     required: true,
-                                                                    message: "Please enter Inventory Code",
+                                                                    message: "Please enter GL Code",
                                                                 },
                                                             ]}
                                                         >
@@ -532,14 +529,12 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                         }
                                         return <></>
                                     })
-
                                 }
                                 {
                                     !view && <div className="col-sm-4">
                                     <MinusOutlined className="minus-wrap" 
                                      onClick={() => {
                                         if(data.md_id) {
-                                            console.log(data.md_id,'llllllllll');
                                             handleRemoveDetail(data.md_id, index);
                                         } else {
                                             setFormData({

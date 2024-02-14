@@ -9,8 +9,8 @@ import { updatePO, fetchPo } from "@/apis/apis/adminApis";
 import { Form, Select } from "antd";
 import PoForm from '../../components/Form';
 import moment from "moment";
-import Link from "next/link";
-// import Po_status from "@/components/Po_status";
+import PoStatus from "@/components/PoStatus";
+import Amendments from "@/components/Amendments";
 
 const { Option } = Select;
 
@@ -44,7 +44,7 @@ const ViewMaterialPo = () => {
         material_details: [{ ...repeatorData }]
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isViewVendorVisible, setViewVendorVisible] = useState(false);
+    const [history, setHistory] = useState([])
 
     const router = useRouter();
     const [form] = Form.useForm();
@@ -79,6 +79,7 @@ const ViewMaterialPo = () => {
                     }),
                     status: data.status
                 });
+                setHistory([...res.data.history_logs_data])
                 form.setFieldValue('po_type', data.po_type);
                 form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
                 form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
@@ -98,7 +99,6 @@ const ViewMaterialPo = () => {
                 form.setFieldValue('quantity', data.material_details[0]?.quantity)
                 form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
                 form.setFieldValue('description', data.material_details[0]?.description)
-                // form.setFieldValue('project_site_id', data.material_details[0]?.project_site)
                 form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                 form.setFieldValue('code', data.material_details[0]?.code)
                 form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
@@ -173,11 +173,9 @@ const ViewMaterialPo = () => {
             ...formData
         });
     }
-    const handleIconClick = (id, index) => {
-        // setViewVendorVisible((prevVisible) => (prevVisible === id ? null : id));
-        setIsModalOpen(true);
-        // setClickedIndex(index);
 
+    const handleIconClick = () => {
+        setIsModalOpen(true);
     };
 
     return (
@@ -194,17 +192,14 @@ const ViewMaterialPo = () => {
                                     <span>View Purchase Order</span>
                                 </div>
                                 <div>
-                                    {/* <Link>
-                                    <Po_status/>
-                                    </Link> */}
-                               <button className="po-status-btn" onClick={() => handleIconClick()}>
-                               PO Status
-                               </button>
+                                    {
+                                        formData.status === 'approved' && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                            PO Status
+                                        </button>
+                                    }
                                 </div>
                             </li>
-
                         </ul>
-
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
                                 <Form onFinish={onFinish} form={form} className="file-form">
@@ -238,10 +233,11 @@ const ViewMaterialPo = () => {
                                     <PoForm formData={formData} view={true} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />
                                 </Form>
                             </div>
+                            { history?.length > 0 && <Amendments history={history} /> }
                         </div>
                     </div>
                 </div>
-                {/* {isModalOpen && <Po_status setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}/>} */}
+                {isModalOpen && <PoStatus setIsModalOpen={setIsModalOpen} />}
             </div>
         </>
     );

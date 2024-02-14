@@ -26,7 +26,6 @@ const Invoice = () => {
         filter_by_po_vendor: "",
         filter_by_po_status: ""
     })
-    console.log(query)
     useEffect(() => {
         invoiceList(currentPage).then((res) => {
             if (res?.data?.results.status) {
@@ -70,11 +69,8 @@ const Invoice = () => {
     useEffect(() => {
         if (query) {
             const queryString = new URLSearchParams(query).toString();
-            console.log(queryString, 'tttttttt');
             const response = filterSearch(queryString);
-            console.log(response, 'ggggggggg');
             response.then((res) => {
-                console.log(res.data.count, 'xxxxxxxxxxxxxxxxxxx');
                 setCount(res.data.count)
                 setInvoiceTable(res.data.results.data)
                 setInvoiceTable(res.data.results.search_invoice_data)

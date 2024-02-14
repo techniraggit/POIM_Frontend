@@ -9,6 +9,7 @@ import { fetchPo, updatePo } from "@/apis/apis/adminApis";
 import { Form, Input, Select } from "antd";
 import moment from "moment";
 import PoForm from "@/components/Form";
+import PoStatus from "@/components/PoStatus";
 
 const { Option } = Select;
 
@@ -34,6 +35,7 @@ const ViewSubContractorPo = () => {
         quantity: 0,
         material_details: []
     });
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const router = useRouter();
     const [form] = Form.useForm();
@@ -64,7 +66,8 @@ const ViewSubContractorPo = () => {
                     phone: data.vendor_contact.phone_number,
                     email: data.vendor_contact.email,
                     shipment_type: data.shipment_type || 'project related',
-                    material_details: [...data.material_details]
+                    material_details: [...data.material_details],
+                    status: data.status,
                 });
                 form.setFieldValue('po_type', data.po_type);
                 form.setFieldValue('company_name', data.vendor_contact.company.company_name)
@@ -145,6 +148,11 @@ const ViewSubContractorPo = () => {
             ...formData
         });
     }
+
+    const handleIconClick = () => {
+        setIsModalOpen(true);
+    };
+
     return (
         <>
             <div className="wrapper-main">
@@ -154,9 +162,18 @@ const ViewSubContractorPo = () => {
                     <div className="bottom-wrapp">
 
                         <ul class=" create-icons">
-                            <li class="icon-text react-icon">
-                                <PlusOutlined />
-                                <span>View Purchase Order</span>
+                            <li class="icon-text react-icon justify-content-between">
+                                <div className="plus-wraptext d-flex align-items-center">
+                                    <PlusOutlined />
+                                    <span>View Purchase Order</span>
+                                </div>
+                                <div>
+                                    {
+                                        formData.status === 'approved' && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                            PO Status
+                                        </button>
+                                    }
+                                </div>
                             </li>
                         </ul>
                         <div className="choose-potype round-wrap">
@@ -265,6 +282,7 @@ const ViewSubContractorPo = () => {
                     </div>
                 </div>
             </div>
+            {isModalOpen && formData.status === 'approved' && <PoStatus setIsModalOpen={setIsModalOpen} />}
         </>
     );
 };

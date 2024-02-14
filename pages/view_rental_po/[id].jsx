@@ -8,6 +8,7 @@ import { Form, Select } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
 import PoForm from "@/components/Form";
+import PoStatus from "@/components/PoStatus";
 
 const { Option } = Select;
 
@@ -35,6 +36,12 @@ const ViewRentalPO = () => {
         material_details: []
     });
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleIconClick = () => {
+        setIsModalOpen(true);
+    };
+
     useEffect(() => {
         form.setFieldValue('po_type', 'rental');
         fetchPo(id).then((res) => {
@@ -59,7 +66,8 @@ const ViewRentalPO = () => {
                     project_id: data.project,
                     material_details: data.material_details.map((details) => {
                         return {...details, project_site_id: details.project_site?.site_id, start_date: details.date}
-                    })
+                    }),
+                    status: data.status,
                 });
                 form.setFieldValue('po_type', data.po_type);
                 form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
@@ -155,9 +163,18 @@ const ViewRentalPO = () => {
                     <Header heading='Purchase Orders' />
                     <div className="bottom-wrapp">
                         <ul class=" create-icons">
-                            <li class="icon-text react-icon">
-                                <PlusOutlined />
-                                <span>View Purchase Order</span>
+                            <li class="icon-text react-icon justify-content-between">
+                                <div className="plus-wraptext d-flex align-items-center">
+                                    <PlusOutlined />
+                                    <span>View Purchase Order</span>
+                                </div>
+                                <div>
+                                    {
+                                        formData.status === 'approved' && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                            PO Status
+                                        </button>
+                                    }
+                                </div>
                             </li>
                         </ul>
                         <div className="choose-potype round-wrap">
@@ -197,6 +214,7 @@ const ViewRentalPO = () => {
                     </div>
                 </div >
             </div >
+            {isModalOpen && <PoStatus setIsModalOpen={setIsModalOpen} />}
         </>
     )
 }

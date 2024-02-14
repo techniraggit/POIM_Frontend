@@ -21,7 +21,6 @@ const Notification = ({ closeNotification}) => {
     const [isActive, setIsActive] = useState(false);
     useEffect(() => {
         const response = getNotification()
-        console.log('hdgdfgs');
         response.then((res) => {
             if (res?.data?.status) {
                 setNotificationData(res.data.data);

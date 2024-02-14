@@ -56,7 +56,6 @@ const EditMaterialPo = () => {
             fetchPo(id).then((res) => {
                 if (res?.data?.status) {
                     const data = res.data?.data;
-                    console.log(data,'aaaaaaaaaaaaaaaaaa');
                     setFormData({
                         ...formData,
                         can_change_status: res.data?.can_change_status,
@@ -77,7 +76,6 @@ const EditMaterialPo = () => {
                         project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         delivery_address: data.delivery_address || '1860 Shawson',
                         material_details: data.material_details.map((detail) => {
-                            console.log(detail,'detail');
                             return { ...detail, project_site_id: detail.project_site?.site_id }
                         }),
                         status: data.status
@@ -101,9 +99,7 @@ const EditMaterialPo = () => {
                     form.setFieldValue('quantity', data.material_details[0]?.quantity)
                     form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
                     form.setFieldValue('description', data.material_details[0]?.description)
-                    // form.setFieldValue('project_site_id', data.material_details[0]?.project_site)
                     form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
-                    form.setFieldValue('code', data.material_details[0]?.code)
                     form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
                     form.setFieldValue('first_name', data.created_by.first_name)
                     form.setFieldValue('last_name', data.created_by.last_name)
@@ -112,6 +108,7 @@ const EditMaterialPo = () => {
                         form.setFieldValue('material_for' + (index), material.material_for)
                         form.setFieldValue('project_id' + (index), material.project?.project_id)
                         form.setFieldValue('amount' + (index), material.amount)
+                        form.setFieldValue('code_' + index, material.code)
                     })
                 }
                 setRefetch(false);
@@ -199,7 +196,6 @@ const EditMaterialPo = () => {
             }
         })
     }
-    console.log(formData,'editPurchase order');
 
     return (
         <>
@@ -215,21 +211,21 @@ const EditMaterialPo = () => {
                             </li> */}
                             <li class="icon-text react-icon justify-content-between">
                                 <div className="plus-wraptext d-flex align-items-center">
-                                <PlusOutlined />
-                                <span>Edit Purchase Order</span>
+                                    <PlusOutlined />
+                                    <span>Edit Purchase Order</span>
                                 </div>
                                 {
-                                formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
-                                <div className="mt-0 apr-rej-li d-flex">
-                                        <Button type="primary" className="approved-btn me-3" onClick={() => {
-                                            setIsModalOpen(true);
-                                        }}>Approve</Button>
-                                        <Button type="primary" className="reject-btn" danger onClick={(event) => {
-                                            handleStatusChange(event, 'reject')
-                                        }}>Reject</Button>
-                                    </div>
+                                    formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
+                                    <div className="mt-0 apr-rej-li d-flex">
+                                            <Button type="primary" className="approved-btn me-3" onClick={() => {
+                                                setIsModalOpen(true);
+                                            }}>Approve</Button>
+                                            <Button type="primary" className="reject-btn" danger onClick={(event) => {
+                                                handleStatusChange(event, 'reject')
+                                            }}>Reject</Button>
+                                        </div>
                                     </Roles>
-                            }
+                                }
                             </li>
                             {/* {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">

@@ -21,8 +21,6 @@ useEffect(()=>{
     const response= await getNotificationCount();
 
     if(response.status==200){
-      console.log(response.data,'kkkkkkkkkkk'); 
-
       setFalseCount(response.data.unread_notification_count)
   
     }

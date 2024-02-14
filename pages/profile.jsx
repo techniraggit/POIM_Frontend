@@ -13,8 +13,6 @@ const Profile = () => {
     useEffect(() => {
         getUserData().then((res) => {
             setProfiledata(res.data.data)
-            console.log(res.data, 'yyyyyyyyyyyyyyyyy');
-
         })
     }, [])
 
