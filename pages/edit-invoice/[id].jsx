@@ -11,8 +11,9 @@ import { useRouter } from 'next/router';
 import Subcontractor_invoice from "@/components/subcontractor_invoice";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import Roles from "@/components/Roles";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 import useInvoice from "@/hooks/useInvoice";
+import ChangeStatus from "@/components/PoChangeStatus";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -26,8 +27,10 @@ const EditInvoice = () => {
     const [invoice, setInvoice] = useState({});
     const [responseData, setResponseData] = useState([]);
     const [po, setPo] = useState('');
+    const [approvalStatus, setApprovalStatus] = useState('');
     const [refetch, setRefetch] = useState(true);
     const { approval_enabled } = useInvoice(invoice);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
     const { id } = router.query;
     const [form] = Form.useForm();
@@ -39,12 +42,12 @@ const EditInvoice = () => {
         formData.append('invoice_amount', invoice.invoice_amount);
         formData.append('invoice_id', invoice.invoice_id);
         invoice.invoice_files?.forEach((file, index) => {
-            if(typeof file.invoice_file === 'string') return;
+            if (typeof file.invoice_file === 'string') return;
             formData.append(`invoice_file_${index}`, file.invoice_file);
         });
 
         updateInvoice(formData).then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 message.success('Invoice Updated!');
                 router.push('/invoice');
             }
@@ -52,7 +55,7 @@ const EditInvoice = () => {
     };
 
     useEffect(() => {
-        if(id && refetch) {
+        if (id && refetch) {
             const response = fetchPoNumbr()
             response.then((res) => {
                 if (res?.data?.status) {
@@ -62,9 +65,9 @@ const EditInvoice = () => {
             const invoicePromise = getInvoiceData(id);
 
             invoicePromise.then((res) => {
-                if(res?.data?.status) {
+                if (res?.data?.status) {
                     const data = res.data.data;
-                    setInvoice({...data, po_creator: res.data?.po_creator});
+                    setInvoice({ ...data, po_creator: res.data?.po_creator });
                     form.setFieldValue('amount', data.invoice_amount);
                     form.setFieldValue('note', data.comment);
                     form.setFieldValue('po_type', res.data?.data?.purchase_order?.po_type);
@@ -73,11 +76,12 @@ const EditInvoice = () => {
                     fetchPoNumber(res.data?.data?.purchase_order?.po_id);
                 }
             })
+            setRefetch(false);
         }
     }, [id, refetch]);
 
     useEffect(() => {
-        if(po){
+        if (po) {
             const response = fetchPoNumbr(po)
             response.then((res) => {
                 if (res?.data?.status) {
@@ -105,7 +109,7 @@ const EditInvoice = () => {
     };
 
     const onChange = (name, value, index) => {
-        if(typeof index !== 'undefined') {
+        if (typeof index !== 'undefined') {
             invoice.invoice_files[index][name] = value;
         } else {
             invoice[name] = value;
@@ -122,16 +126,19 @@ const EditInvoice = () => {
             status: action
         });
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 message.success(res.data?.message);
+                setIsModalOpen(false);
                 setRefetch(true);
+                // setApprovalStatus(action);
+                
             }
         })
     }
 
     const handleDownload = (id) => {
         downloadInvoice(id).then((res) => {
-            if(res?.data) {
+            if (res?.data) {
                 const fileName = `invoice_${id}.pdf`;
                 saveAs(res.data, fileName);
             }
@@ -152,18 +159,33 @@ const EditInvoice = () => {
                                     <PlusOutlined className="me-3" />
                                     <span>Edit Invoice</span>
                                 </li>
+                                {/* {
+                                    approval_enabled && approvalStatus === '' && // Only show when approval not yet given
+                                    <Roles action="approve_invoice">
+                                        <li>
+                                            <Button type="primary" onClick={(event) => {
+                                                handleStatusChange(event, 'approved')
+                                            }}>Approve</Button>
+                                            <Button type="primary" danger onClick={(event) => {
+                                                handleStatusChange(event, 'rejected')
+                                            }}>Reject</Button>
+                                        </li>
+                                    </Roles>
+                                } */}
                                 {
-                                approval_enabled && <Roles action="approve_invoice">
-                                <li>
-                                    <Button type="primary" onClick={(event) => {
-                                        handleStatusChange(event, 'approved')
-                                    }}>Approve</Button>
-                                    <Button type="primary" danger onClick={(event) => {
-                                        handleStatusChange(event, 'rejected')
-                                    }}>Reject</Button>
-                                </li>
-                            </Roles>
-                            }
+                                    approval_enabled &&
+                                    <Roles action="approve_invoice">
+                                        <li>
+                                            <Button type="primary" onClick={(event) => {
+                                                // handleStatusChange(event, 'approved')
+                                                setIsModalOpen(true)
+                                            }}>Approve</Button>
+                                            <Button type="primary" danger onClick={(event) => {
+                                                handleStatusChange(event, 'rejected')
+                                            }}>Reject</Button>
+                                        </li>
+                                    </Roles>
+                                }
                             </ul>
                             {
                                 responseData.po_type == 'material' && (
@@ -249,45 +271,45 @@ const EditInvoice = () => {
                                     {
                                         invoice.invoice_files?.map((data, index) => {
                                             let fileName;
-                                            if(typeof data.invoice_file !== 'object') {
+                                            if (typeof data.invoice_file !== 'object') {
                                                 const invoice_file_split = data.invoice_file?.split('/')
                                                 fileName = invoice_file_split[invoice_file_split.length - 1];
                                             }
                                             return (
                                                 <>
-                                                <div className="download-wrap d-flex gap-2 mb-4">
-                                                    {
-                                                        fileName ? <>
-                                                            <div className="download-fine-invoice">
-                                                                {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
-                                                            </div>
-                                                        </>
-                                                         : 
-                                                        <Form.Item
-                                                            name={`invoice_file` + index}
-                                                            className="select-file-invoice"
-                                                            valuePropName="fileList"
-                                                            getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
-                                                        >
-                                                            <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
-                                                                <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
-                                                            </Upload>
-                                                        </Form.Item>
-                                                    }
-                                                    {
-                                                        <MinusOutlined className="minus-wrap kt" onClick={() => {
-                                                            removeInvoiceFile({ file_id: data.file_id }).then((res) => {
-                                                                if(res?.data?.status) {
-                                                                    setInvoice({
-                                                                        ...invoice,
-                                                                        invoice_files: [...invoice.invoice_files.slice(0, index), ...invoice.invoice_files.slice(index + 1)]
-                                                                    });
-                                                                    message.success('File removed successfully');
-                                                                    setRefetch(true);
-                                                                }
-                                                            })
-                                                        }} style={{ marginLeft: '8px' }} />
-                                                    }
+                                                    <div className="download-wrap d-flex gap-2 mb-4">
+                                                        {
+                                                            fileName ? <>
+                                                                <div className="download-fine-invoice">
+                                                                    {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
+                                                                </div>
+                                                            </>
+                                                                :
+                                                                <Form.Item
+                                                                    name={`invoice_file` + index}
+                                                                    className="select-file-invoice"
+                                                                    valuePropName="fileList"
+                                                                    getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
+                                                                >
+                                                                    <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
+                                                                        <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
+                                                                    </Upload>
+                                                                </Form.Item>
+                                                        }
+                                                        {
+                                                            <MinusOutlined className="minus-wrap kt" onClick={() => {
+                                                                removeInvoiceFile({ file_id: data.file_id }).then((res) => {
+                                                                    if (res?.data?.status) {
+                                                                        setInvoice({
+                                                                            ...invoice,
+                                                                            invoice_files: [...invoice.invoice_files.slice(0, index), ...invoice.invoice_files.slice(index + 1)]
+                                                                        });
+                                                                        message.success('File removed successfully');
+                                                                        setRefetch(true);
+                                                                    }
+                                                                })
+                                                            }} style={{ marginLeft: '8px' }} />
+                                                        }
                                                     </div>
                                                 </>
                                             )
@@ -297,17 +319,17 @@ const EditInvoice = () => {
                                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                                             setInvoice({
                                                 ...invoice,
-                                                invoice_files: [...invoice.invoice_files, {...repeatorData}]
+                                                invoice_files: [...invoice.invoice_files, { ...repeatorData }]
                                             });
                                         }} icon={<PlusOutlined />}>
                                             Add Invoice
                                         </Button>
                                     </Form.Item>
                                     <Form.Item name={"note"} className="note-wrap wrap-box">
-                                        <TextArea onChange={({target: { value }}) => onChange('comment', value)} />
+                                        <TextArea onChange={({ target: { value } }) => onChange('comment', value)} />
                                     </Form.Item>
                                     <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
-                                        <Input onChange={({target: { value }}) => onChange('invoice_amount', value)} addonBefore="$" />
+                                        <Input onChange={({ target: { value } }) => onChange('invoice_amount', value)} addonBefore="$" />
                                     </Form.Item>
                                     <Form.Item>
                                         <Button type="primary" htmlType="submit" id="btn-submit">
@@ -320,6 +342,7 @@ const EditInvoice = () => {
                     </div>
                 </div>
             </div>
+            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
         </>
     )
 }

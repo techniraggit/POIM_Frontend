@@ -3657,6 +3657,8 @@ li.ant-pagination-item {
 
 }
 
+
+
 .po-span {
     text-align: end;
     cursor: pointer;
@@ -3666,7 +3668,13 @@ li.ant-pagination-item {
     max-width: 600px;
     margin: 0 auto;
     background-color: #fff;
-    padding: 20px 20px;
+    padding: 25px 28px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 9999;
+    transform: translate(-50%, 0%);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 span.po-span {
