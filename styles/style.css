@@ -701,8 +701,8 @@ div#forspce {
 .linewrap span {
     color: #112F5C;
     font-size: 17px;
-    font-weight: 500;
-    width: 40%;
+    font-weight: 600;
+    width: 42%;
 }
 
 div#w-small span {
@@ -3694,7 +3694,9 @@ h5.sub-show.sub-hide {
     border-radius: 0px !important;
     border: none !important;
 }
-
+.ant-collapse-header {
+    border-radius: 6px !important;
+}
 .ant-collapse-header {
     flex-direction: row-reverse;
     background-color: #EEF0F8;
