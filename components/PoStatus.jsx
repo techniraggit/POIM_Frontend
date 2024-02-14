@@ -25,8 +25,8 @@ function PoStatus({ setIsModalOpen }) {
                 </div>
                 <div className='po-status-p'>
                     <h5>Approved <span className="po-span">:- 13th feb 2024</span> </h5>
-                    <h5 className='sub-show 2'>Approved Co Amount <span className="po-span">- $450</span> </h5>
-                    <p>
+                    <h5 className='sub-show sub-hide'>Approved Co Amount <span className="po-span">- $450</span> </h5>
+                    <p className="mb-0">
                         Lorem ipsumn Lorem ipsumn Lorem, ipsum dolor.   
                     </p>
                 </div>

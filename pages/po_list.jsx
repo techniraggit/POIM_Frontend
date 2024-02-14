@@ -3,7 +3,7 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
-import { message, Popconfirm,Pagination,Button } from 'antd';
+import { message, Popconfirm,Pagination,Button,Select } from 'antd';
 import Link from "next/link";
 import { deletePO, getPoList, poSearch } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
@@ -86,22 +86,45 @@ const PO_list = () => {
                             </li>
                         </ul>
                         {/* <div className="wrapin-form"> */}
-                        <div className="wrapin-form add-clear-wrap">
-                            <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Vendor"
-                                    value={inputValue} onChange={handleInputChange}
-                                />
-                                <button className="vendor-search-butt"
-                                    onClick={handleButtonClick}
-                                >Search</button>
-                            </form>
-                            <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
-                            {/* <form className="search-vendor">
-                                <input value={search} onChange={({ target: { value } }) => {
-                                    setSearch(value);
-                                }} className="vendor-input" placeholder="Search Purchase Order" />
-                                <button className="vendor-search-butt">Search</button>
-                            </form> */}
+                        <div className="searchbar-wrapper">
+                            <div className="Purchase-form">
+                                <div className="wrapin-form add-clear-wrap mt-0">
+                                    <form className="search-vendor">
+                                        <input className="vendor-input" placeholder="Search Purchase Order"
+                                            value={inputValue} onChange={handleInputChange}
+                                        />
+                                        <button className="vendor-search-butt"
+                                            onClick={handleButtonClick}
+                                        >Search</button>
+                                    </form>
+                                    <button type="submit" className="clear-button ms-3"
+                                        onClick={handleClearButtonClick}
+                                    >
+                                        Clear
+                                    </button>
+                                </div>
+                                <div className="purchase-filter">
+                                    <span className="filter-span">Filter :</span>
+                                    <Select className="line-select me-2" placeholder="Type">
+                                        <Option>Invoice</Option>
+                                        <Option>Invoice</Option>
+                                    </Select>
+                                    {/* -------------------------- */}
+
+                                    <Select className="line-select me-2" placeholder="PO Vendor" >
+                                        <Option>Invoice</Option>
+                                        <Option>Invoice</Option>
+                                    </Select>
+                                    <Select className="line-select" placeholder="PO Status" >
+                                        <Option>Invoice</Option>
+                                        <Option>Invoice</Option>
+                                    </Select>
+
+                                    {/* <Button className="click-btn"><span>Type</span><i className="fa-solid fa-chevron-down"></i></Button>
+                                    <Button className="click-btn"><span>PO Vendor</span><i className="fa-solid fa-chevron-down"></i></Button>
+                                    <Button className="click-btn"><span>PO Status</span><i className="fa-solid fa-chevron-down"></i></Button> */}
+                                </div>
+                            </div>
                         </div>
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
