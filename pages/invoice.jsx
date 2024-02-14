@@ -181,6 +181,49 @@ const Invoice = () => {
                         <div className="table-wrap vendor-wrap">
                             <h5>Invoices</h5>
                             <div className="inner-table" id="inner-purchase">
+                                {Array.isArray(invoiceTable) && invoiceTable.length > 0 ? (
+                                    <table id="" className="table-hover">
+                                        <thead>
+                                            <tr id="header-row">
+                                                <th className="hedaings-tb">S. No</th>
+                                                <th className="hedaings-tb">PO No.</th>
+                                                <th className="hedaings-tb">Created By</th>
+                                                <th className="hedaings-tb">PO Amount</th>
+                                                <th className="hedaings-tb td-color">PO Vendor</th>
+                                                <th className="hedaings-tb">PO Status</th>
+                                                <th className="hedaings-tb">PM</th>
+                                                <th className="hedaings-tb">DM/Admin</th>
+                                                <th className="hedaings-tb">Po Creator</th>
+                                                <th className="hedaings-tb">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {invoiceTable.map((invoice, index) => (
+                                                <tr key={index}>
+                                                    <td>{calculateStartingSerialNumber() + index}</td>
+                                                    <td>{invoice.purchase_order.po_number}</td>
+                                                    <td>{invoice.purchase_order.created_by.first_name} {invoice.purchase_order.created_by.last_name}</td>
+                                                    <td>{invoice.purchase_order.total_amount}</td>
+                                                    <td>{invoice.purchase_order.vendor_contact.name}</td>
+                                                    <td>{invoice.purchase_order.status}</td>
+                                                    <td>{invoice.pm_approval_status}</td>
+                                                    <td>{invoice.dm_approval_status}</td>
+                                                    <td>{invoice.po_creator_approval_status}</td>
+                                                    <td>
+                                                        <Link href={`/view-invoice/${invoice.invoice_id}`} className="me-1"><EyeFilled /></Link>
+                                                        <Roles action="edit_invoice">
+                                                            <Link href={`/edit-invoice/${invoice.invoice_id}`} className="me-1"><EditFilled /></Link>
+                                                        </Roles>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <p>No data found.</p>
+                                )}
+                            </div>
+                            {/* <div className="inner-table" id="inner-purchase">
                                 <table id="" className="table-hover">
                                     <thead>
                                         <tr id="header-row">
@@ -206,14 +249,9 @@ const Invoice = () => {
                                                     <td>{invoice.purchase_order.total_amount}</td>
                                                     <td>{invoice.purchase_order.vendor_contact.name}</td>
                                                     <td>{invoice.purchase_order.status}</td>
-                                                    {/* <td style={{ color: invoice.pm_approved ? 'green' : 'red' }}>
-                                                        {invoice.pm_approved ? '✔' : '❌'}
-                                                    </td> */}
-                                                    {/* <td>
-                                                        {invoice.pm_approved ? <CheckCircleFilled style={{ color: 'green' }} /> : <CloseCircleFilled style={{ color: 'red' }} />}
-                                                    </td> */}
+
                                                     <td>{invoice.pm_approval_status}</td>
-                                                    {/* <td>{invoice.pm_approved|| "N/A"}</td> */}
+
                                                     <td>{invoice.dm_approval_status}</td>
                                                     <td>{invoice.po_creator_approval_status}</td>
                                                     <td>
@@ -231,42 +269,40 @@ const Invoice = () => {
                                     </tbody>
                                 </table>
 
-                            </div>
+                            </div> */}
                         </div>
                         <div className="pagination-container">
-                        <Pagination
-                            // defaultCurrent={2}
-                            current={currentPage}
-                            //  onChange={handlePaginationChange}
-                            onChange={setCurrentPage}
-                            showSizeChanger={true}
-                            prevIcon={
-                                <Button 
-                                    style={currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5 } : null}
-                                    disabled={currentPage === 1}
-                                    onClick={() => setCurrentPage(currentPage - 1)}
-                                >
-                                    Previous
-                                </Button>
-                            }
-                            nextIcon={
-                                <Button 
-                                    style={currentPage === Math.ceil(count / 10) ? { pointerEvents: 'none', opacity: 0.5 } : null}
-                                    disabled={currentPage === Math.ceil(count / 10)}
-                                    onClick={() => setCurrentPage(currentPage + 1)}
-                                >
-                                    Next
-                                </Button>
-                            }
+                            <Pagination
+                                current={currentPage}
+                                onChange={setCurrentPage}
+                                showSizeChanger={true}
+                                prevIcon={
+                                    <Button
+                                        style={currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                        disabled={currentPage === 1}
+                                        onClick={() => setCurrentPage(currentPage - 1)}
+                                    >
+                                        Previous
+                                    </Button>
+                                }
+                                nextIcon={
+                                    <Button
+                                        style={currentPage === Math.ceil(count / 10) ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                        disabled={currentPage === Math.ceil(count / 10)}
+                                        onClick={() => setCurrentPage(currentPage + 1)}
+                                    >
+                                        Next
+                                    </Button>
+                                }
 
-                            onShowSizeChange={() => setCurrentPage(+1)}
-                            total={count}
-                            pageSize={10} // Number of items per page
+                                onShowSizeChange={() => setCurrentPage(+1)}
+                                total={count}
+                                pageSize={10} // Number of items per page
 
-                        />
+                            />
+                        </div>
                     </div>
-                    </div>
-                   
+
                 </div>
             </div>
 
