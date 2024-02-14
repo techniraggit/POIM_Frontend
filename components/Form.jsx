@@ -18,6 +18,12 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
     const { user } = useGlobalContext();
+
+    console.log(edit,formData.status, formData.status != 'pending',view, view !="undefined",'fffffffffffffff');
+
+    let checked= edit & view !='undefined' &  formData.status != 'pending' 
+    
+     
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
         if(!edit && !view){
@@ -132,6 +138,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
+
     return (
         <>
             <div class="order-choose d-flex">
@@ -203,7 +210,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             >
                                 <Select
                                     id="single2"
-                                    disabled={view || edit}
+                                    disabled={view || edit && formData.status !=='pending'}
                                     placeholder="Select"
                                     className="js-states form-control file-wrap-select"
                                     onChange={(value) => {
@@ -242,7 +249,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 <Select
                                     id="singlesa"
                                     placeholder="Select"
-                                    disabled={view || edit}
+                                    disabled={view || edit && formData.status !=='pending'}
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => {
                                         vendorContactDetails(value);
