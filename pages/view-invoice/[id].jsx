@@ -9,7 +9,7 @@ import Rental_invoice from "@/components/rental_invoice";
 import { useRouter } from 'next/router';
 import Subcontractor_invoice from "@/components/subcontractor_invoice";
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -88,14 +88,34 @@ const ViewInvoice = () => {
                 <div className="inner-wrapper">
                     <Header heading='Invoice' />
                     <div class="bottom-wrapp-purchase">
-
+                    <ul class=" create-icons">
+                            <li class="icon-text react-icon justify-content-between">
+                                <div className="plus-wraptext d-flex align-items-center">
+                                    <PlusOutlined />
+                                    <span>View Invoice</span>
+                                </div>
+                                <div>
+                                    {
+                                      <button className="po-status-btn me-2" >
+                                            PO Status
+                                        </button>
+                                    }
+                                      {
+                                       <button className="po-status-btn" >
+                                           Invoice Status
+                                        </button>
+                                    }
+                                </div>
+                               
+                            </li>
+                        </ul>
                         <div class="wrapp-in-voice">
-                            <ul class="bg-colored-ul mb-4">
+                            {/* <ul class="bg-colored-ul mb-4">
                                 <li class="bg-li-invoice">
                                     <PlusOutlined className="me-3" />
                                     <span>View Invoice</span>
                                 </li>
-                            </ul>
+                            </ul> */}
                             {
                                 responseData.po_type == 'material' && (
                                     <>

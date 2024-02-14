@@ -130,8 +130,8 @@ const Invoice = () => {
                                 <div className="purchase-filter">
                                     <span className="filter-span">Filter :</span>
 
-                                    <Select placeholder="Select PO Type" id="single1"
-                                        class="js-states form-control file-wrap-select bold-select"
+                                    <Select placeholder=" Type" id="single1"
+                                        className="line-select me-2"
                                         onChange={(value) =>
 
                                             setQuery(prevState => ({
@@ -168,8 +168,6 @@ const Invoice = () => {
                                                 ...prevState,
                                                 ['filter_by_po_status']: value
                                             }))}
-
-
                                     >
                                         <Option value="pending">Pending</Option>
                                         <Option value="approved">Approved</Option>
