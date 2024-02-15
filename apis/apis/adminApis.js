@@ -32,6 +32,9 @@ export const getVendorDetails = (id) => {
 export const getPoList = (currentPage) => {
     return Axios.get(`/api/admin/purchase-order?page=${currentPage}`);
 }
+export const clearPoList = () => {
+    return Axios.get(`/api/admin/purchase-order`);
+}
 
 export const deletePO = (data) => {
     return Axios.delete('/api/admin/purchase-order', { data: data });

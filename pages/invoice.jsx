@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+
 import '../styles/style.css';
 import { EyeFilled, EditFilled } from '@ant-design/icons'
 import { Button, Select, Pagination } from 'antd';
@@ -20,12 +22,15 @@ const Invoice = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
     const [companyName, setCompanyName] = useState([]);
+    const router = useRouter();
 
     const [query, setQuery] = useState({
         filter_by_po_type: "",
         filter_by_po_vendor: "",
         filter_by_po_status: ""
     })
+
+    console.log(query);
     useEffect(() => {
         invoiceList(currentPage).then((res) => {
             if (res?.data?.results.status) {
@@ -44,7 +49,8 @@ const Invoice = () => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         invoiceSearch(inputValue).then((response) => {
-            setInvoiceTable(response.data.search_invoice_data)
+            console.log(response,'mmmmmmmmmmm');
+            setInvoiceTable(response.data.results.search_invoice_data)
 
         })
 
@@ -52,9 +58,27 @@ const Invoice = () => {
     const handleClearButtonClick = () => {
         setInputValue('');
         invoiceClear().then((res) => {
-            setInvoiceTable(res.data.data)
+          
+            setInvoiceTable(res.data.results.data)
         })
     };
+
+    const handleFilterClearButton=()=>{
+        // router.reload();
+
+            setQuery(prevState => ({
+                ...prevState,
+                ['filter_by_po_status']: '',
+                ['filter_by_po_vendor']:"",
+                ['filter_by_po_type']:""
+            }))
+        invoiceClear().then((res) => {
+            setInvoiceTable(res.data.results.data)
+            setCount(res.data.count)
+        
+        })
+
+    }
 
     useEffect(() => {
 
@@ -132,6 +156,7 @@ const Invoice = () => {
 
                                     <Select placeholder=" Type" id="single1"
                                         className="line-select me-2"
+                                        value={query['filter_by_po_type']}
                                         onChange={(value) =>
 
                                             setQuery(prevState => ({
@@ -150,6 +175,8 @@ const Invoice = () => {
                                                 ...prevState,
                                                 ['filter_by_po_vendor']: value
                                             }))}
+                                        value={query['filter_by_po_vendor']}
+
 
                                     >
                                         {companyName.map((entry) =>
@@ -168,12 +195,18 @@ const Invoice = () => {
                                                 ...prevState,
                                                 ['filter_by_po_status']: value
                                             }))}
+                                        value={query['filter_by_po_status']}
+
                                     >
                                         <Option value="pending">Pending</Option>
                                         <Option value="approved">Approved</Option>
                                         <Option value="rejected">Rejected</Option>
                                     </Select>
-
+                                    <button type="submit" className="clear-button ms-3"
+                                        onClick={handleFilterClearButton}
+                                    >
+                                        Clear
+                                    </button>
 
                                 </div>
                             </div>
