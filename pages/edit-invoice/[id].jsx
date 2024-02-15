@@ -154,10 +154,27 @@ const EditInvoice = () => {
                     <div class="bottom-wrapp-purchase">
 
                         <div class="wrapp-in-voice">
-                            <ul class="bg-colored-ul mb-4">
-                                <li class="bg-li-invoice">
+                            <ul class="bg-colored-ul mb-4 d-block">
+                                <li class="bg-li-invoice justify-content-between d-flex align-items-cente">
+                                <div className="plus-wraptext d-flex align-items-center">
                                     <PlusOutlined className="me-3" />
                                     <span>Edit Invoice</span>
+                                    </div>
+                                    {
+                                    approval_enabled &&
+                                    <Roles action="approve_invoice">
+                                        <div className="mt-0 apr-rej-li d-flex">
+                                            <Button type="primary" className="approved-btn me-3" onClick={(event) => {
+                                                // handleStatusChange(event, 'approved')
+                                                setIsModalOpen(true)
+                                            }}>Approve</Button>
+                                            <Button type="primary" danger className="reject-btn" onClick={(event) => {
+                                                handleStatusChange(event, 'rejected')
+                                            }}>Reject</Button>
+                                        </div>
+                                    </Roles>
+                                }
+
                                 </li>
                                 {/* {
                                     approval_enabled && approvalStatus === '' && // Only show when approval not yet given
@@ -172,7 +189,7 @@ const EditInvoice = () => {
                                         </li>
                                     </Roles>
                                 } */}
-                                {
+                                {/* {
                                     approval_enabled &&
                                     <Roles action="approve_invoice">
                                         <li>
@@ -186,6 +203,7 @@ const EditInvoice = () => {
                                         </li>
                                     </Roles>
                                 }
+                                 */}
                             </ul>
                             {
                                 responseData.po_type == 'material' && (
