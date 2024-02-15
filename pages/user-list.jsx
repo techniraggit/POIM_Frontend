@@ -107,10 +107,11 @@ const User_list = ({ base_url }) => {
                             </li>
                         </ul>
                         <div className="searchbar-wrapper">
-                            <div className="Purchase-form">
-                                <div className="wrapin-form add-clear-wrap mt-0">
+                            <div className="Purchase-form user-div-wrap">
+                               
+                                    <div className="user-wrapsearch d-flex align-items-center">
                                     <form className="search-vendor">
-                                        <input className="vendor-input" placeholder="Search Vendor"
+                                        <input className="vendor-input" placeholder="Search User"
                                             value={inputValue} onChange={handleInputChange}
                                         />
                                         <button className="vendor-search-butt"
@@ -122,28 +123,32 @@ const User_list = ({ base_url }) => {
                                     >
                                         Clear
                                     </button>
-                                </div>
-                                <div className="purchase-filter">
+                                    </div>
+                                    <div className="purchase-filter invoice-filter ms-5">
                                     <span className="filter-span">Filter :</span>
-                                    <Select className="line-select me-2" placeholder="Type">
+                                    <Select className="line-select me-2" placeholder="Role">
                                         <Option>Invoice</Option>
                                         <Option>Invoice</Option>
                                     </Select>
+                                    </div>
+                                
+                             
+                         
                                     {/* -------------------------- */}
 
-                                    <Select className="line-select me-2" placeholder="PO Vendor" >
+                                    {/* <Select className="line-select me-2" placeholder="PO Vendor" >
                                         <Option>Invoice</Option>
                                         <Option>Invoice</Option>
                                     </Select>
                                     <Select className="line-select" placeholder="PO Status" >
                                         <Option>Invoice</Option>
                                         <Option>Invoice</Option>
-                                    </Select>
+                                    </Select> */}
 
                                     {/* <Button className="click-btn"><span>Type</span><i className="fa-solid fa-chevron-down"></i></Button>
                                     <Button className="click-btn"><span>PO Vendor</span><i className="fa-solid fa-chevron-down"></i></Button>
                                     <Button className="click-btn"><span>PO Status</span><i className="fa-solid fa-chevron-down"></i></Button> */}
-                                </div>
+                                {/* </div> */}
                             </div>
                         </div>
                         {/* <div className="wrapin-form add-clear-wrap">

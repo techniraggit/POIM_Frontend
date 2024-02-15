@@ -138,7 +138,7 @@ const Invoice = () => {
                             <div className="Purchase-form">
                                 <div className="wrapin-form add-clear-wrap mt-0">
                                     <form className="search-vendor">
-                                        <input className="vendor-input" placeholder="Search Vendor"
+                                        <input className="vendor-input" placeholder="Search Invoice"
                                             value={inputValue} onChange={handleInputChange}
                                         />
                                         <button className="vendor-search-butt"
@@ -225,7 +225,7 @@ const Invoice = () => {
                                                 <th className="hedaings-tb td-color">PO Vendor</th>
                                                 <th className="hedaings-tb">PO Status</th>
                                                 <th className="hedaings-tb">PM</th>
-                                                <th className="hedaings-tb">DM/Admin</th>
+                                                <th className="hedaings-tb">DM</th>
                                                 <th className="hedaings-tb">Po Creator</th>
                                                 <th className="hedaings-tb">Action</th>
                                             </tr>

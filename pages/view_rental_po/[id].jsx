@@ -166,9 +166,13 @@ const ViewRentalPO = () => {
                             <li class="icon-text react-icon justify-content-between">
                                 <div className="plus-wraptext d-flex align-items-center">
                                     <PlusOutlined />
-                                    <span>View Purchase Order</span>
+                                    <span>View Purcase Order</span>
                                 </div>
+                               
                                 <div>
+                                <button className="po-amendments-btn me-3">
+                                    View All Amendments
+                                </button>
                                     {
                                         formData.status === 'approved' && <button className="po-status-btn" onClick={() => handleIconClick()}>
                                             PO Status
