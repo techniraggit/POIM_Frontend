@@ -4,28 +4,30 @@ import { Collapse } from 'antd';
 import dayjs from 'dayjs';
 
 const getParsedHistory = (changes) => {
+
+
   try {
     const string = changes.replace(/None/g, null).replace(/'/g, '"');
     return JSON.parse(string);
-  } catch(e) {
+  } catch (e) {
     return []
   }
 }
 
 const Amendments = ({ history }) => {
-  const amendments = 
-      (<div className="bottom-po">
+  const amendments =
+    (<div className="bottom-po">
       {history.map((history, index) => {
         const changes = getParsedHistory(history.changes);
 
         const show = changes.reduce((result, change) => {
           return Object.keys(change).map((key) => {
-            if(Array.isArray(change[key][0])) {
-              if(change[key][0][2] === "updated_on") {
+            if (Array.isArray(change[key][0])) {
+              if (change[key][0][2] === "updated_on") {
                 result = false;
               }
             } else {
-              if(change[key][0] === "updated_on") {
+              if (change[key][0] === "updated_on") {
                 result = false;
               }
             }
@@ -33,11 +35,11 @@ const Amendments = ({ history }) => {
           })
         }, true);
 
-        if(!show[0]) {
+        if (!show[0]) {
           return ''
         }
 
-        return(
+        return (
           <div key={index} className="top-data">
             <div className="dot-wrap">
               <div className="form-dot"><span></span></div>
@@ -60,23 +62,23 @@ const Amendments = ({ history }) => {
               changes?.map((change) => {
                 return Object.keys(change).map((key) => {
                   let upperKey = '';
-                  if(Array.isArray(change[key][0])) {
-                    if(change[key][0][2] === "updated_on") {
+                  if (Array.isArray(change[key][0])) {
+                    if (change[key][0][2] === "updated_on") {
                       return ''
                     }
-                    if(change[key][0][0].includes('_')) {
+                    if (change[key][0][0].includes('_')) {
                       upperKey = change[key][0][0].split('_').join(' ')
                     }
                   } else {
-                    if(change[key][0] === "updated_on") {
+                    if (change[key][0] === "updated_on") {
                       return ''
                     }
-                    if(change[key][0].includes('_')) {
+                    if (change[key][0].includes('_')) {
                       upperKey = change[key][0].split('_').join(' ')
                     }
                   }
 
-                  return(
+                  return (
                     <>
                       <div className="linewrap d-flex space-raw">
                         <span className="d-block me-2">{key.charAt(0).toUpperCase() + key.slice(1) + " " + upperKey}</span>
@@ -88,7 +90,10 @@ const Amendments = ({ history }) => {
                             <div className="row raw-data-btm">
                               <div className="col-lg-2 col-md-4">
                                 <div className="inner-data">
-                                  <span className="medium-span">{change[key][1][0]} to {change[key][1][1]}</span>
+                                  <span className="small-span">{change[key][1][0]}</span>
+                                  <span className="medium-span"> {change[key][1][1]}</span>
+                                  {/* <span className="small-span">{change[key][1][1]}</span>
+                                                <span className='medium-span'>{data[key]}</span> */}
                                 </div>
                               </div>
                             </div>
@@ -99,22 +104,44 @@ const Amendments = ({ history }) => {
                         key === 'add' && (
                           <>
                             <div className="row raw-data-btm">
-                                  {
-                                    change[key][1][0]?.map((data) => {
-                                      return Object.keys(data).map((key) => {
-                                        if(data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on') {
-                                          return <>
-                                            <div className="col-lg-2 col-md-4">
-                                              <div className="inner-data">
-                                                <span className="medium-span">{key.split('_').join(" ")}: {data[key]}</span>
-                                              </div>
-                                            </div>
-                                          </>
-                                        }
-                                        return <></>
-                                      })
-                                    })
-                                  }
+                              {
+                                change[key][1][0]?.map((data, index) => {
+                                  console.log(data, 'hhhhhhhhhdata')
+
+                                  // return (
+                                  //   <div className="col-lg-2 col-md-4">
+                                  //     <div className="inner-data">
+                                  //       {/* <span className="medium-span">{key.split('_').join(" ")}: {data[key]}</span> */}
+                                  //       <span className="small-span">{key.split('_').join(" ")}</span>
+                                  //       <span className='medium-span'>{data.quantity}</span>
+                                  // <span className='medium-span'>{data.description}</span>
+                                  //       <span className='medium-span'>{data.description}</span>
+                                  //       {/* <span className='medium-span'>{data.description}</span> */}
+                                  //     </div>
+                                  //   </div>
+                                  // )
+
+                                  return Object.keys(data).map((key) => {
+                                    if(data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on') {
+                                      return <>
+                                        <div className="col-lg-2 col-md-4">
+                                          <div className="inner-data">
+                                            {/* <span className="medium-span">{key.split('_').join(" ")}: {data[key]}</span> */}
+                                            <span className="small-span">{key.split('_').join(" ")}</span>
+                                            <span className='medium-span'>{data[key]}</span>
+                                            {/* <span className='medium-span'>{data.description}</span> */}
+                                          </div>
+                                        </div>
+                                      </>
+                                    }
+                                    <span className='medium-span'>{data[description]}</span>
+                                    return <>
+
+
+                                    </>
+                                  })
+                                })
+                              }
                             </div>
                           </>
                         )
@@ -128,7 +155,7 @@ const Amendments = ({ history }) => {
         )
       })}
     </div>);
-  
+
   const items = [
     {
       key: '1',
@@ -136,7 +163,7 @@ const Amendments = ({ history }) => {
       children: amendments
     }
   ];
-  
+
   return <Collapse items={items} defaultActiveKey={['1']} />;
 };
 

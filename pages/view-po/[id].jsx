@@ -234,8 +234,9 @@ const ViewMaterialPo = () => {
                                     <PoForm formData={formData} view={true} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />
                                 </Form>
                             </div>
-                            { history?.length > 0 && <Amendments history={history} /> }
+                            
                         </div>
+                        {history?.length > 0 && <Amendments history={history} />}
                     </div>
                 </div>
                 {isModalOpen && <PoStatus setIsModalOpen={setIsModalOpen} />}
