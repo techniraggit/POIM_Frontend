@@ -99,27 +99,26 @@ const Amendments = ({ history }) => {
                         key === 'add' && (
                           <>
                             <div className="row raw-data-btm">
-                              <div className="col-lg-2 col-md-4">
-                                <div className="inner-data">
                                   {
                                     change[key][1][0]?.map((data) => {
                                       return Object.keys(data).map((key) => {
                                         if(data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on') {
                                           return <>
-                                            <span className="medium-span">{key.split('_').join(" ")}: {data[key]}</span>
+                                            <div className="col-lg-2 col-md-4">
+                                              <div className="inner-data">
+                                                <span className="medium-span">{key.split('_').join(" ")}: {data[key]}</span>
+                                              </div>
+                                            </div>
                                           </>
                                         }
                                         return <></>
                                       })
                                     })
                                   }
-                                </div>
-                              </div>
                             </div>
                           </>
                         )
                       }
-                      
                     </>
                   )
                 })
