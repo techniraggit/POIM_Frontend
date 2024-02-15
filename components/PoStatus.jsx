@@ -9,7 +9,7 @@ function PoStatus({ setIsModalOpen }) {
 
     return (
         <>
-            <div className='po-status-main'>
+            <div className='po-status-main '>
                 <div className='po-status'>
                     <div className="po-span" >
                         <CloseOutlined onClick={handleCloseModal} />

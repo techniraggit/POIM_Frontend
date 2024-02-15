@@ -3746,8 +3746,32 @@ span.ant-collapse-header-text {
 }
 
 /* 13 feb */
+
+/* 15 feb */
+
+.purchase-filter.invoice-filter .ant-select.line-select.ant-select-show-arrow {
+    width: 200px;
+}
+.po-amendments-btn{
+        height: 40px;
+        font-size: 15px;
+        padding: 6px 32px;
+        border-radius: 20px;
+        border: none;
+        background-color: transparent;
+        color: #000000;
+        border: 1px solid #000000;
+    }
+
+/* 15 feb */
+
+
 /* responsive */
 @media (max-width: 1299px) {
+   .user-div-wrap {
+        flex-direction: column;
+        gap: 24px;
+    }
     .table-hover tbody tr td {
         /* margin-left: 10px; */
         color: #112F5C;
@@ -3885,7 +3909,23 @@ span.text-sizes {
 
 
 @media (min-width: 768px) and (max-width: 991px) {
-
+    .react-icon span:first-child {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+    .po-amendments-btn {
+        height: unset;
+        font-size: 14px;
+        padding: 6px 12px;
+        border-radius: 20px;
+    }
+    .po-status-btn {
+        height: unset;
+        font-size: 15px;
+        padding: 6px 12px;
+        border-radius: 20px;
+    }
     .user-image {
         text-align: center;
     }
@@ -4019,7 +4059,7 @@ span.text-sizes {
     }
 
     .create-icons span {
-        font-size: 17px;
+        font-size: 15px;
     }
 
     .choose-potype {
