@@ -73,14 +73,14 @@ const Vendor = ({ base_url }) => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         projectSearch(inputValue).then((response) => {
-            setProjects(response.data.search_project_data);
+            setProjects(response.data.results.search_project_data);
         })
     };
 
     const handleClearButtonClick = () => {
         setInputValue('');
         projectClear().then((res) => {
-            setProjects(res.data.projects);
+            setProjects(res.data.results.projects);
         })
     };
     const calculateStartingSerialNumber = () => {
