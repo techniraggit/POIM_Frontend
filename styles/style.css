@@ -12,7 +12,9 @@ ul {
 body {
     background-color: #FAFAFA;
 }
-
+a{
+    text-decoration: none;
+}
 span.d-block.admin-menu {
     color: red;
     font-weight: 700;
@@ -3317,6 +3319,7 @@ button.sendemail-btn {
     width: 360px;
     height: 100%;
     top: 0;
+    z-index: 99999;
     padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
 }
@@ -3326,7 +3329,7 @@ button.sendemail-btn {
     text-align: right;
     justify-content: space-between;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
 }
 
 /* .sidebar-right {
@@ -3697,12 +3700,23 @@ h5.sub-show.sub-hide {
 .ant-collapse-header {
     border-radius: 6px !important;
 }
+.ant-collapse-item.ant-collapse-item-active {
+    background-color: #fafafa !important;
+}
+.ant-collapse.ant-collapse-icon-position-start.css-dev-only-do-not-override-p7e5j5 {
+    margin-top: 40px;
+    background-color: transparent !important;
+}
 .ant-collapse-header {
     flex-direction: row-reverse;
     background-color: #EEF0F8;
-    border-radius: 6px;
+    border-radius: 6px !important;
+    margin-bottom: 20px;
 }
-
+.ant-collapse-content-box {
+    padding: 0px !important;
+    background-color: #fff !important;
+}
 .ant-collapse-content.ant-collapse-content-active {
     /* margin-top: 20px; */
     background-color: transparent;
@@ -3710,7 +3724,7 @@ h5.sub-show.sub-hide {
 }
 
 .ant-collapse-item {
-    border: none;
+    border: none !important;
 }
 
 span.ant-collapse-header-text {
@@ -3763,9 +3777,26 @@ span.ant-collapse-header-text {
         border: 1px solid #000000;
     }
 
-/* 15 feb */
-
-
+.sidebar-main.unread {
+    background-color: #eef0f894;
+    border: 1px solid #313f4e;
+}
+.sidebar-main.read {
+    background-color: #f7f7f7;
+}
+.sidebar-main.read .text-sm-span b {
+    color: #676767;
+}
+li.leftwrap img, li.leftwrap span {
+    cursor: pointer;
+}
+span.d-block.mark-read {
+    font-size: 14px;
+    line-height: normal;
+    color: #3b53d8;
+    font-weight: 600;
+}
+/* 15feb */
 /* responsive */
 @media (max-width: 1299px) {
    .user-div-wrap {

@@ -5,7 +5,7 @@ import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/i
 import { getServerSideProps } from "@/components/mainVariable";
 import { message, Popconfirm,Pagination,Button,Select } from 'antd';
 import Link from "next/link";
-import { deletePO, getPoList, poSearch } from "@/apis/apis/adminApis";
+import { clearPoList, deletePO, getPoList, poSearch } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
 
@@ -48,15 +48,15 @@ const PO_list = () => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         poSearch(inputValue).then((response) => {
-            setPurchaseOrders(response.data.search_query_data)
+            setPurchaseOrders(response.data.results.search_query_data)
 
         })
 
     };
     const handleClearButtonClick = () => {
         setInputValue('');
-        getPoList().then((res) => {
-            setPurchaseOrders(res.data.data);
+        clearPoList().then((res) => {
+            setPurchaseOrders(res.data.results.data);
         })
     };
     const calculateStartingSerialNumber = () => {

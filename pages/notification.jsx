@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CloseOutlined, DownOutlined } from "@ant-design/icons";
 import '../styles/style.css';
+import Link from "next/link";
 import { getNotification, toggleButton } from "@/apis/apis/adminApis";
 
 const Notification = ({ closeNotification}) => {
@@ -53,8 +54,10 @@ const Notification = ({ closeNotification}) => {
     return (
         <div className="sidebar-wrapp scroll">
             <div className="inner-side">
-                <div className="icon-cross">
-                    <h4>Notifications</h4>
+                <div className="icon-cross align-items-center">
+                    <h4 className="mb-0">Notifications</h4>
+                    <span className="d-block mark-read"><Link href="#">Mark all as Read</Link></span>
+                    
                     <div className="cross-icon" onClick={closeNotification}>
                         <CloseOutlined />
                     </div>

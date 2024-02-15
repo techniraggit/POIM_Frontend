@@ -72,13 +72,13 @@ const User_list = ({ base_url }) => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         userSearch(inputValue).then((response) => {
-            setUsers(response.data.search_query_data)
+            setUsers(response.data.results.search_query_data)
         })
     };
     const handleClearButtonClick = () => {
         setInputValue('');
         userClear().then((res) => {
-            setUsers(res.data.data);
+            setUsers(res.data.results.data);
         })
     };
     const calculateStartingSerialNumber = () => {

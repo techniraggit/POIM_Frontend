@@ -78,7 +78,7 @@ const Vendor = ({ base_url }) => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         vendorSearch(inputValue).then((response) => {
-            setVendors(response.data.search_vendors_data)
+            setVendors(response.data.results.search_vendors_data)
 
         })
 
@@ -87,7 +87,7 @@ const Vendor = ({ base_url }) => {
     const handleClearButtonClick = () => {
         setInputValue('');
         vendorClear().then((res) => {
-            setVendors(res.data.vendors)
+            setVendors(res.data.results.vendors)
         })
     };
     const calculateStartingSerialNumber = () => {
