@@ -224,6 +224,7 @@ const EditMaterialPo = () => {
         });
         response.then((res) => {
             if (res?.data?.status) {
+                message.success(res.data?.message);
                 setIsModalOpen(false);
                 setRefetch(true);
             }
