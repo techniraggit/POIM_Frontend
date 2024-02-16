@@ -102,8 +102,7 @@ const Dashboard = () => {
                                 </table>
                             </div>
                         </div>
-                    </div>
-                    <div className="pagination-container">
+                        <div className="pagination-container">
                         <Pagination
                             // defaultCurrent={2}
                             current={currentPage}
@@ -117,6 +116,8 @@ const Dashboard = () => {
 
                         />
                     </div>
+                    </div>
+                 
                 </div>
             </div >
         </>

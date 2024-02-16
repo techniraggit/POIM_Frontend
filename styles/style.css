@@ -3777,19 +3777,24 @@ span.ant-collapse-header-text {
         border: 1px solid #000000;
     }
 
+
 .sidebar-main.unread {
     background-color: #eef0f894;
     border: 1px solid #313f4e;
 }
+
 .sidebar-main.read {
     background-color: #f7f7f7;
 }
 .sidebar-main.read .text-sm-span b {
     color: #676767;
 }
+
+
 li.leftwrap img, li.leftwrap span {
     cursor: pointer;
 }
+
 span.d-block.mark-read {
     font-size: 14px;
     line-height: normal;
@@ -3797,6 +3802,12 @@ span.d-block.mark-read {
     font-weight: 600;
 }
 /* 15feb */
+/* 16 feb */
+.setting-role-btn svg {
+    color: #fff;
+    font-size: 18px;
+}
+/* 16 feb */
 /* responsive */
 @media (max-width: 1299px) {
    .user-div-wrap {
