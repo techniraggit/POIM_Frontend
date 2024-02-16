@@ -118,6 +118,8 @@ const EditMaterialPo = () => {
     }, [refetch]);
 
 
+    
+
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
             return total + parseFloat(item.amount);
@@ -157,7 +159,32 @@ const EditMaterialPo = () => {
         })
     }
 
-    const onChange = (name, value, index) => {
+    // const onChange = (name, value, index) => {
+    //     if (name === 'material_details') {
+    //         const materalDetails = formData.material_details[index];
+    //         Object.keys(value).forEach((key) => {
+    //             materalDetails[key] = value[key];
+    //         });
+
+    //         if (value.unit_price) {
+    //             calculateAmount(formData.material_details[index].quantity, value.unit_price, index);
+    //         }
+    //         if (value.quantity) {
+    //             calculateAmount(value.quantity, formData.material_details[index].unit_price, index);
+    //         }
+    //         formData.material_details[index] = {
+    //             ...materalDetails
+    //         };
+    //     } else {
+    //         formData[name] = value;
+    //     }
+    //     setFormData({
+    //         ...formData
+    //     });
+    // }
+
+
+     const onChange = (name, value, index) => {
         if (name === 'material_details') {
             const materalDetails = formData.material_details[index];
             Object.keys(value).forEach((key) => {
@@ -180,6 +207,12 @@ const EditMaterialPo = () => {
             ...formData
         });
     }
+
+
+    formData?.material_details.forEach((data, index) => {
+        // form.setFieldValue(('amount' + (index)), `$${parseFloat(data.amount).toFixed(2) || '0.00'}`);
+        form.setFieldValue(('amount' + (index)), data.amount)
+    })
 
     const handleStatusChange = (event, action, data) => {
         event.preventDefault()
@@ -271,7 +304,13 @@ const EditMaterialPo = () => {
                                         </div>
                                     </div>
 
-                                    <PoForm formData={formData} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />
+                                    <PoForm formData={formData}
+                                    edit={true} isNew={false}
+                                            // isNew={true}
+                                            form={form} onChange={onChange} onFinish={onFinish}
+                                            setFormData={setFormData} calculateAmount={calculateAmount} />
+
+                                    {/* <PoForm formData={formData} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} /> */}
 
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
