@@ -164,7 +164,7 @@ const User_list = ({ base_url }) => {
                         </div> */}
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
-                                <table id="resizeMe" className="table-hover">
+                                <table id="user-list-table" className="table-hover">
                                     <thead>
                                         <tr id="header-row">
                                             <th className="hedaings-tb">S No.</th>
