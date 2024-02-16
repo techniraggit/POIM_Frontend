@@ -135,10 +135,12 @@ ul.list-dboard li {
     position: absolute;
     top: 50%;
     transform: translateY(-70%);
-    font-size: 12px;
+    font-size: 8px;
     background-color: #F14545;
-    width: 17px;
-    height: 17px;
+    width: 19px;
+    padding: 8px;
+    height: 19px;
+    font-weight: 600;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -3798,6 +3800,11 @@ span.d-block.mark-read {
 }
 /* 15feb */
 /* responsive */
+@media (max-width: 1399px) { 
+    .Purchase-form {
+        flex-direction: column;
+    }
+}
 @media (max-width: 1299px) {
    .user-div-wrap {
         flex-direction: column;
@@ -3808,9 +3815,7 @@ span.d-block.mark-read {
         color: #112F5C;
         padding: 10px 10px;
     }
-    .Purchase-form {
-        flex-direction: column;
-    }
+    
     .purchase-filter {
         width: 100%;
     }
