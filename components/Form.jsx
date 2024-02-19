@@ -19,10 +19,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const [vendors, setVendors] = useState([]);
     const { user } = useGlobalContext();
 
-    console.log(edit,formData.status, formData.status != 'pending',view, view !="undefined",'fffffffffffffff');
+    // console.log(edit,formData.status, formData.status != 'pending',view, view !="undefined",'fffffffffffffff');
 
     let checked= edit & view !='undefined' &  formData.status != 'pending' 
-    
      
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);

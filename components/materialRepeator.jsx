@@ -536,6 +536,12 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                      onClick={() => {
                                         if(data.md_id) {
                                             handleRemoveDetail(data.md_id, index);
+
+                                            // let get_amount=formData.total_amount
+                                            //    setFormData({
+                                            //     ...formData,
+                                            //     total_amount: get_amount-amount
+                                            // });
                                         } else {
                                             setFormData({
                                                 ...formData,
