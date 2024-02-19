@@ -24,11 +24,11 @@ const Settings = () => {
             th_id: id,
             value: value
         })
-        .then((res) => {
-            if (res.status) {
-                message.success(res.data.message)
-            }
-        })
+            .then((res) => {
+                if (res.status) {
+                    message.success(res.data.message)
+                }
+            })
     }
     return (
         <>
@@ -62,7 +62,7 @@ const Settings = () => {
                                                 <input placeholder="Enter value in dollars"
                                                     // value={`$${thresholdData[index].value}`}
                                                     // value={thresholdData[index].value}
-                                                      value={`${thresholdData[index].value}`}
+                                                    value={`${thresholdData[index].value}`}
                                                     onChange={(e) => handleInputChange(index, e.target.value)}
                                                 />
                                             </div>
@@ -72,7 +72,7 @@ const Settings = () => {
                                     </div>
                                 </div>
                             ))}
-                            
+
                         </div>
                     </div>
                 </div>

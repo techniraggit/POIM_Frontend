@@ -35,6 +35,9 @@ export const getPoList = (currentPage) => {
 export const clearPoList = () => {
     return Axios.get(`/api/admin/purchase-order`);
 }
+export const allRead=()=>{
+    return Axios.get('/api/admin/mark_all_as_read')
+}
 
 export const deletePO = (data) => {
     return Axios.delete('/api/admin/purchase-order', { data: data });
@@ -70,6 +73,16 @@ export const invoiceSearch=(inputValue)=>{
 }
 export const filterSearch=(params)=>{
     return Axios.get(`/api/search/invoices?${params}`)
+}
+
+export const userFilterSearch=(params)=>{
+    return Axios.get(`/api/search/users?${params}`)
+}
+export const searchUserRoles=(params)=>{
+    return Axios.get(`/api/helping/get-roles-list?${params}`)
+}
+export const filterSearchPo=(params)=>{
+    return Axios.get(`/api/search/purchase-order?${params}`)
 }
 export const vendorClear=()=>{
     return Axios.get(`/api/admin/vendors`)

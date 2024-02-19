@@ -3,7 +3,7 @@ import Sidebar from "@/components/sidebar";
 import { Form, Input, Button, Select, Upload, message } from 'antd';
 import '../../styles/style.css'
 import React, { useEffect, useState } from "react";
-import { changeInvoiceStatus, downloadInvoice, fetchPoNumbers, fetchPoNumbr, getInvoiceData, removeInvoiceFile, updateInvoice } from "@/apis/apis/adminApis";
+import { changeInvoiceStatus, downloadInvoice, fetchPoNumbers, fetchPoNumbr, getInvoiceData, removeInvoiceFile, updateInvoice, threshold } from "@/apis/apis/adminApis";
 import Material_invoice from "@/components/material_invoice";
 import Rental_invoice from "@/components/rental_invoice";
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
@@ -27,13 +27,15 @@ const EditInvoice = () => {
     const [invoice, setInvoice] = useState({});
     const [responseData, setResponseData] = useState([]);
     const [po, setPo] = useState('');
-    const [approvalStatus, setApprovalStatus] = useState('');
     const [refetch, setRefetch] = useState(true);
     const { approval_enabled } = useInvoice(invoice);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
     const { id } = router.query;
     const [form] = Form.useForm();
+    const [thres, setThreshold] = useState()
+    const [show, setshow] = useState(true)
+
     const onFinish = () => {
         const formData = new FormData();
 
@@ -78,6 +80,12 @@ const EditInvoice = () => {
             })
             setRefetch(false);
         }
+
+
+        // const response = threshold();
+        // response.then((res) => {
+        //     setThreshold(res.data.data)
+        // });
     }, [id, refetch]);
 
     useEffect(() => {
@@ -91,6 +99,27 @@ const EditInvoice = () => {
         }
     }, [po])
 
+
+    // useEffect(() => {
+    // let po_type=invoice?.purchase_order?.po_type
+    // let total_amount=invoice?.purchase_order?.total_amount
+    // // let amount=invoice?.invoice_amount
+    // console.log(total_amount,'invoice');
+
+    //   if ( typeof thres != 'undefined' &  typeof po_type != "undefined" ) {
+    //         let  data = thres?.filter(function(item){
+    //             return item.name == po_type })
+    //         let getvalue=data[0]['value']
+    //         if (total_amount >= getvalue ) {
+    //             console.log('matricaal value is hight',getvalue,total_amount);
+    //             setshow(true)  
+    //         }else{
+    //             console.log('matricaal value is low',getvalue,total_amount);
+    //             setshow(false)
+    //         }
+    //   }
+    // }, [thres])
+    
     const fetchPoNumber = (id) => {
         const response = fetchPoNumbers(id)
         response.then((res) => {
@@ -124,7 +153,7 @@ const EditInvoice = () => {
         const response = changeInvoiceStatus({
 
             invoice_id: id,
-            status: action
+            status: action,
         });
         response.then((res) => {
             if (res?.data?.status) {
@@ -145,6 +174,8 @@ const EditInvoice = () => {
         })
     }
 
+
+
     return (
         <>
             <div class="wrapper-main">
@@ -160,7 +191,8 @@ const EditInvoice = () => {
                                     <PlusOutlined className="me-3" />
                                     <span>Edit Invoice</span>
                                     </div>
-
+                                  {/* {show ?(<> */}
+                                    
                                     {
                                     approval_enabled &&
                                     <Roles action="approve_invoice">
@@ -175,6 +207,8 @@ const EditInvoice = () => {
                                         </div>
                                     </Roles>
                                 }
+                                  {/* </>):null} */}
+                                
 
                                 </li>
                                 {/* {

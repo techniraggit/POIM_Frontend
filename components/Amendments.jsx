@@ -107,7 +107,6 @@ const Amendments = ({ history }) => {
                             <div className="row raw-data-btm">
                               {
                                 change[key][1][0]?.map((data, index) => {
-                                  console.log(data, 'hhhhhhhhhdata')
 
                                   // return (
                                   //   <div className="col-lg-2 col-md-4">
