@@ -6,10 +6,12 @@ import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { fetchPo, updatePo } from "@/apis/apis/adminApis";
-import { Form, Input, Select } from "antd";
+import { Form, Input, Select,Button } from "antd";
 import moment from "moment";
 import PoForm from "@/components/Form";
 import PoStatus from "@/components/PoStatus";
+import Roles from "@/components/Roles";
+
 
 const { Option } = Select;
 
@@ -162,7 +164,7 @@ const ViewSubContractorPo = () => {
                     <div className="bottom-wrapp">
 
                         <ul class=" create-icons">
-                            <li class="icon-text react-icon justify-content-between">
+                            {/* <li class="icon-text react-icon justify-content-between">
                                 <div className="plus-wraptext d-flex align-items-center">
                                     <PlusOutlined />
                                     <span>View Purchase Order</span>
@@ -174,7 +176,25 @@ const ViewSubContractorPo = () => {
                                         </button>
                                     }
                                 </div>
-                            </li>
+                            </li> */}
+                            <li class="bg-li-invoice justify-content-between d-flex align-items-center">
+                                <div className="plus-wraptext d-flex align-items-center">
+                                    <PlusOutlined className="me-3" />
+                                    <span>View Purchase Order</span>
+                                    </div>
+                                    
+                                    <Roles action="approve_invoice">
+                                        <div className="mt-0 apr-rej-li d-flex">
+                                            <Button type="primary" className="approved-btn me-3" 
+                                                
+                                                >Approve</Button>
+                                            <Button type="primary" danger className="reject-btn" 
+                                             >Reject</Button>
+                                        </div>
+                                    </Roles>
+                               
+
+                                </li>
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
