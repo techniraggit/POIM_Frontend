@@ -7,7 +7,7 @@ import { Popconfirm, Input, message, Pagination, Button, Select } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
 import UserPopUp from "@/components/user-popup";
-import { userSearch, userClear } from "@/apis/apis/adminApis";
+import { userSearch, userClear, searchUserRoles, userFilterSearch } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
 const User_list = ({ base_url }) => {
@@ -17,6 +17,10 @@ const User_list = ({ base_url }) => {
     const [inputValue, setInputValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
+    const [roleName, setRoleName] = useState([]);
+    const [query, setQuery] = useState({
+        filter_by_role: "",
+    })
 
     useEffect(() => {
         const fetchroles = async () => {
@@ -84,6 +88,39 @@ const User_list = ({ base_url }) => {
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
+    useEffect(() => {
+        const response = searchUserRoles()
+        response.then((res) => {
+            setRoleName(res.data.roles)
+        })
+    },[] )
+
+    const handleFilterClearButton = () => {
+        setQuery(prevState => ({
+            ...prevState,
+            ['filter_by_role']: '',
+
+        }))
+        userClear().then((res) => {
+            setUsers(res.data.results.data);
+            setCount(res.data.count)
+
+        })
+
+    }
+
+    useEffect(() => {
+        if (query) {
+            const queryString = new URLSearchParams(query).toString();
+            const response = userFilterSearch(queryString);
+            response.then((res) => {
+                setCount(res.data.count)
+                setUsers(res.data.results.data);
+                setUsers(res.data.results.search_query_data)
+               
+            })
+        }
+    }, [query])
 
     return (
         <>
@@ -108,8 +145,8 @@ const User_list = ({ base_url }) => {
                         </ul>
                         <div className="searchbar-wrapper">
                             <div className="Purchase-form user-div-wrap">
-                               
-                                    <div className="user-wrapsearch d-flex align-items-center">
+
+                                <div className="user-wrapsearch d-flex align-items-center">
                                     <form className="search-vendor">
                                         <input className="vendor-input" placeholder="Search User"
                                             value={inputValue} onChange={handleInputChange}
@@ -126,17 +163,38 @@ const User_list = ({ base_url }) => {
                                     </div>
                                     <div className="purchase-filter invoice-filter ms-0">
                                     <span className="filter-span">Filter :</span>
-                                    <Select className="line-select me-2" placeholder="Role">
-                                        <Option>Invoice</Option>
-                                        <Option>Invoice</Option>
-                                    </Select>
-                                    </div>
-                                
-                             
-                         
-                                    {/* -------------------------- */}
+                                    <Select className="line-select me-2" placeholder="PO Vendor"
+                                        onChange={(value) =>
+                                            setQuery(prevState => ({
+                                                ...prevState,
+                                                ['filter_by_role']: value
+                                            }))}
+                                        value={query['filter_by_role']}
 
-                                    {/* <Select className="line-select me-2" placeholder="PO Vendor" >
+
+                                    >
+                                        {roleName.map((entry) =>
+
+                                        (
+                                            <Select.Option key={entry.name} value={entry.name}>
+                                                {entry.name}
+                                            </Select.Option>
+                                        )
+                                        )}
+
+                                    </Select>
+                                    <button type="submit" className="clear-button ms-3"
+                                        onClick={handleFilterClearButton}
+                                    >
+                                        Clear
+                                    </button>
+                                </div>
+
+
+
+                                {/* -------------------------- */}
+
+                                {/* <Select className="line-select me-2" placeholder="PO Vendor" >
                                         <Option>Invoice</Option>
                                         <Option>Invoice</Option>
                                     </Select>
@@ -145,7 +203,7 @@ const User_list = ({ base_url }) => {
                                         <Option>Invoice</Option>
                                     </Select> */}
 
-                                    {/* <Button className="click-btn"><span>Type</span><i className="fa-solid fa-chevron-down"></i></Button>
+                                {/* <Button className="click-btn"><span>Type</span><i className="fa-solid fa-chevron-down"></i></Button>
                                     <Button className="click-btn"><span>PO Vendor</span><i className="fa-solid fa-chevron-down"></i></Button>
                                     <Button className="click-btn"><span>PO Status</span><i className="fa-solid fa-chevron-down"></i></Button> */}
                                 {/* </div> */}
@@ -180,7 +238,7 @@ const User_list = ({ base_url }) => {
                                         {Array.isArray(users) &&
                                             users.map((user, index) => (
                                                 <tr key={index}>
-                                                     <td>{calculateStartingSerialNumber() + index}</td>
+                                                    <td>{calculateStartingSerialNumber() + index}</td>
                                                     {/* <td>{index + 1}</td> */}
                                                     <td>{user.first_name}</td>
                                                     <td className="td-color">{user.last_name}</td>
@@ -221,7 +279,7 @@ const User_list = ({ base_url }) => {
                                 onChange={setCurrentPage}
                                 showSizeChanger={true}
                                 prevIcon={
-                                    <Button 
+                                    <Button
                                         style={currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5 } : null}
                                         disabled={currentPage === 1}
                                         onClick={() => setCurrentPage(currentPage - 1)}
@@ -230,7 +288,7 @@ const User_list = ({ base_url }) => {
                                     </Button>
                                 }
                                 nextIcon={
-                                    <Button 
+                                    <Button
                                         style={currentPage === Math.ceil(count / 10) ? { pointerEvents: 'none', opacity: 0.5 } : null}
                                         disabled={currentPage === Math.ceil(count / 10)}
                                         onClick={() => setCurrentPage(currentPage + 1)}

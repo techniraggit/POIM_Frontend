@@ -73,6 +73,7 @@ const Amendments = ({ history }) => {
                     if (change[key][0] === "updated_on") {
                       return ''
                     }
+                  
                     if (change[key][0].includes('_')) {
                       upperKey = change[key][0].split('_').join(' ')
                     }
@@ -106,7 +107,6 @@ const Amendments = ({ history }) => {
                             <div className="row raw-data-btm">
                               {
                                 change[key][1][0]?.map((data, index) => {
-                                  console.log(data, 'hhhhhhhhhdata')
 
                                   // return (
                                   //   <div className="col-lg-2 col-md-4">

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { CloseOutlined, DownOutlined } from "@ant-design/icons";
 import '../styles/style.css';
 import Link from "next/link";
-import { getNotification, toggleButton } from "@/apis/apis/adminApis";
+import { allRead, getNotification, toggleButton } from "@/apis/apis/adminApis";
+import { Button } from "antd";
 
 const Notification = ({ closeNotification}) => {
     const [showMore, setShowMore] = useState(false);
@@ -51,12 +52,26 @@ const Notification = ({ closeNotification}) => {
         }
     };
 
+    const handleMarkAllAsRead=()=>{
+        allRead()
+        .then(() => {
+            setNotificationData(prevNotifications => prevNotifications.map(notification => ({
+                ...notification,
+                is_read: true
+            })));
+        })
+        .catch(error => {
+            console.error('Error marking all notifications as read:', error);
+        });
+       
+    }
+
     return (
         <div className="sidebar-wrapp scroll">
             <div className="inner-side">
                 <div className="icon-cross align-items-center">
                     <h4 className="mb-0">Notifications</h4>
-                    <span className="d-block mark-read"><Link href="#">Mark all as Read</Link></span>
+                    <span className="d-block mark-read"><Button onClick={handleMarkAllAsRead}>Mark all as Read</Button></span>
                     
                     <div className="cross-icon" onClick={closeNotification}>
                         <CloseOutlined />

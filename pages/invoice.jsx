@@ -30,7 +30,6 @@ const Invoice = () => {
         filter_by_po_status: ""
     })
 
-    console.log(query);
     useEffect(() => {
         invoiceList(currentPage).then((res) => {
             if (res?.data?.results.status) {
@@ -49,7 +48,6 @@ const Invoice = () => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         invoiceSearch(inputValue).then((response) => {
-            console.log(response,'mmmmmmmmmmm');
             setInvoiceTable(response.data.results.search_invoice_data)
 
         })
