@@ -41,7 +41,7 @@ span.d-block.admin-menu {
 }
 
 .logo {
-    padding: 25px 40px 15px;
+    padding: 15px 40px 15px;
     border-bottom: 1px solid rgb(112, 112, 112, 0.18);
 }
 
@@ -52,7 +52,7 @@ span.d-block.admin-menu {
 }
 
 ul.list-dboard {
-    padding: 30px 7px 25px;
+    padding: 20px 7px 25px;
 }
 
 ul.list-dboard li a {
@@ -94,7 +94,7 @@ ul.list-dboard li a i {
 }
 
 ul.list-dboard li {
-    margin-bottom: 14px;
+    margin-bottom: 11px;
 }
 
 .top-wrapp {
@@ -491,7 +491,7 @@ span.filter-span {
     display: block;
     color: #112F5C;
     font-size: 16px;
-    margin-right: 13px;
+    margin-right: 10px;
 }
 
 .purchase-filter {
@@ -3590,6 +3590,7 @@ li.ant-pagination-next button {
     color: #fff !important;
     font-size: 14px !important;
     font-weight: 500;
+    border: transparent !important;
 }
 
 li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active {
@@ -3810,13 +3811,66 @@ span.d-block.mark-read {
     font-size: 18px;
 }
 /* 16 feb */
+/* 19feb */
+span.filter-span.invoice-span {
+    width: 9%;
+}
+li.ant-pagination-next  button.ant-btn-default:hover {
+    border-color: transparent !important;
+}
+p.no-data-p {
+    margin-left: 25px;
+}
+ul.reports-dropdown {
+    background-color: #F7F8F8;
+    border-radius: 2px;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 0px;
+    position: absolute;
+    left: 0;
+    top: -1px;
+    z-index: 99;
+    display: none;
+    transition: 0.4s ease-in;
+    margin-top: 46px;
+}
+li#report-li:hover ul.reports-dropdown {
+    display: block;
+}
+ul.reports-dropdown li a {
+    color: #0D0D0D;
+    font-size: 13px;
+    font-weight: 500;
+}
+li#report-li ul.reports-dropdown li {
+    background-color: #f7f8f8;
+    padding: 2px 20px;
+}
+li#report-li {
+    position: relative;
+}
+ul.reports-dropdown li a img, ul.reports-dropdown li a span svg {
+    opacity: 0;
+}
+/* 19feb */
 /* responsive */
-@media (max-width: 1399px) { 
+@media (max-width: 1499px) { 
     .Purchase-form {
         flex-direction: column;
     }
+    .Purchase-form {
+        justify-content: center;
+        flex-direction: column;
+        gap: 25px;
+        align-items: start;
+    }
+}
+@media (max-width: 1399px) { 
+    
 }
 @media (max-width: 1299px) {
+ 
    .user-div-wrap {
         flex-direction: column;
         gap: 24px;
@@ -3894,12 +3948,6 @@ span.text-sizes {
 } */
 
 @media (max-width: 1024px) {
-    .Purchase-form {
-        justify-content: center;
-        flex-direction: column;
-        gap: 25px;
-        align-items: start;
-    }
 
     th.hedaings-tb {
         padding: 10px 12px;
@@ -4159,7 +4207,6 @@ span.text-sizes {
 
     ul.list-dboard li {
         padding: 10px 20px;
-        background: #fff;
     }
 
     span.db-span {

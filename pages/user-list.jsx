@@ -124,7 +124,7 @@ const User_list = ({ base_url }) => {
                                         Clear
                                     </button>
                                     </div>
-                                    <div className="purchase-filter invoice-filter ms-5">
+                                    <div className="purchase-filter invoice-filter ms-0">
                                     <span className="filter-span">Filter :</span>
                                     <Select className="line-select me-2" placeholder="Role">
                                         <Option>Invoice</Option>

@@ -152,7 +152,7 @@ const Invoice = () => {
                                     </button>
                                 </div>
                                 <div className="purchase-filter">
-                                    <span className="filter-span">Filter :</span>
+                                    <span className="filter-span invoice-span">Filter :</span>
 
                                     <Select placeholder=" Type" id="single1"
                                         className="line-select me-2"
@@ -253,7 +253,7 @@ const Invoice = () => {
                                         </tbody>
                                     </table>
                                 ) : (
-                                    <p>No data found.</p>
+                                    <p className="no-data-p">No data found.</p>
                                 )}
                             </div>
                             {/* <div className="inner-table" id="inner-purchase">
