@@ -43,13 +43,13 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) =
               <p className="detail-para">{clickedIndex !== null ? clickedIndex + 1 : ''}</p>
             </div>
 
-            <div class="projct-details">
+            <div class="projct-details d-block">
               <p class="detail-para1">Company Name</p>
               <p class="detail-para">{vendorData.company_name}</p>
 
 
-              <div class="pop-up-flex row">
-                <div class="projct-details col-md-9">
+              <div class="pop-up-flex row justify-content-start">
+                <div class="projct-details col-sm-8">
                   <p class="detail-para1">Email Address</p>
                   <p class="detail-para">{vendorcontact.email}</p>
                 </div>
@@ -66,8 +66,8 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) =
                 <p class="detail-para">{vendorData.address}</p>
               </div>
 
-              <div class="pop-up-flex row">
-                <div class="projct-details col-md-9">
+              <div class="pop-up-flex row justify-content-start">
+                <div class="projct-details col-sm-8">
                   <p class="detail-para1">State / Province</p>
                   <p class="detail-para">Ontario</p>
                 </div>
