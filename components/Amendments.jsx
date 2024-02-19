@@ -73,6 +73,7 @@ const Amendments = ({ history }) => {
                     if (change[key][0] === "updated_on") {
                       return ''
                     }
+                  
                     if (change[key][0].includes('_')) {
                       upperKey = change[key][0].split('_').join(' ')
                     }

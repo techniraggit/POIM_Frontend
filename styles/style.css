@@ -706,7 +706,7 @@ div#forspce {
     color: #112F5C;
     font-size: 17px;
     font-weight: 600;
-    width: 42%;
+    width: 15%;
 }
 
 div#w-small span {
@@ -753,6 +753,7 @@ button.ant-btn.ant-btn-default.vendor-search-butt:hover {
 .linewrap {
     margin-bottom: 35px;
     margin-top: 20px;
+    align-items: center;
 }
 
 .wrap-box label {
@@ -1912,7 +1913,7 @@ p.detail-para3 {
 .detail-para {
     /* margin: 0px; */
     color: rgb(17, 47, 92);
-    font-size: 17px;
+    font-size: 19px;
     /* background: blue; */
     font-weight: 600;
     outline: none;
@@ -3624,14 +3625,12 @@ li.ant-pagination-item {
 }
 
 .detail-para1 {
-    /* margin: 0px; */
-    color: rgb(17, 47, 92);
+    color: rgb(17, 47, 92, 0.5);
     font-size: 17px;
-    /* background: blue; */
-    font-weight: 600;
+    font-weight: 500;
     outline: none;
     border: 0;
-    margin-bottom: 20px;
+    margin-bottom: 1px;
 }
 
 /* 12feb */

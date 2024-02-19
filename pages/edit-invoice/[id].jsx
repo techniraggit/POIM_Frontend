@@ -122,6 +122,7 @@ const EditInvoice = () => {
     const handleStatusChange = (event, action) => {
         event.preventDefault()
         const response = changeInvoiceStatus({
+
             invoice_id: id,
             status: action
         });
@@ -131,7 +132,6 @@ const EditInvoice = () => {
                 setIsModalOpen(false);
                 setRefetch(true);
                 // setApprovalStatus(action);
-                
             }
         })
     }
@@ -155,11 +155,12 @@ const EditInvoice = () => {
 
                         <div class="wrapp-in-voice">
                             <ul class="bg-colored-ul mb-4 d-block">
-                                <li class="bg-li-invoice justify-content-between d-flex align-items-cente">
+                                <li class="bg-li-invoice justify-content-between d-flex align-items-center">
                                 <div className="plus-wraptext d-flex align-items-center">
                                     <PlusOutlined className="me-3" />
                                     <span>Edit Invoice</span>
                                     </div>
+
                                     {
                                     approval_enabled &&
                                     <Roles action="approve_invoice">
