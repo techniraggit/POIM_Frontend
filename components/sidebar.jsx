@@ -120,7 +120,7 @@ const Sidebar = () => {
             </Link>
 
           </li>
-          <li className={activeMenuItem === '/report' ? 'active' : ''}>
+          <li className={activeMenuItem === '/report' ? 'active' : ''} id='report-li'>
             <Link href="#">
               <span className="db-span">
                 <span class="active-img position-relative">
@@ -131,6 +131,44 @@ const Sidebar = () => {
               </span>
               <RightOutlined className='right-outline' />
             </Link>
+            <ul className="reports-dropdown">
+              <li>
+            <Link href="#">
+              <span className="db-span">
+                <span class="active-img position-relative">
+                  <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
+                  <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
+                  PO Report
+                </span>
+              </span>
+              <RightOutlined className='right-outline' />
+            </Link>
+            </li>
+            <li>
+            <Link href="#">
+              <span className="db-span">
+                <span class="active-img position-relative">
+                  <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
+                  <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
+                  Invoice Report
+                </span>
+              </span>
+              <RightOutlined className='right-outline' />
+            </Link>
+            </li>
+            <li>
+            <Link href="#">
+              <span className="db-span">
+                <span class="active-img position-relative">
+                  <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
+                  <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
+                  User Report
+                </span>
+              </span>
+              <RightOutlined className='right-outline' />
+            </Link>
+            </li>
+            </ul>
 
           </li>
             <Roles action='view_threshold'>
