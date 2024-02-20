@@ -5,8 +5,8 @@ import Header from "@/components/header";
 import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
-import { fetchPo, updatePo, changeStatus,message } from "@/apis/apis/adminApis";
-import { Form, Input, Select, Button } from "antd";
+import { fetchPo, updatePo, changeStatus } from "@/apis/apis/adminApis";
+import { Form, Input, Select, Button, message } from "antd";
 import moment from "moment";
 import PoForm from "@/components/Form";
 import PoStatus from "@/components/PoStatus";
