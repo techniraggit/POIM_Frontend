@@ -3662,8 +3662,6 @@ li.ant-pagination-item {
 
 }
 
-
-
 .po-span {
     text-align: end;
     cursor: pointer;
@@ -3675,7 +3673,7 @@ li.ant-pagination-item {
     background-color: #fff;
     padding: 25px 28px;
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
     z-index: 9999;
     transform: translate(-50%, 0%);
@@ -3981,6 +3979,9 @@ span.text-sizes {
 }
 
 @media (max-width: 992px) {
+    p.no-data-p {
+        margin-left: 16px;
+    }
     .shipment-caret .ant-select-selector span.ant-select-selection-item {
         width: 108px;
     }
@@ -3999,8 +4000,6 @@ span.text-sizes {
         margin-top: 20px;
     }
 }
-
-
 
 @media (min-width: 768px) and (max-width: 991px) {
     .react-icon span:first-child {

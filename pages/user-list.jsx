@@ -304,7 +304,6 @@ const User_list = ({ base_url }) => {
                         </div>
                     </div>
                 </div>
-
             </div>
         </>
     )
