@@ -18,7 +18,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
     const { user } = useGlobalContext();
-    let checked= edit & view !='undefined' &  formData.status != 'pending' 
      
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
@@ -471,10 +470,10 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                 <hr />
             </div>
             {
-                formData.po_type === 'subcontractor' ? <SubcontractorRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} view={view} /> : <></>
+                formData.po_type === 'subcontractor' ? <SubcontractorRepeator formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} view={view} calculateAmount={calculateAmount} /> : <></>
             }
             {
-                formData.po_type === 'rental' ? <RentalRepeator view={view} formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} /> : <></>
+                formData.po_type === 'rental' ? <RentalRepeator view={view} formData={formData} edit={edit} siteOptions={siteOptions} setFormData={setFormData} form={form} onChange={onChange} calculateAmount={calculateAmount} /> : <></>
             }
             {
                 formData.po_type === 'material' ? <MaterialRepeator formData={formData} edit={edit} siteOptions={siteOptions} list={list} projects={projects} setFormData={setFormData} form={form} onChange={onChange} view={view} calculateAmount={calculateAmount} /> : <></>

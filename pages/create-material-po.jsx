@@ -65,7 +65,7 @@ const CreateMaterialPo = () => {
             return total + parseFloat(item.amount);
         }, 0);
 
-        return totalAmount;
+        return totalAmount || 0;
     };
     const onFinish = () => {
         setLoading(true);
@@ -81,8 +81,9 @@ const CreateMaterialPo = () => {
                 message.error(error.response.data.message)
             })
     }
+
     const calculateAmount = (quantity, unit_price, index) => {
-        const amount = parseFloat(quantity) * parseFloat(unit_price);
+        const amount = (parseFloat(quantity) * parseFloat(unit_price)) || 0;
         const materialDetails = formData.material_details[index];
         materialDetails.amount = amount;
         formData.material_details[index] = {
@@ -121,9 +122,7 @@ const CreateMaterialPo = () => {
         });
     }
 
-
     formData?.material_details.forEach((data, index) => {
-        // form.setFieldValue(('amount' + (index)), `$${parseFloat(data.amount).toFixed(2) || '0.00'}`);
         form.setFieldValue(('amount' + (index)), data.amount)
     })
 
@@ -184,10 +183,15 @@ const CreateMaterialPo = () => {
                                     </div>
                                     
 
-                                        <PoForm formData={formData}
+                                        <PoForm 
+                                            formData={formData}
                                             isNew={true}
-                                            form={form} onChange={onChange} onFinish={onFinish}
-                                            setFormData={setFormData} calculateAmount={calculateAmount} />
+                                            form={form} 
+                                            onChange={onChange} 
+                                            onFinish={onFinish}
+                                            setFormData={setFormData} 
+                                            calculateAmount={calculateAmount} 
+                                        />
                                     
 
                                     <div className="po-wrap create-wrap-butt m-0">

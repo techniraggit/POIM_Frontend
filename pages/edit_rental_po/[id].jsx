@@ -148,7 +148,10 @@ const Edit_Rental_Po = () => {
         return totalAmount;
     };
 
-    const handleRepeaterAmountChange = () => {
+    const handleRepeaterAmountChange = (amount, index) => {
+        if(amount === 0 && index) {
+            formData.material_details[index].amount = amount;
+        }
         const totalAmount = getTotalAmount()
         setFormData({
             ...formData,
@@ -165,7 +168,7 @@ const Edit_Rental_Po = () => {
             po_id: id,
             status: action,
             approval_notes: data?.approval_notes,
-            approve_amount: data?.approve_amount
+            co_approved_amount: data?.co_approved_amount
         });
         response.then((res) => {
             if(res?.data?.status) {
@@ -236,7 +239,7 @@ const Edit_Rental_Po = () => {
                                         </div>
                                     </div>
                                     
-                                    <PoForm formData={formData} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+                                    <PoForm formData={formData} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} calculateAmount={handleRepeaterAmountChange} />
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
                                             <Button type="primary" htmlType="submit" className="create-ven-butt">

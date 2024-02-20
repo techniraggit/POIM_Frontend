@@ -4,8 +4,6 @@ import { Collapse } from 'antd';
 import dayjs from 'dayjs';
 
 const getParsedHistory = (changes) => {
-
-
   try {
     const string = changes.replace(/None/g, null).replace(/'/g, '"');
     return JSON.parse(string);
@@ -93,8 +91,6 @@ const Amendments = ({ history }) => {
                                 <div className="inner-data">
                                   <span className="small-span">{change[key][1][0]}</span>
                                   <span className="medium-span"> {change[key][1][1]}</span>
-                                  {/* <span className="small-span">{change[key][1][1]}</span>
-                                                <span className='medium-span'>{data[key]}</span> */}
                                 </div>
                               </div>
                             </div>
@@ -107,38 +103,19 @@ const Amendments = ({ history }) => {
                             <div className="row raw-data-btm">
                               {
                                 change[key][1][0]?.map((data, index) => {
-
-                                  // return (
-                                  //   <div className="col-lg-2 col-md-4">
-                                  //     <div className="inner-data">
-                                  //       {/* <span className="medium-span">{key.split('_').join(" ")}: {data[key]}</span> */}
-                                  //       <span className="small-span">{key.split('_').join(" ")}</span>
-                                  //       <span className='medium-span'>{data.quantity}</span>
-                                  // <span className='medium-span'>{data.description}</span>
-                                  //       <span className='medium-span'>{data.description}</span>
-                                  //       {/* <span className='medium-span'>{data.description}</span> */}
-                                  //     </div>
-                                  //   </div>
-                                  // )
-
                                   return Object.keys(data).map((key) => {
-                                    if(data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on') {
+                                    if(data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on' && key !== 'purchase_order') {
                                       return <>
                                         <div className="col-lg-2 col-md-4">
                                           <div className="inner-data">
-                                            {/* <span className="medium-span">{key.split('_').join(" ")}: {data[key]}</span> */}
                                             <span className="small-span">{key.split('_').join(" ")}</span>
                                             <span className='medium-span'>{data[key]}</span>
-                                            {/* <span className='medium-span'>{data.description}</span> */}
                                           </div>
                                         </div>
                                       </>
                                     }
                                     <span className='medium-span'>{data[description]}</span>
-                                    return <>
-
-
-                                    </>
+                                    return <></>
                                   })
                                 })
                               }

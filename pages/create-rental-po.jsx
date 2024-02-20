@@ -80,26 +80,32 @@ const CreateRentalPo = () => {
         })
     }
 
+    const calculateAmount = (amount, index) => {
+        if(amount === 0 && index) {
+            formData.material_details[index].amount = amount;
+        }
+        let totalAmount = getTotalAmount() || 0;
+        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
+        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
+        if (totalAmount > 0) {
+            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || '0.00' });
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+        }
+    }
+
     const onChange = (name, value, index) => {
         if (name === 'material_details') {
-            let totalAmount = 0;
             const materalDetails = formData.material_details[index];
             Object.keys(value).forEach((key) => {
                 materalDetails[key] = value[key];
             });
 
             if (value.amount) {
-                totalAmount = getTotalAmount();
+                calculateAmount()
             }
             formData.material_details[index] = {
                 ...materalDetails
             };
-            formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
-            if (totalAmount > 0) {
-                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || '0.00' });
-                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
-            }
         } else {
             formData[name] = value;
         }
@@ -173,6 +179,7 @@ const CreateRentalPo = () => {
                                         onChange={onChange} 
                                         onFinish={onFinish} 
                                         setFormData={setFormData} 
+                                        calculateAmount={calculateAmount}
                                     />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">

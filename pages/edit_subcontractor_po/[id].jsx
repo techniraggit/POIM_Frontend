@@ -125,6 +125,19 @@ const EditSubContractorPo = () => {
         return totalAmount;
     };
 
+    const calculateAmount = (amount, index) => {
+        if(amount === 0 && index) {
+            formData.material_details[index].amount = amount;
+        }
+        const totalAmount = getTotalAmount();
+        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
+        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
+        if(totalAmount > 0) {
+            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+        }
+    }
+
     const onFinish = () => {
         updatePo({
             ...formData,
@@ -141,24 +154,18 @@ const EditSubContractorPo = () => {
     
     const onChange = (name, value, index) => {
         if(name === 'material_details') {
-            let totalAmount = 0;
             const materalDetails = formData.material_details[index];
             Object.keys(value).forEach((key) => {
                 materalDetails[key] = value[key];
             });
 
             if(value.amount) {
-                totalAmount = getTotalAmount();
+                calculateAmount();
             }
             formData.material_details[index] = {
                 ...materalDetails
             };
-            formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-            formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
-            if(totalAmount > 0) {
-                form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
-                form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
-            }
+            
         } else {
             formData[name] = value;
         }
@@ -173,7 +180,7 @@ const EditSubContractorPo = () => {
             po_id: id,
             status: action,
             approval_notes: data?.approval_notes,
-            approve_amount: data?.approve_amount
+            co_approved_amount: data?.co_approved_amount
         });
         response.then((res) => {
             if(res?.data?.status) {
@@ -195,7 +202,7 @@ const EditSubContractorPo = () => {
                         <li class="icon-text react-icon justify-content-between">
                         <div className="plus-wraptext d-flex align-items-center">
                                 <PlusOutlined />
-                                <span>Edit Purchase Order</span>
+                                <span>Create Purchase Order</span>
                             </div>
                             {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
@@ -308,7 +315,7 @@ const EditSubContractorPo = () => {
                                         </>
                                     )
                                     }
-                                    <PoForm formData={formData} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
+                                    <PoForm formData={formData} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} calculateAmount={calculateAmount} />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>

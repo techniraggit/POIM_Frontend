@@ -17,9 +17,8 @@ const Header = ({ heading }) => {
 };
 
  const handleNotificationClick = async () => {
-    setShow(true); // Show notification
-    setFalseCount(0); // Reset unread count
-    // Make API call to mark notifications as read if required
+    setShow(true); 
+    setFalseCount(0); 
   };
 
 useEffect(()=>{
@@ -71,7 +70,7 @@ useEffect(()=>{
           </li>
         </ul>
         {show &&
-        <Notification  closeNotification={closeNotification}/>
+        <Notification setFalseCount={setFalseCount} closeNotification={closeNotification}/>
 }
       </div>
     </>
