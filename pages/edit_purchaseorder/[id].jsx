@@ -255,7 +255,7 @@ const EditMaterialPo = () => {
                                                 setIsModalOpen(true);
                                             }}>Approve</Button>
                                             <Button type="primary" className="reject-btn" danger onClick={(event) => {
-                                                handleStatusChange(event, 'reject')
+                                                handleStatusChange(event, 'rejected')
                                             }}>Reject</Button>
                                         </div>
                                     </Roles>
