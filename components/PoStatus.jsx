@@ -2,10 +2,20 @@ import React from 'react'
 import '../styles/style.css'
 import { CloseOutlined } from "@ant-design/icons";
 
-function PoStatus({ setIsModalOpen }) {
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+function PoStatus({ setStatusModalOpen, data }) {
     const handleCloseModal = () => {
-        setIsModalOpen(false);
+        setStatusModalOpen(false);
     };
+
 
     return (
         <>
@@ -16,20 +26,19 @@ function PoStatus({ setIsModalOpen }) {
                     </div>
                     <h1>PO Status</h1>
                 </div>
-                <div className='po-status-p'>
-                    <h5>Approved <span className="po-span">:- 12th feb 2024</span></h5>
-                    <h5 className='sub-show sub-hide'>Approved Co Amount <span className="po-span">- $450</span> </h5>
-                    <p>
-                        Lorem, ipsum dolor Lorem ipsum dolor sit amet.
-                    </p>
-                </div>
-                <div className='po-status-p'>
-                    <h5>Approved <span className="po-span">:- 13th feb 2024</span> </h5>
-                    <h5 className='sub-show sub-hide'>Approved Co Amount <span className="po-span">- $450</span> </h5>
-                    <p className="mb-0">
-                        Lorem ipsumn Lorem ipsumn Lorem, ipsum dolor.   
-                    </p>
-                </div>
+                    {
+                        data.map((data) => {
+                            return <div className='po-status-p'>
+                                <h5>Approved <span className="po-span">:-{formatDate(data.created_on)}</span></h5>
+                                {data.amount > 0 ? (
+                                    <h5 className='sub-show '>Approved Co Amount <span className="po-span">-{data.amount}</span> </h5>
+                                ) : null}
+                                <p>
+                                    {data.notes}
+                                </p>
+                            </div>
+                        })
+                    }
             </div>
         </>
     )

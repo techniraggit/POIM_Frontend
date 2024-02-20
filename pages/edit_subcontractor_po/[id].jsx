@@ -173,7 +173,7 @@ const EditSubContractorPo = () => {
             po_id: id,
             status: action,
             approval_notes: data?.approval_notes,
-            approve_amount: data?.approve_amount
+            co_approved_amount: data?.co_approved_amount
         });
         response.then((res) => {
             if(res?.data?.status) {
@@ -195,7 +195,7 @@ const EditSubContractorPo = () => {
                         <li class="icon-text react-icon justify-content-between">
                         <div className="plus-wraptext d-flex align-items-center">
                                 <PlusOutlined />
-                                <span>Edit Purchase Order</span>
+                                <span>Create Purchase Order</span>
                             </div>
                             {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">

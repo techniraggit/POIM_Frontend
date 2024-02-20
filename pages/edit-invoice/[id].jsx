@@ -99,27 +99,6 @@ const EditInvoice = () => {
         }
     }, [po])
 
-
-    // useEffect(() => {
-    // let po_type=invoice?.purchase_order?.po_type
-    // let total_amount=invoice?.purchase_order?.total_amount
-    // // let amount=invoice?.invoice_amount
-    // console.log(total_amount,'invoice');
-
-    //   if ( typeof thres != 'undefined' &  typeof po_type != "undefined" ) {
-    //         let  data = thres?.filter(function(item){
-    //             return item.name == po_type })
-    //         let getvalue=data[0]['value']
-    //         if (total_amount >= getvalue ) {
-    //             console.log('matricaal value is hight',getvalue,total_amount);
-    //             setshow(true)  
-    //         }else{
-    //             console.log('matricaal value is low',getvalue,total_amount);
-    //             setshow(false)
-    //         }
-    //   }
-    // }, [thres])
-    
     const fetchPoNumber = (id) => {
         const response = fetchPoNumbers(id)
         response.then((res) => {
@@ -148,19 +127,19 @@ const EditInvoice = () => {
         });
     }
 
-    const handleStatusChange = (event, action) => {
+    const handleStatusChange = (event, action,form) => {
         event.preventDefault()
         const response = changeInvoiceStatus({
 
             invoice_id: id,
             status: action,
+             approval_notes: form.approval_notes
         });
         response.then((res) => {
             if (res?.data?.status) {
                 message.success(res.data?.message);
                 setIsModalOpen(false);
                 setRefetch(true);
-                // setApprovalStatus(action);
             }
         })
     }
@@ -187,28 +166,28 @@ const EditInvoice = () => {
                         <div class="wrapp-in-voice">
                             <ul class="bg-colored-ul mb-4 d-block">
                                 <li class="bg-li-invoice justify-content-between d-flex align-items-center">
-                                <div className="plus-wraptext d-flex align-items-center">
-                                    <PlusOutlined className="me-3" />
-                                    <span>Edit Invoice</span>
+                                    <div className="plus-wraptext d-flex align-items-center">
+                                        <PlusOutlined className="me-3" />
+                                        <span>Edit Invoice</span>
                                     </div>
-                                  {/* {show ?(<> */}
-                                    
+                                    {/* {show ?(<> */}
+
                                     {
-                                    approval_enabled &&
-                                    <Roles action="approve_invoice">
-                                        <div className="mt-0 apr-rej-li d-flex">
-                                            <Button type="primary" className="approved-btn me-3" onClick={(event) => {
-                                                // handleStatusChange(event, 'approved')
-                                                setIsModalOpen(true)
-                                            }}>Approve</Button>
-                                            <Button type="primary" danger className="reject-btn" onClick={(event) => {
-                                                handleStatusChange(event, 'rejected')
-                                            }}>Reject</Button>
-                                        </div>
-                                    </Roles>
-                                }
-                                  {/* </>):null} */}
-                                
+                                        approval_enabled &&
+                                        <Roles action="approve_invoice">
+                                            <div className="mt-0 apr-rej-li d-flex">
+                                                <Button type="primary" className="approved-btn me-3" onClick={(event) => {
+                                                    // handleStatusChange(event, 'approved')
+                                                    setIsModalOpen(true)
+                                                }}>Approve</Button>
+                                                <Button type="primary" danger className="reject-btn" onClick={(event) => {
+                                                    handleStatusChange(event, 'rejected')
+                                                }}>Reject</Button>
+                                            </div>
+                                        </Roles>
+                                    }
+                                    {/* </>):null} */}
+
 
                                 </li>
                                 {/* {

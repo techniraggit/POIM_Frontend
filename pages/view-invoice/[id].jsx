@@ -1,14 +1,18 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
-import { Form, Input, Select, Upload } from 'antd';
+import { Form, Input, Select, Upload, Button, message } from 'antd';
 import '../../styles/style.css'
 import React, { useEffect, useState } from "react";
-import { downloadInvoice, fetchPoNumbers, fetchPoNumbr, getInvoiceData } from "@/apis/apis/adminApis";
+import { downloadInvoice, fetchPoNumbers, fetchPoNumbr, getInvoiceData, changeInvoiceStatus } from "@/apis/apis/adminApis";
 import Material_invoice from "@/components/material_invoice";
 import Rental_invoice from "@/components/rental_invoice";
 import { useRouter } from 'next/router';
 import Subcontractor_invoice from "@/components/subcontractor_invoice";
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import ChangeStatus from "@/components/PoChangeStatus";
+import useInvoice from "@/hooks/useInvoice";
+import Roles from "@/components/Roles";
+import PoStatus from "@/components/PoStatus";
 // import { saveAs } from "file-saver";
 
 const { TextArea } = Input;
@@ -19,16 +23,20 @@ const ViewInvoice = () => {
     const [invoice, setInvoice] = useState({});
     const [po, setPo] = useState('');
     const [responseData, setResponseData] = useState([]);
+    const { approval_enabled } = useInvoice(invoice);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [refetch, setRefetch] = useState(true);
+    const [isStatusModalOpen, setStatusModalOpen] = useState(false);
     const router = useRouter();
     const { id } = router.query;
     const [form] = Form.useForm();
 
     const onFinish = () => {
-        
+
     };
 
     useEffect(() => {
-        if(id) {
+        if (id && refetch) {
             const response = fetchPoNumbr()
             response.then((res) => {
                 if (res?.data?.status) {
@@ -38,9 +46,11 @@ const ViewInvoice = () => {
             const invoicePromise = getInvoiceData(id);
 
             invoicePromise.then((res) => {
-                if(res?.data?.status) {
+                if (res?.data?.status) {
                     const data = res.data?.data
-                    setInvoice({...data});
+
+                    setInvoice({ ...data, po_creator: res.data?.po_creator });
+                    // setInvoice({ ...data });
                     form.setFieldValue('amount', data.invoice_amount);
                     form.setFieldValue('note', data.comment);
                     form.setFieldValue('po_type', res.data?.data?.purchase_order?.po_type);
@@ -49,11 +59,12 @@ const ViewInvoice = () => {
                     fetchPoNumber(res.data?.data?.purchase_order?.po_id);
                 }
             })
+            setRefetch(false)
         }
-    }, [id]);
+    }, [id, refetch]);
 
     useEffect(() => {
-        if(po){
+        if (po) {
             const response = fetchPoNumbr(po)
             response.then((res) => {
                 if (res?.data?.status) {
@@ -75,11 +86,30 @@ const ViewInvoice = () => {
     const handleDownload = (id) => {
         downloadInvoice(id).then((res) => {
             const fileName = `invoice_${id}.pdf`;
-            if(res?.data) {
-              saveAs(res.data, fileName);
+            if (res?.data) {
+                saveAs(res.data, fileName);
             }
         })
     }
+
+    const handleStatusChange = (event, action, form) => {
+        event.preventDefault()
+        const response = changeInvoiceStatus({
+            invoice_id: id,
+            status: action,
+            approval_notes: form.approval_notes
+        });
+        response.then((res) => {
+            if (res?.data?.status) {
+                message.success(res.data?.message);
+                setIsModalOpen(false);
+                setRefetch(true);
+            }
+        })
+    }
+    const handleIconClick = () => {
+        setStatusModalOpen(true);
+    };
 
     return (
         <>
@@ -88,7 +118,7 @@ const ViewInvoice = () => {
                 <div className="inner-wrapper">
                     <Header heading='Invoice' />
                     <div class="bottom-wrapp-purchase">
-                    <ul class=" create-icons">
+                        <ul class=" create-icons">
                             <li class="icon-text react-icon justify-content-between">
                                 <div className="plus-wraptext d-flex align-items-center">
                                     <PlusOutlined />
@@ -96,17 +126,31 @@ const ViewInvoice = () => {
                                 </div>
                                 <div>
                                     {
-                                      <button className="po-status-btn me-2" >
+                                        !approval_enabled && <button className="po-status-btn" onClick={() => handleIconClick()}>
                                             PO Status
                                         </button>
                                     }
-                                      {
-                                       <button className="po-status-btn" >
-                                           Invoice Status
+                                    {/* {
+                                        <button className="po-status-btn" >
+                                            Invoice Status
                                         </button>
+                                    } */}
+
+                                    {
+                                        approval_enabled &&
+                                        <Roles action="approve_invoice">
+                                            <div className="mt-0 apr-rej-li d-flex">
+                                                <Button type="primary" className="approved-btn me-3" onClick={(event) => {
+                                                    setIsModalOpen(true)
+                                                }}>Approve</Button>
+                                                <Button type="primary" danger className="reject-btn" onClick={(event) => {
+                                                    handleStatusChange(event, 'rejected')
+                                                }}>Reject</Button>
+                                            </div>
+                                        </Roles>
                                     }
                                 </div>
-                               
+
                             </li>
                         </ul>
                         <div class="wrapp-in-voice">
@@ -203,10 +247,10 @@ const ViewInvoice = () => {
                                             const fileName = invoice_file_split[invoice_file_split.length - 1];
                                             return (
                                                 <>
-                                                <div className="download-wrap d-flex">
-                                                    <div className="download-fine-invoice">
-                                                        {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
-                                                    </div>
+                                                    <div className="download-wrap d-flex">
+                                                        <div className="download-fine-invoice">
+                                                            {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
+                                                        </div>
                                                     </div>
                                                 </>
                                             )
@@ -216,7 +260,7 @@ const ViewInvoice = () => {
                                         <TextArea disabled />
                                     </Form.Item>
                                     <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
-                                        <Input disabled  addonBefore="$" />
+                                        <Input disabled addonBefore="$" />
                                     </Form.Item>
                                 </Form>
                             </div>
@@ -224,6 +268,10 @@ const ViewInvoice = () => {
                     </div>
                 </div>
             </div>
+            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+            {isStatusModalOpen && <PoStatus 
+            data={[]} 
+            setStatusModalOpen={setStatusModalOpen} />}
         </>
     )
 }

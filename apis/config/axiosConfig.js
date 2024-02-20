@@ -24,6 +24,7 @@ Axios.interceptors.response.use(function (response) {
 }, function (error) {
     if(error.response?.data?.code === "token_not_valid" || error.response?.data?.code==="user_not_found") {
         localStorage.removeItem('access_token');
+        window.location.href='/'
     }
     return Promise.reject(error);
 });

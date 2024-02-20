@@ -5,7 +5,7 @@ import Link from "next/link";
 import { allRead, getNotification, toggleButton } from "@/apis/apis/adminApis";
 import { Button } from "antd";
 
-const Notification = ({ closeNotification}) => {
+const Notification = ({ closeNotification, setFalseCount }) => {
     const [showMore, setShowMore] = useState(false);
     const [notificationData, setNotificationData] = useState([]);
     const toggleShowMore = (id) => {
@@ -54,16 +54,18 @@ const Notification = ({ closeNotification}) => {
 
     const handleMarkAllAsRead=()=>{
         allRead()
-        .then(() => {
-            setNotificationData(prevNotifications => prevNotifications.map(notification => ({
-                ...notification,
-                is_read: true
-            })));
+        .then((res) => {
+            if(res?.data?.status) {
+                setFalseCount(0);
+                setNotificationData(prevNotifications => prevNotifications.map(notification => ({
+                    ...notification,
+                    is_read: true
+                })));
+            }
         })
         .catch(error => {
             console.error('Error marking all notifications as read:', error);
         });
-       
     }
 
     return (

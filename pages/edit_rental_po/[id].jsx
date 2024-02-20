@@ -165,7 +165,7 @@ const Edit_Rental_Po = () => {
             po_id: id,
             status: action,
             approval_notes: data?.approval_notes,
-            approve_amount: data?.approve_amount
+            co_approved_amount: data?.co_approved_amount
         });
         response.then((res) => {
             if(res?.data?.status) {

@@ -5,12 +5,14 @@ import Header from "@/components/header";
 import '../../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
-import { updatePO, fetchPo } from "@/apis/apis/adminApis";
-import { Form, Select } from "antd";
+import { updatePO, fetchPo, changeStatus } from "@/apis/apis/adminApis";
+import { Form, Select,Button,message } from "antd";
 import PoForm from '../../components/Form';
 import moment from "moment";
 import PoStatus from "@/components/PoStatus";
 import Amendments from "@/components/Amendments";
+import ChangeStatus from "@/components/PoChangeStatus";
+import Roles from "@/components/Roles";
 
 const { Option } = Select;
 
@@ -44,13 +46,16 @@ const ViewMaterialPo = () => {
         material_details: [{ ...repeatorData }]
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isStatusModalOpen,setStatusModalOpen]=useState(false);
     const [history, setHistory] = useState([])
+    const [refetch, setRefetch] = useState(true);
 
     const router = useRouter();
     const [form] = Form.useForm();
     const { id } = router.query;
 
     useEffect(() => {
+        if (refetch) {
         fetchPo(id).then((res) => {
             if (res?.data?.status) {
                 const data = res.data?.data;
@@ -77,7 +82,8 @@ const ViewMaterialPo = () => {
                     material_details: data.material_details.map((detail) => {
                         return { ...detail, project_site_id: detail.project_site?.site_id }
                     }),
-                    status: data.status
+                    status: data.status,
+                    notes: data?.co_approved_amount
                 });
                 setHistory([...res.data.history_logs_data])
                 form.setFieldValue('po_type', data.po_type);
@@ -113,7 +119,9 @@ const ViewMaterialPo = () => {
                 })
             }
         });
-    }, []);
+        setRefetch(false)
+    }
+    }, [refetch]);
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
@@ -175,8 +183,25 @@ const ViewMaterialPo = () => {
         });
     }
 
+    const handleStatusChange = (event, action, data) => {
+        event.preventDefault()
+        const response = changeStatus({
+            po_id: id,
+            status: action,
+            approval_notes: data?.approval_notes,
+            co_approved_amount: data?.co_approved_amount
+        });
+        response.then((res) => {
+            if (res?.data?.status) {
+                message.success(res.data?.message);
+                setIsModalOpen(false);
+                setRefetch(true);
+            }
+        })
+    }
+
     const handleIconClick = () => {
-        setIsModalOpen(true);
+        setStatusModalOpen(true);
     };
 
     return (
@@ -197,6 +222,19 @@ const ViewMaterialPo = () => {
                                         formData.status === 'approved' && <button className="po-status-btn" onClick={() => handleIconClick()}>
                                             PO Status
                                         </button>
+                                    }
+
+                                    {
+                                        formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
+                                            <div className="mt-0 apr-rej-li d-flex">
+                                                <Button type="primary" className="approved-btn me-3" onClick={() => {
+                                                    setIsModalOpen(true);
+                                                }}>Approve</Button>
+                                                <Button type="primary" className="reject-btn" danger onClick={(event) => {
+                                                    handleStatusChange(event, 'rejected')
+                                                }}>Reject</Button>
+                                            </div>
+                                        </Roles>
                                     }
                                 </div>
                             </li>
@@ -234,12 +272,13 @@ const ViewMaterialPo = () => {
                                     <PoForm formData={formData} view={true} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} />
                                 </Form>
                             </div>
-                            
+
                         </div>
                         {history?.length > 0 && <Amendments history={history} />}
                     </div>
                 </div>
-                {isModalOpen && <PoStatus setIsModalOpen={setIsModalOpen} />}
+                {isModalOpen && <ChangeStatus po_id={id} poType={"material"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+                {isStatusModalOpen && <PoStatus data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
             </div>
         </>
     );

@@ -8,7 +8,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
   };
   
   const [form, setForm] = useState({
-    approve_amount: 0,
+    co_approved_amount: 0,
     approval_notes: ''
   });
 
@@ -33,7 +33,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
             {
               poType === 'subcontractor' && <div class="projct-details notes">
               <p class="detail-para1">CO Approved Amount</p>
-              <input id='input-po'  type="text" value={form.approve_amount} onChange={({ target: { value } }) => handleFormChange('approve_amount', value)} className="detail-para "></input>
+              <input id='input-po'  type="text" value={form.co_approved_amount} onChange={({ target: { value } }) => handleFormChange('co_approved_amount', value)} className="detail-para "></input>
             </div>
             }
           

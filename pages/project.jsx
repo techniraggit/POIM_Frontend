@@ -27,7 +27,6 @@ const Vendor = ({ base_url }) => {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
                 const response = await axios.get(`${base_url}/api/admin/projects?page=${currentPage}`, { headers: headers });
-                console.log(response.data.results.projects,'apirespose');
                 setCount(response.data.count)
                 setProjects(response.data.results.projects)
                 setTotalProjects(response.data.results.total_projects);
