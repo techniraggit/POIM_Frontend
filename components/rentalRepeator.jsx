@@ -11,7 +11,7 @@ const repeatorData = {
     project_site_id: ''
 }
 
-function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, edit, view }) {
+function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, edit, view, calculateAmount }) {
     const [endDateError, setEndDateError] = useState(null);
     useEffect(() => {
         if (edit) {
@@ -75,7 +75,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             ]}
                         >
                             <Input readOnly={view} onChange={({ target: { value } }) => handleStartDateChange(value)} type="date"></Input>
-                            {/* <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { start_date: value }, 0)} type="date"></Input> */}
                         </Form.Item>
                     </div>
                 </div>
@@ -94,7 +93,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             ]}
                         >
                             <Input readOnly={view} onChange={({ target: { value } }) => handleEndDateChange(value)} type="date"></Input>
-                            {/* <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { end_date: value }, 0)} type="date"></Input> */}
                         </Form.Item>
                     </div>
                 </div>
@@ -224,21 +222,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                                 }}
                                                             />
                                                         </Form.Item>
-                                                        {/* <Form.Item
-                                                        label={upperKey}
-                                                        rules={[
-                                                            {
-                                                                required: true,
-                                                                message: "Please enter date",
-                                                            },
-                                                        ]}
-                                                    >
-                                                        <Input type="date" readOnly={view}
-                                                            placeholder={upperKey}
-                                                            value={data[key]}
-                                                            onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
-                                                        ></Input>
-                                                    </Form.Item> */}
                                                     </div>
                                                 </div>
                                             )
@@ -259,8 +242,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                                     message: "Please enter date",
                                                                 },
                                                             ]}
-                                                            // validateStatus={endDateError ? 'error' : ''}
-                                                            // help={endDateError}
                                                         >
                                                             <Input type="date" readOnly={view}
                                                                 placeholder={upperKey}
@@ -271,21 +252,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                                 }}
                                                             />
                                                         </Form.Item>
-                                                        {/* <Form.Item
-                                                            label={upperKey}
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please enter date",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Input type="date" readOnly={view}
-                                                                placeholder={upperKey}
-                                                                value={data[key]}
-                                                                onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
-                                                            ></Input>
-                                                        </Form.Item> */}
                                                     </div>
                                                 </div>
                                             )
@@ -325,6 +291,9 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                             ...formData,
                                             material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         });
+                                        if (calculateAmount) {
+                                            calculateAmount(0, index + 1);
+                                        }
                                     }} style={{ marginLeft: '8px' }} />
                                 </div>
                             </div>

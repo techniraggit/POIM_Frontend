@@ -536,31 +536,16 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                      onClick={() => {
                                         if(data.md_id) {
                                             handleRemoveDetail(data.md_id, index);
-
-                                            // let get_amount=formData.total_amount
-                                            //    setFormData({
-                                            //     ...formData,
-                                            //     total_amount: get_amount-amount
-                                            // });
                                         } else {
                                             setFormData({
                                                 ...formData,
                                                 material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                             });
-                                            if (calculateAmount) {
-                                                calculateAmount(0, 0, index + 1)
-                                            }
+                                        }
+                                        if (calculateAmount) {
+                                            calculateAmount(0, 0, index + 1)
                                         }
                                     }}
-                                    // onClick={() => {
-                                        // setFormData({
-                                        //     ...formData,
-                                        //     material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                        // });
-                                        // if (calculateAmount) {
-                                        //     calculateAmount(0, 0, index + 1)
-                                        // }
-                                    // }} 
                                     style={{ marginLeft: '8px' }} />
                                 </div>
                                 }

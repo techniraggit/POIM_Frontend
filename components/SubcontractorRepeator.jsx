@@ -12,7 +12,7 @@ const repeatorData = {
     project_site_id: ''
 }
 
-function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, form, edit, view }) {
+function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, form, edit, view, calculateAmount }) {
     useEffect(() => {
         if (edit) {
             form.setFieldValue('date', formData.material_details[0]?.date);
@@ -220,6 +220,10 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                             ...formData,
                                             material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         });
+                                        console.log(calculateAmount, "===========")
+                                        if(calculateAmount) {
+                                            calculateAmount(0, index + 1);
+                                        }
                                     }} style={{ marginLeft: '8px' }} />
                                 }
                             </div>

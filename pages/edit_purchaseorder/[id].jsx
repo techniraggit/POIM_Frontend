@@ -125,11 +125,11 @@ const EditMaterialPo = () => {
             return total + parseFloat(item.amount);
         }, 0);
 
-        return totalAmount;
+        return totalAmount || 0;
     };
 
     const calculateAmount = (quantity, unit_price, index) => {
-        const amount = parseFloat(quantity) * parseFloat(unit_price);
+        const amount = (parseFloat(quantity) * parseFloat(unit_price)) || 0;
         const materialDetails = formData.material_details[index];
         materialDetails.amount = amount;
         form.setFieldValue('amount' + index, amount)
@@ -305,11 +305,13 @@ const EditMaterialPo = () => {
                                         </div>
                                     </div>
 
-                                    <PoForm formData={formData}
-                                    edit={true} isNew={false}
-                                            // isNew={true}
-                                            form={form} onChange={onChange} onFinish={onFinish}
-                                            setFormData={setFormData} calculateAmount={calculateAmount} />
+                                    <PoForm
+                                        formData={formData}
+                                        edit={true} 
+                                        isNew={false}
+                                        form={form} onChange={onChange} onFinish={onFinish}
+                                        setFormData={setFormData} calculateAmount={calculateAmount} 
+                                    />
 
                                     {/* <PoForm formData={formData} edit={true} isNew={false} form={form} onChange={onChange} onFinish={onFinish} getTotalAmount={getTotalAmount} setFormData={setFormData} /> */}
 
