@@ -8,12 +8,13 @@ import { Button } from "antd";
 const Notification = ({ closeNotification, setFalseCount }) => {
     const [showMore, setShowMore] = useState(false);
     const [notificationData, setNotificationData] = useState([]);
+    const [refetch,setRefetch]=useState(true);
     const toggleShowMore = (id) => {
         setShowMore(!showMore);
-        if(isActive === id){
+        if (isActive === id) {
             setIsActive('');
         }
-        else{
+        else {
             setIsActive(id);
             toggleButton({
                 id: id,
@@ -22,6 +23,7 @@ const Notification = ({ closeNotification, setFalseCount }) => {
     };
     const [isActive, setIsActive] = useState(false);
     useEffect(() => {
+        if(refetch){
         const response = getNotification()
         response.then((res) => {
             if (res?.data?.status) {
@@ -30,7 +32,9 @@ const Notification = ({ closeNotification, setFalseCount }) => {
             }
 
         })
-    }, [])
+        setRefetch(false);
+    }
+    }, [refetch])
 
     const formatTime = (time) => {
         const currentTime = new Date();
@@ -52,20 +56,20 @@ const Notification = ({ closeNotification, setFalseCount }) => {
         }
     };
 
-    const handleMarkAllAsRead=()=>{
+    const handleMarkAllAsRead = () => {
         allRead()
-        .then((res) => {
-            if(res?.data?.status) {
-                setFalseCount(0);
-                setNotificationData(prevNotifications => prevNotifications.map(notification => ({
-                    ...notification,
-                    is_read: true
-                })));
-            }
-        })
-        .catch(error => {
-            console.error('Error marking all notifications as read:', error);
-        });
+            .then((res) => {
+                if (res?.data?.status) {
+                    setFalseCount(0);
+                    setNotificationData(prevNotifications => prevNotifications.map(notification => ({
+                        ...notification,
+                        is_read: true
+                    })));
+                }
+            })
+            .catch(error => {
+                console.error('Error marking all notifications as read:', error);
+            });
     }
 
     return (
@@ -74,7 +78,7 @@ const Notification = ({ closeNotification, setFalseCount }) => {
                 <div className="icon-cross align-items-center">
                     <h4 className="mb-0">Notifications</h4>
                     <span className="d-block mark-read"><Button onClick={handleMarkAllAsRead}>Mark all as Read</Button></span>
-                    
+
                     <div className="cross-icon" onClick={closeNotification}>
                         <CloseOutlined />
                     </div>
@@ -84,15 +88,20 @@ const Notification = ({ closeNotification, setFalseCount }) => {
                     notificationData.map((notification, index) =>
                     (
                         <div className={`sidebar-main mb-3 ${notification.is_read ? 'read' : 'unread'}`} key={index}>
-                        {/* // <div className="sidebar-main mb-3" key={index}> */}
+                            {/* // <div className="sidebar-main mb-3" key={index}> */}
                             <div className="sidebar-right mb-2 ">
                                 <div className="text-sm-span">
 
                                     <div className="d-flex justify-content-between">
                                         <p className="mb-0 text-start"><b>{notification.title}</b><span className="min">  {formatTime(notification.created)}</span></p>
                                         <button
-                                            onClick={() => toggleShowMore(notification.id)}
-                                            id="myBtn" className={isActive === notification.id ? 'transition' : ''} ><DownOutlined /></button>
+                                            onClick={() => {
+                                                toggleShowMore(notification.id)
+                                                setRefetch(true);
+                                                setFalseCount(falseCount => falseCount - 1)
+                                            }}
+                                            id="myBtn" className={isActive === notification.id ? 'transition' : ''} ><DownOutlined />
+                                        </button>
                                     </div>
                                     {isActive === notification.id && <p className="mb-0 text-start ">{notification.message}
                                     </p>}
