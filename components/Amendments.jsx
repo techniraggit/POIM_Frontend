@@ -104,7 +104,7 @@ const Amendments = ({ history }) => {
                               {
                                 change[key][1][0]?.map((data, index) => {
                                   return Object.keys(data).map((key) => {
-                                    if(data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on') {
+                                    if(data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on' && key !== 'purchase_order') {
                                       return <>
                                         <div className="col-lg-2 col-md-4">
                                           <div className="inner-data">

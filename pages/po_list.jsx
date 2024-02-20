@@ -23,15 +23,26 @@ const PO_list = () => {
     })
     
     useEffect(() => {
-        getPoList(currentPage).then((res) => {
-            if (res?.data?.results?.status) {
-               
-                setPurchaseOrders(res.data.results.data || []);
-            }
-            setCount(res.data.count)
-           
-        })
-    }, [currentPage]);
+        if(query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
+            const queryString = new URLSearchParams({
+                ...query,
+                page: currentPage
+            }).toString();
+            const response = filterSearchPo(queryString);
+            response.then((res) => {
+                setCount(res.data.count)
+                setPurchaseOrders(res.data.results.data);
+                setPurchaseOrders(res.data.results.search_query_data)
+            });
+        } else {
+            getPoList(currentPage).then((res) => {
+                if (res?.data?.results?.status) {
+                    setPurchaseOrders(res.data.results.data || []);
+                }
+                setCount(res.data.count)
+            })
+        }
+    }, [currentPage, query.filter_by_po_type, query.filter_by_po_vendor, query.filter_by_po_status]);
 
     const handleDelete = (id) => {
         const response = deletePO({ po_id: id });
@@ -79,33 +90,15 @@ const PO_list = () => {
             clearPoList().then((res) => {
             setPurchaseOrders(res.data.results.data);
             setCount(res.data.count)
-        
         })
-
     }
 
     useEffect(() => {
-
         const response = fetchVendorContact();
         response.then((res) => {
             setCompanyName([...res.data.vendors])
         })
-
     }, [])
-
-    useEffect(() => {
-        if (query) {
-            const queryString = new URLSearchParams(query).toString();
-            const response = filterSearchPo(queryString);
-            response.then((res) => {
-                setCount(res.data.count)
-                setPurchaseOrders(res.data.results.data);
-                setPurchaseOrders(res.data.results.search_query_data)
-               
-            })
-        }
-    }, [query])
-
 
     return (
         <>
@@ -311,7 +304,6 @@ const PO_list = () => {
                             onShowSizeChange={() => setCurrentPage(+1)}
                             total={count}
                             pageSize={10} // Number of items per page
-
                         />
                     </div>
                     </div>
