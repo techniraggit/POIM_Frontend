@@ -140,7 +140,7 @@ const PO_list = () => {
                                     </button>
                                 </div>
                                 <div className="purchase-filter">
-                                    <span className="filter-span">Filter :</span>
+                                    <span className="filter-span po-filter-span">Filter :</span>
 
                                     <Select placeholder=" Type" id="single1"
                                         className="line-select me-2"
