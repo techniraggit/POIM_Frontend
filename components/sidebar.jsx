@@ -24,6 +24,7 @@ const Sidebar = () => {
     setActiveMenuItem(router.pathname);
   }, [router.pathname]);
   
+
   return (
     <>
       <div className="aside-dashboard">
@@ -127,6 +128,7 @@ const Sidebar = () => {
                   <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
                   <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
                   Reports
+                  
                 </span>
               </span>
               <RightOutlined className='right-outline' />
