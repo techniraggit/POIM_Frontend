@@ -3,12 +3,14 @@ import Sidebar from "@/components/sidebar";
 import React, { useEffect, useState } from "react";
 import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined } from '@ant-design/icons';
-import { fetchPo, updatePo } from "@/apis/apis/adminApis";
-import { Form, Select } from "antd";
+import { fetchPo, updatePo, changeStatus } from "@/apis/apis/adminApis";
+import { Form, Select, Button, message } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
 import PoForm from "@/components/Form";
 import PoStatus from "@/components/PoStatus";
+import Roles from "@/components/Roles";
+import ChangeStatus from "@/components/PoChangeStatus";
 
 const { Option } = Select;
 
@@ -37,70 +39,77 @@ const ViewRentalPO = () => {
     });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [refetch, setRefetch] = useState(true);
+    const [isStatusModalOpen,setStatusModalOpen]=useState(false);
 
     const handleIconClick = () => {
-        setIsModalOpen(true);
+        setStatusModalOpen(true);
     };
 
     useEffect(() => {
-        form.setFieldValue('po_type', 'rental');
-        fetchPo(id).then((res) => {
-            if (res?.data?.status) {
-                const data = res.data.data;
-                setFormData({
-                    ...formData,
-                    po_type: data.po_type,
-                    amount: data.amount,
-                    company_name: data.vendor_contact?.company.company_name,
-                    vendor_id: data.vendor_contact?.company.vendor_id,
-                    project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
-                    vendor_contact_id: data.vendor_contact?.vendor_contact_id,
-                    hst_amount: data.hst_amount,
-                    total_amount: data.total_amount,
-                    country: data.vendor_contact?.company.country,
-                    state: data.vendor_contact?.company.state,
-                    address: data.vendor_contact?.company.address,
-                    phone: data.vendor_contact?.phone_number,
-                    email: data.vendor_contact?.email,
-                    shipment_type: data.shipment_type,
-                    project_id: data.project,
-                    material_details: data.material_details.map((details) => {
-                        return {...details, project_site_id: details.project_site?.site_id, start_date: details.date}
-                    }),
-                    status: data.status,
-                });
-                form.setFieldValue('po_type', data.po_type);
-                form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
-                form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
-                form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
-                form.setFieldValue('shipment_type', data.shipment_type);
-                form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
-                form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
-                form.setFieldValue('total_amount', data.total_amount);
-                form.setFieldValue('poDate', moment(data.po_date));
-                form.setFieldValue('country', data.vendor_contact?.company.country);
-                form.setFieldValue('state', data.vendor_contact?.company.state);
-                form.setFieldValue('address', data.vendor_contact?.company.address);
-                form.setFieldValue('phone', data.vendor_contact?.phone_number);
-                form.setFieldValue('email', data.vendor_contact?.email);
-                form.setFieldValue('poNumber', data.po_number)
-                form.setFieldValue('shipment_type', data.shipment_type)
-                form.setFieldValue('amount', data.material_details[0]?.amount)
-                form.setFieldValue('date', data.material_details[0]?.date)
-                form.setFieldValue('to', data.material_details[0]?.end_date)
-                form.setFieldValue('description', data.material_details[0]?.description)
-                form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
-                form.setFieldValue('first_name', data.created_by.first_name)
-                form.setFieldValue('last_name', data.created_by.last_name)
-                data?.material_details.forEach((material, index) => {
-                    form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
-                    form.setFieldValue('material_for' + (index), material.material_for)
-                    form.setFieldValue('project_id' + (index), material.project?.project_id)
-                    form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
-                })
-            }
-        });
-    }, []);
+        if (refetch) {
+            form.setFieldValue('po_type', 'rental');
+            fetchPo(id).then((res) => {
+                if (res?.data?.status) {
+                    const data = res.data.data;
+                    setFormData({
+                        ...formData,
+                        po_type: data.po_type,
+                        can_change_status: res?.data?.can_change_status,
+                        amount: data.amount,
+                        company_name: data.vendor_contact?.company.company_name,
+                        vendor_id: data.vendor_contact?.company.vendor_id,
+                        project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
+                        vendor_contact_id: data.vendor_contact?.vendor_contact_id,
+                        hst_amount: data.hst_amount,
+                        total_amount: data.total_amount,
+                        country: data.vendor_contact?.company.country,
+                        state: data.vendor_contact?.company.state,
+                        address: data.vendor_contact?.company.address,
+                        phone: data.vendor_contact?.phone_number,
+                        email: data.vendor_contact?.email,
+                        shipment_type: data.shipment_type,
+                        project_id: data.project,
+                        material_details: data.material_details.map((details) => {
+                            return { ...details, project_site_id: details.project_site?.site_id, start_date: details.date }
+                        }),
+                        status: data.status,
+                        notes: data?.co_approved_amount
+                    });
+                    form.setFieldValue('po_type', data.po_type);
+                    form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
+                    form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
+                    form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
+                    form.setFieldValue('shipment_type', data.shipment_type);
+                    form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
+                    form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
+                    form.setFieldValue('total_amount', data.total_amount);
+                    form.setFieldValue('poDate', moment(data.po_date));
+                    form.setFieldValue('country', data.vendor_contact?.company.country);
+                    form.setFieldValue('state', data.vendor_contact?.company.state);
+                    form.setFieldValue('address', data.vendor_contact?.company.address);
+                    form.setFieldValue('phone', data.vendor_contact?.phone_number);
+                    form.setFieldValue('email', data.vendor_contact?.email);
+                    form.setFieldValue('poNumber', data.po_number)
+                    form.setFieldValue('shipment_type', data.shipment_type)
+                    form.setFieldValue('amount', data.material_details[0]?.amount)
+                    form.setFieldValue('date', data.material_details[0]?.date)
+                    form.setFieldValue('to', data.material_details[0]?.end_date)
+                    form.setFieldValue('description', data.material_details[0]?.description)
+                    form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
+                    form.setFieldValue('first_name', data.created_by.first_name)
+                    form.setFieldValue('last_name', data.created_by.last_name)
+                    data?.material_details.forEach((material, index) => {
+                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                        form.setFieldValue('material_for' + (index), material.material_for)
+                        form.setFieldValue('project_id' + (index), material.project?.project_id)
+                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                    })
+                }
+            });
+            setRefetch(false)
+        }
+    }, [refetch]);
 
     const onFinish = () => {
         updatePo({
@@ -154,6 +163,23 @@ const ViewRentalPO = () => {
         form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
     };
 
+    const handleStatusChange = (event, action, data) => {
+        event.preventDefault()
+        const response = changeStatus({
+            po_id: id,
+            status: action,
+            approval_notes: data?.approval_notes,
+            co_approved_amount: data?.co_approved_amount
+        });
+        response.then((res) => {
+            if (res?.data?.status) {
+                message.success(res.data?.message);
+                setIsModalOpen(false);
+                setRefetch(true);
+            }
+        })
+    }
+
     return (
         <>
 
@@ -168,15 +194,28 @@ const ViewRentalPO = () => {
                                     <PlusOutlined />
                                     <span>View Purcase Order</span>
                                 </div>
-                               
+
+
                                 <div>
-                                <button className="po-amendments-btn me-3">
-                                    View All Amendments
-                                </button>
+                                    <button className="po-amendments-btn me-3">
+                                        View All Amendments
+                                    </button>
                                     {
                                         formData.status === 'approved' && <button className="po-status-btn" onClick={() => handleIconClick()}>
                                             PO Status
                                         </button>
+                                    }
+                                    {
+                                        formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
+                                            <div className="mt-0 apr-rej-li d-flex">
+                                                <Button type="primary" className="approved-btn me-3" onClick={() => {
+                                                    setIsModalOpen(true);
+                                                }}>Approve</Button>
+                                                <Button type="primary" className="reject-btn" danger onClick={(event) => {
+                                                    handleStatusChange(event, 'rejected')
+                                                }}>Reject</Button>
+                                            </div>
+                                        </Roles>
                                     }
                                 </div>
                             </li>
@@ -218,7 +257,9 @@ const ViewRentalPO = () => {
                     </div>
                 </div >
             </div >
-            {isModalOpen && <PoStatus setIsModalOpen={setIsModalOpen} />}
+            {isModalOpen && <ChangeStatus po_id={id} poType={"rental"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+            {/* {isModalOpen && <PoStatus setIsModalOpen={setIsModalOpen} />} */}
+            {isStatusModalOpen && <PoStatus data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
         </>
     )
 }
