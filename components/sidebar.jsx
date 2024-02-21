@@ -125,8 +125,8 @@ const Sidebar = () => {
             <Link href="#">
               <span className="db-span">
                 <span class="active-img position-relative">
-                  <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
-                  <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
+                  <img src="/images/report-icon.svg" alt="" className="me-4 default-img" />
+                  <img src="/images/report-colored.svg" alt="" class="img-colored me-4" />
                   Reports
                   
                 </span>
