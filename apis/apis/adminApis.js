@@ -132,6 +132,9 @@ export const invoiceSubmit=(data)=>{
 export const invoiceList=(currentPage)=>{
     return Axios.get(`/api/admin/invoice?page=${currentPage}`)
 }
+export const userList=(currentPage)=>{
+    return Axios.get(`/api/admin/users?page=${currentPage}`)
+}
 export const invoiceClear=()=>{
     return Axios.get(`/api/admin/invoice`)
 }
@@ -201,6 +204,16 @@ export const removeInvoiceFile = (data) => {
 
 export const profileSave = (data) => {
     return Axios.post(`/api/accounts/change-password`, data);
+}
+
+export const poReport=(params)=>{
+    return Axios.get(`/api/analytic/purchase_order_reports?${params}`)
+}
+export const invoiceReportPdf = (params) =>{
+    return Axios.get(`/api/analytic/invoice_reports?${params}`)
+}
+export const userReportPdf = (params) =>{
+    return Axios.get(`/api/analytic/user_reports?${params}`)
 }
 // export const getUserData = () => {
 //     return Axios.get('/api/admin/profile');

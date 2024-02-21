@@ -31,15 +31,41 @@ const Invoice = () => {
     })
 
     useEffect(() => {
-        invoiceList(currentPage).then((res) => {
-            if (res?.data?.results.status) {
+        if(query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
+            const queryString = new URLSearchParams({
+                ...query,
+                page: currentPage
+            }).toString();
+            const response = filterSearch(queryString);
+            response.then((res) => {
+                setCount(res.data.count)
                 setInvoiceTable(res.data.results.data)
-                setInvoice(res.data.results.total_invoice)
-                setPendingInvoice(res.data.results.total_pending_invoice)
-            }
-            setCount(res.data.count)
-        })
-    }, [currentPage])
+                setInvoiceTable(res.data.results.search_invoice_data)
+            })
+        } else {
+            invoiceList(currentPage).then((res) => {
+                if (res?.data?.results.status) {
+                    setInvoiceTable(res.data.results.data || [])
+                    // setInvoice(res.data.results.total_invoice)
+                    // setPendingInvoice(res.data.results.total_pending_invoice)
+                }
+                setCount(res.data.count)
+            })
+        }
+    }, [currentPage, query.filter_by_po_type, query.filter_by_po_vendor, query.filter_by_po_status]);
+
+
+
+    // useEffect(() => {
+    //     invoiceList(currentPage).then((res) => {
+    //         if (res?.data?.results.status) {
+    //             setInvoiceTable(res.data.results.data)
+    //             setInvoice(res.data.results.total_invoice)
+    //             setPendingInvoice(res.data.results.total_pending_invoice)
+    //         }
+    //         setCount(res.data.count)
+    //     })
+    // }, [currentPage])
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
@@ -88,18 +114,18 @@ const Invoice = () => {
     }, [])
 
 
-    useEffect(() => {
-        if (query) {
-            const queryString = new URLSearchParams(query).toString();
-            const response = filterSearch(queryString);
-            response.then((res) => {
-                setCount(res.data.count)
-                setInvoiceTable(res.data.results.data)
-                setInvoiceTable(res.data.results.search_invoice_data)
-            })
-            // setCount(res.data.count)
-        }
-    }, [query])
+    // useEffect(() => {
+    //     if (query) {
+    //         const queryString = new URLSearchParams(query).toString();
+    //         const response = filterSearch(queryString);
+    //         response.then((res) => {
+    //             setCount(res.data.count)
+    //             setInvoiceTable(res.data.results.data)
+    //             setInvoiceTable(res.data.results.search_invoice_data)
+    //         })
+    //         // setCount(res.data.count)
+    //     }
+    // }, [query])
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };

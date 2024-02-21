@@ -3,12 +3,14 @@ import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
-import { message, Popconfirm,Pagination,Button,Select } from 'antd';
+import { message, Popconfirm, Pagination, Button, Select } from 'antd';
 import Link from "next/link";
-import { clearPoList, deletePO, filterSearchPo, getPoList, poSearch ,fetchVendorContact} from "@/apis/apis/adminApis";
+import { clearPoList, deletePO, filterSearchPo, getPoList, poSearch, fetchVendorContact } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
 
+
+const { Option } = Select;
 const PO_list = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [search, setSearch] = useState('');
@@ -21,9 +23,9 @@ const PO_list = () => {
         filter_by_po_vendor: "",
         filter_by_po_status: ""
     })
-    
+
     useEffect(() => {
-        if(query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
+        if (query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
             const queryString = new URLSearchParams({
                 ...query,
                 page: currentPage
@@ -80,14 +82,14 @@ const PO_list = () => {
         return (currentPage - 1) * 10 + 1;
     };
 
-    const handleFilterClearButton=()=>{
-            setQuery(prevState => ({
-                ...prevState,
-                ['filter_by_po_status']: '',
-                ['filter_by_po_vendor']:"",
-                ['filter_by_po_type']:""
-            }))
-            clearPoList().then((res) => {
+    const handleFilterClearButton = () => {
+        setQuery(prevState => ({
+            ...prevState,
+            ['filter_by_po_status']: '',
+            ['filter_by_po_vendor']: "",
+            ['filter_by_po_type']: ""
+        }))
+        clearPoList().then((res) => {
             setPurchaseOrders(res.data.results.data);
             setCount(res.data.count)
         })
@@ -219,7 +221,7 @@ const PO_list = () => {
                                         {Array.isArray(rows) && rows.length > 0 ? (
                                             rows.map((purchase, index) => {
                                                 return <tr key={index}>
-                                                   <td>{calculateStartingSerialNumber() + index}</td>
+                                                    <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{purchase.po_number}</td>
                                                     <td>{purchase.project?.project_no || '-'}</td>
                                                     <td className="td-color">{purchase.po_type}</td>
@@ -278,36 +280,36 @@ const PO_list = () => {
                             </div>
                         </div>
                         <div className="pagination-container">
-                        <Pagination
-                            // defaultCurrent={2}
-                            current={currentPage}
-                            onChange={setCurrentPage}
-                            showSizeChanger={true}
-                            prevIcon={
-                                <Button 
-                                    style={currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5 } : null}
-                                    disabled={currentPage === 1}
-                                    onClick={() => setCurrentPage(currentPage - 1)}
-                                >
-                                    Previous
-                                </Button>
-                            }
-                            nextIcon={
-                                <Button 
-                                    style={currentPage === Math.ceil(count / 10) ? { pointerEvents: 'none', opacity: 0.5 } : null}
-                                    disabled={currentPage === Math.ceil(count / 10)}
-                                    onClick={() => setCurrentPage(currentPage + 1)}
-                                >
-                                    Next
-                                </Button>
-                            }
-                            onShowSizeChange={() => setCurrentPage(+1)}
-                            total={count}
-                            pageSize={10} // Number of items per page
-                        />
+                            <Pagination
+                                // defaultCurrent={2}
+                                current={currentPage}
+                                onChange={setCurrentPage}
+                                showSizeChanger={true}
+                                prevIcon={
+                                    <Button
+                                        style={currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                        disabled={currentPage === 1}
+                                        onClick={() => setCurrentPage(currentPage - 1)}
+                                    >
+                                        Previous
+                                    </Button>
+                                }
+                                nextIcon={
+                                    <Button
+                                        style={currentPage === Math.ceil(count / 10) ? { pointerEvents: 'none', opacity: 0.5 } : null}
+                                        disabled={currentPage === Math.ceil(count / 10)}
+                                        onClick={() => setCurrentPage(currentPage + 1)}
+                                    >
+                                        Next
+                                    </Button>
+                                }
+                                onShowSizeChange={() => setCurrentPage(+1)}
+                                total={count}
+                                pageSize={10} // Number of items per page
+                            />
+                        </div>
                     </div>
-                    </div>
-                   
+
                 </div>
             </div>
         </>
@@ -315,6 +317,6 @@ const PO_list = () => {
 };
 
 export { getServerSideProps };
-export default withAuth(['project manager','director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
+export default withAuth(['project manager', 'director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
 
 // export default PO_list;

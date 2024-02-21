@@ -135,7 +135,7 @@ const Sidebar = () => {
             </Link>
             <ul className="reports-dropdown">
               <li>
-            <Link href="#">
+            <Link href="/po-report">
               <span className="db-span">
                 <span class="active-img position-relative">
                   <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
@@ -147,7 +147,7 @@ const Sidebar = () => {
             </Link>
             </li>
             <li>
-            <Link href="#">
+            <Link href="/invoice-report">
               <span className="db-span">
                 <span class="active-img position-relative">
                   <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
@@ -159,7 +159,7 @@ const Sidebar = () => {
             </Link>
             </li>
             <li>
-            <Link href="#">
+            <Link href="user-report">
               <span className="db-span">
                 <span class="active-img position-relative">
                   <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
