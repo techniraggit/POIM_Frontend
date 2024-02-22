@@ -98,7 +98,7 @@ const ViewInvoice = () => {
         const response = changeInvoiceStatus({
             invoice_id: id,
             status: action,
-            approval_notes: form.approval_notes
+            approval_notes: form?.approval_notes
         });
         response.then((res) => {
             if (res?.data?.status) {

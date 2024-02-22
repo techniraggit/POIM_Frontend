@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
-import { Form, Input, Select, DatePicker} from "antd";
+import { Form, Input, Select, DatePicker } from "antd";
 import { fetchProjectSites, fetchProjects, fetchSiteProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
@@ -21,7 +21,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
-        if(!edit && !view){
+        if (!edit && !view) {
             form.setFieldValue('poDate', dayjs());
         }
         // form.setFieldValue('poDate',formData.po_date);
@@ -132,6 +132,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
+    console.log(formData, 'fffffffffffffff');
 
     return (
         <>
@@ -204,7 +205,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             >
                                 <Select
                                     id="single2"
-                                    disabled={view || edit && formData.status !=='pending'}
+                                    disabled={view || edit && formData.status !== 'pending'}
                                     placeholder="Select"
                                     className="js-states form-control file-wrap-select"
                                     onChange={(value) => {
@@ -232,7 +233,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 name="vendor_contact_id"
                                 htmlFor="file"
                                 class="same-clr"
-                               
+
                                 rules={[
                                     {
                                         required: true,
@@ -243,7 +244,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 <Select
                                     id="singlesa"
                                     placeholder="Select"
-                                    disabled={view || edit && formData.status !=='pending'}
+                                    disabled={view || edit && formData.status !== 'pending'}
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => {
                                         vendorContactDetails(value);
@@ -502,6 +503,24 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                         </Form.Item>
                     </div>
                 </div>
+                {formData.status === 'approved' && formData.po_type === 'subcontractor' && view && (
+                    <div className="col-lg-4 col-md-6">
+                        <div className="wrap-box">
+                            <Form.Item
+                                name='co_amount'
+                                label="CO Amount"
+                            >
+                                <Input
+                                    addonBefore="$"
+                                    readOnly
+                                    // value={coAmount}
+                                    // onChange={(e) => setCoAmount(e.target.value)}
+                                    placeholder="CO Amount"
+                                />
+                            </Form.Item>
+                        </div>
+                    </div>
+                )}
             </div>
             <div class="linewrap d-flex">
                 <span class="d-block me-2">By Details</span>
