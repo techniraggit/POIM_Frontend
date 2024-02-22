@@ -11,6 +11,7 @@ import { userSearch, userClear, searchUserRoles, userFilterSearch } from "@/apis
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
 const User_list = ({ base_url }) => {
+    const [isIconClicked, setIsIconClicked] = useState(false);
     const [users, setUsers] = useState([]);
     const [isViewUserVisible, setUserVisible] = useState(false);
     const [totalUser, setTotalUser] = useState(0)
@@ -21,6 +22,16 @@ const User_list = ({ base_url }) => {
     const [query, setQuery] = useState({
         filter_by_role: "",
     })
+
+
+    useEffect(() => {
+        if (isIconClicked) {
+            document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
+        } else {
+            document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
+        }
+    }, [isIconClicked]);
+
 
     useEffect(() => {
         const fetchroles = async () => {
@@ -65,7 +76,8 @@ const User_list = ({ base_url }) => {
         }
     };
     const handleIconClick = (id) => {
-        setUserVisible((prevVisible) => (prevVisible === id ? null : id));
+        setUserVisible(id);
+        setIsIconClicked(true);
     };
 
 
@@ -93,7 +105,7 @@ const User_list = ({ base_url }) => {
         response.then((res) => {
             setRoleName(res.data.roles)
         })
-    },[] )
+    }, [])
 
     const handleFilterClearButton = () => {
         setQuery(prevState => ({
@@ -117,7 +129,7 @@ const User_list = ({ base_url }) => {
                 setCount(res.data.count)
                 setUsers(res.data.results.data);
                 setUsers(res.data.results.search_query_data)
-               
+
             })
         }
     }, [query])
@@ -160,18 +172,16 @@ const User_list = ({ base_url }) => {
                                     >
                                         Clear
                                     </button>
-                                    </div>
-                                    <div className="purchase-filter invoice-filter ms-0">
+                                </div>
+                                <div className="purchase-filter invoice-filter ms-0">
                                     <span className="filter-span">Filter :</span>
-                                    <Select className="line-select me-2" placeholder="PO Vendor"
+                                    <Select className="line-select me-2" placeholder="Role"
                                         onChange={(value) =>
                                             setQuery(prevState => ({
                                                 ...prevState,
                                                 ['filter_by_role']: value
                                             }))}
                                         value={query['filter_by_role']}
-
-
                                     >
                                         {roleName.map((entry) =>
 
@@ -236,7 +246,8 @@ const User_list = ({ base_url }) => {
                                     </thead>
                                     <tbody>
                                         {Array.isArray(users) &&
-                                            users.map((user, index) => (
+                                            users.map((user, index) => { 
+                                                return(
                                                 <tr key={index}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>
                                                     {/* <td>{index + 1}</td> */}
@@ -247,8 +258,8 @@ const User_list = ({ base_url }) => {
                                                     <td>{user.phone_number}</td>
                                                     <td className="td-icon-color">
                                                         <Roles action='view_user'>
-                                                            <EyeFilled onClick={() => handleIconClick(user.id)} />
-                                                            {isViewUserVisible === user.id && <UserPopUp user_id={user.id} />}
+                                                            <EyeFilled onClick={() => handleIconClick(user.id)}  />
+                                                            {isViewUserVisible === user.id && <UserPopUp user_id={user.id} setIsIconClicked={setIsIconClicked} />}
                                                         </Roles>
                                                         <Roles action='delete_user'>
                                                             <Popconfirm
@@ -266,7 +277,7 @@ const User_list = ({ base_url }) => {
                                                         </Roles>
                                                     </td>
                                                 </tr>
-                                            ))}
+                                            )})}
                                     </tbody>
 
                                 </table>
