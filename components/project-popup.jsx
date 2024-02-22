@@ -38,6 +38,9 @@ const ProjectPopup = ({ project_id }) => {
                 //  {projectData ? (
 
                 <div className="approve-main">
+                    < div className='main-topapprove '>
+
+                    
                     <div className="approve-po">
                         <div className="cross-icon" onClick={handleCloseModal}>
                             <CloseOutlined />
@@ -96,6 +99,7 @@ const ProjectPopup = ({ project_id }) => {
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             )}

@@ -3856,6 +3856,23 @@ span.filter-span.po-filter-span {
     width: 14%;
 }
 /* 20feb */
+/* 21 feb  */
+.main-topapprove {
+    width: 100%;
+    background-color: #fbfbfb;
+    position: fixed;
+    top: 50%;
+    /* opacity: .9; */
+    height: 100%;
+    z-index: 19;
+    /* opacity: 0.6; */
+    left: 50%;
+    overflow: auto;
+    transform: translate(-50%, -50%);
+    z-index: 9999999;
+}
+
+/* 21 feb  */
 
 /* responsive */
 @media (max-width: 1499px) { 
