@@ -24,27 +24,39 @@ const PO_list = () => {
         filter_by_po_status: ""
     })
 
-    useEffect(() => {
-        if (query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
-            const queryString = new URLSearchParams({
-                ...query,
-                page: currentPage
-            }).toString();
-            const response = filterSearchPo(queryString);
-            response.then((res) => {
-                setCount(res.data.count)
-                setPurchaseOrders(res.data.results.data);
-                setPurchaseOrders(res.data.results.search_query_data)
-            });
-        } else {
-            getPoList(currentPage).then((res) => {
-                if (res?.data?.results?.status) {
-                    setPurchaseOrders(res.data.results.data || []);
-                }
-                setCount(res.data.count)
-            })
-        }
-    }, [currentPage, query.filter_by_po_type, query.filter_by_po_vendor, query.filter_by_po_status]);
+    // useEffect(() => {
+    //     if (query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
+    //         const queryString = new URLSearchParams({
+    //             ...query,
+    //             page: currentPage
+    //         }).toString();
+    //         const response = filterSearchPo(queryString);
+    //         response.then((res) => {
+    //             setCount(res.data.count)
+    //             setPurchaseOrders(res.data.results.data);
+    //             setPurchaseOrders(res.data.results.search_query_data)
+    //         });
+    //     } else {
+    //         getPoList(currentPage).then((res) => {
+    //             if (res?.data?.results?.status) {
+    //                 setPurchaseOrders(res.data.results.data || []);
+    //             }
+    //             setCount(res.data.count)
+    //         })
+    //     }
+    // }, [currentPage, query.filter_by_po_type, query.filter_by_po_vendor, query.filter_by_po_status]);
+
+
+    const applyFilters = (data) => {
+        const queryString = new URLSearchParams({ ...data }).toString();
+        const response = filterSearchPo(queryString);
+        response.then((res) => {
+            setCount(res.data.count)
+            setPurchaseOrders(res.data.results.data);
+            setPurchaseOrders(res.data.results.search_query_data)
+
+        })
+    }
 
     const handleDelete = (id) => {
         const response = deletePO({ po_id: id });
@@ -65,12 +77,48 @@ const PO_list = () => {
     };
     const handleButtonClick = async (event) => {
         event.preventDefault();
-        poSearch(inputValue).then((response) => {
-            setPurchaseOrders(response.data.results.search_query_data)
+        applyFilters({
+            ...query,
+            query: inputValue
+        });
+        // event.preventDefault();
+        // poSearch(inputValue).then((response) => {
+        //     setPurchaseOrders(response.data.results.search_query_data)
 
-        })
+        // })
 
     };
+
+    const handleFilterClearButton = (action) => {
+        if(action === 'search') {
+            setInputValue('');
+            applyFilters({
+                ...query,
+                query: ''
+            });
+        } else {
+            setQuery(prevState => ({
+                ...prevState,
+                ['filter_by_po_status']: '',
+                ['filter_by_po_vendor']: "",
+                ['filter_by_po_type']: ""
+            }))
+            applyFilters({
+                query: inputValue,
+                ...query
+            });
+        }
+    }
+
+    useEffect(() => {
+        if (query) {
+            applyFilters({
+                inputValue,
+                ...query
+            });
+        }
+    }, [query])
+
     const handleClearButtonClick = () => {
         setInputValue('');
         clearPoList().then((res) => {
@@ -82,18 +130,18 @@ const PO_list = () => {
         return (currentPage - 1) * 10 + 1;
     };
 
-    const handleFilterClearButton = () => {
-        setQuery(prevState => ({
-            ...prevState,
-            ['filter_by_po_status']: '',
-            ['filter_by_po_vendor']: "",
-            ['filter_by_po_type']: ""
-        }))
-        clearPoList().then((res) => {
-            setPurchaseOrders(res.data.results.data);
-            setCount(res.data.count)
-        })
-    }
+    // const handleFilterClearButton = () => {
+    //     setQuery(prevState => ({
+    //         ...prevState,
+    //         ['filter_by_po_status']: '',
+    //         ['filter_by_po_vendor']: "",
+    //         ['filter_by_po_type']: ""
+    //     }))
+    //     clearPoList().then((res) => {
+    //         setPurchaseOrders(res.data.results.data);
+    //         setCount(res.data.count)
+    //     })
+    // }
 
     useEffect(() => {
         const response = fetchVendorContact();
@@ -101,6 +149,7 @@ const PO_list = () => {
             setCompanyName([...res.data.vendors])
         })
     }, [])
+    console.log(purchaseOrders,'purchaseOrders');
 
     return (
         <>
@@ -132,11 +181,17 @@ const PO_list = () => {
                                             value={inputValue} onChange={handleInputChange}
                                         />
                                         <button className="vendor-search-butt"
-                                            onClick={handleButtonClick}
+                                            // onClick={handleButtonClick}
+                                            onClick={(event) => {
+                                                handleButtonClick(event);
+                                            }}
                                         >Search</button>
                                     </form>
                                     <button type="submit" className="clear-button ms-3"
-                                        onClick={handleClearButtonClick}
+                                        // onClick={handleClearButtonClick}
+                                        onClick={() => {
+                                            handleFilterClearButton('search');
+                                        }}
                                     >
                                         Clear
                                     </button>
@@ -146,7 +201,7 @@ const PO_list = () => {
 
                                     <Select placeholder=" Type" id="single1"
                                         className="line-select me-2"
-                                        value={query['filter_by_po_type'] ||  "PO Type"}
+                                        value={query['filter_by_po_type'] || "PO Type"}
                                         onChange={(value) =>
 
                                             setQuery(prevState => ({
@@ -193,7 +248,10 @@ const PO_list = () => {
                                         <Option value="rejected">Rejected</Option>
                                     </Select>
                                     <button type="submit" className="clear-button ms-3"
-                                        onClick={handleFilterClearButton}
+                                        // onClick={handleFilterClearButton}
+                                        onClick={() => {
+                                            handleFilterClearButton('filters')
+                                        }}
                                     >
                                         Clear
                                     </button>

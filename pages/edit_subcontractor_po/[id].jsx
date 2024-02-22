@@ -77,7 +77,7 @@ const EditSubContractorPo = () => {
                         shipment_type: data.shipment_type || 'project related',
                         // material_details: [...data.material_details]
                         material_details: data.material_details.map((detail) => {
-                            return { ...detail, project_site_id: detail.project_site.site_id }
+                            return { ...detail, project_site_id: detail?.project_site?.site_id }
                         }),
                         status: data.status
                     });
@@ -109,7 +109,7 @@ const EditSubContractorPo = () => {
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                         form.setFieldValue('material_for' + (index), material.material_for)
                         form.setFieldValue('project_id' + (index), material.project?.project_id)
-                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                        // form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                     })
                 }
             });

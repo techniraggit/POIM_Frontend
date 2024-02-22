@@ -30,79 +30,63 @@ const Invoice = () => {
         filter_by_po_status: ""
     })
 
-    useEffect(() => {
-        if (query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
-            const queryString = new URLSearchParams({
-                ...query,
-                page: currentPage
-            }).toString();
-            const response = filterSearch(queryString);
-            response.then((res) => {
-                setCount(res.data.count)
-                setInvoiceTable(res.data.results.data)
-                setInvoiceTable(res.data.results.search_invoice_data)
-            })
-        } else {
-            invoiceList(currentPage).then((res) => {
-                if (res?.data?.results.status) {
-                    setInvoiceTable(res.data.results.data || [])
-                    setInvoice(res.data.results.total_invoice)
-                    setPendingInvoice(res.data.results.total_pending_invoice)
-                }
-                setCount(res.data.count)
-            })
-        }
-    }, [currentPage, query.filter_by_po_type, query.filter_by_po_vendor, query.filter_by_po_status]);
+    const applyFilters = (data) => {
+        const queryString = new URLSearchParams({ ...data }).toString();
+        const response = filterSearch(queryString);
+        response.then((res) => {
+            setCount(res.data.count)
+            setInvoiceTable(res.data.results.data)
+            setInvoiceTable(res.data.results.search_invoice_data)
 
-
-
-    // useEffect(() => {
-    //     invoiceList(currentPage).then((res) => {
-    //         if (res?.data?.results.status) {
-    //             setInvoiceTable(res.data.results.data)
-    //             setInvoice(res.data.results.total_invoice)
-    //             setPendingInvoice(res.data.results.total_pending_invoice)
-    //         }
-    //         setCount(res.data.count)
-    //     })
-    // }, [currentPage])
+        })
+    }
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
 
     const handleButtonClick = async (event) => {
+
         event.preventDefault();
-        invoiceSearch(inputValue).then((response) => {
-            setInvoiceTable(response.data.results.search_invoice_data)
-
-        })
-
+        applyFilters({
+            ...query,
+            query: inputValue
+        });
     };
-    const handleClearButtonClick = () => {
-        setInputValue('');
-        invoiceClear().then((res) => {
+    
 
-            setInvoiceTable(res.data.results.data)
-        })
-    };
 
-    const handleFilterClearButton = () => {
-        // router.reload();
-
-        setQuery(prevState => ({
-            ...prevState,
-            ['filter_by_po_status']: '',
-            ['filter_by_po_vendor']: "",
-            ['filter_by_po_type']: ""
-        }))
-        invoiceClear().then((res) => {
-            setInvoiceTable(res.data.results.data)
-            setCount(res.data.count)
-
-        })
-
+    const handleFilterClearButton = (action) => {
+        if(action === 'search') {
+            setInputValue('');
+            applyFilters({
+                ...query,
+                query: ''
+            });
+        } else {
+            setQuery(prevState => ({
+                ...prevState,
+                ['filter_by_po_status']: '',
+                ['filter_by_po_vendor']: "",
+                ['filter_by_po_type']: ""
+            }))
+            applyFilters({
+                query: inputValue,
+                ...query
+            });
+        }
     }
+
+    useEffect(() => {
+        if (query) {
+            applyFilters({
+                inputValue,
+                ...query
+            });
+        }
+    }, [query])
+
+   
 
     useEffect(() => {
 
@@ -113,19 +97,6 @@ const Invoice = () => {
 
     }, [])
 
-
-    // useEffect(() => {
-    //     if (query) {
-    //         const queryString = new URLSearchParams(query).toString();
-    //         const response = filterSearch(queryString);
-    //         response.then((res) => {
-    //             setCount(res.data.count)
-    //             setInvoiceTable(res.data.results.data)
-    //             setInvoiceTable(res.data.results.search_invoice_data)
-    //         })
-    //         // setCount(res.data.count)
-    //     }
-    // }, [query])
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
@@ -166,11 +137,16 @@ const Invoice = () => {
                                             value={inputValue} onChange={handleInputChange}
                                         />
                                         <button className="vendor-search-butt"
-                                            onClick={handleButtonClick}
+                                            // onClick={handleButtonClick}
+                                            onClick={(event) => {
+                                                handleButtonClick(event);
+                                            }}
                                         >Search</button>
                                     </form>
                                     <button type="submit" className="clear-button ms-3"
-                                        onClick={handleClearButtonClick}
+                                        onClick={() => {
+                                            handleFilterClearButton('search');
+                                        }}
                                     >
                                         Clear
                                     </button>
@@ -227,7 +203,9 @@ const Invoice = () => {
                                         <Option value="rejected">Rejected</Option>
                                     </Select>
                                     <button type="submit" className="clear-button ms-3"
-                                        onClick={handleFilterClearButton}
+                                       onClick={() => {
+                                        handleFilterClearButton('filters')
+                                    }}
                                     >
                                         Clear
                                     </button>
