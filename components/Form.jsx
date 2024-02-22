@@ -18,12 +18,11 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
     const { user } = useGlobalContext();
-     
+    
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
         if(!edit && !view){
             form.setFieldValue('poDate', dayjs());
-
         }
         // form.setFieldValue('poDate',formData.po_date);
         if (formData.shipment_type) {

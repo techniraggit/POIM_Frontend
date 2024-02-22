@@ -25,7 +25,7 @@ const PO_list = () => {
     })
 
     useEffect(() => {
-        if (query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
+        if(query.filter_by_po_type !== '' || query.filter_by_po_vendor !== '' || query.filter_by_po_status !== '') {
             const queryString = new URLSearchParams({
                 ...query,
                 page: currentPage
