@@ -33,7 +33,6 @@ const purchaseOrderReport = () => {
             });
         } else {
             getPoList(currentPage).then((res) => {
-                console.log(res.data.results.data, 'aaaaaaaaaaaaaaaaaa');
                 if (res?.data?.results?.status) {
                     setPurchaseOrders(res.data.results.data || []);
                 }
@@ -83,7 +82,7 @@ const purchaseOrderReport = () => {
             <div className="wrapper-main">
                 <Sidebar />
                 <div className="inner-wrapper">
-                    <Header heading="reports" />
+                    <Header heading="PO Report" />
                     <div class="bottom-wrapp">
                         <ul class="list-icons text-list-icons">
                             <li class="me-4">
@@ -114,7 +113,6 @@ const purchaseOrderReport = () => {
                                     <div class="date-wrapp me-1"> <label for="">{query.from_date || "From Date"}</label>
                                         <input type="date" class="input-date" placeholder=""
                                             onChange={(event) => {
-                                                console.log(event.target, event)
                                                 const selectedDate = event.target.value;
                                                 setQuery(prevState => ({
                                                     ...prevState,
