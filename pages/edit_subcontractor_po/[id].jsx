@@ -202,7 +202,7 @@ const EditSubContractorPo = () => {
                         <li class="icon-text react-icon justify-content-between">
                         <div className="plus-wraptext d-flex align-items-center">
                                 <PlusOutlined />
-                                <span>Create Purchase Order</span>
+                                <span>Edit Purchase Order</span>
                             </div>
                             {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">

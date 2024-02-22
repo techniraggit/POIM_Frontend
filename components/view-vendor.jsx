@@ -8,11 +8,12 @@ import { base_url } from './constant';
 import withAuth from './PrivateRoute';
 
 
-const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) => {
+const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex,setIsIconClicked }) => {
   const [vendorData, setVenndorData] = useState([])
   const [vendorcontact, setvendorcontact] = useState([])
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsIconClicked(false);
   };
 
   useEffect(() => {

@@ -6,12 +6,13 @@ import { base_url } from './constant';
 import withAuth from './PrivateRoute';
 
 
-const ProjectPopup = ({ project_id }) => {
+const ProjectPopup = ({ project_id, setIsIconClicked }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(true);
     const [projectData, setProjectData] = useState([])
     const handleCloseModal = () => {
         setIsModalOpen(false);
+        setIsIconClicked(false);
     };
     useEffect(() => {
         const fetchRoles = async () => {
@@ -38,7 +39,6 @@ const ProjectPopup = ({ project_id }) => {
                 //  {projectData ? (
 
                 <div className="approve-main">
-                    < div className='main-topapprove '>
 
                     
                     <div className="approve-po">
@@ -99,7 +99,6 @@ const ProjectPopup = ({ project_id }) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             )}

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { base_url } from './constant';
 import withAuth from './PrivateRoute';
 
-const UserPopUp = ({ user_id }) => {
+const UserPopUp = ({ user_id,setIsIconClicked }) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [userData, setUserData] = useState([])
   const [userRoles, setUserRoles] = useState([])
@@ -15,6 +15,7 @@ const UserPopUp = ({ user_id }) => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsIconClicked(false);
   };
 
   useEffect(() => {
