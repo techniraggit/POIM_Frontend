@@ -146,7 +146,7 @@ const PO_list = () => {
 
                                     <Select placeholder=" Type" id="single1"
                                         className="line-select me-2"
-                                        value={query['filter_by_po_type']}
+                                        value={query['filter_by_po_type'] ||  "PO Type"}
                                         onChange={(value) =>
 
                                             setQuery(prevState => ({
@@ -165,7 +165,7 @@ const PO_list = () => {
                                                 ...prevState,
                                                 ['filter_by_po_vendor']: value
                                             }))}
-                                        value={query['filter_by_po_vendor']}
+                                        value={query['filter_by_po_vendor'] || "PO Vendor"}
 
 
                                     >
@@ -185,7 +185,7 @@ const PO_list = () => {
                                                 ...prevState,
                                                 ['filter_by_po_status']: value
                                             }))}
-                                        value={query['filter_by_po_status']}
+                                        value={query['filter_by_po_status'] || "PO Status"}
 
                                     >
                                         <Option value="pending">Pending</Option>

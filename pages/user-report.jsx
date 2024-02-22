@@ -1,4 +1,4 @@
-import { searchUserRoles, userFilterSearch, userList, userReportPdf } from "@/apis/apis/adminApis";
+import { searchUserRoles, userFilterSearch, userList, userReportPdf, userClear } from "@/apis/apis/adminApis";
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import React,{useEffect, useState} from "react";
@@ -62,6 +62,20 @@ const userReport = () => {
 
             }
         })
+    }
+
+    const handleFilterClearButton = () => {
+        setQuery(prevState => ({
+            ...prevState,
+            ['filter_by_role']: '',
+
+        }))
+        userClear().then((res) => {
+            setUsers(res.data.results.data);
+            setCount(res.data.count)
+
+        })
+
     }
     return (
         <>
@@ -131,7 +145,7 @@ const userReport = () => {
                                                 ...prevState,
                                                 ['filter_by_role']: value
                                             }))}
-                                        value={query['filter_by_role']}
+                                        value={query['filter_by_role']|| "Role"}
 
 
                                     >
@@ -145,6 +159,14 @@ const userReport = () => {
                                         )}
 
                                     </Select>
+                                    <button type="submit" className="clear-button ms-3"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handleFilterClearButton()
+                                                }}
+                                            >
+                                                Clear
+                                            </button>
                                     </div>
                                 </div>
                                 <Button type="submit" class="export-btn" onClick={downloadPdf}>Export To XLS</Button>
@@ -161,7 +183,7 @@ const userReport = () => {
                                             <th className="hedaings-tb">Role</th>
                                             <th className="hedaings-tb">Email</th>
                                             <th className="hedaings-tb">Contact No</th>
-                                            <th className="hedaings-tb">Action</th>
+                                            {/* <th className="hedaings-tb">Action</th> */}
                                         </tr>
                                     </thead>
                                     <tbody>

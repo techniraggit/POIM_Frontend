@@ -1,9 +1,10 @@
-import { invoiceList, filterSearch, invoiceReportPdf } from "@/apis/apis/adminApis";
+import { invoiceList, filterSearch, invoiceReportPdf, invoiceClear } from "@/apis/apis/adminApis";
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import { message, Popconfirm, Pagination, Button, Select } from 'antd';
 import React, { useEffect, useState } from "react";
 import { saveAs } from "file-saver";
+import { EyeFilled, DownloadOutlined } from '@ant-design/icons'
 
 const { Option } = Select;
 const invoiceReport = () => {
@@ -58,6 +59,24 @@ const invoiceReport = () => {
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
+
+    const handleFilterClearButton = () => {
+        // router.reload();
+
+        setQuery(prevState => ({
+            ...prevState,
+            ['filter_by_po_status']: '',
+            ['to_date']: "",
+            ['from_date']: "",
+            ['filter_by_po_type']: ""
+        }))
+        invoiceClear().then((res) => {
+            setInvoiceTable(res.data.results.data)
+            setCount(res.data.count)
+
+        })
+
+    }
     return (
         <>
             <div className="wrapper-main">
@@ -127,7 +146,7 @@ const invoiceReport = () => {
                                                     ...prevState,
                                                     ['filter_by_po_type']: value
                                                 }))}
-                                            value={query['filter_by_po_type']}
+                                            value={query['filter_by_po_type'] || "PO Type"}
 
                                         >
                                             <Option value="material">Material PO</Option>
@@ -141,13 +160,21 @@ const invoiceReport = () => {
                                                         ...prevState,
                                                         ['filter_by_po_status']: value
                                                     }))}
-                                                value={query['filter_by_po_status']}
+                                                value={query['filter_by_po_status'] || "PO Status"}
 
                                             >
                                                 <Option value="pending">Pending</Option>
                                                 <Option value="approved">Approved</Option>
                                                 <Option value="rejected">Rejected</Option>
                                             </Select>
+                                            <button type="submit" className="clear-button ms-3"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handleFilterClearButton()
+                                                }}
+                                            >
+                                                Clear
+                                            </button>
 
                                         </div>
                                     </div>
@@ -186,35 +213,17 @@ const invoiceReport = () => {
                                                     <td>{invoice.pm_approval_status}</td>
                                                     <td>{invoice.dm_approval_status}</td>
                                                     <td>{invoice.po_creator_approval_status}</td>
-                                                    <td>
+                                                    {/* <td>
                                                         <div class="icons-td justify-content-between"> <span>Turner Constructions</span>
-                                                            <div><i class="fa-solid fa-eye me-1"></i>
-                                                                <i class="fa-solid fa-download"></i>
+                                                            <div><EyeFilled />
+                                                            <DownloadOutlined />
                                                             </div>
                                                         </div>
-                                                    </td>
+                                                    </td> */}
                                                 </tr>
                                             ))}
                                         </tbody>
-                                        {/* <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>#45488</td>
-                                            <td>#45488</td>
-                                            <td>Material</td>
-                                            <td>16 Sep 2023</td>
-                                            <td>$456</td>
-                                            <td>Mark</td>
-                                            <td>Approved</td>
-                                            <td>
-                                                <div class="icons-td justify-content-between"> <span>Turner Constructions</span>
-                                                    <div><i class="fa-solid fa-eye me-1"></i>
-                                                        <i class="fa-solid fa-download"></i>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody> */}
+
                                     </table>
                                 ) : (
                                     <p className="no-data-p">No data found.</p>

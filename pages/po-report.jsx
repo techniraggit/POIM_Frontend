@@ -147,7 +147,7 @@ const purchaseOrderReport = () => {
                                                     ...prevState,
                                                     ['filter_by_po_type']: value
                                                 }))}
-                                            value={query['filter_by_po_type']}
+                                            value={query['filter_by_po_type'] || "PO Type"}
 
                                         >
                                             <Option value="material">Material PO</Option>
@@ -161,7 +161,7 @@ const purchaseOrderReport = () => {
                                                         ...prevState,
                                                         ['filter_by_po_status']: value
                                                     }))}
-                                                value={query['filter_by_po_status']}
+                                                value={query['filter_by_po_status'] || "PO Status"}
 
                                             >
                                                 <Option value="pending">Pending</Option>
@@ -216,13 +216,13 @@ const purchaseOrderReport = () => {
                                                     <td>{purchase.created_by.first_name} {purchase.created_by.last_name}</td>
                                                     <td>{purchase.status}</td>
                                                     <td>{purchase.vendor_contact?.name}</td>
-                                                    <td>
+                                                    {/* <td>
                                                         <div class="icons-td justify-content-between"> <span>Turner Constructions</span>
                                                             <div><i class="fa-solid fa-eye me-1"></i>
                                                                 <i class="fa-solid fa-download"></i>
                                                             </div>
                                                         </div>
-                                                    </td>
+                                                    </td> */}
 
                                                 </tr>
                                             })
