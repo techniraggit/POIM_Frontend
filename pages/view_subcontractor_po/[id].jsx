@@ -178,6 +178,7 @@ const ViewSubContractorPo = () => {
     const handleIconClick = () => {
         setStatusModalOpen(true);
     };
+    form
     return (
         <>
             <div className="wrapper-main">
@@ -193,11 +194,10 @@ const ViewSubContractorPo = () => {
                                     <span>View Purchase Order</span>
                                 </div>
                                 {
-                                        formData.status === 'approved' && <button className="po-status-btn" onClick={() => handleIconClick()}>
-                                            PO Status
-                                        </button>
-                                    }
-
+                                    formData.status === 'approved' && formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                        PO Status
+                                    </button>
+                                }
                                 {
                                     formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
                                         <div className="mt-0 apr-rej-li d-flex">

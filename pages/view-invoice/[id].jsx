@@ -13,7 +13,7 @@ import ChangeStatus from "@/components/PoChangeStatus";
 import useInvoice from "@/hooks/useInvoice";
 import Roles from "@/components/Roles";
 import PoStatus from "@/components/PoStatus";
-// import { saveAs } from "file-saver";
+import { saveAs } from "file-saver";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -23,6 +23,7 @@ const ViewInvoice = () => {
     const [invoice, setInvoice] = useState({});
     const [po, setPo] = useState('');
     const [responseData, setResponseData] = useState([]);
+    const [statusData, setStatusData] = useState();
     const { approval_enabled } = useInvoice(invoice);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [refetch, setRefetch] = useState(true);
@@ -97,7 +98,7 @@ const ViewInvoice = () => {
         const response = changeInvoiceStatus({
             invoice_id: id,
             status: action,
-            approval_notes: form.approval_notes
+            approval_notes: form?.approval_notes
         });
         response.then((res) => {
             if (res?.data?.status) {
@@ -107,7 +108,13 @@ const ViewInvoice = () => {
             }
         })
     }
-    const handleIconClick = () => {
+
+    const handleIconClick = (action) => {
+        if(action === 'invoice') {
+            setStatusData([...invoice.tu_chal_main_aya])
+        } else if(action === 'po') {
+            setStatusData([...invoice?.purchase_order?.co_approved_amount])
+        }
         setStatusModalOpen(true);
     };
 
@@ -126,15 +133,14 @@ const ViewInvoice = () => {
                                 </div>
                                 <div>
                                     {
-                                        !approval_enabled && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                        !approval_enabled && invoice?.purchase_order?.co_approved_amount.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick('po')}>
                                             PO Status
                                         </button>
                                     }
-                                    {/* {
-                                        <button className="po-status-btn" >
-                                            Invoice Status
-                                        </button>
-                                    } */}
+
+                                    {!approval_enabled && invoice.tu_chal_main_aya?.length > 0 && <button onClick={() => handleIconClick('invoice')} className="po-status-btn" >
+                                        Invoice Status
+                                    </button>}
 
                                     {
                                         approval_enabled &&
@@ -270,7 +276,7 @@ const ViewInvoice = () => {
             </div>
             {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
             {isStatusModalOpen && <PoStatus 
-            data={[]} 
+            data={statusData || []}
             setStatusModalOpen={setStatusModalOpen} />}
         </>
     )

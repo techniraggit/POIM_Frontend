@@ -22,6 +22,7 @@ const User_list = ({ base_url }) => {
     const [query, setQuery] = useState({
         filter_by_role: "",
     })
+    const [isIconClicked, setIsIconClicked] = useState(false);
 
 
     useEffect(() => {
@@ -85,17 +86,22 @@ const User_list = ({ base_url }) => {
         setInputValue(event.target.value);
     };
 
+    const applyFilters = (data) => {
+        const queryString = new URLSearchParams({...data}).toString();
+        const response = userFilterSearch(queryString);
+        response.then((res) => {
+            setCount(res.data.count)
+            setUsers(res.data.results.data);
+            setUsers(res.data.results.search_query_data)
+        })
+    }
+    
     const handleButtonClick = async (event) => {
         event.preventDefault();
-        userSearch(inputValue).then((response) => {
-            setUsers(response.data.results.search_query_data)
-        })
-    };
-    const handleClearButtonClick = () => {
-        setInputValue('');
-        userClear().then((res) => {
-            setUsers(res.data.results.data);
-        })
+        applyFilters({
+            ...query,
+            query: inputValue
+        });
     };
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
@@ -107,32 +113,41 @@ const User_list = ({ base_url }) => {
         })
     }, [])
 
-    const handleFilterClearButton = () => {
-        setQuery(prevState => ({
-            ...prevState,
-            ['filter_by_role']: '',
-
-        }))
-        userClear().then((res) => {
-            setUsers(res.data.results.data);
-            setCount(res.data.count)
-
-        })
-
+    const handleFilterClearButton = (action) => {
+        if(action === 'search') {
+            setInputValue('');
+            applyFilters({
+                ...query,
+                query: ''
+            });
+        } else {
+            setQuery(prevState => ({
+                ...prevState,
+                ['filter_by_role']: '',
+            }))
+            applyFilters({
+                query: inputValue,
+                ...query
+            });
+        }
     }
 
     useEffect(() => {
         if (query) {
-            const queryString = new URLSearchParams(query).toString();
-            const response = userFilterSearch(queryString);
-            response.then((res) => {
-                setCount(res.data.count)
-                setUsers(res.data.results.data);
-                setUsers(res.data.results.search_query_data)
-
-            })
+            applyFilters({
+                inputValue,
+                ...query
+            });
         }
     }, [query])
+
+
+    useEffect(() => {
+        if(isIconClicked) {
+            document.querySelector(".wrapper-main").classList.add("kavita");
+            setIsIconClicked(false); // Reset the state
+        }
+    }, [isIconClicked]);
 
     return (
         <>
@@ -164,11 +179,16 @@ const User_list = ({ base_url }) => {
                                             value={inputValue} onChange={handleInputChange}
                                         />
                                         <button className="vendor-search-butt"
-                                            onClick={handleButtonClick}
+                                            onClick={(event) => {
+                                                handleButtonClick(event);
+                                            }}
                                         >Search</button>
                                     </form>
                                     <button type="submit" className="clear-button ms-3"
-                                        onClick={handleClearButtonClick}
+                                        // onClick={handleClearButtonClick}
+                                        onClick={() => {
+                                            handleFilterClearButton('search');
+                                        }}
                                     >
                                         Clear
                                     </button>
@@ -181,7 +201,7 @@ const User_list = ({ base_url }) => {
                                                 ...prevState,
                                                 ['filter_by_role']: value
                                             }))}
-                                        value={query['filter_by_role']}
+                                        value={query['filter_by_role'] || "Role"}
                                     >
                                         {roleName.map((entry) =>
 
@@ -194,42 +214,15 @@ const User_list = ({ base_url }) => {
 
                                     </Select>
                                     <button type="submit" className="clear-button ms-3"
-                                        onClick={handleFilterClearButton}
+                                        onClick={() => {
+                                            handleFilterClearButton('filters')
+                                        }}
                                     >
                                         Clear
                                     </button>
                                 </div>
-
-
-
-                                {/* -------------------------- */}
-
-                                {/* <Select className="line-select me-2" placeholder="PO Vendor" >
-                                        <Option>Invoice</Option>
-                                        <Option>Invoice</Option>
-                                    </Select>
-                                    <Select className="line-select" placeholder="PO Status" >
-                                        <Option>Invoice</Option>
-                                        <Option>Invoice</Option>
-                                    </Select> */}
-
-                                {/* <Button className="click-btn"><span>Type</span><i className="fa-solid fa-chevron-down"></i></Button>
-                                    <Button className="click-btn"><span>PO Vendor</span><i className="fa-solid fa-chevron-down"></i></Button>
-                                    <Button className="click-btn"><span>PO Status</span><i className="fa-solid fa-chevron-down"></i></Button> */}
-                                {/* </div> */}
                             </div>
                         </div>
-                        {/* <div className="wrapin-form add-clear-wrap">
-                            <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Users"
-                                    value={inputValue} onChange={handleInputChange}
-                                />
-                                <button className="vendor-search-butt"
-                                    onClick={handleButtonClick}
-                                >Search</button>
-                            </form>
-                            <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
-                        </div> */}
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
                                 <table id="user-list-table" className="table-hover">

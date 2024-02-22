@@ -194,14 +194,9 @@ const ViewRentalPO = () => {
                                     <PlusOutlined />
                                     <span>View Purcase Order</span>
                                 </div>
-
-
                                 <div>
-                                    <button className="po-amendments-btn me-3">
-                                        View All Amendments
-                                    </button>
                                     {
-                                        formData.status === 'approved' && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                        formData.status === 'approved' && formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
                                             PO Status
                                         </button>
                                     }

@@ -46,13 +46,13 @@ const Dashboard = () => {
                         </li> */}
                         <Roles action='add_vendor'>
                             <li className="me-4 me-md-3">
-                                <Link href="#"> <i className="fa-solid fa-check mb-3"></i></Link>
+                                <Link href="create-vendor"> <i className="fa-solid fa-check mb-3"></i></Link>
                                 <span>Create Vendors</span>
                             </li>
                             </Roles>
                             <Roles action="add_project">
                             <li className="me-4 me-md-3">
-                                <Link href="#"><i className="fa-solid fa-check mb-3"></i></Link>
+                                <Link href="create-project"><i className="fa-solid fa-check mb-3"></i></Link>
                                 <span>Create Project</span>
                             </li>
                             </Roles>
