@@ -152,8 +152,6 @@ const EditInvoice = () => {
         })
     }
 
-
-
     return (
         <>
             <div class="wrapper-main">
@@ -161,7 +159,6 @@ const EditInvoice = () => {
                 <div className="inner-wrapper">
                     <Header heading='Invoice' />
                     <div class="bottom-wrapp-purchase">
-
                         <div class="wrapp-in-voice">
                             <ul class="bg-colored-ul mb-4 d-block">
                                 <li class="bg-li-invoice justify-content-between d-flex align-items-center">
@@ -169,14 +166,11 @@ const EditInvoice = () => {
                                         <PlusOutlined className="me-3" />
                                         <span>Edit Invoice</span>
                                     </div>
-                                    {/* {show ?(<> */}
-
                                     {
                                         approval_enabled &&
                                         <Roles action="approve_invoice">
                                             <div className="mt-0 apr-rej-li d-flex">
                                                 <Button type="primary" className="approved-btn me-3" onClick={(event) => {
-                                                    // handleStatusChange(event, 'approved')
                                                     setIsModalOpen(true)
                                                 }}>Approve</Button>
                                                 <Button type="primary" danger className="reject-btn" onClick={(event) => {
@@ -185,9 +179,6 @@ const EditInvoice = () => {
                                             </div>
                                         </Roles>
                                     }
-                                    {/* </>):null} */}
-
-
                                 </li>
                                 {/* {
                                     approval_enabled && approvalStatus === '' && // Only show when approval not yet given
