@@ -31,7 +31,7 @@ const Invoice = () => {
     })
 
     useEffect(() => {
-        if(query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
+        if (query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
             const queryString = new URLSearchParams({
                 ...query,
                 page: currentPage
@@ -46,8 +46,8 @@ const Invoice = () => {
             invoiceList(currentPage).then((res) => {
                 if (res?.data?.results.status) {
                     setInvoiceTable(res.data.results.data || [])
-                    // setInvoice(res.data.results.total_invoice)
-                    // setPendingInvoice(res.data.results.total_pending_invoice)
+                    setInvoice(res.data.results.total_invoice)
+                    setPendingInvoice(res.data.results.total_pending_invoice)
                 }
                 setCount(res.data.count)
             })
@@ -82,24 +82,24 @@ const Invoice = () => {
     const handleClearButtonClick = () => {
         setInputValue('');
         invoiceClear().then((res) => {
-          
+
             setInvoiceTable(res.data.results.data)
         })
     };
 
-    const handleFilterClearButton=()=>{
+    const handleFilterClearButton = () => {
         // router.reload();
 
-            setQuery(prevState => ({
-                ...prevState,
-                ['filter_by_po_status']: '',
-                ['filter_by_po_vendor']:"",
-                ['filter_by_po_type']:""
-            }))
+        setQuery(prevState => ({
+            ...prevState,
+            ['filter_by_po_status']: '',
+            ['filter_by_po_vendor']: "",
+            ['filter_by_po_type']: ""
+        }))
         invoiceClear().then((res) => {
             setInvoiceTable(res.data.results.data)
             setCount(res.data.count)
-        
+
         })
 
     }
