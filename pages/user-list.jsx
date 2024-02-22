@@ -79,12 +79,12 @@ const User_list = ({ base_url }) => {
             setUsers(response.data.results.search_query_data)
         })
     };
-    const handleClearButtonClick = () => {
-        setInputValue('');
-        userClear().then((res) => {
-            setUsers(res.data.results.data);
-        })
-    };
+    // const handleClearButtonClick = () => {
+    //     setInputValue('');
+    //     userClear().then((res) => {
+    //         setUsers(res.data.results.data);
+    //     })
+    // };
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
@@ -96,6 +96,7 @@ const User_list = ({ base_url }) => {
     },[] )
 
     const handleFilterClearButton = () => {
+        setInputValue('');
         setQuery(prevState => ({
             ...prevState,
             ['filter_by_role']: '',
@@ -156,20 +157,21 @@ const User_list = ({ base_url }) => {
                                         >Search</button>
                                     </form>
                                     <button type="submit" className="clear-button ms-3"
-                                        onClick={handleClearButtonClick}
+                                        // onClick={handleClearButtonClick}
+                                        onClick={handleFilterClearButton}
                                     >
                                         Clear
                                     </button>
                                     </div>
                                     <div className="purchase-filter invoice-filter ms-0">
                                     <span className="filter-span">Filter :</span>
-                                    <Select className="line-select me-2" placeholder="PO Vendor"
+                                    <Select className="line-select me-2" placeholder="role"
                                         onChange={(value) =>
                                             setQuery(prevState => ({
                                                 ...prevState,
                                                 ['filter_by_role']: value
                                             }))}
-                                        value={query['filter_by_role']}
+                                        value={query['filter_by_role'] || "role"}
 
 
                                     >
