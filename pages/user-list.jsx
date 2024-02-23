@@ -146,14 +146,6 @@ const User_list = ({ base_url }) => {
         }
     }, [query])
 
-
-    useEffect(() => {
-        if(isIconClicked) {
-            document.querySelector(".wrapper-main").classList.add("kavita");
-            setIsIconClicked(false); // Reset the state
-        }
-    }, [isIconClicked]);
-
     return (
         <>
             <div className="wrapper-main">
