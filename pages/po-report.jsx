@@ -137,7 +137,22 @@ const purchaseOrderReport = () => {
                                             value={query['to_date']}
                                         />
                                     </div>
-                                    <div class="wrapper-selected me-0 d-flex">
+                                    {/* <div class="wrapper-selected me-0 d-flex"> */}
+                                        {/* <Select placeholder=" Type" id="po1"
+                                            className="line-select me-2"
+                                            onChange={(value) =>
+                                                setQuery(prevState => ({
+                                                    ...prevState,
+                                                    ['filter_by_po_type']: value
+                                                }))}
+                                            value={query['filter_by_po_type'] || "PO Type"}
+
+                                        >
+                                            <Option value="material">Material PO</Option>
+                                            <Option value="rental">Rental PO</Option>
+                                            <Option value="subcontractor">Sub Contractor PO</Option>
+                                        </Select> */}
+                                        <div class="one-select ms-2">
                                         <Select placeholder=" Type" id="po1"
                                             className="line-select me-2"
                                             onChange={(value) =>
@@ -152,7 +167,6 @@ const purchaseOrderReport = () => {
                                             <Option value="rental">Rental PO</Option>
                                             <Option value="subcontractor">Sub Contractor PO</Option>
                                         </Select>
-                                        <div class="one-select ms-2">
                                             <Select className="line-select me-2" placeholder="PO Status"
                                                 onChange={(value) =>
                                                     setQuery(prevState => ({
@@ -176,7 +190,7 @@ const purchaseOrderReport = () => {
                                             </button>
 
                                         </div>
-                                    </div>
+                                    {/* </div> */}
                                 </div>
                                 <Button type="submit" class="export-btn" onClick={downloadPdf}>Export To XLS</Button>
                             </form>

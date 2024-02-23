@@ -3936,7 +3936,10 @@ ul.reports-dropdown li a span {
 ul.reports-dropdown li:hover a span {
     color: #e91d26;
 }
+
 /* 22feb */
+
+
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
@@ -3953,9 +3956,17 @@ ul.reports-dropdown li:hover a span {
     }
 }
 
-@media (max-width: 1399px) {}
+@media (max-width: 1399px) {
 
+}
+ul.list-icons.text-list-icons  li  span:last-child {
+    font-size: 14px;
+}
+ul.list-icons.text-list-icons li {
+    padding: 10px 10px;
+}
 @media (max-width: 1299px) {
+
 
     li#report-li>a {
         padding: 10px 20px;
