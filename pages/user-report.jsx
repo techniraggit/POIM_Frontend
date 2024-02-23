@@ -3,7 +3,7 @@ import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import React,{useEffect, useState} from "react";
 import { message, Popconfirm, Pagination, Button, Select } from 'antd';
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 
 const userReport = () => {
     const [roleName, setRoleName] = useState([]);
@@ -138,7 +138,7 @@ const userReport = () => {
                                         value={query['to_date']}
                                         />
                                     </div>
-                                    <div class="wrapper-selected me-0 d-flex">
+                                    <div class="wrapper-selected me-0 d-flex ms-2">
                                     <Select className="line-select me-2" placeholder="PO Vendor"
                                         onChange={(value) =>
                                             setQuery(prevState => ({

@@ -138,7 +138,9 @@ const invoiceReport = () => {
                                             value={query['to_date']}
                                         />
                                     </div>
-                                    <div class="wrapper-selected me-0 d-flex">
+                                    {/* <div class="wrapper-selected me-0 d-flex"> */}
+                                      
+                                        <div class="one-select ms-2">
                                         <Select placeholder=" Type" id="po1"
                                             className="line-select me-2"
                                             onChange={(value) =>
@@ -153,7 +155,6 @@ const invoiceReport = () => {
                                             <Option value="rental">Rental PO</Option>
                                             <Option value="subcontractor">Sub Contractor PO</Option>
                                         </Select>
-                                        <div class="one-select ms-2">
                                             <Select className="line-select me-2" placeholder="PO Status"
                                                 onChange={(value) =>
                                                     setQuery(prevState => ({
@@ -177,7 +178,7 @@ const invoiceReport = () => {
                                             </button>
 
                                         </div>
-                                    </div>
+                                    {/* </div> */}
                                 </div>
                                 <Button type="submit" class="export-btn" onClick={downloadPdf}>Export To XLS</Button>
                             </form>
