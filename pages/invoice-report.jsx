@@ -3,7 +3,7 @@ import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import { message, Popconfirm, Pagination, Button, Select } from 'antd';
 import React, { useEffect, useState } from "react";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 import { EyeFilled, DownloadOutlined } from '@ant-design/icons'
 
 const { Option } = Select;
@@ -267,4 +267,4 @@ const invoiceReport = () => {
         </>
     )
 }
-export default invoiceReport
+export default invoiceReport;
