@@ -22,7 +22,7 @@ const User_list = ({ base_url }) => {
     const [query, setQuery] = useState({
         filter_by_role: "",
     })
-    const [isIconClicked, setIsIconClicked] = useState(false);
+    // const [isIconClicked, setIsIconClicked] = useState(false);
 
 
     useEffect(() => {
@@ -90,7 +90,7 @@ const User_list = ({ base_url }) => {
 
 
 
-    
+
     const applyFilters = (data) => {
         const queryString = new URLSearchParams({...data}).toString();
         const response = userFilterSearch(queryString);
