@@ -1,10 +1,10 @@
 import { invoiceList, filterSearch, invoiceReportPdf, invoiceClear } from "@/apis/apis/adminApis";
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
-import { message, Popconfirm, Pagination, Button, Select } from 'antd';
+import { Pagination, Button, Select } from 'antd';
 import React, { useEffect, useState } from "react";
-// import { saveAs } from "file-saver";
-import { EyeFilled, DownloadOutlined } from '@ant-design/icons'
+import { saveAs } from "file-saver";
+import ReportHeader from "@/components/ReportHeader";
 
 const { Option } = Select;
 const invoiceReport = () => {
@@ -18,7 +18,6 @@ const invoiceReport = () => {
         filter_by_po_status: ""
     })
 
-
     useEffect(() => {
         if (query.filter_by_po_type || query.filter_by_po_status || query.from_date || query.to_date) {
             const queryString = new URLSearchParams({
@@ -28,12 +27,10 @@ const invoiceReport = () => {
             const response = filterSearch(queryString);
             response.then((res) => {
                 setCount(res.data.count)
-                setInvoiceTable(res.data.results.data)
                 setInvoiceTable(res.data.results.search_invoice_data)
             })
         } else {
             invoiceList(currentPage).then((res) => {
-                console.log(res, 'sssssppppppppppppppp');
                 if (res?.data?.results.status) {
                     setInvoiceTable(res.data.results.data || [])
                 }
@@ -61,8 +58,6 @@ const invoiceReport = () => {
     };
 
     const handleFilterClearButton = () => {
-        // router.reload();
-
         setQuery(prevState => ({
             ...prevState,
             ['filter_by_po_status']: '',
@@ -73,10 +68,9 @@ const invoiceReport = () => {
         invoiceClear().then((res) => {
             setInvoiceTable(res.data.results.data)
             setCount(res.data.count)
-
         })
-
     }
+
     return (
         <>
             <div className="wrapper-main">
@@ -84,28 +78,7 @@ const invoiceReport = () => {
                 <div className="inner-wrapper">
                     <Header heading="Invoice Report" />
                     <div class="bottom-wrapp">
-                        <ul class="list-icons text-list-icons">
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Users</span>
-                            </li>
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Vendors</span>
-                            </li>
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Customers</span>
-                            </li>
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total PO</span>
-                            </li>
-                            <li>
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Invoices</span>
-                            </li>
-                        </ul>
+                        <ReportHeader />
                         <div class="filter-po-report">
                             <form action="#" class="poreport-form">
                                 <div class="firstly-wrap">

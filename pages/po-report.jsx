@@ -3,7 +3,8 @@ import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import React, { useEffect, useState } from "react";
 import { message, Popconfirm, Pagination, Button, Select } from 'antd';
-// import { saveAs } from "file-saver";
+import ReportHeader from "@/components/ReportHeader";
+import { saveAs } from "file-saver";
 
 const { Option } = Select;
 const purchaseOrderReport = () => {
@@ -40,16 +41,17 @@ const purchaseOrderReport = () => {
             })
         }
     }, [currentPage, query.filter_by_po_type, query.filter_by_po_status, query.from_date, query.to_date]);
+
     const rows = purchaseOrders?.filter((order) => {
         return order.po_type.toLowerCase().includes(search.toLowerCase()) ||
             order.vendor_contact.name.toLowerCase().includes(search.toLowerCase())
     }) || [];
+
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
 
     const downloadPdf = () => {
-
         const queryString = new URLSearchParams({
             ...query,
             page: currentPage
@@ -58,7 +60,7 @@ const purchaseOrderReport = () => {
         response.then((res) => {
             if (res.data) {
                 const fileName = `report.xlsx`;
-                saveAs(res.data, fileName)
+                saveAs(res.data, fileName);
             }
         })
     }
@@ -77,6 +79,7 @@ const purchaseOrderReport = () => {
             setCount(res.data.count)
         })
     }
+
     return (
         <>
             <div className="wrapper-main">
@@ -84,28 +87,7 @@ const purchaseOrderReport = () => {
                 <div className="inner-wrapper">
                     <Header heading="PO Report" />
                     <div class="bottom-wrapp">
-                        <ul class="list-icons text-list-icons">
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Users</span>
-                            </li>
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Vendors</span>
-                            </li>
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Customers</span>
-                            </li>
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total PO</span>
-                            </li>
-                            <li>
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Invoices</span>
-                            </li>
-                        </ul>
+                        <ReportHeader />
                         <div class="filter-po-report">
                             <form action="#" class="poreport-form">
                                 <div class="firstly-wrap">

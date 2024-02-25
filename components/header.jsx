@@ -3,7 +3,7 @@ import '../styles/style.css'
 import Link from "next/link";
 import { useGlobalContext } from "@/app/Context/UserContext";
 import Notification from "@/pages/notification";
-import { getNotificationCount } from "@/apis/apis/adminApis";
+import { getCount } from "@/apis/apis/adminApis";
 
 
 const Header = ({ heading }) => {
@@ -23,11 +23,10 @@ const Header = ({ heading }) => {
 
 useEffect(()=>{
   async function getNotification() {
-    const response= await getNotificationCount();
+    const response= await getCount();
 
     if(response.status==200){
       setFalseCount(response.data.unread_notification_count)
-  
     }
     else{
       console.log("something is wrong");

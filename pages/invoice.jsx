@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/router';
-
 import '../styles/style.css';
 import { EyeFilled, EditFilled } from '@ant-design/icons'
 import { Button, Select, Pagination } from 'antd';
@@ -10,7 +8,6 @@ import { PlusOutlined } from '@ant-design/icons'
 import { fetchVendorContact, filterSearch, invoiceList } from "@/apis/apis/adminApis";
 import Roles from "@/components/Roles";
 import Header from "@/components/header";
-import { invoiceClear, invoiceSearch } from "@/apis/apis/adminApis";
 
 const { Option } = Select;
 
@@ -22,7 +19,6 @@ const Invoice = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
     const [companyName, setCompanyName] = useState([]);
-    const router = useRouter();
 
     const [query, setQuery] = useState({
         filter_by_po_type: "",
@@ -46,7 +42,6 @@ const Invoice = () => {
     };
 
     const handleButtonClick = async (event) => {
-
         event.preventDefault();
         applyFilters({
             ...query,
@@ -78,29 +73,33 @@ const Invoice = () => {
     }
 
     useEffect(() => {
-        if (query) {
+        if (query.filter_by_po_type || query.filter_by_po_vendor || query.filter_by_po_status) {
             applyFilters({
                 inputValue,
                 ...query
             });
+        } else {
+            invoiceList(currentPage).then((res) => {
+                if (res?.data?.results.status) {
+                    setInvoiceTable(res.data.results.data || [])
+                    setInvoice(res.data.results.total_invoice)
+                    setPendingInvoice(res.data.results.total_pending_invoice)
+                }
+                setCount(res.data.count)
+            })
         }
-    }, [query])
-
-   
+    }, [currentPage, query.filter_by_po_type, query.filter_by_po_vendor, query.filter_by_po_status]);
 
     useEffect(() => {
-
         const response = fetchVendorContact();
         response.then((res) => {
             setCompanyName([...res.data.vendors])
         })
-
     }, [])
 
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
-
 
     return (
         <>
@@ -121,7 +120,6 @@ const Invoice = () => {
                             <li className="me-4">
                                 <span className="text-size mb-3">{pendingInvoice}</span>
 
-                                {/* <i className="fa-solid fa-plus mb-3 mt-0"></i> */}
                                 <span>Pending Invoice</span>
                             </li>
                             <li className="me-4">
@@ -137,7 +135,6 @@ const Invoice = () => {
                                             value={inputValue} onChange={handleInputChange}
                                         />
                                         <button className="vendor-search-butt"
-                                            // onClick={handleButtonClick}
                                             onClick={(event) => {
                                                 handleButtonClick(event);
                                             }}
@@ -258,53 +255,6 @@ const Invoice = () => {
                                     <p className="no-data-p">No data found.</p>
                                 )}
                             </div>
-                            {/* <div className="inner-table" id="inner-purchase">
-                                <table id="" className="table-hover">
-                                    <thead>
-                                        <tr id="header-row">
-                                            <th className="hedaings-tb">S. No</th>
-                                            <th className="hedaings-tb">PO No.</th>
-                                            <th className="hedaings-tb">Created By</th>
-                                            <th className="hedaings-tb">PO Amount</th>
-                                            <th className="hedaings-tb td-color">PO Vendor</th>
-                                            <th className="hedaings-tb">PO Status</th>
-                                            <th className="hedaings-tb">PM</th>
-                                            <th className="hedaings-tb">DM/Admin</th>
-                                            <th className="hedaings-tb">Po Creator</th>
-                                            <th className="hedaings-tb">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {Array.isArray(invoiceTable) &&
-                                            invoiceTable.map((invoice, index) => (
-                                                <tr key={index}>
-                                                    <td>{calculateStartingSerialNumber() + index}</td>
-                                                    <td>{invoice.purchase_order.po_number}</td>
-                                                    <td>{invoice.purchase_order.created_by.first_name} {invoice.purchase_order.created_by.last_name}</td>
-                                                    <td>{invoice.purchase_order.total_amount}</td>
-                                                    <td>{invoice.purchase_order.vendor_contact.name}</td>
-                                                    <td>{invoice.purchase_order.status}</td>
-
-                                                    <td>{invoice.pm_approval_status}</td>
-
-                                                    <td>{invoice.dm_approval_status}</td>
-                                                    <td>{invoice.po_creator_approval_status}</td>
-                                                    <td>
-                                                        <Link href={`/view-invoice/${invoice.invoice_id}`} className="me-1"><EyeFilled /></Link>
-                                                        {
-                                                            <Roles action="edit_invoice">
-                                                                <Link href={`/edit-invoice/${invoice.invoice_id}`} className="me-1"><EditFilled /></Link>
-                                                            </Roles>
-                                                        }
-                                                    </td>
-
-                                                </tr>
-                                            )
-                                            )}
-                                    </tbody>
-                                </table>
-
-                            </div> */}
                         </div>
                         <div className="pagination-container">
                             <Pagination
@@ -329,18 +279,14 @@ const Invoice = () => {
                                         Next
                                     </Button>
                                 }
-
                                 onShowSizeChange={() => setCurrentPage(+1)}
                                 total={count}
-                                pageSize={10} // Number of items per page
-
+                                pageSize={10}
                             />
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </>
     )
 

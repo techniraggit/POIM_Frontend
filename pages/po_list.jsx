@@ -9,7 +9,6 @@ import { clearPoList, deletePO, filterSearchPo, getPoList, poSearch, fetchVendor
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
 
-
 const { Option } = Select;
 const PO_list = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
@@ -22,30 +21,24 @@ const PO_list = () => {
         filter_by_po_type: "",
         filter_by_po_vendor: "",
         filter_by_po_status: ""
-    })
+    });
 
-    // useEffect(() => {
-    //     if (query.filter_by_po_status || query.filter_by_po_vendor || query.filter_by_po_status) {
-    //         const queryString = new URLSearchParams({
-    //             ...query,
-    //             page: currentPage
-    //         }).toString();
-    //         const response = filterSearchPo(queryString);
-    //         response.then((res) => {
-    //             setCount(res.data.count)
-    //             setPurchaseOrders(res.data.results.data);
-    //             setPurchaseOrders(res.data.results.search_query_data)
-    //         });
-    //     } else {
-    //         getPoList(currentPage).then((res) => {
-    //             if (res?.data?.results?.status) {
-    //                 setPurchaseOrders(res.data.results.data || []);
-    //             }
-    //             setCount(res.data.count)
-    //         })
-    //     }
-    // }, [currentPage, query.filter_by_po_type, query.filter_by_po_vendor, query.filter_by_po_status]);
-
+    useEffect(() => {
+        if (query.filter_by_po_type || query.filter_by_po_vendor || query.filter_by_po_status) {
+            applyFilters({
+                inputValue,
+                ...query,
+                page: currentPage
+            });
+        } else {
+            getPoList(currentPage).then((res) => {
+                if (res?.data?.results?.status) {
+                    setPurchaseOrders(res.data.results.data || []);
+                }
+                setCount(res.data.count)
+            })
+        }
+    }, [currentPage, query.filter_by_po_type, query.filter_by_po_vendor, query.filter_by_po_status]);
 
     const applyFilters = (data) => {
         const queryString = new URLSearchParams({ ...data }).toString();
@@ -54,7 +47,6 @@ const PO_list = () => {
             setCount(res.data.count)
             setPurchaseOrders(res.data.results.data);
             setPurchaseOrders(res.data.results.search_query_data)
-
         })
     }
 
@@ -72,21 +64,17 @@ const PO_list = () => {
         return order.po_type.toLowerCase().includes(search.toLowerCase()) ||
             order.vendor_contact.name.toLowerCase().includes(search.toLowerCase())
     }) || [];
+
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
+
     const handleButtonClick = async (event) => {
         event.preventDefault();
         applyFilters({
             ...query,
             query: inputValue
         });
-        // event.preventDefault();
-        // poSearch(inputValue).then((response) => {
-        //     setPurchaseOrders(response.data.results.search_query_data)
-
-        // })
-
     };
 
     const handleFilterClearButton = (action) => {
@@ -110,15 +98,6 @@ const PO_list = () => {
         }
     }
 
-    useEffect(() => {
-        if (query) {
-            applyFilters({
-                inputValue,
-                ...query
-            });
-        }
-    }, [query])
-
     const handleClearButtonClick = () => {
         setInputValue('');
         clearPoList().then((res) => {
@@ -126,6 +105,7 @@ const PO_list = () => {
             setCount(res.data.count)
         })
     };
+
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
@@ -149,7 +129,6 @@ const PO_list = () => {
             setCompanyName([...res.data.vendors])
         })
     }, [])
-    console.log(purchaseOrders,'purchaseOrders');
 
     return (
         <>
@@ -172,7 +151,6 @@ const PO_list = () => {
                                 <span>Total POs</span>
                             </li>
                         </ul>
-                        {/* <div className="wrapin-form"> */}
                         <div className="searchbar-wrapper">
                             <div className="Purchase-form">
                                 <div className="wrapin-form add-clear-wrap mt-0">
@@ -181,14 +159,12 @@ const PO_list = () => {
                                             value={inputValue} onChange={handleInputChange}
                                         />
                                         <button className="vendor-search-butt"
-                                            // onClick={handleButtonClick}
                                             onClick={(event) => {
                                                 handleButtonClick(event);
                                             }}
                                         >Search</button>
                                     </form>
                                     <button type="submit" className="clear-button ms-3"
-                                        // onClick={handleClearButtonClick}
                                         onClick={() => {
                                             handleFilterClearButton('search');
                                         }}
@@ -248,14 +224,12 @@ const PO_list = () => {
                                         <Option value="rejected">Rejected</Option>
                                     </Select>
                                     <button type="submit" className="clear-button ms-3"
-                                        // onClick={handleFilterClearButton}
                                         onClick={() => {
                                             handleFilterClearButton('filters')
                                         }}
                                     >
                                         Clear
                                     </button>
-
                                 </div>
                             </div>
                         </div>
@@ -339,7 +313,6 @@ const PO_list = () => {
                         </div>
                         <div className="pagination-container">
                             <Pagination
-                                // defaultCurrent={2}
                                 current={currentPage}
                                 onChange={setCurrentPage}
                                 showSizeChanger={true}
@@ -363,11 +336,10 @@ const PO_list = () => {
                                 }
                                 onShowSizeChange={() => setCurrentPage(+1)}
                                 total={count}
-                                pageSize={10} // Number of items per page
+                                pageSize={10}
                             />
                         </div>
                     </div>
-
                 </div>
             </div>
         </>
@@ -376,5 +348,3 @@ const PO_list = () => {
 
 export { getServerSideProps };
 export default withAuth(['project manager', 'director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(PO_list)
-
-// export default PO_list;

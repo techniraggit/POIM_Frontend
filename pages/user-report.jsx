@@ -2,8 +2,9 @@ import { searchUserRoles, userFilterSearch, userList, userReportPdf, userClear }
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import React,{useEffect, useState} from "react";
-import { message, Popconfirm, Pagination, Button, Select } from 'antd';
-// import { saveAs } from "file-saver";
+import { Pagination, Button, Select } from 'antd';
+import ReportHeader from "@/components/ReportHeader";
+import { saveAs } from "file-saver";
 
 const userReport = () => {
     const [roleName, setRoleName] = useState([]);
@@ -14,7 +15,6 @@ const userReport = () => {
         filter_by_role: "",
     })
 
-
     useEffect(() => {
         if (query.filter_by_role) {
             const queryString = new URLSearchParams({
@@ -24,12 +24,10 @@ const userReport = () => {
             const response = userFilterSearch(queryString);
             response.then((res) => {
                 setCount(res.data.count)
-                setUsers(res.data.results.data);
                 setUsers(res.data.results.search_query_data)
             })
         } else {
             userList(currentPage).then((res) => {
-                console.log(res, 'sssssppppppppppppppp');
                 if (res?.data?.results.status) {
                     setUsers(res.data.results.data || []);
                 }
@@ -43,11 +41,11 @@ const userReport = () => {
         response.then((res) => {
             setRoleName(res.data.roles)
         })
-    },[] )
+    }, []);
+
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
-
 
     const downloadPdf = () => {
         const queryString = new URLSearchParams({
@@ -59,7 +57,6 @@ const userReport = () => {
             if (res.data) {
                 const fileName = `report.xls`;
                 saveAs(res.data, fileName)
-
             }
         })
     }
@@ -73,10 +70,9 @@ const userReport = () => {
         userClear().then((res) => {
             setUsers(res.data.results.data);
             setCount(res.data.count)
-
         })
-
     }
+
     return (
         <>
             <div className="wrapper-main">
@@ -84,28 +80,7 @@ const userReport = () => {
                 <div className="inner-wrapper">
                     <Header heading="User Report" />
                     <div class="bottom-wrapp">
-                        <ul class="list-icons text-list-icons">
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Users</span>
-                            </li>
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Vendors</span>
-                            </li>
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Customers</span>
-                            </li>
-                            <li class="me-4">
-                                <span class="text-size mb-3">200</span>
-                                <span>Total PO</span>
-                            </li>
-                            <li>
-                                <span class="text-size mb-3">200</span>
-                                <span>Total Invoices</span>
-                            </li>
-                        </ul>
+                        <ReportHeader />
                         <div class="filter-po-report">
                             <form action="#" class="poreport-form">
                                 <div class="firstly-wrap">
@@ -183,7 +158,6 @@ const userReport = () => {
                                             <th className="hedaings-tb">Role</th>
                                             <th className="hedaings-tb">Email</th>
                                             <th className="hedaings-tb">Contact No</th>
-                                            {/* <th className="hedaings-tb">Action</th> */}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -191,7 +165,6 @@ const userReport = () => {
                                             users.map((user, index) => (
                                                 <tr key={index}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>
-                                                    {/* <td>{index + 1}</td> */}
                                                     <td>{user.first_name}</td>
                                                     <td className="td-color">{user.last_name}</td>
                                                     <td>{user.user_role.name}</td>
@@ -207,7 +180,6 @@ const userReport = () => {
                         </div>
                         <div className="pagination-container">
                             <Pagination
-                                // defaultCurrent={2}
                                 current={currentPage}
                                 onChange={setCurrentPage}
                                 showSizeChanger={true}
@@ -231,15 +203,14 @@ const userReport = () => {
                                 }
                                 onShowSizeChange={() => setCurrentPage(+1)}
                                 total={count}
-                                pageSize={10} // Number of items per page
-
+                                pageSize={10}
                             />
                         </div>
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
+
 export default userReport

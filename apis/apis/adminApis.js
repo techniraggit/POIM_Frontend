@@ -100,7 +100,7 @@ export const getPoNumber = () => {
 export const getNotification=()=>{
     return Axios.get(`/api/admin/notifications`)
 }
-export const getNotificationCount=()=>{
+export const getCount=()=>{
     return Axios.get(`/api/helping/get-count`)
 }
 export const toggleButton=(data)=>{
@@ -207,13 +207,19 @@ export const profileSave = (data) => {
 }
 
 export const poReport=(params)=>{
-    return Axios.get(`/api/analytic/purchase_order_reports?${params}`)
+    return Axios.get(`/api/analytic/purchase_order_reports?${params}`, {responseType: 'blob'})
 }
+
 export const invoiceReportPdf = (params) =>{
-    return Axios.get(`/api/analytic/invoice_reports?${params}`)
+    return Axios.get(`/api/analytic/invoice_reports?${params}`, {responseType: 'blob'})
 }
+
 export const userReportPdf = (params) =>{
-    return Axios.get(`/api/analytic/user_reports?${params}`)
+    return Axios.get(`/api/analytic/user_reports?${params}`, {responseType: 'blob'})
+}
+
+export const getSubcontractorReport = (params) => {
+    return Axios.get(`/api/admin/subcontractor-view`);
 }
 // export const getUserData = () => {
 //     return Axios.get('/api/admin/profile');

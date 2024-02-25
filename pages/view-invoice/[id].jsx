@@ -51,7 +51,6 @@ const ViewInvoice = () => {
                     const data = res.data?.data
 
                     setInvoice({ ...data, po_creator: res.data?.po_creator });
-                    // setInvoice({ ...data });
                     form.setFieldValue('amount', data.invoice_amount);
                     form.setFieldValue('note', data.comment);
                     form.setFieldValue('po_type', res.data?.data?.purchase_order?.po_type);
@@ -111,7 +110,7 @@ const ViewInvoice = () => {
 
     const handleIconClick = (action) => {
         if(action === 'invoice') {
-            setStatusData([...invoice.tu_chal_main_aya])
+            setStatusData([...invoice.invoice_approval_note])
         } else if(action === 'po') {
             setStatusData([...invoice?.purchase_order?.co_approved_amount])
         }
@@ -138,7 +137,7 @@ const ViewInvoice = () => {
                                         </button>
                                     }
 
-                                    {!approval_enabled && invoice.tu_chal_main_aya?.length > 0 && <button onClick={() => handleIconClick('invoice')} className="po-status-btn" >
+                                    {!approval_enabled && invoice.invoice_approval_note?.length > 0 && <button onClick={() => handleIconClick('invoice')} className="po-status-btn" >
                                         Invoice Status
                                     </button>}
 
