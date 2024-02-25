@@ -132,7 +132,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
-    console.log(formData, 'fffffffffffffff');
 
     return (
         <>
@@ -405,7 +404,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                         </Form.Item>
                     </div>
                 </div>
-                {formData.shipment_type === 'project related' && (
+                {(formData.shipment_type === 'project related' || (formData.material_details && formData.material_details?.some(details => details.material_for === 'project'))) && (
                     <div className="col-lg-4 col-md-6">
                         <div class="selectwrap columns-select shipment-caret">
                             <Form.Item
