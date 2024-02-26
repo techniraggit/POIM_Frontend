@@ -19,6 +19,8 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 const ViewInvoice = () => {
+    const [isIconClicked, setIsIconClicked] = useState(false);
+    
     const [poNumber, setPoNumber] = useState([]);
     const [invoice, setInvoice] = useState({});
     const [po, setPo] = useState('');
@@ -36,6 +38,13 @@ const ViewInvoice = () => {
 
     };
 
+    useEffect(() => {
+        if (isIconClicked) {
+            document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
+        } else {
+            document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
+        }
+    }, [isIconClicked]);
     useEffect(() => {
         if (id && refetch) {
             const response = fetchPoNumbr()
@@ -115,6 +124,7 @@ const ViewInvoice = () => {
             setStatusData([...invoice?.purchase_order?.co_approved_amount])
         }
         setStatusModalOpen(true);
+        setIsIconClicked(true);
     };
 
     return (
@@ -159,12 +169,7 @@ const ViewInvoice = () => {
                             </li>
                         </ul>
                         <div class="wrapp-in-voice">
-                            {/* <ul class="bg-colored-ul mb-4">
-                                <li class="bg-li-invoice">
-                                    <PlusOutlined className="me-3" />
-                                    <span>View Invoice</span>
-                                </li>
-                            </ul> */}
+                            
                             {
                                 responseData.po_type == 'material' && (
                                     <>
@@ -273,8 +278,9 @@ const ViewInvoice = () => {
                     </div>
                 </div>
             </div>
-            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen}  setIsModalOpen={setIsModalOpen} />}
             {isStatusModalOpen && <PoStatus 
+            setIsIconClicked={setIsIconClicked}
             data={statusData || []}
             setStatusModalOpen={setStatusModalOpen} />}
         </>

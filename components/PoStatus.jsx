@@ -11,15 +11,16 @@ function formatDate(dateString) {
     return `${year}-${month}-${day}`;
 }
 
-function PoStatus({ setStatusModalOpen, data }) {
+function PoStatus({ setStatusModalOpen, data,setIsIconClicked }) {
     const handleCloseModal = () => {
         setStatusModalOpen(false);
+        setIsIconClicked(false)
     };
 
 
     return (
         <>
-            <div className='po-status-main '>
+            <div className='po-status-main-view'>
                 <div className='po-status'>
                     <div className="po-span" >
                         <CloseOutlined onClick={handleCloseModal} />

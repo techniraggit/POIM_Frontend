@@ -4,7 +4,7 @@ import Sidebar from "@/components/sidebar";
 import React,{useEffect, useState} from "react";
 import { Pagination, Button, Select } from 'antd';
 import ReportHeader from "@/components/ReportHeader";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 
 const userReport = () => {
     const [roleName, setRoleName] = useState([]);
@@ -84,7 +84,9 @@ const userReport = () => {
                         <div class="filter-po-report">
                             <form action="#" class="poreport-form">
                                 <div class="firstly-wrap">
-                                    <p class="filt-er mb-0 me-1">Filter</p>
+                                <div className="filter-main">
+
+                                    <p class="filt-er mb-0 me-4">Filter</p>
                                     <div class="date-wrapp me-1"> <label for="">{query.from_date || "From Date"}</label>
                                         <input type="date" class="input-date" placeholder="" 
                                          onChange={(event) => {
@@ -112,6 +114,7 @@ const userReport = () => {
 
                                         value={query['to_date']}
                                         />
+                                    </div>
                                     </div>
                                     <div class="wrapper-selected me-0 d-flex ms-2">
                                     <Select className="line-select me-2" placeholder="PO Vendor"

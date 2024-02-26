@@ -3939,6 +3939,24 @@ ul.reports-dropdown li:hover a span {
 
 /* 22feb */
 
+/* 26 feb  */
+.filter-main {
+    display: flex;
+    align-items: center;
+}
+.po-status-main-view {
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 25px 28px 8px;
+    position: absolute;
+    top: 6%;
+    left: 50%;
+    z-index: 9999;
+    transform: translate(-50%, 0%);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
 
 /* responsive */
 @media (max-width: 1599px) { 
@@ -3957,8 +3975,18 @@ ul.reports-dropdown li:hover a span {
 }
 
 @media (max-width: 1399px) {
+    .poreport-form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        /* align-items: center; */
+        flex-direction: column;
+        align-items: start;
+        gap: 20px;
+    }
 
 }
+
 ul.list-icons.text-list-icons  li  span:last-child {
     font-size: 14px;
 }
@@ -3966,8 +3994,42 @@ ul.list-icons.text-list-icons li {
     padding: 10px 10px;
 }
 @media (max-width: 1299px) {
+    span.text-size {
+        font-size: 19px;
+    }
+    ul.list-icons.text-list-icons  span.text-size {
+        font-size: 19px;
+        /* width: unset; */
+        padding: 7px 7px !important;
+    }
+    .input-date {
+        max-width: 100% !important;
+    }
+    .firstly-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+    }
 
-
+    .firstly-wrap > div {
+        width: 75%;
+    }
+    .date-wrapp {
+        width: 100%;
+    }
+    ul.list-icons li a span {
+        width: 56px;
+        height: 56px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 14px;
+        padding-top: 0;
+    }
+    .ant-select.line-select.ant-select-show-arrow {
+        width: 35%;
+    }
     li#report-li>a {
         padding: 10px 20px;
     }
@@ -4013,16 +4075,14 @@ ul.list-icons.text-list-icons li {
 }
 
 @media (max-width: 1199px) {
-    ul.list-icons li a span {
-        width: 56px;
-        height: 56px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 14px;
-        padding-top: 0;
+    
+    ul.list-icons.text-list-icons  span.text-size {
+        font-size: 14px;
+        border-radius: 10px;
+        padding: 7px 7px;
+        width: 45px !important;
     }
-
+    
     table.table-hover {
         min-width: 910px;
     }
@@ -4105,9 +4165,15 @@ span.text-sizes {
         width: 100%;
         padding: 14px 6px 12px;
     }
+    ul.list-icons.text-list-icons  li  span:last-child {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 992px) {
+
+    
+
     p.no-data-p {
         margin-left: 16px;
     }
@@ -4131,9 +4197,18 @@ span.text-sizes {
     .space-raw {
         margin-top: 20px;
     }
+    ul.list-icons.text-list-icons li {
+        /* padding: 7px 5px !important; */
+        margin-right: 10px !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+
+
+    button.export-btn span {
+        font-size: 14px;
+    }
     .react-icon span:first-child {
         width: 40px;
         height: 40px;
@@ -4365,7 +4440,7 @@ span.text-sizes {
     }
 
     ul.list-icons li>span:first-child {
-        font-size: 17px;
+        font-size: 18px;
         padding: 11px 3px;
     }
 

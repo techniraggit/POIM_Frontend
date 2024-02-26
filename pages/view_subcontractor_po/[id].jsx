@@ -38,6 +38,8 @@ const ViewSubContractorPo = () => {
         quantity: 0,
         material_details: []
     });
+    const [isIconClicked, setIsIconClicked] = useState(false);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [refetch, setRefetch] = useState(true);
     const [isStatusModalOpen,setStatusModalOpen]=useState(false);
@@ -46,6 +48,13 @@ const ViewSubContractorPo = () => {
     const [form] = Form.useForm();
     const { id } = router.query;
 
+    useEffect(() => {
+        if (isIconClicked) {
+            document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
+        } else {
+            document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
+        }
+    }, [isIconClicked]);
     useEffect(() => {
         if (refetch) {
             form.setFieldValue('po_type', 'subcontractor');
@@ -178,6 +187,7 @@ const ViewSubContractorPo = () => {
     }
     const handleIconClick = () => {
         setStatusModalOpen(true);
+        setIsIconClicked(true)
     };
     form
     return (
@@ -322,7 +332,7 @@ const ViewSubContractorPo = () => {
                 </div>
             </div>
             {isModalOpen && <ChangeStatus po_id={id} poType={"subcontractor"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
-            {isStatusModalOpen  && <PoStatus data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
+            {isStatusModalOpen  && <PoStatus data={formData.notes} setIsIconClicked={setIsIconClicked} setStatusModalOpen={setStatusModalOpen} />}
             {/* {isModalOpen && formData.status === 'approved' && <PoStatus setIsModalOpen={setIsModalOpen} />} */}
         </>
     );

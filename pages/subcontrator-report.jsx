@@ -32,7 +32,9 @@ const SubcontractorReport = () => {
                             <div class="filter-po-report">
                                 <form action="#" class="poreport-form">
                                     <div class="firstly-wrap">
-                                        <p class="filt-er mb-0 me-1">Filter</p>
+                                    <div className="filter-main">
+
+                                        <p class="filt-er mb-0 me-4">Filter</p>
                                         <div class="date-wrapp me-1"> <label for="">"From Date"</label>
                                             <input type="date" class="input-date" placeholder=""
                                                 // onChange={(event) => {
@@ -61,6 +63,7 @@ const SubcontractorReport = () => {
                                                 // value={query['to_date']}
                                             />
                                         </div>
+                                        </div>
                                         <div class="wrapper-selected me-0 d-flex">
                                             <Select placeholder=" Type" id="po1"
                                                 className="line-select me-2"
@@ -76,7 +79,7 @@ const SubcontractorReport = () => {
                                                 <Option value="rental">Rental PO</Option>
                                                 <Option value="subcontractor">Sub Contractor PO</Option>
                                             </Select>
-                                            <div class="one-select ms-2">
+                                            {/* <div class="one-select ms-2"> */}
                                                 <Select className="line-select me-2" placeholder="PO Status"
                                                     // onChange={(value) =>
                                                     //     setQuery(prevState => ({
@@ -90,7 +93,8 @@ const SubcontractorReport = () => {
                                                     <Option value="approved">Approved</Option>
                                                     <Option value="rejected">Rejected</Option>
                                                 </Select>
-                                                <button type="submit" className="clear-button ms-3"
+                                            {/* </div> */}
+                                            <button type="submit" className="clear-button ms-3"
                                                     // onClick={(e) => {
                                                     //     e.preventDefault();
                                                     //     handleFilterClearButton()
@@ -98,8 +102,6 @@ const SubcontractorReport = () => {
                                                 >
                                                     Clear
                                                 </button>
-
-                                            </div>
                                         </div>
                                     </div>
                                     <Button type="submit" class="export-btn" 
