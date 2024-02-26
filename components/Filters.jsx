@@ -60,8 +60,8 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
     }
 
   return (
-    <div className="searchbar-wrapper">
-        <div className="Purchase-form">
+    <div className="filter-wrapper">
+        <div className="filter-main">
             <div className="wrapin-form add-clear-wrap mt-0">
                 {search && <input className="vendor-input" placeholder="Search Invoice"
                     value={inputValue} onChange={(event) => setInputValue(event.target.value)}

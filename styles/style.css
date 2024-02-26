@@ -4392,3 +4392,16 @@ span.text-sizes {
         margin-top: 50px;
     }
 }
+
+.wrapin-form.add-clear-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wrapin-form div, .wrapin-form button {
+    margin-top: 10px;
+}
+
+.wrapin-form div {
+    margin-left: 10px
+}
