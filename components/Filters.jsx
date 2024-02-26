@@ -63,7 +63,7 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
     <div className="filter-wrapper">
         <div className="filter-main">
             <div className="wrapin-form add-clear-wrap mt-0">
-                {search && <input className="vendor-input" placeholder="Search Invoice"
+                {search && <input className="vendor-input" placeholder="Search"
                     value={inputValue} onChange={(event) => setInputValue(event.target.value)}
                 />}
                 {fromDate && <div class="date-wrapp me-1"> <label for="">{query.from_date || "From Date"}</label>
