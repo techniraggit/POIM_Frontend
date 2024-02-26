@@ -2768,10 +2768,6 @@ div#space-report {
     top: 46px;
 }
 
-li.report-li:hover .dropdown-reoprt {
-    display: block;
-}
-
 li.report-li li:hover li.report-li li i {
     transform: rotate(360deg);
 }
@@ -3858,10 +3854,6 @@ ul.reports-dropdown {
     margin-top: 2px;
 }
 
-li#report-li:hover ul.reports-dropdown {
-    display: block;
-}
-
 ul.reports-dropdown li a {
     color: #0D0D0D;
     font-size: 13px;
@@ -3930,10 +3922,12 @@ span.db-span img {
     overflow-y: hidden;
     height: 100vh;
 }
+
 ul.reports-dropdown li a span {
    transition: 0.3s ease-in;
 }
-ul.reports-dropdown li:hover a span {
+
+ul.reports-dropdown li:hover a span, ul.reports-dropdown li a span.active {
     color: #e91d26;
 }
 

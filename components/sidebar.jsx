@@ -24,7 +24,6 @@ const Sidebar = () => {
     setActiveMenuItem(router.pathname);
   }, [router.pathname]);
 
-
   return (
     <>
       <div className="aside-dashboard">
@@ -36,9 +35,9 @@ const Sidebar = () => {
             <Link href="/dashboard">
               <span className="db-span">
                 {/* <HomeFilled className='home-sidebar me-4' /> */}
-                <span class="active-img position-relative">
-                  <img src="/images/noun-home-default.svg" alt="" class="me-4 default-img" />
-                  <img src="/images/noun-home.svg" alt="" class="img-colored me-4" />
+                <span className="active-img position-relative">
+                  <img src="/images/noun-home-default.svg" alt="" className="me-4 default-img" />
+                  <img src="/images/noun-home.svg" alt="" className="img-colored me-4" />
                   Dashboard
                 </span>
               </span>
@@ -52,9 +51,9 @@ const Sidebar = () => {
             <li className={activeMenuItem === '/user-list' ? 'active' : ''}>
               <Link href="/user-list">
                 <span className="db-span">
-                  <span class="active-img position-relative">
+                  <span className="active-img position-relative">
                     <img src="/images/user.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/user-svg-active.svg" alt="" class="img-colored me-4" />
+                    <img src="/images/user-svg-active.svg" alt="" className="img-colored me-4" />
                     Users
                   </span>
                 </span>
@@ -67,9 +66,9 @@ const Sidebar = () => {
             <li className={activeMenuItem === '/vendor' ? 'active' : ''}>
               <Link href="/vendor">
                 <span className="db-span">
-                  <span class="active-img position-relative">
+                  <span className="active-img position-relative">
                     <img src="/images/vendors.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/vendors-colored.svg" alt="" class="img-colored me-4" />
+                    <img src="/images/vendors-colored.svg" alt="" className="img-colored me-4" />
                     Vendors
                   </span>
                 </span>
@@ -82,9 +81,9 @@ const Sidebar = () => {
             <li className={activeMenuItem === '/project' ? 'active' : ''}>
               <Link href="/project">
                 <span className="db-span">
-                  <span class="active-img position-relative">
+                  <span className="active-img position-relative">
                     <img src="/images/Projects.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/Projects-colored.svg" alt="" class="img-colored me-4" />
+                    <img src="/images/Projects-colored.svg" alt="" className="img-colored me-4" />
                     Projects
                   </span>
                 </span>
@@ -97,9 +96,9 @@ const Sidebar = () => {
             <li className={activeMenuItem === '/po_list' ? 'active' : ''}>
               <Link href='/po_list'>
                 <span className="db-span">
-                  <span class="active-img position-relative">
+                  <span className="active-img position-relative">
                     <img src="/images/Purchase.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/Purchase-colored.svg" alt="" class="img-colored me-4" />
+                    <img src="/images/Purchase-colored.svg" alt="" className="img-colored me-4" />
                     Purchase Orders
                   </span>
                 </span>
@@ -111,9 +110,9 @@ const Sidebar = () => {
           <li className={activeMenuItem === '/invoice' ? 'active' : ''}>
             <Link href='/invoice'>
               <span className="db-span">
-                <span class="active-img position-relative">
+                <span className="active-img position-relative">
                   <img src="/images/Invoice.svg" alt="" className="me-4 default-img" />
-                  <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
+                  <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4" />
                   Invoice
                 </span>
               </span>
@@ -121,25 +120,24 @@ const Sidebar = () => {
             </Link>
 
           </li>
-          <li className={activeMenuItem === '/report' ? 'active' : ''} id='report-li'>
-            <Link href="#">
+          <li className={activeMenuItem === '/po-report' || activeMenuItem === '/user-report' || activeMenuItem === '/invoice-report' || activeMenuItem === '/subcontrator-report' ? 'active' : ''} id='report-li'>
+            <Link href="/po-report">
               <span className="db-span">
-                <span class="active-img position-relative">
+                <span className="active-img position-relative">
                   <img src="/images/report-icon.svg" alt="" className="me-4 default-img" />
-                  <img src="/images/report-colored.svg" alt="" class="img-colored me-4" />
+                  <img src="/images/report-colored.svg" alt="" className="img-colored me-4" />
                   Reports
-
                 </span>
               </span>
               <RightOutlined className='right-outline' />
             </Link>
-            <ul className="reports-dropdown">
+            <ul className="reports-dropdown" style={{display: activeMenuItem === '/po-report' || activeMenuItem === '/user-report' || activeMenuItem === '/invoice-report' || activeMenuItem === '/subcontrator-report' ? 'block' : 'none'}}>
               <li>
                 <Link href="/po-report">
                   <span className="db-span">
-                    <span class="active-img position-relative">
+                    <span className={`active-img position-relative ${activeMenuItem === '/po-report' ? 'active' : ''}`}>
                       <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
-                      <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
+                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4" />
                       PO Report
                     </span>
                   </span>
@@ -149,9 +147,9 @@ const Sidebar = () => {
               <li>
                 <Link href="/subcontrator-report">
                   <span className="db-span">
-                    <span class="active-img position-relative">
+                    <span className={`active-img position-relative ${activeMenuItem === '/subcontrator-report' ? 'active' : ''}`}>
                       <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
-                      <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
+                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4" />
                       Subcontractor Report
                     </span>
                   </span>
@@ -161,9 +159,9 @@ const Sidebar = () => {
               <li>
                 <Link href="/invoice-report">
                   <span className="db-span">
-                    <span class="active-img position-relative">
+                    <span className={`active-img position-relative ${activeMenuItem === '/invoice-report' ? 'active' : ''}`}>
                       <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
-                      <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
+                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4" />
                       Invoice Report
                     </span>
                   </span>
@@ -171,11 +169,11 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="user-report">
+                <Link href="/user-report">
                   <span className="db-span">
-                    <span class="active-img position-relative">
+                    <span className={`active-img position-relative ${activeMenuItem === '/user-report' ? 'active' : ''}`}>
                       <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
-                      <img src="/images/Invoice-colored.svg" alt="" class="img-colored me-4" />
+                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4" />
                       User Report
                     </span>
                   </span>
@@ -189,9 +187,9 @@ const Sidebar = () => {
             <li className={activeMenuItem === '/settings' ? 'active' : ''}>
               <Link href='settings'>
                 <span className="db-span">
-                  <span class="active-img position-relative">
+                  <span className="active-img position-relative">
                     <img src="/images/Settings.svg" alt="" className="me-4 default-img" />
-                    <img src="/images/Settings-colored.svg" alt="" class="img-colored me-4" />
+                    <img src="/images/Settings-colored.svg" alt="" className="img-colored me-4" />
                     Settings
                   </span>
                 </span>

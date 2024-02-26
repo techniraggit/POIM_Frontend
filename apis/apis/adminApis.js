@@ -62,8 +62,8 @@ export const userSearch=(inputValue)=>{
 export const userClear=()=>{
     return Axios.get(`/api/admin/users`)
 }
-export const vendorSearch=(inputValue)=>{
-    return Axios.get(`/api/search/vendors?query=${inputValue}`)
+export const vendorSearch=(params)=>{
+    return Axios.get(`/api/search/vendors?${params}`)
 }
 export const poSearch=(inputValue)=>{
     return Axios.get(`/api/search/purchase-order?query=${inputValue}`)
@@ -87,11 +87,11 @@ export const filterSearchPo=(params)=>{
 export const vendorClear=()=>{
     return Axios.get(`/api/admin/vendors`)
 }
-export const projectSearch=(inputValue)=>{
-    return Axios.get(`/api/search/projects?query=${inputValue}`)
+export const projectSearch=(params)=>{
+    return Axios.get(`/api/search/projects?${params}`)
 }
-export const projectClear=()=>{
-    return Axios.get(`/api/admin/projects`)
+export const getProjectList = (page) => {
+    return Axios.get(`/api/admin/projects?page=${page}`)
 }
 
 export const getPoNumber = () => {
@@ -218,9 +218,14 @@ export const userReportPdf = (params) =>{
     return Axios.get(`/api/analytic/user_reports?${params}`, {responseType: 'blob'})
 }
 
-export const getSubcontractorReport = (params) => {
-    return Axios.get(`/api/admin/subcontractor-view`);
+export const downloadSubcontractorReport = (params) => {
+    return Axios.get(`/api/analytic/subcontractor_reports?${params}`, {responseType: 'blob'})
 }
-// export const getUserData = () => {
-//     return Axios.get('/api/admin/profile');
-// }
+
+export const getSubcontractorReport = (params) => {
+    return Axios.get(`/api/admin/subcontractor-view?${params}`);
+}
+
+export const getVendorList = (page) => {
+    return Axios.get(`/api/admin/vendors?page=${page}`);
+}

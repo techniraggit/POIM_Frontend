@@ -1,101 +1,50 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { EyeFilled, EditFilled } from '@ant-design/icons'
-import { Button, Select, Pagination } from 'antd';
+import { Button, Pagination } from 'antd';
 import Sidebar from "@/components/sidebar";
 import Link from "next/link";
 import { PlusOutlined } from '@ant-design/icons'
-import { fetchVendorContact, filterSearch, invoiceList } from "@/apis/apis/adminApis";
+import { filterSearch, invoiceList } from "@/apis/apis/adminApis";
 import Roles from "@/components/Roles";
 import Header from "@/components/header";
-
-const { Option } = Select;
+import Filters from "@/components/Filters";
 
 const Invoice = () => {
     const [invoiceTable, setInvoiceTable] = useState([]);
     const [invoice, setInvoice] = useState(0);
     const [pendingInvoice, setPendingInvoice] = useState(0);
-    const [inputValue, setInputValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [count, setCount] = useState('')
-    const [companyName, setCompanyName] = useState([]);
+    const [count, setCount] = useState('');
 
-    const [query, setQuery] = useState({
-        filter_by_po_type: "",
-        filter_by_po_vendor: "",
-        filter_by_po_status: ""
-    })
+    const getInvoiceList = () => {
+        invoiceList(currentPage).then((res) => {
+            if (res?.data?.results.status) {
+                setInvoiceTable(res.data.results.data || [])
+                setInvoice(res.data.results.total_invoice)
+                setPendingInvoice(res.data.results.total_pending_invoice)
+            }
+            setCount(res.data.count)
+        })
+    }
 
     const applyFilters = (data) => {
-        const queryString = new URLSearchParams({ ...data }).toString();
-        const response = filterSearch(queryString);
-        response.then((res) => {
-            setCount(res.data.count)
-            setInvoiceTable(res.data.results.data)
-            setInvoiceTable(res.data.results.search_invoice_data)
-
-        })
-    }
-
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
-    };
-
-    const handleButtonClick = async (event) => {
-        event.preventDefault();
-        applyFilters({
-            ...query,
-            query: inputValue
-        });
-    };
-    
-
-
-    const handleFilterClearButton = (action) => {
-        if(action === 'search') {
-            setInputValue('');
-            applyFilters({
-                ...query,
-                query: ''
-            });
-        } else {
-            setQuery(prevState => ({
-                ...prevState,
-                ['filter_by_po_status']: '',
-                ['filter_by_po_vendor']: "",
-                ['filter_by_po_type']: ""
-            }))
-            applyFilters({
-                query: inputValue,
-                ...query
-            });
-        }
-    }
-
-    useEffect(() => {
-        if (query.filter_by_po_type || query.filter_by_po_vendor || query.filter_by_po_status) {
-            applyFilters({
-                inputValue,
-                ...query
-            });
-        } else {
-            invoiceList(currentPage).then((res) => {
-                if (res?.data?.results.status) {
-                    setInvoiceTable(res.data.results.data || [])
-                    setInvoice(res.data.results.total_invoice)
-                    setPendingInvoice(res.data.results.total_pending_invoice)
-                }
+        if(typeof data === 'object' && Object.keys(data).length > 0) {
+            const queryString = new URLSearchParams({ ...data, page: currentPage }).toString();
+            const response = filterSearch(queryString);
+            response.then((res) => {
                 setCount(res.data.count)
+                setInvoiceTable(res.data.results.data)
+                setInvoiceTable(res.data.results.search_invoice_data)
             })
+        } else {
+            getInvoiceList();
         }
-    }, [currentPage, query.filter_by_po_type, query.filter_by_po_vendor, query.filter_by_po_status]);
+    }
 
     useEffect(() => {
-        const response = fetchVendorContact();
-        response.then((res) => {
-            setCompanyName([...res.data.vendors])
-        })
-    }, [])
+        getInvoiceList();
+    }, []);
 
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
@@ -127,89 +76,7 @@ const Invoice = () => {
                                 <span>Total Invoice</span>
                             </li>
                         </ul>
-                        <div className="searchbar-wrapper">
-                            <div className="Purchase-form">
-                                <div className="wrapin-form add-clear-wrap mt-0">
-                                    <form className="search-vendor">
-                                        <input className="vendor-input" placeholder="Search Invoice"
-                                            value={inputValue} onChange={handleInputChange}
-                                        />
-                                        <button className="vendor-search-butt"
-                                            onClick={(event) => {
-                                                handleButtonClick(event);
-                                            }}
-                                        >Search</button>
-                                    </form>
-                                    <button type="submit" className="clear-button ms-3"
-                                        onClick={() => {
-                                            handleFilterClearButton('search');
-                                        }}
-                                    >
-                                        Clear
-                                    </button>
-                                </div>
-                                <div className="purchase-filter">
-                                    <span className="filter-span invoice-span">Filter :</span>
-
-                                    <Select placeholder=" Type" id="single1"
-                                        className="line-select me-2"
-                                        value={query['filter_by_po_type'] || "PO Type"}
-                                        onChange={(value) =>
-
-                                            setQuery(prevState => ({
-                                                ...prevState,
-                                                ['filter_by_po_type']: value
-                                            }))
-                                        }
-                                    >
-                                        <Option value="material">Material PO</Option>
-                                        <Option value="rental">Rental PO</Option>
-                                        <Option value="subcontractor">Sub Contractor PO</Option>
-                                    </Select>
-                                    <Select className="line-select me-2" placeholder="PO Vendor"
-                                        onChange={(value) =>
-                                            setQuery(prevState => ({
-                                                ...prevState,
-                                                ['filter_by_po_vendor']: value
-                                            }))}
-                                        value={query['filter_by_po_vendor'] || "PO Vendor"}
-
-
-                                    >
-                                        {companyName.map((entry) =>
-
-                                        (
-                                            <Select.Option key={entry.vendor_id} value={entry.vendorId}>
-                                                {entry.company_name}
-                                            </Select.Option>
-                                        )
-                                        )}
-
-                                    </Select>
-                                    <Select className="line-select me-2" placeholder="PO Status"
-                                        onChange={(value) =>
-                                            setQuery(prevState => ({
-                                                ...prevState,
-                                                ['filter_by_po_status']: value
-                                            }))}
-                                        value={query['filter_by_po_status'] || "PO Status"}
-
-                                    >
-                                        <Option value="pending">Pending</Option>
-                                        <Option value="approved">Approved</Option>
-                                        <Option value="rejected">Rejected</Option>
-                                    </Select>
-                                    <button type="submit" className="clear-button ms-3"
-                                       onClick={() => {
-                                        handleFilterClearButton('filters')
-                                    }}
-                                    >
-                                        Clear
-                                    </button>
-
-                                </div>
-                            </div>
-                        </div>
+                        <Filters search={true} type={true} vendor={true} status={true} applyFilters={applyFilters} currentPage={currentPage} />
                         <div className="table-wrap vendor-wrap">
                             <h5>Invoices</h5>
                             <div className="inner-table" id="inner-purchase">
