@@ -3953,15 +3953,15 @@ ul.reports-dropdown li:hover a span, ul.reports-dropdown li a span.active {
 @media (max-width: 1399px) {
 
 }
-ul.list-icons.text-list-icons  li  span:last-child {
-    font-size: 14px;
-}
-ul.list-icons.text-list-icons li {
-    padding: 10px 10px;
-}
+
 @media (max-width: 1299px) {
 
-
+    ul.list-icons.text-list-icons  li  span:last-child {
+        font-size: 14px;
+    }
+    ul.list-icons.text-list-icons li {
+        padding: 10px 10px;
+    }
     li#report-li>a {
         padding: 10px 20px;
     }
