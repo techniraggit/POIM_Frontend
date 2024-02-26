@@ -3,24 +3,36 @@ import Sidebar from "@/components/sidebar";
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import axios from 'axios';
-import { message, Popconfirm ,Pagination,Button} from 'antd';
+import { message, Popconfirm , Pagination, Button} from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
 import ProjectPopup from "@/components/project-popup";
-import { projectSearch, projectClear } from "@/apis/apis/adminApis";
+import { projectSearch, getProjectList } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
+import Filters from "@/components/Filters";
 
 const Vendor = ({ base_url }) => {
     const [isIconClicked, setIsIconClicked] = useState(false);
     const [projects, setProjects] = useState([]);
     const [isViewProjectVisible, setProjectVisible] = useState(false);
     const [totalProjects, setTotalProjects] = useState(0)
-    const [inputValue, setInputValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
 
+    const getProjects = () => {
+        if(typeof currentPage !== 'undefined') {
+            const response = getProjectList(currentPage);
+            response.then((res) => {
+                if(res.status === 200) {
+                    setCount(res.data.count)
+                    setProjects(res.data.results.projects)
+                    setTotalProjects(res.data.results.total_projects);
+                }
+            })
+        }
+    }
     
     useEffect(() => {
         if (isIconClicked) {
@@ -31,21 +43,8 @@ const Vendor = ({ base_url }) => {
     }, [isIconClicked]);
 
     useEffect(() => {
-        const fetchroles = async () => {
-            try {
-                const headers = {
-                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-                }
-                const response = await axios.get(`${base_url}/api/admin/projects?page=${currentPage}`, { headers: headers });
-                setCount(response.data.count)
-                setProjects(response.data.results.projects)
-                setTotalProjects(response.data.results.total_projects);
-            } catch (error) {
-                console.error('Error fetching projects:', error);
-            }
-        }
-        fetchroles();
-    }, [currentPage])
+        getProjects();
+    }, [])
 
     const handleDelete = async (id) => {
         try {
@@ -77,26 +76,23 @@ const Vendor = ({ base_url }) => {
 
     };
 
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
-    };
-
-    const handleButtonClick = async (event) => {
-        event.preventDefault();
-        projectSearch(inputValue).then((response) => {
-            setProjects(response.data.results.search_project_data);
-        })
-    };
-
-    const handleClearButtonClick = () => {
-        setInputValue('');
-        projectClear().then((res) => {
-            setProjects(res.data.results.projects);
-        })
-    };
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
+
+    const applyFilters = (data) => {
+        if(typeof data === 'object' && Object.keys(data).length > 0) {
+            const queryString = new URLSearchParams({ ...data }).toString();
+            const response = projectSearch(queryString);
+            response.then((res) => {
+                if(res.status === 200) {
+                    setProjects(res.data?.results?.search_project_data);
+                }
+            })
+        } else {
+            getProjects();
+        }
+    }
 
     return (
         <>
@@ -118,17 +114,7 @@ const Vendor = ({ base_url }) => {
                                 <span>Total Projects</span>
                             </li>
                         </ul>
-                        <div className="wrapin-form add-clear-wrap">
-                            <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Projects"
-                                    value={inputValue} onChange={handleInputChange}
-                                />
-                                <button className="vendor-search-butt"
-                                    onClick={handleButtonClick}
-                                >Search</button>
-                            </form>
-                            <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
-                        </div>
+                        <Filters search={true} applyFilters={applyFilters} currentPage={currentPage} />
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
                                 <table id="project-table" className="table-hover">

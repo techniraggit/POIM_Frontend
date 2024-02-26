@@ -9,9 +9,10 @@ import { getServerSideProps } from "@/components/mainVariable";
 import { EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
 import Link from "next/link";
 import View_Vendor from "@/components/view-vendor";
-import { vendorSearch, vendorClear } from "@/apis/apis/adminApis";
+import { getVendorList, vendorSearch } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
+import Filters from "@/components/Filters";
 
 const Vendor = ({ base_url }) => {
     const [isIconClicked, setIsIconClicked] = useState(false);
@@ -20,11 +21,8 @@ const Vendor = ({ base_url }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isViewVendorVisible, setViewVendorVisible] = useState(false);
     const [clickedIndex, setClickedIndex] = useState(null);
-    const [inputValue, setInputValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
-
-    
 
     useEffect(() => {
         if (isIconClicked) {
@@ -34,22 +32,20 @@ const Vendor = ({ base_url }) => {
         }
     }, [isIconClicked]);
 
-    useEffect(() => {
-        const fetchroles = async () => {
-            try {
-                const headers = {
-                    Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-                }
-                const response = await axios.get(`${base_url}/api/admin/vendors?page=${currentPage}`, { headers: headers });
-                setCount(response.data.count)
-                setTotalVendor(response.data.results.total_vendors)
-                setVendors(response.data.results.vendors);
-            } catch (error) {
-                console.error('Error fetching projects:', error);
+    const getVendors = () => {
+        const response = getVendorList(currentPage);
+        response.then((res) => {
+            if(res.status === 200) {
+                setCount(res.data.count)
+                setTotalVendor(res.data.results.total_vendors)
+                setVendors(res.data.results.vendors);
             }
-        }
-        fetchroles();
-    }, [currentPage])
+        })
+    }
+
+    useEffect(() => {
+        getVendors()
+    }, [])
 
     const handleDelete = async (id) => {
         try {
@@ -80,32 +76,23 @@ const Vendor = ({ base_url }) => {
         setIsModalOpen(true);
         setClickedIndex(index);
         setIsIconClicked(true);
-
-
     };
 
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
-    };
-
-    const handleButtonClick = async (event) => {
-        event.preventDefault();
-        vendorSearch(inputValue).then((response) => {
-            setVendors(response.data.results.search_vendors_data)
-
-        })
-
-    };
-
-    const handleClearButtonClick = () => {
-        setInputValue('');
-        vendorClear().then((res) => {
-            setVendors(res.data.results.vendors)
-        })
-    };
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
+
+    const applyFilters = (data) => {
+        if(typeof data === 'object' && Object.keys(data).length > 0) {
+            const queryString = new URLSearchParams({ ...data }).toString();
+            const response = vendorSearch(queryString);
+            response.then((res) => {
+                setVendors(res.data.results.search_vendors_data)
+            })
+        } else {
+            getVendors();
+        }
+    }
 
     return (
         <>
@@ -126,17 +113,7 @@ const Vendor = ({ base_url }) => {
                                 <span>Total Vendors</span>
                             </li>
                         </ul>
-                        <div className="wrapin-form add-clear-wrap">
-                            <form className="search-vendor">
-                                <input className="vendor-input" placeholder="Search Vendor"
-                                    value={inputValue} onChange={handleInputChange}
-                                />
-                                <button className="vendor-search-butt"
-                                    onClick={handleButtonClick}
-                                >Search</button>
-                            </form>
-                            <button type="submit" className="clear-button ms-3" onClick={handleClearButtonClick}>Clear</button>
-                        </div>
+                        <Filters search={true} applyFilters={applyFilters} currentPage={currentPage} />
                         <div className="table-wrap vendor-wrap">
                             <div className="inner-table">
                                 <table id="vendor-table" className="table-hover">
