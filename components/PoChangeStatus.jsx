@@ -4,7 +4,10 @@ import { CloseOutlined } from '@ant-design/icons';
 
 const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType }) => {
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setIsModalOpen({
+      modalStatus: false,
+      action: ''
+    });
   };
   
   const [form, setForm] = useState({
@@ -21,7 +24,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
 
   return (
     <>
-      {isModalOpen && (
+      {isModalOpen.modalStatus && (
         <div class="approve-po-popup">
           <div className="cross-icon" onClick={handleCloseModal}>
             <CloseOutlined />
@@ -47,7 +50,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
             <div className='approve'>
                 <button className='button1' type="button" onClick={handleCloseModal}>Cancel</button>
                 <button className='button2' type="submit" onClick={(event) => {
-                    handleStatusChange(event, 'approved', form)
+                    handleStatusChange(event, isModalOpen.action, form)
                 }}>Approve</button>
             </div>
           </form>

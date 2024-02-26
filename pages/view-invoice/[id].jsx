@@ -25,7 +25,10 @@ const ViewInvoice = () => {
     const [responseData, setResponseData] = useState([]);
     const [statusData, setStatusData] = useState();
     const { approval_enabled } = useInvoice(invoice);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState({
+        modalStatus: false,
+        action: ''
+    });
     const [refetch, setRefetch] = useState(true);
     const [isStatusModalOpen, setStatusModalOpen] = useState(false);
     const router = useRouter();
@@ -145,10 +148,16 @@ const ViewInvoice = () => {
                                         <Roles action="approve_invoice">
                                             <div className="mt-0 apr-rej-li d-flex">
                                                 <Button type="primary" className="approved-btn me-3" onClick={(event) => {
-                                                    setIsModalOpen(true)
+                                                    setIsModalOpen({
+                                                        modalStatus: true,
+                                                        action: 'approved'
+                                                    })
                                                 }}>Approve</Button>
                                                 <Button type="primary" danger className="reject-btn" onClick={(event) => {
-                                                    handleStatusChange(event, 'rejected')
+                                                    setIsModalOpen({
+                                                        modalStatus: true,
+                                                        action: 'rejected'
+                                                    })
                                                 }}>Reject</Button>
                                             </div>
                                         </Roles>

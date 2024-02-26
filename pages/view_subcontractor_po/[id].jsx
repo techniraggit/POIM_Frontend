@@ -39,7 +39,10 @@ const ViewSubContractorPo = () => {
         quantity: 0,
         material_details: []
     });
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState({
+        modalStatus: false,
+        action: ''
+    });
     const [refetch, setRefetch] = useState(true);
     const [isStatusModalOpen,setStatusModalOpen]=useState(false);
     const [contractFile, setContractFile] = useState(null)
@@ -236,11 +239,17 @@ const ViewSubContractorPo = () => {
                                 {
                                     formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
                                         <div className="mt-0 apr-rej-li d-flex">
-                                            <Button type="primary" className="approved-btn me-3" onClick={() => {
-                                                setIsModalOpen(true);
+                                            <Button type="primary" className="approved-btn me-3" onClick={(event) => {
+                                                setIsModalOpen({
+                                                    modalStatus: true,
+                                                    action: 'approved'
+                                                })
                                             }}>Approve</Button>
-                                            <Button type="primary" className="reject-btn" danger onClick={(event) => {
-                                                handleStatusChange(event, 'rejected')
+                                            <Button type="primary" danger className="reject-btn" onClick={(event) => {
+                                                setIsModalOpen({
+                                                    modalStatus: true,
+                                                    action: 'rejected'
+                                                })
                                             }}>Reject</Button>
                                         </div>
                                     </Roles>
