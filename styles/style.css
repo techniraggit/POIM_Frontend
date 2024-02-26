@@ -4405,3 +4405,17 @@ span.text-sizes {
 .wrapin-form div {
     margin-left: 10px
 }
+
+.po-status-main-view {
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 25px 28px 8px;
+    position: absolute;
+    top: 6%;
+    left: 50%;
+    z-index: 9999;
+    transform: translate(-50%, 0%);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}

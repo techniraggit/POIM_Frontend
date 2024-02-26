@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
-import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled } from '@ant-design/icons'
+import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled, DownloadOutlined } from '@ant-design/icons'
 import { getServerSideProps } from "@/components/mainVariable";
 import { message, Popconfirm, Pagination, Button } from 'antd';
 import Link from "next/link";
-import { deletePO, filterSearchPo, getPoList } from "@/apis/apis/adminApis";
+import { deletePO, downloadContract, filterSearchPo, getPoList } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
 import Filters from "@/components/Filters";
+import { saveAs } from "file-saver";
 
 const PO_list = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
@@ -57,6 +58,15 @@ const PO_list = () => {
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
+
+    const handleDownload = (id, name) => {
+        const response = downloadContract(id);
+        response.then((res) => {
+            if(res.data) {
+                saveAs(res.data, name);
+            }
+        })
+    }
 
     return (
         <>
@@ -148,6 +158,7 @@ const PO_list = () => {
                                                                 <Link href={`/edit_subcontractor_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
                                                             )}
                                                         </Roles>
+                                                        {purchase.po_type === 'subcontractor' && <DownloadOutlined onClick={() => handleDownload(purchase.po_id, purchase.signed_contract?.split('/')[purchase.signed_contract?.split('/').length - 1])} />}
                                                     </td>
                                                 </tr>
                                             })

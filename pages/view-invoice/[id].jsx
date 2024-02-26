@@ -83,9 +83,8 @@ const ViewInvoice = () => {
         })
     }
 
-    const handleDownload = (id) => {
+    const handleDownload = (id, fileName) => {
         downloadInvoice(id).then((res) => {
-            const fileName = `invoice_${id}.pdf`;
             if (res?.data) {
                 saveAs(res.data, fileName);
             }
@@ -254,7 +253,7 @@ const ViewInvoice = () => {
                                                 <>
                                                     <div className="download-wrap d-flex">
                                                         <div className="download-fine-invoice">
-                                                            {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
+                                                            {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id, fileName)} />
                                                         </div>
                                                     </div>
                                                 </>
@@ -275,6 +274,7 @@ const ViewInvoice = () => {
             </div>
             {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
             {isStatusModalOpen && <PoStatus 
+            isStatusModalOpen={isStatusModalOpen}
             data={statusData || []}
             setStatusModalOpen={setStatusModalOpen} />}
         </>

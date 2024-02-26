@@ -229,3 +229,11 @@ export const getSubcontractorReport = (params) => {
 export const getVendorList = (page) => {
     return Axios.get(`/api/admin/vendors?page=${page}`);
 }
+
+export const uploadContract = (data) => {
+    return Axios.post('/api/admin/upload-contract', data);
+}
+
+export const downloadContract = (id) => {
+    return Axios.get('/api/admin/upload-contract?po_id=' + id, {responseType: 'blob'});
+}

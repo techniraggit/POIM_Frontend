@@ -3,15 +3,16 @@ import { getServerSideProps } from "@/components/mainVariable";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import '../../styles/style.css'
-import { PlusOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
-import { fetchPo, updatePo, changeStatus } from "@/apis/apis/adminApis";
-import { Form, Input, Select, Button, message } from "antd";
+import { fetchPo, updatePo, changeStatus, uploadContract, downloadContract } from "@/apis/apis/adminApis";
+import { Form, Input, Select, Button, message, Upload } from "antd";
 import moment from "moment";
 import PoForm from "@/components/Form";
 import PoStatus from "@/components/PoStatus";
 import ChangeStatus from "@/components/PoChangeStatus";
 import Roles from "@/components/Roles";
+import { saveAs } from "file-saver";
 
 
 const { Option } = Select;
@@ -41,6 +42,7 @@ const ViewSubContractorPo = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [refetch, setRefetch] = useState(true);
     const [isStatusModalOpen,setStatusModalOpen]=useState(false);
+    const [contractFile, setContractFile] = useState(null)
 
     const router = useRouter();
     const [form] = Form.useForm();
@@ -75,7 +77,9 @@ const ViewSubContractorPo = () => {
                         shipment_type: data.shipment_type || 'project related',
                         material_details: [...data.material_details],
                         status: data.status,
-                        notes: data?.co_approved_amount
+                        notes: data?.co_approved_amount,
+                        signed_contract: data.signed_contract,
+                        po_creator: res?.data?.po_creator
                     });
                     form.setFieldValue('co_amount', data.co_approved_amount[0]?.amount);
                     form.setFieldValue('po_type', data.po_type);
@@ -179,7 +183,37 @@ const ViewSubContractorPo = () => {
     const handleIconClick = () => {
         setStatusModalOpen(true);
     };
-    form
+
+    const uploadContractFile = () => {
+        const formData = new FormData();
+        formData.append('po_id', id);
+        formData.append('contract_file', contractFile);
+        console.log(contractFile)
+        const response = uploadContract(formData);
+        response.then((res) => {
+            if(res?.data?.status) {
+                setRefetch(true);
+            }
+        })
+    }
+
+    const beforeUpload = (file) => {
+        const isPDF = file.type === 'application/pdf';
+        if (!isPDF) {
+            message.error('Only PDF files are allowed!');
+        }
+        return isPDF;
+    };
+
+    const handleDownload = (name) => {
+        const response = downloadContract(id);
+        response.then((res) => {
+            if(res.data) {
+                saveAs(res.data, name);
+            }
+        })
+    }
+
     return (
         <>
             <div className="wrapper-main">
@@ -317,13 +351,38 @@ const ViewSubContractorPo = () => {
                                     <PoForm formData={formData} view={true} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                 </Form>
                             </div>
+                            {!formData.signed_contract && <>
+                                <p>Upload Contract File</p>
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    <Form.Item
+                                        className="select-file-invoice"
+                                        valuePropName="fileList"
+                                        getValueFromEvent={(e) => setContractFile(e.fileList[0].originFileObj)}
+                                    >
+                                        <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
+                                            <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
+                                        </Upload>
+                                    </Form.Item>
+                                    <Form.Item style={{
+                                        marginLeft: '10px'
+                                    }}>
+                                        <Button onClick={uploadContractFile} type="primary">
+                                            Upload
+                                        </Button>
+                                    </Form.Item>
+                                </div>
+                            </>}
+                            {formData.signed_contract && <div className="download-wrap d-flex">
+                                <div className="download-fine-invoice">
+                                    {formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1]} <DownloadOutlined onClick={() => handleDownload(formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1])} />
+                                </div>
+                            </div>}
                         </div>
                     </div>
                 </div>
             </div>
             {isModalOpen && <ChangeStatus po_id={id} poType={"subcontractor"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
-            {isStatusModalOpen  && <PoStatus data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
-            {/* {isModalOpen && formData.status === 'approved' && <PoStatus setIsModalOpen={setIsModalOpen} />} */}
+            {isStatusModalOpen && formData.po_creator && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
         </>
     );
 };

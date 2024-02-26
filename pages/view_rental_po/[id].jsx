@@ -250,11 +250,11 @@ const ViewRentalPO = () => {
                             </div>
                         </div>
                     </div>
-                </div >
-            </div >
+                </div>
+            </div>
             {isModalOpen && <ChangeStatus po_id={id} poType={"rental"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
             {/* {isModalOpen && <PoStatus setIsModalOpen={setIsModalOpen} />} */}
-            {isStatusModalOpen && <PoStatus data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
+            {isStatusModalOpen && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
         </>
     )
 }

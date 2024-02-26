@@ -277,7 +277,7 @@ const ViewMaterialPo = () => {
                     </div>
                 </div>
                 {isModalOpen && <ChangeStatus po_id={id} poType={"material"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
-                {isStatusModalOpen && <PoStatus data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
+                {isStatusModalOpen && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
             </div>
         </>
     );
