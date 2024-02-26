@@ -237,3 +237,7 @@ export const uploadContract = (data) => {
 export const downloadContract = (id) => {
     return Axios.get('/api/admin/upload-contract?po_id=' + id, {responseType: 'blob'});
 }
+
+export const changeVendorStatus = (data) => {
+    return Axios.put('/api/admin/approve_vendor', data);
+}
