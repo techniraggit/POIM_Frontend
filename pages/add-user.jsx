@@ -8,7 +8,6 @@ import { Form, Input, Select, message, } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { Spin } from 'antd';
 import withAuth from '@/components/PrivateRoute';
 
 const { Option } = Select;
@@ -17,7 +16,6 @@ const AddUser = ({ base_url }) => {
   const [roles, setRoles] = useState([]);
   const router = useRouter();
   const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchroles = async () => {
@@ -32,15 +30,12 @@ const AddUser = ({ base_url }) => {
       }
     }
     fetchroles();
-    return () => {
-      setLoading(false);
-    };
+   
   }, [])
   
 
   const onFinish = async (values) => {
     try {
-      setLoading(true);
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         Accept: 'application/json',
@@ -61,7 +56,6 @@ const AddUser = ({ base_url }) => {
       
     }
     catch (error) {
-      setLoading(false);
       message.error(error.response.data.message)
     }
    
@@ -96,7 +90,6 @@ const AddUser = ({ base_url }) => {
             </ul>
             <div class="choose-potype round-wrap"><div class="inner-choose">
 
-              <Spin spinning={loading}>
                 <Form onFinish={onFinish} layout="vertical" form={form}
                   labelCol={{ span: 8 }}
                   wrapperCol={{ span: 16 }}
@@ -231,12 +224,11 @@ const AddUser = ({ base_url }) => {
                     </div>
                     <div className="col-12">
                       <Form.Item >
-                        <button type="submit" className="create-ven-butt" loading={loading}>Submit</button>
+                        <button type="submit" className="create-ven-butt" >Submit</button>
                       </Form.Item>
                     </div>
                   </div>
                 </Form>
-              </Spin>
             </div>
             </div>
 

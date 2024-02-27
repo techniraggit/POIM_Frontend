@@ -9,7 +9,6 @@ import { createPO, getPoNumber } from "@/apis/apis/adminApis";
 import { Form, Select, Button, Input, message } from "antd";
 import PoForm from '../components/Form';
 import dayjs from "dayjs";
-import { Spin } from 'antd';
 
 const { Option } = Select;
 
@@ -21,7 +20,6 @@ const repeatorData = {
 }
 
 const CreateSubContractorPo = () => {
-    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         po_number: '',
         po_type: 'subcontractor',
@@ -81,7 +79,6 @@ const CreateSubContractorPo = () => {
     };
 
     const onFinish = () => {
-        setLoading(true);
         createPO({
             ...formData,
         }).then((res) => {
@@ -90,7 +87,6 @@ const CreateSubContractorPo = () => {
             }
         })
         .catch((error) => {
-            setLoading(false);
             message.error(error.response.data.message)
         })
     }
@@ -170,7 +166,6 @@ const CreateSubContractorPo = () => {
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
-                            <Spin spinning={loading}>
                                 <Form onFinish={onFinish} form={form} className="file-form">
                                     <div className="row po-typeraw mb-5">
                                         <div className="col-lg-4 col-md-6">
@@ -280,13 +275,12 @@ const CreateSubContractorPo = () => {
 
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
-                                            <Button type="primary" htmlType="submit" className="create-ven-butt" loading={loading}>
+                                            <Button type="primary" htmlType="submit" className="create-ven-butt" >
                                                 Create PO
                                             </Button>
                                         </Form.Item>
                                     </div>
                                 </Form>
-                                </Spin>
                             </div>
                         </div>
                     </div>

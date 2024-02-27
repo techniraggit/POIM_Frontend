@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import withAuth from "@/components/PrivateRoute";
 import VendorForm from "@/components/VendorForm";
 import { createVendor } from "@/apis/apis/adminApis";
-import { Spin } from 'antd';
 
 const repeatorData = {
     email: '',
@@ -18,7 +17,6 @@ const repeatorData = {
 const CreateVendor = () => {
     const [form] = Form.useForm();
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         company_name: '',
         country: 'Canada',
@@ -30,7 +28,6 @@ const CreateVendor = () => {
     });
 
     const onFinish = () => {
-        setLoading(true);
       
         createVendor(formData).then((response) => {
            
@@ -40,7 +37,6 @@ const CreateVendor = () => {
             }
         })
         .catch((error)=>{
-            setLoading(false);
             message.error(error.response.data.message)
         })
     }
@@ -80,12 +76,10 @@ const CreateVendor = () => {
                         </ul>
 
                         <div className="vendor-form-create">
-                        <Spin spinning={loading}>
                             <VendorForm form={form} onFinish={onFinish} 
                             setFormData={setFormData} formData={formData} 
                             onChange={onChange} repeatorData={repeatorData}
-                            loading={loading} />
-                            </Spin>
+                           />
                         </div>
                     </div>
                 </div>
