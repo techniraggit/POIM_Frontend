@@ -18,7 +18,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const [siteOptions, setSiteOptions] = useState([]);
     const [vendors, setVendors] = useState([]);
     const { user } = useGlobalContext();
-    
+
     useEffect(() => {
         form.setFieldValue('po_type', formData.po_type);
         if (!edit && !view) {
@@ -50,8 +50,15 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     }, []);
 
     useEffect(() => {
-        form.setFieldValue('first_name', user.first_name)
-        form.setFieldValue('last_name', user.last_name)
+        if (formData && formData.created_by && Object.keys(formData.created_by).length > 0) {
+            
+            form.setFieldValue('first_name', formData.created_by.first_name)
+            form.setFieldValue('last_name', formData.created_by.last_name)
+        } else {
+            form.setFieldValue('first_name', user.first_name)
+            form.setFieldValue('last_name', user.last_name)
+        }
+
     }, [user])
 
     useEffect(() => {

@@ -17,7 +17,7 @@ function PoStatus({ setStatusModalOpen, data, isStatusModalOpen }) {
     };
 
     useEffect(() => {
-        if(isStatusModalOpen) {
+        if (isStatusModalOpen) {
             document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
         }
     }, [isStatusModalOpen]);
@@ -31,20 +31,20 @@ function PoStatus({ setStatusModalOpen, data, isStatusModalOpen }) {
                     </div>
                     <h1>Status</h1>
                 </div>
-                    {
-                        data.map((data) => {
-                            return <div className='po-status-p scroll-invoice-view'>
-                                <h5>{data.status?.charAt(0)?.toUpperCase() + data.status?.slice(1)} <span className="po-span">:- {formatDate(data.created_on)}</span></h5>
-                                <h5>{data.status?.charAt(0)?.toUpperCase() + data.status?.slice(1)} By <span className="po-span">:- {data?.created_by?.first_name + ' ' + data?.created_by?.last_name}</span></h5>
-                                {data.amount > 0 ? (
-                                    <h5 className='sub-show '>Approved Co Amount <span className="po-span">- {data.amount}</span> </h5>
-                                ) : null}
-                                {data.notes && <p className='text-note-wrapper'>
-                                    {data.notes}
-                                </p>}
-                            </div>
-                        })
-                    }
+                {
+                    data.map((data) => {
+                        return <div className='po-status-p'>
+                            <h5>{data.status?.charAt(0)?.toUpperCase() + data.status?.slice(1)} <span className="po-span">:- {formatDate(data.created_on)}</span></h5>
+                            <h5>{data.status?.charAt(0)?.toUpperCase() + data.status?.slice(1)} By <span className="po-span">:- {data?.created_by?.first_name + ' ' + data?.created_by?.last_name}</span></h5>
+                            {data.amount > 0 ? (
+                                <h5 className='sub-show '>Approved Co Amount <span className="po-span">- {data.amount}</span> </h5>
+                            ) : null}
+                            <p>
+                                {data.notes || ' N/A'}
+                            </p>
+                        </div>
+                    })
+                }
             </div>
         </>
     )

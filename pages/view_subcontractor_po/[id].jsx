@@ -60,6 +60,7 @@ const ViewSubContractorPo = () => {
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
+                        created_by:data.created_by,
                         can_change_status: res?.data?.can_change_status,
                         amount: data.total_amount,
                         po_date: data.po_date,
@@ -84,6 +85,7 @@ const ViewSubContractorPo = () => {
                         signed_contract: data.signed_contract,
                         po_creator: res?.data?.po_creator
                     });
+
                     form.setFieldValue('co_amount', data.co_approved_amount[0]?.amount);
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact.company.company_name)
@@ -216,6 +218,7 @@ const ViewSubContractorPo = () => {
             }
         })
     }
+    console.log(formData.status === 'approved'  && formData.po_creator && formData.signed_contract,'hhh');
     
     return (
         <>
@@ -232,7 +235,7 @@ const ViewSubContractorPo = () => {
                                     <span>View Purchase Order</span>
                                 </div>
                                 {
-                                    formData.status === 'approved' && formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                   ( formData.status === 'approved' || formData.status === 'rejected' )&& formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
                                         PO Status
                                     </button>
                                 }
@@ -360,15 +363,16 @@ const ViewSubContractorPo = () => {
                                     <PoForm formData={formData} view={true} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                 </Form>
                             </div>
-                            {!formData.signed_contract && <>
+                            {!formData.signed_contract && formData.status === 'approved'  && formData.po_creator && <>
                                 <p>Upload Contract File</p>
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <Form.Item
                                         className="select-file-invoice"
                                         valuePropName="fileList"
-                                        getValueFromEvent={(e) => setContractFile(e.fileList[0].originFileObj)}
                                     >
-                                        <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
+                                        <Upload onChange={(e) => {
+                                            setContractFile(e.fileList[0].originFileObj);
+                                        }} beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
                                             <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
                                         </Upload>
                                     </Form.Item>

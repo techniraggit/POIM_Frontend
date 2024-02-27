@@ -28,6 +28,10 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
         document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
     }
   }, [isModalOpen.modalStatus]);
+  useEffect(()=>{
+    return ()=>document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
+
+  },[])
 
   return (
     <>
@@ -38,10 +42,12 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
           </div>
           <form class="details-main">
           <div className='approve'>
-              <p>Approved PO</p>
+              <p>
+              {isModalOpen.action === 'approved'? 'Approved PO':'Rejected PO'}
+              </p>
             </div>
             {
-              poType === 'subcontractor' && <div class="projct-details notes">
+              poType === 'subcontractor' && isModalOpen.action === 'approved' && <div class="projct-details notes">
               <p class="detail-para1">CO Approved Amount</p>
               <input id='input-po'  type="text" value={form.co_approved_amount} onChange={({ target: { value } }) => handleFormChange('co_approved_amount', value)} className="detail-para "></input>
             </div>
@@ -58,7 +64,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
                 <button className='button1' type="button" onClick={handleCloseModal}>Cancel</button>
                 <button className='button2' type="submit" onClick={(event) => {
                     handleStatusChange(event, isModalOpen.action, form)
-                }}>Approve</button>
+                }}>{isModalOpen.action === 'approved'? 'Approve':'Reject'}</button>
             </div>
           </form>
         </div>

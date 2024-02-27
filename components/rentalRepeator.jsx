@@ -305,7 +305,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 ...formData,
                                 material_details: [...formData.material_details, {
                                     ...repeatorData,
-                                    project_site_id: formData.material_details[0].project_site_id
+                                    project_site_id: formData.material_details[0]?.project_site_id
                                 }]
                             });
                         }} icon={<PlusOutlined />}>

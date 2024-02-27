@@ -158,7 +158,7 @@ const PO_list = () => {
                                                                 <Link href={`/edit_subcontractor_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
                                                             )}
                                                         </Roles>
-                                                        {purchase.po_type === 'subcontractor' && <DownloadOutlined onClick={() => handleDownload(purchase.po_id, purchase.signed_contract?.split('/')[purchase.signed_contract?.split('/').length - 1])} />}
+                                                        {purchase.po_type === 'subcontractor' && purchase.signed_contract && <DownloadOutlined onClick={() => handleDownload(purchase.po_id, purchase.signed_contract?.split('/')[purchase.signed_contract?.split('/').length - 1])} />}
                                                     </td>
                                                 </tr>
                                             })
