@@ -27,7 +27,7 @@ const ReportHeader = () => {
   }, []);
 
   return (
-    <ul class="list-icons text-list-icons">
+    <ul class="list-icons text-list-icons mb-4">
         <li class="me-4">
             <span class="text-size mb-3">{count?.users || 0}</span>
             <span>Total Users</span>

@@ -91,7 +91,7 @@ const Vendor = ({ base_url }) => {
                 <div className="inner-wrapper">
                     <Header heading="Vendors" />
                     <div className="bottom-wrapp users-list-wrapin">
-                        <ul className="list-icons">
+                        <ul className="list-icons mb-4">
                             <Roles action='add_vendor'>
                                 <li className="me-4">
                                     <Link href="/create-vendor" className="mb-2 d-block"><PlusOutlined /></Link>

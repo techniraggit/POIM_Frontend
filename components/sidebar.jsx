@@ -137,7 +137,7 @@ const Sidebar = () => {
                   <span className="db-span">
                     <span className={`active-img position-relative ${activeMenuItem === '/po-report' ? 'active' : ''}`}>
                       <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
-                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4" />
+                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4 d-none" />
                       PO Report
                     </span>
                   </span>
@@ -149,7 +149,7 @@ const Sidebar = () => {
                   <span className="db-span">
                     <span className={`active-img position-relative ${activeMenuItem === '/subcontrator-report' ? 'active' : ''}`}>
                       <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
-                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4" />
+                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4 d-none" />
                       Subcontractor Report
                     </span>
                   </span>
@@ -161,7 +161,7 @@ const Sidebar = () => {
                   <span className="db-span">
                     <span className={`active-img position-relative ${activeMenuItem === '/invoice-report' ? 'active' : ''}`}>
                       <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
-                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4" />
+                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4 d-none" />
                       Invoice Report
                     </span>
                   </span>
@@ -173,7 +173,7 @@ const Sidebar = () => {
                   <span className="db-span">
                     <span className={`active-img position-relative ${activeMenuItem === '/user-report' ? 'active' : ''}`}>
                       <img src="/images/Reports.svg" alt="" className="me-4 default-img" />
-                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4" />
+                      <img src="/images/Invoice-colored.svg" alt="" className="img-colored me-4 d-none" />
                       User Report
                     </span>
                   </span>
@@ -202,5 +202,5 @@ const Sidebar = () => {
     </>
   )
 }
-export default Sidebar;
 
+export default Sidebar;

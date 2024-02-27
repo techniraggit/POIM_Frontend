@@ -87,7 +87,7 @@ const User_list = ({ base_url }) => {
                 <div className="inner-wrapper">
                     <Header heading="User" />
                     <div className="bottom-wrapp">
-                        <ul className="list-icons">
+                        <ul className="list-icons mb-4">
                             <Roles action='add_user'>
                                 <li className="me-4">
                                     <Link href="/add-user" className="d-block mb-2"><PlusOutlined /></Link>
