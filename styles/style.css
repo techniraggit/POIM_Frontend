@@ -3648,6 +3648,7 @@ li.ant-pagination-item {
     /* width: 500px; */
     border-left: 1px solid #716e6e;
     padding: 10px 10px;
+    word-wrap: break-word;
 }
 
 .po-status-p h1 {
