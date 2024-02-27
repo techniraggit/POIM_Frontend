@@ -3947,7 +3947,10 @@ ul.reports-dropdown li:hover a span, ul.reports-dropdown li a span.active {
     transform: translate(-50%, 0%);
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-
+p.text-note-wrapper {
+    height: 140px;
+    overflow-y: auto;
+}
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
