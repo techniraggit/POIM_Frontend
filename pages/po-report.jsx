@@ -92,38 +92,38 @@ const purchaseOrderReport = () => {
                             <form action="#" class="poreport-form">
                                 <div class="firstly-wrap">
                                     <div className="filter-main">
-                                    <p class="filt-er mb-0 me-4">Filter</p>
-                                    <div class="date-wrapp me-2"> <label for="">{query.from_date || "From Date"}</label>
-                                        <input type="date" class="input-date" placeholder=""
-                                            onChange={(event) => {
-                                                const selectedDate = event.target.value;
-                                                setQuery(prevState => ({
-                                                    ...prevState,
-                                                    from_date: selectedDate
-                                                }));
-                                            }}
+                                        <p class="filt-er mb-0 me-4">Filter</p>
+                                        <div class="date-wrapp me-2"> <label for="">{query.from_date || "From Date"}</label>
+                                            <input type="date" class="input-date" placeholder=""
+                                                onChange={(event) => {
+                                                    const selectedDate = event.target.value;
+                                                    setQuery(prevState => ({
+                                                        ...prevState,
+                                                        from_date: selectedDate
+                                                    }));
+                                                }}
 
-                                            value={query['from_date']}
-                                        />
-                                    </div>
-                                    <div class="date-wrapp me-1"> <label for="">{query.to_date || "To Date"}</label>
-                                        <input type="date" class="input-date" placeholder=""
-                                            onChange={(event) => {
-                                                const selectedDate = event.target.value;
-                                                const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
-                                                setQuery(prevState => ({
-                                                    ...prevState,
-                                                    to_date: formattedDate
-                                                }));
-                                            }}
+                                                value={query['from_date']}
+                                            />
+                                        </div>
+                                        <div class="date-wrapp me-1"> <label for="">{query.to_date || "To Date"}</label>
+                                            <input type="date" class="input-date" placeholder=""
+                                                onChange={(event) => {
+                                                    const selectedDate = event.target.value;
+                                                    const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+                                                    setQuery(prevState => ({
+                                                        ...prevState,
+                                                        to_date: formattedDate
+                                                    }));
+                                                }}
 
-                                            value={query['to_date']}
-                                        />
+                                                value={query['to_date']}
+                                            />
+                                        </div>
                                     </div>
-                                    </div>
-                                    
+
                                     {/* <div class="wrapper-selected me-0 d-flex"> */}
-                                        {/* <Select placeholder=" Type" id="po1"
+                                    {/* <Select placeholder=" Type" id="po1"
                                             className="line-select me-2"
                                             onChange={(value) =>
                                                 setQuery(prevState => ({
@@ -137,7 +137,7 @@ const purchaseOrderReport = () => {
                                             <Option value="rental">Rental PO</Option>
                                             <Option value="subcontractor">Sub Contractor PO</Option>
                                         </Select> */}
-                                        <div class="one-select ms-2">
+                                    <div class="one-select ms-2">
                                         <Select placeholder=" Type" id="po1"
                                             className="line-select me-2"
                                             onChange={(value) =>
@@ -152,29 +152,31 @@ const purchaseOrderReport = () => {
                                             <Option value="rental">Rental PO</Option>
                                             <Option value="subcontractor">Sub Contractor PO</Option>
                                         </Select>
-                                            <Select className="line-select me-2" placeholder="PO Status"
-                                                onChange={(value) =>
-                                                    setQuery(prevState => ({
-                                                        ...prevState,
-                                                        ['filter_by_po_status']: value
-                                                    }))}
-                                                value={query['filter_by_po_status'] || "PO Status"}
+                                        <Select className="line-select me-2" placeholder="PO Status"
+                                            onChange={(value) =>
+                                                setQuery(prevState => ({
+                                                    ...prevState,
+                                                    ['filter_by_po_status']: value
+                                                }))}
+                                            value={query['filter_by_po_status'] || "PO Status"}
 
-                                            >
-                                                <Option value="pending">Pending</Option>
-                                                <Option value="approved">Approved</Option>
-                                                <Option value="rejected">Rejected</Option>
-                                            </Select>
-                                            <button type="submit" className="clear-button ms-3"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    handleFilterClearButton()
-                                                }}
-                                            >
-                                                Clear
-                                            </button>
+                                        >
+                                            <Option value="pending">Pending</Option>
+                                            <Option value="approved">Approved</Option>
+                                            <Option value="rejected">Rejected</Option>
+                                        </Select>
 
-                                        </div>
+                                        
+                                        <button type="submit" className="clear-button ms-3"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleFilterClearButton()
+                                            }}
+                                        >
+                                            Clear
+                                        </button>
+
+                                    </div>
                                     {/* </div> */}
                                 </div>
                                 <Button type="submit" class="export-btn" onClick={downloadPdf}>Export To XLS</Button>
