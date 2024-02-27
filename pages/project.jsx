@@ -14,7 +14,6 @@ import Roles from "@/components/Roles";
 import Filters from "@/components/Filters";
 
 const Vendor = ({ base_url }) => {
-    const [isIconClicked, setIsIconClicked] = useState(false);
     const [projects, setProjects] = useState([]);
     const [isViewProjectVisible, setProjectVisible] = useState(false);
     const [totalProjects, setTotalProjects] = useState(0)
@@ -33,14 +32,6 @@ const Vendor = ({ base_url }) => {
             })
         }
     }
-    
-    useEffect(() => {
-        if (isIconClicked) {
-            document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
-        } else {
-            document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
-        }
-    }, [isIconClicked]);
 
     useEffect(() => {
         getProjects();
@@ -72,8 +63,6 @@ const Vendor = ({ base_url }) => {
 
     const handleIconClick = (id) => {
         setProjectVisible((prevVisible) => (prevVisible === id ? null : id));
-        setIsIconClicked(true);
-
     };
 
     const calculateStartingSerialNumber = () => {
@@ -138,7 +127,7 @@ const Vendor = ({ base_url }) => {
                                                     <td className="td-icon-color">
                                                         <Roles action="view_project">
                                                             <EyeFilled onClick={() => handleIconClick(project.project_id)} />
-                                                            {isViewProjectVisible === project.project_id && <ProjectPopup setIsIconClicked={setIsIconClicked} project_id={project.project_id} />}
+                                                            {isViewProjectVisible === project.project_id && <ProjectPopup show={isViewProjectVisible === project.project_id} project_id={project.project_id} />}
                                                         </Roles>
                                                         <Roles action="delete_project">
                                                             <Popconfirm

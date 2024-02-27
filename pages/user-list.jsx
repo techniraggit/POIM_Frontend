@@ -13,20 +13,11 @@ import Roles from "@/components/Roles";
 import Filters from "@/components/Filters";
 
 const User_list = ({ base_url }) => {
-    const [isIconClicked, setIsIconClicked] = useState(false);
     const [users, setUsers] = useState([]);
     const [isViewUserVisible, setUserVisible] = useState(false);
     const [totalUser, setTotalUser] = useState(0)
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
-
-    useEffect(() => {
-        if (isIconClicked) {
-            document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
-        } else {
-            document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
-        }
-    }, [isIconClicked]);
 
     useEffect(() => {
         getUsers();
@@ -69,7 +60,6 @@ const User_list = ({ base_url }) => {
 
     const handleIconClick = (id) => {
         setUserVisible(id);
-        setIsIconClicked(true);
     };
 
     const applyFilters = (data) => {
@@ -140,7 +130,7 @@ const User_list = ({ base_url }) => {
                                                     <td className="td-icon-color">
                                                         <Roles action='view_user'>
                                                             <EyeFilled onClick={() => handleIconClick(user.id)}  />
-                                                            {isViewUserVisible === user.id && <UserPopUp user_id={user.id} setIsIconClicked={setIsIconClicked} />}
+                                                            {isViewUserVisible === user.id && <UserPopUp show={isViewUserVisible === user.id} user_id={user.id} />}
                                                         </Roles>
                                                         <Roles action='delete_user'>
                                                             <Popconfirm

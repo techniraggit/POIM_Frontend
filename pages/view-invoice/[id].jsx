@@ -18,7 +18,7 @@ import { saveAs } from "file-saver";
 const { TextArea } = Input;
 const { Option } = Select;
 
-const ViewInvoice = () => {
+const ViewInvoice = () => {    
     const [poNumber, setPoNumber] = useState([]);
     const [invoice, setInvoice] = useState({});
     const [po, setPo] = useState('');
@@ -167,12 +167,7 @@ const ViewInvoice = () => {
                             </li>
                         </ul>
                         <div class="wrapp-in-voice">
-                            {/* <ul class="bg-colored-ul mb-4">
-                                <li class="bg-li-invoice">
-                                    <PlusOutlined className="me-3" />
-                                    <span>View Invoice</span>
-                                </li>
-                            </ul> */}
+                            
                             {
                                 responseData.po_type == 'material' && (
                                     <>
@@ -281,7 +276,7 @@ const ViewInvoice = () => {
                     </div>
                 </div>
             </div>
-            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen}  setIsModalOpen={setIsModalOpen} />}
             {isStatusModalOpen && <PoStatus 
             isStatusModalOpen={isStatusModalOpen}
             data={statusData || []}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/style.css';
 import { CloseOutlined } from '@ant-design/icons';
 
@@ -8,6 +8,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
       modalStatus: false,
       action: ''
     });
+    document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
   };
   
   const [form, setForm] = useState({
@@ -21,6 +22,12 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
         [name]: value
     });
   }
+
+  useEffect(() => {
+    if(isModalOpen.modalStatus) {
+        document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
+    }
+  }, [isModalOpen.modalStatus]);
 
   return (
     <>

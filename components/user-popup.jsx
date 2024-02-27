@@ -5,17 +5,15 @@ import axios from 'axios';
 import { base_url } from './constant';
 import withAuth from './PrivateRoute';
 
-const UserPopUp = ({ user_id,setIsIconClicked }) => {
+const UserPopUp = ({ user_id, show }) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [userData, setUserData] = useState([])
   const [userRoles, setUserRoles] = useState([])
   //   const[vendorcontact,setvendorcontact]=useState([])
 
-
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setIsIconClicked(false);
+    document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
   };
 
   useEffect(() => {
@@ -35,6 +33,13 @@ const UserPopUp = ({ user_id,setIsIconClicked }) => {
     }
     fetchRoles();
   }, [user_id])
+
+  useEffect(() => {
+    if(show) {
+        document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
+    }
+  }, [show]);
+
   return (
     <>
       {isModalOpen && (

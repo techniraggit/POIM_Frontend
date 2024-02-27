@@ -216,7 +216,7 @@ const ViewSubContractorPo = () => {
             }
         })
     }
-
+    
     return (
         <>
             <div className="wrapper-main">
@@ -381,7 +381,7 @@ const ViewSubContractorPo = () => {
                                     </Form.Item>
                                 </div>
                             </>}
-                            {formData.status === 'approved' && formData.signed_contract && <div className="download-wrap d-flex">
+                            {formData.status === 'approved'  && formData.po_creator && formData.signed_contract && <div className="download-wrap d-flex">
                                 <div className="download-fine-invoice">
                                     {formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1]} <DownloadOutlined onClick={() => handleDownload(formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1])} />
                                 </div>
@@ -391,7 +391,7 @@ const ViewSubContractorPo = () => {
                 </div>
             </div>
             {isModalOpen && <ChangeStatus po_id={id} poType={"subcontractor"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
-            {isStatusModalOpen && formData.po_creator && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
+            {isStatusModalOpen && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
         </>
     );
 };

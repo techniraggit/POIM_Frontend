@@ -15,7 +15,6 @@ import Roles from "@/components/Roles";
 import Filters from "@/components/Filters";
 
 const Vendor = ({ base_url }) => {
-    const [isIconClicked, setIsIconClicked] = useState(false);
     const [vendors, setVendors] = useState([]);
     const [totalVendor, setTotalVendor] = useState(0)
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,14 +22,6 @@ const Vendor = ({ base_url }) => {
     const [clickedIndex, setClickedIndex] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
-
-    useEffect(() => {
-        if (isIconClicked) {
-            document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
-        } else {
-            document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
-        }
-    }, [isIconClicked]);
 
     const getVendors = () => {
         const response = getVendorList(currentPage);
@@ -75,7 +66,6 @@ const Vendor = ({ base_url }) => {
         setViewVendorVisible((prevVisible) => (prevVisible === id ? null : id));
         setIsModalOpen(true);
         setClickedIndex(index);
-        setIsIconClicked(true);
     };
 
     const calculateStartingSerialNumber = () => {
@@ -192,7 +182,7 @@ const Vendor = ({ base_url }) => {
                         </div>
                     </div>
                 </div>
-                {isModalOpen && <View_Vendor setIsIconClicked={setIsIconClicked} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible}
+                {isModalOpen && <View_Vendor setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} vendor_id={isViewVendorVisible}
                     clickedIndex={clickedIndex}
                 />}
             </div>
