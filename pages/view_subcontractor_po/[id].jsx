@@ -381,7 +381,7 @@ const ViewSubContractorPo = () => {
                                     </Form.Item>
                                 </div>
                             </>}
-                            {formData.signed_contract && <div className="download-wrap d-flex">
+                            {formData.status === 'approved' && formData.signed_contract && <div className="download-wrap d-flex">
                                 <div className="download-fine-invoice">
                                     {formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1]} <DownloadOutlined onClick={() => handleDownload(formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1])} />
                                 </div>
