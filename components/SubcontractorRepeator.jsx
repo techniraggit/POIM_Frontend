@@ -220,7 +220,6 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                             ...formData,
                                             material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         });
-                                        console.log(calculateAmount, "===========")
                                         if(calculateAmount) {
                                             calculateAmount(0, index + 1);
                                         }

@@ -45,7 +45,10 @@ const ViewMaterialPo = () => {
         email: '',
         material_details: [{ ...repeatorData }]
     });
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState({
+        modalStatus: false,
+        action: ''
+    });
     const [isStatusModalOpen,setStatusModalOpen]=useState(false);
     const [history, setHistory] = useState([])
     const [refetch, setRefetch] = useState(true);
@@ -226,11 +229,17 @@ const ViewMaterialPo = () => {
                                     {
                                         formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
                                             <div className="mt-0 apr-rej-li d-flex">
-                                                <Button type="primary" className="approved-btn me-3" onClick={() => {
-                                                    setIsModalOpen(true);
+                                                <Button type="primary" className="approved-btn me-3" onClick={(event) => {
+                                                    setIsModalOpen({
+                                                        modalStatus: true,
+                                                        action: 'approved'
+                                                    })
                                                 }}>Approve</Button>
-                                                <Button type="primary" className="reject-btn" danger onClick={(event) => {
-                                                    handleStatusChange(event, 'rejected')
+                                                <Button type="primary" danger className="reject-btn" onClick={(event) => {
+                                                    setIsModalOpen({
+                                                        modalStatus: true,
+                                                        action: 'rejected'
+                                                    })
                                                 }}>Reject</Button>
                                             </div>
                                         </Roles>
@@ -277,7 +286,7 @@ const ViewMaterialPo = () => {
                     </div>
                 </div>
                 {isModalOpen && <ChangeStatus po_id={id} poType={"material"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
-                {isStatusModalOpen && <PoStatus data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
+                {isStatusModalOpen && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
             </div>
         </>
     );

@@ -6,14 +6,21 @@ import { base_url } from './constant';
 import withAuth from './PrivateRoute';
 
 
-const ProjectPopup = ({ project_id, setIsIconClicked }) => {
+const ProjectPopup = ({ project_id, show }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(true);
     const [projectData, setProjectData] = useState([])
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        setIsIconClicked(false);
+        document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
     };
+
+    useEffect(() => {
+        if(show) {
+            document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
+        }
+    }, [show]);
+
     useEffect(() => {
         const fetchRoles = async () => {
             try {

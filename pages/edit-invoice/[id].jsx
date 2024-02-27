@@ -29,7 +29,10 @@ const EditInvoice = () => {
     const [po, setPo] = useState('');
     const [refetch, setRefetch] = useState(true);
     const { approval_enabled } = useInvoice(invoice);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState({
+        modalStatus: false,
+        action: ''
+    });
     const router = useRouter();
     const { id } = router.query;
     const [form] = Form.useForm();
@@ -171,10 +174,16 @@ const EditInvoice = () => {
                                         <Roles action="approve_invoice">
                                             <div className="mt-0 apr-rej-li d-flex">
                                                 <Button type="primary" className="approved-btn me-3" onClick={(event) => {
-                                                    setIsModalOpen(true)
+                                                    setIsModalOpen({
+                                                        modalStatus: true,
+                                                        action: 'approved'
+                                                    })
                                                 }}>Approve</Button>
                                                 <Button type="primary" danger className="reject-btn" onClick={(event) => {
-                                                    handleStatusChange(event, 'rejected')
+                                                    setIsModalOpen({
+                                                        modalStatus: true,
+                                                        action: 'rejected'
+                                                    })
                                                 }}>Reject</Button>
                                             </div>
                                         </Roles>
@@ -364,7 +373,7 @@ const EditInvoice = () => {
                     </div>
                 </div>
             </div>
-            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+            {isModalOpen?.modalStatus && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
         </>
     )
 }

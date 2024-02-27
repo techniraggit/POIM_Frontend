@@ -18,16 +18,17 @@ import { saveAs } from "file-saver";
 const { TextArea } = Input;
 const { Option } = Select;
 
-const ViewInvoice = () => {
-    const [isIconClicked, setIsIconClicked] = useState(false);
-    
+const ViewInvoice = () => {    
     const [poNumber, setPoNumber] = useState([]);
     const [invoice, setInvoice] = useState({});
     const [po, setPo] = useState('');
     const [responseData, setResponseData] = useState([]);
     const [statusData, setStatusData] = useState();
     const { approval_enabled } = useInvoice(invoice);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState({
+        modalStatus: false,
+        action: ''
+    });
     const [refetch, setRefetch] = useState(true);
     const [isStatusModalOpen, setStatusModalOpen] = useState(false);
     const router = useRouter();
@@ -38,13 +39,6 @@ const ViewInvoice = () => {
 
     };
 
-    useEffect(() => {
-        if (isIconClicked) {
-            document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
-        } else {
-            document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
-        }
-    }, [isIconClicked]);
     useEffect(() => {
         if (id && refetch) {
             const response = fetchPoNumbr()
@@ -92,9 +86,8 @@ const ViewInvoice = () => {
         })
     }
 
-    const handleDownload = (id) => {
+    const handleDownload = (id, fileName) => {
         downloadInvoice(id).then((res) => {
-            const fileName = `invoice_${id}.pdf`;
             if (res?.data) {
                 saveAs(res.data, fileName);
             }
@@ -124,7 +117,6 @@ const ViewInvoice = () => {
             setStatusData([...invoice?.purchase_order?.co_approved_amount])
         }
         setStatusModalOpen(true);
-        setIsIconClicked(true);
     };
 
     return (
@@ -156,10 +148,16 @@ const ViewInvoice = () => {
                                         <Roles action="approve_invoice">
                                             <div className="mt-0 apr-rej-li d-flex">
                                                 <Button type="primary" className="approved-btn me-3" onClick={(event) => {
-                                                    setIsModalOpen(true)
+                                                    setIsModalOpen({
+                                                        modalStatus: true,
+                                                        action: 'approved'
+                                                    })
                                                 }}>Approve</Button>
                                                 <Button type="primary" danger className="reject-btn" onClick={(event) => {
-                                                    handleStatusChange(event, 'rejected')
+                                                    setIsModalOpen({
+                                                        modalStatus: true,
+                                                        action: 'rejected'
+                                                    })
                                                 }}>Reject</Button>
                                             </div>
                                         </Roles>
@@ -259,7 +257,7 @@ const ViewInvoice = () => {
                                                 <>
                                                     <div className="download-wrap d-flex">
                                                         <div className="download-fine-invoice">
-                                                            {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
+                                                            {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id, fileName)} />
                                                         </div>
                                                     </div>
                                                 </>
@@ -280,7 +278,7 @@ const ViewInvoice = () => {
             </div>
             {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen}  setIsModalOpen={setIsModalOpen} />}
             {isStatusModalOpen && <PoStatus 
-            setIsIconClicked={setIsIconClicked}
+            isStatusModalOpen={isStatusModalOpen}
             data={statusData || []}
             setStatusModalOpen={setStatusModalOpen} />}
         </>

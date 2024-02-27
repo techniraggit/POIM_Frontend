@@ -8,12 +8,12 @@ import { base_url } from './constant';
 import withAuth from './PrivateRoute';
 
 
-const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex,setIsIconClicked }) => {
+const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) => {
   const [vendorData, setVenndorData] = useState([])
   const [vendorcontact, setvendorcontact] = useState([])
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setIsIconClicked(false);
+    document.querySelector(".wrapper-main").classList.remove("hide-bg-wrap");
   };
 
   useEffect(() => {
@@ -31,6 +31,13 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex,setI
     }
     fetchRoles();
   }, [vendor_id])
+
+  useEffect(() => {
+    if(isModalOpen) {
+        document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
+    }
+  }, [isModalOpen]);
+
   return (
     <>
       {isModalOpen && (

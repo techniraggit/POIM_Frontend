@@ -1,48 +1,33 @@
-import { invoiceList, filterSearch, invoiceReportPdf, invoiceClear } from "@/apis/apis/adminApis";
+import { invoiceList, filterSearch, invoiceReportPdf } from "@/apis/apis/adminApis";
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
-import { Pagination, Button, Select } from 'antd';
+import { Pagination, Button } from 'antd';
 import React, { useEffect, useState } from "react";
 // import { saveAs } from "file-saver";
 import ReportHeader from "@/components/ReportHeader";
+import Filters from "@/components/Filters";
 
-const { Option } = Select;
 const invoiceReport = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
     const [invoiceTable, setInvoiceTable] = useState([]);
-    const [query, setQuery] = useState({
-        filter_by_po_type: "",
-        to_date: "",
-        from_date: '',
-        filter_by_po_status: ""
-    })
+
+    const getInvoices = () => {
+        invoiceList(currentPage).then((res) => {
+            if (res?.data?.results.status) {
+                setInvoiceTable(res.data.results.data || [])
+            }
+            setCount(res.data.count)
+        })
+    }
 
     useEffect(() => {
-        if (query.filter_by_po_type || query.filter_by_po_status || query.from_date || query.to_date) {
-            const queryString = new URLSearchParams({
-                ...query,
-                page: currentPage
-            }).toString();
-            const response = filterSearch(queryString);
-            response.then((res) => {
-                setCount(res.data.count)
-                setInvoiceTable(res.data.results.search_invoice_data)
-            })
-        } else {
-            invoiceList(currentPage).then((res) => {
-                if (res?.data?.results.status) {
-                    setInvoiceTable(res.data.results.data || [])
-                }
-                setCount(res.data.count)
-            })
-        }
-    }, [currentPage, query.filter_by_po_type, query.filter_by_po_status, query.from_date, query.to_date]);
+        getInvoices()
+    }, []);
 
-    const downloadPdf = () => {
+    const downloadPdf = (data) => {
         const queryString = new URLSearchParams({
-            ...query,
-            page: currentPage
+            ...data
         }).toString();
         const response = invoiceReportPdf(queryString);
         response.then((res) => {
@@ -57,18 +42,17 @@ const invoiceReport = () => {
         return (currentPage - 1) * 10 + 1;
     };
 
-    const handleFilterClearButton = () => {
-        setQuery(prevState => ({
-            ...prevState,
-            ['filter_by_po_status']: '',
-            ['to_date']: "",
-            ['from_date']: "",
-            ['filter_by_po_type']: ""
-        }))
-        invoiceClear().then((res) => {
-            setInvoiceTable(res.data.results.data)
-            setCount(res.data.count)
-        })
+    const applyFilters = (data) => {
+        if(typeof data === 'object' && Object.keys(data).length > 0) {
+            const queryString = new URLSearchParams({ ...data }).toString();
+            const response = filterSearch(queryString);
+            response.then((res) => {
+                setCount(res.data.count)
+                setInvoiceTable(res.data.results.search_invoice_data)
+            });
+        } else {
+            getInvoices();
+        }
     }
 
     return (
@@ -79,86 +63,7 @@ const invoiceReport = () => {
                     <Header heading="Invoice Report" />
                     <div class="bottom-wrapp">
                         <ReportHeader />
-                        <div class="filter-po-report">
-                            <form action="#" class="poreport-form">
-                                <div class="firstly-wrap">
-                                <div className="filter-main">
-
-                                    <p class="filt-er mb-0 me-4">Filter</p>
-                                    <div class="date-wrapp me-1"> <label for="">{query.from_date || "From Date"}</label>
-                                        <input type="date" class="input-date" placeholder=""
-                                            onChange={(event) => {
-                                                console.log(event.target, event)
-                                                const selectedDate = event.target.value;
-                                                setQuery(prevState => ({
-                                                    ...prevState,
-                                                    from_date: selectedDate
-                                                }));
-                                            }}
-
-                                            value={query['from_date']}
-                                        />
-                                    </div>
-                                    <div class="date-wrapp me-1"> <label for="">{query.to_date || "To Date"}</label>
-                                        <input type="date" class="input-date" placeholder=""
-                                            onChange={(event) => {
-                                                const selectedDate = event.target.value;
-                                                const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
-                                                setQuery(prevState => ({
-                                                    ...prevState,
-                                                    to_date: formattedDate
-                                                }));
-                                            }}
-
-                                            value={query['to_date']}
-                                        />
-                                    </div>
-                                    </div>
-                                    {/* <div class="wrapper-selected me-0 d-flex"> */}
-                                      
-                                        <div class="one-select ms-2">
-                                        <Select placeholder=" Type" id="po1"
-                                            className="line-select me-2"
-                                            onChange={(value) =>
-                                                setQuery(prevState => ({
-                                                    ...prevState,
-                                                    ['filter_by_po_type']: value
-                                                }))}
-                                            value={query['filter_by_po_type'] || "PO Type"}
-
-                                        >
-                                            <Option value="material">Material PO</Option>
-                                            <Option value="rental">Rental PO</Option>
-                                            <Option value="subcontractor">Sub Contractor PO</Option>
-                                        </Select>
-                                            <Select className="line-select me-2" placeholder="PO Status"
-                                                onChange={(value) =>
-                                                    setQuery(prevState => ({
-                                                        ...prevState,
-                                                        ['filter_by_po_status']: value
-                                                    }))}
-                                                value={query['filter_by_po_status'] || "PO Status"}
-
-                                            >
-                                                <Option value="pending">Pending</Option>
-                                                <Option value="approved">Approved</Option>
-                                                <Option value="rejected">Rejected</Option>
-                                            </Select>
-                                            <button type="submit" className="clear-button ms-3"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    handleFilterClearButton()
-                                                }}
-                                            >
-                                                Clear
-                                            </button>
-
-                                        </div>
-                                    {/* </div> */}
-                                </div>
-                                <Button type="submit" class="export-btn" onClick={downloadPdf}>Export To XLS</Button>
-                            </form>
-                        </div>
+                        <Filters fromDate={true} toDate={true} download={true} type={true} status={true} applyFilters={applyFilters} currentPage={currentPage} downloadPdf={downloadPdf} />
                         <div class="table-wrap vendor-wrap" id="space-report">
                             <div class="inner-table" id="inner-purchase">
                                 {Array.isArray(invoiceTable) && invoiceTable.length > 0 ? (
@@ -174,7 +79,6 @@ const invoiceReport = () => {
                                                 <th className="hedaings-tb">PM</th>
                                                 <th className="hedaings-tb">DM</th>
                                                 <th className="hedaings-tb">Po Creator</th>
-                                                {/* <th className="hedaings-tb">Action</th> */}
                                             </tr>
                                         </thead>
 
@@ -190,17 +94,9 @@ const invoiceReport = () => {
                                                     <td>{invoice.pm_approval_status}</td>
                                                     <td>{invoice.dm_approval_status}</td>
                                                     <td>{invoice.po_creator_approval_status}</td>
-                                                    {/* <td>
-                                                        <div class="icons-td justify-content-between"> <span>Turner Constructions</span>
-                                                            <div><EyeFilled />
-                                                            <DownloadOutlined />
-                                                            </div>
-                                                        </div>
-                                                    </td> */}
                                                 </tr>
                                             ))}
                                         </tbody>
-
                                     </table>
                                 ) : (
                                     <p className="no-data-p">No data found.</p>

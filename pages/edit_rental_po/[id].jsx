@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { getServerSideProps } from "@/components/mainVariable";
 import { PlusOutlined } from '@ant-design/icons';
 import { changeStatus, fetchPo, updatePo } from "@/apis/apis/adminApis";
-import { Form, Select, Button } from "antd";
+import { Form, Select, Button, message } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
 import Roles from "@/components/Roles";
@@ -18,7 +18,10 @@ const Edit_Rental_Po = () => {
     const [form] = Form.useForm();
     const router = useRouter();
     const { id } = router.query;
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState({
+        modalStatus: false,
+        action: ''
+    });
     const [refetch, setRefetch] = useState(true);
     const [formData, setFormData] = useState({
         po_type: '',
@@ -196,15 +199,20 @@ const Edit_Rental_Po = () => {
                             {
                                 formData.status === 'pending' && formData.can_change_status && <Roles action="approve_purchase_order">
                                 <div className="mt-0 apr-rej-li d-flex">
-                                    <Button type="primary" className="approved-btn me-3"  onClick={() => {
-                                        setIsModalOpen(true);
-                                    }}>Approve</Button>
-                                    <Button type="primary" className="reject-btn"   danger onClick={(event) => {
-                                        handleStatusChange(event, 'rejected')
-                                    }}>Reject</Button>
-                                </div>
-                                
-                            </Roles>
+                                        <Button type="primary" className="approved-btn me-3" onClick={(event) => {
+                                            setIsModalOpen({
+                                                modalStatus: true,
+                                                action: 'approved'
+                                            })
+                                        }}>Approve</Button>
+                                        <Button type="primary" danger className="reject-btn" onClick={(event) => {
+                                            setIsModalOpen({
+                                                modalStatus: true,
+                                                action: 'rejected'
+                                            })
+                                        }}>Reject</Button>
+                                    </div>
+                                </Roles>
                             }
                             </li>   
                         </ul>

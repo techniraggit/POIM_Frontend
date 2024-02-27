@@ -114,9 +114,11 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                 onChange={({ target: { value } }) => onChange('material_details', 
                                 { description: value }, 0)} /> */}
                                  <Input.TextArea 
-                   placeholder="description" rows="4" cols="50"
-                   onChange={({ target: { value } }) => onChange('material_details', 
-                   { description: value }, 0)} />
+                                    placeholder="description" rows="4" cols="50"
+                                    onChange={({ target: { value } }) => onChange('material_details', 
+                                    { description: value }, 0)}
+                                    readOnly={view}
+                                />
                         </Form.Item>
                     </div>
                 </div>
