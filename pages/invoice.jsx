@@ -57,7 +57,7 @@ const Invoice = () => {
                 <div className="inner-wrapper">
                     <Header heading='Invoice' />
                     <div className="bottom-wrapp-purchase">
-                        <ul className="list-icons">
+                        <ul className="list-icons mb-4">
                             {
                                 <Roles action="add_invoice">
                                     <li class="me-4 ">

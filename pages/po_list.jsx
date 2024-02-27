@@ -76,7 +76,7 @@ const PO_list = () => {
                     <Header heading="Purchase Order" />
 
                     <div className="bottom-wrapp">
-                        <ul className="list-icons">
+                        <ul className="list-icons mb-4">
                             <Roles action='add_purchase_order'>
                                 <li className="me-4">
                                     <Link href="/create-material-po" className="d-block mb-2"><PlusOutlined /></Link>
