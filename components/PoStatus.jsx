@@ -39,7 +39,7 @@ function PoStatus({ setStatusModalOpen, data, isStatusModalOpen }) {
                             {data.amount > 0 ? (
                                 <h5 className='sub-show '>Approved Co Amount <span className="po-span">- {data.amount}</span> </h5>
                             ) : null}
-                            <p>
+                            <p className='text-note-wrapper'>
                                 {data.notes || ' N/A'}
                             </p>
                         </div>
