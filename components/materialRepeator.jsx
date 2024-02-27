@@ -181,9 +181,9 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 )}
                 <div className="col-lg-4 col-md-6">
                     <div className="wrap-box">
-                        {(formData.material_details[0].material_for?.toLowerCase() === 'inventory' || formData.material_details[0].material_for?.toLowerCase() === 'supplies') && (
+                        {(formData.material_details[0]?.material_for?.toLowerCase() === 'inventory' || formData.material_details[0]?.material_for?.toLowerCase() === 'supplies') && (
                             <Form.Item
-                                label={formData.material_details[0].material_for?.toLowerCase() === 'inventory' ? "Inventory Code" : "GL Code"}
+                                label={formData.material_details[0]?.material_for?.toLowerCase() === 'inventory' ? "Inventory Code" : "GL Code"}
                                 name="code_0"
                                 htmlFor="file"
                                 className="same-clr"
@@ -201,7 +201,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 </div>
             </div>
             <div className="row">
-                {formData.material_details[0].material_for?.toLowerCase() === 'project' && (
+                {formData.material_details[0]?.material_for?.toLowerCase() === 'project' && (
                     <div class="col-sm-4">
                         <div className="selectwrap columns-select shipment-caret ">
                             <Form.Item
@@ -482,7 +482,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                 ...formData,
                                 material_details: [...formData.material_details, {
                                     ...repeatorData,
-                                    project_site_id: formData.material_details[0].project_site_id
+                                    project_site_id: formData.material_details[0]?.project_site_id
                                 }]
                             });
                         }} icon={<PlusOutlined />}>
