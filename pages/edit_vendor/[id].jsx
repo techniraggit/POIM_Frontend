@@ -37,7 +37,7 @@ const VendorEdit = () => {
                 if (res?.data?.status) {
                     const data = res.data?.vendors_details;
                     setFormData({
-                        status: res.data?.status,
+                        status: data?.status,
                         company_name: data.company_name,
                         state: data.state,
                         country: data.country,
@@ -125,7 +125,7 @@ const VendorEdit = () => {
                                     <i className="fa-solid fa-plus me-3 mt-0"></i>
                                     <span>Edit Vendor</span>
                                 </div>
-                                {!formData.status && <div className="mt-0 apr-rej-li d-flex">
+                                {formData.status === 'pending' && <div className="mt-0 apr-rej-li d-flex">
                                     <Button type="primary" className="approved-btn me-3" onClick={(event) => {
                                         handleVendorStatusChange('approved');
                                     }}>Approve</Button>
