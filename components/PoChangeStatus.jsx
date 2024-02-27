@@ -42,7 +42,9 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
           </div>
           <form class="details-main">
           <div className='approve'>
-              <p>Approved PO</p>
+              <p>
+              {isModalOpen.action === 'approved'? 'Approved PO':'Rejected PO'}
+              </p>
             </div>
             {
               poType === 'subcontractor' && isModalOpen.action === 'approved' && <div class="projct-details notes">
