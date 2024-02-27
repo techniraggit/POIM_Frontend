@@ -199,7 +199,7 @@ const ViewRentalPO = () => {
                                 </div>
                                 <div>
                                     {
-                                        formData.status === 'approved' && formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                        (formData.status === 'approved'|| formData.status === 'rejected') && formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
                                             PO Status
                                         </button>
                                     }
