@@ -366,9 +366,10 @@ const ViewSubContractorPo = () => {
                                     <Form.Item
                                         className="select-file-invoice"
                                         valuePropName="fileList"
-                                        getValueFromEvent={(e) => setContractFile(e.fileList[0].originFileObj)}
                                     >
-                                        <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
+                                        <Upload onChange={(e) => {
+                                            setContractFile(e.fileList[0].originFileObj);
+                                        }} beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
                                             <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
                                         </Upload>
                                     </Form.Item>

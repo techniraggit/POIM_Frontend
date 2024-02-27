@@ -96,6 +96,7 @@ const CreateInvoice = () => {
             ...form
         });
     }
+
     return (
         <>
             <div class="wrapper-main">
@@ -240,15 +241,14 @@ const CreateInvoice = () => {
                                             placeholder={`Please enter a note`} />
                                     </Form.Item>
                                     <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
-                                        {/* <span class="ant-input-group-addon">$</span> */}
                                         <Input
                                             onChange={({ target: { value } }) => onChange('invoice_amount', value)}
                                             placeholder={`Please enter amount`} addonBefore="$" />
+                                        <span className="error-msg" style={{color: 'red', display: parseFloat(responseData?.total_amount || 0) >= parseFloat(form?.invoice_amount || 0) ? 'none' : 'block'}}>Invoice amount cannot be greater than PO amount</span>
                                     </Form.Item>
 
-
                                     <Form.Item>
-                                        <Button type="primary" htmlType="submit" id="btn-submit">
+                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(form?.invoice_amount || 0))} type="primary" htmlType="submit" id="btn-submit">
                                             Submit
                                         </Button>
                                     </Form.Item>
