@@ -2,7 +2,7 @@ import '../styles/globals.css'
 import { GlobalContextProvider } from '../app/Context/UserContext';
 import { Provider, } from "react-redux";
 import { store } from "../redux/store";
-import Layout from './layout';
+import Layout from '../layouts/layout';
 
 function MyApp({ Component, pageProps }) {
   return (
