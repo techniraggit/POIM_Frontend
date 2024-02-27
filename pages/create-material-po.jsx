@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
 import { Form, Select, Button,message } from "antd";
 import PoForm from '../components/Form';
-import { Spin } from 'antd';
 
 const { Option } = Select;
 
@@ -42,7 +41,6 @@ const CreateMaterialPo = () => {
         email: '',
         material_details: [{ ...repeatorData }]
     });
-    const [loading, setLoading] = useState(false);
 
     const router = useRouter();
     const [form] = Form.useForm();
@@ -68,7 +66,6 @@ const CreateMaterialPo = () => {
         return totalAmount || 0;
     };
     const onFinish = () => {
-        setLoading(true);
         createPO({
             ...formData,
         }).then((res) => {
@@ -77,7 +74,6 @@ const CreateMaterialPo = () => {
             }
         })
             .catch((error) => {
-                setLoading(false);
                 message.error(error.response.data.message)
             })
     }
@@ -150,7 +146,6 @@ const CreateMaterialPo = () => {
                         </ul>
                         <div className="choose-potype round-wrap">
                             <div className="inner-choose">
-                            <Spin spinning={loading}>
                                 <Form onFinish={onFinish} form={form} className="file-form">
                                     <div className="row po-typeraw">
                                         <div className="col-lg-4 col-md-6">
@@ -196,13 +191,12 @@ const CreateMaterialPo = () => {
 
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
-                                            <Button type="primary" htmlType="submit" className="create-ven-butt" loading={loading}>
+                                            <Button type="primary" htmlType="submit" className="create-ven-butt" >
                                                 Create PO
                                             </Button>
                                         </Form.Item>
                                     </div>
                                 </Form>
-                                </Spin>
                             </div>
                         </div>
                     </div>

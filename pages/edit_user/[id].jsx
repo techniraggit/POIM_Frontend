@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { getServerSideProps } from "@/components/mainVariable";
 import DynamicTitle from '@/components/dynamic-title.jsx';
-import { Spin } from 'antd';
 import withAuth from "@/components/PrivateRoute";
 
 const { Option } = Select;
@@ -15,7 +14,6 @@ const EditUser = ({ base_url }) => {
     const [form] = Form.useForm();
     const router = useRouter();
     const { id } = router.query;
-    const [loading, setLoading] = useState(false);
     const [roles, setRoles] = useState([]);
 
     useEffect(() => {
@@ -31,9 +29,7 @@ const EditUser = ({ base_url }) => {
             }
         }
         fetchroles();
-        return () => {
-            setLoading(false);
-        };
+       
     }, [])
 
     useEffect(() => {
@@ -118,7 +114,6 @@ const EditUser = ({ base_url }) => {
                         </ul>
                         <div class="choose-potype round-wrap"><div class="inner-choose">
 
-                            <Spin spinning={loading}>
                                 <Form onFinish={onFinish} layout="vertical" form={form}
                                     labelCol={{ span: 8 }}
                                     wrapperCol={{ span: 16 }}
@@ -240,12 +235,11 @@ const EditUser = ({ base_url }) => {
                                         </div>
                                         <div className="col-12">
                                             <Form.Item >
-                                                <button type="submit" className="create-ven-butt" loading={loading}>Update</button>
+                                                <button type="submit" className="create-ven-butt" >Update</button>
                                             </Form.Item>
                                         </div>
                                     </div>
                                 </Form>
-                            </Spin>
                         </div>
                         </div>
 
