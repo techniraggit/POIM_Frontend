@@ -55,7 +55,7 @@ span.d-block.admin-menu {
 
 ul.list-dboard {
     padding: 20px 7px 25px;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     height: 100%;
 }
 
@@ -4091,6 +4091,7 @@ ul.list-icons.text-list-icons li {
 
     .aside-dashboard {
         width: 260px;
+        overflow-y: auto;
     }
 
     .user-div-wrap {
