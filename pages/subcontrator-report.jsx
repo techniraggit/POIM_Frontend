@@ -6,6 +6,7 @@ import { downloadSubcontractorReport, getSubcontractorReport } from "@/apis/apis
 import Filters from "@/components/Filters";
 import { saveAs } from "file-saver";
 import { Button, Pagination } from "antd";
+import withAuth from "@/components/PrivateRoute";
 
 const SubcontractorReport = () => {
     const [poList, setPoList] = useState([]);
@@ -137,5 +138,6 @@ const SubcontractorReport = () => {
         </>
     )
 }
+export default withAuth(['project manager', 'director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(SubcontractorReport)
 
-export default SubcontractorReport;
+// export default SubcontractorReport;

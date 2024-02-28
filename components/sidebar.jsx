@@ -132,7 +132,9 @@ const Sidebar = () => {
               <RightOutlined className='right-outline' />
             </Link>
             <ul className="reports-dropdown" style={{display: activeMenuItem === '/po-report' || activeMenuItem === '/user-report' || activeMenuItem === '/invoice-report' || activeMenuItem === '/subcontrator-report' ? 'block' : 'none'}}>
+              
               <li>
+              <Roles action='view_purchase_order'>
                 <Link href="/po-report">
                   <span className="db-span">
                     <span className={`active-img position-relative ${activeMenuItem === '/po-report' ? 'active' : ''}`}>
@@ -143,8 +145,10 @@ const Sidebar = () => {
                   </span>
                   <RightOutlined className='right-outline' />
                 </Link>
+                </Roles>
               </li>
               <li>
+              <Roles action='view_purchase_order'>
                 <Link href="/subcontrator-report">
                   <span className="db-span">
                     <span className={`active-img position-relative ${activeMenuItem === '/subcontrator-report' ? 'active' : ''}`}>
@@ -155,6 +159,7 @@ const Sidebar = () => {
                   </span>
                   <RightOutlined className='right-outline' />
                 </Link>
+                </Roles>
               </li>
               <li>
                 <Link href="/invoice-report">
@@ -169,6 +174,7 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li>
+              <Roles action='view_user'>
                 <Link href="/user-report">
                   <span className="db-span">
                     <span className={`active-img position-relative ${activeMenuItem === '/user-report' ? 'active' : ''}`}>
@@ -179,6 +185,7 @@ const Sidebar = () => {
                   </span>
                   <RightOutlined className='right-outline' />
                 </Link>
+                </Roles>
               </li>
             </ul>
 

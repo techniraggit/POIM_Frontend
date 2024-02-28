@@ -6,6 +6,7 @@ import { Pagination, Button } from 'antd';
 import ReportHeader from "@/components/ReportHeader";
 import { saveAs } from "file-saver";
 import Filters from "@/components/Filters";
+import withAuth from "@/components/PrivateRoute";
 
 const userReport = () => {
     const [users, setUsers] = useState([]);
@@ -129,5 +130,6 @@ const userReport = () => {
         </>
     )
 }
+export default withAuth(['admin', 'accounting', 'project manager', 'director', 'department manager'])(userReport);
 
-export default userReport
+// export default userReport
