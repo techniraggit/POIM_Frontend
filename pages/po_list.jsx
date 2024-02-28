@@ -59,8 +59,11 @@ const PO_list = () => {
         return (currentPage - 1) * 10 + 1;
     };
 
-    const handleDownload = (id, name) => {
-        const response = downloadContract(id);
+    const handleDownload = (id, name, contract_id) => {
+        const response = downloadContract({
+            id,
+            contract_id
+        });
         response.then((res) => {
             if(res.data) {
                 saveAs(res.data, name);
@@ -158,7 +161,7 @@ const PO_list = () => {
                                                                 <Link href={`/edit_subcontractor_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
                                                             )}
                                                         </Roles>
-                                                        {purchase.po_type === 'subcontractor' && purchase.signed_contract && <DownloadOutlined onClick={() => handleDownload(purchase.po_id, purchase.signed_contract?.split('/')[purchase.signed_contract?.split('/').length - 1])} />}
+                                                        {purchase.po_type === 'subcontractor' && purchase.signed_contract?.length > 0 && <DownloadOutlined onClick={() => handleDownload(purchase.po_id, purchase.signed_contract[0].contract_file?.split('/')[purchase.signed_contract[0].contract_file?.split('/').length - 1], purchase.signed_contract[0].contract_id)} />}
                                                     </td>
                                                 </tr>
                                             })
