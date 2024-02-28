@@ -3941,13 +3941,23 @@ ul.reports-dropdown li:hover a span, ul.reports-dropdown li a span.active {
     margin: 0 auto;
     background-color: #fff;
     padding: 25px 28px 8px;
-    position: absolute;
-    top: 6%;
-    left: 50%;
+    position: fixed;
+    top: 10%;
+    left: 60%;
     z-index: 9999;
-    transform: translate(-50%, 0%);
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transform: translate(-50%);
+    box-shadow: 0 7px 29px 0 hsla(240,5%,41%,.2);
 }
+.po-status-main-view {
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 25px 28px 8px;
+    position: absolute;
+    top: 25%;
+}
+
 p.text-note-wrapper {
     height: 140px;
     overflow-y: auto;
@@ -3966,6 +3976,26 @@ span.ant-spin-dot.ant-spin-dot-spin {
     height: 320px;
     overflow-y: auto;
 }
+
+.wrapin-form.add-clear-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wrapin-form div, .wrapin-form button {
+    margin-top: 10px;
+}
+
+.wrapin-form div {
+    margin-left: 10px
+}
+/* rj */
+.ant-spin-spinning {
+    z-index: 10 !important;
+    position: fixed !important;
+    top: 25% !important;
+    left: 50%;
+}/* rj */
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
@@ -4502,29 +4532,3 @@ li#report-li ul.reports-dropdown li {
     }
 }
 
-.wrapin-form.add-clear-wrap {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.wrapin-form div, .wrapin-form button {
-    margin-top: 10px;
-}
-
-.wrapin-form div {
-    margin-left: 10px
-}
-
-.po-status-main-view {
-    width: 600px;
-    max-width: 100%;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 25px 28px 8px;
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    z-index: 9999;
-    transform: translate(-50%, 0%);
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}

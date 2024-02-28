@@ -24,6 +24,10 @@ const Dashboard = () => {
         })
     }, [currentPage]);
 
+    const calculateStartingSerialNumber = () => {
+        return (currentPage - 1) * 10 + 1;
+    };
+
     return (
         <>
             <DynamicTitle title="Dashboard" />
@@ -80,7 +84,7 @@ const Dashboard = () => {
                                         {Array.isArray(purchaseOrders) && purchaseOrders.length > 0 ? (
                                             purchaseOrders.map((purchase, index) => (
                                                 <tr key={index}>
-                                                    <td>{index + 1}</td>
+                                                    <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{purchase.po_number}</td>
                                                     <td className="td-color">{purchase.po_type}</td>
                                                     <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
