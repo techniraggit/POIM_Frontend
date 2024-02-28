@@ -36,7 +36,7 @@ const SubcontractorReport = () => {
         const response = downloadSubcontractorReport(queryString);
         response.then((res) => {
             if (res.data) {
-                const fileName = `report.xlsx`;
+                const fileName = `subcontractor-report.xlsx`;
                 saveAs(res.data, fileName);
             }
         })
