@@ -29,14 +29,14 @@ const userReport = () => {
         return (currentPage - 1) * 10 + 1;
     };
 
-    const downloadPdf = () => {
+    const downloadPdf = (data) => {
         const queryString = new URLSearchParams({
             ...data
         }).toString();
         const response = userReportPdf(queryString);
         response.then((res) => {
             if (res.data) {
-                const fileName = `report.xls`;
+                const fileName = `user-report.xls`;
                 saveAs(res.data, fileName)
             }
         })
