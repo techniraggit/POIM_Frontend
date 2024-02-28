@@ -210,8 +210,11 @@ const ViewSubContractorPo = () => {
         return isPDF;
     };
 
-    const handleDownload = (name) => {
-        const response = downloadContract(id);
+    const handleDownload = (name, contract_id) => {
+        const response = downloadContract({
+            id: id,
+            contract_id
+        });
         response.then((res) => {
             if(res.data) {
                 saveAs(res.data, name);
@@ -362,7 +365,7 @@ const ViewSubContractorPo = () => {
                                     <PoForm formData={formData} view={true} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                 </Form>
                             </div>
-                            {!formData.signed_contract?.length > 0 && formData.status === 'approved'  && formData.po_creator && <>
+                            {formData.signed_contract?.length > 0 && formData.status === 'approved'  && formData.po_creator && <>
                                 <p>Upload Contract File</p>
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <Form.Item
@@ -385,9 +388,15 @@ const ViewSubContractorPo = () => {
                                 </div>
                             </>}
                             {formData.status === 'approved'  && formData.po_creator && formData.signed_contract?.length > 0 && <div className="download-wrap d-flex">
-                                <div className="download-fine-invoice">
-                                    {formData.signed_contract[0].contract_file?.split('/')[formData.signed_contract[0].contract_file?.split('/').length - 1]} <DownloadOutlined onClick={() => handleDownload(formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1])} />
-                                </div>
+                                {
+                                    formData.signed_contract.map((contract) => {
+                                        const split_file_name = contract.contract_file.split('/');
+                                        const fileName = split_file_name[split_file_name.length - 1];
+                                        return <div className="download-fine-invoice">
+                                            {fileName} <DownloadOutlined onClick={() => handleDownload(fileName, contract.contract_id)} />
+                                        </div>
+                                    })
+                                }
                             </div>}
                         </div>
                     </div>
