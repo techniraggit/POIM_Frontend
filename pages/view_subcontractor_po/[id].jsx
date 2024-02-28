@@ -44,7 +44,7 @@ const ViewSubContractorPo = () => {
         action: ''
     });
     const [refetch, setRefetch] = useState(true);
-    const [isStatusModalOpen,setStatusModalOpen]=useState(false);
+    const [isStatusModalOpen, setStatusModalOpen] = useState(false);
     const [contractFile, setContractFile] = useState(null)
 
     const router = useRouter();
@@ -60,7 +60,7 @@ const ViewSubContractorPo = () => {
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
-                        created_by:data.created_by,
+                        created_by: data.created_by,
                         can_change_status: res?.data?.can_change_status,
                         amount: data.total_amount,
                         po_date: data.po_date,
@@ -196,7 +196,7 @@ const ViewSubContractorPo = () => {
         console.log(contractFile)
         const response = uploadContract(formData);
         response.then((res) => {
-            if(res?.data?.status) {
+            if (res?.data?.status) {
                 setRefetch(true);
             }
         })
@@ -216,12 +216,12 @@ const ViewSubContractorPo = () => {
             contract_id
         });
         response.then((res) => {
-            if(res.data) {
+            if (res.data) {
                 saveAs(res.data, name);
             }
         })
     }
-    console.log(formData, formData?.signed_contract?.length,'ggggggggggggg');
+    console.log(formData, formData?.signed_contract?.length, 'ggggggggggggg');
     return (
         <>
             <div className="wrapper-main">
@@ -237,7 +237,7 @@ const ViewSubContractorPo = () => {
                                     <span>View Purchase Order</span>
                                 </div>
                                 {
-                                   ( formData.status === 'approved' || formData.status === 'rejected' )&& formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                    (formData.status === 'approved' || formData.status === 'rejected') && formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
                                         PO Status
                                     </button>
                                 }
@@ -365,9 +365,9 @@ const ViewSubContractorPo = () => {
                                     <PoForm formData={formData} view={true} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                 </Form>
                             </div>
-                            {formData.signed_contract?.length > 0 && formData.status === 'approved'  && formData.po_creator && <>
+                            {formData.status === 'approved' && formData.po_creator && <>
                                 <p>Upload Contract File</p>
-                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
                                     <Form.Item
                                         className="select-file-invoice"
                                         valuePropName="fileList"
@@ -387,7 +387,9 @@ const ViewSubContractorPo = () => {
                                     </Form.Item>
                                 </div>
                             </>}
-                            {formData.status === 'approved'  && formData.po_creator && formData.signed_contract?.length > 0 && <div className="download-wrap d-flex">
+                            {formData.status === 'approved' && formData.po_creator && formData.signed_contract?.length > 0 && <div className="download-wrap d-flex" style={{
+                                flexDirection: 'column', gap: 10, marginTop: 10
+                            }}>
                                 {
                                     formData.signed_contract.map((contract) => {
                                         const split_file_name = contract.contract_file.split('/');
