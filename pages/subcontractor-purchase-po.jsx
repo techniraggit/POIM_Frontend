@@ -4,6 +4,7 @@ import { Form, Button, Select } from "antd";
 import { PlusOutlined } from '@ant-design/icons'
 import '../styles/style.css'
 import Sidebar from '@/components/sidebar';
+import withAuth from '@/components/PrivateRoute';
 
 function SubcontractorPurchaseOrderForm() {
     return (
@@ -378,5 +379,4 @@ function SubcontractorPurchaseOrderForm() {
         </>
     )
 }
-
 export default SubcontractorPurchaseOrderForm;

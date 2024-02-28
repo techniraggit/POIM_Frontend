@@ -6,6 +6,7 @@ import { Pagination, Button, Select } from 'antd';
 import ReportHeader from "@/components/ReportHeader";
 import { saveAs } from "file-saver";
 import Filters from "@/components/Filters";
+import withAuth from "@/components/PrivateRoute";
 
 const purchaseOrderReport = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -178,4 +179,5 @@ const purchaseOrderReport = () => {
         </>
     )
 }
-export default purchaseOrderReport
+export default withAuth(['project manager', 'director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(purchaseOrderReport)
+// export default purchaseOrderReport
