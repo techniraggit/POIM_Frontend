@@ -78,9 +78,9 @@ const SubcontractorReport = () => {
                                                 <th class="hedaings-tb">PO Amount</th>
                                                 <th class="hedaings-tb">CO Approved Amt</th>
                                                 <th class="hedaings-tb">Invoice Received Month - Amt </th>
+                                                <th class="hedaings-tb">Total Contract Amt </th>
                                                 <th class="hedaings-tb">Total Invoice Amt </th>
-                                                <th class="hedaings-tb">Balance </th>
-                                                <th class="hedaings-tb">% Billed </th>
+                                                <th class="hedaings-tb">Balance</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -93,8 +93,9 @@ const SubcontractorReport = () => {
                                                         <td>{po.COApprovedAmt?.split('\n').join(' ,')}</td>
                                                         <td>{po.InvoiceReceivedMonthAmt?.split('\n').join(' ,')}</td>
                                                         <td>{po.total_contract_amt?.toFixed(2)}</td>
-                                                        <td>{po.balance?.toFixed(2)}</td>
+                                                        <td>{po.total_contract_amt?.toFixed(2)}</td>
                                                         <td>{po.total_invoice_received_amount?.toFixed(2)}</td>
+                                                        <td>{po.balance?.toFixed(2)}</td>
                                                     </tr>
                                                 )
                                             })}
