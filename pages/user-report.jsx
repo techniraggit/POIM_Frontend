@@ -29,7 +29,7 @@ const userReport = () => {
         return (currentPage - 1) * 10 + 1;
     };
 
-    const downloadPdf = () => {
+    const downloadPdf = (data) => {
         const queryString = new URLSearchParams({
             ...data
         }).toString();
