@@ -93,7 +93,6 @@ const SubcontractorReport = () => {
                                                         <td>{po.COApprovedAmt?.split('\n').join(' ,')}</td>
                                                         <td>{po.InvoiceReceivedMonthAmt?.split('\n').join(' ,')}</td>
                                                         <td>{po.total_contract_amt?.toFixed(2)}</td>
-                                                        <td>{po.total_contract_amt?.toFixed(2)}</td>
                                                         <td>{po.total_invoice_received_amount?.toFixed(2)}</td>
                                                         <td>{po.balance?.toFixed(2)}</td>
                                                     </tr>
