@@ -78,7 +78,7 @@ const PO_list = () => {
                 <div className="inner-wrapper">
                     <Header heading="Purchase Order" />
 
-                    <div className="bottom-wrapp">
+                    <div className="bottom-wrapp users-list-wrapin">
                         <ul className="list-icons mb-4">
                             <Roles action='add_purchase_order'>
                                 <li className="me-4">

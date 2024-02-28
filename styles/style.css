@@ -1184,8 +1184,9 @@ li.me-4 span {
     background: #FAFAFA 0% 0% no-repeat padding-box;
     color: #112F5C;
     padding: 6px 26px;
-    border-bottom-left-radius: 60px;
-    border-top-left-radius: 60px;
+    /* border-bottom-left-radius: 60px;
+    border-top-left-radius: 60px; */
+    border-radius: 60px;
 
 }
 
@@ -3947,10 +3948,54 @@ ul.reports-dropdown li:hover a span, ul.reports-dropdown li a span.active {
     transform: translate(-50%);
     box-shadow: 0 7px 29px 0 hsla(240,5%,41%,.2);
 }
+.po-status-main-view {
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 25px 28px 8px;
+    position: absolute;
+    top: 25%;
+}
+
 p.text-note-wrapper {
     height: 140px;
     overflow-y: auto;
 }
+span.ant-spin-dot.ant-spin-dot-spin {
+    z-index: 9999;
+}
+.ant-spin-nested-loading .ant-spin {
+    max-height: 100% !important;
+}
+.ant-spin-nested-loading .ant-spin span.ant-spin-dot {
+    /* transform: translate(-50%, -50%) !important; */
+    left: 50%;
+}
+.inner-viewpopup {
+    height: 320px;
+    overflow-y: auto;
+}
+
+.wrapin-form.add-clear-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wrapin-form div, .wrapin-form button {
+    margin-top: 10px;
+}
+
+.wrapin-form div {
+    margin-left: 10px
+}
+/* rj */
+.ant-spin-spinning {
+    z-index: 10 !important;
+    position: fixed !important;
+    top: 25% !important;
+    left: 50%;
+}/* rj */
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
@@ -3987,6 +4032,9 @@ ul.list-icons.text-list-icons li {
     padding: 10px 10px;
 }
 @media (max-width: 1299px) {
+    .inner-wrapper {
+        width: calc(100% - 260px);
+    }
 
     li#report-li ul.reports-dropdown li {
         background-color: transparent;
@@ -4134,7 +4182,9 @@ span.text-sizes {
     .aside-dashboard {
         width: 230px;
     }
-
+    .inner-wrapper {
+        width: calc(100% - 230px);
+    }
     span.db-span img {
         max-width: 15px;
         margin-right: 15px !important;
@@ -4148,9 +4198,6 @@ span.text-sizes {
         font-size: 14px;
     }
 
-    .inner-wrapper {
-        width: calc(100% - 280px);
-    }
 
     .bottom-wrapp {
         padding-top: 26px;
@@ -4485,22 +4532,3 @@ li#report-li ul.reports-dropdown li {
     }
 }
 
-.wrapin-form.add-clear-wrap {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.wrapin-form div, .wrapin-form button {
-    margin-top: 10px;
-}
-
-.wrapin-form div {
-    margin-left: 10px
-}
-
-.ant-spin-spinning {
-    z-index: 10 !important;
-    position: fixed !important;
-    top: 25% !important;
-    left: 50%;
-}

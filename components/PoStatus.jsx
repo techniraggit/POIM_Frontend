@@ -31,6 +31,7 @@ function PoStatus({ setStatusModalOpen, data, isStatusModalOpen }) {
                     </div>
                     <h1>Status</h1>
                 </div>
+                <div className='inner-viewpopup'>
                 {
                     data.map((data) => {
                         return <div className='po-status-p'>
@@ -45,6 +46,7 @@ function PoStatus({ setStatusModalOpen, data, isStatusModalOpen }) {
                         </div>
                     })
                 }
+                </div>
             </div>
         </>
     )
