@@ -38,7 +38,7 @@ const purchaseOrderReport = () => {
         const response = poReport(queryString);
         response.then((res) => {
             if (res.data) {
-                const fileName = `report.xlsx`;
+                const fileName = `po-report.xlsx`;
                 saveAs(res.data, fileName);
             }
         })

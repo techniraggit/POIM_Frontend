@@ -32,7 +32,7 @@ const invoiceReport = () => {
         const response = invoiceReportPdf(queryString);
         response.then((res) => {
             if (res.data) {
-                const fileName = `report.xls`;
+                const fileName = `invoice-report.xls`;
                 saveAs(res.data, fileName)
             }
         })
