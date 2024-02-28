@@ -218,8 +218,7 @@ const ViewSubContractorPo = () => {
             }
         })
     }
-    console.log(formData.status === 'approved'  && formData.po_creator && formData.signed_contract,'hhh');
-    
+    console.log(formData, formData?.signed_contract?.length,'ggggggggggggg');
     return (
         <>
             <div className="wrapper-main">
@@ -363,7 +362,7 @@ const ViewSubContractorPo = () => {
                                     <PoForm formData={formData} view={true} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} />
                                 </Form>
                             </div>
-                            {!formData.signed_contract && formData.status === 'approved'  && formData.po_creator && <>
+                            {!formData.signed_contract?.length > 0 && formData.status === 'approved'  && formData.po_creator && <>
                                 <p>Upload Contract File</p>
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <Form.Item
@@ -385,9 +384,9 @@ const ViewSubContractorPo = () => {
                                     </Form.Item>
                                 </div>
                             </>}
-                            {formData.status === 'approved'  && formData.po_creator && formData.signed_contract && <div className="download-wrap d-flex">
+                            {formData.status === 'approved'  && formData.po_creator && formData.signed_contract?.length > 0 && <div className="download-wrap d-flex">
                                 <div className="download-fine-invoice">
-                                    {formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1]} <DownloadOutlined onClick={() => handleDownload(formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1])} />
+                                    {formData.signed_contract[0].contract_file?.split('/')[formData.signed_contract[0].contract_file?.split('/').length - 1]} <DownloadOutlined onClick={() => handleDownload(formData.signed_contract?.split('/')[formData.signed_contract?.split('/').length - 1])} />
                                 </div>
                             </div>}
                         </div>
