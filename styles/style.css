@@ -3940,12 +3940,12 @@ ul.reports-dropdown li:hover a span, ul.reports-dropdown li a span.active {
     margin: 0 auto;
     background-color: #fff;
     padding: 25px 28px 8px;
-    position: absolute;
-    top: 6%;
-    left: 50%;
+    position: fixed;
+    top: 10%;
+    left: 60%;
     z-index: 9999;
-    transform: translate(-50%, 0%);
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transform: translate(-50%);
+    box-shadow: 0 7px 29px 0 hsla(240,5%,41%,.2);
 }
 p.text-note-wrapper {
     height: 140px;
@@ -4496,20 +4496,6 @@ li#report-li ul.reports-dropdown li {
 
 .wrapin-form div {
     margin-left: 10px
-}
-
-.po-status-main-view {
-    width: 600px;
-    max-width: 100%;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 25px 28px 8px;
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    z-index: 9999;
-    transform: translate(-50%, 0%);
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .ant-spin-spinning {
