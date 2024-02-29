@@ -167,7 +167,7 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
                 >
                     Clear
                 </button>
-                {download && <Button type="submit" class="export-btn" onClick={() => {
+                {download && <Button type="submit" class="export-btn" id="xyz" onClick={() => {
                     downloadPdf({
                         ...query,
                         query: inputValue
