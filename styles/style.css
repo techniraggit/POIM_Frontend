@@ -4163,7 +4163,18 @@ span.text-sizes {
 }
 
 
-
+/* 29 feb */
+button#xyz {
+    height: 40px;
+    border: none;
+    font-size: 16px;
+    padding: 6px 32px;
+    border-radius: 50px;
+    background-color: #e91d26;
+    color: #fff;
+    margin-left: 10px;
+}
+/* 29 feb */
 
 /* .read {
     background-color: green;
@@ -4223,8 +4234,6 @@ span.text-sizes {
 }
 
 @media (max-width: 992px) {
-
-    
 
     p.no-data-p {
         margin-left: 16px;
