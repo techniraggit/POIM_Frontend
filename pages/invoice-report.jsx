@@ -32,7 +32,7 @@ const invoiceReport = () => {
         const response = invoiceReportPdf(queryString);
         response.then((res) => {
             if (res.data) {
-                const fileName = `report.xls`;
+                const fileName = `invoice-report.xls`;
                 saveAs(res.data, fileName)
             }
         })
@@ -81,7 +81,6 @@ const invoiceReport = () => {
                                                 <th className="hedaings-tb">Po Creator</th>
                                             </tr>
                                         </thead>
-
                                         <tbody>
                                             {invoiceTable.map((invoice, index) => (
                                                 <tr key={index}>
@@ -130,7 +129,6 @@ const invoiceReport = () => {
                                 onShowSizeChange={() => setCurrentPage(+1)}
                                 total={count}
                                 pageSize={10} // Number of items per page
-
                             />
                         </div>
                     </div>

@@ -6,6 +6,7 @@ import { downloadSubcontractorReport, getSubcontractorReport } from "@/apis/apis
 import Filters from "@/components/Filters";
 import { saveAs } from "file-saver";
 import { Button, Pagination } from "antd";
+import withAuth from "@/components/PrivateRoute";
 
 const SubcontractorReport = () => {
     const [poList, setPoList] = useState([]);
@@ -36,7 +37,7 @@ const SubcontractorReport = () => {
         const response = downloadSubcontractorReport(queryString);
         response.then((res) => {
             if (res.data) {
-                const fileName = `report.xlsx`;
+                const fileName = `subcontractor-report.xlsx`;
                 saveAs(res.data, fileName);
             }
         })
@@ -78,9 +79,9 @@ const SubcontractorReport = () => {
                                                 <th class="hedaings-tb">PO Amount</th>
                                                 <th class="hedaings-tb">CO Approved Amt</th>
                                                 <th class="hedaings-tb">Invoice Received Month - Amt </th>
+                                                <th class="hedaings-tb">Total Contract Amt </th>
                                                 <th class="hedaings-tb">Total Invoice Amt </th>
-                                                <th class="hedaings-tb">Balance </th>
-                                                <th class="hedaings-tb">% Billed </th>
+                                                <th class="hedaings-tb">Balance</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -93,8 +94,8 @@ const SubcontractorReport = () => {
                                                         <td>{po.COApprovedAmt?.split('\n').join(' ,')}</td>
                                                         <td>{po.InvoiceReceivedMonthAmt?.split('\n').join(' ,')}</td>
                                                         <td>{po.total_contract_amt?.toFixed(2)}</td>
-                                                        <td>{po.balance?.toFixed(2)}</td>
                                                         <td>{po.total_invoice_received_amount?.toFixed(2)}</td>
+                                                        <td>{po.balance?.toFixed(2)}</td>
                                                     </tr>
                                                 )
                                             })}
@@ -137,5 +138,6 @@ const SubcontractorReport = () => {
         </>
     )
 }
+export default withAuth(['project manager', 'director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(SubcontractorReport)
 
-export default SubcontractorReport;
+// export default SubcontractorReport;
