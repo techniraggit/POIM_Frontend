@@ -14,7 +14,8 @@ import { saveAs } from "file-saver";
 const PO_list = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState('');
+    const [refetch, setRefetch] = useState(true);
 
     const getPos = () => {
         getPoList(currentPage).then((res) => {
@@ -22,12 +23,15 @@ const PO_list = () => {
                 setPurchaseOrders(res.data.results.data || []);
                 setCount(res.data.count)
             }
+            setRefetch(false);
         })
     }
 
     useEffect(() => {
-        getPos();
-    }, []);
+        if(refetch) {
+            getPos();
+        }
+    }, [refetch]);
 
     const applyFilters = (data) => {
         if(typeof data === 'object' && Object.keys(data).length > 0) {
@@ -49,6 +53,7 @@ const PO_list = () => {
             if (res?.data?.status) {
                 message.success('Purchase Order deleted successfully.');
                 setPurchaseOrders(prepo => prepo.filter(po => po.po_id !== id));
+                setRefetch(true);
             }
         })
     };

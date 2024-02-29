@@ -205,7 +205,6 @@ const CreateInvoice = () => {
                                                             name={`invoice_file` + index}
                                                             className="select-file-invoice mb-custom"
                                                             valuePropName="fileList"
-                                                            rules={[{ required: true, message: 'Please select a file' }]}
                                                             getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
                                                         >
                                                             <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
