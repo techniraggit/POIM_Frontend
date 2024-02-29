@@ -7,6 +7,7 @@ import DynamicTitle from '@/components/dynamic-title.jsx';
 import withAuth from "@/components/PrivateRoute";
 import { changeVendorStatus, fetchVendorDetails, updateVendorDetails } from "@/apis/apis/adminApis";
 import VendorForm from "@/components/VendorForm";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const repeatorData = {
     id: "",
@@ -17,6 +18,7 @@ const repeatorData = {
 
 const VendorEdit = () => {
     const [form] = Form.useForm();
+    const { user } = useGlobalContext();
     const router = useRouter();
     const { id } = router.query;
     const [refetch, setRefetch] = useState(true);
@@ -133,6 +135,16 @@ const VendorEdit = () => {
                                         handleVendorStatusChange('rejected');
                                     }}>Reject</Button>
                                 </div>}
+                                {
+                                    user.role === "admin" && formData.status === 'rejected' && <button style={{backgroundColor: 'red'}} className="po-status-btn">
+                                        Rejected
+                                    </button>
+                                }
+                                {
+                                    user.role === "admin" && formData.status === 'approved' && <button className="po-status-btn">
+                                        Approved
+                                    </button>
+                                }
                             </li>
                         </ul>
 

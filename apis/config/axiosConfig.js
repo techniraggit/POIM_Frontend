@@ -15,6 +15,11 @@ Axios.interceptors.request.use(function (config) {
     if(token) {
         config.headers.Authorization = `Bearer ${token}`
     }
+
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    // console.log("timeZone === ", timeZone, typeof(timeZone))
+    config.headers['Timezone'] = timeZone;
+
     config.signal = abortController.signal;
     return config;
 }, function (error) {
