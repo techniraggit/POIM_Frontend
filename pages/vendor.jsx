@@ -126,6 +126,7 @@ const Vendor = ({ base_url }) => {
                                                     <td>{vendor.vendor_contact[0].name}</td>
                                                     <td>{vendor.country}</td>
                                                     <td>{vendor.state}</td>
+                                                    
                                                     <td className="td-icon-color">
                                                         <Roles action='view_vendor'>
                                                             <EyeFilled onClick={() => handleIconClick(vendor.vendor_id, index)} />

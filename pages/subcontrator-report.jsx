@@ -6,6 +6,7 @@ import { downloadSubcontractorReport, getSubcontractorReport } from "@/apis/apis
 import Filters from "@/components/Filters";
 import { saveAs } from "file-saver";
 import { Button, Pagination } from "antd";
+import withAuth from "@/components/PrivateRoute";
 
 const SubcontractorReport = () => {
     const [poList, setPoList] = useState([]);
@@ -18,6 +19,7 @@ const SubcontractorReport = () => {
         }).toString();
         const response = getSubcontractorReport(queryString);
         response.then((res) => {
+            console.log(res.data,'lllllllllllllllll');
             if(res?.status === 200) {
                 setPoList([...res?.data?.results?.data]);
                 setCount(res.data.count);
@@ -81,6 +83,7 @@ const SubcontractorReport = () => {
                                                 <th class="hedaings-tb">Total Contract Amt </th>
                                                 <th class="hedaings-tb">Total Invoice Amt </th>
                                                 <th class="hedaings-tb">Balance</th>
+                                                <th class="hedaings-tb">Billed</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -90,11 +93,12 @@ const SubcontractorReport = () => {
                                                         <td>{calculateStartingSerialNumber() + index}</td>
                                                         <td>{po.po_number}</td>
                                                         <td>{po.po_amount?.toFixed(2)}</td>
-                                                        <td>{po.COApprovedAmt?.split('\n').join(' ,')}</td>
-                                                        <td>{po.InvoiceReceivedMonthAmt?.split('\n').join(' ,')}</td>
+                                                        <td>{po.COApprovedAmt?.split('\n').join(' ,') || '-'}</td>
+                                                        <td>{po.InvoiceReceivedMonthAmt?.split('\n').join(' ,') ||'-'}</td>
                                                         <td>{po.total_contract_amt?.toFixed(2)}</td>
                                                         <td>{po.total_invoice_received_amount?.toFixed(2)}</td>
                                                         <td>{po.balance?.toFixed(2)}</td>
+                                                        <td>{po.percent_billed}</td>
                                                     </tr>
                                                 )
                                             })}
@@ -104,7 +108,6 @@ const SubcontractorReport = () => {
                             </div>
                             <div className="pagination-container">
                                 <Pagination
-                                    // defaultCurrent={2}
                                     current={currentPage}
                                     onChange={setCurrentPage}
                                     showSizeChanger={true}
@@ -137,5 +140,6 @@ const SubcontractorReport = () => {
         </>
     )
 }
+export default withAuth(['project manager', 'director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(SubcontractorReport)
 
-export default SubcontractorReport;
+// export default SubcontractorReport;

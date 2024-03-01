@@ -62,7 +62,7 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
   return (
     <div className="filter-wrapper">
         <div className="filter-main">
-            <div className="wrapin-form add-clear-wrap mt-0">
+            <div className="wrapin-form add-clear-wrap mt-0 ps-3">
                 {search && <input className="vendor-input" placeholder="Search"
                     value={inputValue} onChange={(event) => setInputValue(event.target.value)}
                 />}
@@ -167,7 +167,7 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
                 >
                     Clear
                 </button>
-                {download && <Button type="submit" class="export-btn" onClick={() => {
+                {download && <Button type="submit" class="export-btn" id="xyz" onClick={() => {
                     downloadPdf({
                         ...query,
                         query: inputValue

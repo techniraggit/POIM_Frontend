@@ -96,7 +96,7 @@ const CreateInvoice = () => {
             ...form
         });
     }
-
+    console.log(form.invoice_files, form?.invoice_files?.some((file) => file.invoice_file === ''))
     return (
         <>
             <div class="wrapper-main">
@@ -205,8 +205,8 @@ const CreateInvoice = () => {
                                                             name={`invoice_file` + index}
                                                             className="select-file-invoice mb-custom"
                                                             valuePropName="fileList"
-                                                            rules={[{ required: true, message: 'Please select a file' }]}
-                                                            getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
+                                                            rules={[{ required: form?.invoice_files[index]?.invoice_file === '', message: 'Please select a file' }]}
+                                                            getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0]?.originFileObj, index)}
                                                         >
                                                             <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
                                                                 <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
