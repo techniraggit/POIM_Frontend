@@ -2,6 +2,7 @@ import axios from 'axios';
 import { base_url } from '@/components/constant';
 import { store } from '../../redux/store';
 import { SET_LOADING } from '../../redux/store';
+import moment from 'moment-timezone';
 
 const Axios = axios.create({
     baseURL: base_url
@@ -16,8 +17,10 @@ Axios.interceptors.request.use(function (config) {
         config.headers.Authorization = `Bearer ${token}`
     }
 
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const timeZone = moment.tz.guess(); 
     config.headers['Timezone'] = timeZone;
+    // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    // config.headers['Timezone'] = timeZone;
 
     config.signal = abortController.signal;
     return config;
