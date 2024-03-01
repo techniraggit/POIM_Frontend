@@ -95,6 +95,12 @@ const CreateMaterialPo = () => {
     }
 
     const onChange = (name, value, index) => {
+        if(name==='shipment_type'){
+            formData?.material_details.forEach((material, index) => {
+                form.setFieldValue('material_for' + (index), '')
+                formData.material_details[index].material_for = '';
+            })
+        }
         if (name === 'material_details') {
             const materalDetails = formData.material_details[index];
             Object.keys(value).forEach((key) => {
