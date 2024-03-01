@@ -3996,6 +3996,30 @@ span.ant-spin-dot.ant-spin-dot-spin {
     top: 25% !important;
     left: 50%;
 }/* rj */
+/* 29 feb */
+button#xls-btn{
+    height: 40px;
+    border: none;
+    font-size: 16px;
+    padding: 6px 32px;
+    border-radius: 50px;
+    background-color: #e91d26;
+    color: #fff;
+    margin-left: 10px;
+}
+/* 29 feb */
+/* 1 march */
+.po-status-main-view {
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 25px 28px 8px;
+    left: 50%;
+    position: absolute;
+    top: 25%;
+}
+/* 1 march */
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
@@ -4163,18 +4187,9 @@ span.text-sizes {
 }
 
 
-/* 29 feb */
-button#xyz {
-    height: 40px;
-    border: none;
-    font-size: 16px;
-    padding: 6px 32px;
-    border-radius: 50px;
-    background-color: #e91d26;
-    color: #fff;
-    margin-left: 10px;
-}
-/* 29 feb */
+
+
+
 
 /* .read {
     background-color: green;
