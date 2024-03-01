@@ -156,33 +156,13 @@ const EditMaterialPo = () => {
             message.error(error.response.data.message)
         })
     }
-
-    // const onChange = (name, value, index) => {
-    //     if (name === 'material_details') {
-    //         const materalDetails = formData.material_details[index];
-    //         Object.keys(value).forEach((key) => {
-    //             materalDetails[key] = value[key];
-    //         });
-
-    //         if (value.unit_price) {
-    //             calculateAmount(formData.material_details[index].quantity, value.unit_price, index);
-    //         }
-    //         if (value.quantity) {
-    //             calculateAmount(value.quantity, formData.material_details[index].unit_price, index);
-    //         }
-    //         formData.material_details[index] = {
-    //             ...materalDetails
-    //         };
-    //     } else {
-    //         formData[name] = value;
-    //     }
-    //     setFormData({
-    //         ...formData
-    //     });
-    // }
-
-
      const onChange = (name, value, index) => {
+        if(name==='shipment_type'){
+            formData?.material_details.forEach((material, index) => {
+                form.setFieldValue('material_for' + (index), '')
+                formData.material_details[index].material_for = '';
+            })
+        }
         if (name === 'material_details') {
             const materalDetails = formData.material_details[index];
             Object.keys(value).forEach((key) => {
