@@ -103,7 +103,16 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         }
     };
 
-    const fetchVendorContactDropdown = (id) => {
+    const fetchVendorContactDropdown = (id, reset) => {
+        if(reset) {
+            form.setFieldValue('vendor_contact_id', '');
+            form.setFieldValue('company_name', '');
+            form.setFieldValue('email', '');
+            form.setFieldValue('phone', ''); 
+            form.setFieldValue('address', '');
+            form.setFieldValue('state', '');
+            form.setFieldValue('country', '');
+        }
         const response = fetchVendorContacts(id);
         response.then((res) => {
             if (res?.data?.status) {
@@ -215,7 +224,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     placeholder="Select"
                                     className="js-states form-control file-wrap-select"
                                     onChange={(value) => {
-                                        fetchVendorContactDropdown(value)
+                                        fetchVendorContactDropdown(value, true)
                                         onChange('vendor_id', value);
                                     }}
                                 >
