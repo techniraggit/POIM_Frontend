@@ -19,7 +19,6 @@ const SubcontractorReport = () => {
         }).toString();
         const response = getSubcontractorReport(queryString);
         response.then((res) => {
-            console.log(res.data,'lllllllllllllllll');
             if(res?.status === 200) {
                 setPoList([...res?.data?.results?.data]);
                 setCount(res.data.count);

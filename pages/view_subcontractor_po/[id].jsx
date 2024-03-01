@@ -193,7 +193,6 @@ const ViewSubContractorPo = () => {
         const formData = new FormData();
         formData.append('po_id', id);
         formData.append('contract_file', contractFile);
-        console.log(contractFile)
         const response = uploadContract(formData);
         response.then((res) => {
             if (res?.data?.status) {
@@ -221,7 +220,6 @@ const ViewSubContractorPo = () => {
             }
         })
     }
-    console.log(formData, formData?.signed_contract?.length, 'ggggggggggggg');
     return (
         <>
             <div className="wrapper-main">

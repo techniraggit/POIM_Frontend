@@ -17,7 +17,6 @@ Axios.interceptors.request.use(function (config) {
     }
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    // console.log("timeZone === ", timeZone, typeof(timeZone))
     config.headers['Timezone'] = timeZone;
 
     config.signal = abortController.signal;
