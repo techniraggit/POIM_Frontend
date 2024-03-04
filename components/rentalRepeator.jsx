@@ -38,6 +38,17 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
         }
     };
 
+
+
+    // const handleAmountChange = (e) => {
+    //     const { value } = e.target;
+    //     const formattedValue = parseFloat(value.replace(/\D/g, "")).toLocaleString();
+    //     console.log(formattedValue,'gggggggggggggggggggg');
+
+        
+    //     onChange('material_details', { amount: formattedValue }, 0);
+    // };
+
     return (
         <div class="row">
             <div class="col-12 space-col-spc mb-3">
@@ -101,7 +112,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                         <Form.Item
                             label="Amount"
                             for="name"
-                            name="amount"
+                            name="amount0"
                             rules={[
                                 {
                                     required: true,
@@ -112,7 +123,14 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             <Input
                                 readOnly={view}
                                 addonBefore="$"
-                                placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
+                                placeholder="Amount" 
+                                // onChange={handleAmountChange} 
+                               
+                                onChange={({ target: { value } }) => {
+                                    form.setFieldValue('amount0', parseFloat(value.replace(/,/g, '')).toLocaleString())
+                                    onChange('material_details', { amount: value }, 0)
+                                }} 
+                                />
                         </Form.Item>
                     </div>
                 </div>
@@ -162,6 +180,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                     <div key={key} className="wrap-box dollor-inputs">
                                                         <Form.Item
                                                             label={upperKey}
+                                                            name='amount'
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                         >
                                                             <Input
@@ -170,7 +189,11 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 name={key + index}
-                                                                onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+                                                                onChange={({ target: { value } }) => {
+                                                                    form.setFieldValue('amount', parseFloat(value.replace(/,/g, '')).toLocaleString())
+                                                                    onChange('material_details', { [key]: value }, index + 1)
+                                                                }} 
+                                                                // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             />
                                                         </Form.Item>
                                                     </div>

@@ -21,8 +21,9 @@ const repeatorData = {
 const CreateInvoice = () => {
     const [poNumber, setPoNumber] = useState([]);
     const [responseData, setResponseData] = useState([]);
-    const [po, setPo] = useState('')
-    const [form, setForm] = useState({
+    const [po, setPo] = useState('');
+    const [form] = Form.useForm();
+    const [formData, setFormData] = useState({
         comment: '',
         po_id: '',
         invoice_amount: '',
@@ -33,10 +34,10 @@ const CreateInvoice = () => {
 
     const onFinish = () => {
         const formData = new FormData();
-        formData.append('comment', form.comment);
-        formData.append('invoice_amount', form.invoice_amount);
-        formData.append('po_id', form.po_id);
-        form.invoice_files?.forEach((file, index) => {
+        formData.append('comment', formData.comment);
+        formData.append('invoice_amount', formData.invoice_amount);
+        formData.append('po_id', formData.po_id);
+        formData.invoice_files?.forEach((file, index) => {
             formData.append(`invoice_file_${index}`, file.invoice_file);
         })
 
@@ -64,8 +65,8 @@ const CreateInvoice = () => {
         const response = fetchPoNumbers(id)
         response.then((res) => {
             const data = res.data.data;
-            setForm({
-                ...form,
+            setFormData({
+                ...formData,
                 po_id: data.po_id,
             })
             setResponseData(data)
@@ -74,6 +75,8 @@ const CreateInvoice = () => {
     }
 
     const handlePoTypeChange =(value)=>{
+        form.setFieldValue('po_number', '');
+        setResponseData([]);
         setPo(value);
         setPoNumber([]);
     }
@@ -87,14 +90,13 @@ const CreateInvoice = () => {
     };
 
     const onChange = (name, value, index) => {
-        
         if (typeof index !== 'undefined') {
-            form.invoice_files[index][name] = value;
+            formData.invoice_files[index][name] = value;
         } else {
-            form[name] = value;
+            formData[name] = value;
         }
-        setForm({
-            ...form
+        setFormData({
+            ...formData
         });
     }
 
@@ -140,6 +142,7 @@ const CreateInvoice = () => {
                                 <Form
                                     name="antdForm"
                                     className="mt-5"
+                                    form={form}
                                     onFinish={onFinish}
                                 >
                                     <div className="row mb-4">
@@ -198,7 +201,7 @@ const CreateInvoice = () => {
                                         </div>
                                     </div>
                                     {
-                                        form.invoice_files?.map((data, index) => {
+                                        formData.invoice_files?.map((data, index) => {
                                             return (
                                                 <>
                                                     <div className="both-wrapinone d-flex align-items-center mb-3">
@@ -206,7 +209,7 @@ const CreateInvoice = () => {
                                                             name={`invoice_file` + index}
                                                             className="select-file-invoice mb-custom"
                                                             valuePropName="fileList"
-                                                            rules={[{ required: form?.invoice_files[index]?.invoice_file === '', message: 'Please select a file' }]}
+                                                            rules={[{ required: formData?.invoice_files[index]?.invoice_file === '', message: 'Please select a file' }]}
                                                             getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0]?.originFileObj, index)}
                                                         >
                                                             <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
@@ -215,9 +218,9 @@ const CreateInvoice = () => {
                                                         </Form.Item>
                                                         {
                                                             index > 0 && <MinusOutlined className="minus-wrap" onClick={() => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    invoice_files: [...form.invoice_files.slice(0, index), ...form.invoice_files.slice(index + 1)]
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    invoice_files: [...formData.invoice_files.slice(0, index), ...formData.invoice_files.slice(index + 1)]
                                                                 });
                                                             }} style={{ marginLeft: '8px' }} />
                                                         }
@@ -228,9 +231,9 @@ const CreateInvoice = () => {
                                     }
                                     <Form.Item>
                                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
-                                            setForm({
-                                                ...form,
-                                                invoice_files: [...form.invoice_files, { ...repeatorData }]
+                                            setFormData({
+                                                ...formData,
+                                                invoice_files: [...formData.invoice_files, { ...repeatorData }]
                                             });
                                         }} icon={<PlusOutlined />}>
                                             Add File
@@ -244,13 +247,16 @@ const CreateInvoice = () => {
                                     </Form.Item>
                                     <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
                                         <Input
-                                            onChange={({ target: { value } }) => onChange('invoice_amount', value)}
+                                            onChange={({ target: { value } }) => {
+                                            onChange('invoice_amount', value)
+                                            }
+                                        }
                                             placeholder={`Please enter amount`} addonBefore="$" />
-                                        <span className="error-msg" style={{color: 'red', display: parseFloat(responseData?.total_amount || 0) >= parseFloat(form?.invoice_amount || 0) ? 'none' : 'block'}}>Invoice amount cannot be greater than PO amount</span>
+                                        <span className="error-msg" style={{color: 'red', display: parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0) ? 'none' : 'block'}}>Invoice amount cannot be greater than PO amount</span>
                                     </Form.Item>
 
                                     <Form.Item>
-                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(form?.invoice_amount || 0))} type="primary" htmlType="submit" id="btn-submit">
+                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0))} type="primary" htmlType="submit" id="btn-submit">
                                             Submit
                                         </Button>
                                     </Form.Item>
