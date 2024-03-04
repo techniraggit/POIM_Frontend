@@ -87,8 +87,8 @@ const EditMaterialPo = () => {
                     form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
                     form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
                     form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
-                    form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
-                    form.setFieldValue('total_amount', data.total_amount);
+                    form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
+                    form.setFieldValue('total_amount', data.total_amount.toLocaleString());
                     form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
                     form.setFieldValue('poDate', moment(data.po_date));
                     form.setFieldValue('country', data.vendor_contact?.company.country);
@@ -109,7 +109,7 @@ const EditMaterialPo = () => {
                     data?.material_details.forEach((material, index) => {
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                         form.setFieldValue('material_for' + (index), material.material_for)
-                        form.setFieldValue('amount' + (index), material.amount)
+                        form.setFieldValue('amount' + (index), material.amount.toLocaleString())
                         form.setFieldValue('code_' + index, material.code)
                     })
                 }
@@ -138,8 +138,8 @@ const EditMaterialPo = () => {
         formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
         formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
         if (totalAmount > 0) {
-            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
         }
     }
 

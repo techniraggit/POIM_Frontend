@@ -128,7 +128,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                
                                 onChange={({ target: { value } }) => {
                                     form.setFieldValue('amount0', parseFloat(value.replace(/,/g, '')).toLocaleString())
-                                    onChange('material_details', { amount: value }, 0)
+                                    onChange('material_details', { amount: parseFloat(value.replace(/,/g, '')) }, 0)
                                 }} 
                                 />
                         </Form.Item>
@@ -190,8 +190,8 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                                 value={data[key]}
                                                                 name={key + index}
                                                                 onChange={({ target: { value } }) => {
-                                                                    form.setFieldValue('amount', parseFloat(value.replace(/,/g, '')).toLocaleString())
-                                                                    onChange('material_details', { [key]: value }, index + 1)
+                                                                    form.setFieldValue('amount' + (index + 1), parseFloat(value.replace(/,/g, '')).toLocaleString())
+                                                                    onChange('material_details', { [key]: parseFloat(value.replace(/,/g, '')) }, index + 1)
                                                                 }} 
                                                                 // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             />
