@@ -180,7 +180,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                     <div key={key} className="wrap-box dollor-inputs">
                                                         <Form.Item
                                                             label={upperKey}
-                                                            name='amount'
+                                                            name={'amount' + (index + 1)}
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                         >
                                                             <Input

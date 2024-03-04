@@ -88,7 +88,7 @@ const Edit_Rental_Po = () => {
                     form.setFieldValue('email', data.vendor_contact?.email);
                     form.setFieldValue('poNumber', data.po_number)
                     form.setFieldValue('shipment_type', data.shipment_type)
-                    form.setFieldValue('amount', data.material_details[0]?.amount)
+                    form.setFieldValue('amount0', data.material_details[0]?.amount)
                     form.setFieldValue('date', data.material_details[0]?.date)
                     form.setFieldValue('to', data.material_details[0]?.end_date)
                     form.setFieldValue('description', data.material_details[0]?.description)
