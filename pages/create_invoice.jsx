@@ -96,7 +96,6 @@ const CreateInvoice = () => {
             ...form
         });
     }
-    console.log(form.invoice_files, form?.invoice_files?.some((file) => file.invoice_file === ''))
     return (
         <>
             <div class="wrapper-main">

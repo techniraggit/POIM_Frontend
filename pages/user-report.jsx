@@ -37,7 +37,7 @@ const userReport = () => {
         const response = userReportPdf(queryString);
         response.then((res) => {
             if (res.data) {
-                const fileName = `user-report.xls`;
+                const fileName = `user-report.xlsx`;
                 saveAs(res.data, fileName)
             }
         })
