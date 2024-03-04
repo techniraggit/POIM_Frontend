@@ -60,7 +60,7 @@ const CreateMaterialPo = () => {
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
-            return total + parseFloat(item.amount);
+            return total + parseFloat(item.amount.replace(/,/g, ''));
         }, 0);
 
         return totalAmount || 0;
@@ -79,18 +79,18 @@ const CreateMaterialPo = () => {
     }
 
     const calculateAmount = (quantity, unit_price, index) => {
-        const amount = (parseFloat(quantity) * parseFloat(unit_price)) || 0;
+        const amount = ((parseFloat(quantity) * parseFloat(unit_price)).toLocaleString()) || 0;
         const materialDetails = formData.material_details[index];
         materialDetails.amount = amount;
         formData.material_details[index] = {
             ...materialDetails
         };
         const totalAmount = getTotalAmount();
-        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
+        formData.total_amount = totalAmount > 0 ? (totalAmount * 0.13 + totalAmount).toFixed(2) : formData.total_amount;
+        formData.hst_amount = totalAmount > 0 ? (totalAmount * 0.13).toFixed(2) : formData.hst_amount;
         if (totalAmount > 0) {
-            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+            form.setFieldsValue({ 'hst_amount': ((totalAmount * 0.13).toFixed(2)).toLocaleString() || 0 });
+            form.setFieldsValue({ 'total_amount': ((totalAmount * 0.13 + totalAmount).toFixed(2)).toLocaleString() || 0 });
         }
     }
 
@@ -125,7 +125,7 @@ const CreateMaterialPo = () => {
     }
 
     formData?.material_details.forEach((data, index) => {
-        form.setFieldValue(('amount' + (index)), data.amount)
+        form.setFieldValue(('amount' + (index)), data.amount.toLocaleString())
     })
 
     const handlePoTypeChange = (value) => {

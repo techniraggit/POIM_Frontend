@@ -74,7 +74,8 @@ const CreateInvoice = () => {
     }
 
     const handlePoTypeChange =(value)=>{
-        setPo(value)
+        setPo(value);
+        setPoNumber([]);
     }
 
     const beforeUpload = (file) => {
@@ -96,6 +97,7 @@ const CreateInvoice = () => {
             ...form
         });
     }
+
     return (
         <>
             <div class="wrapper-main">
