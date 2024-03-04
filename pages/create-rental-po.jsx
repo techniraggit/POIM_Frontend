@@ -77,6 +77,7 @@ const CreateRentalPo = () => {
     }
 
     const calculateAmount = (amount, index) => {
+       
         if(amount === 0 && index) {
             formData.material_details[index].amount = amount;
         }
@@ -84,8 +85,8 @@ const CreateRentalPo = () => {
         formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
         formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
         if (totalAmount > 0) {
-            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || '0.00' });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || '0.00' });
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
         }
     }
 

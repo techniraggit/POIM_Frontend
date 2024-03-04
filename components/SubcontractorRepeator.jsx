@@ -66,7 +66,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                         <Form.Item
                             label="Amount"
                             for="name"
-                            name="amount"
+                            name="amount0"
                             rules={[
                                 {
                                     required: true,
@@ -76,7 +76,12 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                         >
                             <Input placeholder="Amount" readOnly={view}
                                 addonBefore="$"
-                                onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
+                                onChange={({ target: { value } }) => {
+                                    form.setFieldValue('amount0', parseFloat(value.replace(/,/g, '')).toLocaleString())
+                                    onChange('material_details', { amount: value }, 0)
+                                }} 
+                                // onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} 
+                                />
                         </Form.Item>
                     </div>
                 </div>
@@ -127,6 +132,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                     <div key={key} className="wrap-box dollor-inputs">
                                                         <Form.Item
                                                             label={upperKey}
+                                                            name='amount'
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                         >
                                                             <Input
@@ -135,7 +141,11 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 name={key + index}
-                                                                onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+                                                                onChange={({ target: { value } }) => {
+                                                                    form.setFieldValue('amount', parseFloat(value.replace(/,/g, '')).toLocaleString())
+                                                                    onChange('material_details', { [key]: value }, index + 1)
+                                                                }} 
+                                                                // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             />
                                                         </Form.Item>
                                                     </div>

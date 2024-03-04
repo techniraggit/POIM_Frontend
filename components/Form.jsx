@@ -149,6 +149,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         };
     });
 
+    console.log(formData.total_amount.toLocaleString(),'total' );
+
     return (
         <>
             <div class="order-choose d-flex">
@@ -502,6 +504,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                         >
                             <Input
                                 addonBefore="$"
+                                value={formData.hst_amount.toLocaleString()}
+                                // value={formData.hst_amount ? formData.hst_amount.toLocaleString() : ''}
                                 readOnly placeholder="HST Amount" />
                         </Form.Item>
                     </div>
@@ -514,7 +518,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                         >
                             <Input
                                 addonBefore="$"
-                                readOnly placeholder="Total Amount" />
+                                readOnly placeholder="Total Amount"
+                                value={formData.total_amount ? formData.total_amount.toLocaleString() : ''} />
                         </Form.Item>
                     </div>
                 </div>
