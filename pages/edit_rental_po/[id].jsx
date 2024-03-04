@@ -78,8 +78,8 @@ const Edit_Rental_Po = () => {
                     form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                     form.setFieldValue('shipment_type', data.shipment_type);
                     form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
-                    form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
-                    form.setFieldValue('total_amount', data.total_amount);
+                    form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
+                    form.setFieldValue('total_amount', data.total_amount.toLocaleString());
                     form.setFieldValue('poDate', moment(data.po_date));
                     form.setFieldValue('country', data.vendor_contact?.company.country);
                     form.setFieldValue('state', data.vendor_contact?.company.state);
@@ -88,7 +88,6 @@ const Edit_Rental_Po = () => {
                     form.setFieldValue('email', data.vendor_contact?.email);
                     form.setFieldValue('poNumber', data.po_number)
                     form.setFieldValue('shipment_type', data.shipment_type)
-                    form.setFieldValue('amount0', data.material_details[0]?.amount)
                     form.setFieldValue('date', data.material_details[0]?.date)
                     form.setFieldValue('to', data.material_details[0]?.end_date)
                     form.setFieldValue('description', data.material_details[0]?.description)
@@ -100,6 +99,7 @@ const Edit_Rental_Po = () => {
                         form.setFieldValue('material_for' + (index), material.material_for)
                         form.setFieldValue('project_id' + (index), material.project?.project_id)
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                        form.setFieldValue('amount' + (index), material.amount.toLocaleString())
                     })
                 }
             });
