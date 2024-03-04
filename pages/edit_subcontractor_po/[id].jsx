@@ -101,7 +101,7 @@ const EditSubContractorPo = () => {
                     form.setFieldValue('email', data.vendor_contact.email);
                     form.setFieldValue('poNumber', data.po_number)
                     form.setFieldValue('shipment_type', data.shipment_type || 'project related')
-                    form.setFieldValue('amount', data.material_details[0]?.amount)
+                    form.setFieldValue('amount0', data.material_details[0]?.amount)
                     form.setFieldValue('description', data.material_details[0]?.description)
                     form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                     form.setFieldValue('first_name', data.created_by.first_name)
