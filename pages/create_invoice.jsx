@@ -246,7 +246,7 @@ const CreateInvoice = () => {
                                             rows={8}
                                             placeholder={`Please enter a note`} />
                                     </Form.Item>
-                                    <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
+                                    <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs no-number-rental">
                                         <InputNumber
 
                                             formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
