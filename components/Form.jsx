@@ -407,7 +407,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Select disabled={view} id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
+                            <Select disabled={view || edit} id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
                                 onChange={(value) => {
                                     onChange('shipment_type', value);
                                     if (value === 'combined' || value === 'non project related') {
