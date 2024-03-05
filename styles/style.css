@@ -8,9 +8,9 @@
     border: none !important;
 }
 
-:where(.css-dev-only-do-not-override-p7e5j5).ant-input-number .ant-input-number-input{
+/* :where(.css-dev-only-do-not-override-p7e5j5).ant-input-number .ant-input-number-input{
     margin: 7px !important;
-}
+} */
 
 
 ul {
@@ -4031,6 +4031,28 @@ button#xls-btn{
     top: 25%;
 }
 /* 1 march */
+/* 5 march */
+
+.wrap-box.dollor-inputs.no-number-rental   .ant-input-number-handler-wrap {
+    opacity: 0 !important;
+    display: none !important;
+}
+.wrap-box.dollor-inputs.no-number-rental .ant-input-number-input-wrap input {
+    padding: 9px 12px;
+    background-color: #F9F9FA;
+}
+.wrap-box.dollor-inputs.no-number-rental .ant-input-number-input-wrap input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+.wrap-box.dollor-inputs.no-number-rental .ant-input-number-input-wrap:focus input {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+/* 5 march */
+
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
