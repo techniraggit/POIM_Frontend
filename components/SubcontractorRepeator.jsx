@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space, DatePicker } from "antd";
+import { Form, Input, Select, Button, Space, DatePicker, InputNumber } from "antd";
 // import { DatePicker } from 'antd';
 import dayjs from "dayjs";
 
@@ -74,14 +74,22 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 },
                             ]}
                         >
-                            <Input placeholder="Amount" readOnly={view}
+                            <InputNumber
+                                placeholder="Amount" 
+                                readOnly={view}
                                 addonBefore="$"
-                                onChange={({ target: { value } }) => {
-                                    form.setFieldValue('amount0', parseFloat(value.replace(/,/g, '')).toLocaleString())
-                                    onChange('material_details', { amount: parseFloat(value.replace(/,/g, '')) }, 0)
-                                }} 
-                                // onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} 
-                                />
+                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                onChange={(value) => {
+                                    form.setFieldValue('amount0', (value || 0) || '0')
+                                    onChange('material_details', { amount: (value || 0) }, 0)
+                                }}
+                            // onChange={({ target: { value } }) => {
+                            //     form.setFieldValue('amount0', parseFloat(value.replace(/,/g, '')).toLocaleString())
+                            //     onChange('material_details', { amount: parseFloat(value.replace(/,/g, '')) }, 0)
+                            // }} 
+                            // onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} 
+                            />
                         </Form.Item>
                     </div>
                 </div>
@@ -135,17 +143,24 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                             name={'amount' + (index + 1)}
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                         >
-                                                            <Input
+                                                            <InputNumber
                                                                 readOnly={view}
                                                                 addonBefore="$"
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 name={key + index}
-                                                                onChange={({ target: { value } }) => {
-                                                                    form.setFieldValue('amount' + (index + 1), parseFloat(value.replace(/,/g, '')).toLocaleString())
-                                                                    onChange('material_details', { [key]:  parseFloat(value.replace(/,/g, '')) }, index + 1)
-                                                                }} 
-                                                                // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+                                                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+
+                                                                onChange={(value) => {
+                                                                    form.setFieldValue('amount' + (index + 1), (value || 0) || '0')
+                                                                    onChange('material_details', { [key]: (value || 0) }, index + 1)
+                                                                }}
+                                                            // onChange={({ target: { value } }) => {
+                                                            //     form.setFieldValue('amount' + (index + 1), parseFloat(value.replace(/,/g, '')).toLocaleString())
+                                                            //     onChange('material_details', { [key]:  parseFloat(value.replace(/,/g, '')) }, index + 1)
+                                                            // }} 
+                                                            // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             />
                                                         </Form.Item>
                                                     </div>
@@ -230,7 +245,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                             ...formData,
                                             material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         });
-                                        if(calculateAmount) {
+                                        if (calculateAmount) {
                                             calculateAmount(0, index + 1);
                                         }
                                     }} style={{ marginLeft: '8px' }} />

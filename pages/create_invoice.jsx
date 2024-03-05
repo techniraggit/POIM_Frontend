@@ -33,15 +33,15 @@ const CreateInvoice = () => {
     const router = useRouter();
 
     const onFinish = () => {
-        const formData = new FormData();
-        formData.append('comment', formData.comment);
-        formData.append('invoice_amount', formData.invoice_amount);
-        formData.append('po_id', formData.po_id);
+        const data = new FormData();
+        data.append('comment', formData.comment);
+        data.append('invoice_amount', formData.invoice_amount);
+        data.append('po_id', formData.po_id);
         formData.invoice_files?.forEach((file, index) => {
-            formData.append(`invoice_file_${index}`, file.invoice_file);
+            data.append(`invoice_file_${index}`, file.invoice_file);
         })
 
-        const response = invoiceSubmit(formData)
+        const response = invoiceSubmit(data)
         response.then((res) => {
             if (res.data.status_code == 201) {
                 message.success(res.data.message);
@@ -90,6 +90,7 @@ const CreateInvoice = () => {
     };
 
     const onChange = (name, value, index) => {
+        console.log(name,value,index,'eeeeeeeeee');
         if (typeof index !== 'undefined') {
             formData.invoice_files[index][name] = value;
         } else {
@@ -99,7 +100,7 @@ const CreateInvoice = () => {
             ...formData
         });
     }
-
+    console.log(formData)
     return (
         <>
             <div class="wrapper-main">
@@ -256,7 +257,9 @@ const CreateInvoice = () => {
                                     </Form.Item>
 
                                     <Form.Item>
-                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0))} type="primary" htmlType="submit" id="btn-submit">
+                                        <Button 
+                                        disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0))} 
+                                        type="primary" htmlType="submit" id="btn-submit">
                                             Submit
                                         </Button>
                                     </Form.Item>
