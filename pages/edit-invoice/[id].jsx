@@ -1,6 +1,6 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
-import { Form, Input, Button, Select, Upload, message } from 'antd';
+import { Form, Input, Button, Select, Upload, message,InputNumber } from 'antd';
 import '../../styles/style.css'
 import React, { useEffect, useState } from "react";
 import { changeInvoiceStatus, downloadInvoice, fetchPoNumbers, fetchPoNumbr, getInvoiceData, removeInvoiceFile, updateInvoice, threshold } from "@/apis/apis/adminApis";
@@ -130,7 +130,7 @@ const EditInvoice = () => {
         });
     }
 
-    const handleStatusChange = (event, action,form) => {
+    const handleStatusChange = (event, action, form) => {
         event.preventDefault()
         const response = changeInvoiceStatus({
             invoice_id: id,
@@ -360,7 +360,15 @@ const EditInvoice = () => {
                                         <TextArea onChange={({ target: { value } }) => onChange('comment', value)} />
                                     </Form.Item>
                                     <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
-                                        <Input onChange={({ target: { value } }) => onChange('invoice_amount', value)} addonBefore="$" />
+                                        <InputNumber
+
+                                            formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                            parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                            onChange={(value) => {
+                                                onChange('invoice_amount', value)
+                                            }
+                                            }
+                                            placeholder={`Please enter amount`} addonBefore="$" />
                                     </Form.Item>
                                     <Form.Item>
                                         <Button type="primary" htmlType="submit" id="btn-submit">
