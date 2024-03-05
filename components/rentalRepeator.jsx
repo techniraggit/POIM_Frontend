@@ -98,7 +98,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div className="wrap-box dollor-inputs">
+                    <div className="wrap-box dollor-inputs no-number-rental">
                         <Form.Item
                             label="Amount"
                             for="name"
@@ -177,7 +177,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                         if (key === "amount") {
                                             return (
                                                 <div className="col-lg-4 col-md-6">
-                                                    <div key={key} className="wrap-box dollor-inputs">
+                                                    <div key={key} className="wrap-box dollor-inputs no-number-rental">
                                                         <Form.Item
                                                             label={upperKey}
                                                             name={'amount' + (index + 1)}
