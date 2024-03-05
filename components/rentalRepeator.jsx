@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space } from "antd";
+import { Form, Input, Select, Button, Space ,InputNumber} from "antd";
 
 const repeatorData = {
     description: '',
@@ -37,17 +37,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
             setEndDateError(null);
         }
     };
-
-
-
-    // const handleAmountChange = (e) => {
-    //     const { value } = e.target;
-    //     const formattedValue = parseFloat(value.replace(/\D/g, "")).toLocaleString();
-    //     console.log(formattedValue,'gggggggggggggggggggg');
-
-        
-    //     onChange('material_details', { amount: formattedValue }, 0);
-    // };
 
     return (
         <div class="row">
@@ -93,6 +82,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     <div className="wrap-box">
                         <Form.Item
                             label="To"
+
                             name="end_date"
                             validateStatus={endDateError ? 'error' : ''}
                             help={endDateError}
@@ -118,17 +108,27 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     required: true,
                                     message: "Please enter Amount",
                                 },
+
                             ]}
+                            // style={{margin:'7px'}}
                         >
-                            <Input
+                            {/* <InputNumber
+                                min={0}
+                                size="large"
+                                style={{ width: 400 }}
+                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                            /> */}
+                            <InputNumber
                                 readOnly={view}
                                 addonBefore="$"
                                 placeholder="Amount" 
-                                // onChange={handleAmountChange} 
-                               
-                                onChange={({ target: { value } }) => {
-                                    form.setFieldValue('amount0', parseFloat(value.replace(/,/g, '')).toLocaleString())
-                                    onChange('material_details', { amount: parseFloat(value.replace(/,/g, '')) }, 0)
+                                
+                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                onChange={(value) => {
+                                    form.setFieldValue('amount0',(value || 0) || '0')
+                                    onChange('material_details', { amount:(value || 0)}, 0)
                                 }} 
                                 />
                         </Form.Item>
@@ -183,17 +183,21 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                             name={'amount' + (index + 1)}
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                         >
-                                                            <Input
+                                                            <InputNumber
                                                                 readOnly={view}
                                                                 addonBefore="$"
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 name={key + index}
-                                                                onChange={({ target: { value } }) => {
-                                                                    form.setFieldValue('amount' + (index + 1), parseFloat(value.replace(/,/g, '')).toLocaleString())
-                                                                    onChange('material_details', { [key]: parseFloat(value.replace(/,/g, '')) }, index + 1)
-                                                                }} 
-                                                                // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+
+                                                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+
+                                                                onChange={( value) => {
+                                                                    form.setFieldValue('amount' + (index + 1),(value || 0) || '0')
+                                                                    onChange('material_details', { [key]: (value || 0) }, index + 1)
+                                                                }}
+                                                            // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             />
                                                         </Form.Item>
                                                     </div>

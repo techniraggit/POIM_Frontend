@@ -2,6 +2,16 @@
     color: red;
 }
 
+
+
+.wrap-box.dollor-inputs input{
+    border: none !important;
+}
+
+:where(.css-dev-only-do-not-override-p7e5j5).ant-input-number .ant-input-number-input{
+    margin: 7px !important;
+}
+
 ul {
     list-style: none;
     padding-left: 0;
