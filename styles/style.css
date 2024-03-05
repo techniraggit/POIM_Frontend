@@ -1367,7 +1367,8 @@ li.react-icon {
 
 .ant-select-item.ant-select-item-option {
     background-color: transparent !important;
-    padding-left: 4px;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
     padding-bottom: 10px;
     padding-top: 10px;
 }
@@ -1383,7 +1384,7 @@ li.react-icon {
     border: 2px solid rgb(13, 13, 13, 0.6) !important;
     border-radius: 6px !important;
     box-shadow: none !important;
-    padding: 4px 20px;
+    padding: 4px 10px;
     /* transition: 0.4s ease; */
 }
 
@@ -4051,6 +4052,12 @@ button#xls-btn{
     box-shadow: none !important;
     border: none !important;
 }
+/* .wrapin-form.add-clear-wrap .ant-select.line-select {
+    min-width: 150px;
+}
+.wrapin-form.add-clear-wrap .ant-select.line-select.dropdown-report {
+    min-width: 170px;
+} */
 /* 5 march */
 
 /* responsive */
@@ -4058,6 +4065,12 @@ button#xls-btn{
     .Purchase-form {
         flex-direction: column;
         gap: 30px;
+    }
+    .wrapin-form.add-clear-wrap .ant-select.line-select {
+        min-width: 150px;
+    }
+    .wrapin-form.add-clear-wrap .ant-select.line-select.dropdown-report {
+        min-width: 170px;
     }
 }
 @media (max-width: 1499px) {
@@ -4172,7 +4185,7 @@ ul.list-icons.text-list-icons li {
     }
 
     .ant-select.line-select.ant-select-show-arrow {
-        width: 28%;
+        width: 24%;
     }
 
     .wrapin-form.add-clear-wrap {
