@@ -62,7 +62,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div className="wrap-box dollor-inputs">
+                    <div className="wrap-box dollor-inputs no-number-rental">
                         <Form.Item
                             label="Amount"
                             for="name"
