@@ -90,7 +90,6 @@ const CreateInvoice = () => {
     };
 
     const onChange = (name, value, index) => {
-        console.log(name, value, index, 'eeeeeeeeee');
         if (typeof index !== 'undefined') {
             formData.invoice_files[index][name] = value;
         } else {
@@ -100,7 +99,6 @@ const CreateInvoice = () => {
             ...formData
         });
     }
-    console.log(formData)
     return (
         <>
             <div class="wrapper-main">
