@@ -4060,6 +4060,19 @@ button#xls-btn{
 } */
 /* 5 march */
 
+/* 6march */
+input#ns{
+    border: 1px solid #70707054 !important;
+    border-radius: 2px;
+    width: 100%;
+    padding: 9px 20px;
+    outline: none;
+    font-size: 16px;
+    color: #112f5c;
+    font-weight: 500;
+}
+/* 6march */
+
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
