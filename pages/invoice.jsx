@@ -102,7 +102,7 @@ const Invoice = () => {
                                                     <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{invoice.purchase_order.po_number}</td>
                                                     <td>{invoice.purchase_order.created_by.first_name} {invoice.purchase_order.created_by.last_name}</td>
-                                                    <td>{invoice.purchase_order.total_amount}</td>
+                                                    <td>{(invoice.purchase_order.total_amount).toLocaleString()}</td>
                                                     <td>{invoice.purchase_order.vendor_contact.name}</td>
                                                     <td>{invoice.purchase_order.status}</td>
                                                     <td>{invoice.pm_approval_status}</td>
