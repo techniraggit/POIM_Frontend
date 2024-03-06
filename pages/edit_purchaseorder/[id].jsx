@@ -157,10 +157,8 @@ const EditMaterialPo = () => {
         })
     }
      const onChange = (name, value, index) => {
-        // console.log(name, value, index,'kkkkkkkk');
         if(name==='shipment_type'){
             formData?.material_details.forEach((material, index) => {
-                console.log(index,'hhhhhhhhhhh');
                 form.setFieldValue('material_for' + (index), '')
                 formData.material_details[index].material_for = '';
             })
