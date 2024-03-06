@@ -149,7 +149,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         };
     });
 
-    console.log(formData.total_amount.toLocaleString(),'total' );
 
     return (
         <>
