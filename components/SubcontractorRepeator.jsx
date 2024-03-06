@@ -62,7 +62,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div className="wrap-box dollor-inputs no-number-rental">
+                    <div className="wrap-box  no-number-rental">
                         <Form.Item
                             label="Amount"
                             for="name"
@@ -137,7 +137,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                         if (key === "amount") {
                                             return (
                                                 <div className="col-sm-4">
-                                                    <div key={key} className="wrap-box dollor-inputs">
+                                                    <div key={key} className="wrap-box create-an-more no-number-rental">
                                                         <Form.Item
                                                             label={upperKey}
                                                             name={'amount' + (index + 1)}

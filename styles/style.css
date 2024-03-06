@@ -1591,7 +1591,7 @@ label {
     color: rgb(17, 47, 92, 0.5) !important;
     font-size: 16px !important;
     font-weight: 500;
-    margin-bottom: 7px !important;
+    margin-bottom: 2px !important;
 }
 
 .bg-border-select .ant-col {
@@ -4038,6 +4038,10 @@ button#xls-btn{
     opacity: 0 !important;
     display: none !important;
 }
+.wrap-box.no-number-rental   .ant-input-number-handler-wrap {
+    opacity: 0 !important;
+    display: none !important;
+}
 .wrap-box.dollor-inputs.no-number-rental .ant-input-number-input-wrap input {
     padding: 9px 12px;
     background-color: #F9F9FA;
@@ -4059,6 +4063,18 @@ button#xls-btn{
     min-width: 170px;
 } */
 /* 5 march */
+/* 6march 2023 */
+.wrap-box.no-number-rental input {
+    padding: 9px 20px;
+}
+.wrap-box.create-an-more.no-number-rental label.ant-form-item-required {
+    margin-bottom: 10px !important;
+}
+.wrap-box.no-number-rental .ant-input-number-input-wrap:focus {
+    border: 1px solid #70707054 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
 
 /* 6march */
 input#ns{
@@ -4070,6 +4086,9 @@ input#ns{
     font-size: 16px;
     color: #112f5c;
     font-weight: 500;
+}
+.wrap-box.no-number-rental .ant-input-number-group-wrapper {
+    width: 100% !important;
 }
 /* 6march */
 
