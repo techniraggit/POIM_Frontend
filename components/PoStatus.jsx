@@ -38,7 +38,7 @@ function PoStatus({ setStatusModalOpen, data, isStatusModalOpen }) {
                             <h5>{data.status?.charAt(0)?.toUpperCase() + data.status?.slice(1)} <span className="po-span">:- {formatDate(data.created_on)}</span></h5>
                             <h5>{data.status?.charAt(0)?.toUpperCase() + data.status?.slice(1)} By <span className="po-span">:- {data?.created_by?.first_name + ' ' + data?.created_by?.last_name}</span></h5>
                             {data.amount > 0 ? (
-                                <h5 className='sub-show '>Approved Co Amount <span className="po-span">- {data.amount}</span> </h5>
+                                <h5 className='sub-show '>Approved Co Amount <span className="po-span">- {(data.amount).toLocaleString()}</span> </h5>
                             ) : null}
                             <p className='text-note-wrapper'>
                                 {data.notes || ' N/A'}
