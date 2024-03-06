@@ -86,7 +86,7 @@ const ViewSubContractorPo = () => {
                         po_creator: res?.data?.po_creator
                     });
 
-                    form.setFieldValue('co_amount', data.co_approved_amount[0]?.amount);
+                    form.setFieldValue('co_amount', data.co_approved_amount[0]?.amount.toLocaleString());
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact.company.company_name)
                     form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);

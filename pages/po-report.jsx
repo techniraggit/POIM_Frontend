@@ -97,7 +97,7 @@ const purchaseOrderReport = () => {
                                                         month: 'short',
                                                         day: 'numeric',
                                                     })}</td>
-                                                    <td>{purchase.total_amount}</td>
+                                                    <td>{(purchase.total_amount.toLocaleString())}</td>
                                                     <td>{purchase.created_by.first_name} {purchase.created_by.last_name}</td>
                                                     <td>{purchase.status}</td>
                                                     <td>{purchase.vendor_contact?.name}</td>
