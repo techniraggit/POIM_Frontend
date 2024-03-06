@@ -54,7 +54,7 @@ const ViewInvoice = () => {
                     const data = res.data?.data
 
                     setInvoice({ ...data, po_creator: res.data?.po_creator });
-                    form.setFieldValue('amount', data.invoice_amount);
+                    form.setFieldValue('amount', data.invoice_amount.toLocaleString());
                     form.setFieldValue('note', data.comment);
                     form.setFieldValue('po_type', res.data?.data?.purchase_order?.po_type);
                     form.setFieldValue('po_number', res.data?.data?.purchase_order?.po_number);

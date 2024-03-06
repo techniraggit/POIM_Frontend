@@ -295,6 +295,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 readOnly={view}
                                                                 addonBefore="$"
                                                                 placeholder={upperKey}
+                                                               
                                                                 value={data[key]}
                                                                 onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             ></Input>

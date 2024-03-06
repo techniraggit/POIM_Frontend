@@ -92,7 +92,7 @@ const Dashboard = () => {
                                                         month: 'short',
                                                         day: 'numeric',
                                                     })}</td>
-                                                    <td>{purchase.total_amount}</td>
+                                                    <td>{(purchase.total_amount).toLocaleString()}</td>
                                                     <td>{purchase.status}</td>
                                                     <td>{purchase.vendor_contact?.name}</td>
                                                 </tr>

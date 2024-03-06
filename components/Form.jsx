@@ -149,6 +149,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         };
     });
 
+    console.log(formData.total_amount.toLocaleString(),'total' );
+
     return (
         <>
             <div class="order-choose d-flex">
@@ -405,7 +407,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Select disabled={view} id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
+                            <Select disabled={view || edit} id="single3" placeholder="Select" class="js-states form-control file-wrap-select"
                                 onChange={(value) => {
                                     onChange('shipment_type', value);
                                     if (value === 'combined' || value === 'non project related') {
@@ -502,6 +504,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                         >
                             <Input
                                 addonBefore="$"
+                                value={formData.hst_amount.toLocaleString()}
+                                // value={formData.hst_amount ? formData.hst_amount.toLocaleString() : ''}
                                 readOnly placeholder="HST Amount" />
                         </Form.Item>
                     </div>
@@ -514,11 +518,12 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                         >
                             <Input
                                 addonBefore="$"
-                                readOnly placeholder="Total Amount" />
+                                readOnly placeholder="Total Amount"
+                                value={formData.total_amount ? formData.total_amount.toLocaleString() : ''} />
                         </Form.Item>
                     </div>
                 </div>
-                {formData.status === 'approved' && formData.po_type === 'subcontractor' && view && (
+                {user.role !== 'admin' && formData.status === 'approved' && formData.po_type === 'subcontractor' && view && (
                     <div className="col-lg-4 col-md-6">
                         <div className="wrap-box">
                             <Form.Item

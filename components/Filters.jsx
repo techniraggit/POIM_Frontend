@@ -93,7 +93,7 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
                         value={query['to_date']}
                     />
                 </div>}
-                {role && <Select className="line-select me-2" placeholder="Role"
+                {role && <Select className="line-select dropdown-report me-2" placeholder="Role"
                     onChange={(value) =>
                         setQuery(prevState => ({
                             ...prevState,
@@ -125,7 +125,7 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
                     <Option value="rental">Rental PO</Option>
                     <Option value="subcontractor">Sub Contractor PO</Option>
                 </Select>}
-                {vendor && <Select className="line-select me-2" placeholder="PO Vendor"
+                {vendor && <Select className="line-select dropdown-report me-2" placeholder="PO Vendor"
                     onChange={(value) =>
                     setQuery(prevState => ({
                         ...prevState,
@@ -141,7 +141,7 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
                     )
                     )}
                 </Select>}
-                {status && <Select className="line-select me-2" placeholder="PO Status"
+                {status && <Select className="line-select  me-2" placeholder="PO Status"
                     onChange={(value) =>
                         setQuery(prevState => ({
                             ...prevState,

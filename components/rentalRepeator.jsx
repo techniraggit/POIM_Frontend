@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space } from "antd";
+import { Form, Input, Select, Button, Space ,InputNumber} from "antd";
 
 const repeatorData = {
     description: '',
@@ -82,6 +82,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     <div className="wrap-box">
                         <Form.Item
                             label="To"
+
                             name="end_date"
                             validateStatus={endDateError ? 'error' : ''}
                             help={endDateError}
@@ -97,22 +98,39 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div className="wrap-box dollor-inputs">
+                    <div className="wrap-box dollor-inputs no-number-rental">
                         <Form.Item
                             label="Amount"
                             for="name"
-                            name="amount"
+                            name="amount0"
                             rules={[
                                 {
                                     required: true,
                                     message: "Please enter Amount",
                                 },
+
                             ]}
+                            // style={{margin:'7px'}}
                         >
-                            <Input
+                            {/* <InputNumber
+                                min={0}
+                                size="large"
+                                style={{ width: 400 }}
+                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                            /> */}
+                            <InputNumber
                                 readOnly={view}
                                 addonBefore="$"
-                                placeholder="Amount" onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} />
+                                placeholder="Amount" 
+                                
+                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                onChange={(value) => {
+                                    form.setFieldValue('amount0',(value || 0) || '0')
+                                    onChange('material_details', { amount:(value || 0)}, 0)
+                                }} 
+                                />
                         </Form.Item>
                     </div>
                 </div>
@@ -159,18 +177,27 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                         if (key === "amount") {
                                             return (
                                                 <div className="col-lg-4 col-md-6">
-                                                    <div key={key} className="wrap-box dollor-inputs">
+                                                    <div key={key} className="wrap-box dollor-inputs no-number-rental">
                                                         <Form.Item
                                                             label={upperKey}
+                                                            name={'amount' + (index + 1)}
                                                             rules={[{ required: true, message: `Please enter ${upperKey}` }]}
                                                         >
-                                                            <Input
+                                                            <InputNumber
                                                                 readOnly={view}
                                                                 addonBefore="$"
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 name={key + index}
-                                                                onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
+
+                                                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+
+                                                                onChange={( value) => {
+                                                                    form.setFieldValue('amount' + (index + 1),(value || 0) || '0')
+                                                                    onChange('material_details', { [key]: (value || 0) }, index + 1)
+                                                                }}
+                                                            // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             />
                                                         </Form.Item>
                                                     </div>

@@ -113,6 +113,20 @@ const Material = ({ base_url }) => {
         updateAmount(quantity, value);
     };
 
+    // const updateAmount = (quantity, unitPrice) => {
+    //     const calculatedAmount = quantity * unitPrice;
+    //     console.log(calculatedAmount, 'calculateAmount');
+
+    //     setAmount(calculatedAmount.toLocaleString()); // Format amount with commas
+    //     form.setFieldsValue({ Amount: calculatedAmount.toLocaleString() });
+
+    //     const hstAmount = calculatedAmount * 0.13;
+    //     form.setFieldsValue({ HST_Amount: hstAmount.toLocaleString() });
+
+    //     const totalAmount = calculatedAmount + hstAmount;
+    //     form.setFieldsValue({ Total_amount: totalAmount.toLocaleString() });
+    // };
+
     const updateAmount = (quantity, unitPrice) => {
         const calculatedAmount = quantity * unitPrice;
 
@@ -151,36 +165,6 @@ const Material = ({ base_url }) => {
                 total_amount: values.Total_amount,
                 project_site_id: values.site_id,
                 material_details: [...dynamicItems],
-                // -------------------------------------------------------------------
-                // po_data: {
-                //     company_name: vendorForm.company_name,
-                //     email: vendorForm.email,
-                //     phone: vendorForm.phone,
-                //     state: vendorForm.state,
-                //     country: vendorForm.country,
-                //     vendor_id: values.vendor_id,
-                //     po_type: values.po_type,
-                //     address1: vendorForm.address,
-                // },
-                // shipment: {
-                //     HST_Amount: values.HST_Amount,
-                //     Total_amount: values.Total_amount,
-                //     shipment_type: values.shipment_type,
-                //     project_id: values.project_id,
-                //     shipment_address: 'add',
-                // },
-                // shipment_material: {
-                //     quantity: values.quantity,
-                //     unit_price: values.unit_price,
-                //     Amount: values.Amount,
-                //     Description: values.Description,
-                //     material_for: values.materialFor,
-                //     site_id: values.site_id,
-                //     project_id: values.project_id,
-                //     code: values.code,
-                //     shipment_address: values.shipment_address,
-                //     material_details:[...dynamicItems]
-                // }
 
             }
         } else {
@@ -203,41 +187,7 @@ const Material = ({ base_url }) => {
                     project_id: values.project_id,
                     project_site_id: values.site_id,
                 }]
-                // po_data: {
-                //     company_name: vendorForm.company_name,
-                //     email: vendorForm.email,
-                //     phone: vendorForm.phone,
-                //     state: vendorForm.state,
-                //     country: vendorForm.country,
-                //     vendor_id: values.vendor_id,
-                //     po_type: values.po_type,
-                //     address1: vendorForm.address,
-                // },
-                // shipment: {
-                //     HST_Amount: values.HST_Amount,
-                //     Total_amount: values.Total_amount,
-                //     shipment_type: values.shipment_type,
-                //     project_id: values.project_id,
-                //     shipment_address: 'add',
-                // },
-                // shipment_material: {
-                //     quantity: values.quantity,
-                //     unit_price: values.unit_price,
-                //     Amount: values.Amount,
-                //     Description: values.Description,
-                //     material_for: values.materialFor,
-                //     site_id: values.site_id,
-                //     project_id: values.project_id,
-                //     code: values.code,
-                //     shipment_address: values.shipment_address,
-                // material_details:[{
-                //     quantity: values.quantity,
-                //     unit_price: values.unit_price,
-                //     Amount: values.Amount,
-                //     Description: values.Description
-                // }
-                // ]
-                // },
+
 
             }
         }
@@ -861,7 +811,7 @@ const Material = ({ base_url }) => {
                                     >
                                         <Select id="singlesa" class="js-states form-control file-wrap-select">
                                             {Array.isArray(siteOptions) &&
-                                                siteOptions.map((site) =>(
+                                                siteOptions.map((site) => (
                                                     <Select.Option key={site.site_id} value={site.site_id}>
                                                         {site.name}
                                                     </Select.Option>
