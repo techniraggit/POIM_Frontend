@@ -1591,7 +1591,7 @@ label {
     color: rgb(17, 47, 92, 0.5) !important;
     font-size: 16px !important;
     font-weight: 500;
-    margin-bottom: 7px !important;
+    margin-bottom: 2px !important;
 }
 
 .bg-border-select .ant-col {
@@ -4086,6 +4086,9 @@ input#ns{
     font-size: 16px;
     color: #112f5c;
     font-weight: 500;
+}
+.wrap-box.no-number-rental .ant-input-number-group-wrapper {
+    width: 100% !important;
 }
 /* 6march */
 
