@@ -33,6 +33,10 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
 
   },[])
 
+  const removeCommas = (value) => {
+    return value.replace(/,/g, '');
+  };
+
   return (
     <>
       {isModalOpen.modalStatus && (
@@ -49,7 +53,15 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
             {
               poType === 'subcontractor' && isModalOpen.action === 'approved' && <div class="projct-details notes">
               <p class="detail-para1">CO Approved Amount</p>
-              <input id='input-po'  type="text" value={form.co_approved_amount} onChange={({ target: { value } }) => handleFormChange('co_approved_amount', value)} className="detail-para "></input>
+              <input id='input-po'  type="text" 
+              // value={form.co_approved_amount} 
+              //  value={form.co_approved_amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 
+              value={typeof form.co_approved_amount === 'string' ? form.co_approved_amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : form.co_approved_amount} 
+               onChange={({ target: { value } }) => handleFormChange('co_approved_amount', value.replace(/\D/g, ''))} 
+              
+              //  onChange={({ target: { value } }) => handleFormChange('co_approved_amount', value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','))} 
+              // onChange={({ target: { value } }) => handleFormChange('co_approved_amount', value)} 
+              className="detail-para "></input>
             </div>
             }
           
