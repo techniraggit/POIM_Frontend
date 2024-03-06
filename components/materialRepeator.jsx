@@ -15,8 +15,7 @@ const repeatorData = {
     project_site_id: '',
 }
 
-function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, projects, calculateAmount, view }) {
-    const [form] = Form.useForm();
+function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, projects, calculateAmount, view ,form}) {
 
     const handleRemoveDetail = (id, index) => {
         updatematerialPo({ md_id: id }).then((response) => {
@@ -31,11 +30,6 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
     }
 
     return (
-        <Form
-        name="antdForm"
-        className="mt-5"
-        form={form}
-    >
         <div class="row">
 
            
@@ -508,7 +502,6 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 </div>
                 
         </div>
-        </Form>
     )
 }
 
