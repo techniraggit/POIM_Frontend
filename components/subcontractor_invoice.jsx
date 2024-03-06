@@ -65,8 +65,8 @@ const Subcontractor_invoice = ({data}) => {
             form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
             form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
             form.setFieldValue('shipment_type', data.shipment_type);
-            form.setFieldValue('hst_amount', (data.hst_amount).toFixed(2)) || 0;
-            form.setFieldValue('total_amount', data.total_amount);
+            form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
+            form.setFieldValue('total_amount', data.total_amount.toLocaleString());
             form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
             form.setFieldValue('poDate', moment(data.po_date));
             form.setFieldValue('country', data.vendor_contact.company.country);
@@ -87,7 +87,7 @@ const Subcontractor_invoice = ({data}) => {
                 form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                 form.setFieldValue('material_for' + (index), material.material_for)
                 form.setFieldValue('project_id' + (index), material.project?.project_id)
-                form.setFieldValue('amount' + (index), material.amount)
+                form.setFieldValue('amount' + (index), material.amount.toLocaleString())
             })
         }
     }, [id]);
