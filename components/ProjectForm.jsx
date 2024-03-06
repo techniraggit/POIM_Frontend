@@ -9,7 +9,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
         >
-            <div className="col-lg-4 col-md-12 mb-3">
+            <div className="col-sm-4 mb-3">
                     <div className="wrap-box mb-2">
                         <Form.Item
                             label="Customer Name"

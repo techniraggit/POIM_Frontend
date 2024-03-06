@@ -31,10 +31,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
 
     return (
         <div class="row">
-
-           
                 <div class="col-sm-4">
-                    <div class="wrap-box dollor-inputs">
+                    <div class="wrap-box">
                         <Form.Item
                             label="Quantity"
                             for="name"
@@ -285,7 +283,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                             } else if (key === 'amount') {
                                                 return (
                                                     <div className="col-sm-4">
-                                                        <div className="wrap-box mb dollor-inputs">
+                                                        <div className="wrap-box mb">
                                                             <Form.Item
                                                                 label={upperKey}
                                                                 name={`amount` + (index + 1)}
