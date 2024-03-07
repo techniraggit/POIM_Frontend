@@ -67,7 +67,7 @@ const purchaseOrderReport = () => {
                     <Header heading="PO Report" />
                     <div class="bottom-wrapp">
                         <ReportHeader />
-                        <Filters fromDate={true} toDate={true} download={true} type={true} status={true} applyFilters={applyFilters} currentPage={currentPage} downloadPdf={downloadPdf} />
+                        <Filters fromDate={true} toDate={true} download={true} type={true} name={true} status={true} applyFilters={applyFilters} currentPage={currentPage} downloadPdf={downloadPdf} />
                         <div class="table-wrap vendor-wrap" id="space-report">
                             <div class="inner-table" id="inner-purchase">
                                 <table id="purcahse-tablewrap" class="table-hover">
@@ -101,14 +101,6 @@ const purchaseOrderReport = () => {
                                                     <td>{purchase.created_by.first_name} {purchase.created_by.last_name}</td>
                                                     <td>{purchase.status}</td>
                                                     <td>{purchase.vendor_contact?.name}</td>
-                                                    {/* <td>
-                                                        <div class="icons-td justify-content-between"> <span>Turner Constructions</span>
-                                                            <div><i class="fa-solid fa-eye me-1"></i>
-                                                                <i class="fa-solid fa-download"></i>
-                                                            </div>
-                                                        </div>
-                                                    </td> */}
-
                                                 </tr>
                                             })
                                         ) : (
@@ -116,29 +108,6 @@ const purchaseOrderReport = () => {
                                                 <td colSpan="8">No purchase orders available</td>
                                             </tr>
                                         )}
-
-                                        {/* <tr>
-                                            <td>{calculateStartingSerialNumber() + index}</td>
-                                            <td>{purchase.po_number}</td>
-                                            <td>{purchase.project?.project_no || '-'}</td>
-                                            <td></td>
-                                            <td className="td-color">{purchase.po_type}</td>
-                                            <td>{new Date(purchase.po_date).toLocaleDateString('en-US', {
-                                                year: 'numeric',
-                                                month: 'short',
-                                                day: 'numeric',
-                                            })}</td>
-                                            <td>{purchase.total_amount}</td>
-                                            <td>{purchase.status}</td>
-                                            <td>{purchase.vendor_contact?.name}</td>
-                                            <td>
-                                                <div class="icons-td justify-content-between"> <span>Turner Constructions</span>
-                                                    <div><i class="fa-solid fa-eye me-1"></i>
-                                                        <i class="fa-solid fa-download"></i>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr> */}
                                     </tbody>
                                 </table>
                             </div>
@@ -180,4 +149,3 @@ const purchaseOrderReport = () => {
     )
 }
 export default withAuth(['project manager', 'director', 'site superintendent', 'accounting', 'department manager', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop', 'admin'])(purchaseOrderReport)
-// export default purchaseOrderReport

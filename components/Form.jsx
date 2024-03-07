@@ -148,7 +148,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             company_name: vendor.company_name,
         };
     });
-console.log(formData.material_details,'formData');
 
     return (
         <>

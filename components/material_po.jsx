@@ -113,19 +113,6 @@ const Material = ({ base_url }) => {
         updateAmount(quantity, value);
     };
 
-    // const updateAmount = (quantity, unitPrice) => {
-    //     const calculatedAmount = quantity * unitPrice;
-    //     console.log(calculatedAmount, 'calculateAmount');
-
-    //     setAmount(calculatedAmount.toLocaleString()); // Format amount with commas
-    //     form.setFieldsValue({ Amount: calculatedAmount.toLocaleString() });
-
-    //     const hstAmount = calculatedAmount * 0.13;
-    //     form.setFieldsValue({ HST_Amount: hstAmount.toLocaleString() });
-
-    //     const totalAmount = calculatedAmount + hstAmount;
-    //     form.setFieldsValue({ Total_amount: totalAmount.toLocaleString() });
-    // };
 
     const updateAmount = (quantity, unitPrice) => {
         const calculatedAmount = quantity * unitPrice;

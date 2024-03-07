@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Button, Select } from 'antd';
-import { fetchVendorContact, searchUserRoles } from "@/apis/apis/adminApis";
+import { fetchVendorContact, searchUserRoles, searchPoName } from "@/apis/apis/adminApis";
 const { Option } = Select;
 
-const Filters = ({ search, toDate, fromDate, role, type, status, vendor, download, applyFilters, currentPage, downloadPdf }) => {
+const Filters = ({ search, name,toDate, fromDate, role, type, status, vendor, download, applyFilters, currentPage, downloadPdf }) => {
     const [inputValue, setInputValue] = useState('');
     const [companyName, setCompanyName] = useState([]);
     const [roleName, setRoleName] = useState([]);
+    const [poName, setPoName] = useState([]);
     const [query, setQuery] = useState({
         filter_by_po_type: "",
         filter_by_po_vendor: "",
         filter_by_po_status: "",
         filter_by_role: "",
+        filter_by_name:"",
         to_date: "",
         from_date: ''
     });
@@ -34,6 +36,20 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
         }
     }, [role])
 
+    useEffect(()=>{
+        if(name){
+            const response = searchPoName()
+            response.then((res)=>{
+                setPoName(res.data.po_creators)
+
+            })
+
+        }
+
+    },[name])
+
+
+
     useEffect(() => {
         if(query && !Object.keys(query).some(data => query[data] !== "") && inputValue === '') {
             applyFilters({})
@@ -51,6 +67,7 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
             filter_by_po_type: "",
             filter_by_po_vendor: "",
             filter_by_po_status: "",
+            filter_by_name:"",  // By creator name
             filter_by_role: "",
             to_date: "",
             from_date: ''
@@ -58,7 +75,6 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
         setInputValue('');
         applyFilters({});
     }
-
   return (
     <div className="filter-wrapper">
         <div className="filter-main">
@@ -111,6 +127,25 @@ const Filters = ({ search, toDate, fromDate, role, type, status, vendor, downloa
                     )}
 
                 </Select>}
+
+                {name && <Select className="line-select dropdown-report me-2" placeholder="Name"
+                    onChange={(value) =>
+                        setQuery(prevState => ({
+                            ...prevState,
+                            ['filter_by_name']: value
+                        }))}
+                    value={query['filter_by_name'] || "Name"}
+                >
+                    {poName.map((entry) =>
+                    (
+                        <Select.Option key={entry.created_by__id} value={entry.created_by__id}>
+                            {entry.full_name}
+                        </Select.Option>
+                    )
+                    )}
+
+                </Select>}
+
                 {type && <Select placeholder=" Type" id="single1"
                     className="line-select me-2"
                     value={query['filter_by_po_type'] || "PO Type"}

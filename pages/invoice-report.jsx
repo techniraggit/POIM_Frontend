@@ -63,7 +63,7 @@ const invoiceReport = () => {
                     <Header heading="Invoice Report" />
                     <div class="bottom-wrapp">
                         <ReportHeader />
-                        <Filters fromDate={true} toDate={true} download={true} type={true} status={true} applyFilters={applyFilters} currentPage={currentPage} downloadPdf={downloadPdf} />
+                        <Filters fromDate={true} toDate={true} download={true} type={true} vendor={true} status={true} applyFilters={applyFilters} currentPage={currentPage} downloadPdf={downloadPdf} />
                         <div class="table-wrap vendor-wrap" id="space-report">
                             <div class="inner-table" id="inner-purchase">
                                 {Array.isArray(invoiceTable) && invoiceTable.length > 0 ? (
@@ -73,6 +73,7 @@ const invoiceReport = () => {
                                                 <th className="hedaings-tb">S. No</th>
                                                 <th className="hedaings-tb">PO No.</th>
                                                 <th className="hedaings-tb">Created By</th>
+                                                <th className="hedaings-tb">PO Date</th>
                                                 <th className="hedaings-tb">PO Amount</th>
                                                 <th className="hedaings-tb td-color">PO Vendor</th>
                                                 <th className="hedaings-tb">PO Status</th>
@@ -87,6 +88,7 @@ const invoiceReport = () => {
                                                     <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{invoice.purchase_order.po_number}</td>
                                                     <td>{invoice.purchase_order.created_by.first_name} {invoice.purchase_order.created_by.last_name}</td>
+                                                    <td>{invoice.purchase_order.po_date}</td>
                                                     <td>{(invoice.purchase_order.total_amount).toLocaleString()}</td>
                                                     <td>{invoice.purchase_order.vendor_contact.name}</td>
                                                     <td>{invoice.purchase_order.status}</td>
