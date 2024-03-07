@@ -794,6 +794,7 @@ const Material = ({ base_url }) => {
                         {shipmentType === 'Project Related' && (
                             <div class="col-sm-4">
                                 <div className="selectwrap columns-select shipment-caret ">
+                                    
                                     {/* <CaretDownFilled className="caret-icon" /> */}
 
                                     {/* /// */}

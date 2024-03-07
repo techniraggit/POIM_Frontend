@@ -95,7 +95,9 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                 </div>
                 {formData.shipment_type === 'project related' && (
                     <div class="col-sm-4">
-                        <div className="selectwrap columns-select shipment-caret ">
+                        {/* <div className="selectwrap columns-select shipment-caret "> */}
+                        <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret columns-select`}>
+
                             <Form.Item
                                 label="Select Site"
                                 name="project_site_id0"
