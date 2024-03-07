@@ -130,7 +130,7 @@ const EditMaterialPo = () => {
         const amount = (parseFloat(quantity) * parseFloat(unit_price)) || 0;
         const materialDetails = formData.material_details[index];
         materialDetails.amount = amount;
-        form.setFieldValue('amount' + index, amount)
+        form.setFieldValue('amount' + index, amount.toLocaleString())
         formData.material_details[index] = {
             ...materialDetails
         };
@@ -139,7 +139,7 @@ const EditMaterialPo = () => {
         formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
         if (totalAmount > 0) {
             form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString()  || 0 });
         }
     }
 
