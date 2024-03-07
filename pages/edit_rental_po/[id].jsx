@@ -78,7 +78,7 @@ const Edit_Rental_Po = () => {
                     form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                     form.setFieldValue('shipment_type', data.shipment_type);
                     form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
-                    form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
+                    form.setFieldValue('hst_amount', data.hst_amount.toLocaleString()) || 0;
                     form.setFieldValue('total_amount', data.total_amount.toLocaleString());
                     form.setFieldValue('poDate', moment(data.po_date));
                     form.setFieldValue('country', data.vendor_contact?.company.country);
@@ -161,8 +161,8 @@ const Edit_Rental_Po = () => {
             hst_amount: totalAmount * 0.13,
             total_amount: totalAmount * 0.13 + totalAmount
         })
-        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toFixed(2) || 0 });
-        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toFixed(2) || 0 });
+        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
+        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
     };
 
     const handleStatusChange = (event, action, data) => {
