@@ -205,7 +205,7 @@ console.log(formData.material_details,'formData');
             <div class="row vendor-rowgap">
                 <div class="col-lg-4 col-md-6">
                     <div class="selectwrap react-select" id="vendor-selector">
-                        <div class="selectwrap  shipment-caret select-site aligned-text">
+                        <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
                             <Form.Item
                                 label="Vendor"
                                 name="vendor_id"
@@ -216,7 +216,6 @@ console.log(formData.material_details,'formData');
                                         required: true,
                                         message: "Please choose Vendor",
                                     },
-
                                 ]}
                             >
                                 <Select
@@ -242,7 +241,7 @@ console.log(formData.material_details,'formData');
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="selectwrap react-select" id="vendor-selector">
-                        <div class="selectwrap  shipment-caret select-site aligned-text">
+                        <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
 
                             <Form.Item
                                 label="Vendor Contact Person"
@@ -393,7 +392,9 @@ console.log(formData.material_details,'formData');
             </div>
             <div class="row space-bottom">
                 <div class="col-md-6 col-lg-4">
-                    <div class="selectwrap  shipment-caret aligned-text">
+                    {/* <div class="selectwrap  shipment-caret aligned-text"> */}
+                    <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  aligned-text`}>
+
                         <Form.Item
                             label="Shipment Type"
                             name="shipment_type"
@@ -423,9 +424,11 @@ console.log(formData.material_details,'formData');
                 </div>
                 {(formData.shipment_type === 'project related' || (formData.material_details && formData.material_details?.some(details => details.material_for === 'project'))) && (
                     <div className="col-lg-4 col-md-6">
-                        <div class="selectwrap columns-select shipment-caret">
+                        {/* <div class="selectwrap columns-select shipment-caret"> */}
+                    <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  columns-select`}>
+
                             <Form.Item
-                                label="Project "
+                                label="Project"
                                 name="project_id"
                                 for="file"
                                 class="same-clr"
