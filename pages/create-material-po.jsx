@@ -86,6 +86,7 @@ const CreateMaterialPo = () => {
             ...materialDetails
         };
         const totalAmount = getTotalAmount();
+        console.log(totalAmount,'totalAmount');
         formData.total_amount = totalAmount > 0 ? (totalAmount * 0.13 + totalAmount) : formData.total_amount;
         formData.hst_amount = totalAmount > 0 ? (totalAmount * 0.13) : formData.hst_amount;
         if (totalAmount > 0) {
