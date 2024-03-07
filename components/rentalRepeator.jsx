@@ -136,7 +136,9 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                 </div>
                 {formData.shipment_type === 'project related' && (
                     <div class="col-lg-4 col-md-6">
-                        <div className="selectwrap columns-select shipment-caret ">
+                        {/* <div className="selectwrap columns-select shipment-caret "> */}
+                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+
                             <Form.Item
                                 label="Select Site"
                                 name="project_site_id0"
