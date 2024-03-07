@@ -18,7 +18,7 @@ import { saveAs } from "file-saver";
 const { TextArea } = Input;
 const { Option } = Select;
 
-const ViewInvoice = () => {    
+const ViewInvoice = (view) => {    
     const [poNumber, setPoNumber] = useState([]);
     const [invoice, setInvoice] = useState({});
     const [po, setPo] = useState('');
@@ -224,7 +224,9 @@ const ViewInvoice = () => {
                                         </div>
 
                                         <div className="col-lg-4 col-md-6">
-                                            <div className="selectwrap  shipment-caret invoice-select aligned-text">
+                                            {/* <div className="selectwrap  shipment-caret  aligned-text"> */}
+                    <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret invoice-select  aligned-text`}>
+
                                                 <Form.Item
                                                     label="Choose PO Number"
                                                     name="po_number"

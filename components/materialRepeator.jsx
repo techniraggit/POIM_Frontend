@@ -124,7 +124,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                     </div>
                     {(formData.shipment_type === 'project related') && (
                         <div class="col-sm-4">
-                            <div className="selectwrap columns-select shipment-caret ">
+                            <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+                                
                                 <Form.Item
                                     label="Select Site"
                                     name="project_site_id0"
