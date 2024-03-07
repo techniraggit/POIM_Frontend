@@ -492,7 +492,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                         }]
                                     });
                                 }} icon={<PlusOutlined />}>
-                                    Add More Material
+                                    Add More Items
                                 </Button>
                             </Form.Item>
                         }

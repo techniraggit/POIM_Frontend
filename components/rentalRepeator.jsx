@@ -336,7 +336,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 }]
                             });
                         }} icon={<PlusOutlined />}>
-                            Add More Material
+                            Add More Items
                         </Button>
                     </Form.Item>
                 </Space>
