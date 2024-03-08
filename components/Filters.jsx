@@ -134,7 +134,7 @@ const Filters = ({ search, name,toDate, fromDate, role, type, status, vendor, do
                             ...prevState,
                             ['filter_by_name']: value
                         }))}
-                    value={query['filter_by_name'] || "Name"}
+                    value={query['filter_by_name'] || "PO Creator"}
                 >
                     {poName.map((entry) =>
                     (

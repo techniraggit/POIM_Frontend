@@ -57,6 +57,7 @@ const ViewSubContractorPo = () => {
             fetchPo(id).then((res) => {
                 if (res?.data?.status) {
                     const data = res.data.data;
+                    console.log(data,'hhhhhhhhhhhhhhhhhh');
                     setFormData({
                         ...formData,
                         po_type: data.po_type,
@@ -221,6 +222,13 @@ const ViewSubContractorPo = () => {
             }
         })
     }
+
+
+
+    console.log(formData,'formData');
+
+
+
     return (
         <>
             <div className="wrapper-main">

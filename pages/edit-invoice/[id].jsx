@@ -22,7 +22,7 @@ const repeatorData = {
     invoice_file: ''
 }
 
-const EditInvoice = () => {
+const EditInvoice = (view) => {
     const [poNumber, setPoNumber] = useState([]);
     const [invoice, setInvoice] = useState({});
     const [responseData, setResponseData] = useState([]);
@@ -273,7 +273,9 @@ const EditInvoice = () => {
                                         </div>
 
                                         <div className="col-lg-4 col-md-6">
-                                            <div className="selectwrap  shipment-caret invoice-select aligned-text">
+                                            {/* <div className="selectwrap  shipment-caret aligned-text"> */}
+                                            <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  invoice-select  aligned-text`}>
+
                                                 <Form.Item
                                                     label="Choose PO Number"
                                                     name="po_number"

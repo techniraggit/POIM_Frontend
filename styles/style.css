@@ -4104,7 +4104,18 @@ input[readonly] {
     background-color:#F9F9FA !important;
 }
 
+input#amount0 {
+    background: #FAFAFA;
+}
 /* 7 march */
+/* 07  */
+.wrapin-form.add-clear-wrap .ant-select.line-select.dropdown-report {
+    min-width: 190px;
+}
+.wrapin-form.add-clear-wrap  .ant-select.line-select {
+    width: 200px;
+}
+/* 07 */
 
 /* responsive */
 @media (max-width: 1599px) { 
