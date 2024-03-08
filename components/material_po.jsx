@@ -813,6 +813,7 @@ const Material = ({ base_url }) => {
                         {shipmentType === 'Non Project Related' && (
                             <div class="col-sm-4 ">
                                 <div className="selectwrap add-dropdown-wrap shipment-caret">
+                                    
                                     {/* <CaretDownFilled className="caret-icon" /> */}
                                     <Form.Item
                                         label="Material For"

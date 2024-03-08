@@ -99,6 +99,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 <div class="row space-col-spc mb-0">
                     <div class="col-sm-12">
                         <div className="wrap-box mb-0">
+                        
+
                             <Form.Item
                                 label="Description"
                                 for="name"
@@ -114,6 +116,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                 onChange={({ target: { value } }) => onChange('material_details', 
                                 { description: value }, 0)} /> */}
                                 <Input.TextArea
+                            className={`selectwrap ${view ? 'description-clr' : ""} columns-select shipment-caret `}
+
                                     placeholder="description" rows="4" cols="50"
                                     onChange={({ target: { value } }) => onChange('material_details',
                                         { description: value }, 0)}
@@ -124,7 +128,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                     </div>
                     {(formData.shipment_type === 'project related') && (
                         <div class="col-sm-4">
-                            <div className="selectwrap columns-select shipment-caret ">
+                            <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+                                
                                 <Form.Item
                                     label="Select Site"
                                     name="project_site_id0"
@@ -153,7 +158,9 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
 
                     {(formData.shipment_type?.toLowerCase() === 'non project related' || formData.shipment_type?.toLowerCase() === 'combined') && (
                         <div class="col-lg-4 col-md-6">
-                            <div className="selectwrap add-dropdown-wrap shipment-caret">
+                            {/* <div className="selectwrap  shipment-caret"> */}
+                            <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} add-dropdown-wrap shipment-caret`}>
+
                                 <Form.Item
                                     label="Material For"
                                     name="material_for0"
@@ -206,7 +213,9 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 <div className="row">
                     {formData.material_details[0]?.material_for?.toLowerCase() === 'project' && (
                         <div class="col-sm-4">
-                            <div className="selectwrap columns-select shipment-caret ">
+                            {/* <div className="selectwrap columns-select shipment-caret "> */}
+                            <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+
                                 <Form.Item
                                     label="Select Site"
                                     name="project_site_id0"
@@ -320,8 +329,10 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 ]}
                                                             >
                                                                 <Input.TextArea
+                                                                                            className={`selectwrap ${view ? 'description-clr' : ""} columns-select shipment-caret `}
                                                                     placeholder={upperKey}
                                                                     rows="3" cols="40"
+                                                                    readOnly={view}
                                                                     value={data[key]}
                                                                     onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                                 />
@@ -333,7 +344,9 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                 return (
                                                     <div class="col-sm-4">
                                                         <div className="wrap-box">
-                                                            <div className="selectwrap columns-select shipment-caret ">
+                                                            {/* <div className="selectwrap columns-select shipment-caret "> */}
+                                                            <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+
                                                                 <Form.Item
                                                                     label="Select Site"
                                                                     name={`project_site_id${index + 1}`}
@@ -383,7 +396,10 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                 return (
                                                     <div class="col-lg-4 col-md-6">
                                                         <div className="wrap-box">
-                                                            <div className="selectwrap add-dropdown-wrap shipment-caret">
+                                                            {/* <div className="selectwrap add-dropdown-wrap shipment-caret"> */}
+                                                            <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} add-dropdown-wrap shipment-caret`}>
+
+                                                                
                                                                 <Form.Item
                                                                     label="Material For"
                                                                     name={'material_for' + (index + 1)}

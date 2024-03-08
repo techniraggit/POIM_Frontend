@@ -75,7 +75,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                             ]}
                         >
                             <InputNumber
-                                placeholder="Amount" 
+                                placeholder="Amount"
                                 readOnly={view}
                                 addonBefore="$"
                                 formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
@@ -176,6 +176,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                         rules={[{ required: true, message: `Please enter Scope Of Work` }]}
                                                     >
                                                         <Input.TextArea
+                                                            className={`selectwrap ${view ? 'description-clr' : ""} columns-select shipment-caret `}
                                                             rows={4}
                                                             readOnly={view}
                                                             cols={50}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space ,InputNumber} from "antd";
+import { Form, Input, Select, Button, Space, InputNumber } from "antd";
 
 const repeatorData = {
     description: '',
@@ -54,6 +54,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                         ]}
                     >
                         <Input.TextArea
+                            className={`selectwrap ${view ? 'description-clr' : ""} columns-select shipment-caret `}
                             readOnly={view} rows={4} cols={50}
                             placeholder="description"
                             onChange={(e) => onChange('material_details',
@@ -110,7 +111,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 },
 
                             ]}
-                            // style={{margin:'7px'}}
+                        // style={{margin:'7px'}}
                         >
                             {/* <InputNumber
                                 min={0}
@@ -122,21 +123,23 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             <InputNumber
                                 readOnly={view}
                                 addonBefore="$"
-                                placeholder="Amount" 
-                                
+                                placeholder="Amount"
+
                                 formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
                                 parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
                                 onChange={(value) => {
-                                    form.setFieldValue('amount0',(value || 0) || '0')
-                                    onChange('material_details', { amount:(value || 0)}, 0)
-                                }} 
-                                />
+                                    form.setFieldValue('amount0', (value || 0) || '0')
+                                    onChange('material_details', { amount: (value || 0) }, 0)
+                                }}
+                            />
                         </Form.Item>
                     </div>
                 </div>
                 {formData.shipment_type === 'project related' && (
                     <div class="col-lg-4 col-md-6">
-                        <div className="selectwrap columns-select shipment-caret ">
+                        {/* <div className="selectwrap columns-select shipment-caret "> */}
+                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+
                             <Form.Item
                                 label="Select Site"
                                 name="project_site_id0"
@@ -193,8 +196,8 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                                 formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
                                                                 parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
 
-                                                                onChange={( value) => {
-                                                                    form.setFieldValue('amount' + (index + 1),(value || 0) || '0')
+                                                                onChange={(value) => {
+                                                                    form.setFieldValue('amount' + (index + 1), (value || 0) || '0')
                                                                     onChange('material_details', { [key]: (value || 0) }, index + 1)
                                                                 }}
                                                             // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
@@ -212,6 +215,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                             rules={[{ required: true, message: `Please enter description` }]}
                                                         >
                                                             <Input.TextArea
+                                                                className={`selectwrap ${view ? 'description-clr' : ""} columns-select shipment-caret `}
                                                                 readOnly={view}
                                                                 rows={4}
                                                                 cols={50}
@@ -287,7 +291,9 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                             return (
                                                 <div class="col-lg-4 col-md-6">
                                                     <div className="wrap-box">
-                                                        <div className="selectwrap columns-select shipment-caret">
+                                                        {/* <div className="selectwrap columns-select shipment-caret"> */}
+                                                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+
                                                             <Form.Item
                                                                 label="Select Site"
                                                                 name={`project_site_id${index + 1}`}
