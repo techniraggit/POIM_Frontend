@@ -304,7 +304,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 ]}
                                                             >
                                                                 <Input
-                                                                    readOnly={view}
+                                                                    readOnly={view}  
                                                                     addonBefore="$"
                                                                     placeholder={upperKey}
 
