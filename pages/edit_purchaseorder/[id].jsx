@@ -189,7 +189,7 @@ const EditMaterialPo = () => {
 
     formData?.material_details.forEach((data, index) => {
         // form.setFieldValue(('amount' + (index)), `$${parseFloat(data.amount).toFixed(2) || '0.00'}`);
-        form.setFieldValue(('amount' + (index)), data.amount)
+        form.setFieldValue(('amount' + (index)), data.amount.toLocaleString())
     })
 
     const handleStatusChange = (event, action, data) => {
