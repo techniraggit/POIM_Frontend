@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Select, Button, Space, DatePicker, InputNumber } from "antd";
-// import { DatePicker } from 'antd';
 import dayjs from "dayjs";
 
 const repeatorData = {
@@ -51,12 +50,6 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 },
                             ]}
                         >
-                            {/* <DatePicker
-                                format="YYYY-MM-DD"
-                                picker="month"
-                                readOnly={view}
-                                onChange={(date, dateString) => onChange('material_details', { date: dateString }, 0)}
-                            /> */}
                             <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { date: dayjs(value).format('YYYY-MM-DD') }, 0)} type="date"></Input>
                         </Form.Item>
                     </div>
@@ -84,11 +77,6 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                     form.setFieldValue('amount0', (value || 0) || '0')
                                     onChange('material_details', { amount: (value || 0) }, 0)
                                 }}
-                            // onChange={({ target: { value } }) => {
-                            //     form.setFieldValue('amount0', parseFloat(value.replace(/,/g, '')).toLocaleString())
-                            //     onChange('material_details', { amount: parseFloat(value.replace(/,/g, '')) }, 0)
-                            // }} 
-                            // onChange={({ target: { value } }) => onChange('material_details', { amount: value }, 0)} 
                             />
                         </Form.Item>
                     </div>
@@ -158,11 +146,6 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                                     form.setFieldValue('amount' + (index + 1), (value || 0) || '0')
                                                                     onChange('material_details', { [key]: (value || 0) }, index + 1)
                                                                 }}
-                                                            // onChange={({ target: { value } }) => {
-                                                            //     form.setFieldValue('amount' + (index + 1), parseFloat(value.replace(/,/g, '')).toLocaleString())
-                                                            //     onChange('material_details', { [key]:  parseFloat(value.replace(/,/g, '')) }, index + 1)
-                                                            // }} 
-                                                            // onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             />
                                                         </Form.Item>
                                                     </div>
