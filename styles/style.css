@@ -4120,7 +4120,11 @@ input#amount1 {
     background: #FAFAFA;
 }
 /* 7 march */
-
+/* 08-03-2023 */
+.wrap-box .ant-form-item-control-input-content .ant-input {
+    color: #112F5C !important;
+}
+/* 08-03-2023 */
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
@@ -4293,11 +4297,6 @@ span.text-sizes {
     text-align: center;
 }
 
-
-
-
-
-
 /* .read {
     background-color: green;
 }
@@ -4356,7 +4355,37 @@ span.text-sizes {
 }
 
 @media (max-width: 992px) {
-
+    .ant-select.line-select.ant-select-show-arrow .ant-select-selector {
+        height: 30px !important;
+    }
+    .ant-select.line-select.ant-select-show-arrow {
+        height: 30px;
+    }
+    .input-date {
+        max-width: 100% !important;
+        padding: 4px 13px;
+        height: 30px;
+        font-size: 17px;
+    }
+    .date-wrapp label {
+        font-weight: 600 !important;
+        font-size: 13px !important;
+    }
+    button.clear-button {
+        height: 30px;
+        font-size: 13px;
+        display: flex;
+        padding: 6px 22px;
+        align-items: center;
+        justify-content: center;
+    }
+    button#xls-btn {
+        height: 30px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        padding: 6px 22px;
+    }
     p.no-data-p {
         margin-left: 16px;
     }
