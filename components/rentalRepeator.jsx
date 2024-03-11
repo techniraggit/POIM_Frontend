@@ -67,7 +67,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     <div className="wrap-box">
                         <Form.Item
                             label="Date"
-                            name="start_date"
+                            name="start_date0"
                             rules={[
                                 {
                                     required: true,
@@ -84,7 +84,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                         <Form.Item
                             label="To"
 
-                            name="end_date"
+                            name="end_date0"
                             validateStatus={endDateError ? 'error' : ''}
                             help={endDateError}
                             rules={[
@@ -236,7 +236,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                     <div className="wrap-box">
                                                         <Form.Item
                                                             label={upperKey}
-                                                            name="start_date"
+                                                            name={`start_date` + (index + 1)}
                                                             rules={[
                                                                 {
                                                                     required: true,
@@ -264,7 +264,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                     <div className="wrap-box">
                                                         <Form.Item
                                                             label={upperKey}
-                                                            name="end_date"
+                                                            name={"end_date" + (index + 1)}
                                                             validateStatus={endDateError ? 'error' : ''}
                                                             help={endDateError}
                                                             rules={[
@@ -320,10 +320,8 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 }
                                 <div className="col-sm-4">
                                     <MinusOutlined className="minus-wrap" onClick={() => {
-                                        setFormData({
-                                            ...formData,
-                                            material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                        });
+                                        console.log("HEre")
+                                        formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         if (calculateAmount) {
                                             calculateAmount(0, index + 1);
                                         }
@@ -332,7 +330,8 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             </div>
                         })
                     }
-                    <Form.Item className="mt-3">
+                    {
+                     !view &&<Form.Item className="mt-3">
                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                             setFormData({
                                 ...formData,
@@ -345,6 +344,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             Add More Items
                         </Button>
                     </Form.Item>
+                    }
                 </Space>
             </div>
         </div>
