@@ -49,6 +49,7 @@ const Edit_Rental_Po = () => {
             fetchPo(id).then((res) => {
                 if (res?.data?.status) {
                     const data = res.data.data;
+                    console.log(data,'hhhhhhhhhhhhhhh');
                     setFormData({
                         ...formData,
                         can_change_status: res.data?.can_change_status,
@@ -88,17 +89,22 @@ const Edit_Rental_Po = () => {
                     form.setFieldValue('email', data.vendor_contact?.email);
                     form.setFieldValue('poNumber', data.po_number)
                     form.setFieldValue('shipment_type', data.shipment_type)
-                    form.setFieldValue('date', data.material_details[0]?.date)
-                    form.setFieldValue('to', data.material_details[0]?.end_date)
+                    form.setFieldValue('start_date0', data.material_details[0]?.date)
+                    form.setFieldValue('end_date0', data.material_details[0]?.end_date)
                     form.setFieldValue('description', data.material_details[0]?.description)
                     form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                     form.setFieldValue('first_name', data.created_by.first_name)
                     form.setFieldValue('last_name', data.created_by.last_name)
                     data?.material_details.forEach((material, index) => {
+                        console.log(material,'ccccccccmmmmmmmmmmmmmm');
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                         form.setFieldValue('material_for' + (index), material.material_for)
                         form.setFieldValue('project_id' + (index), material.project?.project_id)
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                        if(index > 0) {
+                            form.setFieldValue('start_date' + (index), material_details?.date)
+                            form.setFieldValue('end_date' + (index), material?.end_date)
+                        }
                         form.setFieldValue('amount' + (index), material.amount.toLocaleString())
                     })
                 }
@@ -152,9 +158,8 @@ const Edit_Rental_Po = () => {
     };
 
     const handleRepeaterAmountChange = (amount, index) => {
-        if(amount === 0 && index) {
-            formData.material_details[index].amount = amount;
-        }
+        console.log(formData.material_details)
+
         const totalAmount = getTotalAmount()
         setFormData({
             ...formData,

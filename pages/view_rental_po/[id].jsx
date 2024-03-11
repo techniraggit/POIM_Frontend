@@ -99,8 +99,8 @@ const ViewRentalPO = () => {
                     form.setFieldValue('poNumber', data.po_number)
                     form.setFieldValue('shipment_type', data.shipment_type)
                     form.setFieldValue('amount0', data.material_details[0]?.amount)
-                    form.setFieldValue('date', data.material_details[0]?.date)
-                    form.setFieldValue('to', data.material_details[0]?.end_date)
+                    form.setFieldValue('start_date0', data.material_details[0]?.date)
+                    form.setFieldValue('end_date0', data.material_details[0]?.end_date)
                     form.setFieldValue('description', data.material_details[0]?.description)
                     form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                     form.setFieldValue('first_name', data.created_by.first_name)
@@ -110,6 +110,10 @@ const ViewRentalPO = () => {
                         form.setFieldValue('material_for' + (index), material.material_for)
                         form.setFieldValue('project_id' + (index), material.project?.project_id)
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                        if(index > 0) {
+                            form.setFieldValue('start_date' + (index), material_details?.date)
+                            form.setFieldValue('end_date' + (index), material?.end_date)
+                        }
                         form.setFieldValue('amount' + (index), material.amount.toLocaleString())
                     })
                 }
@@ -268,7 +272,8 @@ const ViewRentalPO = () => {
             </div>
             {isModalOpen && <ChangeStatus po_id={id} poType={"rental"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
             {/* {isModalOpen && <PoStatus setIsModalOpen={setIsModalOpen} />} */}
-            {isStatusModalOpen && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
+            {isStatusModalOpen && <PoStatus isStatusMod
+            alOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
         </>
     )
 }
