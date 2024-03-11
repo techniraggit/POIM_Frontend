@@ -18,7 +18,7 @@ import { saveAs } from "file-saver";
 const { TextArea } = Input;
 const { Option } = Select;
 
-const ViewInvoice = (view) => {    
+const ViewInvoice = (view) => {
     const [poNumber, setPoNumber] = useState([]);
     const [invoice, setInvoice] = useState({});
     const [po, setPo] = useState('');
@@ -111,9 +111,9 @@ const ViewInvoice = (view) => {
     }
 
     const handleIconClick = (action) => {
-        if(action === 'invoice') {
+        if (action === 'invoice') {
             setStatusData([...invoice.invoice_approval_note])
-        } else if(action === 'po') {
+        } else if (action === 'po') {
             setStatusData([...invoice?.purchase_order?.co_approved_amount])
         }
         setStatusModalOpen(true);
@@ -167,7 +167,7 @@ const ViewInvoice = (view) => {
                             </li>
                         </ul>
                         <div class="wrapp-in-voice">
-                            
+
                             {
                                 responseData.po_type == 'material' && (
                                     <>
@@ -225,7 +225,7 @@ const ViewInvoice = (view) => {
 
                                         <div className="col-lg-4 col-md-6">
                                             {/* <div className="selectwrap  shipment-caret  aligned-text"> */}
-                    <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret invoice-select  aligned-text`}>
+                                            <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret invoice-select  aligned-text`}>
 
                                                 <Form.Item
                                                     label="Choose PO Number"
@@ -278,11 +278,11 @@ const ViewInvoice = (view) => {
                     </div>
                 </div>
             </div>
-            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen}  setIsModalOpen={setIsModalOpen} />}
-            {isStatusModalOpen && <PoStatus 
-            isStatusModalOpen={isStatusModalOpen}
-            data={statusData || []}
-            setStatusModalOpen={setStatusModalOpen} />}
+            {isModalOpen && <ChangeStatus po_id={id} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+            {isStatusModalOpen && <PoStatus
+                isStatusModalOpen={isStatusModalOpen}
+                data={statusData || []}
+                setStatusModalOpen={setStatusModalOpen} />}
         </>
     )
 }

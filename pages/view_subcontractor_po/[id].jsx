@@ -13,6 +13,7 @@ import PoStatus from "@/components/PoStatus";
 import ChangeStatus from "@/components/PoChangeStatus";
 import Roles from "@/components/Roles";
 import { saveAs } from "file-saver";
+import Amendments from "@/components/Amendments";
 
 
 const { Option } = Select;
@@ -43,6 +44,7 @@ const ViewSubContractorPo = () => {
         modalStatus: false,
         action: ''
     });
+    const [history, setHistory] = useState([])
     const [refetch, setRefetch] = useState(true);
     const [isStatusModalOpen, setStatusModalOpen] = useState(false);
     const [contractFile, setContractFile] = useState(null)
@@ -85,6 +87,7 @@ const ViewSubContractorPo = () => {
                         signed_contract: data.signed_contract,
                         po_creator: res?.data?.po_creator
                     });
+                    setHistory([...res.data.history_logs_data])
 
                     form.setFieldValue('co_amount', data.co_approved_amount[0]?.amount.toLocaleString());
                     form.setFieldValue('po_type', data.po_type);
@@ -407,6 +410,7 @@ const ViewSubContractorPo = () => {
                                 }
                             </div>}
                         </div>
+                        {history?.length > 0 && <Amendments history={history} />}
                     </div>
                 </div>
             </div>

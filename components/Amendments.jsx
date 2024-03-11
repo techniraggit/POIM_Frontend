@@ -3,20 +3,11 @@ import '../styles/style.css'
 import { Collapse } from 'antd';
 import dayjs from 'dayjs';
 
-const getParsedHistory = (changes) => {
-  try {
-    const string = changes.replace(/None/g, null).replace(/'/g, '"');
-    return JSON.parse(string);
-  } catch (e) {
-    return []
-  }
-}
-
 const Amendments = ({ history }) => {
   const amendments =
     (<div className="bottom-po">
       {history.map((history, index) => {
-        const changes = getParsedHistory(history.changes);
+        const changes = history.changes;
 
         const show = changes.reduce((result, change) => {
           return Object.keys(change).map((key) => {

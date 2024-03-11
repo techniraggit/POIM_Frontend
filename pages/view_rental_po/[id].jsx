@@ -11,6 +11,7 @@ import PoForm from "@/components/Form";
 import PoStatus from "@/components/PoStatus";
 import Roles from "@/components/Roles";
 import ChangeStatus from "@/components/PoChangeStatus";
+import Amendments from "@/components/Amendments";
 
 const { Option } = Select;
 
@@ -42,6 +43,7 @@ const ViewRentalPO = () => {
         modalStatus: false,
         action: ''
     });
+    const [history, setHistory] = useState([])
     const [refetch, setRefetch] = useState(true);
     const [isStatusModalOpen,setStatusModalOpen]=useState(false);
 
@@ -79,6 +81,7 @@ const ViewRentalPO = () => {
                         status: data.status,
                         notes: data?.co_approved_amount
                     });
+                    setHistory([...res.data.history_logs_data])
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
                     form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
@@ -259,6 +262,7 @@ const ViewRentalPO = () => {
                                 </Form>
                             </div>
                         </div>
+                        {history?.length > 0 && <Amendments history={history} />}
                     </div>
                 </div>
             </div>
