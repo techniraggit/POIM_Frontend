@@ -157,7 +157,7 @@ const Edit_Rental_Po = () => {
     };
 
     const handleRepeaterAmountChange = () => {
-        console.log(formData)
+        console.log(formData.material_details)
 
         const totalAmount = getTotalAmount()
         setFormData({

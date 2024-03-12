@@ -40,9 +40,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
     };
 
     const handleRemoveDetail = async (id, index) => {
-        console.log([...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)])
         await updatematerialPo({ md_id: id }).then((response) => {
-            console.log(response.data);
             if (response?.data?.status) {
                 message.success(response.data.message);
                 formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
@@ -327,10 +325,11 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                         if (data.md_id) {
                                             await handleRemoveDetail(data.md_id, index);
                                         } else {
-                                            setFormData({
-                                                ...formData,
-                                                material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                            });
+                                            // setFormData(
+                                                formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                                // ...formData,
+                                                // material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                            // );
                                         }
                                         if (calculateAmount) {
                                             calculateAmount();
