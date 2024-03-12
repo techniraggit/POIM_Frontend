@@ -105,7 +105,7 @@ const Amendments = ({ history }) => {
                                         </div>
                                       </>
                                     }
-                                    <span className='medium-span'>{data[description]}</span>
+                                    <span className='medium-span'>{data['description']}</span>
                                     return <></>
                                   })
                                 })

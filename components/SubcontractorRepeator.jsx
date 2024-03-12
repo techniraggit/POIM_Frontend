@@ -226,15 +226,22 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                     })
                                 }
                                 {
-                                    !view && <MinusOutlined className="minus-wrap" onClick={() => {
-                                        setFormData({
-                                            ...formData,
-                                            material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                        });
+                                    !view && 
+                                    <MinusOutlined className="minus-wrap" onClick={() => {
+                                        formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         if (calculateAmount) {
                                             calculateAmount(0, index + 1);
                                         }
                                     }} style={{ marginLeft: '8px' }} />
+                                    // <MinusOutlined className="minus-wrap" onClick={() => {
+                                    //     setFormData({
+                                    //         ...formData,
+                                    //         material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                    //     });
+                                    //     if (calculateAmount) {
+                                    //         calculateAmount(0, index + 1);
+                                    //     }
+                                    // }} style={{ marginLeft: '8px' }} />
                                 }
                             </div>
                         })
