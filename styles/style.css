@@ -4127,6 +4127,26 @@ input#amount1 {
     color: #112F5C !important;
 }
 /* 08-03-2023 */
+/* 12march add */
+.toggle-bar {
+    display: none;
+}
+.toggle-bar span svg {
+    color: #000;
+    font-size: 20px;
+}
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+a.sidebar-hide a span svg {
+    color: #e91d26;
+    font-size: 19px;
+    display: none;
+}
+/* 12march add */
+
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
@@ -4672,7 +4692,52 @@ li#report-li ul.reports-dropdown li {
     }
 }
 
+@media screen and (max-width: 767px) {
+    .aside-dashboard {
+        width: 210px;
+        position: fixed;
+        /* display: none; */
+        left: -300px;
+    }
+    a.sidebar-hide a span svg {
+        display: block;
+    }
+    .toggle-bar {
+        display: block;
+    }
+    .inner-wrapper {
+        width: 100%;
+    }
+    ul.list-icons li i {
+        font-size: 20px;
+        padding: 11px 11px;
+        border-radius: 10px;
+    }
+    
+}
+@media screen and (max-width: 575px) {
+ul.list-icons li i {
+    font-size: 18px;
+    padding: 10px 10px;
+    border-radius: 8px;
+}
+.text-wrap h5 {
+    font-size: 22px;
+}
+.table-wrap h5 {
+    font-size: 22px;
+}
+}
 @media screen and (max-width: 480px) {
+    .toggle-bar {
+        margin-right: 20px;
+    }
+    .top-wrapp {
+        padding: 18px 26px 18px 26px;
+    }
+    .text-wrap h5 {
+        font-size: 20px;
+    }
     h4.admin {
         color: #404040;
         font-size: 30px;
@@ -4692,6 +4757,36 @@ li#report-li ul.reports-dropdown li {
         font-size: 16px;
         padding: 8px 12px;
         margin-top: 50px;
+    }
+}
+@media screen  and (max-width: 480px)  {
+    ul.list-icons li i {
+        font-size: 14px;
+        padding: 7px 8px;
+        border-radius: 5px;
+    }
+    ul.list-icons li.me-4.me-md-3 {
+        margin-right: 5px !important;
+    }
+    .bottom-wrapp {
+        padding-top: 26px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    ul.list-icons li a i {
+        margin-bottom: 8px !important;
+    }
+    .text-wrap h5 {
+        font-size: 16px;
+    }
+    
+}
+@media (min-width: 320px) and (max-width: 375px) {
+    ul.list-icons li.me-4.me-md-3 {
+        margin-right: 3px !important;
+    }
+    ul.list-icons li span {
+        font-size: 12px;
     }
 }
 
