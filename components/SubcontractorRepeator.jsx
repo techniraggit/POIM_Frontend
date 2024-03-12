@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space, DatePicker, InputNumber } from "antd";
+import { Form, Input, Select, Button, Space, DatePicker, InputNumber, message } from "antd";
 import dayjs from "dayjs";
+import { updatematerialPo } from "@/apis/apis/adminApis";
 
 const repeatorData = {
     description: '',
@@ -18,6 +19,17 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
         }
     }, [formData.material_details[0]?.date, edit]);
     console.log(formData.material_details)
+
+    const handleRemoveDetail = async (id, index) => {
+        console.log([...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)])
+        await updatematerialPo({ md_id: id }).then((response) => {
+            console.log(response.data);
+            if (response?.data?.status) {
+                message.success(response.data.message);
+                formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+            }
+        })
+    }
     return (
         <div class="row">
             <div class="col-12 space-col-spc mb-3">
@@ -225,24 +237,38 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                         return <></>
                                     })
                                 }
-                                {
-                                    !view && 
-                                    <MinusOutlined className="minus-wrap" onClick={() => {
-                                        formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+
+                                <div className="col-sm-4">
+                                    <MinusOutlined className="minus-wrap" onClick={async () => {
+                                        if (data.md_id) {
+                                            await handleRemoveDetail(data.md_id, index);
+                                        } else {
+                                            setFormData({
+                                                ...formData,
+                                                material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                            });
+                                        }
                                         if (calculateAmount) {
-                                            calculateAmount(0, index + 1);
+                                            calculateAmount();
                                         }
                                     }} style={{ marginLeft: '8px' }} />
-                                    // <MinusOutlined className="minus-wrap" onClick={() => {
-                                    //     setFormData({
-                                    //         ...formData,
-                                    //         material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                    //     });
-                                    //     if (calculateAmount) {
-                                    //         calculateAmount(0, index + 1);
-                                    //     }
-                                    // }} style={{ marginLeft: '8px' }} />
-                                }
+                                </div>
+                                {/* {
+                                    !view && 
+                                    <MinusOutlined className="minus-wrap" onClick={async () => {
+                                        if (data.md_id) {
+                                            await handleRemoveDetail(data.md_id, index);
+                                        } else {
+                                            setFormData({
+                                                ...formData,
+                                                material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                            });
+                                        }
+                                        if (calculateAmount) {
+                                            calculateAmount();
+                                        }
+                                    }} style={{ marginLeft: '8px' }} />
+                                } */}
                             </div>
                         })
                     }

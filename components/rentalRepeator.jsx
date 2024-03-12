@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space, InputNumber } from "antd";
+import { Form, Input, Select, Button, Space, InputNumber,message } from "antd";
+import { updatematerialPo } from "@/apis/apis/adminApis";
 
 const repeatorData = {
     description: '',
@@ -38,6 +39,16 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
         }
     };
 
+    const handleRemoveDetail = async (id, index) => {
+        console.log([...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)])
+        await updatematerialPo({ md_id: id }).then((response) => {
+            console.log(response.data);
+            if (response?.data?.status) {
+                message.success(response.data.message);
+                formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+            }
+        })
+    }
     return (
         <div class="row">
             <div class="col-12 space-col-spc mb-3">
@@ -113,13 +124,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                             ]}
                         // style={{margin:'7px'}}
                         >
-                            {/* <InputNumber
-                                min={0}
-                                size="large"
-                                style={{ width: 400 }}
-                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
-                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
-                            /> */}
                             <InputNumber
                                 readOnly={view}
                                 addonBefore="$"
@@ -319,10 +323,17 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     })
                                 }
                                 <div className="col-sm-4">
-                                    <MinusOutlined className="minus-wrap" onClick={() => {
-                                        formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                    <MinusOutlined className="minus-wrap" onClick={async () => {
+                                        if (data.md_id) {
+                                            await handleRemoveDetail(data.md_id, index);
+                                        } else {
+                                            setFormData({
+                                                ...formData,
+                                                material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                            });
+                                        }
                                         if (calculateAmount) {
-                                            calculateAmount(0, index + 1);
+                                            calculateAmount();
                                         }
                                     }} style={{ marginLeft: '8px' }} />
                                 </div>

@@ -127,22 +127,31 @@ const EditSubContractorPo = () => {
 
         return totalAmount;
     };
+    const handleRepeaterAmountChange = () => {
+        console.log(formData)
 
-    const calculateAmount = (amount, index) => {
-        // if(amount === 0 && index) {
-        //     formData.material_details[index].amount = amount;
-        // }
-        const totalAmount = getTotalAmount();
-        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
-        if(totalAmount > 0) {
-            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
-        }
+        const totalAmount = getTotalAmount()
         setFormData({
-            ...formData
+            ...formData,
+            hst_amount: totalAmount * 0.13,
+            total_amount: totalAmount * 0.13 + totalAmount
         })
-    }
+        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
+        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
+    };
+
+    // const calculateAmount = (amount, index) => {
+    //     const totalAmount = getTotalAmount();
+    //     formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
+    //     formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
+    //     if(totalAmount > 0) {
+    //         form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
+    //         form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
+    //     }
+    //     setFormData({
+    //         ...formData
+    //     })
+    // }
 
     const onFinish = () => {
         updatePo({
@@ -166,7 +175,8 @@ const EditSubContractorPo = () => {
             });
 
             if(value.amount) {
-                calculateAmount();
+                handleRepeaterAmountChange();
+                // calculateAmount();
             }
             formData.material_details[index] = {
                 ...materalDetails
@@ -327,7 +337,11 @@ const EditSubContractorPo = () => {
                                         </>
                                     )
                                     }
-                                    <PoForm formData={formData} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} calculateAmount={calculateAmount} />
+                                    <PoForm formData={formData} edit={true} isNew={true} form={form} onChange={onChange} onFinish={onFinish} setFormData={setFormData} calculateAmount
+                                    =
+                                    {handleRepeaterAmountChange}
+                                    // {calculateAmount} 
+                                    />
                                     
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>
