@@ -239,19 +239,20 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 }
 
                                 <div className="col-sm-4">
-                                    <MinusOutlined className="minus-wrap" onClick={async () => {
+                                    { !view && <MinusOutlined className="minus-wrap" onClick={async () => {
                                         if (data.md_id) {
                                             await handleRemoveDetail(data.md_id, index);
                                         } else {
-                                            setFormData({
-                                                ...formData,
-                                                material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                            });
+                                            formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                            // setFormData({
+                                            //     ...formData,
+                                            //     material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                            // });
                                         }
                                         if (calculateAmount) {
                                             calculateAmount();
                                         }
-                                    }} style={{ marginLeft: '8px' }} />
+                                    }} style={{ marginLeft: '8px' }} />}
                                 </div>
                                 {/* {
                                     !view && 
