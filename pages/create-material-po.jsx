@@ -79,7 +79,6 @@ const CreateMaterialPo = () => {
     }
 
     const calculateAmount = (quantity, unit_price, index) => {
-        console.log(parseFloat(quantity),'parseFloat(quantity)');
         const amount = ((parseFloat(quantity) * parseFloat(unit_price))) || 0;
         const materialDetails = formData.material_details[index];
         materialDetails.amount = amount;

@@ -320,7 +320,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 }
                                 <div className="col-sm-4">
                                     <MinusOutlined className="minus-wrap" onClick={() => {
-                                        console.log("HEre")
                                         formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         if (calculateAmount) {
                                             calculateAmount(0, index + 1);

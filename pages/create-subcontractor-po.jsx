@@ -92,9 +92,9 @@ const CreateSubContractorPo = () => {
     }
 
     const calculateAmount = (amount, index) => {
-        if(amount === 0 && index) {
-            formData.material_details[index].amount = amount;
-        }
+        // if(amount === 0 && index) {
+        //     formData.material_details[index].amount = amount;
+        // }
         const totalAmount = getTotalAmount();
         formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
         formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
