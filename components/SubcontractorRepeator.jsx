@@ -17,7 +17,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
             form.setFieldValue('date', formData.material_details[0]?.date);
         }
     }, [formData.material_details[0]?.date, edit]);
-
+    console.log(formData.material_details)
     return (
         <div class="row">
             <div class="col-12 space-col-spc mb-3">
