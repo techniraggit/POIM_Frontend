@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/style.css'
 import Link from 'next/link';
-import { RightOutlined, HomeFilled } from '@ant-design/icons';
+import { RightOutlined, HomeFilled, CloseOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import Roles from './Roles';
 
@@ -29,6 +29,7 @@ const Sidebar = () => {
       <div className="aside-dashboard">
         <div className="logo">
           <a href="#"><img src="/images/logo.png" alt="" /></a>
+          <a href="#" class="sidebar-hide"><a href="#"><CloseOutlined></CloseOutlined></a></a>
         </div>
         <ul className="list-dboard">
           <li className={activeMenuItem === '/dashboard' ? 'active' : ''}>
