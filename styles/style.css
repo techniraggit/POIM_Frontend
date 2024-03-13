@@ -4733,7 +4733,7 @@ ul.list-icons li i {
         margin-right: 20px;
     }
     .top-wrapp {
-        padding: 18px 26px 18px 26px;
+        padding: 18px 12px 18px 12px;
     }
     .text-wrap h5 {
         font-size: 20px;
@@ -4758,8 +4758,6 @@ ul.list-icons li i {
         padding: 8px 12px;
         margin-top: 50px;
     }
-}
-@media screen  and (max-width: 480px)  {
     ul.list-icons li i {
         font-size: 14px;
         padding: 7px 8px;
@@ -4779,8 +4777,40 @@ ul.list-icons li i {
     .text-wrap h5 {
         font-size: 16px;
     }
-    
+    span.d-block.admin-menu {
+        font-size: 12px;
+    }
+    .leftwrap {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    ul.notify li span {
+        font-size: 12px;
+    }
+    ul.list-icons li {
+        padding: 14px 12px 14px;
+        border-radius: 6px;
+        width: 195px;
+    }
+    ul.list-icons li a span {
+        width: 46px;
+        height: 46px;
+    }
+    span.text-size {
+        font-size: 15px;
+        padding: 11px 14px;
+        border-radius: 8px;
+        width: 46px;
+    }
+    ul.list-icons li span.text-size {
+        font-size: 14px;
+    }
+    .wrapin-form.add-clear-wrap {
+        padding: 27px 12px;
+        justify-content: center;
+    }
 }
+
 @media (min-width: 320px) and (max-width: 375px) {
     ul.list-icons li.me-4.me-md-3 {
         margin-right: 3px !important;
