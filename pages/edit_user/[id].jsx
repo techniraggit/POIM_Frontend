@@ -29,7 +29,7 @@ const EditUser = ({ base_url }) => {
             }
         }
         fetchroles();
-       
+
     }, [])
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const EditUser = ({ base_url }) => {
                     first_name: userData.first_name,
                     last_name: userData.last_name,
                     email: userData.email,
-                    phone_number: userData.phone_number,
+                    phone_number: userData.phone_number.slice(2),
                     address: userData.address,
                     state: userData.state,
                     country: userData.country
@@ -69,6 +69,7 @@ const EditUser = ({ base_url }) => {
         const data = {
             id: id,
             ...values,
+            phone_number: '+1' + values.phone_number
         }
         try {
             const headers = {
@@ -81,7 +82,7 @@ const EditUser = ({ base_url }) => {
         } catch (error) {
             message.error(error.response.data.message)
             console.error('Error updating user:', error);
-           
+
         }
     };
 
@@ -114,71 +115,94 @@ const EditUser = ({ base_url }) => {
                         </ul>
                         <div class="choose-potype round-wrap"><div class="inner-choose">
 
-                                <Form onFinish={onFinish} layout="vertical" form={form}
-                                    labelCol={{ span: 8 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    <div className="row mb-4">
-                                        <div className="col-lg-4 col-md-6">
-                                            <div className="selectwrap react-select">
+                            <Form onFinish={onFinish} layout="vertical" form={form}
+                                labelCol={{ span: 8 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                <div className="row mb-4">
+                                    <div className="col-lg-4 col-md-6">
+                                        <div className="selectwrap react-select">
 
-                                                <Form.Item label="Role" name="role_id" initialValue="select role"
-                                                    className='dropdown vender-input'
-                                                    rules={[{ required: true, message: 'Please choose role!' }]}
-                                                >
-                                                    <Select >
-                                                        {Array.isArray(roles) &&
-                                                            roles.map((role) => (
-                                                                <Option key={role.id} value={role.id}
-                                                                >
-                                                                    {role.name}
-                                                                </Option>
-                                                            ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </div>
+                                            <Form.Item label="Role" name="role_id" initialValue="select role"
+                                                className='dropdown vender-input'
+                                                rules={[{ required: true, message: 'Please choose role!' }]}
+                                            >
+                                                <Select >
+                                                    {Array.isArray(roles) &&
+                                                        roles.map((role) => (
+                                                            <Option key={role.id} value={role.id}
+                                                            >
+                                                                {role.name}
+                                                            </Option>
+                                                        ))}
+                                                </Select>
+                                            </Form.Item>
                                         </div>
                                     </div>
-                                    <div className="row">
+                                </div>
+                                <div className="row">
 
-                                        <div className="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-                                                    label="First Name"
-                                                    name="first_name"
-                                                    // Add a name to link the input to the form values
-                                                    className="vender-input"
-                                                    rules={[{ required: true, message: 'Please enter your first name!' }]}
-                                                >
-                                                    <Input />
-                                                </Form.Item>
-                                            </div>
+                                    <div className="col-lg-4 col-md-6">
+                                        <div class="wrap-box">
+                                            <Form.Item
+                                                label="First Name"
+                                                name="first_name"
+                                                // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your first name!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
                                         </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Last Name"
-                                                    name="last_name"  // Add a name to link the input to the form values
-                                                    className="vender-input"
-                                                    rules={[{ required: true, message: 'Please enter your last name!' }]}
-                                                >
-                                                    <Input />
-                                                </Form.Item>
-                                            </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6">
+                                        <div class="wrap-box">
+                                            <Form.Item
+                                                label="Last Name"
+                                                name="last_name"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your last name!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
                                         </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Email Address"
-                                                    name="email"  // Add a name to link the input to the form values
-                                                    className="vender-input"
-                                                    rules={[{ required: true, message: 'Please enter your email address!' }]}
-                                                >
-                                                    <Input />
-                                                </Form.Item>
-                                            </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6">
+                                        <div class="wrap-box">
+                                            <Form.Item
+                                                label="Email Address"
+                                                name="email"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your email address!' }]}
+                                            >
+                                                <Input />
+                                            </Form.Item>
                                         </div>
-                                        <div className="col-lg-4 col-md-6">
+                                    </div>
+                                    <div className="col-lg-4 col-md-6">
+                                        <div class="wrap-box">
+                                            <Form.Item
+                                                label="Contact No"
+                                                name="phone_number"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[
+                                                    { required: true, message: 'Please enter your contact number!' },
+                                                    {
+                                                        pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
+                                                        message: 'Please enter a valid 10 digit phone number',
+                                                    },
+
+                                                ]}
+
+                                            >
+                                                <Input className='plus-wrap-input'
+                                                    addonBefore="+1"
+                                                // defaultValue="+"
+                                                />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                    {/* <div className="col-lg-4 col-md-6">
                                             <div class="wrap-box">
                                                 <Form.Item
                                                     label="Contact No"
@@ -195,51 +219,51 @@ const EditUser = ({ base_url }) => {
                                                     />
                                                 </Form.Item>
                                             </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Address"
-                                                    name="address"  // Add a name to link the input to the form values
-                                                    className="vender-input"
-                                                >
-                                                    <Input />
-                                                </Form.Item>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-                                                    label="State / Province"
-                                                    name="state"  // Add a name to link the input to the form values
-                                                    className="vender-input"
-                                                    rules={[{ required: true, message: 'Please enter your state!' }]}
-                                                // initialValue='Ontario'
-                                                >
-                                                    <Input readOnly />
-                                                </Form.Item>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div class="wrap-box">
-                                                <Form.Item
-                                                    label="Country"
-                                                    name="country"  // Add a name to link the input to the form values
-                                                    className="vender-input"
-                                                    rules={[{ required: true, message: 'Please enter your country!' }]}
-                                                // initialValue='Canada'
-                                                >
-                                                    <Input readOnly />
-                                                </Form.Item>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <Form.Item >
-                                                <button type="submit" className="create-ven-butt" >Update</button>
+                                        </div> */}
+                                    <div className="col-lg-4 col-md-6">
+                                        <div class="wrap-box">
+                                            <Form.Item
+                                                label="Address"
+                                                name="address"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                            >
+                                                <Input readOnly />
                                             </Form.Item>
                                         </div>
                                     </div>
-                                </Form>
+                                    <div className="col-lg-4 col-md-6">
+                                        <div class="wrap-box">
+                                            <Form.Item
+                                                label="State / Province"
+                                                name="state"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your state!' }]}
+                                            // initialValue='Ontario'
+                                            >
+                                                <Input readOnly />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6">
+                                        <div class="wrap-box">
+                                            <Form.Item
+                                                label="Country"
+                                                name="country"  // Add a name to link the input to the form values
+                                                className="vender-input"
+                                                rules={[{ required: true, message: 'Please enter your country!' }]}
+                                            // initialValue='Canada'
+                                            >
+                                                <Input readOnly />
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                    <div className="col-12">
+                                        <Form.Item >
+                                            <button type="submit" className="create-ven-butt" >Update</button>
+                                        </Form.Item>
+                                    </div>
+                                </div>
+                            </Form>
                         </div>
                         </div>
 

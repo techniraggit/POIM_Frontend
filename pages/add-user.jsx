@@ -43,6 +43,7 @@ const AddUser = ({ base_url }) => {
       };
       const data = {
         ...values,
+        phone_number: '+1' + values.phone_number
       }
 
       const response = await axios.post(`${base_url}/api/admin/users`, data, {
@@ -169,16 +170,16 @@ const AddUser = ({ base_url }) => {
                           rules={[
                             { required: true, message: 'Please enter your contact number!' },
                             {
-                              pattern: /^(?:\+91|\+1)[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
-                              message: 'Please enter a valid phone number with +1 and without spaces!',
+                              pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
+                              message: 'Please enter a valid 10 digit phone number',
                             },
                            
                           ]}
                         
                         >
                           <Input className='plus-wrap-input'
-                            // onChange={(e) => handlePhoneNumberChange(e.target.value)}
-                            defaultValue="+"
+                          addonBefore="+1"
+                            // defaultValue="+"
                           />
                         </Form.Item>
                       </div>
@@ -191,7 +192,7 @@ const AddUser = ({ base_url }) => {
                           className="vender-input"
                           initialValue='1860 Shawson'
                         >
-                          <Input />
+                          <Input readOnly/>
                         </Form.Item>
                         
                       </div>

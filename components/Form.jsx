@@ -127,14 +127,14 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             if (res.data?.status) {
                 formData.company_name = res.data.vendors.company.company_name;
                 formData.email = res.data.vendors.email;
-                formData.phone = res.data.vendors.phone_number;
+                formData.phone = '+1'+ res.data.vendors.phone_number;
                 formData.address = res.data.vendors.company.address;
                 formData.state = res.data.vendors.company.state;
                 formData.country = res.data.vendors.company.country;
 
                 form.setFieldsValue({ 'company_name': res.data.vendors.company.company_name });
                 form.setFieldsValue({ 'email': res.data.vendors.email });
-                form.setFieldsValue({ 'phone': res.data.vendors.phone_number });
+                form.setFieldsValue({ 'phone': res.data.vendors.phone_number.slice(2) });
                 form.setFieldsValue({ 'address': res.data.vendors.company.address });
                 form.setFieldsValue({ 'state': res.data.vendors.company.state });
                 form.setFieldsValue({ 'country': res.data.vendors.company.country });
@@ -328,7 +328,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input disabled readOnly={view || edit} onChange={({ target: { value } }) => onChange('phone', value)} />
+                            <Input disabled 
+                             addonBefore="+1"
+                            readOnly={view || edit} onChange={({ target: { value } }) => onChange('phone', value)} />
                         </Form.Item>
                     </div>
                 </div>

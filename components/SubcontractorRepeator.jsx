@@ -77,6 +77,10 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                     required: true,
                                     message: "Please enter Amount",
                                 },
+                                {
+                                    pattern: /^(?:\d+|\d*\.\d+)$/,
+                                    message: "Please enter a valid number only",
+                                },
                             ]}
                         >
                             <InputNumber
@@ -143,7 +147,13 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                         <Form.Item
                                                             label={upperKey}
                                                             name={'amount' + (index + 1)}
-                                                            rules={[{ required: true, message: `Please enter ${upperKey}` }]}
+                                                            rules={[
+                                                                { required: true, message: `Please enter ${upperKey}` },
+                                                                {
+                                                                    pattern: /^(?:\d+|\d*\.\d+)$/,
+                                                                    message: "Please enter a valid number only",
+                                                                },
+                                                            ]}
                                                         >
                                                             <InputNumber
                                                                 readOnly={view}
@@ -238,7 +248,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                     })
                                 }
 
-                                <div className="col-sm-4">
+                                {/* <div className="col-sm-4"> */}
                                     { !view && <MinusOutlined className="minus-wrap" onClick={async () => {
                                         if (data.md_id) {
                                             await handleRemoveDetail(data.md_id, index);
@@ -253,7 +263,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                             calculateAmount();
                                         }
                                     }} style={{ marginLeft: '8px' }} />}
-                                </div>
+                                {/* </div> */}
                                 {/* {
                                     !view && 
                                     <MinusOutlined className="minus-wrap" onClick={async () => {

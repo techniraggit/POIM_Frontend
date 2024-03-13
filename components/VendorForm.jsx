@@ -50,20 +50,23 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                 </div>
                 <div className="col-lg-4 col-md-12">
                     <div className="wrap-box">
-                        <Form.Item
-                            label="Contact No"
-                            name="phone_number"
-                            className="vender-input"
-                            rules={[{ required: true, message: 'Please enter phone number!' },
+                    <Form.Item
+                          label="Contact No"
+                          name="phone_number"  // Add a name to link the input to the form values
+                          className="vender-input"
+                          rules={[
+                            { required: true, message: 'Please enter your contact number!' },
                             {
-                                pattern: /^(\+91|\+1)\d{10}$/,
-                                message: 'Please enter a valid phone number starting with +1, followed by 10 digits!',
+                              pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
+                              message: 'Please enter a valid 10 digit phone number',
                             },
-                            ]}
+                           
+                          ]}
+                        
                         >
                             <Input value={formData.contact_info[0]?.phone_number}
                                 onChange={({ target: { value } }) => onChange('contact_info', { phone_number: value }, 0)}
-                                defaultValue="+"
+                                addonBefore="+1"
                             />
                         </Form.Item>
                     </div>
@@ -154,10 +157,10 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                         <Form.Item
                                                             label={"Phone Number"}
                                                             name={key + index}
-                                                            rules={[{ required: true, message: `Please enter phone number` },
+                                                            rules={[ { required: true, message: 'Please enter your contact number!' },
                                                             {
-                                                                pattern: /^(\+91|\+1)\d{10}$/,
-                                                                message: 'Please enter a valid phone number starting with +1, followed by 10 digits!',
+                                                              pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
+                                                              message: 'Please enter a valid 10 digit phone number',
                                                             },
                                                             {
                                                                 validator(_, value) {
@@ -176,7 +179,11 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                             <Input
                                                                 placeholder={upperKey}
                                                                 value={contact[key]}
-                                                                onChange={({ target: { value, name } }) => onChange('contact_info', { [key]: value }, index + 1)}
+                                                                addonBefore="+1"
+                                                                onChange={({ target: { value, name } }) => {
+                                                                    onChange('contact_info', { [key]: value }, index + 1)
+                                                                }
+                                                            }
                                                             />
                                                         </Form.Item>
                                                     </div>

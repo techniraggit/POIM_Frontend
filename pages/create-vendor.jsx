@@ -29,10 +29,20 @@ const CreateVendor = () => {
 
     const onFinish = () => {
       
-        createVendor(formData).then((response) => {
+        createVendor({
+            ...formData,
+            // phone_number: '+1' + formData.contact_info[0].phone_number,
+            contact_info: formData.contact_info.map((info) => {
+                console.log(info,'info')
+                if(!info.phone_number.includes('+1')) {
+                    info.phone_number = '+1' + info.phone_number;
+                }
+                return info
+            })
+        }).then((response) => {
            
             if(response.data?.status) {
-                message.success("Vendor Created");
+                message.success(response.data.message);
                 router.push('/vendor');
             }
         })
@@ -40,7 +50,7 @@ const CreateVendor = () => {
             message.error(error.response.data.message)
         })
     }
-
+    console.log(formData)
     const onChange = (name, value, index) => {
         if (name === 'contact_info') {
             const contactInfo = formData.contact_info[index];
@@ -59,7 +69,7 @@ const CreateVendor = () => {
         });
     }
 
-    
+    console.log(formData,'ffffffffffff');
     return (
         <>
             <DynamicTitle title="Add User" />

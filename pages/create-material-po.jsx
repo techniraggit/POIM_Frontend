@@ -68,6 +68,7 @@ const CreateMaterialPo = () => {
     const onFinish = () => {
         createPO({
             ...formData,
+            // phone_number:'1'+ formData.phone_number
         }).then((res) => {
             if (res?.data?.status) {
                 router.push('/po_list');
@@ -136,6 +137,9 @@ const CreateMaterialPo = () => {
             router.push('/create-subcontractor-po');
         }
     };
+
+
+    console.log(formData,'ssssssssssssss');
     return (
         <>
             <div className="wrapper-main">

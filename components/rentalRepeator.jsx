@@ -117,11 +117,10 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 {
                                     required: true,
                                     message: "Please enter Amount",
-                                },
+                                }
 
                             ]}
-                        // style={{margin:'7px'}}
-                        >
+s                        >
                             <InputNumber
                                 readOnly={view}
                                 addonBefore="$"
@@ -186,7 +185,13 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                         <Form.Item
                                                             label={upperKey}
                                                             name={'amount' + (index + 1)}
-                                                            rules={[{ required: true, message: `Please enter ${upperKey}` }]}
+                                                            rules={[
+                                                                { required: true, message: `Please enter ${upperKey}` },
+                                                                {
+                                                                    pattern: /^(?:\d+|\d*\.\d+)$/,
+                                                                    message: "Please enter a valid number only",
+                                                                },
+                                                            ]}
                                                         >
                                                             <InputNumber
                                                                 readOnly={view}
