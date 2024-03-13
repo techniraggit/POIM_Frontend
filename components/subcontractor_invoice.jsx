@@ -72,7 +72,7 @@ const Subcontractor_invoice = ({data}) => {
             form.setFieldValue('country', data.vendor_contact.company.country);
             form.setFieldValue('state', data.vendor_contact.company.state);
             form.setFieldValue('address', data.vendor_contact.company.address);
-            form.setFieldValue('phone', data.vendor_contact.phone_number);
+            form.setFieldValue('phone', data.vendor_contact.phone_number.slice(2));
             form.setFieldValue('email', data.vendor_contact.email);
             form.setFieldValue('poNumber', data.po_number)
             form.setFieldValue('amount', data.material_details[0]?.amount)

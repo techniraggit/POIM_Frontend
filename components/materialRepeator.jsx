@@ -259,13 +259,20 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                     <div key={key} className="wrap-box">
                                                         <Form.Item
                                                             label={upperKey}
-                                                            rules={[{ required: true, message: `Please enter ${upperKey}` }]}
+                                                            name={`quantity${index + 1}`}
+                                                         
+                                                            rules={[
+                                                                { required: true, message: `Please enter ${upperKey}` },
+                                                                {
+                                                                    pattern: /^(?:\d+|\d*\.\d+)$/,
+                                                                    message: "Please enter a valid number only",
+                                                                },
+                                                            ]}
                                                         >
                                                             <Input
                                                                 readOnly={view}
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
-                                                                name={key + index}
                                                                 onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                             />
                                                         </Form.Item>
@@ -277,13 +284,20 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                 <div key={key} className="wrap-box col-sm-4">
                                                     <Form.Item
                                                         label={"Unit price"}
-                                                        rules={[{ required: true, message: `Please enter unit price` }]}
+                                                        name={`unit_price${index + 1}`}
+                                                        rules={[
+                                                            { required: true, message: `Please enter unit price` },
+                                                            {
+                                                                pattern: /^(?:\d+|\d*\.\d+)$/,
+                                                                message: "Please enter a valid number only",
+                                                            },
+                                                        ]}
                                                     >
                                                         <Input
                                                             readOnly={view}
                                                             placeholder={upperKey}
                                                             value={data[key]}
-                                                            name={key + index}
+                                                            // name={key + index}
                                                             onChange={({ target: { value, name } }) => onChange('material_details', { [key]: value }, index + 1)}
                                                         />
                                                     </Form.Item>

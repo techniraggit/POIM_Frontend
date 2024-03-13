@@ -80,7 +80,8 @@ const EditSubContractorPo = () => {
                         shipment_type: data.shipment_type || 'project related',
                         // material_details: [...data.material_details]
                         material_details: data.material_details.map((detail) => {
-                            return { ...detail, project_site_id: detail?.project_site?.site_id }
+                            console.log(detail,'ssssssssssss');
+                            return {description:detail.description,date:detail.date,amount:detail.amount, project_site_id: detail?.project_site?.site_id }
                         }),
                         status: data.status
                     });
@@ -97,7 +98,7 @@ const EditSubContractorPo = () => {
                     form.setFieldValue('country', data.vendor_contact.company.country);
                     form.setFieldValue('state', data.vendor_contact.company.state);
                     form.setFieldValue('address', data.vendor_contact.company.address);
-                    form.setFieldValue('phone', data.vendor_contact.phone_number);
+                    form.setFieldValue('phone', data.vendor_contact.phone_number.slice(2));
                     form.setFieldValue('email', data.vendor_contact.email);
                     form.setFieldValue('poNumber', data.po_number)
                     form.setFieldValue('shipment_type', data.shipment_type || 'project related')
@@ -131,13 +132,20 @@ const EditSubContractorPo = () => {
         console.log(formData)
 
         const totalAmount = getTotalAmount()
+
+        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
+        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
         setFormData({
             ...formData,
-            hst_amount: totalAmount * 0.13,
-            total_amount: totalAmount * 0.13 + totalAmount
+            // hst_amount: totalAmount * 0.13,
+            // total_amount: totalAmount * 0.13 + totalAmount
         })
-        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
+        if(totalAmount > 0) {
+                    form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
+                    form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
+                }
+        // form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
+        // form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
     };
 
     // const calculateAmount = (amount, index) => {

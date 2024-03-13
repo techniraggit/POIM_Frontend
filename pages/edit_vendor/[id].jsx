@@ -38,6 +38,7 @@ const VendorEdit = () => {
             response.then((res) => {
                 if (res?.data?.status) {
                     const data = res.data?.vendors_details;
+                    console.log(data,'dddddddddd');
                     setFormData({
                         status: data?.status,
                         company_name: data.company_name,
@@ -50,7 +51,14 @@ const VendorEdit = () => {
                     })
                     data.vendor_contact.slice(1).forEach((contact, index) => {
                         Object.keys(contact).forEach((key) => {
-                            form.setFieldValue(key + index, contact[key])
+                            if(key == 'phone_number'){
+                                form.setFieldValue(key + index, contact[key].slice(2))
+                                
+                            }else{
+                                form.setFieldValue(key + index, contact[key])
+                            }
+                            console.log(key,'ggggggggggg');
+                            // form.setFieldValue(key + index, contact['phone_number'].slice(2))
                         })
                     })
                     form.setFieldValue('company_name', data.company_name);
@@ -60,7 +68,7 @@ const VendorEdit = () => {
                     form.setFieldValue('customer_name', data.customer_name);
                     form.setFieldValue('address', data.address);
                     form.setFieldValue('name', data.vendor_contact[0]?.name);
-                    form.setFieldValue('phone_number', data.vendor_contact[0]?.phone_number);
+                    form.setFieldValue('phone_number', data.vendor_contact[0]?.phone_number.slice(2));
                     form.setFieldValue('email', data.vendor_contact[0]?.email);
                 }
             })
@@ -100,7 +108,14 @@ const VendorEdit = () => {
     const onFinish = () => {
         const response = updateVendorDetails({
             ...formData,
-            vendor_id: id
+            vendor_id: id,
+            contact_info: formData.contact_info.map((info) => {
+                console.log(info,'info')
+                if(!info.phone_number.includes('+1')) {
+                    info.phone_number = '+1' + info.phone_number;
+                }
+                return info
+            })
         });
         response.then((res) => {
             if (res?.data?.status) {
