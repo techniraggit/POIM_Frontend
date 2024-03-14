@@ -61,20 +61,6 @@ const AddUser = ({ base_url }) => {
     }
    
   };
-
-  const handlePhoneNumberChange = (value) => {
-    if (isValidPhone(value)) {
-      console.log('Valid phone number:', value);
-    } else {
-      console.log('Invalid phone number:', value);
-    }
-  };
-
-  function isValidPhone(phoneNumber) {
-    const pattern = /^\+(?:[0-9] ?){6,11}[0-9]$/;
-    return phoneNumber && pattern.test(phoneNumber);
-  }
-
   return (
     <>
       <DynamicTitle title="Add User" />

@@ -109,7 +109,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                 </div>
                 <div class="col-sm-4">
                     <div className="wrap-box no-number-rental">
-
+ 
                         <Form.Item
                             label="Amount"
                             name="amount0"
@@ -117,7 +117,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 {
                                     required: true,
                                     message: "Please enter only numbers",
-                                    pattern: /^[0-9]*$/, // Regex to allow only numbers
                                 }
                             ]}
                         >
@@ -126,7 +125,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 addonBefore="$"
                                 placeholder="Amount"
                                 formatter={value => {
-                                    console.log(value);
                                     return `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')
                                 }}
                                 parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
@@ -139,7 +137,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     onChange('material_details', { amount: (value || 0) }, 0);
                                 }}
                             />
-                        </Form.Item>
+                        </Form.Item> 
 
                         {/* <Form.Item
                             label="Amount"
