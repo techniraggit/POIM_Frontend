@@ -224,13 +224,6 @@ const ViewSubContractorPo = () => {
             }
         })
     }
-
-
-
-    console.log(formData,'formData');
-
-
-
     return (
         <>
             <div className="wrapper-main">

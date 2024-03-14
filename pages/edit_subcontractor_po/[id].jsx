@@ -78,10 +78,8 @@ const EditSubContractorPo = () => {
                         email: data.vendor_contact.email,
                         project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         shipment_type: data.shipment_type || 'project related',
-                        // material_details: [...data.material_details]
                         material_details: data.material_details.map((detail) => {
-                            console.log(detail,'ssssssssssss');
-                            return {description:detail.description,date:detail.date,amount:detail.amount, project_site_id: detail?.project_site?.site_id }
+                            return {description:detail.description,date:detail.date,amount:detail.amount,md_id:detail.md_id, project_site_id: detail?.project_site?.site_id }
                         }),
                         status: data.status
                     });
@@ -129,7 +127,6 @@ const EditSubContractorPo = () => {
         return totalAmount;
     };
     const handleRepeaterAmountChange = () => {
-        console.log(formData)
 
         const totalAmount = getTotalAmount()
 

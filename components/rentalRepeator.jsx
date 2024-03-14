@@ -187,10 +187,6 @@ s                        >
                                                             name={'amount' + (index + 1)}
                                                             rules={[
                                                                 { required: true, message: `Please enter ${upperKey}` },
-                                                                // {
-                                                                //     pattern: /^(?:\d+|\d*\.\d+)$/,
-                                                                //     message: "Please enter a valid number only",
-                                                                // },
                                                             ]}
                                                         >
                                                             <InputNumber
@@ -330,11 +326,8 @@ s                        >
                                         if (data.md_id) {
                                             await handleRemoveDetail(data.md_id, index);
                                         } else {
-                                            // setFormData(
                                                 formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                                // ...formData,
-                                                // material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                            // );
+                                               
                                         }
                                         if (calculateAmount) {
                                             calculateAmount();

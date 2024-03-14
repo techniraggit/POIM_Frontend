@@ -18,12 +18,9 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
             form.setFieldValue('date', formData.material_details[0]?.date);
         }
     }, [formData.material_details[0]?.date, edit]);
-    console.log(formData.material_details)
 
     const handleRemoveDetail = async (id, index) => {
-        console.log([...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)])
         await updatematerialPo({ md_id: id }).then((response) => {
-            console.log(response.data);
             if (response?.data?.status) {
                 message.success(response.data.message);
                 formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
@@ -247,22 +244,21 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                         return <></>
                                     })
                                 }
-
-                                {/* <div className="col-sm-4"> */}
-                                    { !view && <MinusOutlined className="minus-wrap" onClick={async () => {
+                                <div className="col-sm-4">
+                                    <MinusOutlined className="minus-wrap" onClick={async () => {
                                         if (data.md_id) {
+                                        
                                             await handleRemoveDetail(data.md_id, index);
                                         } else {
-                                            formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                            // setFormData({
-                                            //     ...formData,
-                                            //     material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                            // });
+                                                formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         }
                                         if (calculateAmount) {
                                             calculateAmount();
                                         }
-                                    }} style={{ marginLeft: '8px' }} />}
+                                    }} style={{ marginLeft: '8px' }} />
+                                </div>
+
+                                {/* <div className="col-sm-4"> */}
                                 {/* </div> */}
                                 {/* {
                                     !view && 

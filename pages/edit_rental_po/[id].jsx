@@ -49,7 +49,6 @@ const Edit_Rental_Po = () => {
             fetchPo(id).then((res) => {
                 if (res?.data?.status) {
                     const data = res.data.data;
-                    console.log(data,'hhhhhhhhhhhhhhh');
                     setFormData({
                         ...formData,
                         can_change_status: res.data?.can_change_status,
@@ -157,7 +156,6 @@ const Edit_Rental_Po = () => {
     };
 
     const handleRepeaterAmountChange = () => {
-        console.log(formData.material_details)
 
         const totalAmount = getTotalAmount()
         setFormData({

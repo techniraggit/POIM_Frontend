@@ -103,10 +103,10 @@ const CreateSubContractorPo = () => {
             form.setFieldsValue({ 'total_amount':(totalAmount * 0.13 + totalAmount).toLocaleString()|| 0 });
         }
         if (totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {
-            form.setFieldValue('original_po_amount', (totalAmount * 0.13 + totalAmount).toFixed(2) || 0);
+            form.setFieldValue('original_po_amount', (totalAmount * 0.13 + totalAmount).toLocaleString() || 0);
             setFormData({
                 ...formData,
-                original_po_amount: (totalAmount * 0.13).toFixed(2) || 0
+                original_po_amount: (totalAmount * 0.13).toLocaleString() || 0
             })
         } else {
             form.setFieldValue('original_po_amount', originalAmount.current);
