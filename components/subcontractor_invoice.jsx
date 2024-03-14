@@ -58,7 +58,10 @@ const Subcontractor_invoice = ({data}) => {
                 shipment_type: data.shipment_type,
                 original_po_amount:data.original_amount,
                 invoice_amount:data.invoice_received_amount,
-                material_details: [...data.material_details]
+                material_details: data.material_details.map((detail) => {
+                    return {description:detail.description,date:detail.date,amount:detail.amount,md_id:detail.md_id, project_site_id: detail?.project_site?.site_id }
+                }),
+                // material_details: [...data.material_details]
             });
             form.setFieldValue('po_type', data.po_type);
             form.setFieldValue('company_name', data.vendor_contact.company.company_name)
@@ -90,7 +93,7 @@ const Subcontractor_invoice = ({data}) => {
                 form.setFieldValue('amount' + (index), material.amount.toLocaleString())
             })
         }
-    }, [id]);
+    }, [id,data]);
 
     const onFinish = () => {
         updatePo({

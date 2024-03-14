@@ -92,16 +92,24 @@ const Material_invoice = ({ data }) => {
             form.setFieldValue('unit_price', data.material_details[0]?.unit_price)
             form.setFieldValue('description', data.material_details[0]?.description)
             form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
-            form.setFieldValue('code', data.material_details[0]?.code)
+            // form.setFieldValue('code', data.material_details[0]?.code)
             form.setFieldValue('material_delivery', data.material_details[0]?.delivery_address || '1860 Shawson')
             form.setFieldValue('first_name', data.created_by.first_name)
             form.setFieldValue('last_name', data.created_by.last_name)
             data?.material_details.forEach((material, index) => {
                 form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                 form.setFieldValue('material_for' + (index), material.material_for)
-                form.setFieldValue('project_id' + (index), material.project?.project_id)
                 form.setFieldValue('amount' + (index), material.amount.toLocaleString())
+                form.setFieldValue('code_' + index, material.code)
+                form.setFieldValue('quantity'+ index, material.quantity)
+                form.setFieldValue('unit_price'+ index, material.unit_price)
             })
+            // data?.material_details.forEach((material, index) => {
+            //     form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+            //     form.setFieldValue('material_for' + (index), material.material_for)
+            //     form.setFieldValue('project_id' + (index), material.project?.project_id)
+            //     form.setFieldValue('amount' + (index), material.amount.toLocaleString())
+            // })
         }
     }, [data]);
     const getTotalAmount = () => {

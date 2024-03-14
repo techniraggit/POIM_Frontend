@@ -16,7 +16,7 @@ const ProjectPopup = ({ project_id, show }) => {
     };
 
     useEffect(() => {
-        if(show) {
+        if (show) {
             document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
         }
     }, [show]);
@@ -47,7 +47,7 @@ const ProjectPopup = ({ project_id, show }) => {
 
                 <div className="approve-main">
 
-                    
+
                     <div className="approve-po">
                         <div className="cross-icon" onClick={handleCloseModal}>
                             <CloseOutlined />
@@ -65,22 +65,22 @@ const ProjectPopup = ({ project_id, show }) => {
 
                             <div className="pop-up-flex row" >
                                 <div className="projct-details col-sm-8">
-                                    <p className="detail-para1">Email Address</p>
+                                    <p className="detail-para1">Project Manager Email Address</p>
                                     {/* <p className="detail-para">{projectData.customer_name}</p> */}
 
                                     <p className="detail-para">{projectData.project_manager && projectData.project_manager.email
-                ? projectData.project_manager.email
-                : ''}</p>
+                                        ? projectData.project_manager.email
+                                        : ''}</p>
                                 </div>
 
                                 <div className="projct-details col-sm-4">
-                                    <p className="detail-para1">Contact No</p>
+                                    <p className="detail-para1"> Project Manager Contact No</p>
                                     <p className="detail-para">
-                                    
-                                    {projectData.project_manager && projectData.project_manager.phone_number
-                ? projectData.project_manager.phone_number
-                : ''}
-                                    
+
+                                        {projectData.project_manager && projectData.project_manager.phone_number
+                                            ? projectData.project_manager.phone_number
+                                            : ''}
+
                                     </p>
                                 </div>
                             </div>
@@ -88,10 +88,10 @@ const ProjectPopup = ({ project_id, show }) => {
                             <div className="projct-details">
                                 <p className="detail-para1">Project Address</p>
                                 <p className="detail-para">
-                                {projectData.sites && projectData.sites[0].address
-                ? projectData.sites[0].address
-                : ''}
-                                
+                                    {projectData.sites && projectData.sites[0].address
+                                        ? projectData.sites[0].address
+                                        : ''}
+
                                 </p>
                             </div>
 
@@ -112,7 +112,7 @@ const ProjectPopup = ({ project_id, show }) => {
         </>
     );
 };
-export default withAuth(['admin','accounting','project manager','department manager',
-'director','site superintendent','project coordinator','marketing','health & safety','estimator','shop'])
-(ProjectPopup)
+export default withAuth(['admin', 'accounting', 'project manager', 'department manager',
+    'director', 'site superintendent', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop'])
+    (ProjectPopup)
 // export default ProjectPopup;
