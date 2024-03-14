@@ -13,7 +13,7 @@ const repeatorData = {
 }
 
 function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, edit, view, calculateAmount }) {
-    const [endDateError, setEndDateError] = useState(null);
+    const [endDateError, setEndDateError] = useState({});
     useEffect(() => {
         if (edit) {
             form.setFieldValue('start_date', formData.material_details[0]?.date);
@@ -21,21 +21,36 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
         }
     }, [formData.material_details[0]?.date, edit, formData.material_details[0]?.end_date]);
 
-    const handleStartDateChange = (value) => {
+    const handleStartDateChange = (value, index) => {
         onChange('material_details', { start_date: value }, 0);
-        if (formData.material_details[0]?.end_date && value > formData.material_details[0]?.end_date) {
-            setEndDateError('Start date cannot be greater than end date');
+        console.log(formData.material_details[0]?.end_date && value > formData.material_details[0]?.end_date,'kkkkkkkkkkkkkkkk');
+        if (formData.material_details[0]?.end_date && value > formData.material_details[0]?.date) {
+            setEndDateError({
+                ...endDateError,
+                [index]: 'Start date cannot be greater than end date'
+            });
         } else {
-            setEndDateError(null);
+            setEndDateError({
+                ...endDateError,
+                [index]: null
+            });
         }
     };
 
-    const handleEndDateChange = (value) => {
+    const handleEndDateChange = (value,index) => {
         onChange('material_details', { end_date: value }, 0);
         if (formData.material_details[0]?.start_date && value < formData.material_details[0]?.start_date) {
-            setEndDateError('End date cannot be smaller than start date');
+            setEndDateError({
+                ...endDateError,
+                [index]: 'End date cannot be smaller than start date'
+            });
+            // setEndDateError('End date cannot be smaller than start date');
         } else {
-            setEndDateError(null);
+            setEndDateError({
+                ...endDateError,
+                [index]: null
+            });
+            // setEndDateError(null);
         }
     };
 
@@ -92,10 +107,9 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     <div className="wrap-box">
                         <Form.Item
                             label="To"
-
                             name="end_date0"
-                            validateStatus={endDateError ? 'error' : ''}
-                            help={endDateError}
+                            validateStatus={endDateError['0'] ? 'error' : ''}
+                            help={endDateError['0']}
                             rules={[
                                 {
                                     required: true,
@@ -103,7 +117,9 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 },
                             ]}
                         >
-                            <Input readOnly={view} onChange={({ target: { value } }) => handleEndDateChange(value)} type="date"></Input>
+                            <Input readOnly={view} 
+                            onChange={({ target: { value } }) => handleEndDateChange(value, 0)}
+                             type="date"></Input>
                         </Form.Item>
                     </div>
                 </div>
@@ -330,8 +346,8 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                         <Form.Item
                                                             label={upperKey}
                                                             name={"end_date" + (index + 1)}
-                                                            validateStatus={endDateError ? 'error' : ''}
-                                                            help={endDateError}
+                                                            validateStatus={endDateError[index + 1] ? 'error' : ''}
+                                                            help={endDateError[index + 1]}
                                                             rules={[
                                                                 {
                                                                     required: true,
@@ -343,7 +359,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                                 placeholder={upperKey}
                                                                 value={data[key]}
                                                                 onChange={({ target: { value, name } }) => {
-                                                                    handleEndDateChange(value);
+                                                                    handleEndDateChange(value, index + 1);
                                                                     onChange('material_details', { [key]: value }, index + 1);
                                                                 }}
                                                             />
@@ -385,6 +401,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 }
                                 <div className="col-sm-4">
                                     <MinusOutlined className="minus-wrap" onClick={async () => {
+                                        console.log(data,'fffffffffff');
                                         if (data.md_id) {
                                             await handleRemoveDetail(data.md_id, index);
                                         } else {
