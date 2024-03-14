@@ -4394,10 +4394,10 @@ span.text-sizes {
         font-size: 13px !important;
     }
     button.clear-button {
-        height: 30px;
+        height: 33px;
         font-size: 13px;
         display: flex;
-        padding: 6px 22px;
+        padding: 6px 42px;
         align-items: center;
         justify-content: center;
     }
@@ -4690,9 +4690,45 @@ li#report-li ul.reports-dropdown li {
         border-radius: 6px;
         width: 170px;
     }
+    button.ant-btn.add-more-btn {
+        padding: 7px 20px !important;
+        font-size: 13px;
+        height: 39px;
+        margin-top: 15px;
+    }
 }
-
+@media screen and (max-width: 768px) {
+.ant-select.line-select.ant-select-show-arrow {
+    height: 47px;
+}
+.ant-select.line-select.ant-select-show-arrow .ant-select-selector {
+    height: 35px !important;
+}
+.vendor-input {
+    width: 204px;
+    height: 35px;
+}
+.create-ven-butt {
+    margin-top: 20px;
+    padding: 10px 12px;
+    font-size: 16px;
+    border-radius: 37px;
+    width: 270px;
+}
+}
 @media screen and (max-width: 767px) {
+    button.clear-button {
+        margin-top: 0px !important;
+    }
+    .ant-select.line-select.ant-select-show-arrow span.ant-select-arrow {
+        top: 40%;
+    }
+    button.ant-btn.add-more-btn {
+        padding: 7px 20px !important;
+        font-size: 13px;
+        height: 39px;
+        margin-top: 5px;
+    }
     .aside-dashboard {
         width: 210px;
         position: fixed;
@@ -4713,9 +4749,33 @@ li#report-li ul.reports-dropdown li {
         padding: 11px 11px;
         border-radius: 10px;
     }
-    
+    .react-icon span:first-child {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+    }
+    .ant-form-item.css-dev-only-do-not-override-p7e5j5 {
+        margin-bottom: 20px !important;
+    }
 }
 @media screen and (max-width: 575px) {
+    .wrap-box:nth-child(1), .wrap-box:nth-child(2), .wrap-box:nth-child(3) {
+        margin-bottom: 15px;
+    }
+    .vendor-input {
+        width: 184px;
+        height: 38px;
+    }
+    .wrapin-form.add-clear-wrap  .ant-select.line-select {
+        width: 180px;
+    }
+    .ant-select-selector {
+        height: 32px !important;
+        border-radius: 40px !important;
+    }
+    .ant-select.ant-select-in-form-item.arrow-wrap-user::after {
+        top: 42%;
+    }
 ul.list-icons li i {
     font-size: 18px;
     padding: 10px 10px;
@@ -4727,8 +4787,56 @@ ul.list-icons li i {
 .table-wrap h5 {
     font-size: 22px;
 }
+.choose-potype {
+    padding: 32px 30px 50px 30px;
+}
+.create-ven-butt {
+    margin-top: 15px;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 37px;
+    width: 220px;
+}
+.ant-select.line-select.ant-select-show-arrow span.ant-select-arrow {
+    transform: translateY(-34%);
+    font-size: 6px !important;
+    top: 34%;
+}
+.create-icons span {
+    font-size: 16px;
+}
 }
 @media screen and (max-width: 480px) {
+    .react-icon span:first-child {
+        width: 37px;
+        height: 37px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    .vendor-input {
+        width: 132px;
+        height: 35px;
+    }
+    .ant-select.line-select.ant-select-show-arrow .ant-select-selector {
+        height: 30px !important;
+        font-size: 12px !important;
+    }
+   
+    .wrapin-form.add-clear-wrap  .ant-select.line-select {
+        width: 132px;
+        height: 38px;
+    }
+    .choose-potype {
+        padding: 25px 20px 30px 20px;
+    }
+    ul.create-icons li i {
+        font-size: 16px;
+        padding: 11px 11px;
+        border-radius: 10px;
+    }
+    .create-icons span {
+        font-size: 16px;
+    }
     .toggle-bar {
         margin-right: 20px;
     }
@@ -4788,7 +4896,7 @@ ul.list-icons li i {
         font-size: 12px;
     }
     ul.list-icons li {
-        padding: 14px 12px 14px;
+        padding: 14px 9px 14px;
         border-radius: 6px;
         width: 195px;
     }
@@ -4809,9 +4917,43 @@ ul.list-icons li i {
         padding: 27px 12px;
         justify-content: center;
     }
+    .table-wrap h5 {
+        font-size: 18px;
+        margin-top: 15px;
+        margin-bottom: 18px;
+        margin-left: 15px;
+    }
+    .pagination-container ul li {
+        margin-bottom: 15px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 375px) {
+    .wrapin-form.add-clear-wrap .ant-select.line-select.dropdown-report {
+        min-width: 102px;
+        margin-bottom: 0px;
+        margin-left: 0px !important;
+    }
+    button.clear-button {
+        margin-top: 10px !important;
+    }
+    .vendor-input {
+        width: 102px;
+        height: 35px;
+    }
+    .wrapin-form.add-clear-wrap .ant-select.line-select {
+        min-width: 126px;
+    }
+    .bottom-wrapp.users-list-wrapin .wrapin-form.add-clear-wrap {
+        padding: 27px 10px;
+    }
+    button.clear-button {
+        height: 30px;
+    }
+ 
+    ul.list-icons li.me-4 {
+        margin-right: 17px !important;
+    }
     ul.list-icons li.me-4.me-md-3 {
         margin-right: 3px !important;
     }
