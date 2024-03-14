@@ -83,7 +83,7 @@ const AddUser = ({ base_url }) => {
           <Header heading="User" />
           <div className="bottom-wrapp">
             <ul className=" create-icons">
-              <li className="me-4 icon-text">
+              <li className="me-0 icon-text">
                 <i className="fa-solid fa-user me-3 mt-0"></i>
                 <span>Create User</span>
               </li>
