@@ -187,10 +187,10 @@ s                        >
                                                             name={'amount' + (index + 1)}
                                                             rules={[
                                                                 { required: true, message: `Please enter ${upperKey}` },
-                                                                {
-                                                                    pattern: /^(?:\d+|\d*\.\d+)$/,
-                                                                    message: "Please enter a valid number only",
-                                                                },
+                                                                // {
+                                                                //     pattern: /^(?:\d+|\d*\.\d+)$/,
+                                                                //     message: "Please enter a valid number only",
+                                                                // },
                                                             ]}
                                                         >
                                                             <InputNumber
