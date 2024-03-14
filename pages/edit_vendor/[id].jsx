@@ -38,7 +38,6 @@ const VendorEdit = () => {
             response.then((res) => {
                 if (res?.data?.status) {
                     const data = res.data?.vendors_details;
-                    console.log(data,'dddddddddd');
                     setFormData({
                         status: data?.status,
                         company_name: data.company_name,
@@ -57,7 +56,6 @@ const VendorEdit = () => {
                             }else{
                                 form.setFieldValue(key + index, contact[key])
                             }
-                            console.log(key,'ggggggggggg');
                             // form.setFieldValue(key + index, contact['phone_number'].slice(2))
                         })
                     })
@@ -110,7 +108,6 @@ const VendorEdit = () => {
             ...formData,
             vendor_id: id,
             contact_info: formData.contact_info.map((info) => {
-                console.log(info,'info')
                 if(!info.phone_number.includes('+1')) {
                     info.phone_number = '+1' + info.phone_number;
                 }

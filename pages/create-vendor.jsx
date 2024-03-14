@@ -33,7 +33,6 @@ const CreateVendor = () => {
             ...formData,
             // phone_number: '+1' + formData.contact_info[0].phone_number,
             contact_info: formData.contact_info.map((info) => {
-                console.log(info,'info')
                 if(!info.phone_number.includes('+1')) {
                     info.phone_number = '+1' + info.phone_number;
                 }
@@ -50,7 +49,6 @@ const CreateVendor = () => {
             message.error(error.response.data.message)
         })
     }
-    console.log(formData)
     const onChange = (name, value, index) => {
         if (name === 'contact_info') {
             const contactInfo = formData.contact_info[index];
@@ -69,7 +67,6 @@ const CreateVendor = () => {
         });
     }
 
-    console.log(formData,'ffffffffffff');
     return (
         <>
             <DynamicTitle title="Add User" />
