@@ -49,6 +49,7 @@ const Subcontractor_invoice = ({data}) => {
                 vendor_contact_id: data.vendor_contact.vendor_contact_id,
                 hst_amount: data.hst_amount,
                 total_amount: data.total_amount,
+                project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                 project_site_id: data.project_site,
                 country: data.vendor_contact.company.country,
                 state: data.vendor_contact.company.state,

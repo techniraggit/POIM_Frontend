@@ -46,11 +46,10 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     }, []);
 
     useEffect(() => {
-        if (edit) {
+        if ((edit || view) && formData?.project_id) {
             fetchSitesProject(formData.project_id, 0)
-            // fetchSites();
         }
-    }, [edit, formData.project_id])
+    }, [edit,view,formData.project_id])
 
     useEffect(() => {
         if (formData && formData.created_by && Object.keys(formData.created_by).length > 0) {

@@ -69,6 +69,7 @@ const CreateInvoice = () => {
                 ...formData,
                 po_id: data.po_id,
             })
+            console.log(data,'data data');
             setResponseData(data)
         })
 
