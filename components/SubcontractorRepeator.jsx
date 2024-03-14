@@ -77,10 +77,10 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                     required: true,
                                     message: "Please enter Amount",
                                 },
-                                {
-                                    pattern: /^(?:\d+|\d*\.\d+)$/,
-                                    message: "Please enter a valid number only",
-                                },
+                                // {
+                                //     pattern: /^(?:\d+|\d*\.\d+)$/,
+                                //     message: "Please enter a valid number only",
+                                // },
                             ]}
                         >
                             <InputNumber
@@ -149,10 +149,10 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                             name={'amount' + (index + 1)}
                                                             rules={[
                                                                 { required: true, message: `Please enter ${upperKey}` },
-                                                                {
-                                                                    pattern: /^(?:\d+|\d*\.\d+)$/,
-                                                                    message: "Please enter a valid number only",
-                                                                },
+                                                                // {
+                                                                //     pattern: /^(?:\d+|\d*\.\d+)$/,
+                                                                //     message: "Please enter a valid number only",
+                                                                // },
                                                             ]}
                                                         >
                                                             <InputNumber
