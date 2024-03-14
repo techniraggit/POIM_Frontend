@@ -81,7 +81,10 @@ const ViewSubContractorPo = () => {
                         phone: data.vendor_contact.phone_number,
                         email: data.vendor_contact.email,
                         shipment_type: data.shipment_type || 'project related',
-                        material_details: [...data.material_details],
+                        material_details: data.material_details.map((detail) => {
+                            return {description:detail.description,date:detail.date,amount:detail.amount,md_id:detail.md_id, project_site_id: detail?.project_site?.site_id }
+                        }),
+                        // material_details: [...data.material_details],
                         status: data.status,
                         notes: data?.co_approved_amount,
                         signed_contract: data.signed_contract,

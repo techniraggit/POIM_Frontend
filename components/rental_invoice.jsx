@@ -48,7 +48,11 @@ const Rental_invoice = ({ data }) => {
                 phone: data.vendor_contact.phone_number,
                 email: data.vendor_contact.email,
                 shipment_type: data.shipment_type,
-                material_details: [...data.material_details]
+                material_details: data.material_details.map((details) => {
+                    return {description:details.description, start_date: details.date,end_date:details.end_date,amount:details.amount, project_site_id: details.project_site?.site_id}
+                    // return {...details, project_site_id: details.project_site?.site_id, start_date: details.date}
+                }),
+                // material_details: [...data.material_details]
             });
             form.setFieldValue('po_type', data.po_type);
             form.setFieldValue('company_name', data.vendor_contact.company.company_name)
@@ -67,8 +71,8 @@ const Rental_invoice = ({ data }) => {
             form.setFieldValue('poNumber', data.po_number)
             form.setFieldValue('amount', data.material_details[0]?.amount)
             form.setFieldValue('description', data.material_details[0]?.description)
-            form.setFieldValue('start_date', data.material_details[0]?.date)
-            form.setFieldValue('end_date', data.material_details[0]?.end_date)
+            form.setFieldValue('start_date0', data.material_details[0]?.date)
+            form.setFieldValue('end_date0', data.material_details[0]?.end_date)
             form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
             form.setFieldValue('first_name', data.created_by.first_name)
             form.setFieldValue('last_name', data.created_by.last_name)
@@ -79,7 +83,7 @@ const Rental_invoice = ({ data }) => {
                 form.setFieldValue('amount' + (index), material.amount.toLocaleString())
             })
         }
-    }, []);
+    }, [data.po_number]);
     const onFinish = () => {
         updatePo({
             ...formData,

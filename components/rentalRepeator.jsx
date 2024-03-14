@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space, InputNumber,message } from "antd";
+import { Form, Input, Select, Button, Space, InputNumber, message } from "antd";
 import { updatematerialPo } from "@/apis/apis/adminApis";
 
 const repeatorData = {
@@ -109,31 +109,95 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                 </div>
                 <div class="col-sm-4">
                     <div className="wrap-box no-number-rental">
+
                         <Form.Item
                             label="Amount"
-                            for="name"
                             name="amount0"
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please enter Amount",
+                                    message: "Please enter only numbers",
+                                    pattern: /^[0-9]*$/, // Regex to allow only numbers
                                 }
-
                             ]}
-s                        >
+                        >
                             <InputNumber
                                 readOnly={view}
                                 addonBefore="$"
                                 placeholder="Amount"
-
-                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                formatter={value => {
+                                    console.log(value);
+                                    return `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')
+                                }}
                                 parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
                                 onChange={(value) => {
-                                    form.setFieldValue('amount0', (value || 0) || '0')
-                                    onChange('material_details', { amount: (value || 0) }, 0)
+                                    if (!/^[0-9]*$/.test(value)) {
+                                        message.error("Please enter only numbers");
+                                        return;
+                                    }
+                                    form.setFieldValue('amount0', (value || 0) || '0');
+                                    onChange('material_details', { amount: (value || 0) }, 0);
                                 }}
                             />
                         </Form.Item>
+
+                        {/* <Form.Item
+                            label="Amount"
+                            name="amount0"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter numbers only",
+                                    pattern: /^[0-9]*$/, // Regex to allow only numbers
+                                    validateTrigger: 'onChange', // Trigger validation on every change
+                                    validator: (_, value) => {
+                                        if (!value || /^[0-9]*$/.test(value)) {
+                                            return Promise.resolve();
+                                        }
+                                        return Promise.reject(new Error('Please enter numbers only'));
+                                    },
+                                },
+                            ]}
+                        >
+                            <InputNumber
+                                readOnly={view}
+                                addonBefore="$"
+                                placeholder="Amount"
+                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                onChange={(value) => {
+                                    form.setFieldValue('amount0', (value || 0) || '0');
+                                    onChange('material_details', { amount: (value || 0) }, 0);
+                                }}
+                            />
+                        </Form.Item> */}
+
+
+                        {/* <Form.Item
+                            label="Amount"
+                            name="amount0"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter only numbers",
+                                    pattern: /^[0-9]*$/, // Regex to allow only numbers
+                                }
+                            ]}
+                        >
+                            <InputNumber
+                                readOnly={view}
+                                addonBefore="$"
+                                placeholder="Amount"
+                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                onChange={(value) => {
+                                    form.setFieldValue('amount0', (value || 0) || '0');
+                                    onChange('material_details', { amount: (value || 0) }, 0);
+                                }}
+                            />
+                        </Form.Item> */}
+
+
                     </div>
                 </div>
                 {formData.shipment_type === 'project related' && (
@@ -232,7 +296,7 @@ s                        >
                                                 </div>
                                             )
                                         }
-                                        else if (key === 'start_date') {
+                                        else if (key === 'start_date' || key === 'date') {
                                             return (
 
                                                 <div className="col-lg-4 col-md-6">
@@ -326,8 +390,8 @@ s                        >
                                         if (data.md_id) {
                                             await handleRemoveDetail(data.md_id, index);
                                         } else {
-                                                formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                               
+                                            formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+
                                         }
                                         if (calculateAmount) {
                                             calculateAmount();
@@ -338,19 +402,19 @@ s                        >
                         })
                     }
                     {
-                     !view &&<Form.Item className="mt-3">
-                        <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
-                            setFormData({
-                                ...formData,
-                                material_details: [...formData.material_details, {
-                                    ...repeatorData,
-                                    project_site_id: formData.material_details[0]?.project_site_id
-                                }]
-                            });
-                        }} icon={<PlusOutlined />}>
-                            Add More Items
-                        </Button>
-                    </Form.Item>
+                        !view && <Form.Item className="mt-3">
+                            <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
+                                setFormData({
+                                    ...formData,
+                                    material_details: [...formData.material_details, {
+                                        ...repeatorData,
+                                        project_site_id: formData.material_details[0]?.project_site_id
+                                    }]
+                                });
+                            }} icon={<PlusOutlined />}>
+                                Add More Items
+                            </Button>
+                        </Form.Item>
                     }
                 </Space>
             </div>

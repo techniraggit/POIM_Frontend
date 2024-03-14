@@ -111,6 +111,8 @@ const EditMaterialPo = () => {
                         form.setFieldValue('material_for' + (index), material.material_for)
                         form.setFieldValue('amount' + (index), material.amount.toLocaleString())
                         form.setFieldValue('code_' + index, material.code)
+                        form.setFieldValue('quantity'+ index, material.quantity)
+                        form.setFieldValue('unit_price'+ index, material.unit_price)
                     })
                 }
                 setRefetch(false);

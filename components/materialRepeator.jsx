@@ -70,7 +70,9 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                             },
                         ]}
                     >
-                        <Input readOnly={view} placeholder="Unit Price" onChange={({ target: { value } }) => onChange('material_details', { unit_price: value }, 0)} />
+                        <Input readOnly={view} placeholder="Unit Price" 
+                        onChange={({ target: { value } }) => onChange('material_details', { unit_price: value }, 0)} 
+                        />
                     </Form.Item>
 
                 </div>

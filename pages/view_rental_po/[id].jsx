@@ -76,8 +76,12 @@ const ViewRentalPO = () => {
                         shipment_type: data.shipment_type,
                         project_id: data.project,
                         material_details: data.material_details.map((details) => {
-                            return { ...details, project_site_id: details.project_site?.site_id, start_date: details.date }
+                            return {description:details.description, start_date: details.date,end_date:details.end_date,amount:details.amount, project_site_id: details.project_site?.site_id}
+                            // return {...details, project_site_id: details.project_site?.site_id, start_date: details.date}
                         }),
+                        // material_details: data.material_details.map((details) => {
+                        //     return { ...details, project_site_id: details.project_site?.site_id, start_date: details.date }
+                        // }),
                         status: data.status,
                         notes: data?.co_approved_amount
                     });
