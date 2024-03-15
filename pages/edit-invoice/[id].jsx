@@ -155,6 +155,7 @@ const EditInvoice = (view) => {
             }
         })
     }
+    console.log(parseFloat(responseData?.total_amount || 0) ,parseFloat(invoice?.invoice_amount || 0))
     return (
         <>
             <div class="wrapper-main">
@@ -304,9 +305,9 @@ const EditInvoice = (view) => {
                                     {
                                         invoice.invoice_files?.map((data, index) => {
                                             let fileName;
-                                            if (typeof data.invoice_file !== 'object') {
+                                            if (typeof data.invoice_file !== 'object' && typeof data.invoice_file !== 'undefined') {
                                                 const invoice_file_split = data.invoice_file?.split('/')
-                                                fileName = invoice_file_split[invoice_file_split.length - 1];
+                                                fileName = invoice_file_split[invoice_file_split?.length - 1];
                                             }
                                             return (
                                                 <>
@@ -322,7 +323,7 @@ const EditInvoice = (view) => {
                                                                     name={`invoice_file` + index}
                                                                     className="select-file-invoice"
                                                                     valuePropName="fileList"
-                                                                    rules={[{ required: (formData?.invoice_files[index]?.invoice_file === '' || formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf')), message: 'Please select a file' }]}
+                                                                    rules={[{ required: (invoice?.invoice_files[index]?.invoice_file === '' || invoice.invoice_files.some((file) => typeof file.invoice_file === 'object' && file.invoice_file?.type !== 'application/pdf')), message: 'Please select a file' }]}
                                                                     getValueFromEvent={(e) => {
                                                                         onChange('invoice_file', e.fileList[0]?.originFileObj, index)
                                                                     }}
@@ -366,7 +367,6 @@ const EditInvoice = (view) => {
                                     </Form.Item>
                                     <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
                                         <InputNumber
-
                                             formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
                                             parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
                                             onChange={(value) => {
@@ -374,9 +374,10 @@ const EditInvoice = (view) => {
                                             }
                                             }
                                             placeholder={`Please enter amount`} addonBefore="$" />
+                                            <span className="error-msg" style={{ color: 'red', display: parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span>
                                     </Form.Item>
                                     <Form.Item>
-                                        <Button type="primary" htmlType="submit" id="btn-submit">
+                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0))} type="primary" htmlType="submit" id="btn-submit">
                                             Submit
                                         </Button>
                                     </Form.Item>
