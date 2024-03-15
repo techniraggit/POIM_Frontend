@@ -361,6 +361,12 @@ const EditInvoice = (view) => {
                                     <Form.Item
                                         name={"invoice_amount"}
                                         className="note-wrap wrap-box dollor-inputs"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please enter amount",
+                                            },
+                                        ]}
                                     >
                                         <InputNumber
                                             addonBefore='$'
@@ -373,14 +379,14 @@ const EditInvoice = (view) => {
                                         />
                                     </Form.Item>
                                     {invoice.invoice_amount && (
-                                            <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
-                                                {invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
-                                            </span>
-                                        )}
+                                        <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
+                                            {invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
+                                        </span>
+                                    )}
                                     {/* <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>{invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}</span> */}
                                     {/* <span className="error-msg" style={{ color: 'red', display: !responseData || (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span> */}
                                     <Form.Item>
-                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0))} type="primary" htmlType="submit" id="btn-submit">
+                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) || (invoice?.invoice_amount && !/^[0-9]*$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit">
                                             Submit
                                         </Button>
                                     </Form.Item>

@@ -249,9 +249,16 @@ const CreateInvoice = () => {
                                             rows={8}
                                             placeholder={`Please enter a note`} />
                                     </Form.Item>
-                                    <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs no-number-rental">
+                                    <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs no-number-rental"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Please enter amount",
+                                            },
+                                        ]}
+                                    >
                                         <InputNumber
-                                         addonBefore="$"
+                                            addonBefore="$"
                                             formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
                                             parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
                                             onChange={(value) => {
@@ -280,7 +287,7 @@ const CreateInvoice = () => {
 
                                     <Form.Item>
                                         <Button
-                                            disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file))}
+                                            disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^[0-9]*$/.test(formData?.invoice_amount))}
                                             type="primary" htmlType="submit" id="btn-submit">
                                             Submit
                                         </Button>

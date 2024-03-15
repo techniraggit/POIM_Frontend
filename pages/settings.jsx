@@ -4,6 +4,7 @@ import '../styles/style.css'
 import { Button, message } from "antd";
 import { threshold, updateThreshold } from "@/apis/apis/adminApis";
 import Header from "@/components/header";
+import Roles from "@/components/Roles";
 
 
 const Settings = () => {
@@ -67,7 +68,9 @@ const Settings = () => {
                                                 />
                                             </div>
                                             <hr className="mt-4" />
-                                            <Button className="save-Button" onClick={() => handleSaveClick(item.th_id, item.value)}>save</Button>
+                                            <Roles action='save_setting'>
+                                                <Button className="save-Button" onClick={() => handleSaveClick(item.th_id, item.value)}>save</Button>
+                                            </Roles>
                                         </div>
                                     </div>
                                 </div>
