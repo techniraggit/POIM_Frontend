@@ -52,20 +52,25 @@ const Amendments = ({ history }) => {
                     return Object.keys(change).map((key) => {
                       let upperKey = '';
                       if (Array.isArray(change[key][0])) {
-                        if (change[key][0][2] === "updated_on") {
+                        if (change[key][0][2] === "updated_on" || change[key][0][2] === 'project_site') {
                           return ''
                         }
-                        if (change[key][0][0].includes('_')) {
-                          upperKey = change[key][0][0].split('_').join(' ')
+                        if (change[key][0][2].includes('_')) {
+                          console.log(change[key][0][2],'gggaaaaaaaaaaaaaa');
+                          upperKey = change[key][0][2].split('_').join(' ').charAt(0).toUpperCase() + change[key][0][2].split('_').join(' ').slice(1)
+                        } else {
+                          upperKey = change[key][0][2].charAt(0).toUpperCase() + change[key][0][2].slice(1)
                         }
                       } else {
-                        if (change[key][0] === "updated_on") {
+                        console.log(change[key][0])
+                        if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on") {
                           return ''
                         }
-                        console.log(change[key][0].includes('_'), change[key][0])
-
-                        if (change[key][0].includes('_')) {
-                          upperKey = change[key][0].split('_').join(' ')
+                        if(change[key][0]?.includes('.')) {
+                          change[key][0] = change[key][0].split('.')[1]
+                        }
+                        if (change[key][0]?.includes('_')) {
+                          upperKey = change[key][0].split('_').join(' ').charAt(0).toUpperCase() + change[key][0].split('_').join(' ').slice(1)
                         } else {
                           upperKey = change[key][0].charAt(0).toUpperCase() + change[key][0].slice(1)
                         }
@@ -91,7 +96,7 @@ const Amendments = ({ history }) => {
                               }
 
 
-                              {
+                              {/* {
                                 key === 'add' && (
                                   <>
                                     <div className="row raw-data-btm">
@@ -116,7 +121,7 @@ const Amendments = ({ history }) => {
                                     </div>
                                   </>
                                 )
-                              }
+                              } */}
                             </span>
 
                           </div>
