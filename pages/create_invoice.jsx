@@ -69,7 +69,7 @@ const CreateInvoice = () => {
                 ...formData,
                 po_id: data.po_id,
             })
-            console.log(data,'data data');
+            console.log(data, 'data data');
             setResponseData(data)
         })
 
@@ -251,6 +251,22 @@ const CreateInvoice = () => {
                                     </Form.Item>
                                     <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs no-number-rental">
                                         <InputNumber
+                                         addonBefore="$"
+                                            formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                            parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                            onChange={(value) => {
+                                                onChange('invoice_amount', value)
+                                            }}
+                                            placeholder={`Please enter amount`} />
+                                        {formData.invoice_amount && (
+                                            <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block' }}>
+                                                {formData.invoice_amount && !/^[0-9]*$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
+                                            </span>
+                                        )}
+                                    </Form.Item>
+
+                                    {/* <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs no-number-rental">
+                                        <InputNumber
 
                                             formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
                                             parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
@@ -260,7 +276,7 @@ const CreateInvoice = () => {
                                             }
                                             placeholder={`Please enter amount`} addonBefore="$" />
                                         <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block' }}>{formData.invoice_amount && !/^[0-9]*$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}</span>
-                                    </Form.Item>
+                                    </Form.Item> */}
 
                                     <Form.Item>
                                         <Button

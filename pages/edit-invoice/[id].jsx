@@ -1,6 +1,6 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
-import { Form, Input, Button, Select, Upload, message,InputNumber } from 'antd';
+import { Form, Input, Button, Select, Upload, message, InputNumber } from 'antd';
 import '../../styles/style.css'
 import React, { useEffect, useState } from "react";
 import { changeInvoiceStatus, downloadInvoice, fetchPoNumbers, fetchPoNumbr, getInvoiceData, removeInvoiceFile, updateInvoice, threshold } from "@/apis/apis/adminApis";
@@ -73,7 +73,7 @@ const EditInvoice = (view) => {
                 console.log(res, "===========")
                 if (res?.data?.status) {
                     const data = res.data.data;
-                    console.log(data.invoice_amount,'kkkkkkkkkkkkk');
+                    console.log(data.invoice_amount, 'kkkkkkkkkkkkk');
                     setInvoice({ ...data, po_creator: res.data?.po_creator });
                     form.setFieldValue('invoice_amount', data.invoice_amount.toLocaleString());
                     form.setFieldValue('note', data.comment);
@@ -360,20 +360,27 @@ const EditInvoice = (view) => {
                                     <Form.Item name={"note"} className="note-wrap wrap-box">
                                         <TextArea onChange={({ target: { value } }) => onChange('comment', value)} />
                                     </Form.Item>
-                                    <Form.Item 
+                                    <Form.Item
                                         name={"invoice_amount"}
                                         className="note-wrap wrap-box dollor-inputs"
                                     >
                                         <InputNumber
+                                            addonBefore='$'
                                             formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
-                                            parser=  {value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                            parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
                                             onChange={(value) => {
                                                 onChange('invoice_amount', value)
                                             }}
                                             placeholder={`Please enter amount`}
                                         />
                                     </Form.Item>
-                                    <span className="error-msg" style={{ color: 'red', display: !responseData || (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span>
+                                    {formData.invoice_amount && (
+                                            <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block' }}>
+                                                {formData.invoice_amount && !/^[0-9]*$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
+                                            </span>
+                                        )}
+                                    {/* <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>{invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}</span> */}
+                                    {/* <span className="error-msg" style={{ color: 'red', display: !responseData || (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span> */}
                                     <Form.Item>
                                         <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0))} type="primary" htmlType="submit" id="btn-submit">
                                             Submit
