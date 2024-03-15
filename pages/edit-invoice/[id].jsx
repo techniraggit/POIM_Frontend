@@ -60,7 +60,6 @@ const EditInvoice = (view) => {
     };
 
     useEffect(() => {
-        console.log(id && refetch)
         if (id && refetch) {
             const response = fetchPoNumbr()
             response.then((res) => {
@@ -158,7 +157,6 @@ const EditInvoice = (view) => {
             }
         })
     }
-    console.log(parseFloat(responseData?.total_amount || 0) ,parseFloat(invoice?.invoice_amount || 0))
     return (
         <>
             <div class="wrapper-main">
@@ -368,9 +366,10 @@ const EditInvoice = (view) => {
                                     <Form.Item name={"note"} className="note-wrap wrap-box">
                                         <TextArea onChange={({ target: { value } }) => onChange('comment', value)} />
                                     </Form.Item>
-                                    <Form.Item name={"invoice_amount"} className="note-wrap wrap-box dollor-inputs">
+                                    <Form.Item 
+                                    name={"invoice_amount"}
+                                    className="note-wrap wrap-box dollor-inputs">
                                         <InputNumber
-                                            defaultValue={invoice.invoice_amount}
                                             formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
                                             parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
                                             onChange={(value) => {

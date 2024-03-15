@@ -46,6 +46,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     }, []);
 
     useEffect(() => {
+        console.log(view,'ffffffffffffffffffffffff');
+        console.log(formData,'project_id');
         if ((edit || view) && formData?.project_id) {
             fetchSitesProject(formData.project_id, 0)
         }
