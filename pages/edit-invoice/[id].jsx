@@ -111,10 +111,11 @@ const EditInvoice = (view) => {
         })
     }
 
-    const beforeUpload = (file) => {
+    const beforeUpload = (file, index) => {
         const isPDF = file.type === 'application/pdf';
         if (!isPDF) {
             message.error('Only PDF files are allowed!');
+            form.setFieldValue('invoice_file' + index, [])
         }
         return isPDF;
     };
@@ -321,10 +322,12 @@ const EditInvoice = (view) => {
                                                                     name={`invoice_file` + index}
                                                                     className="select-file-invoice"
                                                                     valuePropName="fileList"
-                                                                    rules={[{ required: invoice?.invoice_files[index]?.invoice_file === '', message: 'Please select a file' }]}
-                                                                    getValueFromEvent={(e) => onChange('invoice_file', e.fileList[0].originFileObj, index)}
+                                                                    rules={[{ required: (formData?.invoice_files[index]?.invoice_file === '' || formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf')), message: 'Please select a file' }]}
+                                                                    getValueFromEvent={(e) => {
+                                                                        onChange('invoice_file', e.fileList[0]?.originFileObj, index)
+                                                                    }}
                                                                 >
-                                                                    <Upload beforeUpload={beforeUpload} accept=".pdf" maxCount={1} className="upload-filewrap" >
+                                                                    <Upload beforeUpload={(files) => beforeUpload(files, index)} accept=".pdf" maxCount={1} className="upload-filewrap" >
                                                                         <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
                                                                     </Upload>
                                                                 </Form.Item>
