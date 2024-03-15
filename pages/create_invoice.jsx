@@ -258,9 +258,9 @@ const CreateInvoice = () => {
                                                 onChange('invoice_amount', value)
                                             }}
                                             placeholder={`Please enter amount`} />
-                                        {formData.invoice_amount && (
-                                            <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block' }}>
-                                                {formData.invoice_amount && !/^[0-9]*$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
+                                        {invoice.invoice_amount && (
+                                            <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
+                                                {invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                             </span>
                                         )}
                                     </Form.Item>
