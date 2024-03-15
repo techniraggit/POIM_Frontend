@@ -101,6 +101,7 @@ const CreateInvoice = () => {
             ...formData
         });
     }
+    console.log(/^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)))
     return (
         <>
             <div class="wrapper-main">
@@ -258,7 +259,7 @@ const CreateInvoice = () => {
                                             }
                                             }
                                             placeholder={`Please enter amount`} addonBefore="$" />
-                                        <span className="error-msg" style={{ color: 'red', display: parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span>
+                                        <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block' }}>{formData.invoice_amount && !/^[0-9]*$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}</span>
                                     </Form.Item>
 
                                     <Form.Item>
