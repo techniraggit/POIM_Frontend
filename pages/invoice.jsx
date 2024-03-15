@@ -71,7 +71,7 @@ const Invoice = () => {
 
                                 <span>Pending Invoice</span>
                             </li>
-                            <li className="me-4">
+                            <li className="me-2">
                                 <span className="text-size green-bg-span mb-3">{invoice}</span>
                                 <span>Total Invoice</span>
                             </li>
