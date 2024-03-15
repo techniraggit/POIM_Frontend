@@ -60,6 +60,7 @@ const EditInvoice = (view) => {
     };
 
     useEffect(() => {
+        console.log(id && refetch)
         if (id && refetch) {
             const response = fetchPoNumbr()
             response.then((res) => {
@@ -70,10 +71,12 @@ const EditInvoice = (view) => {
             const invoicePromise = getInvoiceData(id);
 
             invoicePromise.then((res) => {
+                console.log(res, "===========")
                 if (res?.data?.status) {
                     const data = res.data.data;
+                    console.log(data.invoice_amount,'kkkkkkkkkkkkk');
                     setInvoice({ ...data, po_creator: res.data?.po_creator });
-                    form.setFieldValue('amount', data.invoice_amount);
+                    form.setFieldValue('invoice_amount', data.invoice_amount);
                     form.setFieldValue('note', data.comment);
                     form.setFieldValue('po_type', res.data?.data?.purchase_order?.po_type);
                     form.setFieldValue('po_number', res.data?.data?.purchase_order?.po_number);
@@ -365,8 +368,9 @@ const EditInvoice = (view) => {
                                     <Form.Item name={"note"} className="note-wrap wrap-box">
                                         <TextArea onChange={({ target: { value } }) => onChange('comment', value)} />
                                     </Form.Item>
-                                    <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs">
+                                    <Form.Item name={"invoice_amount"} className="note-wrap wrap-box dollor-inputs">
                                         <InputNumber
+                                            defaultValue={invoice.invoice_amount}
                                             formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
                                             parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
                                             onChange={(value) => {
