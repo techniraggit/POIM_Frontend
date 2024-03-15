@@ -70,10 +70,8 @@ const EditInvoice = (view) => {
             const invoicePromise = getInvoiceData(id);
 
             invoicePromise.then((res) => {
-                console.log(res, "===========")
                 if (res?.data?.status) {
                     const data = res.data.data;
-                    console.log(data.invoice_amount, 'kkkkkkkkkkkkk');
                     setInvoice({ ...data, po_creator: res.data?.po_creator });
                     form.setFieldValue('invoice_amount', data.invoice_amount.toLocaleString());
                     form.setFieldValue('note', data.comment);
@@ -271,7 +269,7 @@ const EditInvoice = (view) => {
 
                                         <div className="col-lg-4 col-md-6">
                                             {/* <div className="selectwrap  shipment-caret aligned-text"> */}
-                                            <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  invoice-select  aligned-text`}>
+                                            <div class={`selectwrap ${view || edit && invoice.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  invoice-select  aligned-text`}>
 
                                                 <Form.Item
                                                     label="Choose PO Number"
@@ -374,9 +372,9 @@ const EditInvoice = (view) => {
                                             placeholder={`Please enter amount`}
                                         />
                                     </Form.Item>
-                                    {formData.invoice_amount && (
-                                            <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block' }}>
-                                                {formData.invoice_amount && !/^[0-9]*$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
+                                    {invoice.invoice_amount && (
+                                            <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
+                                                {invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                             </span>
                                         )}
                                     {/* <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>{invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}</span> */}
