@@ -75,7 +75,7 @@ const EditInvoice = (view) => {
                     const data = res.data.data;
                     console.log(data.invoice_amount,'kkkkkkkkkkkkk');
                     setInvoice({ ...data, po_creator: res.data?.po_creator });
-                    form.setFieldValue('invoice_amount', data.invoice_amount);
+                    form.setFieldValue('invoice_amount', data.invoice_amount.toLocaleString());
                     form.setFieldValue('note', data.comment);
                     form.setFieldValue('po_type', res.data?.data?.purchase_order?.po_type);
                     form.setFieldValue('po_number', res.data?.data?.purchase_order?.po_number);
@@ -85,12 +85,6 @@ const EditInvoice = (view) => {
             })
             setRefetch(false);
         }
-
-
-        // const response = threshold();
-        // response.then((res) => {
-        //     setThreshold(res.data.data)
-        // });
     }, [id, refetch]);
 
     useEffect(() => {
@@ -367,18 +361,19 @@ const EditInvoice = (view) => {
                                         <TextArea onChange={({ target: { value } }) => onChange('comment', value)} />
                                     </Form.Item>
                                     <Form.Item 
-                                    name={"invoice_amount"}
-                                    className="note-wrap wrap-box dollor-inputs">
+                                        name={"invoice_amount"}
+                                        className="note-wrap wrap-box dollor-inputs"
+                                    >
                                         <InputNumber
                                             formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
-                                            parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                            parser=  {value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
                                             onChange={(value) => {
                                                 onChange('invoice_amount', value)
-                                            }
-                                            }
-                                            placeholder={`Please enter amount`} addonBefore="$" />
-                                            <span className="error-msg" style={{ color: 'red', display: parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span>
+                                            }}
+                                            placeholder={`Please enter amount`}
+                                        />
                                     </Form.Item>
+                                    <span className="error-msg" style={{ color: 'red', display: parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span>
                                     <Form.Item>
                                         <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0))} type="primary" htmlType="submit" id="btn-submit">
                                             Submit
