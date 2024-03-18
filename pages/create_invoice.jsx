@@ -101,7 +101,6 @@ const CreateInvoice = () => {
             ...formData
         });
     }
-    console.log(/^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)))
     return (
         <>
             <div class="wrapper-main">

@@ -68,7 +68,7 @@ const Settings = () => {
                                                 />
                                             </div>
                                             <hr className="mt-4" />
-                                            <Roles action='save_setting'>
+                                            <Roles action='edit_threshold'>
                                                 <Button className="save-Button" onClick={() => handleSaveClick(item.th_id, item.value)}>save</Button>
                                             </Roles>
                                         </div>
