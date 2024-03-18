@@ -101,6 +101,7 @@ const CreateInvoice = () => {
             ...formData
         });
     }
+    console.log(/^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)))
     return (
         <>
             <div class="wrapper-main">
@@ -264,12 +265,12 @@ const CreateInvoice = () => {
                                                 onChange('invoice_amount', value)
                                             }}
                                             placeholder={`Please enter amount`} />
+                                    </Form.Item>
                                         {formData.invoice_amount && (
                                             <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block' }}>
                                                 {formData.invoice_amount && !/^[0-9]*$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                             </span>
                                         )}
-                                    </Form.Item>
 
                                     {/* <Form.Item name={"amount"} className="note-wrap wrap-box dollor-inputs no-number-rental">
                                         <InputNumber
@@ -286,7 +287,8 @@ const CreateInvoice = () => {
 
                                     <Form.Item>
                                         <Button
-                                            disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^[0-9]*$/.test(formData?.invoice_amount))}
+                                        disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0))|| (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^[0-9]*$/.test(formData?.invoice_amount))}
+                                            // disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^[0-9]*$/.test(formData?.invoice_amount))}
                                             type="primary" htmlType="submit" id="btn-submit">
                                             Submit
                                         </Button>
