@@ -1344,7 +1344,8 @@ li.react-icon {
     border-radius: 26px;
     opacity: 1;
     border: none;
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
+    background-color: transparent;
 }
 
 .react-select .ant-select-selector {
@@ -4698,6 +4699,9 @@ li#report-li ul.reports-dropdown li {
     }
 }
 @media screen and (max-width: 768px) {
+    .choose-file {
+        padding: 10px 21px 20px;
+    }
 .ant-select.line-select.ant-select-show-arrow {
     height: 47px;
 }
@@ -4717,6 +4721,12 @@ li#report-li ul.reports-dropdown li {
 }
 }
 @media screen and (max-width: 767px) {
+    .btm-space {
+        margin-bottom: 40px;
+    }
+    .create-another .ant-space {
+        margin-bottom: 0px !important;
+    }
     button.clear-button {
         margin-top: 0px !important;
     }
@@ -4772,6 +4782,7 @@ li#report-li ul.reports-dropdown li {
     .ant-select-selector {
         height: 32px !important;
         border-radius: 40px !important;
+        font-size: 14px;
     }
     .ant-select.ant-select-in-form-item.arrow-wrap-user::after {
         top: 42%;
@@ -4805,8 +4816,34 @@ ul.list-icons li i {
 .create-icons span {
     font-size: 16px;
 }
+.linewrap span {
+    width: 34%;
+}
+.wrap-box input {
+    padding: 6px 20px;
+}
+div#w-small span {
+    width: 17%;
+}
+.wrap-box textarea.ant-input {
+    padding: 6px 12px;
+    font-size: 15px;
+    height: 150px;
+}
 }
 @media screen and (max-width: 480px) {
+    .choose-file {
+        padding: 1px 21px 20px;
+    }
+    .wrap-box textarea.ant-input {
+        padding: 6px 12px;
+        font-size: 15px;
+        height: 120px;
+    }
+    .wrap-box input {
+        padding: 4px 12px;
+        font-size: 15px;
+    }
     .react-icon span:first-child {
         width: 37px;
         height: 37px;
@@ -4879,6 +4916,12 @@ ul.list-icons li i {
         padding-left: 12px;
         padding-right: 12px;
     }
+    .bottom-wrapp-purchase {
+        padding-top: 26px;
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-bottom: 30px;
+    }
     ul.list-icons li a i {
         margin-bottom: 8px !important;
     }
@@ -4926,9 +4969,47 @@ ul.list-icons li i {
     .pagination-container ul li {
         margin-bottom: 15px;
     }
+    .po-status-btn {
+        font-size: 14px;
+        padding: 6px 16px;
+        height: 37px;
+    }
+    li.bg-li-invoice span.anticon.anticon-plus {
+        font-size: 18px;
+        padding: 11px 11px;
+        border-radius: 8px;
+    }
+    ul.create-icons li {
+        padding: 12px 12px;
+    }
+    ul.list-icons li.me-4 {
+        margin-right: 15px !important;
+    }
 }
 
-@media (min-width: 320px) and (max-width: 375px) {
+@media (min-width: 320px) and (max-width: 376px) {
+    ul.list-icons li {
+        padding: 14px 0px 14px 7px;
+        border-radius: 6px;
+    }
+    li.bg-li-invoice span.anticon.anticon-plus {
+        font-size: 15px;
+        padding: 9px 9px;
+        border-radius: 8px;
+        margin-right: 7px !important;
+    }
+    .po-status-btn {
+        font-size: 12px;
+        padding: 6px 9px;
+        margin-left: 3px;
+        height: 33px;
+    }
+    .create-icons span {
+        font-size: 15px;
+    }
+    .linewrap span {
+        width: 51%;
+    }
     .wrapin-form.add-clear-wrap .ant-select.line-select.dropdown-report {
         min-width: 102px;
         margin-bottom: 0px;
@@ -4952,7 +5033,7 @@ ul.list-icons li i {
     }
  
     ul.list-icons li.me-4 {
-        margin-right: 17px !important;
+        margin-right: 5px !important;
     }
     ul.list-icons li.me-4.me-md-3 {
         margin-right: 3px !important;
