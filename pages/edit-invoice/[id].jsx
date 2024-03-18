@@ -378,11 +378,11 @@ const EditInvoice = (view) => {
                                             placeholder={`Please enter amount`}
                                         />
                                     </Form.Item>
-                                    {invoice.invoice_amount && (
+                                    {invoice.invoice_amount && invoice.invoice_amount !== 0 ? (
                                         <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
                                             {invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                         </span>
-                                    )}
+                                    ): ''}
                                     {/* <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>{invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}</span> */}
                                     {/* <span className="error-msg" style={{ color: 'red', display: !responseData || (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span> */}
                                     <Form.Item>

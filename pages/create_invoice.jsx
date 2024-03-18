@@ -264,6 +264,14 @@ const CreateInvoice = () => {
                                                 required: true,
                                                 message: "Please enter amount",
                                             },
+                                            // {
+                                            //     validator: (_, value) => {
+                                            //         if (value === 0) {
+                                            //             return Promise.reject('Amount cannot be zero');
+                                            //         }
+                                            //         return Promise.resolve();
+                                            //     },
+                                            // },
                                         ]}
                                     >
                                         <InputNumber
