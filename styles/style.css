@@ -1,5 +1,9 @@
-.error {
+.error, .star {
     color: red;
+}
+
+.star {
+    font-size: 20px;
 }
 
 

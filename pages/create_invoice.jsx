@@ -217,7 +217,7 @@ const CreateInvoice = () => {
                                                             }}
                                                         >
                                                             <Upload beforeUpload={(files) => beforeUpload(files, index)} accept=".pdf" maxCount={1} className="upload-filewrap" >
-                                                                <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
+                                                                <Button icon={<UploadOutlined />} className="file-btn" >Select File<span className="star">*</span></Button>
                                                             </Upload>
                                                         </Form.Item>
                                                         {
@@ -233,7 +233,15 @@ const CreateInvoice = () => {
                                             )
                                         })
                                     }
-                                    <Form.Item>
+                                    <Form.Item
+                                    name='invoice_files'
+                                    // rules={[
+                                    //     {
+                                    //         required: true,
+                                    //         message: "Please select file",
+                                    //     },
+                                    // ]}
+                                    >
                                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                                             setFormData({
                                                 ...formData,
