@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 
 const Amendments = ({ history }) => {
 
-  console.log(history, 'dddddddddddddddddddddddddddd');
   const amendments =
     (<div className="bottom-po">
       {history.map((history, index) => {
@@ -16,19 +15,23 @@ const Amendments = ({ history }) => {
             if (Array.isArray(change[key][0])) {
               if (change[key][0][2] === "updated_on") {
                 result = false;
+              } else {
+                result = true
               }
             } else {
               if (change[key][0] === "updated_on") {
                 result = false;
+              } else {
+                result = true
               }
             }
             return result;
           })
         }, true);
 
-        if (!show[0]) {
-          return ''
-        }
+        // if(!show[0]) {
+        //   return ''
+        // }
 
         return (
           <div key={index} className="top-data">
@@ -52,17 +55,16 @@ const Amendments = ({ history }) => {
                     return Object.keys(change).map((key) => {
                       let upperKey = '';
                       if (Array.isArray(change[key][0])) {
-                        if (change[key][0][2] === "updated_on" || change[key][0][2] === 'project_site') {
+
+                        if (change[key][0][2] === "updated_on" || change[key][0][2] === 'project_site' || change[key][0][2] === 'md_id' ) {
                           return ''
                         }
                         if (change[key][0][2].includes('_')) {
-                          console.log(change[key][0][2],'gggaaaaaaaaaaaaaa');
                           upperKey = change[key][0][2].split('_').join(' ').charAt(0).toUpperCase() + change[key][0][2].split('_').join(' ').slice(1)
                         } else {
                           upperKey = change[key][0][2].charAt(0).toUpperCase() + change[key][0][2].slice(1)
                         }
                       } else {
-                        console.log(change[key][0])
                         if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on") {
                           return ''
                         }
@@ -75,6 +77,7 @@ const Amendments = ({ history }) => {
                           upperKey = change[key][0].charAt(0).toUpperCase() + change[key][0].slice(1)
                         }
                       }
+                      console.log(key, '============key')
                       return (
                         <div className="col-lg-4 col-md-6">
                           <div className="inner-data">
@@ -94,8 +97,6 @@ const Amendments = ({ history }) => {
                                   </>
                                 )
                               }
-
-
                               {/* {
                                 key === 'add' && (
                                   <>
@@ -131,83 +132,8 @@ const Amendments = ({ history }) => {
                   })
 
                 }
-
-
               </div>
-
             </div>
-            {
-              changes?.map((change) => {
-                return Object.keys(change).map((key) => {
-                  let upperKey = '';
-                  if (Array.isArray(change[key][0])) {
-                    if (change[key][0][2] === "updated_on") {
-                      return ''
-                    }
-                    if (change[key][0][0].includes('_')) {
-                      upperKey = change[key][0][0].split('_').join(' ')
-                    }
-                  } else {
-                    if (change[key][0] === "updated_on") {
-                      return ''
-                    }
-
-                    if (change[key][0].includes('_')) {
-                      upperKey = change[key][0].split('_').join(' ')
-                    }
-                  }
-
-                  return (
-                    <>
-                      {/* <div className="linewrap d-flex space-raw">
-                        <span className="d-block me-2">{key.charAt(0).toUpperCase() + key.slice(1) + " " + upperKey}</span>
-                        <hr />
-                      </div> */}
-                      {/* {
-                        key === 'change' && (
-                          <>
-                            <div className="row raw-data-btm">
-                              <div className="col-lg-2 col-md-4">
-                                <div className="inner-data">
-                                  <span className="small-span">{change[key][1][0]}</span>
-                                  <span className="medium-span"> {change[key][1][1]}</span>
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        )
-                      } */}
-                      {/* {
-                        key === 'add' && (
-                          <>
-                            <div className="row raw-data-btm">
-                              {
-                                change[key][1][0]?.map((data, index) => {
-                                  return Object.keys(data).map((key) => {
-                                    if (data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on' && key !== 'purchase_order' && key !== 'project_site') {
-                                      return <>
-                                        <div className="col-lg-2 col-md-4">
-                                          <div className="inner-data">
-                                            <span className="small-span">{key.split('_').join(" ")}</span>
-                                            <span className='medium-span'>{data[key]}</span>
-                                          </div>
-                                        </div>
-                                      </>
-                                    }
-                                    <span className='medium-span'>{data['description']}</span>
-                                    return <></>
-                                  })
-                                })
-                              }
-                            </div>
-                          </>
-                        )
-                      } */}
-                    </>
-                  )
-                })
-              })
-            }
           </div>
         )
       })}
