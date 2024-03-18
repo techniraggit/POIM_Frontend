@@ -5,10 +5,12 @@ import { Button, message } from "antd";
 import { threshold, updateThreshold } from "@/apis/apis/adminApis";
 import Header from "@/components/header";
 import Roles from "@/components/Roles";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 
 const Settings = () => {
     const [thresholdData, setThresholdData] = useState(0)
+    const { user } = useGlobalContext();
     useEffect(() => {
         const response = threshold();
         response.then((res) => {
@@ -61,8 +63,7 @@ const Settings = () => {
                                             <div className="dollars-input d-flex align-items-center">
                                                 <span className="dollar-sign">$</span>
                                                 <input placeholder="Enter value in dollars"
-                                                    // value={`$${thresholdData[index].value}`}
-                                                    // value={thresholdData[index].value}
+                                                    disabled={!user.permissions.includes('edit_threshold')}
                                                     value={`${thresholdData[index].value}`}
                                                     onChange={(e) => handleInputChange(index, e.target.value)}
                                                 />
