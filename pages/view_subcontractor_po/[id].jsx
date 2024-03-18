@@ -89,6 +89,7 @@ const ViewSubContractorPo = () => {
                         status: data.status,
                         notes: data?.co_approved_amount,
                         signed_contract: data.signed_contract,
+                        co_amount:data.co_approved_amount[0]?.amount,
                         po_creator: res?.data?.po_creator
                     });
                     setHistory([...res.data.history_logs_data])

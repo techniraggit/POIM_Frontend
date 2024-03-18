@@ -154,6 +154,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         };
     });
 
+
+
     return (
         <>
             <div class="order-choose d-flex">
@@ -534,7 +536,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                         </Form.Item>
                     </div>
                 </div>
-                {user.role !== 'admin' && formData.status === 'approved' && formData.po_type === 'subcontractor' && view && (
+                {user.role !== 'admin' && formData.status === 'approved'
+                 && formData.co_amount > 0 
+                 && formData.po_type === 'subcontractor' && view && (
                     <div className="col-lg-4 col-md-6">
                         <div className="wrap-box">
                             <Form.Item
