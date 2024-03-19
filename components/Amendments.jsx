@@ -56,7 +56,7 @@ const Amendments = ({ history }) => {
                       let upperKey = '';
                       if (Array.isArray(change[key][0])) {
 
-                        if (change[key][0][2] === "updated_on" || change[key][0][2] === 'project_site' || change[key][0][2] === 'md_id' ) {
+                        if (change[key][0][2] === "updated_on" || change[key][0][2] === 'project_site' || change[key][0][2] === 'md_id') {
                           return ''
                         }
                         if (change[key][0][2].includes('_')) {
@@ -68,7 +68,7 @@ const Amendments = ({ history }) => {
                         if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on") {
                           return ''
                         }
-                        if(change[key][0]?.includes('.')) {
+                        if (change[key][0]?.includes('.')) {
                           change[key][0] = change[key][0].split('.')[1]
                         }
                         if (change[key][0]?.includes('_')) {
@@ -77,56 +77,61 @@ const Amendments = ({ history }) => {
                           upperKey = change[key][0].charAt(0).toUpperCase() + change[key][0].slice(1)
                         }
                       }
-                      console.log(key, '============key')
                       return (
-                        <div className="col-lg-4 col-md-6">
-                          <div className="inner-data">
-                            <span className="small-span">{upperKey}</span>
-                            <span className="medium-span">
-                              {
-                                key === 'change' && (
-                                  <>
-                                    <div className="row raw-data-btm">
-                                      <div className="col-lg-2 col-md-4">
-                                        <div className="inner-data">
-                                          {/* <span className="small-span">{change[key][1][0]}</span> */}
-                                          <span className="medium-span"> {change[key][1][1]}</span>
+                        // <div className='row'>
+                          <div className="col-lg-4 col-md-6">
+                            <div className="inner-data">
+                              <span className="small-span">{upperKey}</span>
+                              <span className="medium-span">
+                                {
+                                  key === 'change' && (
+                                    <>
+                                      <div className="row raw-data-btm">
+                                        <div className="col-lg-2 col-md-4">
+                                          <div className="inner-data">
+                                            {/* <span className="small-span">{change[key][1][0]}</span> */}
+                                            <span className="medium-span"> {change[key][1][1]}</span>
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
-                                  </>
-                                )
-                              }
-                              {/* {
-                                key === 'add' && (
-                                  <>
-                                    <div className="row raw-data-btm">
+                                    </>
+                                  )
+                                }
+                              </span>
+                            </div>
+                            <div className="inner-data">
+                              {/* <span className="small-span">{upperKey}</span> */}
+                              <span className="medium-span">
+                                {
+                                  key === 'add' && (
+                                    <>
                                       {
                                         change[key][1][0]?.map((data, index) => {
                                           return Object.keys(data).map((key) => {
                                             if (data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on' && key !== 'purchase_order' && key !== 'project_site') {
                                               return <>
-                                                <div className="col-lg-2 col-md-4">
-                                                  <div className="inner-data">
-                                                    <span className="small-span">{key.split('_').join(" ")}</span>
-                                                    <span className='medium-span'>{data[key]}</span>
+                                                <div className="row raw-data-btm">
+                                                  <div className="col-lg-2 col-md-4">
+                                                    <div className="inner-data">
+                                                      <span className="small-span">{key.split('_').join(" ")}</span>
+                                                      <span className='medium-span'>{data[key]}</span>
+                                                    </div>
                                                   </div>
                                                 </div>
                                               </>
                                             }
-                                            <span className='medium-span'>{data['description']}</span>
+                                            // <span className='medium-span'>{data['description']}</span>
                                             return <></>
                                           })
                                         })
                                       }
-                                    </div>
-                                  </>
-                                )
-                              } */}
-                            </span>
-
+                                    </>
+                                  )
+                                }
+                              </span>
+                            </div>
                           </div>
-                        </div>
+                        // </div>
                       )
                     })
                   })
