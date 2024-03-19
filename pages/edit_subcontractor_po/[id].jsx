@@ -161,7 +161,8 @@ const EditSubContractorPo = () => {
     const onFinish = () => {
         updatePo({
             ...formData,
-            po_id: id
+            po_id: id,
+            original_po_amount : formData.subcontractor_type === 'new' ? undefined : formData.original_po_amount
         }).then((res) => {
             if(res?.data?.status) {
                 router.push('/po_list');

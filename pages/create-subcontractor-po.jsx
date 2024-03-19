@@ -81,6 +81,7 @@ const CreateSubContractorPo = () => {
     const onFinish = () => {
         createPO({
             ...formData,
+            // subcontractor_type : formData.subcontractor_type === 'new' ? formData.original_po_amount : undefined
         }).then((res) => {
             if (res?.data?.status) {
                 router.push('/po_list');
