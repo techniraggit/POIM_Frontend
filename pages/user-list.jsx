@@ -26,7 +26,7 @@ const User_list = ({ base_url }) => {
     const getUsers = () => {
         const response = userList(currentPage);
         response.then((res) => {
-            if(res?.status === 200) {
+            if (res?.status === 200) {
                 setCount(res.data.count)
                 setTotalUser(res.data.results.total_users)
                 setUsers(res.data.results.data);
@@ -63,8 +63,8 @@ const User_list = ({ base_url }) => {
     };
 
     const applyFilters = (data) => {
-        if(typeof data === 'object' && Object.keys(data).length > 0) {
-            const queryString = new URLSearchParams({...data, page: currentPage}).toString();
+        if (typeof data === 'object' && Object.keys(data).length > 0) {
+            const queryString = new URLSearchParams({ ...data, page: currentPage }).toString();
             const response = userFilterSearch(queryString);
             response.then((res) => {
                 setCount(res.data.count)
@@ -116,39 +116,45 @@ const User_list = ({ base_url }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {Array.isArray(users) &&
-                                            users.map((user, index) => { 
-                                                return(
-                                                <tr key={index}>
-                                                    <td>{calculateStartingSerialNumber() + index}</td>
-                                                    {/* <td>{index + 1}</td> */}
-                                                    <td>{user.first_name}</td>
-                                                    <td className="td-color">{user.last_name}</td>
-                                                    <td>{user.user_role.name}</td>
-                                                    <td>{user.email}</td>
-                                                    <td>{user.phone_number}</td>
-                                                    <td className="td-icon-color">
-                                                        <Roles action='view_user'>
-                                                            <EyeFilled onClick={() => handleIconClick(user.id)}  />
-                                                            {isViewUserVisible === user.id && <UserPopUp show={isViewUserVisible === user.id} user_id={user.id} />}
-                                                        </Roles>
-                                                        <Roles action='delete_user'>
-                                                            <Popconfirm
-                                                                title="Are you sure you want to delete this item?"
-                                                                onConfirm={() => handleDelete(user.id)}
-                                                                okText="Yes"
-                                                                cancelText="No"
+                                        {Array.isArray(users) && users.length > 0 ? (
+                                            users.map((user, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{calculateStartingSerialNumber() + index}</td>
+                                                        {/* <td>{index + 1}</td> */}
+                                                        <td>{user.first_name}</td>
+                                                        <td className="td-color">{user.last_name}</td>
+                                                        <td>{user.user_role.name}</td>
+                                                        <td>{user.email}</td>
+                                                        <td>{user.phone_number}</td>
+                                                        <td className="td-icon-color">
+                                                            <Roles action='view_user'>
+                                                                <EyeFilled onClick={() => handleIconClick(user.id)} />
+                                                                {isViewUserVisible === user.id && <UserPopUp show={isViewUserVisible === user.id} user_id={user.id} />}
+                                                            </Roles>
+                                                            <Roles action='delete_user'>
+                                                                <Popconfirm
+                                                                    title="Are you sure you want to delete this item?"
+                                                                    onConfirm={() => handleDelete(user.id)}
+                                                                    okText="Yes"
+                                                                    cancelText="No"
 
-                                                            >
-                                                                <DeleteFilled />
-                                                            </Popconfirm>
-                                                        </Roles>
-                                                        <Roles action='edit_user'>
-                                                            <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link>
-                                                        </Roles>
-                                                    </td>
-                                                </tr>
-                                            )})}
+                                                                >
+                                                                    <DeleteFilled />
+                                                                </Popconfirm>
+                                                            </Roles>
+                                                            <Roles action='edit_user'>
+                                                                <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link>
+                                                            </Roles>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })) : (
+                                            <tr>
+                                                <td colSpan="8">No User available</td>
+                                            </tr>
+                                        )
+                                        }
                                     </tbody>
                                 </table>
                             </div>
