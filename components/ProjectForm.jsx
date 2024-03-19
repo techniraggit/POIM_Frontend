@@ -43,7 +43,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                             // disabled={edit}
                             rules={[{ required: true, message: 'Please enter your project number!' }]}
                         >
-                            <Input placeholder="00854" 
+                            <Input placeholder="ex.00854" 
                             readOnly={edit}
                             onChange={({ target: { value } }) => onChange('project_number', value)} />
                         </Form.Item>

@@ -155,6 +155,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                         </div>
                     </div>
                 )}
+                <div className="row mt-4">
 
                 {(formData.shipment_type?.toLowerCase() === 'non project related' || formData.shipment_type?.toLowerCase() === 'combined') && (
                     <div class="col-lg-4 col-md-6">
@@ -189,30 +190,26 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                         </div>
                     </div>
                 )}
-                <div className="col-lg-4 col-md-6">
+                {(formData.material_details[0]?.material_for?.toLowerCase() === 'inventory' || formData.material_details[0]?.material_for?.toLowerCase() === 'supplies') && <div className="col-lg-4 col-md-6">
                     <div className="wrap-box">
-                        {(formData.material_details[0]?.material_for?.toLowerCase() === 'inventory' || formData.material_details[0]?.material_for?.toLowerCase() === 'supplies') && (
-                            <Form.Item
-                                label={formData.material_details[0]?.material_for?.toLowerCase() === 'inventory' ? "Inventory Code" : "GL Code"}
-                                name="code_0"
-                                htmlFor="file"
-                                className="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please enter Inventory Code",
-                                    },
-                                ]}
-                            >
-                                <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { code: value }, 0)} />
-                            </Form.Item>
-                        )}
+                        <Form.Item
+                            label={formData.material_details[0]?.material_for?.toLowerCase() === 'inventory' ? "Inventory Code" : "GL Code"}
+                            name="code_0"
+                            htmlFor="file"
+                            className="same-clr"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter Inventory Code",
+                                },
+                            ]}
+                        >
+                            <Input readOnly={view} onChange={({ target: { value } }) => onChange('material_details', { code: value }, 0)} />
+                        </Form.Item>
                     </div>
-                </div>
-            </div>
-            <div className="row">
+                </div>}
                 {formData.material_details[0]?.material_for?.toLowerCase() === 'project' && (
-                    <div class="col-sm-4">
+                    <div class="col-lg-4 col-md-6">
                         {/* <div className="selectwrap columns-select shipment-caret "> */}
                         <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
 
@@ -241,7 +238,10 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                         </div>
                     </div>
                 )}
+                </div>
+                
             </div>
+            
             <div className="create-another minuswrap-img">
                 <Space style={{ display: 'flex', marginBottom: 8 }} align="baseline" className="space-unit">
                     {
