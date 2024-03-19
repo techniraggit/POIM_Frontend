@@ -118,7 +118,7 @@ const Vendor = ({ base_url }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {Array.isArray(vendors) &&
+                                        {Array.isArray(vendors) && vendors.length > 0 ?(
                                             vendors.map((vendor, index) => (
                                                 <tr key={index}>
                                                   <td>{calculateStartingSerialNumber() + index}</td>
@@ -146,7 +146,11 @@ const Vendor = ({ base_url }) => {
                                                         </Roles>
                                                     </td>
                                                 </tr>
-                                            ))}
+                                            ))):(
+                                                <tr>
+                                                <td colSpan="8">No Vendor available</td>
+                                            </tr>
+                                            )}
                                     </tbody>
                                 </table>
                             </div>
