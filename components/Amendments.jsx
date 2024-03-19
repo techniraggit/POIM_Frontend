@@ -63,6 +63,7 @@ const Amendments = ({ history }) => {
                   changes?.map((change) => {
                     return Object.keys(change).map((key) => {
                       let upperKey = '';
+                      console.log((change[key][0][2]),'ppppppppppppp');
                       if (Array.isArray(change[key][0])) {
 
                         if (change[key][0][2] === "updated_on" || change[key][0][2] === 'md_id' || change[key][0][2] === 'material_details') {
@@ -75,6 +76,11 @@ const Amendments = ({ history }) => {
                         }
                         if(change[key][0][2] === 'project_site') {
                           change[key][1][1] = jsonParse(change[key][1][1])
+                        }
+                        if(change[key][0][2] === 'created_on'){
+                          let createdOnDate = new Date(change[key][1][1]);
+                          let formattedDate = `${createdOnDate.getFullYear()}-${(createdOnDate.getMonth() + 1).toString().padStart(2, '0')}-${createdOnDate.getDate().toString().padStart(2, '0')}`;
+                          change[key][1][1] = formattedDate;
                         }
                       } else {
                         if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on" || change[key][0] === 'material_details') {
