@@ -99,7 +99,7 @@ const Edit_Rental_Po = () => {
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                         form.setFieldValue('material_for' + (index), material.material_for)
                         form.setFieldValue('project_id' + (index), material.project?.project_id)
-                        form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
+                        // form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                         if(index > 0) {
                             form.setFieldValue('start_date' + (index), material?.date)
                             form.setFieldValue('end_date' + (index), material?.end_date)

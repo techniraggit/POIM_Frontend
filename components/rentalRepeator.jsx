@@ -23,7 +23,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
 
     const handleStartDateChange = (value, index) => {
         onChange('material_details', { start_date: value }, 0);
-        console.log(formData.material_details[0]?.end_date && value > formData.material_details[0]?.end_date,'kkkkkkkkkkkkkkkk');
         if (formData.material_details[0]?.end_date && value > formData.material_details[0]?.date) {
             setEndDateError({
                 ...endDateError,
@@ -401,7 +400,6 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 }
                                 <div className="col-sm-4">
                                     <MinusOutlined className="minus-wrap" onClick={async () => {
-                                        console.log(data,'fffffffffff');
                                         if (data.md_id) {
                                             await handleRemoveDetail(data.md_id, index);
                                         } else {
