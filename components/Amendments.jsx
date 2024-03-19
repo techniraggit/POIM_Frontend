@@ -3,6 +3,15 @@ import '../styles/style.css'
 import { Collapse } from 'antd';
 import dayjs from 'dayjs';
 
+const jsonParse = (string) => {
+  try {
+    const updatedString = string.replace(/'/g, '"').replace(/True/g, 'true');
+    return Object.values(JSON.parse(updatedString)).filter((value) => typeof value !== 'boolean').join(', ');
+  } catch(e) {
+    return ''
+  }
+}
+
 const Amendments = ({ history }) => {
 
   const amendments =
@@ -10,35 +19,35 @@ const Amendments = ({ history }) => {
       {history.map((history, index) => {
         const changes = history.changes;
 
-        const show = changes.reduce((result, change) => {
-          return Object.keys(change).map((key) => {
+        const show = changes.map((change, index) => {
+          return Object.keys(change).reduce((result, key) => {
             if (Array.isArray(change[key][0])) {
-              if (change[key][0][2] === "updated_on") {
+              if (change[key][0][2] === "updated_on" || change[key][0][2] === 'project_site' || change[key][0][2] === 'md_id') {
                 result = false;
               } else {
-                result = true
+                result = true;
               }
             } else {
-              if (change[key][0] === "updated_on") {
+              if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on") {
                 result = false;
               } else {
-                result = true
+                result = true;
               }
             }
             return result;
-          })
-        }, true);
+          }, true)
+        })
 
-        // if(!show[0]) {
-        //   return ''
-        // }
-
+        if(!show.some(value => value === true)) {
+          return ''
+        }
+        
         return (
           <div key={index} className="top-data">
             <div className="dot-wrap">
               <div className="form-dot"><span></span></div>
               <div className="row left-wrap-space">
-                <div className="col-lg-3 col-md-6">
+                <div className="col-lg-4 col-md-6">
                   <div className="inner-data">
                     <span className="small-span">Amendment On</span>
                     <span className="medium-span">{dayjs(history.changed_at).format('DD MMM YYYY')}</span>
@@ -56,7 +65,7 @@ const Amendments = ({ history }) => {
                       let upperKey = '';
                       if (Array.isArray(change[key][0])) {
 
-                        if (change[key][0][2] === "updated_on" || change[key][0][2] === 'project_site' || change[key][0][2] === 'md_id') {
+                        if (change[key][0][2] === "updated_on" || change[key][0][2] === 'md_id' || change[key][0][2] === 'material_details') {
                           return ''
                         }
                         if (change[key][0][2].includes('_')) {
@@ -64,8 +73,11 @@ const Amendments = ({ history }) => {
                         } else {
                           upperKey = change[key][0][2].charAt(0).toUpperCase() + change[key][0][2].slice(1)
                         }
+                        if(change[key][0][2] === 'project_site') {
+                          change[key][1][1] = jsonParse(change[key][1][1])
+                        }
                       } else {
-                        if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on") {
+                        if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on" || change[key][0] === 'material_details') {
                           return ''
                         }
                         if (change[key][0]?.includes('.')) {
@@ -77,61 +89,39 @@ const Amendments = ({ history }) => {
                           upperKey = change[key][0].charAt(0).toUpperCase() + change[key][0].slice(1)
                         }
                       }
+
                       return (
-                        // <div className='row'>
-                          <div className="col-lg-4 col-md-6">
+                        <>
+                          {key === 'change' && (<div className="col-lg-4 col-md-6">
                             <div className="inner-data">
                               <span className="small-span">{upperKey}</span>
-                              <span className="medium-span">
-                                {
-                                  key === 'change' && (
-                                    <>
-                                      <div className="row raw-data-btm">
-                                        <div className="col-lg-2 col-md-4">
-                                          <div className="inner-data">
-                                            {/* <span className="small-span">{change[key][1][0]}</span> */}
-                                            <span className="medium-span"> {change[key][1][1]}</span>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </>
-                                  )
-                                }
-                              </span>
+                              <span className="medium-span"> {change[key][1][1]}</span>
                             </div>
-                            <div className="inner-data">
-                              {/* <span className="small-span">{upperKey}</span> */}
-                              <span className="medium-span">
-                                {
-                                  key === 'add' && (
-                                    <>
-                                      {
-                                        change[key][1][0]?.map((data, index) => {
-                                          return Object.keys(data).map((key) => {
-                                            if (data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on' && key !== 'purchase_order' && key !== 'project_site') {
-                                              return <>
-                                                <div className="row raw-data-btm">
-                                                  <div className="col-lg-2 col-md-4">
-                                                    <div className="inner-data">
-                                                      <span className="small-span">{key.split('_').join(" ")}</span>
-                                                      <span className='medium-span'>{data[key]}</span>
-                                                    </div>
-                                                  </div>
+                          </div>)}
+                            {
+                              key === 'add' && (
+                                <>
+                                    {
+                                      change[key][1][0]?.map((data) => {
+                                        return Object.keys(data).map((key) => {
+                                          if (data[key] && key !== "md_id" && key !== 'created_on' && key !== 'updated_on' && key !== 'purchase_order') {
+                                            return <>
+                                              <div className="col-lg-2 col-md-4">
+                                                <div className="inner-data">
+                                                  <span className="small-span">{key.split('_').join(" ")}</span>
+                                                  <span className='medium-span'>{data[key]}</span>
                                                 </div>
-                                              </>
-                                            }
-                                            // <span className='medium-span'>{data['description']}</span>
-                                            return <></>
-                                          })
+                                              </div>
+                                            </>
+                                          }
+                                          return <></>
                                         })
-                                      }
-                                    </>
-                                  )
-                                }
-                              </span>
-                            </div>
-                          </div>
-                        // </div>
+                                      })
+                                    }
+                                </>
+                              )
+                            }
+                        </>
                       )
                     })
                   })
