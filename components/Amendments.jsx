@@ -22,7 +22,7 @@ const Amendments = ({ history }) => {
         const show = changes.map((change, index) => {
           return Object.keys(change).reduce((result, key) => {
             if (Array.isArray(change[key][0])) {
-              if (change[key][0][2] === "updated_on" || change[key][0][2] === 'project_site' || change[key][0][2] === 'md_id') {
+              if (change[key][0][2] === "updated_on" || change[key][0][2] === 'md_id') {
                 result = false;
               } else {
                 result = true;
@@ -145,4 +145,4 @@ const Amendments = ({ history }) => {
   return <Collapse items={items} defaultActiveKey={['1']} />;
 };
 
-export default Amendments;
+export default React.memo(Amendments);
