@@ -3112,8 +3112,11 @@ button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn:hove
 }
 
 button.ant-btn.css-p7e5j5.ant-btn-default.file-btn {
-    color: #1f1f1f !important;
-    border-color: 1px solid #1f1f1f !important;
+    color: #1f1f1f!important;
+    border: 1px solid #70707054 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn {
