@@ -151,7 +151,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
 
     return (
         <>
-            <div class="order-choose d-flex">
+            <div class="order-choose d-flex rental-selected">
                 <div className="left-wrap wrap-number sub-po-typee">
                     <Form.Item
                         label="Purchase Order Number"

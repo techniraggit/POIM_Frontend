@@ -40,7 +40,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
 
     return (
         <div class="row">
-            <div class="col-12 space-col-spc mb-3">
+            <div class="col-12 space-col-spc mb-3 pe-0">
                 <div class="wrap-box">
                     <Form.Item
                         label="Description"
@@ -62,8 +62,8 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                     </Form.Item>
                 </div>
             </div>
-            <div class="row space-col-spc mb-0">
-                <div class="col-sm-4">
+            <div class="row space-col-spc mb-0 pe-0">
+                <div class="col-sm-4 pe-0">
                     <div className="wrap-box">
                         <Form.Item
                             label="Date"
@@ -79,7 +79,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                         </Form.Item>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 pe-0">
                     <div className="wrap-box">
                         <Form.Item
                             label="To"
@@ -98,7 +98,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                         </Form.Item>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 pe-0">
                     <div className="wrap-box no-number-rental">
                         <Form.Item
                             label="Amount"
