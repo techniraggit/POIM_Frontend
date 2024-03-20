@@ -96,8 +96,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
 
                 </div>
             </div>
-            <div class="row space-col-spc mb-0">
-                <div class="col-sm-12">
+            <div class="row space-col-spc mb-0 pe-0">
+                <div class="col-sm-12 pe-0">
                     <div className="wrap-box mb-0">
 
 
@@ -127,7 +127,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                     </div>
                 </div>
                 {(formData.shipment_type === 'project related') && (
-                    <div class="col-sm-4">
+                    <div class=" col-lg-4 col-md-6 col-sm-12 pe-0">
                         <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
 
                             <Form.Item
@@ -191,6 +191,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                     </div>
                 )}
                 {(formData.material_details[0]?.material_for?.toLowerCase() === 'inventory' || formData.material_details[0]?.material_for?.toLowerCase() === 'supplies') && <div className="col-lg-4 col-md-6">
+                    
                     <div className="wrap-box">
                         <Form.Item
                             label={formData.material_details[0]?.material_for?.toLowerCase() === 'inventory' ? "Inventory Code" : "GL Code"}
@@ -449,7 +450,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                             )
                                         } else if (key === 'code' && (formData.material_details[index + 1].material_for?.toLowerCase() === 'supplies')) {
                                             return (
-                                                <div className="col-sm-4">
+                                                <div className="col-lg-4 col-md-6">
                                                     <div className="wrap-box">
                                                         <Form.Item
                                                             label="GL Code"
