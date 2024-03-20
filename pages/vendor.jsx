@@ -120,7 +120,7 @@ const Vendor = ({ base_url }) => {
                                     <tbody>
                                         {Array.isArray(vendors) && vendors.length > 0 ?(
                                             vendors.map((vendor, index) => (
-                                                <tr key={index}>
+                                                <tr key={index} className={vendor.is_deleted ? 'light-blue':''}>
                                                   <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{vendor.company_name}</td>
                                                     <td>{vendor.vendor_contact[0].name}</td>
@@ -128,10 +128,10 @@ const Vendor = ({ base_url }) => {
                                                     <td>{vendor.state}</td>
                                                     
                                                     <td className="td-icon-color">
-                                                        <Roles action='view_vendor'>
+                                                    {!vendor.is_deleted &&<Roles action='view_vendor'>
                                                             <EyeFilled onClick={() => handleIconClick(vendor.vendor_id, index)} />
-                                                        </Roles>
-                                                        <Roles action='delete_vendor'>
+                                                        </Roles>}
+                                                        {!vendor.is_deleted &&<Roles action='delete_vendor'>
                                                             <Popconfirm
                                                                 title="Are you sure you want to delete this item?"
                                                                 onConfirm={() => handleDelete(vendor.vendor_id)}
@@ -140,10 +140,10 @@ const Vendor = ({ base_url }) => {
                                                             >
                                                                 <DeleteFilled />
                                                             </Popconfirm>
-                                                        </Roles>
-                                                        <Roles action='edit_vendor'>
+                                                        </Roles>}
+                                                        {!vendor.is_deleted &&<Roles action='edit_vendor'>
                                                         <Link href={`/edit_vendor/${vendor.vendor_id}`} className="me-2"><EditFilled /></Link>
-                                                        </Roles>
+                                                        </Roles>}
                                                     </td>
                                                 </tr>
                                             ))):(
