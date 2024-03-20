@@ -5,6 +5,7 @@ import { PlusOutlined, EyeFilled, DeleteFilled, EditFilled, DownloadOutlined } f
 import { getServerSideProps } from "@/components/mainVariable";
 import { message, Popconfirm, Pagination, Button } from 'antd';
 import Link from "next/link";
+import '../styles/style.css';
 import { deletePO, downloadContract, filterSearchPo, getPoList } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
@@ -119,7 +120,8 @@ const PO_list = () => {
                                     <tbody>
                                         {Array.isArray(rows) && rows.length > 0 ? (
                                             rows.map((purchase, index) => {
-                                                return <tr key={index}>
+                                                // const rowClassName = purchase.is_deleted === 'false' ? 'light-blue' : '';
+                                                return <tr key={index} className={purchase.is_deleted ? 'light-blue':''}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{purchase.po_number}</td>
                                                     <td>{purchase.project?.project_no || '-'}</td>
