@@ -6,6 +6,7 @@ import { getServerSideProps } from "@/components/mainVariable";
 import { Popconfirm, message, Pagination, Button } from 'antd';
 import axios from 'axios';
 import Link from "next/link";
+import '../styles/style.css';
 import UserPopUp from "@/components/user-popup";
 import { userFilterSearch, userList } from "@/apis/apis/adminApis";
 import withAuth from "@/components/PrivateRoute";
@@ -118,8 +119,9 @@ const User_list = ({ base_url }) => {
                                     <tbody>
                                         {Array.isArray(users) && users.length > 0 ? (
                                             users.map((user, index) => {
+                                                console.log(user,'gggggggggggggg');
                                                 return (
-                                                    <tr key={index}>
+                                                    <tr key={index} className={user.is_deleted ? 'light-blue':''}>
                                                         <td>{calculateStartingSerialNumber() + index}</td>
                                                         {/* <td>{index + 1}</td> */}
                                                         <td>{user.first_name}</td>
@@ -128,11 +130,11 @@ const User_list = ({ base_url }) => {
                                                         <td>{user.email}</td>
                                                         <td>{user.phone_number}</td>
                                                         <td className="td-icon-color">
-                                                            <Roles action='view_user'>
+                                                        {!user.is_deleted &&<Roles action='view_user'>
                                                                 <EyeFilled onClick={() => handleIconClick(user.id)} />
                                                                 {isViewUserVisible === user.id && <UserPopUp show={isViewUserVisible === user.id} user_id={user.id} />}
-                                                            </Roles>
-                                                            <Roles action='delete_user'>
+                                                            </Roles>}
+                                                            {!user.is_deleted &&<Roles action='delete_user'>
                                                                 <Popconfirm
                                                                     title="Are you sure you want to delete this item?"
                                                                     onConfirm={() => handleDelete(user.id)}
@@ -142,10 +144,10 @@ const User_list = ({ base_url }) => {
                                                                 >
                                                                     <DeleteFilled />
                                                                 </Popconfirm>
-                                                            </Roles>
-                                                            <Roles action='edit_user'>
+                                                            </Roles>}
+                                                            {!user.is_deleted &&<Roles action='edit_user'>
                                                                 <Link href={`/edit_user/${user.id}`} className="me-2"><EditFilled /></Link>
-                                                            </Roles>
+                                                            </Roles>}
                                                         </td>
                                                     </tr>
                                                 )

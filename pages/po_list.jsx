@@ -134,8 +134,8 @@ const PO_list = () => {
                                                     <td>{(purchase.total_amount).toLocaleString()}</td>
                                                     <td>{purchase.status}</td>
                                                     <td>{purchase.vendor_contact?.name}</td>
-                                                    <td className="td-icon-color">
-                                                        <Roles action='view_purchase_order'>
+                                                    <td className="td-icon-color" >
+                                                        {!purchase.is_deleted && <Roles action='view_purchase_order'>
                                                             {purchase.po_type === 'material' && (
                                                                 <Link href={`/view-po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
                                                             )}
@@ -145,9 +145,9 @@ const PO_list = () => {
                                                             {purchase.po_type === "subcontractor" && (
                                                                 <Link href={`/view_subcontractor_po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
                                                             )}
-                                                        </Roles>
+                                                        </Roles>}
 
-                                                        <Roles action='delete_purchase_order'>
+                                                        {!purchase.is_deleted &&<Roles action='delete_purchase_order'>
                                                             <Popconfirm
                                                                 title="Are you sure you want to delete this item?"
                                                                 onConfirm={() => handleDelete(purchase.po_id)}
@@ -156,8 +156,8 @@ const PO_list = () => {
                                                             >
                                                                 <DeleteFilled />
                                                             </Popconfirm>
-                                                        </Roles>
-                                                        <Roles action='edit_purchase_order'>
+                                                        </Roles>}
+                                                        {!purchase.is_deleted &&<Roles action='edit_purchase_order'>
                                                             {purchase.po_type === "material" && (
                                                                 <Link href={`/edit_purchaseorder/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
                                                             )}
@@ -167,7 +167,7 @@ const PO_list = () => {
                                                             {purchase.po_type === "subcontractor" && (
                                                                 <Link href={`/edit_subcontractor_po/${purchase.po_id}`} className="me-1"><EditFilled /></Link>
                                                             )}
-                                                        </Roles>
+                                                        </Roles>}
                                                         {purchase.po_type === 'subcontractor' && purchase.signed_contract?.length > 0 && <DownloadOutlined onClick={() => handleDownload(purchase.po_id, purchase.signed_contract[0].contract_file?.split('/')[purchase.signed_contract[0].contract_file?.split('/').length - 1], purchase.signed_contract[0].contract_id)} />}
                                                     </td>
                                                 </tr>

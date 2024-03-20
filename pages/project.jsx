@@ -119,17 +119,17 @@ const Vendor = ({ base_url }) => {
                                     <tbody>
                                         {Array.isArray(projects) && projects.length > 0 ?(
                                             projects.map((project, index) => (
-                                                <tr key={index}>
+                                                <tr key={index} className={project.is_deleted ? 'light-blue':''}>
                                                    <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{project.name}</td>
                                                     <td>{project.customer_name}</td>
                                                     <td>{project.sites[0].address}</td>
                                                     <td className="td-icon-color">
-                                                        <Roles action="view_project">
+                                                       {!project.is_deleted && <Roles action="view_project">
                                                             <EyeFilled onClick={() => handleIconClick(project.project_id)} />
                                                             {isViewProjectVisible === project.project_id && <ProjectPopup show={isViewProjectVisible === project.project_id} project_id={project.project_id} />}
-                                                        </Roles>
-                                                        <Roles action="delete_project">
+                                                        </Roles>}
+                                                        {!project.is_deleted && <Roles action="delete_project">
                                                             <Popconfirm
                                                                 title="Are you sure you want to delete this item?"
                                                                 onConfirm={() => handleDelete(project.project_id)}
@@ -138,10 +138,10 @@ const Vendor = ({ base_url }) => {
                                                             >
                                                                 <DeleteFilled />
                                                             </Popconfirm>
-                                                        </Roles>
-                                                        <Roles action='edit_project'>
+                                                        </Roles>}
+                                                        {!project.is_deleted && <Roles action='edit_project'>
                                                             <Link href={`/edit_project/${project.project_id}`} className="me-2"><EditFilled /></Link>
-                                                        </Roles>
+                                                        </Roles>}
                                                     </td>
                                                 </tr>
                                             )
