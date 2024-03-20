@@ -2,7 +2,8 @@
 import { Axios } from '../config/axiosConfig';
 
 export const fetchProjects = () => {
-    return Axios.get(`/api/admin/projects`);
+    // return Axios.get(`/api/admin/projects`);
+    return Axios.get(`/api/helping/get-projects-list`);
     // ?page=${currentPage}
 }
 

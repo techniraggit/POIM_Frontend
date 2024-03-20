@@ -207,7 +207,8 @@ const Material = ({ base_url }) => {
                 const headers = {
                     Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
                 }
-                const response = await axios.get(`${base_url}/api/admin/projects`, { headers: headers });
+                const response = await axios.get(`${base_url}/api/helping/get-projects-list`, { headers: headers });
+                console.log(response,'sssssssssssssssssssssss');
 
                 setProjects(response.data.projects); // Assuming the API response is an array of projects
             } catch (error) {
