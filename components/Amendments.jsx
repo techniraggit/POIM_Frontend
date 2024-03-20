@@ -87,7 +87,7 @@ const Amendments = ({ history }) => {
                           return ''
                         }
                         if (change[key][0]?.includes('.')) {
-                          change[key][0] = change[key][0].split('.')[1]
+                          change[key][0] = change[key][0].split('.')[0]  + " " +  change[key][0].split('.')[1]
                         }
                         if (change[key][0]?.includes('_')) {
                           upperKey = change[key][0].split('_').join(' ').charAt(0).toUpperCase() + change[key][0].split('_').join(' ').slice(1)
@@ -95,6 +95,10 @@ const Amendments = ({ history }) => {
                           upperKey = change[key][0].charAt(0).toUpperCase() + change[key][0].slice(1)
                         }
                       }
+                      // if(change[key].includes('first_name') || change[key].includes('last_name') || change[key].includes('email')){
+                      //   return ''
+                      // }
+                      console.log(change[key],'mmmmmmmmmmmmmmm');
 
                       return (
                         <>
