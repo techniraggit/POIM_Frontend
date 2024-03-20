@@ -83,7 +83,7 @@ const Dashboard = () => {
                                     <tbody>
                                         {Array.isArray(purchaseOrders) && purchaseOrders.length > 0 ? (
                                             purchaseOrders.map((purchase, index) => (
-                                                <tr key={index}>
+                                                <tr key={index} className={purchase.is_deleted ? 'light-blue':''}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{purchase.po_number}</td>
                                                     <td className="td-color">{purchase.po_type}</td>
