@@ -33,7 +33,7 @@ const CreateInvoice = () => {
     const router = useRouter();
 
     const onFinish = () => {
-        try {
+        // try {
         const data = new FormData();
         data.append('comment', formData.comment);
         data.append('invoice_amount', formData.invoice_amount);
@@ -48,11 +48,9 @@ const CreateInvoice = () => {
                 message.success(res.data.message);
                 router.push('/invoice');
             }
+        }).catch((error) => {
+            message.error(error.response.data.message)
         })
-    }
-    catch (error) {
-        message.error(error.res.data.message)
-      }
     };
 
     useEffect(() => {
