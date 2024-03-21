@@ -113,18 +113,21 @@ const Vendor = ({ base_url }) => {
                                             <th className="hedaings-tb">Company Name</th>
                                             <th className="hedaings-tb">Vendor Name</th>
                                             <th className="hedaings-tb">Country</th>
+                                            <th className="hedaings-tb">Status</th>
                                             <th className="hedaings-tb">State</th>
                                             <th className="hedaings-tb">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {Array.isArray(vendors) && vendors.length > 0 ?(
-                                            vendors.map((vendor, index) => (
-                                                <tr key={index} className={vendor.is_deleted ? 'light-blue':''}>
+                                            vendors.map((vendor, index) =>
+                                            (
+                                                <tr key={index} className={vendor.is_deleted ? 'light-blue' : ''}>
                                                   <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{vendor.company_name}</td>
                                                     <td>{vendor.vendor_contact[0].name}</td>
                                                     <td>{vendor.country}</td>
+                                                    <td style={{textTransform:'capitalize'}}>{vendor.status}</td>
                                                     <td>{vendor.state}</td>
                                                     
                                                     <td className="td-icon-color">
@@ -146,7 +149,8 @@ const Vendor = ({ base_url }) => {
                                                         </Roles>}
                                                     </td>
                                                 </tr>
-                                            ))):(
+                                            )
+                                            )):(
                                                 <tr>
                                                 <td colSpan="8">No Vendor available</td>
                                             </tr>
