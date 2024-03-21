@@ -2491,7 +2491,7 @@ button.vendor-search-butt:hover {
 }
 
 button.clear-button {
-    height: 40px;
+    height: 36px;
     font-size: 15px;
     padding: 6px 32px;
     border-radius: 20px;
@@ -4014,11 +4014,12 @@ span.ant-spin-dot.ant-spin-dot-spin {
 .wrapin-form.add-clear-wrap {
     display: flex;
     flex-wrap: wrap;
+    gap: 13px;
 }
 
-.wrapin-form div, .wrapin-form button {
+/* .wrapin-form div, .wrapin-form button {
     margin-top: 10px;
-}
+} */
 
 .wrapin-form div {
     margin-left: 10px
@@ -4165,7 +4166,12 @@ a.sidebar-hide a span svg {
     display: none;
 }
 /* 12march add */
-
+ul.list-icons.text-list-icons  li  span:last-child {
+    font-size: 14px;
+}
+ul.list-icons.text-list-icons li {
+    padding: 10px 10px;
+}
 /* responsive */
 @media (max-width: 1599px) { 
     .Purchase-form {
@@ -4174,6 +4180,7 @@ a.sidebar-hide a span svg {
     }
     .wrapin-form.add-clear-wrap .ant-select.line-select {
         min-width: 150px;
+        margin-right: 0px !important;
     }
     .wrapin-form.add-clear-wrap .ant-select.line-select.dropdown-report {
         min-width: 170px;
@@ -4198,14 +4205,6 @@ a.sidebar-hide a span svg {
         align-items: start;
         gap: 20px;
     }
-
-}
-
-ul.list-icons.text-list-icons  li  span:last-child {
-    font-size: 14px;
-}
-ul.list-icons.text-list-icons li {
-    padding: 10px 10px;
 }
 @media (max-width: 1299px) {
     .shipment-caret .ant-select-selector span.ant-select-selection-item {
@@ -4427,7 +4426,7 @@ span.text-sizes {
         font-size: 13px !important;
     }
     button.clear-button {
-        height: 33px;
+        height: 35px;
         font-size: 13px;
         display: flex;
         padding: 6px 42px;
@@ -4435,7 +4434,7 @@ span.text-sizes {
         justify-content: center;
     }
     button#xls-btn {
-        height: 30px;
+        height: 32px;
         font-size: 14px;
         display: flex;
         align-items: center;
@@ -4726,9 +4725,12 @@ li#report-li ul.reports-dropdown li {
     }
 }
 @media screen and (max-width: 768px) {
+    .input-date {
+        height: 35px;
+    }
     .ant-select.line-select.ant-select-show-arrow span.ant-select-arrow {
-        transform: translateY(-79%);
-        top: 43%;
+        transform: translateY(-50%);
+        top: 50%;
     }
     .wrapp-box {
         margin-bottom: 30px;
@@ -4741,9 +4743,9 @@ li#report-li ul.reports-dropdown li {
     .choose-file {
         padding: 10px 21px 20px;
     }
-.ant-select.line-select.ant-select-show-arrow {
-    height: 47px;
-}
+    .ant-select.line-select.ant-select-show-arrow {
+        height: 35px;
+    }
 .ant-select.line-select.ant-select-show-arrow .ant-select-selector {
     height: 35px !important;
 }
@@ -4783,7 +4785,7 @@ li#report-li ul.reports-dropdown li {
         margin-top: 0px !important;
     }
     .ant-select.line-select.ant-select-show-arrow span.ant-select-arrow {
-        top: 39%;
+        top: 50%;
         transform: translateY(-50%);
     }
     button.ant-btn.add-more-btn {
@@ -4924,9 +4926,9 @@ div#w-small span {
         font-size: 16px;
     }
     .vendor-input {
-        width: 132px;
+        width: 100%;
         height: 35px;
-        margin-right: 15px;
+        /* margin-right: 15px; */
     }
     .ant-select.line-select.ant-select-show-arrow .ant-select-selector {
         height: 30px !important;
@@ -4934,8 +4936,9 @@ div#w-small span {
     }
    
     .wrapin-form.add-clear-wrap  .ant-select.line-select {
-        width: 132px;
+        width: 100%;
         height: 38px;
+        margin: 0px !important;
     }
     .choose-potype {
         padding: 25px 20px 30px 20px;
@@ -5061,21 +5064,47 @@ div#w-small span {
     }
     button#xls-btn {
         height: 33px;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+    }
+    .date-wrapp {
+        width: 100%;
+        margin: 0px !important;
+    }
+    .input-date {
+        display: block;
+        height: 30px;
+    }
+    
+    button.clear-button.ms-3 {
+        margin: 0px !important;
+        width: 48%;
+        height: 30px;
+    }
+    .ant-select.line-select.ant-select-show-arrow span.ant-select-arrow {
+        transform: translateY(-40%);
+        font-size: 6px !important;
+        top: 36%;
     }
 }
 
 @media (min-width: 320px) and (max-width: 376px) {
+    .date-wrapp label {
+        margin-bottom: 0px !important;
+        top: 46%;
+    }
+    button.clear-button.ms-3 {
+        width: 100%;
+    }
     .date-wrapp input {
         margin-bottom: 5px;
     }
-    .input-date {
-        display: block;
-    }
     .wrapin-form div {
         margin-left: 0px;
-    }
-    .date-wrapp {
-        width: 100%;
     }
     .text-wrap h5 {
         font-size: 14px;
