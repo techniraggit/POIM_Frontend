@@ -1029,7 +1029,6 @@ span.select2-selection__clear {
 }
 
 input:focus {
-    border: none;
     outline: none;
     box-shadow: none !important;
 }
@@ -2480,7 +2479,7 @@ button.vendor-search-butt:hover {
 }
 
 button.clear-button {
-    height: 40px;
+    height: 35px;
     font-size: 15px;
     padding: 6px 32px;
     border-radius: 20px;
@@ -3125,8 +3124,13 @@ button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn {
     color: #1f1f1f;
     padding: 2px 15px;
     height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
+button.ant-btn.css-p7e5j5.ant-btn-default.file-btn:hover {
+    border: 1px solid #1f1f1f !important;
+}
 .invoice-select {
     cursor: pointer;
 }
@@ -4000,15 +4004,16 @@ span.ant-spin-dot.ant-spin-dot-spin {
 .wrapin-form.add-clear-wrap {
     display: flex;
     flex-wrap: wrap;
+    gap: 13px;
 }
 
-.wrapin-form div, .wrapin-form button {
+/* .wrapin-form div, .wrapin-form button {
     margin-top: 10px;
-}
+} */
 
-.wrapin-form div {
+/* .wrapin-form div {
     margin-left: 10px
-}
+} */
 /* rj */
 .ant-spin-spinning {
     z-index: 10 !important;
