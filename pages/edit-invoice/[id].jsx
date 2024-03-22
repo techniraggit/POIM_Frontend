@@ -360,7 +360,7 @@ const EditInvoice = (view) => {
                                     </Form.Item>
                                     <Form.Item
                                         name={"invoice_amount"}
-                                        className="note-wrap wrap-box dollor-inputs"
+                                        className="note-wrap wrap-box dollor-inputs no-number-rental"
                                         rules={[
                                             {
                                                 required: true,

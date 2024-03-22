@@ -1753,13 +1753,9 @@ button.ant-btn.ant-btn-dashed.add-more-btn:hover {
     padding: 6px 16px !important;
 }
 
-/* .shipment-caret .ant-select-selector span.ant-select-selection-item {
-    color: #112F5C !important;
-    font-weight: 700 !important;
-} */
 .shipment-caret .ant-select-selector span.ant-select-selection-item {
-    color: #112F5C !important;
-    font-weight: 700 !important;
+    color: #112f5c!important;
+    font-weight: 700!important;
     font-size: 14px;
     position: absolute;
     top: 50%;
@@ -1768,9 +1764,10 @@ button.ant-btn.ant-btn-dashed.add-more-btn:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 160px;
+    width: 100%;
+    max-width: 100%;
+    padding-right: 40px !important;
 }
-
 .shipment-caret .form-control {
     border: none;
     padding: 0;
@@ -4401,7 +4398,7 @@ span.text-sizes {
     }
 
     .shipment-caret .ant-select-selector span.ant-select-selection-item {
-        width: 108px;
+        width: 99%;
     }
 
     div#vendor-selector {
