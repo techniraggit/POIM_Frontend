@@ -69,6 +69,7 @@ const CreateInvoice = () => {
         const response = fetchPoNumbers(id)
         response.then((res) => {
             const data = res.data.data;
+            console.log(data,'hhhhhhhhhhhhhhhhhhhhhhh');
             setFormData({
                 ...formData,
                 po_id: data.po_id,
