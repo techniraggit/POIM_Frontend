@@ -56,6 +56,8 @@ const EditInvoice = (view) => {
                 message.success('Invoice Updated!');
                 router.push('/invoice');
             }
+        }).catch((error) => {
+            message.error(error.response.data.message)
         })
     };
 
@@ -328,16 +330,26 @@ const EditInvoice = (view) => {
                                                         }
                                                         {
                                                             <MinusOutlined className="minus-wrap kt" onClick={() => {
-                                                                removeInvoiceFile({ file_id: data.file_id }).then((res) => {
-                                                                    if (res?.data?.status) {
-                                                                        setInvoice({
-                                                                            ...invoice,
-                                                                            invoice_files: [...invoice.invoice_files.slice(0, index), ...invoice.invoice_files.slice(index + 1)]
-                                                                        });
-                                                                        message.success('File removed successfully');
-                                                                        setRefetch(true);
-                                                                    }
-                                                                })
+                                                                console.log(data,'iiiiiiiiiiiiii');
+                                                                if(data.file_id) {
+                                                                    removeInvoiceFile({ file_id: data.file_id }).then((res) => {
+                                                                        if (res?.data?.status) {
+                                                                            setInvoice({
+                                                                                ...invoice,
+                                                                                invoice_files: [...invoice.invoice_files.slice(0, index), ...invoice.invoice_files.slice(index + 1)]
+                                                                            });
+                                                                            message.success('File removed successfully');
+                                                                            setRefetch(true);
+                                                                        }
+                                                                    })
+                                                                } else {
+                                                                    setInvoice({
+                                                                        ...invoice,
+                                                                        invoice_files: [...invoice.invoice_files.slice(0, index), ...invoice.invoice_files.slice(index + 1)]
+                                                                    });
+                                                                }
+
+                                                                
                                                             }} style={{ marginLeft: '8px' }} />
                                                         }
                                                     </div>
@@ -379,14 +391,14 @@ const EditInvoice = (view) => {
                                         />
                                     </Form.Item>
                                     {invoice.invoice_amount && invoice.invoice_amount !== 0 ? (
-                                        <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
-                                            {invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
+                                        <span className="error-msg" style={{ color: 'red', display: /^-?\d*\.?\d+$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
+                                            {invoice.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                         </span>
                                     ): ''}
                                     {/* <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>{invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}</span> */}
                                     {/* <span className="error-msg" style={{ color: 'red', display: !responseData || (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span> */}
                                     <Form.Item>
-                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) || (invoice?.invoice_amount && !/^[0-9]*$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit">
+                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit">
                                             Submit
                                         </Button>
                                     </Form.Item>
