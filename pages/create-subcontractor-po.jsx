@@ -79,7 +79,6 @@ const CreateSubContractorPo = () => {
     };
 
     const onFinish = () => {
-      console.log(formData,'gggggggggggggg');
         createPO({
             ...formData,
             // subcontractor_type : formData.subcontractor_type === 'new' ? formData.original_po_amount : undefined
@@ -107,16 +106,9 @@ const CreateSubContractorPo = () => {
         if (totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {
             form.setFieldValue('original_po_amount', (totalAmount * 0.13 + totalAmount).toLocaleString() || 0);
             formData.original_po_amount = (totalAmount * 0.13) + totalAmount || 0
-            // setFormData({
-                // original_po_amount: (totalAmount * 0.13) + totalAmount|| 0
-            // })
         } else {
-            form.setFieldValue('original_po_amount', originalAmount.current).toLocaleString();
+            form.setFieldValue('original_po_amount', originalAmount.current);
             formData.original_po_amount = originalAmount.current
-            // setFormData({
-            //     ...formData,
-            //     original_po_amount: originalAmount.current
-            // })
         }
     }
 
