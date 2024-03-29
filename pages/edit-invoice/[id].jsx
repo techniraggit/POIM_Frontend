@@ -74,7 +74,11 @@ const EditInvoice = (view) => {
             invoicePromise.then((res) => {
                 if (res?.data?.status) {
                     const data = res.data.data;
-                    setInvoice({ ...data, po_creator: res.data?.po_creator });
+                    let updatedInvoice = { ...data, po_creator: res.data?.po_creator }
+                    if (updatedInvoice.invoice_files.length === 0) {
+                        updatedInvoice.invoice_files = [{ ...repeatorData }]
+                    }
+                    setInvoice({ ...updatedInvoice });
                     form.setFieldValue('invoice_amount', data.invoice_amount.toLocaleString());
                     form.setFieldValue('note', data.comment);
                     form.setFieldValue('po_type', res.data?.data?.purchase_order?.po_type);
@@ -151,6 +155,8 @@ const EditInvoice = (view) => {
             }
         })
     }
+
+
     return (
         <>
             <div class="wrapper-main">
@@ -318,7 +324,10 @@ const EditInvoice = (view) => {
                                                                     name={`invoice_file` + index}
                                                                     className="select-file-invoice"
                                                                     valuePropName="fileList"
-                                                                    rules={[{ required: (invoice?.invoice_files[index]?.invoice_file === '' || invoice.invoice_files.some((file) => typeof file.invoice_file === 'object' && file.invoice_file?.type !== 'application/pdf')), message: 'Please select a file' }]}
+                                                                    rules={[{
+                                                                        required: ((!invoice?.invoice_files[index]?.invoice_file) || (invoice.invoice_files.some((file) => typeof file.invoice_file === 'object' && file.invoice_file?.type !== 'application/pdf'))),
+                                                                        message: 'Please select a file'
+                                                                    }]}
                                                                     getValueFromEvent={(e) => {
                                                                         onChange('invoice_file', e.fileList[0]?.originFileObj, index)
                                                                     }}
@@ -329,27 +338,24 @@ const EditInvoice = (view) => {
                                                                 </Form.Item>
                                                         }
                                                         {
-                                                            <MinusOutlined className="minus-wrap kt" onClick={() => {
-                                                                console.log(data,'iiiiiiiiiiiiii');
-                                                                if(data.file_id) {
+                                                            index > 0 && <MinusOutlined className="minus-wrap kt" onClick={() => {
+                                                                if (data.file_id) {
                                                                     removeInvoiceFile({ file_id: data.file_id }).then((res) => {
                                                                         if (res?.data?.status) {
-                                                                            setInvoice({
-                                                                                ...invoice,
-                                                                                invoice_files: [...invoice.invoice_files.slice(0, index), ...invoice.invoice_files.slice(index + 1)]
-                                                                            });
+
                                                                             message.success('File removed successfully');
                                                                             setRefetch(true);
                                                                         }
                                                                     })
                                                                 } else {
+
                                                                     setInvoice({
                                                                         ...invoice,
                                                                         invoice_files: [...invoice.invoice_files.slice(0, index), ...invoice.invoice_files.slice(index + 1)]
                                                                     });
                                                                 }
 
-                                                                
+
                                                             }} style={{ marginLeft: '8px' }} />
                                                         }
                                                     </div>
@@ -357,7 +363,7 @@ const EditInvoice = (view) => {
                                             )
                                         })
                                     }
-                                    <Form.Item>
+                                    <Form.Item name='invoice_files'>
                                         <Button className="ant-btn css-dev-only-do-not-override-p7e5j5 ant-btn-dashed add-more-btn add-space-btn" type="dashed" onClick={() => {
                                             setInvoice({
                                                 ...invoice,
@@ -394,11 +400,12 @@ const EditInvoice = (view) => {
                                         <span className="error-msg" style={{ color: 'red', display: /^-?\d*\.?\d+$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
                                             {invoice.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                         </span>
-                                    ): ''}
-                                    {/* <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>{invoice.invoice_amount && !/^[0-9]*$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}</span> */}
-                                    {/* <span className="error-msg" style={{ color: 'red', display: !responseData || (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>Invoice amount cannot be greater than PO amount</span> */}
+                                    ) : ''}
+
                                     <Form.Item>
-                                        <Button disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit">
+                                        <Button 
+                                        disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit"
+                                        >
                                             Submit
                                         </Button>
                                     </Form.Item>
