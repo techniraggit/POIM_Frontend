@@ -365,6 +365,12 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 name={`project_site_id${index + 1}`}
                                                                 htmlFor="file"
                                                                 class="same-clr"
+                                                                rules={[
+                                                                    {
+                                                                        required: true,
+                                                                        message: "Please choose site",
+                                                                    },
+                                                                ]}
                                                             >
                                                                 <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
                                                                     {Array.isArray(siteOptions[0]) &&
@@ -390,6 +396,12 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                                 name={`project_site_id${index + 1}`}
                                                                 htmlFor="file"
                                                                 class="same-clr"
+                                                                rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: "Please choose site",
+                                                                },
+                                                            ]}
                                                             >
                                                                 <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
                                                                     {Array.isArray(siteOptions[0]) &&

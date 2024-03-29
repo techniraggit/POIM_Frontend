@@ -49,6 +49,7 @@ const CreateInvoice = () => {
                 router.push('/invoice');
             }
         }).catch((error) => {
+            console.log(error.response.data.message, 'error');
             message.error(error.response.data.message)
         })
     };
@@ -68,6 +69,7 @@ const CreateInvoice = () => {
         const response = fetchPoNumbers(id)
         response.then((res) => {
             const data = res.data.data;
+            console.log(data, 'hhhhhhhhhhhhhhhhhhhhhhh');
             setFormData({
                 ...formData,
                 po_id: data.po_id,
@@ -265,14 +267,6 @@ const CreateInvoice = () => {
                                                 required: true,
                                                 message: "Please enter amount",
                                             },
-                                            // {
-                                            //     validator: (_, value) => {
-                                            //         if (value === 0) {
-                                            //             return Promise.reject('Amount cannot be zero');
-                                            //         }
-                                            //         return Promise.resolve();
-                                            //     },
-                                            // },
                                         ]}
                                     >
                                         <InputNumber
@@ -285,14 +279,19 @@ const CreateInvoice = () => {
                                             placeholder={`Please enter amount`} />
                                     </Form.Item>
                                     {formData.invoice_amount && formData.invoice_amount !== 0 ? (
-                                        <span className="error-msg" style={{ color: 'red', display: /^[0-9]*$/.test(formData.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block' }}>
-                                            {formData.invoice_amount && !/^[0-9]*$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
+                                        <span className="error-msg" style={{
+                                            color: 'red',
+                                            display: /^-?\d*\.?\d+$/.test(formData.invoice_amount)
+                                                // display: /^[0-9]*$/.test(formData.invoice_amount) 
+                                                && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block'
+                                        }}>
+                                            {formData.invoice_amount && !/^-?\d*\.?\d+$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                         </span>
                                     ) : ''}
 
                                     <Form.Item>
                                         <Button
-                                            disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^[0-9]*$/.test(formData?.invoice_amount))}
+                                            disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^-?\d*\.?\d+$/.test(formData?.invoice_amount))}
                                             // disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^[0-9]*$/.test(formData?.invoice_amount))}
                                             type="primary" htmlType="submit" id="btn-submit">
                                             Submit
@@ -308,3 +307,11 @@ const CreateInvoice = () => {
     )
 }
 export default CreateInvoice;
+
+
+
+
+
+
+
+ 
