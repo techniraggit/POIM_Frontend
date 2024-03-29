@@ -144,7 +144,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 }}
                                 parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
                                 onChange={(value) => {
-                                    if (!/^[0-9]*$/.test(value)) {
+                                    if (!/^-?\d*\.?\d+$/.test(value)) {
                                         message.error("Please enter only numbers");
                                         return;
                                     }
