@@ -338,7 +338,7 @@ const EditInvoice = (view) => {
                                                                 </Form.Item>
                                                         }
                                                         {
-                                                            index > 0 && <MinusOutlined className="minus-wrap kt" onClick={() => {
+                                                           (index > 0 || fileName)&& <MinusOutlined className="minus-wrap kt" onClick={() => {
                                                                 if (data.file_id) {
                                                                     removeInvoiceFile({ file_id: data.file_id }).then((res) => {
                                                                         if (res?.data?.status) {
