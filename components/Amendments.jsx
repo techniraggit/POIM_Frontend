@@ -63,7 +63,6 @@ const Amendments = ({ history }) => {
                   changes?.map((change) => {
                     return Object.keys(change).map((key) => {
                       let upperKey = '';
-                      console.log((change[key][0][2]),'ppppppppppppp');
                       if (Array.isArray(change[key][0])) {
 
                         if (change[key][0][2] === "updated_on" || change[key][0][2] === 'md_id' || change[key][0][2] === 'material_details') {
@@ -100,9 +99,6 @@ const Amendments = ({ history }) => {
                           upperKey = change[key][0].charAt(0).toUpperCase() + change[key][0].slice(1)
                         }
                       }
-                     
-                      console.log(change[key],'mmmmmmmmmmmmmmm');
-
                       return (
                         <>
                           {key === 'change' && (<div className="col-lg-4 col-md-6">
