@@ -76,10 +76,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                 if (res?.data) {
                     setProjects(res.data);
                 }
-                
-                // if (res?.data?.results.status) {
-                //     setProjects(res.data.results.projects);
-                // }
             });
         }
     }, [form.getFieldValue('shipment_type')]);

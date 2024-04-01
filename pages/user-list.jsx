@@ -119,7 +119,6 @@ const User_list = ({ base_url }) => {
                                     <tbody>
                                         {Array.isArray(users) && users.length > 0 ? (
                                             users.map((user, index) => {
-                                                console.log(user,'gggggggggggggg');
                                                 return (
                                                     <tr key={index} className={user.is_deleted ? 'light-blue':''}>
                                                         <td>{calculateStartingSerialNumber() + index}</td>

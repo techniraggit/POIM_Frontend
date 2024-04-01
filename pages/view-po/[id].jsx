@@ -67,6 +67,7 @@ const ViewMaterialPo = () => {
                     can_change_status: res.data?.can_change_status,
                     po_type: data.po_type,
                     amount: data.total_amount,
+                    // vendor_id: data.is_deleted ? data.vendor_contact?.company.vendor_id:data.vendor_contact?.company.company_name,
                     company_name: data.vendor_contact?.company.company_name,
                     vendor_id: data.vendor_contact?.company.vendor_id,
                     vendor_contact_id: data.vendor_contact?.vendor_contact_id,
