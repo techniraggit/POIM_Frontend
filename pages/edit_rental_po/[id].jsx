@@ -75,10 +75,10 @@ const Edit_Rental_Po = () => {
                     });
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
-                    form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
+                    form.setFieldValue('vendor_id', data.vendor_contact?.company?.is_deleted ? data.vendor_contact?.company.company_name : data.vendor_contact?.company.vendor_id);
                     form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                     form.setFieldValue('shipment_type', data.shipment_type);
-                    form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
+                    form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.is_deleted ? data.project.name : data.project?.project_id : data.project);
                     form.setFieldValue('hst_amount', data.hst_amount.toLocaleString()) || 0;
                     form.setFieldValue('total_amount', data.total_amount.toLocaleString());
                     form.setFieldValue('poDate', moment(data.po_date));
@@ -98,7 +98,7 @@ const Edit_Rental_Po = () => {
                     data?.material_details.forEach((material, index) => {
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                         form.setFieldValue('material_for' + (index), material.material_for)
-                        form.setFieldValue('project_id' + (index), material.project?.project_id)
+                        form.setFieldValue('project_id' + (index), material.project === 'object' ? material.project?.is_deleted ? material.project.name : material.project?.project_id : material.project)
                         // form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                         if(index > 0) {
                             form.setFieldValue('start_date' + (index), material?.date)
