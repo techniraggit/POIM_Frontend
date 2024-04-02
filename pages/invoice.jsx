@@ -9,19 +9,28 @@ import { filterSearch, invoiceList } from "@/apis/apis/adminApis";
 import Roles from "@/components/Roles";
 import Header from "@/components/header";
 import Filters from "@/components/Filters";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const Invoice = () => {
     const [invoiceTable, setInvoiceTable] = useState([]);
     const [invoice, setInvoice] = useState(0);
     const [pendingInvoice, setPendingInvoice] = useState(0);
+    const [poCreator,setPoCreator]=useState(0);
+    const [dmInvoice, setDmInvoice] = useState(0);
+    const [pmInvoice, setpmInvoice] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('');
-
+    const { user } = useGlobalContext();
+    console.log(user, 'ppppppppppp');
     const getInvoiceList = () => {
         invoiceList(currentPage).then((res) => {
+            console.log(res, 'kkkkkkkkkkkkkkkkkk');
             if (res?.data?.results.status) {
                 setInvoiceTable(res.data.results.data || [])
                 setInvoice(res.data.results.total_invoice)
+                setPoCreator(res.data.results.total_pending_invoice.po_creator_total_pending_invoice)
+                setDmInvoice(res.data.results.total_pending_invoice.dm_total_pending_invoice)
+                setpmInvoice(res.data.results.total_pending_invoice.pm_total_pending_invoice)
                 setPendingInvoice(res.data.results.total_pending_invoice)
             }
             setCount(res.data.count)
@@ -29,7 +38,7 @@ const Invoice = () => {
     }
 
     const applyFilters = (data) => {
-        if(typeof data === 'object' && Object.keys(data).length > 0) {
+        if (typeof data === 'object' && Object.keys(data).length > 0) {
             const queryString = new URLSearchParams({ ...data, page: currentPage }).toString();
             const response = filterSearch(queryString);
             response.then((res) => {
@@ -49,7 +58,7 @@ const Invoice = () => {
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
-
+    console.log();
     return (
         <>
             <div className="wrapper-main">
@@ -66,15 +75,33 @@ const Invoice = () => {
                                     </li>
                                 </Roles>
                             }
-                            <li className="me-4">
-                                <span className="text-size mb-3">{pendingInvoice}</span>
+                            {!(user.role === 'admin' || user.role === 'accounting') &&
+                                <li className="me-4">
+                                    <span className="text-size mb-3">{pendingInvoice}</span>
 
-                                <span>Pending Invoice</span>
-                            </li>
+                                    <span>Pending Invoice</span>
+                                </li>
+                            }
                             <li className="me-4">
                                 <span className="text-size green-bg-span mb-3">{invoice}</span>
                                 <span>Total Invoice</span>
                             </li>
+                            {(user.role === 'admin' || user.role === 'accounting') &&
+                                <>
+                                    <li className="me-4">
+                                        <span className="text-size mb-3">{pmInvoice}</span>
+                                        <span>PM-Pending </span>
+                                    </li>
+                                    <li className="me-4">
+                                        <span className="text-size green-bg-span mb-3">{dmInvoice}</span>
+                                        <span>DM-Pending </span>
+                                    </li>
+                                    <li className="me-4">
+                                        <span className="text-size mb-3">{poCreator}</span>
+                                        <span className="po-pending">PO-Creator Pending </span>
+                                    </li>
+                                </>
+                            }
                         </ul>
                         <Filters search={true} type={true} vendor={true} status={true} applyFilters={applyFilters} currentPage={currentPage} />
                         <div className="table-wrap vendor-wrap">
