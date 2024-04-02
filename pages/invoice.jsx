@@ -21,10 +21,8 @@ const Invoice = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('');
     const { user } = useGlobalContext();
-    console.log(user, 'ppppppppppp');
     const getInvoiceList = () => {
         invoiceList(currentPage).then((res) => {
-            console.log(res, 'kkkkkkkkkkkkkkkkkk');
             if (res?.data?.results.status) {
                 setInvoiceTable(res.data.results.data || [])
                 setInvoice(res.data.results.total_invoice)
@@ -58,7 +56,6 @@ const Invoice = () => {
     const calculateStartingSerialNumber = () => {
         return (currentPage - 1) * 10 + 1;
     };
-    console.log();
     return (
         <>
             <div className="wrapper-main">
