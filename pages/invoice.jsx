@@ -15,7 +15,7 @@ const Invoice = () => {
     const [invoiceTable, setInvoiceTable] = useState([]);
     const [invoice, setInvoice] = useState(0);
     const [pendingInvoice, setPendingInvoice] = useState(0);
-    const [poCreator,setPoCreator]=useState(0);
+    const [poCreator, setPoCreator] = useState(0);
     const [dmInvoice, setDmInvoice] = useState(0);
     const [pmInvoice, setpmInvoice] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -75,18 +75,12 @@ const Invoice = () => {
                                     </li>
                                 </Roles>
                             }
-                            {!(user.role === 'admin' || user.role === 'accounting') &&
-                                <li className="me-4">
-                                    <span className="text-size mb-3">{pendingInvoice}</span>
 
-                                    <span>Pending Invoice</span>
-                                </li>
-                            }
                             <li className="me-4">
                                 <span className="text-size green-bg-span mb-3">{invoice}</span>
                                 <span>Total Invoice</span>
                             </li>
-                            {(user.role === 'admin' || user.role === 'accounting') &&
+                            {(user.role === 'admin' || user.role === 'accounting') ?
                                 <>
                                     <li className="me-4">
                                         <span className="text-size mb-3">{pmInvoice}</span>
@@ -98,7 +92,13 @@ const Invoice = () => {
                                     </li>
                                     <li className="me-4">
                                         <span className="text-size mb-3">{poCreator}</span>
-                                        <span className="po-pending">PO-Creator Pending </span>
+                                        <span className="po-pending">PO Creator-Pending </span>
+                                    </li>
+                                </> :
+                                <>
+                                    <li className="me-4">
+                                        <span className="text-size mb-3">{pendingInvoice}</span>
+                                        <span>Pending Invoice</span>
                                     </li>
                                 </>
                             }
