@@ -92,6 +92,9 @@ const Amendments = ({ history }) => {
                             change[key][0] = change[key][0].split('.')[1]
                           }
                         }
+                        if(change[key][0].includes('amount')) {
+                          change[key][1][1] = change[key][1][1].toFixed(2);
+                        }
                         if(change[key].includes('first_name') || change[key].includes('last_name') || change[key].includes('email')){
                           return ''
                         }
