@@ -86,9 +86,11 @@ const Amendments = ({ history }) => {
                           return ''
                         }
                         if (change[key][0]?.includes('.')) {
-                          change[key][0] =
-                          //  change[key][0].split('.')[0]  + " " + 
-                           change[key][0].split('.')[1]
+                          if(change[key][0].split('.')[0] !== 'updated_by' && change[key][0].split('.')[1] !== 'project_no') {
+                            change[key][0] = change[key][0].split('.')[0] + " " + change[key][0].split('.')[1]
+                          } else {
+                            change[key][0] = change[key][0].split('.')[1]
+                          }
                         }
                         if(change[key].includes('first_name') || change[key].includes('last_name') || change[key].includes('email')){
                           return ''
