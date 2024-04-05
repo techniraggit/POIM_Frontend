@@ -68,6 +68,9 @@ const Amendments = ({ history }) => {
                         if (change[key][0][2] === "updated_on" || change[key][0][2] === 'md_id' || change[key][0][2] === 'material_details') {
                           return ''
                         }
+                        if(change[key][0][2].includes('amount') || change[key][0][2].includes('price')) {
+                          change[key][1][1] = change[key][1][1].toFixed(2);
+                        }
                         if (change[key][0][2].includes('_')) {
                           upperKey = change[key][0][2].split('_').join(' ').charAt(0).toUpperCase() + change[key][0][2].split('_').join(' ').slice(1)
                         } else {
@@ -86,9 +89,14 @@ const Amendments = ({ history }) => {
                           return ''
                         }
                         if (change[key][0]?.includes('.')) {
-                          change[key][0] =
-                          //  change[key][0].split('.')[0]  + " " + 
-                           change[key][0].split('.')[1]
+                          if(change[key][0].split('.')[0] !== 'updated_by' && change[key][0].split('.')[1] !== 'project_no') {
+                            change[key][0] = change[key][0].split('.')[0] + " " + change[key][0].split('.')[1]
+                          } else {
+                            change[key][0] = change[key][0].split('.')[1]
+                          }
+                        }
+                        if(change[key][0].includes('amount')) {
+                          change[key][1][1] = change[key][1][1].toFixed(2);
                         }
                         if(change[key].includes('first_name') || change[key].includes('last_name') || change[key].includes('email')){
                           return ''

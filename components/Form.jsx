@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { Form, Input, Select, DatePicker } from "antd";
-import { fetchProjectSites, fetchProjects, fetchSiteProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
+import { fetchProjects, fetchSiteProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
 import RentalRepeator from "./rentalRepeator";
@@ -79,15 +79,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             });
         }
     }, [form.getFieldValue('shipment_type')]);
-
-    const fetchSites = () => {
-        const response = fetchProjectSites();
-        response.then((res) => {
-            if (res?.data?.status) {
-                setSiteOptions([[...res.data.sites]]);
-            }
-        })
-    };
 
     const fetchSitesProject = (project_id, index) => {
         const response = fetchSiteProject(project_id);
@@ -450,7 +441,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     class="js-states form-control file-wrap-select"
                                     onChange={(value) => {
                                         // form.setFieldValue(`project_site_id${index + 1}`,'')
-                                        form.setFieldValue('project_site_id0', '')
+                                        formData.material_details.forEach((detail, index) => {
+                                            form.setFieldValue('project_site_id' + index, '')
+                                        })
                                         
                                         list(value, 0)
                                         onChange('project_id', value)

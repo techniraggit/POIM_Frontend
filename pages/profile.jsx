@@ -54,7 +54,7 @@ const Profile = () => {
                         <ul className=" create-icons">
                         <li class="icon-text react-icon">
                                 <PlusOutlined />
-                                <span>Create New Profile</span>
+                                <span> Update Profile</span>
                             </li>
                         </ul>
                         <div className="vendor-form">
