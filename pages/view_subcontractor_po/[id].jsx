@@ -115,7 +115,7 @@ const ViewSubContractorPo = () => {
                     form.setFieldValue('material_site_id', data.material_details[0]?.project_site)
                     form.setFieldValue('first_name', data.created_by.first_name)
                     form.setFieldValue('last_name', data.created_by.last_name);
-                    form.setFieldValue('original_po_amount', data.total_amount);
+                    form.setFieldValue('original_po_amount', data.total_amount.toLocaleString());
                     form.setFieldValue('last_name', data.created_by.last_name);
                     form.setFieldValue('subcontractor_type', data.subcontractor_type);
                     form.setFieldValue('invoice_amount', data.invoice_received_amount);

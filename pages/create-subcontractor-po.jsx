@@ -131,6 +131,7 @@ const CreateSubContractorPo = () => {
         }
         if (name === 'original_po_amount') {
             originalAmount.current = value;
+            form.setFieldsValue({ 'original_po_amount': parseFloat(value).toLocaleString() });
         }
         setFormData({
             ...formData
