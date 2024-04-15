@@ -89,7 +89,7 @@ const EditSubContractorPo = () => {
                     form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
                     form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
                     form.setFieldValue('total_amount', data.total_amount.toLocaleString());
-                    form.setFieldValue('original_po_amount', data.total_amount);
+                    form.setFieldValue('original_po_amount', data.total_amount.toLocaleString());
                     form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.is_deleted ? data.project.name : data.project?.project_id : data.project);
                     form.setFieldValue('poDate', dayjs(data.po_date));
                     // form.setFieldValue('poDate', data.po_date);
