@@ -245,3 +245,7 @@ export const downloadContract = (data) => {
 export const changeVendorStatus = (data) => {
     return Axios.put('/api/admin/approve_vendor', data);
 }
+
+export const ssoLogin = (data) => {
+    return Axios.post('/sso/auth/convert-token', data)
+}
