@@ -175,7 +175,7 @@ const Login = ({ base_url }) => {
                                     )}
                                 </div>
                                 <div className="col-md-12">
-                                    <MicrosoftLogin clientId={'52b7d019-02ba-482d-a613-7235bd981eae'} redirectUri="http://localhost:3000/" authCallback={authHandler} />
+                                    <MicrosoftLogin clientId={'52b7d019-02ba-482d-a613-7235bd981eae'} redirectUri="https://duronfrontend.enquisitiv.com/" authCallback={authHandler} />
                                     <button type="submit" className="submit-btn">Login</button>
                                 </div>
                             </form>
