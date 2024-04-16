@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { message } from 'antd';
 import { isLoggedIn } from "@/apis/apis/shared";
 import { useGlobalContext } from "@/app/Context/UserContext";
+import MicrosoftLogin from "react-microsoft-login";
 
 const Login = ({ base_url }) => {
     const [email, setEmail] = useState('');
@@ -25,6 +26,10 @@ const Login = ({ base_url }) => {
             router.push('/dashboard');
         }
     }, [])
+
+    const authHandler = (err, data) => {
+        console.log(err, data);
+    };
 
     const validateForm = () => {
         const errors = {};
@@ -170,6 +175,7 @@ const Login = ({ base_url }) => {
                                     )}
                                 </div>
                                 <div className="col-md-12">
+                                    <MicrosoftLogin clientId={'52b7d019-02ba-482d-a613-7235bd981eae'} redirectUri="http://localhost:3000/" authCallback={authHandler} />
                                     <button type="submit" className="submit-btn">Login</button>
                                 </div>
                             </form>
