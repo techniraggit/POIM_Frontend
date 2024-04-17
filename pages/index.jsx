@@ -50,8 +50,8 @@ const Login = ({ base_url }) => {
                 permissions: response.data.user_permissions,
                 role: response.data.user_role
             });
-            router.push('/dashboard');
             message.success('Login successful');
+            window.location = '/dashboard'
         }
     };
 
