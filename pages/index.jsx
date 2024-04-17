@@ -30,7 +30,7 @@ const Login = ({ base_url }) => {
 
     const authHandler = async (err, data) => {
         if(err) {
-            message.error(err);
+            message.error('Something went wrong! Try again later.');
             return false;
         }
         const response = await ssoLogin({
@@ -38,7 +38,7 @@ const Login = ({ base_url }) => {
             client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
             grant_type: "convert_token",
             backend: 'azuread-oauth2',
-            token: data.accessToken
+            token: data.accessToken || data.access_token
         })
         if(response.status === 200 && response?.data?.access_token) {
             localStorage.setItem('access_token', response.data.access_token)

@@ -55,11 +55,9 @@ useEffect(()=>{
         
           
           <li class="ms-2"><span>{user.first_name} {user.last_name}</span>
-            <span className="d-block admin-menu">{user.role
-            .split(" ")
+            <span className="d-block admin-menu">{user.role?.split(" ")
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ")
-            // charAt(0).toUpperCase() + user.role.slice(1)
             }</span></li>
 
           <li class="user">
