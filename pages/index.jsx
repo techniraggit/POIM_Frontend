@@ -127,8 +127,8 @@ const Login = ({ base_url }) => {
                 if (response.status === 200) {
                     localStorage.setItem('access_token', response.data.access_token)
                     localStorage.setItem('refresh_token', response.data.refresh_token)
-                    router.push('/dashboard');
                     message.success('Login successful');
+                    window.location = '/dashboard'
                 } else {
                 }
             } catch (error) {
