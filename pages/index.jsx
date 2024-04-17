@@ -30,6 +30,7 @@ const Login = ({ base_url }) => {
 
     const authHandler = async (err, data) => {
         if(err) {
+            console.log(err)
             message.error('Something went wrong! Try again later.');
             return false;
         }
