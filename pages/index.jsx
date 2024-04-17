@@ -196,7 +196,7 @@ const Login = ({ base_url }) => {
                                     )}
                                 </div>
                                 <div className="col-md-12">
-                                    <MicrosoftLogin clientId={process.env.NEXT_PUBLIC_SSO_CLIENT_ID} redirectUri={process.env.NEXT_PUBLIC_SSO_REDIRECT_URL} authCallback={authHandler} />
+                                    <MicrosoftLogin tenantUrl={process.env.NEXT_PUBLIC_TENANT_URL} clientId={process.env.NEXT_PUBLIC_SSO_CLIENT_ID} redirectUri={process.env.NEXT_PUBLIC_SSO_REDIRECT_URL} authCallback={authHandler} />
                                     <button type="submit" className="submit-btn">Login</button>
                                 </div>
                             </form>
