@@ -19,24 +19,15 @@ const Logout = ({ base_url }) => {
           throw new Error('No access_token or access_refresh found in localStorage.');
         }
 
-        // const headers = {
-        //   Authorization: ` Bearer ${localStorage.getItem('access_token')}`,
-        // }
-
-        const headers = {
-          'Authorization': `Bearer ${access_token}`,
-          'Content-Type': 'application/json',
-        };
-
-        const response = await axios.get(
-            `${base_url}/api/accounts/logout? refresh_token=${refresh_token}`,
-            // { refresh_token: access_refresh },
-          { headers }
+        const response = await axios.post(
+            `${base_url}/sso/auth/revoke-token`, {
+              client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
+              client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+              token: access_token
+            }
         );
-
-        if (response.status === 200) {
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('refresh_token');
+        if (response.status === 204) {
+          localStorage.clear();
           message.success('Logout successful');
           setUser({
             first_name: '',
