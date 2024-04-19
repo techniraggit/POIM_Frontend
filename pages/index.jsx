@@ -9,6 +9,7 @@ import { message } from 'antd';
 import { isLoggedIn } from "@/apis/apis/shared";
 import { useGlobalContext } from "@/app/Context/UserContext";
 import MicrosoftLogin from "react-microsoft-login";
+import { ssoLogin } from "@/apis/apis/adminApis";
 
 const Login = ({ base_url }) => {
     const [email, setEmail] = useState('');
@@ -27,8 +28,31 @@ const Login = ({ base_url }) => {
         }
     }, [])
 
-    const authHandler = (err, data) => {
-        console.log(err, data);
+    const authHandler = async (err, data) => {
+        if(err) {
+            console.log(err)
+            message.error('Something went wrong! Try again later.');
+            return false;
+        }
+        const response = await ssoLogin({
+            client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
+            client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+            grant_type: "convert_token",
+            backend: 'azuread-oauth2',
+            token: data.accessToken || data.access_token
+        })
+        if(response.status === 200 && response?.data?.access_token) {
+            localStorage.setItem('access_token', response.data.access_token)
+            localStorage.setItem('refresh_token', response.data.refresh_token)
+            setUser({
+                first_name: response.data.user_first_name,
+                last_name: response.data.user_last_name,
+                permissions: response.data.user_permissions,
+                role: response.data.user_role
+            });
+            message.success('Login successful');
+            window.location = '/dashboard'
+        }
     };
 
     const validateForm = () => {
@@ -91,23 +115,20 @@ const Login = ({ base_url }) => {
         e.preventDefault();
         if (validateForm() && !forgotEmail) {
             const values = {
-                email: email,
+                client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
+                client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+                grant_type: "password",
+                username: email,
                 password: password,
             }
             try {
-                const response = await axios.post(`${base_url}/api/accounts/login`, values
+                const response = await axios.post(`${base_url}/sso/auth/token`, values
                 );
                 if (response.status === 200) {
                     localStorage.setItem('access_token', response.data.access_token)
                     localStorage.setItem('refresh_token', response.data.refresh_token)
-                    setUser({
-                        first_name: response.data.user_first_name,
-                        last_name: response.data.user_last_name,
-                        permissions: response.data.user_permissions,
-                        role: response.data.user_role
-                    });
-                    router.push('/dashboard');
                     message.success('Login successful');
+                    window.location = '/dashboard'
                 } else {
                 }
             } catch (error) {
@@ -175,7 +196,7 @@ const Login = ({ base_url }) => {
                                     )}
                                 </div>
                                 <div className="col-md-12">
-                                    <MicrosoftLogin clientId={'52b7d019-02ba-482d-a613-7235bd981eae'} redirectUri="https://duronfrontend.enquisitiv.com/" authCallback={authHandler} />
+                                    <MicrosoftLogin tenantUrl={process.env.NEXT_PUBLIC_TENANT_URL} clientId={process.env.NEXT_PUBLIC_SSO_CLIENT_ID} redirectUri={process.env.NEXT_PUBLIC_SSO_REDIRECT_URL} authCallback={authHandler} />
                                     <button type="submit" className="submit-btn">Login</button>
                                 </div>
                             </form>

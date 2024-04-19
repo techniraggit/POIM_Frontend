@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DynamicTitle from '@/components/dynamic-title.jsx';
 import '../styles/style.css'
-import { CheckOutlined } from '@ant-design/icons'
 import Link from "next/link";
 import { Pagination,Button } from 'antd';
 import Sidebar from '@/components/sidebar';
