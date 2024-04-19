@@ -90,6 +90,7 @@ const SubcontractorReport = () => {
                                             return (
                                                 <tr key={index}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>
+                                                    <td>{po.project_number}</td>
                                                     <td>{po.po_number}</td>
                                                     <td>{po.po_amount?.toLocaleString()}</td>
                                                     {/* <td>{po.COApprovedAmt ? po.COApprovedAmt.split('\n').join(' ,').toLocaleString() : '-'}</td>

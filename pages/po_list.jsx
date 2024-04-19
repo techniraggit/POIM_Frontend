@@ -120,6 +120,7 @@ const PO_list = () => {
                                     <tbody>
                                         {Array.isArray(rows) && rows.length > 0 ? (
                                             rows.map((purchase, index) => {
+                                                console.log(purchase,'==========purchase============');
                                                 // const rowClassName = purchase.is_deleted === 'false' ? 'light-blue' : '';
                                                 return <tr key={index} className={purchase.is_deleted ? 'light-blue':''}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>
@@ -147,7 +148,7 @@ const PO_list = () => {
                                                             )}
                                                         </Roles>
 
-                                                        {!purchase.is_deleted &&<Roles action='delete_purchase_order'>
+                                                        {!(purchase.is_deleted || purchase.status === 'approved') &&<Roles action='delete_purchase_order'>
                                                             <Popconfirm
                                                                 title="Are you sure you want to delete this item?"
                                                                 onConfirm={() => handleDelete(purchase.po_id)}
