@@ -6,7 +6,7 @@ import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
-import { Form, Select, Button, Input, message } from "antd";
+import { Form, Select, Button, Input, message, InputNumber } from "antd";
 import PoForm from '../components/Form';
 import dayjs from "dayjs";
 
@@ -87,9 +87,9 @@ const CreateSubContractorPo = () => {
                 router.push('/po_list');
             }
         })
-        .catch((error) => {
-            message.error(error.response.data.message)
-        })
+            .catch((error) => {
+                message.error(error.response.data.message)
+            })
     }
 
     const calculateAmount = (amount, index) => {
@@ -101,7 +101,7 @@ const CreateSubContractorPo = () => {
         formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
         if (totalAmount > 0) {
             form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-            form.setFieldsValue({ 'total_amount':(totalAmount * 0.13 + totalAmount).toLocaleString()|| 0 });
+            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
         }
         if (totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {
             form.setFieldValue('original_po_amount', (totalAmount * 0.13 + totalAmount).toLocaleString() || 0);
@@ -125,13 +125,12 @@ const CreateSubContractorPo = () => {
             formData.material_details[index] = {
                 ...materalDetails
             };
-            
+
         } else {
             formData[name] = value;
         }
         if (name === 'original_po_amount') {
             originalAmount.current = value;
-            form.setFieldsValue({ 'original_po_amount': parseFloat(value).toLocaleString() });
         }
         setFormData({
             ...formData
@@ -219,7 +218,7 @@ const CreateSubContractorPo = () => {
                                         <>
                                             <div className="row mt-5 mb-3">
                                                 <div class="col-lg-4 col-md-6">
-                                                    <div class="wrap-box">
+                                                    <div class="wrap-box no-number-rental">
                                                         <Form.Item
                                                             label="Original PO Amount"
                                                             name="original_po_amount"
@@ -230,9 +229,20 @@ const CreateSubContractorPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input 
+                                                            {/* <Input 
                                                              addonBefore="$"
-                                                            onChange={({ target: { value } }) => onChange('original_po_amount', value)} placeholder="Original PO Amount" />
+                                                            onChange={({ target: { value } }) => onChange('original_po_amount', value)} placeholder="Original PO Amount" /> */}
+
+
+                                                            <InputNumber
+                                                                placeholder="Original PO Amount"
+                                                                addonBefore="$"
+                                                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
+                                                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
+                                                                onChange={(value) => {
+                                                                    onChange('original_po_amount', value)
+                                                                }}
+                                                            />
                                                         </Form.Item>
                                                     </div>
                                                 </div>
@@ -248,9 +258,9 @@ const CreateSubContractorPo = () => {
                                                                 },
                                                             ]}
                                                         >
-                                                            <Input 
-                                                             addonBefore="$"
-                                                            onChange={({ target: { value } }) => onChange('invoice_amount', value)} placeholder="Invoice Recieved Amount" />
+                                                            <Input
+                                                                addonBefore="$"
+                                                                onChange={({ target: { value } }) => onChange('invoice_amount', value)} placeholder="Invoice Recieved Amount" />
                                                         </Form.Item>
                                                     </div>
                                                 </div>
@@ -260,11 +270,11 @@ const CreateSubContractorPo = () => {
                                     )
                                     }
                                     <PoForm
-                                        formData={formData} 
-                                        isNew={formData.subcontractor_type === 'new'} 
-                                        form={form} 
-                                        onChange={onChange} 
-                                        onFinish={onFinish} 
+                                        formData={formData}
+                                        isNew={formData.subcontractor_type === 'new'}
+                                        form={form}
+                                        onChange={onChange}
+                                        onFinish={onFinish}
                                         setFormData={setFormData}
                                         calculateAmount={calculateAmount}
                                     />

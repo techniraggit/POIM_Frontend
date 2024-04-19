@@ -85,7 +85,7 @@ const Subcontractor_invoice = ({data}) => {
             form.setFieldValue('first_name', data.created_by.first_name)
             form.setFieldValue('last_name', data.created_by.last_name)
             form.setFieldValue('subcontractor_type', data.subcontractor_type);
-            form.setFieldValue('original_po_amount',data.original_amount);
+            form.setFieldValue('original_po_amount',data.original_amount.toLocaleString());
             form.setFieldValue('invoice_amount',data.invoice_received_amount);
             data?.material_details.forEach((material, index) => {
                 form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)

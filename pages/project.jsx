@@ -125,10 +125,10 @@ const Vendor = ({ base_url }) => {
                                                     <td>{project.customer_name}</td>
                                                     <td>{project.sites[0].address}</td>
                                                     <td className="td-icon-color">
-                                                       {!project.is_deleted && <Roles action="view_project">
+                                                        <Roles action="view_project">
                                                             <EyeFilled onClick={() => handleIconClick(project.project_id)} />
                                                             {isViewProjectVisible === project.project_id && <ProjectPopup show={isViewProjectVisible === project.project_id} project_id={project.project_id} />}
-                                                        </Roles>}
+                                                        </Roles>
                                                         {!project.is_deleted && <Roles action="delete_project">
                                                             <Popconfirm
                                                                 title="Are you sure you want to delete this item?"
