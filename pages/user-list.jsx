@@ -129,10 +129,10 @@ const User_list = ({ base_url }) => {
                                                         <td>{user.email}</td>
                                                         <td>{user.phone_number}</td>
                                                         <td className="td-icon-color">
-                                                        {!user.is_deleted &&<Roles action='view_user'>
+                                                        <Roles action='view_user'>
                                                                 <EyeFilled onClick={() => handleIconClick(user.id)} />
                                                                 {isViewUserVisible === user.id && <UserPopUp show={isViewUserVisible === user.id} user_id={user.id} />}
-                                                            </Roles>}
+                                                            </Roles>
                                                             {!user.is_deleted &&<Roles action='delete_user'>
                                                                 <Popconfirm
                                                                     title="Are you sure you want to delete this item?"

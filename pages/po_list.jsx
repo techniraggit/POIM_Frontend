@@ -120,6 +120,7 @@ const PO_list = () => {
                                     <tbody>
                                         {Array.isArray(rows) && rows.length > 0 ? (
                                             rows.map((purchase, index) => {
+                                                console.log(purchase,'==========purchase============');
                                                 // const rowClassName = purchase.is_deleted === 'false' ? 'light-blue' : '';
                                                 return <tr key={index} className={purchase.is_deleted ? 'light-blue':''}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>
@@ -135,7 +136,7 @@ const PO_list = () => {
                                                     <td>{purchase.status}</td>
                                                     <td>{purchase.vendor_contact?.name}</td>
                                                     <td className="td-icon-color" >
-                                                        {!purchase.is_deleted && <Roles action='view_purchase_order'>
+                                                        <Roles action='view_purchase_order'>
                                                             {purchase.po_type === 'material' && (
                                                                 <Link href={`/view-po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
                                                             )}
@@ -145,9 +146,9 @@ const PO_list = () => {
                                                             {purchase.po_type === "subcontractor" && (
                                                                 <Link href={`/view_subcontractor_po/${purchase.po_id}`} className="me-1"><EyeFilled /></Link>
                                                             )}
-                                                        </Roles>}
+                                                        </Roles>
 
-                                                        {!purchase.is_deleted &&<Roles action='delete_purchase_order'>
+                                                        {!(purchase.is_deleted || purchase.status === 'approved') &&<Roles action='delete_purchase_order'>
                                                             <Popconfirm
                                                                 title="Are you sure you want to delete this item?"
                                                                 onConfirm={() => handleDelete(purchase.po_id)}

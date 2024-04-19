@@ -128,9 +128,9 @@ const Vendor = ({ base_url }) => {
                                                     <td>{vendor.state}</td>
                                                     
                                                     <td className="td-icon-color">
-                                                    {!vendor.is_deleted &&<Roles action='view_vendor'>
+                                                    <Roles action='view_vendor'>
                                                             <EyeFilled onClick={() => handleIconClick(vendor.vendor_id, index)} />
-                                                        </Roles>}
+                                                        </Roles>
                                                         {!vendor.is_deleted &&<Roles action='delete_vendor'>
                                                             <Popconfirm
                                                                 title="Are you sure you want to delete this item?"
