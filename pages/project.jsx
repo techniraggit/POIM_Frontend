@@ -110,6 +110,7 @@ const Vendor = ({ base_url }) => {
                                     <thead>
                                         <tr id="header-row">
                                             <th className="hedaings-tb">S No.</th>
+                                            <th className="hedaings-tb">Project Number</th>
                                             <th className="hedaings-tb">Project Name</th>
                                             <th className="hedaings-tb">Customer Name</th>
                                             <th className="hedaings-tb">Address</th>
@@ -121,6 +122,7 @@ const Vendor = ({ base_url }) => {
                                             projects.map((project, index) => (
                                                 <tr key={index} className={project.is_deleted ? 'light-blue':''}>
                                                    <td>{calculateStartingSerialNumber() + index}</td>
+                                                   <td>{project.project_no}</td>
                                                     <td>{project.name}</td>
                                                     <td>{project.customer_name}</td>
                                                     <td>{project.sites[0].address}</td>

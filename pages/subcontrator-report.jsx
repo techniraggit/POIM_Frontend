@@ -68,13 +68,14 @@ const SubcontractorReport = () => {
                     <Header heading="Subcontractor Report" />
                     <div class="bottom-wrapp">
                         <ReportHeader />
-                        <Filters fromDate={true} toDate={true} download={true} status={true} applyFilters={applyFilters} currentPage={currentPage} downloadPdf={downloadPdf} />
+                        <Filters fromDate={true} toDate={true} download={true} status={true} project_number={true} applyFilters={applyFilters} currentPage={currentPage} downloadPdf={downloadPdf} />
                         <div class="table-wrap vendor-wrap" id="space-report">
                             <div class="inner-table" id="inner-purchase">
                                 <table id="purcahse-tablewrap" class="table-hover">
                                     <thead>
                                         <tr id="header-row">
                                             <th class="hedaings-tb">S. No</th>
+                                            <th class="hedaings-tb">Project No.</th>
                                             <th class="hedaings-tb">PO No.</th>
                                             <th class="hedaings-tb">PO Amount</th>
                                             <th class="hedaings-tb">CO Approved Amt</th>
@@ -88,6 +89,7 @@ const SubcontractorReport = () => {
                                     </thead>
                                     <tbody>
                                         {poList.map((po, index) => {
+                                            console.log(po,'=============po===============');
                                             return (
                                                 <tr key={index}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>

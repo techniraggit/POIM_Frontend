@@ -49,11 +49,11 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         if ((edit || view) && formData?.project_id) {
             fetchSitesProject(formData.project_id, 0)
         }
-    }, [edit,view,formData.project_id])
+    }, [edit, view, formData.project_id])
 
     useEffect(() => {
         if (formData && formData.created_by && Object.keys(formData.created_by).length > 0) {
-            
+
             form.setFieldValue('first_name', formData.created_by.first_name)
             form.setFieldValue('last_name', formData.created_by.last_name)
         } else {
@@ -97,11 +97,11 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     };
 
     const fetchVendorContactDropdown = (id, reset) => {
-        if(reset) {
+        if (reset) {
             form.setFieldValue('vendor_contact_id', '');
             form.setFieldValue('company_name', '');
             form.setFieldValue('email', '');
-            form.setFieldValue('phone', ''); 
+            form.setFieldValue('phone', '');
             form.setFieldValue('address', '');
             form.setFieldValue('state', '');
             form.setFieldValue('country', '');
@@ -120,7 +120,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             if (res.data?.status) {
                 formData.company_name = res.data.vendors.company.company_name;
                 formData.email = res.data.vendors.email;
-                formData.phone = '+1'+ res.data.vendors.phone_number;
+                formData.phone = '+1' + res.data.vendors.phone_number;
                 formData.address = res.data.vendors.company.address;
                 formData.state = res.data.vendors.company.state;
                 formData.country = res.data.vendors.company.country;
@@ -143,6 +143,15 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     });
 
 
+    const onSearch = (value) => {
+        console.log('search:', value);
+      };
+    const filterOption = (input, option) =>{
+        console.log(input,option,'====input and option========')
+        return True
+    }
+   
+        // (option?.label?? '').toLowerCase().includes(input.toLowerCase())
 
     return (
         <>
@@ -199,7 +208,47 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             <div class="row vendor-rowgap">
                 <div class="col-lg-4 col-md-6">
                     <div class="selectwrap react-select" id="vendor-selector">
-                        <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
+                        <div className={`selectwrap ${view || (edit && formData.status !== 'pending') ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
+                            <Form.Item
+                                label="Vendor"
+                                name="vendor_id"
+                                htmlFor="file"
+                                className="same-clr"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please choose a Vendor",
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    id="single2"
+                                    disabled={view || (edit && formData.status !== 'pending')}
+                                    placeholder="Select"
+                                    className="js-states form-control file-wrap-select"
+                                    showSearch
+                                    // optionFilterProp="children"
+                                    // onSearch={onSearch}
+                                    // filterOption={filterOption}
+                                    // mode="multiple"
+                                    filterOption={(input, option) =>
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }
+                                    onChange={(value) => {
+                                        fetchVendorContactDropdown(value, true)
+                                        onChange('vendor_id', value);
+                                    }}
+                                    onPressEnter={true}
+                                >
+                                    {names.map((entry) => (
+                                        <Select.Option key={entry.vendorId} value={entry.vendorId}>
+                                            {entry.company_name}
+                                        </Select.Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </div>
+                        {/* <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
                             <Form.Item
                                 label="Vendor"
                                 name="vendor_id"
@@ -230,7 +279,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     )}
                                 </Select>
                             </Form.Item>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
@@ -242,6 +291,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 name="vendor_contact_id"
                                 htmlFor="file"
                                 class="same-clr"
+
 
                                 rules={[
                                     {
@@ -255,6 +305,10 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     placeholder="Select"
                                     disabled={view || edit && formData.status !== 'pending'}
                                     class="js-states form-control file-wrap-select"
+                                    mode="multiple"
+                                    filterOption={(input, option) =>
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }
                                     onChange={(value) => {
                                         vendorContactDetails(value);
                                         onChange('vendor_contact_id', value);
@@ -306,7 +360,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input disabled  readOnly={view || edit} onChange={({ target: { value } }) => onChange('email', value)} />
+                            <Input disabled readOnly={view || edit} onChange={({ target: { value } }) => onChange('email', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -323,9 +377,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 },
                             ]}
                         >
-                            <Input disabled 
-                             addonBefore="+1"
-                            readOnly={view || edit} onChange={({ target: { value } }) => onChange('phone', value)} />
+                            <Input disabled
+                                addonBefore="+1"
+                                readOnly={view || edit} onChange={({ target: { value } }) => onChange('phone', value)} />
                         </Form.Item>
                     </div>
                 </div>
@@ -421,7 +475,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                 {(formData.shipment_type === 'project related' || (formData.material_details && formData.material_details?.some(details => details.material_for === 'project'))) && (
                     <div className="col-lg-4 col-md-6">
                         {/* <div class="selectwrap columns-select shipment-caret"> */}
-                    <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  columns-select`}>
+                        <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  columns-select`}>
 
                             <Form.Item
                                 label="Project"
@@ -444,7 +498,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                         formData.material_details.forEach((detail, index) => {
                                             form.setFieldValue('project_site_id' + index, '')
                                         })
-                                        
+
                                         list(value, 0)
                                         onChange('project_id', value)
                                     }}
@@ -454,7 +508,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                             return (
                                                 <Select.Option key={project.project_id} value={project.project_id}
                                                 >
-                                                    {project.name}
+                                                    {project.project_no}
                                                 </Select.Option>
                                             )
                                         })}
@@ -527,25 +581,25 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                     </div>
                 </div>
                 {user.role !== 'admin' && formData.status === 'approved'
-                 && formData.co_amount > 0 
-                 && formData.po_type === 'subcontractor' && view && (
-                    <div className="col-lg-4 col-md-6">
-                        <div className="wrap-box">
-                            <Form.Item
-                                name='co_amount'
-                                label="CO Amount"
-                            >
-                                <Input
-                                    addonBefore="$"
-                                    readOnly
-                                    // value={coAmount}
-                                    // onChange={(e) => setCoAmount(e.target.value)}
-                                    placeholder="CO Amount"
-                                />
-                            </Form.Item>
+                    && formData.co_amount > 0
+                    && formData.po_type === 'subcontractor' && view && (
+                        <div className="col-lg-4 col-md-6">
+                            <div className="wrap-box">
+                                <Form.Item
+                                    name='co_amount'
+                                    label="CO Amount"
+                                >
+                                    <Input
+                                        addonBefore="$"
+                                        readOnly
+                                        // value={coAmount}
+                                        // onChange={(e) => setCoAmount(e.target.value)}
+                                        placeholder="CO Amount"
+                                    />
+                                </Form.Item>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
             </div>
             <div class="linewrap d-flex">
                 <span class="d-block me-2">By Details</span>
