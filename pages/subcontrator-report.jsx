@@ -78,7 +78,8 @@ const SubcontractorReport = () => {
                                             <th class="hedaings-tb">PO No.</th>
                                             <th class="hedaings-tb">PO Amount</th>
                                             <th class="hedaings-tb">CO Approved Amt</th>
-                                            <th class="hedaings-tb">Invoice Received Month - Amt </th>
+                                            <th class="hedaings-tb">Invoice Received Month</th>
+                                            <th class="hedaings-tb">Invoice Received Amount </th>
                                             <th class="hedaings-tb">Total Contract Amt </th>
                                             <th class="hedaings-tb">Total Invoice Amt </th>
                                             <th class="hedaings-tb">Balance</th>
@@ -96,11 +97,8 @@ const SubcontractorReport = () => {
                                                     {/* <td>{po.COApprovedAmt ? po.COApprovedAmt.split('\n').join(' ,').toLocaleString() : '-'}</td>
                                                     <td>{po.InvoiceReceivedMonthAmt ? po.InvoiceReceivedMonthAmt.split('\n').join(' ,').toLocaleString() : '-'}</td> */}
                                                     <td>{po.COApprovedAmt ? po.COApprovedAmt.split('\n').map((amount) => parseFloat(amount).toLocaleString()).join(' ,') || '-' : '-'}</td>
-                                                        <td>{po.InvoiceReceivedMonthAmt ? po.InvoiceReceivedMonthAmt.split('\n').map((amount) => {
-                                                            const splittedAmount = amount.split(' - ');
-                                                            splittedAmount[1] = parseFloat(splittedAmount[1]).toLocaleString();
-                                                            return splittedAmount.join(' - ');
-                                                        }).join(' ,') ||'-' : '-'}</td>
+                                                    <td>{po.InvoiceReceivedMonth ? po.InvoiceReceivedMonth.split('\n').join(' ,') || '-' : '-'}</td>
+                                                    <td>{po.InvoiceReceivedAmount ? po.InvoiceReceivedAmount.split('\n').join(' ,') || '-' : '-'}</td>
                                                     <td>{po.total_contract_amt?.toLocaleString()}</td>
                                                     <td>{po.total_invoice_received_amount?.toLocaleString()}</td>
                                                     <td>{po.balance?.toLocaleString()}</td>
