@@ -66,8 +66,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         >
                             <Input value={formData.contact_info[0]?.phone_number}
                                 onChange={({ target: { value } }) => 
-                                {console.log(value,'========value=============');}
-                                // onChange('contact_info', { phone_number: value }, 0)
+                                onChange('contact_info', { phone_number: value }, 0)
                             }
                                 addonBefore="+1"
                             />

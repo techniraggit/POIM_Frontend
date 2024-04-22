@@ -148,7 +148,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         console.log('search:', value);
       };
     const filterOption = (input, option) =>{
-        console.log(input,option,'====input and option========')
         return True
     }
    

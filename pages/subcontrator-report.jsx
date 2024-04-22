@@ -89,7 +89,6 @@ const SubcontractorReport = () => {
                                     </thead>
                                     <tbody>
                                         {poList.map((po, index) => {
-                                            console.log(po,'=============po===============');
                                             return (
                                                 <tr key={index}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>
