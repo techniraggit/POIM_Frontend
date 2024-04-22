@@ -143,6 +143,15 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     });
 
 
+    const onSearch = (value) => {
+        console.log('search:', value);
+      };
+    const filterOption = (input, option) =>{
+        console.log(input,option,'====input and option========')
+        return True
+    }
+   
+        // (option?.label?? '').toLowerCase().includes(input.toLowerCase())
 
     return (
         <>
@@ -217,7 +226,11 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     disabled={view || (edit && formData.status !== 'pending')}
                                     placeholder="Select"
                                     className="js-states form-control file-wrap-select"
-                                    mode="multiple"
+                                    showSearch
+                                    // optionFilterProp="children"
+                                    // onSearch={onSearch}
+                                    // filterOption={filterOption}
+                                    // mode="multiple"
                                     filterOption={(input, option) =>
                                         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                     }
@@ -225,6 +238,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                         fetchVendorContactDropdown(value, true)
                                         onChange('vendor_id', value);
                                     }}
+                                    onPressEnter={true}
                                 >
                                     {names.map((entry) => (
                                         <Select.Option key={entry.vendorId} value={entry.vendorId}>
@@ -277,10 +291,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                 name="vendor_contact_id"
                                 htmlFor="file"
                                 class="same-clr"
-                                mode="multiple"
-                                    filterOption={(input, option) =>
-                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                    }
+
 
                                 rules={[
                                     {
@@ -294,6 +305,10 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     placeholder="Select"
                                     disabled={view || edit && formData.status !== 'pending'}
                                     class="js-states form-control file-wrap-select"
+                                    mode="multiple"
+                                    filterOption={(input, option) =>
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }
                                     onChange={(value) => {
                                         vendorContactDetails(value);
                                         onChange('vendor_contact_id', value);
