@@ -120,7 +120,6 @@ const PO_list = () => {
                                     <tbody>
                                         {Array.isArray(rows) && rows.length > 0 ? (
                                             rows.map((purchase, index) => {
-                                                console.log(purchase,'==========purchase============');
                                                 // const rowClassName = purchase.is_deleted === 'false' ? 'light-blue' : '';
                                                 return <tr key={index} className={purchase.is_deleted ? 'light-blue':''}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>

@@ -83,6 +83,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
     const fetchSitesProject = (project_id, index) => {
         const response = fetchSiteProject(project_id);
         response.then((res) => {
+            console.log(res.data,'========res==========');
             if (res?.data?.status) {
                 siteOptions[index] = [...res.data.sites];
                 setSiteOptions([...siteOptions]);
@@ -147,7 +148,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         console.log('search:', value);
       };
     const filterOption = (input, option) =>{
-        console.log(input,option,'====input and option========')
         return True
     }
    
@@ -231,9 +231,9 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     // onSearch={onSearch}
                                     // filterOption={filterOption}
                                     // mode="multiple"
-                                    filterOption={(input, option) =>
-                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                    }
+                                    // filterOption={(input, option) =>
+                                    //     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    // }
                                     onChange={(value) => {
                                         fetchVendorContactDropdown(value, true)
                                         onChange('vendor_id', value);
@@ -305,10 +305,10 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     placeholder="Select"
                                     disabled={view || edit && formData.status !== 'pending'}
                                     class="js-states form-control file-wrap-select"
-                                    mode="multiple"
-                                    filterOption={(input, option) =>
-                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                    }
+                                    // mode="multiple"
+                                    // filterOption={(input, option) =>
+                                    //     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    // }
                                     onChange={(value) => {
                                         vendorContactDetails(value);
                                         onChange('vendor_contact_id', value);

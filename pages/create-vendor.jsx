@@ -33,7 +33,7 @@ const CreateVendor = () => {
             ...formData,
             // phone_number: '+1' + formData.contact_info[0].phone_number,
             contact_info: formData.contact_info.map((info) => {
-                if(!info.phone_number.includes('+1')) {
+                if(info.phone_number && !info.phone_number.includes('+1')) {
                     info.phone_number = '+1' + info.phone_number;
                 }
                 return info
