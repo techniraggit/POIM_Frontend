@@ -132,9 +132,8 @@ const Login = ({ base_url }) => {
                 } else {
                 }
             } catch (error) {
-                message.error(error?.response?.data?.message);
+                message.error(error?.response?.data?.message || error?.response?.data?.error_description);
             }
-        } else {
         }
     };
 
