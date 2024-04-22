@@ -55,7 +55,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                           name="phone_number"  // Add a name to link the input to the form values
                           className="vender-input"
                           rules={[
-                            { required: true, message: 'Please enter your contact number!' },
+                            // { required: true, message: 'Please enter your contact number!' },
                             {
                               pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
                               message: 'Please enter a valid 10 digit phone number',
@@ -65,7 +65,10 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         
                         >
                             <Input value={formData.contact_info[0]?.phone_number}
-                                onChange={({ target: { value } }) => onChange('contact_info', { phone_number: value }, 0)}
+                                onChange={({ target: { value } }) => 
+                                {console.log(value,'========value=============');}
+                                // onChange('contact_info', { phone_number: value }, 0)
+                            }
                                 addonBefore="+1"
                             />
                         </Form.Item>
