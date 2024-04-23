@@ -7,11 +7,13 @@ import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
 import { getPoList } from '@/apis/apis/adminApis';
 import Roles from '@/components/Roles';
+import Accordian from '@/components/accordian';
 
 const Dashboard = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState('')
+    const [isOpen, setIsOpen] = useState(false);
     // const [loa]
     useEffect(() => {
         // const response = getPoList();
@@ -64,6 +66,7 @@ const Dashboard = () => {
                                 <span>Create New Roles</span>
                             </li> */}
                         </ul>
+                        {/* <Accordian/> */}
                         <div className="table-wrap">
                             <h5>Purchase Orders</h5>
                             <div className="inner-table">
@@ -79,6 +82,7 @@ const Dashboard = () => {
                                             <th className="hedaings-tb">PO Vendor</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                         {Array.isArray(purchaseOrders) && purchaseOrders.length > 0 ? (
                                             purchaseOrders.map((purchase, index) => (
@@ -86,7 +90,7 @@ const Dashboard = () => {
                                                     <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{purchase.po_number}</td>
                                                     <td className="td-color">{purchase.po_type}</td>
-                                                    <td>{new Date(purchase.created_on).toLocaleDateString('en-US', {
+                                                    <td className=''>{new Date(purchase.created_on).toLocaleDateString('en-US', {
                                                         year: 'numeric',
                                                         month: 'short',
                                                         day: 'numeric',

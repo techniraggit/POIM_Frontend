@@ -7,12 +7,14 @@ import Filters from "@/components/Filters";
 import { saveAs } from "file-saver";
 import { Button, Pagination } from "antd";
 import withAuth from "@/components/PrivateRoute";
+import Accordian from '@/components/accordian';
+import { CloseOutlined } from "@ant-design/icons";
 
 const SubcontractorReport = () => {
     const [poList, setPoList] = useState([]);
     const [count, setCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [isOpen, setIsOpen] = useState(false);
     const getPos = () => {
         const queryString = new URLSearchParams({
             page: currentPage
@@ -62,12 +64,23 @@ const SubcontractorReport = () => {
 
     return (
         <>
+
             <div className="wrapper-main">
                 <Sidebar />
                 <div className="inner-wrapper">
                     <Header heading="Subcontractor Report" />
                     <div class="bottom-wrapp">
                         <ReportHeader />
+                        <div>
+                            <button className="acc-btn" onClick={() => setIsOpen(!isOpen)}>Open PopUp</button>
+                            {isOpen && (
+                                <div className="popup">
+                                    <div  className="acc-icon"><CloseOutlined/></div>
+                                    <h5>This is a Popup</h5>
+                                    <Accordian />
+                                </div>
+                            )}
+                        </div>
                         <Filters fromDate={true} toDate={true} download={true} status={true} project_number={true} applyFilters={applyFilters} currentPage={currentPage} downloadPdf={downloadPdf} />
                         <div class="table-wrap vendor-wrap" id="space-report">
                             <div class="inner-table" id="inner-purchase">
