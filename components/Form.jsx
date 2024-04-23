@@ -418,12 +418,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             label="Phone"
                             name="phone"
                             class="bold-label"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please Enter Phone",
-                                },
-                            ]}
                         >
                             <Input disabled
                                 addonBefore="+1"
