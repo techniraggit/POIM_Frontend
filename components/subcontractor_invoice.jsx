@@ -14,11 +14,14 @@ const Subcontractor_invoice = ({data}) => {
         amount: 0,
         company_name: '',
         vendor_id: '',
+        // original_po_amount: '',
+        co_amount:'',
         vendor_contact_id: '',
         hst_amount: '',
         total_amount: '',
         project_site_id: '',
         company_name: '',
+        status:"",
         country: '',
         state: '',
         address: '',
@@ -43,6 +46,8 @@ const Subcontractor_invoice = ({data}) => {
                 ...formData,
                 po_type: data.po_type,
                 amount: data.total_amount,
+                co_amount:data.co_approved_amount[0]?.amount,
+                status:data.status,
                 subcontractor_type: data.subcontractor_type,
                 company_name: data.vendor_contact.company.company_name,
                 vendor_id: data.vendor_contact.company.vendor_id,
@@ -64,6 +69,7 @@ const Subcontractor_invoice = ({data}) => {
                 }),
                 // material_details: [...data.material_details]
             });
+            form.setFieldValue('co_amount', data.co_approved_amount[0]?.amount.toLocaleString());
             form.setFieldValue('po_type', data.po_type);
             form.setFieldValue('company_name', data.vendor_contact.company.company_name)
             form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
@@ -71,6 +77,7 @@ const Subcontractor_invoice = ({data}) => {
             form.setFieldValue('shipment_type', data.shipment_type);
             form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
             form.setFieldValue('total_amount', data.total_amount.toLocaleString());
+            // form.setFieldValue('status', data.status);
             form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.project_id : data.project);
             form.setFieldValue('poDate', moment(data.po_date));
             form.setFieldValue('country', data.vendor_contact.company.country);
@@ -106,7 +113,6 @@ const Subcontractor_invoice = ({data}) => {
             }
         });
     }
-
     const onChange = (name, value, index) => {
         if (name === 'material_details') {
             let totalAmount = 0;

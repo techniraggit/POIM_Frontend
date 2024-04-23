@@ -28,7 +28,7 @@ const Amendments = ({ history }) => {
                 result = true;
               }
             } else {
-              if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on") {
+              if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on" ) {
                 result = false;
               } else {
                 result = true;
@@ -62,6 +62,7 @@ const Amendments = ({ history }) => {
                 {
                   changes?.map((change) => {
                     return Object.keys(change).map((key) => {
+                      
                       let upperKey = '';
                       if (Array.isArray(change[key][0])) {
 
@@ -85,7 +86,7 @@ const Amendments = ({ history }) => {
                           change[key][1][1] = formattedDate;
                         }
                       } else {
-                        if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on" || change[key][0] === 'material_details') {
+                        if (typeof change[key][0] === 'undefined' || change[key][0] === "updated_on" || change[key][0] === 'material_details'|| change[key][0].includes('vendor_contact_id') || change[key][0].includes('vendor_id')) {
                           return ''
                         }
                         if (change[key][0]?.includes('.')) {

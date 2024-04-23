@@ -93,7 +93,7 @@ const EditProject = () => {
 
     return (
         <>
-            <DynamicTitle title="Add User" />
+            <DynamicTitle title="Edit Project" />
             <div className="wrapper-main kt">
                 <Sidebar />
                 <div className="inner-wrapper">

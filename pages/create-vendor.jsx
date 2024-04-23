@@ -69,7 +69,7 @@ const CreateVendor = () => {
 
     return (
         <>
-            <DynamicTitle title="Add User" />
+            <DynamicTitle title="Add Vendor" />
             <div className="wrapper-main">
                 <Sidebar />
                 <div className="inner-wrapper">
