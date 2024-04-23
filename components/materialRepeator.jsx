@@ -137,7 +137,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                 name="project_site_id0"
                                 htmlFor="file"
                                 class="same-clr"
-                                // disabled={siteOptions[0]?.some(option => option === true)}
+                                disabled={siteOptions[0]?.some(option => option.project_is_deleted === true)}
                                 rules={[
                                     {
                                         required: true,

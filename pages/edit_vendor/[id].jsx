@@ -127,7 +127,7 @@ const VendorEdit = () => {
 
     return (
         <>
-            <DynamicTitle title="Add User" />
+            <DynamicTitle title="Edit vendor" />
             <div className="wrapper-main">
                 <Sidebar />
                 <div className="inner-wrapper">

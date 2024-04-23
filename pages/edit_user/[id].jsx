@@ -87,7 +87,7 @@ const EditUser = ({ base_url }) => {
     };
     return (
         <>
-            <DynamicTitle title="Add User" />
+            <DynamicTitle title="Edit User" />
             <div className="wrapper-main">
                 <Sidebar />
                 <div className="inner-wrapper">

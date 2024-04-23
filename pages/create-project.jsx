@@ -64,7 +64,7 @@ const CreateProject = () => {
 
     return (
         <>
-            <DynamicTitle title="Add User" />
+            <DynamicTitle title="Add Project" />
             <div className="wrapper-main">
                 <Sidebar />
                 <div className="inner-wrapper">
