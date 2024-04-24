@@ -69,6 +69,7 @@ const Subcontractor_invoice = ({data}) => {
                 }),
                 // material_details: [...data.material_details]
             });
+            console.log(data)
             form.setFieldValue('co_amount', data.co_approved_amount[0]?.amount.toLocaleString());
             form.setFieldValue('po_type', data.po_type);
             form.setFieldValue('company_name', data.vendor_contact.company.company_name)
@@ -92,8 +93,8 @@ const Subcontractor_invoice = ({data}) => {
             form.setFieldValue('first_name', data.created_by.first_name)
             form.setFieldValue('last_name', data.created_by.last_name)
             form.setFieldValue('subcontractor_type', data.subcontractor_type);
-            form.setFieldValue('original_po_amount',data.original_amount.toLocaleString());
-            form.setFieldValue('invoice_amount',data.invoice_received_amount);
+            form.setFieldValue('original_po_amount', data.original_amount?.toLocaleString());
+            form.setFieldValue('invoice_amount', data.invoice_received_amount);
             data?.material_details.forEach((material, index) => {
                 form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
                 form.setFieldValue('material_for' + (index), material.material_for)
