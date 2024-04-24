@@ -28,6 +28,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
             }
         })
     }
+    console.log(siteOptions,'==============site==========');
 
     return (
         <div class="row">
@@ -137,7 +138,12 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                 name="project_site_id0"
                                 htmlFor="file"
                                 class="same-clr"
-                                disabled={siteOptions[0]?.some(option => option.project_is_deleted === true)}
+                                disabled={siteOptions[0]?.some(option => 
+                                    // {
+                                    //     console.log(option.project_is_deleted,'=======.project_is_deleted========');
+                                    // }
+                                    option.project_is_deleted === true
+                                )}
                                 rules={[
                                     {
                                         required: true,
