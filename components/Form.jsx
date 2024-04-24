@@ -210,7 +210,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             <div class="row vendor-rowgap">
                 <div class="col-lg-4 col-md-6">
                     <div class="selectwrap react-select" id="vendor-selector">
-                        <Autocomplete
+                        {/* <Autocomplete
                             disablePortal
                             id="combo-box-demo"
                             options={names}
@@ -221,8 +221,8 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             }}
                             getOptionLabel={(option) => option.company_name}
                             renderInput={(params) => <TextField {...params} label="Vendor" />}
-                        />
-                        {/* <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
+                        /> */}
+                        <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
                             <Form.Item
                                 label="Vendor"
                                 name="vendor_id"
@@ -253,7 +253,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     )}
                                 </Select>
                             </Form.Item>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
@@ -344,6 +344,12 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             label="Phone"
                             name="phone"
                             class="bold-label"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please Enter Phone",
+                                },
+                            ]}
                         >
                             <Input disabled
                                 addonBefore="+1"
