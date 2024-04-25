@@ -62,18 +62,16 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
 
     useEffect(() => {
         if (formData && formData.created_by && Object.keys(formData.created_by).length > 0) {
-
             form.setFieldValue('first_name', formData.created_by.first_name)
             form.setFieldValue('last_name', formData.created_by.last_name)
         } else {
             form.setFieldValue('first_name', user.first_name)
             form.setFieldValue('last_name', user.last_name)
         }
-
     }, [user])
 
     useEffect(() => {
-        if (edit) {
+        if (edit && formData.vendor_id) {
             fetchVendorContactDropdown(formData.vendor_id);
         }
     }, [formData.vendor_id, edit])
@@ -199,18 +197,25 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             <div class="row vendor-rowgap">
                 <div class="col-lg-4 col-md-6">
                     <div class="selectwrap react-select" id="vendor-selector">
-                        <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
+                        <div class={`selectwrap ${(view || edit) && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
                             <div className='ns-field-set'>
                                 <SearchDropdown
                                     placeholder="Select"
                                     required={true}
+                                    value={vendors?.reduce((value, vendor) => {
+                                        if(vendor.vendor_id === formData.vendor_id) {
+                                            value = vendor.company_name
+                                        }
+                                        return value
+                                    }, '')}
+                                    disabled={(view || edit) && formData.status !== 'pending'}
                                     filterFunc={filterVendors}
                                     name='vendor_id'
-
                                     form={form}
                                     label="Vendor"
                                     callback={(value) => {
                                         fetchVendorContactDropdown(value, true)
+                                        formData.vendor_contact_id = '';
                                         onChange('vendor_id', value);
                                     }}
                                     data={vendors}
@@ -228,9 +233,15 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     placeholder="Select"
                                     name="vendor_contact_id"
                                     label="Vendor Contact Person"
-
                                     required={true}
+                                    disabled={(view || edit) && formData.status !== 'pending'}
                                     form={form}
+                                    value={contactId.length > 0 ? contactId?.reduce((value, contact) => {
+                                        if(contact.vendor_contact_id === formData.vendor_contact_id) {
+                                            value = contact.name
+                                        }
+                                        return value
+                                    }, '') : ''}
                                     filterFunc={filterVendorContacts}
                                     callback={(value) => {
                                         vendorContactDetails(value);
@@ -386,19 +397,25 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                 {(formData.shipment_type === 'project related' || (formData.material_details && formData.material_details?.some(details => details.material_for === 'project'))) && (
                     <div className="col-lg-4 col-md-6">
                         {/* <div class="selectwrap columns-select shipment-caret"> */}
-                        <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  columns-select`}>
-                        <SearchDropdown
+                        <div class={`selectwrap ${(view || edit) && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  columns-select`}>
+                            <SearchDropdown
                                 name="project_id" 
-                                label="Project" 
-                                disabled={view}
+                                label="Project"
+                                disabled={(view || edit) && formData.status !== 'pending'}
                                 required={true}
                                 form={form}
-                                filterFunc={filterProjects} 
+                                filterFunc={filterProjects}
+                                value={Array.isArray(projects) ? projects.reduce((value, project) => {
+                                    if(formData.project_id === project.project_id) {
+                                        value = project.project_no
+                                    }
+                                    return value
+                                }, '') : ''}
                                 callback={(value) => {
                                     formData.material_details.forEach((detail, index) => {
+                                        formData.material_details[index].project_site_id = '';
                                         form.setFieldValue('project_site_id' + index, '')
                                     })
-
                                     list(value, 0)
                                     onChange('project_id', value)
                                 }}

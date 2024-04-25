@@ -3,12 +3,8 @@ import '../styles/style.css'
 import TextField from '@mui/material/TextField';
 import { Form } from "antd";
 
-<<<<<<< HEAD
-const SearchDropDown = ({ form, label, name, callback, data, filterFunc, getMenuItems, required, placeholder }) => {
-=======
-const SearchDropDown = ({ form, label, name, callback, data, disabled, filterFunc, getMenuItems, required }) => {
->>>>>>> f8ad13d303599eb199e185439504eac42f4bb3bf
-    const [searchValue, setSearchValue] = useState('');
+const SearchDropDown = ({value, form, label, name, callback, data, disabled, filterFunc, getMenuItems, required, placeholder }) => {
+    const [searchValue, setSearchValue] = useState(undefined);
     const [searchResults, setSearchResults] = useState([]);
     const [showResults, setShowResults] = useState(false);
     useEffect(() => {
@@ -24,14 +20,11 @@ const SearchDropDown = ({ form, label, name, callback, data, disabled, filterFun
     const hideResults = () => {
         setShowResults(false);
     };
-
     return (
         <>
             <Form.Item
                 label={label}
                 name={name}
-                disabled={disabled}
-               
                 rules={required ? [
                     ({ getFieldValue }) => ({
                         validator(_, value) {
@@ -46,12 +39,14 @@ const SearchDropDown = ({ form, label, name, callback, data, disabled, filterFun
                 <TextField
                     placeholder={placeholder}
                     id="search"
-                    value={searchValue}
+                    autoComplete={false}
+                    disabled={disabled || false}
+                    value={typeof searchValue === 'undefined' ? value : searchValue}
                     onFocus={() => setShowResults(true)}
                     onBlur={() => setTimeout(() => hideResults(), 200)}
                     onChange={(e) => {
                         onSearch(e.target.value);
-                        form.setFieldsValue({ [name]: e.target.value ? null : form.getFieldValue(name) });
+                        form.setFieldsValue({ [name]: e.target.value ? e.target.value : form.getFieldValue(name) });
                     }}
                 />
                 <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
@@ -60,9 +55,7 @@ const SearchDropDown = ({ form, label, name, callback, data, disabled, filterFun
                     ))}
                 </div>
             </Form.Item>
-
         </>
     )
-
 }
 export default React.memo(SearchDropDown);

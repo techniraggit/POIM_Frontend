@@ -64,7 +64,6 @@ const SubcontractorReport = () => {
 
     return (
         <>
-
             <div className="wrapper-main">
                 <Sidebar />
                 <div className="inner-wrapper">
@@ -72,14 +71,14 @@ const SubcontractorReport = () => {
                     <div class="bottom-wrapp">
                         <ReportHeader />
                         <div>
-                            <button className="acc-btn" onClick={() => setIsOpen(!isOpen)}>Open PopUp</button>
-                            {isOpen && (
+                            {/* <button className="acc-btn" onClick={() => setIsOpen(!isOpen)}>Open PopUp</button> */}
+                            {/* {isOpen && (
                                 <div className="popup">
                                     <div  className="acc-icon"><CloseOutlined/></div>
                                     <h5>This is a Popup</h5>
                                     <Accordian />
                                 </div>
-                            )}
+                            )} */}
                         </div>
                         <Filters fromDate={true} toDate={true} download={true} status={true} project_number={true} applyFilters={applyFilters} currentPage={currentPage} downloadPdf={downloadPdf} />
                         <div class="table-wrap vendor-wrap" id="space-report">

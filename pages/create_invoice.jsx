@@ -192,7 +192,6 @@ const CreateInvoice = () => {
                                                     data={poNumber}
                                                     getMenuItems={getInvoivePOMenuItem}
                                                 />
-                                                
                                             </div>
                                         </div>
                                     </div>

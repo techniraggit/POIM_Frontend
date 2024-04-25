@@ -2,25 +2,12 @@ import MenuItem from '@mui/material/MenuItem';
 
 export const filterVendors = (vendors, searchValue) => {
     return vendors.filter(vendor =>
-        vendor.company_name.toLowerCase().includes(searchValue.toLowerCase())
+        vendor.company_name.toLowerCase().includes(searchValue?.toLowerCase())
     );
 }
 
 export const getVendorMenuItem = (vendor, callback, setSearchValue, hideResults) => {
     return <MenuItem
-<<<<<<< HEAD
-    placeholder="nitin"
-                key={vendor.vendor_id}
-                value={vendor.vendor_id}
-                onClick={() => {
-                    callback(vendor.vendor_id)
-                    setSearchValue(vendor.company_name);
-                    hideResults();
-                }}
-            >
-                {vendor.company_name}
-        </MenuItem>
-=======
         key={vendor.vendor_id}
         value={vendor.vendor_id}
         onClick={() => {
@@ -31,12 +18,13 @@ export const getVendorMenuItem = (vendor, callback, setSearchValue, hideResults)
     >
         {vendor.company_name}
     </MenuItem>
->>>>>>> f8ad13d303599eb199e185439504eac42f4bb3bf
 }
 
 export const filterVendorContacts = (contacts, searchValue) => {
+    console.log(contacts)
+
     return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(searchValue.toLowerCase())
+        contact.name.toLowerCase().includes(searchValue?.toLowerCase())
     );
 }
 
@@ -81,31 +69,31 @@ export const getProjectMenuItem = (project, callback, setSearchValue, hideResult
     </MenuItem>
 }
 
-// export const filterSites = (siteOptions, searchValue) => {
-//     return siteOptions.filter(site =>
-//         site.address.toLowerCase().includes(searchValue.toLowerCase())
-//     );
-// }
+export const filterSites = (siteOptions, searchValue) => {
+    return siteOptions.filter(site =>
+        site.address.toLowerCase().includes(searchValue?.toLowerCase())
+    );
+}
 
-// export const getSiteMenuItem = (site, callback, setSearchValue, hideResults) => {
-//     return <MenuItem
-//         key={site.site_id}
-//         value={site.site_id}
-//         onClick={() => {
-//             callback(site.site_id)
-//             setSearchValue(site.address);
-//             hideResults();
-//         }}
-//     >
-//         {site.address}
-//     </MenuItem>
-// }
+export const getSiteMenuItem = (site, callback, setSearchValue, hideResults) => {
+    return <MenuItem
+        key={site.site_id}
+        value={site.site_id}
+        onClick={() => {
+            callback(site.site_id)
+            setSearchValue(site.address);
+            hideResults();
+        }}
+    >
+        {site.address}
+    </MenuItem>
+}
 
 export const filterInvoicePO = (poNumber, searchValue) => {
     return poNumber.filter(po =>{
-        if (po && po.po_number) {
+        if (po.po_number) {
             const projectNoString = String(po.po_number);
-            return projectNoString.toLowerCase().includes(searchValue.toLowerCase());
+            return projectNoString.toLowerCase().includes(searchValue?.toLowerCase());
         } else {
             console.error("Invalid project or project_no:", project);
             return false;
