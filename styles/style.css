@@ -4219,6 +4219,30 @@ input#amount1 {
 }
 
 /* 08-03-2023 */
+/* 25-04-2024 */
+.ns-field-set 
+ fieldset.MuiOutlinedInput-notchedOutline.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    top: 0;
+    height: 30px;
+    border: none;
+}
+.ns-field-set fieldset.MuiOutlinedInput-notchedOutline.css-1d3z3hw-MuiOutlinedInput-notchedOutline  legend.css-ihdtdm {
+    border: none !important;
+    margin-bottom: 0px !important;
+}
+.ns-field-set .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    border: 1px solid #d9d9d9 !important;
+    opacity: 1;
+    visibility: visible;
+    border-radius: 33px;
+    min-width: 100% !important;
+    padding: 6px 12px !important;
+    height: 32px !important;
+}
+.ant-form-item .ant-form-item-label >label {
+    height: unset !important;
+}
+/* 25-04-2024*/
 /* responsive */
 @media (max-width: 1599px) {
     .Purchase-form {

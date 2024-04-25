@@ -103,7 +103,7 @@ const SubcontractorReport = () => {
                                     <tbody>
                                         {poList.map((po, index) => {
                                             return (
-                                                <tr key={index}>
+                                                <tr key={index} className={po.is_deleted ? 'light-blue':''}>
                                                     <td>{calculateStartingSerialNumber() + index}</td>
                                                     <td>{po.project_number}</td>
                                                     <td>{po.po_number}</td>
