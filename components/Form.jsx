@@ -11,8 +11,10 @@ import { useGlobalContext } from "@/app/Context/UserContext";
 import dayjs from "dayjs";
 import SearchDropdown from "./SearchDropdown";
 import { 
+    filterProjects,
     filterVendorContacts, 
     filterVendors, 
+    getProjectMenuItem, 
     getVendorContactMenuItem, 
     getVendorMenuItem 
 } from "@/utility/filters";
@@ -200,6 +202,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                         <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
                                 <SearchDropdown
                                     required={true} 
+                                    disabled={view || (edit && formData.status !== 'pending')}
                                     filterFunc={filterVendors} 
                                     name='vendor_id' 
                                     form={form} 
@@ -220,6 +223,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                             <SearchDropdown
                                 name="vendor_contact_id" 
                                 label="Vendor Contact Person" 
+                                disabled={view || edit && formData.status !== 'pending'}
                                 required={true}
                                 form={form}
                                 filterFunc={filterVendorContacts} 
@@ -376,44 +380,24 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                     <div className="col-lg-4 col-md-6">
                         {/* <div class="selectwrap columns-select shipment-caret"> */}
                         <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  columns-select`}>
+                        <SearchDropdown
+                                name="project_id" 
+                                label="Project" 
+                                disabled={view}
+                                required={true}
+                                form={form}
+                                filterFunc={filterProjects} 
+                                callback={(value) => {
+                                    formData.material_details.forEach((detail, index) => {
+                                        form.setFieldValue('project_site_id' + index, '')
+                                    })
 
-                            <Form.Item
-                                label="Project"
-                                name="project_id"
-                                for="file"
-                                class="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose Project",
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    disabled={view}
-                                    id="single456"
-                                    class="js-states form-control file-wrap-select"
-                                    onChange={(value) => {
-                                        // form.setFieldValue(`project_site_id${index + 1}`,'')
-                                        formData.material_details.forEach((detail, index) => {
-                                            form.setFieldValue('project_site_id' + index, '')
-                                        })
-
-                                        list(value, 0)
-                                        onChange('project_id', value)
-                                    }}
-                                >
-                                    {Array.isArray(projects) &&
-                                        projects.map((project) => {
-                                            return (
-                                                <Select.Option key={project.project_id} value={project.project_id}
-                                                >
-                                                    {project.project_no}
-                                                </Select.Option>
-                                            )
-                                        })}
-                                </Select>
-                            </Form.Item>
+                                    list(value, 0)
+                                    onChange('project_id', value)
+                                }}
+                                data={projects}
+                                getMenuItems={getProjectMenuItem}
+                            />
                         </div>
                     </div>
                 )}

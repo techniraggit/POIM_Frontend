@@ -69,7 +69,6 @@ const Subcontractor_invoice = ({data}) => {
                 }),
                 // material_details: [...data.material_details]
             });
-            console.log(data)
             form.setFieldValue('co_amount', data.co_approved_amount[0]?.amount.toLocaleString());
             form.setFieldValue('po_type', data.po_type);
             form.setFieldValue('company_name', data.vendor_contact.company.company_name)
