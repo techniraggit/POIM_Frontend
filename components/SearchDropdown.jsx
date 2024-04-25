@@ -3,7 +3,11 @@ import '../styles/style.css'
 import TextField from '@mui/material/TextField';
 import { Form } from "antd";
 
+<<<<<<< HEAD
 const SearchDropDown = ({ form, label, name, callback, data, filterFunc, getMenuItems, required, placeholder }) => {
+=======
+const SearchDropDown = ({ form, label, name, callback, data, disabled, filterFunc, getMenuItems, required }) => {
+>>>>>>> f8ad13d303599eb199e185439504eac42f4bb3bf
     const [searchValue, setSearchValue] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [showResults, setShowResults] = useState(false);
@@ -26,6 +30,8 @@ const SearchDropDown = ({ form, label, name, callback, data, filterFunc, getMenu
             <Form.Item
                 label={label}
                 name={name}
+                disabled={disabled}
+               
                 rules={required ? [
                     ({ getFieldValue }) => ({
                         validator(_, value) {

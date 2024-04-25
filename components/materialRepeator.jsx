@@ -3,6 +3,8 @@ import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Select, Button, Space, message } from "antd";
 import { updatematerialPo } from "@/apis/apis/adminApis";
+import { filterSites, getSiteMenuItem } from "@/utility/filters";
+import SearchDropdown from "./SearchDropdown";
 
 const repeatorData = {
     quantity: '',
@@ -131,8 +133,21 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 {(formData.shipment_type === 'project related') && (
                     <div class="col-md-6 col-lg-4">
                         <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+                        <SearchDropdown
+                                name="project_site_id0" 
+                                label="Select Site" 
+                                required={true}
+                                form={form}
+                                disabled={siteOptions[0]?.some(option => option.project_is_deleted === true)}
+                                filterFunc={filterSites} 
+                                callback={(value) => {
+                                    onChange('material_details', { project_site_id: value }, 0)
+                                }}
+                                data={siteOptions}
+                                getMenuItems={getSiteMenuItem}
+                                />
 
-                            <Form.Item
+                            {/* <Form.Item
                                 label="Select Site"
                                 name="project_site_id0"
                                 htmlFor="file"
@@ -145,7 +160,8 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                     },
                                 ]}
                             >
-                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
+                                <Select disabled={view} id="singlesa" 
+                                onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
                                     {Array.isArray(siteOptions[0]) &&
                                         siteOptions[0].map((site) => (
                                             <Select.Option key={site.site_id} value={site.site_id}>
@@ -154,7 +170,7 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                         )
                                         )}
                                 </Select>
-                            </Form.Item>
+                            </Form.Item> */}
                         </div>
                     </div>
                 )}
