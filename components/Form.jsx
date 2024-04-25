@@ -9,8 +9,13 @@ import RentalRepeator from "./rentalRepeator";
 import MaterialRepeator from "./materialRepeator";
 import { useGlobalContext } from "@/app/Context/UserContext";
 import dayjs from "dayjs";
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import SearchDropdown from "./SearchDropdown";
+import { 
+    filterVendorContacts, 
+    filterVendors, 
+    getVendorContactMenuItem, 
+    getVendorMenuItem 
+} from "@/utility/filters";
 
 const { Option } = Select;
 
@@ -137,26 +142,6 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
         })
     }
 
-    
-
-
-    const onSearch = (value) => {
-        console.log('search:', value);
-    };
-
-
-    const filterOption = (input, option) =>
-        (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
-
-
-        const names = vendors?.map((vendor) => {
-            return {
-                vendorId: vendor.vendor_id,
-                company_name: vendor.company_name,
-            };
-        });
-
-
     return (
         <>
             <div class="order-choose d-flex">
@@ -212,166 +197,39 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
             <div class="row vendor-rowgap">
                 <div class="col-lg-4 col-md-6">
                     <div class="selectwrap react-select" id="vendor-selector">
-                        {/* <Autocomplete
-                            disablePortal
-                            id="combo-box-demo"
-                            options={names || []}
-                            sx={{ width: 300 }}
-                            onChange={(value) => {
-                                fetchVendorContactDropdown(value, true)
-                                onChange('vendor_id', value);
-                            }}
-                            getOptionLabel={(option) => option.company_name}
-                            renderInput={(params) => <TextField {...params} label="Vendor" />}
-                        /> */}
-                        
-                        {/* <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
-                            <Form.Item
-                                label="Vendor"
-                                name="vendor_id"
-                                for="file"
-                                class="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose Vendor",
-                                    },
-                                ]}
-                            >
-                                <datalist
-                                    id="single2"
-                                    disabled={view || edit && formData.status !== 'pending'}
-                                    placeholder="Select"
-                                    className="js-states form-control file-wrap-select"
-                                    onChange={(value) => {
-                                        fetchVendorContactDropdown(value, true)
-                                        onChange('vendor_id', value);
-                                    }}
-                                >
-                                    {names.map((entry) => (
-                                        <option key={entry.vendorId} value={entry.vendorId}>
-                                            {entry.company_name}
-                                        </option>
-                                    )
-                                    )}
-                                </datalist>
-                            </Form.Item>
-                        </div>  */}
-                        {/* <div className={`selectwrap ${view || (edit && formData.status !== 'pending') ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
-                            <Form.Item
-                                label="Vendor"
-                                name="vendor_id"
-                                htmlFor="file"
-                                className="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose a Vendor",
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    id="single2"
-                                    disabled={view || (edit && formData.status !== 'pending')}
-                                    placeholder="Select"
-                                    className="js-states form-control file-wrap-select"
-                                    showSearch
-                                    optionFilterProp="children"
-                                    onSearch={onSearch}
-                                    filterOption={filterOption}
-                                    onChange={(value) => {
-                                        fetchVendorContactDropdown(value, true)
-                                        onChange('vendor_id', value);
-                                    }}
-                                // onPressEnter={() => {
-                                //     fetchVendorContactDropdown(value, true);
-                                //     onChange('vendor_id', value);
-                                // }}
-                                >
-                                    {names.map((entry) => (
-                                        <Select.Option key={entry.vendorId} value={entry.vendorId}>
-                                            {entry.company_name}
-                                        </Select.Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </div> */}
                         <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
-                            <Form.Item
-                                label="Vendor"
-                                name="vendor_id"
-                                for="file"
-                                class="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose Vendor",
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    id="single2"
-                                    disabled={view || edit && formData.status !== 'pending'}
-                                    placeholder="Select"
-                                    className="js-states form-control file-wrap-select"
-                                    onChange={(value) => {
+                                <SearchDropdown
+                                    required={true} 
+                                    filterFunc={filterVendors} 
+                                    name='vendor_id' 
+                                    form={form} 
+                                    label="Vendor" 
+                                    callback={(value) => {
                                         fetchVendorContactDropdown(value, true)
                                         onChange('vendor_id', value);
                                     }}
-                                >
-                                    {names.map((entry) => (
-                                        <Select.Option key={entry.vendorId} value={entry.vendorId}>
-                                            {entry.company_name}
-                                        </Select.Option>
-                                    )
-                                    )}
-                                </Select>
-                            </Form.Item>
+                                    data={vendors} 
+                                    getMenuItems={getVendorMenuItem}  
+                                />
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="selectwrap react-select" id="vendor-selector">
                         <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
-
-                            <Form.Item
-                                label="Vendor Contact Person"
-                                name="vendor_contact_id"
-                                htmlFor="file"
-                                class="same-clr"
-
-
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose vendor contact person",
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    id="singlesa"
-                                    placeholder="Select"
-                                    disabled={view || edit && formData.status !== 'pending'}
-                                    class="js-states form-control file-wrap-select"
-                                    // mode="multiple"
-                                    // filterOption={(input, option) =>
-                                    //     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                    // }
-                                    onChange={(value) => {
-                                        vendorContactDetails(value);
-                                        onChange('vendor_contact_id', value);
-                                    }}
-                                >
-                                    {contactId.length > 0 &&
-                                        contactId.map((contact) => (
-                                            <Select.Option key={contact.vendor_contact_id} value={contact.vendor_contact_id}>
-                                                {contact.name}
-                                            </Select.Option>
-                                        ))
-                                    }
-                                </Select>
-
-                            </Form.Item>
+                            <SearchDropdown
+                                name="vendor_contact_id" 
+                                label="Vendor Contact Person" 
+                                required={true}
+                                form={form}
+                                filterFunc={filterVendorContacts} 
+                                callback={(value) => {
+                                    vendorContactDetails(value);
+                                    onChange('vendor_contact_id', value);
+                                }}
+                                data={contactId.length > 0 ? contactId : []}
+                                getMenuItems={getVendorContactMenuItem}
+                            />
                         </div>
                     </div>
                 </div>
