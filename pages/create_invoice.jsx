@@ -180,18 +180,20 @@ const CreateInvoice = () => {
 
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap  shipment-caret invoice-select aligned-text">
-                                                <SearchDropdown
-                                                    name="po_number"
-                                                    label="Choose PO Number"
-                                                    required={true}
-                                                    form={form}
-                                                    filterFunc={filterInvoicePO}
-                                                    callback={(value) => {
-                                                        fetchPoNumber(value)
-                                                    }}
-                                                    data={poNumber}
-                                                    getMenuItems={getInvoivePOMenuItem}
-                                                />
+                                                <div className="ns-field-set ">
+                                                    <SearchDropdown
+                                                        name="po_number"
+                                                        label="Choose PO Number"
+                                                        required={true}
+                                                        form={form}
+                                                        filterFunc={filterInvoicePO}
+                                                        callback={(value) => {
+                                                            fetchPoNumber(value)
+                                                        }}
+                                                        data={poNumber}
+                                                        getMenuItems={getInvoivePOMenuItem}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

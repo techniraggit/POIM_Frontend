@@ -38,7 +38,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
         }
     };
 
-    const handleEndDateChange = (value,index) => {
+    const handleEndDateChange = (value, index) => {
         onChange('material_details', { end_date: value }, 0);
         if (formData.material_details[0]?.start_date && value < formData.material_details[0]?.start_date) {
             setEndDateError({
@@ -118,15 +118,15 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 },
                             ]}
                         >
-                            <Input readOnly={view} 
-                            onChange={({ target: { value } }) => handleEndDateChange(value, 0)}
-                             type="date"></Input>
+                            <Input readOnly={view}
+                                onChange={({ target: { value } }) => handleEndDateChange(value, 0)}
+                                type="date"></Input>
                         </Form.Item>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div className="wrap-box no-number-rental">
- 
+
                         <Form.Item
                             label="Amount"
                             name="amount0"
@@ -154,35 +154,33 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     onChange('material_details', { amount: (value || 0) }, 0);
                                 }}
                             />
-                        </Form.Item> 
-
-
+                        </Form.Item>
                     </div>
                 </div>
                 {formData.shipment_type === 'project related' && (
                     <div class="col-lg-4 col-md-6">
                         {/* <div className="selectwrap columns-select shipment-caret "> */}
                         <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
-                            <SearchDropdown
-                                name="project_site_id0" 
-                                label="Select Site" 
-                                placeholder="Select Site"
-                                required={true}
-                                form={form}
-                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
-                                    if(site.site_id == formData.material_details[0]?.project_site?.site_id) {
-                                        value = formData.material_details[0]?.project_site?.address
-                                    }
-                                    return value
-                                }, '') : ''}
-                                disabled={view || siteOptions[0]?.some(option => option.project_is_deleted === true)}
-                                filterFunc={filterSites} 
-                                callback={(value) => {
-                                    onChange('material_details', { project_site_id: value }, 0)
-                                }}
-                                data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
-                                getMenuItems={getSiteMenuItem}
-                            />
+                                <SearchDropdown
+                                    name="project_site_id0"
+                                    label="Select Site"
+                                    placeholder="Select Site"
+                                    required={true}
+                                    form={form}
+                                    value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                        if (site.site_id == formData.material_details[0]?.project_site?.site_id) {
+                                            value = formData.material_details[0]?.project_site?.address
+                                        }
+                                        return value
+                                    }, '') : ''}
+                                    disabled={view || siteOptions[0]?.some(option => option.project_is_deleted === true)}
+                                    filterFunc={filterSites}
+                                    callback={(value) => {
+                                        onChange('material_details', { project_site_id: value }, 0)
+                                    }}
+                                    data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
+                                    getMenuItems={getSiteMenuItem}
+                                />
                         </div>
                     </div>
                 )}
@@ -318,18 +316,18 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                         <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
                                                             <SearchDropdown
                                                                 name={`project_site_id${index + 1}`}
-                                                                label="Select Site" 
+                                                                label="Select Site"
                                                                 placeholder="Select Site"
                                                                 required={true}
                                                                 form={form}
                                                                 value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
-                                                                    if(site.site_id == formData.material_details[index + 1]?.project_site?.site_id) {
+                                                                    if (site.site_id == formData.material_details[index + 1]?.project_site?.site_id) {
                                                                         value = formData.material_details[index + 1]?.project_site?.address
                                                                     }
                                                                     return value
                                                                 }, '') : ''}
                                                                 disabled={view || siteOptions[0]?.some(option => option.project_is_deleted === true)}
-                                                                filterFunc={filterSites} 
+                                                                filterFunc={filterSites}
                                                                 callback={(value) => {
                                                                     onChange('material_details', { [key]: value }, index + 1)
                                                                 }}

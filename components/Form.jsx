@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { Form, Input, Select, DatePicker } from "antd";
+import CaretDownOutlined from "@ant-design/icons"
 import { fetchProjects, fetchSiteProject, fetchVendorContact, fetchVendorContacts, getVendorDetails } from "@/apis/apis/adminApis";
 import moment from "moment";
 import SubcontractorRepeator from "./SubcontractorRepeator";
@@ -10,13 +11,13 @@ import MaterialRepeator from "./materialRepeator";
 import { useGlobalContext } from "@/app/Context/UserContext";
 import dayjs from "dayjs";
 import SearchDropdown from "./SearchDropdown";
-import { 
+import {
     filterProjects,
-    filterVendorContacts, 
-    filterVendors, 
-    getProjectMenuItem, 
-    getVendorContactMenuItem, 
-    getVendorMenuItem 
+    filterVendorContacts,
+    filterVendors,
+    getProjectMenuItem,
+    getVendorContactMenuItem,
+    getVendorMenuItem
 } from "@/utility/filters";
 
 const { Option } = Select;
@@ -198,12 +199,12 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                 <div class="col-lg-4 col-md-6">
                     <div class="selectwrap react-select" id="vendor-selector">
                         <div class={`selectwrap ${(view || edit) && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
-                            <div className='ns-field-set'>
+                            <div className='ns-field-set' id="nk-wrapper-id">
                                 <SearchDropdown
                                     placeholder="Select"
                                     required={true}
                                     value={vendors?.reduce((value, vendor) => {
-                                        if(vendor.vendor_id === formData.vendor_id) {
+                                        if (vendor.vendor_id === formData.vendor_id) {
                                             value = vendor.company_name
                                         }
                                         return value
@@ -226,7 +227,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <div className="ns-field-set">
+                    <div className="ns-field-set" id="nk-wrapper-id">
                         <div class="selectwrap react-select" id="vendor-selector">
                             <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret select-site aligned-text`}>
                                 <SearchDropdown
@@ -237,7 +238,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     disabled={(view || edit) && formData.status !== 'pending'}
                                     form={form}
                                     value={contactId.length > 0 ? contactId?.reduce((value, contact) => {
-                                        if(contact.vendor_contact_id === formData.vendor_contact_id) {
+                                        if (contact.vendor_contact_id === formData.vendor_contact_id) {
                                             value = contact.name
                                         }
                                         return value
@@ -250,6 +251,7 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                                     data={contactId.length > 0 ? contactId : []}
                                     getMenuItems={getVendorContactMenuItem}
                                 />
+                                      {/* <CaretDownOutlined className="nnnn"/> */}
                             </div>
                         </div>
                     </div>
@@ -398,30 +400,34 @@ function PoForm({ onChange, formData, form, isNew, setFormData, edit, calculateA
                     <div className="col-lg-4 col-md-6">
                         {/* <div class="selectwrap columns-select shipment-caret"> */}
                         <div class={`selectwrap ${(view || edit) && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret  columns-select`}>
-                            <SearchDropdown
-                                name="project_id" 
-                                label="Project"
-                                disabled={(view || edit) && formData.status !== 'pending'}
-                                required={true}
-                                form={form}
-                                filterFunc={filterProjects}
-                                value={Array.isArray(projects) ? projects.reduce((value, project) => {
-                                    if(formData.project_id === project.project_id) {
-                                        value = project.project_no
-                                    }
-                                    return value
-                                }, '') : ''}
-                                callback={(value) => {
-                                    formData.material_details.forEach((detail, index) => {
-                                        formData.material_details[index].project_site_id = '';
-                                        form.setFieldValue('project_site_id' + index, '')
-                                    })
-                                    list(value, 0)
-                                    onChange('project_id', value)
-                                }}
-                                data={projects}
-                                getMenuItems={getProjectMenuItem}
-                            />
+                            <div className="ns-field-set ">
+                                <SearchDropdown
+                                // placeholder={}
+                                    name="project_id"
+                                    label="Project"
+                                    disabled={(view || edit) && formData.status !== 'pending'}
+                                    required={true}
+                                    form={form}
+                                    filterFunc={filterProjects}
+                                    value={Array.isArray(projects) ? projects.reduce((value, project) => {
+                                        if (formData.project_id === project.project_id) {
+                                            value = project.project_no
+                                        }
+                                        return value
+                                    }, '') : ''}
+                                    callback={(value) => {
+                                        formData.material_details.forEach((detail, index) => {
+                                            formData.material_details[index].project_site_id = '';
+                                            form.setFieldValue('project_site_id' + index, '')
+                                        })
+                                        list(value, 0)
+                                        onChange('project_id', value)
+                                    }}
+                                    data={projects}
+                                    getMenuItems={getProjectMenuItem}
+                                />
+                                <CaretDownOutlined />
+                            </div>
                         </div>
                     </div>
                 )}

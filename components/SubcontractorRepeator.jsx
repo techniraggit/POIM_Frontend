@@ -96,6 +96,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                     <div class="col-sm-4">
                         {/* <div className="selectwrap columns-select shipment-caret "> */}
                         <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret columns-select`}>
+                        <div className="ns-field-set ">
                             <SearchDropdown
                                 name="project_site_id0" 
                                 label="Select Site" 
@@ -117,6 +118,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
                                 getMenuItems={getSiteMenuItem}
                             />
+                            </div>
                         </div>
                     </div>
                 )}

@@ -1076,6 +1076,9 @@ input:focus {
     outline: none;
     box-shadow: none !important;
 }
+.nnnn{
+    color: black !important;
+}
 
 .left-wrap input::placeholder {
     color: #112F5C;
@@ -1386,7 +1389,7 @@ li.react-icon {
 }
 
 .react-select .ant-col label.ant-form-item-required {
-    color: #112F5C !important;
+    color: rgb(17, 47, 92, 0.5) !important;
     font-weight: 600 !important;
 }
 
@@ -1693,7 +1696,7 @@ button.ant-btn.ant-btn-dashed.add-more-btn:hover {
 }
 
 .react-select .ant-form-item-label>label {
-    color: #112F5C !important;
+    color: rgb(17, 47, 92, 0.5) !important;
     font-weight: 600 !important;
 }
 
@@ -2791,10 +2794,18 @@ ul.list-icons.text-list-icons li:nth-child(5) span.text-size {
     position: absolute;
     transform: translateY(-50%);
     top: 50%;
+    font-size: 13px !important;
     left: 14px;
+    color: #112F5C !important;
     background-color: #fff !important;
     z-index: 1;
     width: 100px;
+}
+div#nk-wrapper-id 
+ .MuiInputBase-root 
+ input.MuiInputBase-input::placeholder {
+    color: #112F5C !important;
+    font-weight: 400;
 }
 
 .date-wrapp {
