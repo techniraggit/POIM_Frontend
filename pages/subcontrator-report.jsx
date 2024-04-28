@@ -18,6 +18,8 @@ const SubcontractorReport = () => {
   const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
+  const [amountData, setAmountData] = useState({});
+
   const getPos = () => {
     const queryString = new URLSearchParams({
       page: currentPage,
@@ -123,21 +125,10 @@ const SubcontractorReport = () => {
                           </td>
                           <td style={{
                             cursor: 'pointer'
-                          }}><span onClick={() => setIsOpen(true)}>View Report</span></td>
-                          {/* <td>
-                            {po.InvoiceReceivedMonth
-                              ? po.InvoiceReceivedMonth.split("\n").join(
-                                  " ,"
-                                ) || "-"
-                              : "-"}
-                          </td> */}
-                          {/* <td>
-                            {po.InvoiceReceivedAmount
-                              ? po.InvoiceReceivedAmount.split("\n").join(
-                                  " ,"
-                                ) || "-"
-                              : "-"}
-                          </td> */}
+                          }}><span onClick={() => {
+                            setIsOpen(true);
+                            setAmountData({...po.invoice_recieved_amount});
+                          }}>View Report</span></td>
                           <td>{po.total_contract_amt?.toLocaleString()}</td>
                           <td>
                             {po.total_invoice_received_amount?.toLocaleString()}
@@ -196,7 +187,7 @@ const SubcontractorReport = () => {
               <div className="popup">
                   <div  className="acc-icon"><CloseOutlined onClick={() => setIsOpen(false)}/></div>
                   <h5>Invoice Report</h5>
-                  <Accordian />
+                  <Accordian amounts={amountData} />
               </div>
           )}
       </div>

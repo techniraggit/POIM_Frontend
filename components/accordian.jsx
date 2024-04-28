@@ -1,38 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import { Collapse } from "antd";
+import dayjs from "dayjs";
 
-const App = () => {
-  const [expandIconPosition, setExpandIconPosition] = useState("start");
-  const onPositionChange = (newExpandIconPosition) => {
-    setExpandIconPosition(newExpandIconPosition);
-  };
+const Accordian = ({ amounts }) => {
+  const expandIconPosition = "start";
 
-  const onChange = (key) => {
-    console.log(key);
-  };
-
-  const items = [
-    {
-      key: "1",
-      label: "Accordian",
-      children: (
-        <div className="displayflex-table">
-          <div>23-apr-2024</div>
-          <div className="border-amount">$2000</div>
-        </div>
-      ),
-    },
-  ];
+  const items = Object.keys(amounts || {}).map((key) => {
+    console.log(amounts[key])
+    return {
+      key: key, label: key, children: (
+        <>
+          {amounts[key].map((amount) => {
+            return(<>
+              <div className="displayflex-table">
+                <div>{dayjs(amount.datetime).format('DD-MM-YYYY HH:MM:ss')}</div>
+                <div className="border-amount">${amount.amount}</div>
+              </div>
+            </>)
+          })}
+        </>
+      )
+    }
+  })
 
   return (
     <>
       <Collapse
         defaultActiveKey={[]}
-        onChange={onChange}
         expandIconPosition={expandIconPosition}
         items={items}
       />
     </>
   );
 };
-export default App;
+export default React.memo(Accordian);
