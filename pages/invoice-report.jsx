@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { saveAs } from "file-saver";
 import ReportHeader from "@/components/ReportHeader";
 import Filters from "@/components/Filters";
+import dayjs from "dayjs";
 
 const invoiceReport = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,7 +37,7 @@ const invoiceReport = () => {
     const response = invoiceReportPdf(queryString);
     response.then((res) => {
       if (res.data) {
-        const fileName = `invoice-report.xlsx`;
+        const fileName = `invoice-report-${dayjs().format('DD-mm-YYYY')}.xlsx`;
         saveAs(res.data, fileName);
       }
     });

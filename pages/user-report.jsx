@@ -11,6 +11,7 @@ import ReportHeader from "@/components/ReportHeader";
 import { saveAs } from "file-saver";
 import Filters from "@/components/Filters";
 import withAuth from "@/components/PrivateRoute";
+import dayjs from "dayjs";
 
 const userReport = () => {
   const [users, setUsers] = useState([]);
@@ -41,7 +42,7 @@ const userReport = () => {
     const response = userReportPdf(queryString);
     response.then((res) => {
       if (res.data) {
-        const fileName = `user-report.xlsx`;
+        const fileName = `user-report-${dayjs().format('DD-mm-YYYY')}.xlsx`;
         saveAs(res.data, fileName);
       }
     });

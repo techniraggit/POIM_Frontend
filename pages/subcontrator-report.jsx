@@ -12,6 +12,7 @@ import { Button, Pagination } from "antd";
 import withAuth from "@/components/PrivateRoute";
 import Accordian from "@/components/accordian";
 import { CloseOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
 
 const SubcontractorReport = () => {
   const [poList, setPoList] = useState([]);
@@ -44,7 +45,7 @@ const SubcontractorReport = () => {
     const response = downloadSubcontractorReport(queryString);
     response.then((res) => {
       if (res.data) {
-        const fileName = `subcontractor-report.xlsx`;
+        const fileName = `subcontractor-report-${dayjs().format('DD-mm-YYYY')}.xlsx`;
         saveAs(res.data, fileName);
       }
     });

@@ -7,6 +7,7 @@ import ReportHeader from "@/components/ReportHeader";
 import { saveAs } from "file-saver";
 import Filters from "@/components/Filters";
 import withAuth from "@/components/PrivateRoute";
+import dayjs from "dayjs";
 
 const purchaseOrderReport = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +40,7 @@ const purchaseOrderReport = () => {
     const response = poReport(queryString);
     response.then((res) => {
       if (res.data) {
-        const fileName = `po-report.xlsx`;
+        const fileName = `po-report-${dayjs().format('DD-mm-YYYY')}.xlsx`;
         saveAs(res.data, fileName);
       }
     });
