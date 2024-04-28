@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Select, Button, Space, message } from "antd";
@@ -17,7 +17,7 @@ const repeatorData = {
     project_site_id: '',
 }
 
-function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, projects, calculateAmount, view, form }) {
+function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calculateAmount, view, form }) {
 
     const handleRemoveDetail = (id, index) => {
         updatematerialPo({ md_id: id }).then((response) => {
