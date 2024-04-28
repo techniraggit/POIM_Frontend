@@ -94,8 +94,7 @@ const SubcontractorReport = () => {
                       <th class="hedaings-tb">PO No.</th>
                       <th class="hedaings-tb">PO Amount</th>
                       <th class="hedaings-tb">CO Approved Amt</th>
-                      <th class="hedaings-tb">Invoice Received Month</th>
-                      <th class="hedaings-tb">Invoice Received Amount </th>
+                      <th class="hedaings-tb">Invoice Received Report</th>
                       <th class="hedaings-tb">Total Contract Amt </th>
                       <th class="hedaings-tb">Total Invoice Amt </th>
                       <th class="hedaings-tb">Balance</th>
@@ -113,8 +112,6 @@ const SubcontractorReport = () => {
                           <td>{po.project_number}</td>
                           <td>{po.po_number}</td>
                           <td>{po.po_amount?.toLocaleString()}</td>
-                          {/* <td>{po.COApprovedAmt ? po.COApprovedAmt.split('\n').join(' ,').toLocaleString() : '-'}</td>
-                                                    <td>{po.InvoiceReceivedMonthAmt ? po.InvoiceReceivedMonthAmt.split('\n').join(' ,').toLocaleString() : '-'}</td> */}
                           <td>
                             {po.COApprovedAmt
                               ? po.COApprovedAmt.split("\n")
@@ -124,20 +121,23 @@ const SubcontractorReport = () => {
                                   .join(" ,") || "-"
                               : "-"}
                           </td>
-                          <td>
+                          <td style={{
+                            cursor: 'pointer'
+                          }}><span onClick={() => setIsOpen(true)}>View Report</span></td>
+                          {/* <td>
                             {po.InvoiceReceivedMonth
                               ? po.InvoiceReceivedMonth.split("\n").join(
                                   " ,"
                                 ) || "-"
                               : "-"}
-                          </td>
-                          <td>
+                          </td> */}
+                          {/* <td>
                             {po.InvoiceReceivedAmount
                               ? po.InvoiceReceivedAmount.split("\n").join(
                                   " ,"
                                 ) || "-"
                               : "-"}
-                          </td>
+                          </td> */}
                           <td>{po.total_contract_amt?.toLocaleString()}</td>
                           <td>
                             {po.total_invoice_received_amount?.toLocaleString()}
@@ -189,6 +189,16 @@ const SubcontractorReport = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+          <button className="acc-btn" onClick={() => setIsOpen(!isOpen)}>Open PopUp</button>
+          {isOpen && (
+              <div className="popup">
+                  <div  className="acc-icon"><CloseOutlined onClick={() => setIsOpen(false)}/></div>
+                  <h5>Invoice Report</h5>
+                  <Accordian />
+              </div>
+          )}
       </div>
     </>
   );
