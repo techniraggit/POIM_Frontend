@@ -4025,6 +4025,11 @@ ul.reports-dropdown li a span.active {
     color: #e91d26;
 }
 
+.custom-color {
+    color: #e91d26;
+    text-decoration: underline;
+}
+
 /* 22feb */
 
 /* 26 feb  */
