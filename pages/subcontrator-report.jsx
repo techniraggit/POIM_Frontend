@@ -129,7 +129,7 @@ const SubcontractorReport = () => {
                             {Object.keys(po.invoice_recieved_amount || {}).length > 0 ? <span onClick={() => {
                               setIsOpen(true);
                               setAmountData({...po.invoice_recieved_amount});
-                            }} className="custom-color">View Report</span> : <></>}
+                            }} className="custom-color">View Report</span> : '-'}
                           </td>
                           <td>{po.total_contract_amt?.toLocaleString()}</td>
                           <td>
