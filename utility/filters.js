@@ -1,6 +1,12 @@
 import MenuItem from '@mui/material/MenuItem';
 
-export const filterVendors = (vendors, searchValue) => {
+export const filterVendors = (vendors, searchValue, setValid) => {
+    console.log(vendors?.some((vendor) => vendor.company_name.toLowerCase() === searchValue?.toLowerCase()))
+    if(vendors?.some((vendor) => vendor.company_name.toLowerCase() === searchValue?.toLowerCase())) {
+        setValid(true)
+    } else {
+        setValid(false)
+    }
     return vendors.filter(vendor =>
         vendor.company_name.toLowerCase().includes(searchValue?.toLowerCase())
     );
@@ -20,7 +26,12 @@ export const getVendorMenuItem = (vendor, callback, setSearchValue, hideResults)
     </MenuItem>
 }
 
-export const filterVendorContacts = (contacts, searchValue) => {
+export const filterVendorContacts = (contacts, searchValue, setValid) => {
+    if(contacts?.some((contact) => contact.name.toLowerCase() === searchValue?.toLowerCase())) {
+        setValid(true)
+    } else {
+        setValid(false)
+    }
     return contacts.filter(contact =>
         contact.name.toLowerCase().includes(searchValue?.toLowerCase())
     );
@@ -40,7 +51,12 @@ export const getVendorContactMenuItem = (contact, callback, setSearchValue, hide
     </MenuItem>
 }
 
-export const filterProjects = (projects, searchValue) => {
+export const filterProjects = (projects, searchValue, setValid) => {
+    if(projects?.some((project) => project.project_no.toLowerCase() === searchValue?.toLowerCase())) {
+        setValid(true)
+    } else {
+        setValid(false)
+    }
     return projects.filter(project =>{
         if (project && project.project_no ) {
             const projectNoString = String(project.project_no);
@@ -67,7 +83,12 @@ export const getProjectMenuItem = (project, callback, setSearchValue, hideResult
     </MenuItem>
 }
 
-export const filterSites = (siteOptions, searchValue) => {
+export const filterSites = (siteOptions, searchValue, setValid) => {
+    if(siteOptions?.some((site) => site.address.toLowerCase() === searchValue?.toLowerCase())) {
+        setValid(true)
+    } else {
+        setValid(false)
+    }
     return siteOptions.filter(site =>
         site.address.toLowerCase().includes(searchValue?.toLowerCase())
     );
@@ -87,7 +108,12 @@ export const getSiteMenuItem = (site, callback, setSearchValue, hideResults) => 
     </MenuItem>
 }
 
-export const filterInvoicePO = (poNumber, searchValue) => {
+export const filterInvoicePO = (poNumber, searchValue, setValid) => {
+    if(poNumber?.some((po) => po.po_number.toLowerCase() === searchValue?.toLowerCase())) {
+        setValid(true)
+    } else {
+        setValid(false)
+    }
     return poNumber.filter(po =>{
         if (po.po_number) {
             const projectNoString = String(po.po_number);
