@@ -1,7 +1,6 @@
 import MenuItem from '@mui/material/MenuItem';
 
 export const filterVendors = (vendors, searchValue, setValid) => {
-    console.log(vendors?.some((vendor) => vendor.company_name.toLowerCase() === searchValue?.toLowerCase()))
     if(vendors?.some((vendor) => vendor.company_name.toLowerCase() === searchValue?.toLowerCase())) {
         setValid(true)
     } else {
@@ -12,13 +11,14 @@ export const filterVendors = (vendors, searchValue, setValid) => {
     );
 }
 
-export const getVendorMenuItem = (vendor, callback, setSearchValue, hideResults) => {
+export const getVendorMenuItem = (vendor, callback, setSearchValue, hideResults, setClicked) => {
     return <MenuItem
         key={vendor.vendor_id}
         value={vendor.vendor_id}
         onClick={() => {
             callback(vendor.vendor_id)
             setSearchValue(vendor.company_name);
+            setClicked(true);
             hideResults();
         }}
     >
@@ -37,7 +37,7 @@ export const filterVendorContacts = (contacts, searchValue, setValid) => {
     );
 }
 
-export const getVendorContactMenuItem = (contact, callback, setSearchValue, hideResults) => {
+export const getVendorContactMenuItem = (contact, callback, setSearchValue, hideResults, setClicked) => {
     return <MenuItem
         key={contact.vendor_contact_id}
         value={contact.vendor_contact_id}
@@ -45,6 +45,7 @@ export const getVendorContactMenuItem = (contact, callback, setSearchValue, hide
             callback(contact.vendor_contact_id)
             setSearchValue(contact.name);
             hideResults();
+            setClicked(true);
         }}
     >
         {contact.name}
@@ -69,7 +70,7 @@ export const filterProjects = (projects, searchValue, setValid) => {
     );
 }
 
-export const getProjectMenuItem = (project, callback, setSearchValue, hideResults) => {
+export const getProjectMenuItem = (project, callback, setSearchValue, hideResults, setClicked) => {
     return <MenuItem
         key={project.project_id}
         value={project.project_id}
@@ -77,6 +78,7 @@ export const getProjectMenuItem = (project, callback, setSearchValue, hideResult
             callback(project.project_id)
             setSearchValue(project.project_no);
             hideResults();
+            setClicked(true);
         }}
     >
         {project.project_no}
@@ -94,7 +96,7 @@ export const filterSites = (siteOptions, searchValue, setValid) => {
     );
 }
 
-export const getSiteMenuItem = (site, callback, setSearchValue, hideResults) => {
+export const getSiteMenuItem = (site, callback, setSearchValue, hideResults, setClicked) => {
     return <MenuItem
         key={site.site_id}
         value={site.site_id}
@@ -102,6 +104,7 @@ export const getSiteMenuItem = (site, callback, setSearchValue, hideResults) => 
             callback(site.site_id)
             setSearchValue(site.address);
             hideResults();
+            setClicked(true);
         }}
     >
         {site.address}
@@ -126,7 +129,7 @@ export const filterInvoicePO = (poNumber, searchValue, setValid) => {
     );
 }
 
-export const getInvoivePOMenuItem = (number, callback, setSearchValue, hideResults) => {
+export const getInvoivePOMenuItem = (number, callback, setSearchValue, hideResults, setClicked) => {
     return <MenuItem
         key={number.po_id}
         value={number.po_id}
@@ -134,6 +137,7 @@ export const getInvoivePOMenuItem = (number, callback, setSearchValue, hideResul
             callback(number.po_id)
             setSearchValue(number.po_number);
             hideResults();
+            setClicked(true);
         }}
     >
         {number.po_number}
@@ -146,11 +150,12 @@ export const filterUserRoles = (roles, searchValue) => {
     );
 }
 
-export const getUserRoleMenuItem = (role, callback, setSearchValue, hideResults) => {
+export const getUserRoleMenuItem = (role, callback, setSearchValue, hideResults, setClicked) => {
     return <MenuItem
         key={role.id}
         value={role.id}
         onClick={() => {
+            setClicked(true);
             callback(role.id)
             setSearchValue(role.name);
             hideResults();
@@ -167,11 +172,12 @@ export const filterProjectManager = (managers, searchValue) => {
     );
 }
 
-export const getProjectManagerMenuItem = (manager, callback, setSearchValue, hideResults) => {
+export const getProjectManagerMenuItem = (manager, callback, setSearchValue, hideResults, setClicked) => {
     return <MenuItem
         key={manager.id}
         value={manager.id}
         onClick={() => {
+            setClicked(true);
             callback(manager.id)
             setSearchValue(manager.first_name);
             hideResults();

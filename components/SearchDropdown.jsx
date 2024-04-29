@@ -20,6 +20,7 @@ const SearchDropDown = ({
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [valid, setValid] = useState(true);
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     if(value) {
@@ -60,7 +61,7 @@ const SearchDropDown = ({
             ? [
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if ((!value && !getFieldValue(name)) || !valid) {
+                    if ((!value && !getFieldValue(name)) || !valid || !clicked) {
                       return Promise.reject("Please choose an option");
                     }
                     return Promise.resolve();
@@ -80,13 +81,14 @@ const SearchDropDown = ({
           onFocus={() => setShowResults(true)}
           onBlur={() => setTimeout(() => hideResults(), 200)}
           onChange={(e) => {
+            setClicked(false);
             onSearch(e.target.value);
           }}
         />
         <div className={"search-items" + (showResults ? " active" : "")}>
           {showResults &&
             searchResults.map((result) =>
-              getMenuItems(result, callback, setSearchValue, hideResults)
+              getMenuItems(result, callback, setSearchValue, hideResults, setClicked)
             )}
         </div>
       </Form.Item>
