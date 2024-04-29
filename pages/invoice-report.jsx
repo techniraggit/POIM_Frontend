@@ -78,7 +78,6 @@ const invoiceReport = () => {
               applyFilters={applyFilters}
               currentPage={currentPage}
               downloadPdf={downloadPdf}
-              is_delete={true}
             />
             <div class="table-wrap vendor-wrap" id="space-report">
               <div class="inner-table" id="inner-purchase">
