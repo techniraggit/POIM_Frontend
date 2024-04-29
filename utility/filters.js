@@ -115,3 +115,23 @@ export const getInvoivePOMenuItem = (number, callback, setSearchValue, hideResul
         {number.po_number}
     </MenuItem>
 }
+
+export const filterUserRoles = (roles, searchValue) => {
+    return roles.filter(role =>
+        role.name.toLowerCase().includes(searchValue?.toLowerCase())
+    );
+}
+
+export const getUserRoleMenuItem = (role, callback, setSearchValue, hideResults) => {
+    return <MenuItem
+        key={role.id}
+        value={role.id}
+        onClick={() => {
+            callback(role.id)
+            setSearchValue(role.name);
+            hideResults();
+        }}
+    >
+        {role.name}
+    </MenuItem>
+}
