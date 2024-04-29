@@ -15,8 +15,6 @@ const SearchDropDown = ({
   getMenuItems,
   required,
   placeholder,
-  reset,
-  setReset
 }) => {
   const [searchValue, setSearchValue] = useState(undefined);
   const [searchResults, setSearchResults] = useState([]);
@@ -27,12 +25,12 @@ const SearchDropDown = ({
   }, [searchValue, data]);
 
   useEffect(() => {
-    if(reset) {
-        setSearchValue(undefined);
-        setShowResults(false);
-        setReset(false);
-    }
-  }, [reset]);
+    form.setFieldsValue({
+      [name]: searchValue
+        ? searchValue
+        : form.getFieldValue(name),
+    });
+  }, [searchValue]);
 
   const onSearch = (value) => {
     setSearchValue(value);
@@ -73,11 +71,6 @@ const SearchDropDown = ({
           onBlur={() => setTimeout(() => hideResults(), 200)}
           onChange={(e) => {
             onSearch(e.target.value);
-            form.setFieldsValue({
-              [name]: e.target.value
-                ? e.target.value
-                : form.getFieldValue(name),
-            });
           }}
         />
         <div style={{ maxHeight: "200px", overflowY: "auto" }}>

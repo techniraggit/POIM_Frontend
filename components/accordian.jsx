@@ -6,7 +6,6 @@ const Accordian = ({ amounts }) => {
   const expandIconPosition = "start";
 
   const items = Object.keys(amounts || {}).map((key) => {
-    console.log(amounts[key])
     return {
       key: key, label: key, children: (
         <>

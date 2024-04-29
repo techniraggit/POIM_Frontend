@@ -21,8 +21,6 @@ export const getVendorMenuItem = (vendor, callback, setSearchValue, hideResults)
 }
 
 export const filterVendorContacts = (contacts, searchValue) => {
-    console.log(contacts)
-
     return contacts.filter(contact =>
         contact.name.toLowerCase().includes(searchValue?.toLowerCase())
     );
