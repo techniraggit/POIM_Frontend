@@ -254,6 +254,7 @@ function PoForm({
                     }
                     return value;
                   }, "")}
+                  
                   disabled={(view || edit) && formData.status !== "pending"}
                   filterFunc={filterVendors}
                   name="vendor_id"

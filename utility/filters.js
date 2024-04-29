@@ -159,3 +159,24 @@ export const getUserRoleMenuItem = (role, callback, setSearchValue, hideResults)
         {role.name}
     </MenuItem>
 }
+
+
+export const filterProjectManager = (managers, searchValue) => {
+    return managers.filter(manager =>
+        manager.first_name.toLowerCase().includes(searchValue?.toLowerCase())
+    );
+}
+
+export const getProjectManagerMenuItem = (manager, callback, setSearchValue, hideResults) => {
+    return <MenuItem
+        key={manager.id}
+        value={manager.id}
+        onClick={() => {
+            callback(manager.id)
+            setSearchValue(manager.first_name);
+            hideResults();
+        }}
+    >
+        {manager.first_name}
+    </MenuItem>
+}

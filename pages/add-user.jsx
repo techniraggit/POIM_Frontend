@@ -36,10 +36,10 @@ const AddUser = ({ base_url }) => {
   }, [])
 
 
-console.log(roles,'=======roles============');
+  console.log(roles, '=======roles============');
 
   const onFinish = async (values) => {
-    console.log(values,'=============all values============');
+    console.log(values, '=============all values============');
     try {
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -48,7 +48,7 @@ console.log(roles,'=======roles============');
       };
       const data = {
         ...values,
-        role_id:values.role_id,
+        role_id: values.role_id,
         phone_number: '+1' + values.phone_number
       }
 
@@ -92,15 +92,9 @@ console.log(roles,'=======roles============');
                   <div className="col-lg-4 col-md-6">
                     <div className="selectwrap react-select">
 
-                      {/* <SearchDropdown
+                      <SearchDropdown
                         placeholder="Select"
                         required={true}
-                        value={roles?.reduce((value, role) => {
-                          if (role.id ) {
-                            value = role.id;
-                          }
-                          return value;
-                        }, "")}
                         // disabled={(view || edit) && formData.status !== "pending"}
                         filterFunc={filterUserRoles}
                         name="role_id"
@@ -114,28 +108,7 @@ console.log(roles,'=======roles============');
                         }}
                         data={roles}
                         getMenuItems={getUserRoleMenuItem}
-                      /> */}
-
-                      <Form.Item label="Select Role" name="role_id"
-                        // initialValue="select role" 
-                        className='dropdown vender-input'
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please Choose Role",
-                          },
-                        ]}
-                      >
-                        <Select className='arrow-wrap-user'>
-                          {Array.isArray(roles) &&
-                            roles.map((role) => (
-                              <Option key={role.id} value={role.id}
-                              >
-                                {role.name}
-                              </Option>
-                            ))}
-                        </Select>
-                      </Form.Item>
+                      />
                     </div>
                   </div>
                 </div>
