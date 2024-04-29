@@ -12,11 +12,13 @@ import { saveAs } from "file-saver";
 import Filters from "@/components/Filters";
 import withAuth from "@/components/PrivateRoute";
 import dayjs from "dayjs";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const userReport = () => {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [count, setCount] = useState("");
+  const { user } = useGlobalContext();
 
   const getUsers = () => {
     userList(currentPage).then((res) => {
@@ -42,7 +44,7 @@ const userReport = () => {
     const response = userReportPdf(queryString);
     response.then((res) => {
       if (res.data) {
-        const fileName = `user-report-${dayjs().format('DD-mm-YYYY')}.xlsx`;
+        const fileName = `${user.first_name}-${user.last_name}-${dayjs().format('DD-MM-YYYY')}.xlsx`;
         saveAs(res.data, fileName);
       }
     });

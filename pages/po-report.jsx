@@ -8,11 +8,13 @@ import { saveAs } from "file-saver";
 import Filters from "@/components/Filters";
 import withAuth from "@/components/PrivateRoute";
 import dayjs from "dayjs";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const purchaseOrderReport = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [count, setCount] = useState("");
+  const { user } = useGlobalContext();
 
   const getPos = () => {
     getPoList(currentPage).then((res) => {
@@ -40,7 +42,7 @@ const purchaseOrderReport = () => {
     const response = poReport(queryString);
     response.then((res) => {
       if (res.data) {
-        const fileName = `po-report-${dayjs().format('DD-mm-YYYY')}.xlsx`;
+        const fileName = `${user.first_name}-${user.last_name}-${dayjs().format('DD-MM-YYYY')}.xlsx`;
         saveAs(res.data, fileName);
       }
     });

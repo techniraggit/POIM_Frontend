@@ -11,11 +11,13 @@ import { saveAs } from "file-saver";
 import ReportHeader from "@/components/ReportHeader";
 import Filters from "@/components/Filters";
 import dayjs from "dayjs";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const invoiceReport = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [count, setCount] = useState("");
   const [invoiceTable, setInvoiceTable] = useState([]);
+  const { user } = useGlobalContext();
 
   const getInvoices = () => {
     invoiceList(currentPage).then((res) => {
@@ -37,7 +39,7 @@ const invoiceReport = () => {
     const response = invoiceReportPdf(queryString);
     response.then((res) => {
       if (res.data) {
-        const fileName = `invoice-report-${dayjs().format('DD-mm-YYYY')}.xlsx`;
+        const fileName = `${user.first_name}-${user.last_name}-${dayjs().format('DD-MM-YYYY')}.xlsx`;
         saveAs(res.data, fileName);
       }
     });

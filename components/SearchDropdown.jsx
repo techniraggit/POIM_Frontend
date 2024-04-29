@@ -54,6 +54,7 @@ const SearchDropDown = ({
       <Form.Item
         label={label}
         name={name}
+        className="search-dropdown"
         rules={
           required
             ? [
@@ -72,6 +73,7 @@ const SearchDropDown = ({
         <TextField
           placeholder={placeholder}
           id="search"
+          className="dropdown-input"
           autoComplete="off"
           disabled={disabled || false}
           value={typeof searchValue === "undefined" ? value : searchValue}
@@ -81,7 +83,7 @@ const SearchDropDown = ({
             onSearch(e.target.value);
           }}
         />
-        <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+        <div className={"search-items" + (showResults ? " active" : "")}>
           {showResults &&
             searchResults.map((result) =>
               getMenuItems(result, callback, setSearchValue, hideResults)

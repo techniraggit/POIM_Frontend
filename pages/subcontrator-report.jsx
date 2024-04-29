@@ -13,6 +13,7 @@ import withAuth from "@/components/PrivateRoute";
 import Accordian from "@/components/accordian";
 import { CloseOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const SubcontractorReport = () => {
   const [poList, setPoList] = useState([]);
@@ -20,6 +21,7 @@ const SubcontractorReport = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [amountData, setAmountData] = useState({});
+  const { user } = useGlobalContext();
 
   const getPos = () => {
     const queryString = new URLSearchParams({
@@ -45,7 +47,7 @@ const SubcontractorReport = () => {
     const response = downloadSubcontractorReport(queryString);
     response.then((res) => {
       if (res.data) {
-        const fileName = `subcontractor-report-${dayjs().format('DD-mm-YYYY')}.xlsx`;
+        const fileName = `${user.first_name}-${user.last_name}-${dayjs().format('DD-MM-YYYY')}.xlsx`;
         saveAs(res.data, fileName);
       }
     });

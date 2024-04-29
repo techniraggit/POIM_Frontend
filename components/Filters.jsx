@@ -314,8 +314,8 @@ const Filters = ({
               }
               value={query["is_deleted"] || "Active Status"}
             >
-              <Option value="false">Active</Option>
-              <Option value="true">Deleted</Option>
+              <Option value="active">Active</Option>
+              <Option value="deleted">Deleted</Option>
             </Select>
           )}
           <button
