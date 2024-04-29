@@ -19,8 +19,13 @@ const SearchDropDown = ({
   const [searchValue, setSearchValue] = useState(undefined);
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  const [valid, setValid] = useState(false);
+
   useEffect(() => {
     const filteredData = filterFunc(data, searchValue || "");
+    if(filteredData.length === 0) {
+      setValid(false);
+    }
     setSearchResults(filteredData);
   }, [searchValue, data]);
 
@@ -51,7 +56,7 @@ const SearchDropDown = ({
             ? [
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value && !getFieldValue(name)) {
+                    if (!value && !getFieldValue(name) && !valid) {
                       return Promise.reject("Please choose an option");
                     }
                     return Promise.resolve();
