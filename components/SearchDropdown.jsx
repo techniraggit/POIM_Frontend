@@ -66,7 +66,7 @@ const SearchDropDown = ({
         <TextField
           placeholder={placeholder}
           id="search"
-          autoComplete={false}
+          autoComplete="off"
           disabled={disabled || false}
           value={typeof searchValue === "undefined" ? value : searchValue}
           onFocus={() => setShowResults(true)}
