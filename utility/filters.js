@@ -52,7 +52,7 @@ export const getVendorContactMenuItem = (contact, callback, setSearchValue, hide
 }
 
 export const filterProjects = (projects, searchValue, setValid) => {
-    if(projects?.some((project) => project.project_no.toLowerCase() === searchValue?.toLowerCase())) {
+    if(projects?.some((project) => project.project_no?.toLowerCase() === searchValue?.toLowerCase())) {
         setValid(true)
     } else {
         setValid(false)
