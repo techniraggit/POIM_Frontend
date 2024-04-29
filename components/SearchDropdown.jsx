@@ -23,9 +23,10 @@ const SearchDropDown = ({
 
   useEffect(() => {
     const filteredData = filterFunc(data, searchValue || "");
-    console.log(filteredData, "===============filteredData")
     if(filteredData.length === 0) {
       setValid(false);
+    } else {
+      setValid(true);
     }
     setSearchResults(filteredData);
   }, [searchValue, data]);
