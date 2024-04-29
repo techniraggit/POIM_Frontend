@@ -56,15 +56,13 @@ const CreateInvoice = () => {
     };
 
     useEffect(() => {
-        if (po) {
-            const response = fetchPoNumbr(po)
-            response.then((res) => {
-                if (res?.data?.status) {
-                    setPoNumber([...res.data.data]);
-                }
-            })
-        }
-    }, [po])
+        const response = fetchPoNumbr()
+        response.then((res) => {
+            if (res?.data?.status) {
+                setPoNumber([...res.data.data]);
+            }
+        })
+    }, [])
 
     const fetchPoNumber = (id) => {
         const response = fetchPoNumbers(id)
@@ -151,7 +149,7 @@ const CreateInvoice = () => {
                                     onFinish={onFinish}
                                 >
                                     <div className="row mb-4">
-                                        <div className="col-lg-4 col-md-6">
+                                        {/* <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap react-select">
                                                 <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
                                                     <Form.Item
@@ -176,7 +174,7 @@ const CreateInvoice = () => {
                                                     </Form.Item>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
 
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap  shipment-caret invoice-select aligned-text">

@@ -15,24 +15,24 @@ const SearchDropDown = ({
   getMenuItems,
   required,
   placeholder,
-  reset,
-  setReset
 }) => {
   const [searchValue, setSearchValue] = useState(undefined);
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  const [valid, setValid] = useState(true);
+
   useEffect(() => {
-    const filteredData = filterFunc(data, searchValue || "");
+    const filteredData = filterFunc(data, searchValue || "", setValid);
     setSearchResults(filteredData);
   }, [searchValue, data]);
 
   useEffect(() => {
-    if(reset) {
-        setSearchValue(undefined);
-        setShowResults(false);
-        setReset(false);
-    }
-  }, [reset]);
+    form.setFieldsValue({
+      [name]: searchValue
+        ? searchValue
+        : form.getFieldValue(name),
+    });
+  }, [searchValue]);
 
   const onSearch = (value) => {
     setSearchValue(value);
@@ -53,7 +53,7 @@ const SearchDropDown = ({
             ? [
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value && !getFieldValue(name)) {
+                    if ((!value && !getFieldValue(name)) || !valid) {
                       return Promise.reject("Please choose an option");
                     }
                     return Promise.resolve();
@@ -66,18 +66,13 @@ const SearchDropDown = ({
         <TextField
           placeholder={placeholder}
           id="search"
-          autoComplete={false}
+          autoComplete="off"
           disabled={disabled || false}
           value={typeof searchValue === "undefined" ? value : searchValue}
           onFocus={() => setShowResults(true)}
           onBlur={() => setTimeout(() => hideResults(), 200)}
           onChange={(e) => {
             onSearch(e.target.value);
-            form.setFieldsValue({
-              [name]: e.target.value
-                ? e.target.value
-                : form.getFieldValue(name),
-            });
           }}
         />
         <div style={{ maxHeight: "200px", overflowY: "auto" }}>

@@ -104,7 +104,6 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 required={true}
                                 form={form}
                                 value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
-                                    console.log(site, formData.material_details[0])
                                     if(site.site_id == formData.material_details[0]?.project_site?.site_id || site.site_id == formData.material_details[0].project_site_id) {
                                         value = site.address
                                     }
