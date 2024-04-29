@@ -22,7 +22,13 @@ const SearchDropDown = ({
   const [valid, setValid] = useState(true);
 
   useEffect(() => {
-    const filteredData = filterFunc(data, searchValue || "", setValid);
+    if(value) {
+      setValid(true);
+    }
+  }, [value]);
+
+  useEffect(() => {
+    const filteredData = filterFunc(data, (typeof searchValue === "undefined" ? value : searchValue) || "", setValid);
     setSearchResults(filteredData);
   }, [searchValue, data]);
 
