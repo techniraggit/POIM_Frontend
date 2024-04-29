@@ -2,17 +2,14 @@ import DynamicTitle from '@/components/dynamic-title';
 import Header from '@/components/header';
 import Sidebar from '@/components/sidebar';
 import React, { useEffect, useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons'
 import '../styles/style.css'
-import { Form, Input, Select, message, } from 'antd';
+import { Form, Input, message, } from 'antd';
 import { getServerSideProps } from "@/components/mainVariable";
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import withAuth from '@/components/PrivateRoute';
 import { filterUserRoles, getUserRoleMenuItem } from '@/utility/filters';
 import SearchDropdown from '@/components/SearchDropdown';
-
-const { Option } = Select;
 
 const AddUser = ({ base_url }) => {
   const [roles, setRoles] = useState([]);
@@ -35,8 +32,6 @@ const AddUser = ({ base_url }) => {
 
   }, [])
 
-
-  console.log(roles, '=======roles============');
 
   const onFinish = async (values) => {
     console.log(values, '=============all values============');
@@ -95,16 +90,13 @@ const AddUser = ({ base_url }) => {
                       <SearchDropdown
                         placeholder="Select"
                         required={true}
-                        // disabled={(view || edit) && formData.status !== "pending"}
                         filterFunc={filterUserRoles}
                         name="role_id"
                         form={form}
                         label="Select Role"
                         callback={(value) => {
-                          form.setFieldValue('role_id',value)
-                    //       fetchVendorContactDropdown(value, true);
-                    // formData.vendor_contact_id = "";
-                    // onChange("vendor_id", value);
+                          console.log(value, "========user role value")
+                          form.setFieldValue('role_id', value)
                         }}
                         data={roles}
                         getMenuItems={getUserRoleMenuItem}
@@ -221,7 +213,6 @@ const AddUser = ({ base_url }) => {
               </Form>
             </div>
             </div>
-
           </div>
         </div>
       </div>
