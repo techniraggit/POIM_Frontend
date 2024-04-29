@@ -19,7 +19,7 @@ const SearchDropDown = ({
   const [searchValue, setSearchValue] = useState(undefined);
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
-  const [valid, setValid] = useState(false);
+  const [valid, setValid] = useState(true);
 
   useEffect(() => {
     const filteredData = filterFunc(data, searchValue || "");
