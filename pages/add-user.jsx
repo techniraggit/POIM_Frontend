@@ -83,10 +83,8 @@ const AddUser = ({ base_url }) => {
                 wrapperCol={{ span: 16 }}
               >
                 <div className="row mb-5">
-
                   <div className="col-lg-4 col-md-6">
-                    <div className="selectwrap react-select">
-
+                    <div className="selectwrap ns-field-set react-select">
                       <SearchDropdown
                         placeholder="Select"
                         required={true}

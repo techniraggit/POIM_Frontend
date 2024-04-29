@@ -132,7 +132,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                 </div>
                 {(formData.shipment_type === 'project related') && (
                     <div class="col-md-6 col-lg-4">
-                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select ns-field-set shipment-caret`}>
                             <SearchDropdown
                                 name="project_site_id0" 
                                 label="Select Site" 
@@ -212,7 +212,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                 {formData.material_details[0]?.material_for?.toLowerCase() === 'project' && (
                     <div class="col-md-6 col-lg-4">
                         {/* <div className="selectwrap columns-select shipment-caret "> */}
-                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select ns-field-set shipment-caret`}>
                             <SearchDropdown
                                 name="project_site_id0" 
                                 label="Select Site" 
@@ -352,7 +352,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                                                 <div class="col-sm-4">
                                                     <div className="wrap-box">
                                                         {/* <div className="selectwrap columns-select shipment-caret "> */}
-                                                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+                                                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select ns-field-set shipment-caret`}>
                                                             <SearchDropdown
                                                                 name={`project_site_id${index + 1}`}
                                                                 placeholder="Select Site"

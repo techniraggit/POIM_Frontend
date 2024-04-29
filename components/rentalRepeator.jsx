@@ -160,7 +160,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                 {formData.shipment_type === 'project related' && (
                     <div class="col-lg-4 col-md-6">
                         {/* <div className="selectwrap columns-select shipment-caret "> */}
-                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select ns-field-set shipment-caret`}>
                                 <SearchDropdown
                                     name="project_site_id0"
                                     label="Select Site"
@@ -313,7 +313,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                 <div class="col-lg-4 col-md-6">
                                                     <div className="wrap-box">
                                                         {/* <div className="selectwrap columns-select shipment-caret"> */}
-                                                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
+                                                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} ns-field-set columns-select shipment-caret`}>
                                                             <SearchDropdown
                                                                 name={`project_site_id${index + 1}`}
                                                                 label="Select Site"

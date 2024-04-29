@@ -53,7 +53,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
             </div>
             <div className="row mb-4">
                 <div className="col-lg-4 col-md-12 shipment-caret">
-                    <div className="selectwrap bg-border-select">
+                    <div className="selectwrap bg-border-select ns-field-set">
                         <SearchDropdown
                             placeholder="Select"
                             name="project_manager_id"

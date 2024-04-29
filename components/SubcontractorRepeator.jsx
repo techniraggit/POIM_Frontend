@@ -217,7 +217,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                         else if (key === 'project_site_id' && formData.shipment_type === 'project related') {
                                             return (
                                                 <div class="col-sm-4">
-                                                    <div className="selectwrap columns-select shipment-caret ">
+                                                    <div className="selectwrap columns-select ns-field-set shipment-caret ">
                                                         <SearchDropdown
                                                             name={`project_site_id${index + 1}`}
                                                             label="Select Site" 
