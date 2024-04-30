@@ -34,16 +34,24 @@ const AddUser = ({ base_url }) => {
 
 
   const onFinish = async (values) => {
-    console.log(values, '=============all values============');
     try {
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       };
+
+      const selectedRole = roles.find(role => 
+          {
+          return role.name === values.role_id
+        }
+      );
+    if (!selectedRole) {
+      throw new Error('Selected role not found');
+    }
       const data = {
         ...values,
-        role_id: values.role_id,
+        role_id: selectedRole.id,
         phone_number: '+1' + values.phone_number
       }
 
@@ -93,7 +101,6 @@ const AddUser = ({ base_url }) => {
                         form={form}
                         label="Select Role"
                         callback={(value) => {
-                          console.log(value, "========user role value")
                           form.setFieldValue('role_id', value)
                         }}
                         data={roles}
