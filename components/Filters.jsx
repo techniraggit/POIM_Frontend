@@ -39,7 +39,7 @@ const Filters = ({
     filter_by_name: "",
     to_date: "",
     from_date: "",
-    is_deleted: false,
+    is_deleted: "",
   });
 
   useEffect(() => {

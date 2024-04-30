@@ -105,7 +105,7 @@ function PoForm({
       form.getFieldValue("shipment_type") === "project related" ||
       form.getFieldValue("shipment_type") === "combined"
     ) {
-      const response = fetchProjects();
+      const response = fetchProjects({ is_deleted: view || (edit && formData.status !== "pending") });
       response.then((res) => {
         if (res?.data) {
           setProjects(res.data);
@@ -239,7 +239,7 @@ function PoForm({
           <div class="selectwrap react-select" id="vendor-selector">
             <div
               class={`selectwrap ${
-                (view || edit) && formData.status !== "pending"
+                view || (edit && formData.status !== "pending")
                   ? "non-editable-dropdown"
                   : ""
               } shipment-caret select-site aligned-text`}
@@ -255,7 +255,7 @@ function PoForm({
                     return value;
                   }, "")}
                   
-                  disabled={(view || edit) && formData.status !== "pending"}
+                  disabled={view || (edit && formData.status !== "pending")}
                   filterFunc={filterVendors}
                   name="vendor_id"
                   form={form}
@@ -287,7 +287,7 @@ function PoForm({
                   name="vendor_contact_id"
                   label="Vendor Contact Person"
                   required={true}
-                  disabled={(view || edit) && formData.status !== "pending"}
+                  disabled={view || (edit && formData.status !== "pending")}
                   form={form}
                   value={
                     contactId.length > 0
@@ -501,7 +501,7 @@ function PoForm({
             {/* <div class="selectwrap columns-select shipment-caret"> */}
             <div
               class={`selectwrap ${
-                (view || edit) && formData.status !== "pending"
+                view || (edit && formData.status !== "pending")
                   ? "non-editable-dropdown"
                   : ""
               } shipment-caret  columns-select`}
@@ -511,7 +511,7 @@ function PoForm({
                   // placeholder={}
                   name="project_id"
                   label="Project"
-                  disabled={(view || edit) && formData.status !== "pending"}
+                  disabled={view || (edit && formData.status !== "pending")}
                   required={true}
                   form={form}
                   filterFunc={filterProjects}
