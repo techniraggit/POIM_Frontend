@@ -87,10 +87,11 @@ const SearchDropDown = ({
           }}
         />
         <div className={"search-items" + (showResults ? " active" : "")}>
-          {showResults &&
-            searchResults.map((result) =>
+          {showResults ?
+              searchResults.length > 0 ? searchResults.map((result) =>
               getMenuItems(result, callback, setSearchValue, hideResults, setClicked)
-            )}
+            ) : <>No Records Found</> : <></>
+          }
         </div>
       </Form.Item>
     </>

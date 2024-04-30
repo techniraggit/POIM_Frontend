@@ -168,8 +168,9 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     required={true}
                                     form={form}
                                     value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
-                                        if (site.site_id == formData.material_details[0]?.project_site?.site_id) {
-                                            value = formData.material_details[0]?.project_site?.address
+                                        if (site.site_id == formData.material_details[0]?.project_site_id?.site_id || site.site_id == formData.material_details[0]?.project_site_id) {
+                                            console.log(formData.material_details[0])
+                                            value = formData.material_details[0]?.project_site_id?.address
                                         }
                                         return value
                                     }, '') : ''}
