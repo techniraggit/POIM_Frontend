@@ -280,7 +280,7 @@ function PoForm({
                   view || (edit && formData.status !== "pending")
                     ? "non-editable-dropdown"
                     : ""
-                } shipment-caret select-site aligned-text`}
+                } shipment-caret ns-field-set select-site aligned-text`}
               >
                 <SearchDropdown
                   placeholder="Select"
