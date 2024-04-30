@@ -25,6 +25,7 @@ const SearchDropDown = ({
   useEffect(() => {
     if(value) {
       setValid(true);
+      setClicked(true);
     }
   }, [value]);
 
