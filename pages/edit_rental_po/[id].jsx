@@ -115,7 +115,13 @@ const Edit_Rental_Po = () => {
     const onFinish = () => {
         updatePo({
             ...formData,
-            po_id: id
+            po_id: id,
+            material_details: formData.material_details.map((detail) => {
+                return {
+                    ...detail,
+                    project_site_id: detail.project_site_id.site_id
+                }
+            })
         }).then((res) => {
             if (res?.data?.status) {
                 router.push('/po_list');
