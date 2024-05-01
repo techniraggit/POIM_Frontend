@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Select, Button, Space, message } from "antd";
 import { updatematerialPo } from "@/apis/apis/adminApis";
+import { filterSites, getSiteMenuItem } from "@/utility/filters";
+import SearchDropdown from "./SearchDropdown";
 
 const repeatorData = {
     quantity: '',
@@ -15,7 +17,7 @@ const repeatorData = {
     project_site_id: '',
 }
 
-function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, projects, calculateAmount, view, form }) {
+function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calculateAmount, view, form }) {
 
     const handleRemoveDetail = (id, index) => {
         updatematerialPo({ md_id: id }).then((response) => {
@@ -130,31 +132,26 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 </div>
                 {(formData.shipment_type === 'project related') && (
                     <div class="col-md-6 col-lg-4">
-                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
-
-                            <Form.Item
-                                label="Select Site"
-                                name="project_site_id0"
-                                htmlFor="file"
-                                class="same-clr"
-                                disabled={siteOptions[0]?.some(option => option.project_is_deleted === true)}
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose site",
-                                    },
-                                ]}
-                            >
-                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
-                                    {Array.isArray(siteOptions[0]) &&
-                                        siteOptions[0].map((site) => (
-                                            <Select.Option key={site.site_id} value={site.site_id}>
-                                                {site.address}
-                                            </Select.Option>
-                                        )
-                                        )}
-                                </Select>
-                            </Form.Item>
+                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select ns-field-set shipment-caret`}>
+                            <SearchDropdown
+                                name="project_site_id0" 
+                                label="Select Site" 
+                                required={true}
+                                form={form}
+                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                    if(site.site_id == formData.material_details[0]?.project_site?.site_id) {
+                                        value = formData.material_details[0]?.project_site?.address
+                                    }
+                                    return value
+                                }, '') : ''}
+                                disabled={view || siteOptions[0]?.some(option => option.project_is_deleted === true)}
+                                filterFunc={filterSites} 
+                                callback={(value) => {
+                                    onChange('material_details', { project_site_id: value }, 0)
+                                }}
+                                data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
+                                getMenuItems={getSiteMenuItem}
+                            />
                         </div>
                     </div>
                 )}
@@ -215,30 +212,26 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                 {formData.material_details[0]?.material_for?.toLowerCase() === 'project' && (
                     <div class="col-md-6 col-lg-4">
                         {/* <div className="selectwrap columns-select shipment-caret "> */}
-                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
-
-                            <Form.Item
-                                label="Select Site"
-                                name="project_site_id0"
-                                htmlFor="file"
-                                class="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose site",
-                                    },
-                                ]}
-                            >
-                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
-                                    {Array.isArray(siteOptions[0]) &&
-                                        siteOptions[0].map((site) => (
-                                            <Select.Option key={site.site_id} value={site.site_id}>
-                                                {site.address}
-                                            </Select.Option>
-                                        )
-                                        )}
-                                </Select>
-                            </Form.Item>
+                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select ns-field-set shipment-caret`}>
+                            <SearchDropdown
+                                name="project_site_id0" 
+                                label="Select Site" 
+                                required={true}
+                                form={form}
+                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                    if(site.site_id == formData.material_details[0]?.project_site?.site_id) {
+                                        value = formData.material_details[0]?.project_site?.address
+                                    }
+                                    return value
+                                }, '') : ''}
+                                disabled={view}
+                                filterFunc={filterSites} 
+                                callback={(value) => {
+                                    onChange('material_details', { project_site_id: value }, 0)
+                                }}
+                                data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
+                                getMenuItems={getSiteMenuItem}
+                            />
                         </div>
                     </div>
                 )}
@@ -359,30 +352,27 @@ function MaterialRepeator({ onChange, siteOptions, list, formData, setFormData, 
                                                 <div class="col-sm-4">
                                                     <div className="wrap-box">
                                                         {/* <div className="selectwrap columns-select shipment-caret "> */}
-                                                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
-
-                                                            <Form.Item
-                                                                label="Select Site"
+                                                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select ns-field-set shipment-caret`}>
+                                                            <SearchDropdown
                                                                 name={`project_site_id${index + 1}`}
-                                                                htmlFor="file"
-                                                                class="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please choose site",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
-                                                                    {Array.isArray(siteOptions[0]) &&
-                                                                        siteOptions[0].map((site) => (
-                                                                            <Select.Option key={site.site_id} value={site.site_id}>
-                                                                                {site.address}
-                                                                            </Select.Option>
-                                                                        )
-                                                                        )}
-                                                                </Select>
-                                                            </Form.Item>
+                                                                placeholder="Select Site"
+                                                                label="Select Site" 
+                                                                required={true}
+                                                                form={form}
+                                                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                                                    if(site.site_id == formData.material_details[0]?.project_site?.site_id) {
+                                                                        value = formData.material_details[0]?.project_site?.address
+                                                                    }
+                                                                    return value
+                                                                }, '') : ''}
+                                                                disabled={view}
+                                                                filterFunc={filterSites} 
+                                                                callback={(value) => {
+                                                                    onChange('material_details', { [key]: value }, index + 1)
+                                                                }}
+                                                                data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
+                                                                getMenuItems={getSiteMenuItem}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>

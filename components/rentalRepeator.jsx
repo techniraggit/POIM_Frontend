@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space, InputNumber, message } from "antd";
+import { Form, Input, Button, Space, InputNumber, message } from "antd";
 import { updatematerialPo } from "@/apis/apis/adminApis";
+import SearchDropdown from "./SearchDropdown";
+import { filterSites, getSiteMenuItem } from "@/utility/filters";
 
 const repeatorData = {
     description: '',
@@ -36,7 +38,7 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
         }
     };
 
-    const handleEndDateChange = (value,index) => {
+    const handleEndDateChange = (value, index) => {
         onChange('material_details', { end_date: value }, 0);
         if (formData.material_details[0]?.start_date && value < formData.material_details[0]?.start_date) {
             setEndDateError({
@@ -116,15 +118,15 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                 },
                             ]}
                         >
-                            <Input readOnly={view} 
-                            onChange={({ target: { value } }) => handleEndDateChange(value, 0)}
-                             type="date"></Input>
+                            <Input readOnly={view}
+                                onChange={({ target: { value } }) => handleEndDateChange(value, 0)}
+                                type="date"></Input>
                         </Form.Item>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div className="wrap-box no-number-rental">
- 
+
                         <Form.Item
                             label="Amount"
                             name="amount0"
@@ -152,94 +154,33 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                     onChange('material_details', { amount: (value || 0) }, 0);
                                 }}
                             />
-                        </Form.Item> 
-
-                        {/* <Form.Item
-                            label="Amount"
-                            name="amount0"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please enter numbers only",
-                                    pattern: /^[0-9]*$/, // Regex to allow only numbers
-                                    validateTrigger: 'onChange', // Trigger validation on every change
-                                    validator: (_, value) => {
-                                        if (!value || /^[0-9]*$/.test(value)) {
-                                            return Promise.resolve();
-                                        }
-                                        return Promise.reject(new Error('Please enter numbers only'));
-                                    },
-                                },
-                            ]}
-                        >
-                            <InputNumber
-                                readOnly={view}
-                                addonBefore="$"
-                                placeholder="Amount"
-                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
-                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
-                                onChange={(value) => {
-                                    form.setFieldValue('amount0', (value || 0) || '0');
-                                    onChange('material_details', { amount: (value || 0) }, 0);
-                                }}
-                            />
-                        </Form.Item> */}
-
-
-                        {/* <Form.Item
-                            label="Amount"
-                            name="amount0"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please enter only numbers",
-                                    pattern: /^[0-9]*$/, // Regex to allow only numbers
-                                }
-                            ]}
-                        >
-                            <InputNumber
-                                readOnly={view}
-                                addonBefore="$"
-                                placeholder="Amount"
-                                formatter={value => `${value}`.replace(new RegExp(/\B(?=(\d{3})+(?!\d))/g), ',')}
-                                parser={value => value.replace(new RegExp(/\$\s?|(,*)/g), '')}
-                                onChange={(value) => {
-                                    form.setFieldValue('amount0', (value || 0) || '0');
-                                    onChange('material_details', { amount: (value || 0) }, 0);
-                                }}
-                            />
-                        </Form.Item> */}
-
-
+                        </Form.Item>
                     </div>
                 </div>
                 {formData.shipment_type === 'project related' && (
                     <div class="col-lg-4 col-md-6">
                         {/* <div className="selectwrap columns-select shipment-caret "> */}
-                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
-
-                            <Form.Item
-                                label="Select Site"
-                                name="project_site_id0"
-                                htmlFor="file"
-                                class="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose site",
-                                    },
-                                ]}
-                            >
-                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
-                                    {Array.isArray(siteOptions[0]) &&
-                                        siteOptions[0].map((site) => (
-                                            <Select.Option key={site.site_id} value={site.site_id}>
-                                                {site.address}
-                                            </Select.Option>
-                                        )
-                                        )}
-                                </Select>
-                            </Form.Item>
+                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select ns-field-set shipment-caret`}>
+                                <SearchDropdown
+                                    name="project_site_id0"
+                                    label="Select Site"
+                                    placeholder="Select Site"
+                                    required={true}
+                                    form={form}
+                                    value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                        if (site.site_id == formData.material_details[0]?.project_site_id?.site_id || site.site_id == formData.material_details[0]?.project_site_id) {
+                                            value = formData.material_details[0]?.project_site_id?.address
+                                        }
+                                        return value
+                                    }, '') : ''}
+                                    disabled={view || siteOptions[0]?.some(option => option.project_is_deleted === true)}
+                                    filterFunc={filterSites}
+                                    callback={(value) => {
+                                        onChange('material_details', { project_site_id: value }, 0)
+                                    }}
+                                    data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
+                                    getMenuItems={getSiteMenuItem}
+                                />
                         </div>
                     </div>
                 )}
@@ -372,30 +313,27 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                                 <div class="col-lg-4 col-md-6">
                                                     <div className="wrap-box">
                                                         {/* <div className="selectwrap columns-select shipment-caret"> */}
-                                                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} columns-select shipment-caret`}>
-
-                                                            <Form.Item
-                                                                label="Select Site"
+                                                        <div className={`selectwrap ${view ? 'non-editable-dropdown' : ""} ns-field-set columns-select shipment-caret`}>
+                                                            <SearchDropdown
                                                                 name={`project_site_id${index + 1}`}
-                                                                htmlFor="file"
-                                                                class="same-clr"
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: "Please choose site",
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
-                                                                    {Array.isArray(siteOptions[0]) &&
-                                                                        siteOptions[0].map((site) => (
-                                                                            <Select.Option key={site.site_id} value={site.site_id}>
-                                                                                {site.address}
-                                                                            </Select.Option>
-                                                                        )
-                                                                        )}
-                                                                </Select>
-                                                            </Form.Item>
+                                                                label="Select Site"
+                                                                placeholder="Select Site"
+                                                                required={true}
+                                                                form={form}
+                                                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                                                    if (site.site_id == formData.material_details[index + 1]?.project_site_id?.site_id) {
+                                                                        value = site.address
+                                                                    }
+                                                                    return value
+                                                                }, '') : ''}
+                                                                disabled={view || siteOptions[0]?.some(option => option.project_is_deleted === true)}
+                                                                filterFunc={filterSites}
+                                                                callback={(value) => {
+                                                                    onChange('material_details', { [key]: value }, index + 1)
+                                                                }}
+                                                                data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
+                                                                getMenuItems={getSiteMenuItem}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>

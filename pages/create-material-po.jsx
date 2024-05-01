@@ -39,6 +39,7 @@ const CreateMaterialPo = () => {
         address: '',
         phone: '',
         email: '',
+        vendor_name: '',
         material_details: [{ ...repeatorData }]
     });
 
@@ -96,7 +97,7 @@ const CreateMaterialPo = () => {
     }
 
     const onChange = (name, value, index) => {
-        if(name==='shipment_type'){
+        if(name === 'shipment_type') {
             formData?.material_details.forEach((material, index) => {
                 form.setFieldValue('material_for' + (index), '')
                 formData.material_details[index].material_for = '';

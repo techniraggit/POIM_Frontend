@@ -36,6 +36,7 @@ const EditSubContractorPo = () => {
         shipment_type: '',
         delivery_address: '',
         quantity: 0,
+        vendor_name: '',
         material_details: []
     });
 
@@ -67,6 +68,7 @@ const EditSubContractorPo = () => {
                         original_po_amount: data.total_amount,
                         company_name: data.vendor_contact.company.company_name,
                         vendor_id: data.vendor_contact.company.vendor_id,
+                        vendor_name: data.vendor_contact?.name,
                         vendor_contact_id: data.vendor_contact.vendor_contact_id,
                         hst_amount: data.hst_amount,
                         total_amount: data.total_amount,
@@ -79,13 +81,14 @@ const EditSubContractorPo = () => {
                         project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         shipment_type: data.shipment_type || 'project related',
                         material_details: data.material_details.map((detail) => {
-                            return {description:detail.description,date:detail.date,amount:detail.amount,md_id:detail.md_id, project_site_id: detail?.project_site?.site_id }
+                            return {description:detail.description,date:detail.date,amount:detail.amount,md_id:detail.md_id, project_site_id: detail?.project_site }
                         }),
                         status: data.status
                     });
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact.company.company_name)
                     form.setFieldValue('vendor_id', data.vendor_contact?.company?.is_deleted ? data.vendor_contact?.company.company_name : data.vendor_contact?.company.vendor_id);
+                    form.setFieldValue('vendor_name', data.vendor_contact?.name);
                     form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
                     form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
                     form.setFieldValue('total_amount', data.total_amount.toLocaleString());
@@ -163,6 +166,12 @@ const EditSubContractorPo = () => {
         updatePo({
             ...formData,
             po_id: id,
+            material_details: formData.material_details.map((detail) => {
+                return {
+                    ...detail,
+                    project_site_id: detail.project_site_id.site_id
+                }
+            }),
             original_po_amount : formData.subcontractor_type === 'new' ? undefined : formData.original_po_amount
         }).then((res) => {
             if(res?.data?.status) {

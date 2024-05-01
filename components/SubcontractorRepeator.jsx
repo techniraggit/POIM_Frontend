@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import '../styles/style.css';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Select, Button, Space, DatePicker, InputNumber, message } from "antd";
+import { Form, Input, Button, Space, InputNumber, message } from "antd";
 import dayjs from "dayjs";
 import { updatematerialPo } from "@/apis/apis/adminApis";
+import { filterSites, getSiteMenuItem } from "@/utility/filters";
+import SearchDropdown from "./SearchDropdown";
 
 const repeatorData = {
     description: '',
@@ -73,11 +75,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 {
                                     required: true,
                                     message: "Please enter Amount",
-                                },
-                                // {
-                                //     pattern: /^(?:\d+|\d*\.\d+)$/,
-                                //     message: "Please enter a valid number only",
-                                // },
+                                }
                             ]}
                         >
                             <InputNumber
@@ -98,29 +96,28 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                     <div class="col-sm-4">
                         {/* <div className="selectwrap columns-select shipment-caret "> */}
                         <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret columns-select`}>
-
-                            <Form.Item
-                                label="Select Site"
-                                name="project_site_id0"
-                                htmlFor="file"
-                                class="same-clr"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "Please choose site",
-                                    },
-                                ]}
-                            >
-                                <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { project_site_id: value }, 0)} class="js-states form-control file-wrap-select">
-                                    {Array.isArray(siteOptions[0]) &&
-                                        siteOptions[0].map((site) => (
-                                            <Select.Option key={site.site_id} value={site.site_id}>
-                                                {site.address}
-                                            </Select.Option>
-                                        )
-                                        )}
-                                </Select>
-                            </Form.Item>
+                        <div className="ns-field-set ">
+                            <SearchDropdown
+                                name="project_site_id0" 
+                                label="Select Site" 
+                                placeholder="Select Site"
+                                required={true}
+                                form={form}
+                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                    if(site.site_id == formData.material_details[0]?.project_site_id?.site_id || site.site_id == formData.material_details[0].project_site_id) {
+                                        value = site.address
+                                    }
+                                    return value
+                                }, '') : ''}
+                                disabled={view || siteOptions[0]?.some(option => option.project_is_deleted === true)}
+                                filterFunc={filterSites} 
+                                callback={(value) => {
+                                    onChange('material_details', { project_site_id: value }, 0)
+                                }}
+                                data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
+                                getMenuItems={getSiteMenuItem}
+                            />
+                            </div>
                         </div>
                     </div>
                 )}
@@ -220,29 +217,27 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                         else if (key === 'project_site_id' && formData.shipment_type === 'project related') {
                                             return (
                                                 <div class="col-sm-4">
-                                                    <div className="selectwrap columns-select shipment-caret ">
-                                                        <Form.Item
-                                                            label="Select Site"
+                                                    <div className="selectwrap columns-select ns-field-set shipment-caret ">
+                                                        <SearchDropdown
                                                             name={`project_site_id${index + 1}`}
-                                                            htmlFor="file"
-                                                            class="same-clr"
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: "Please choose site",
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select disabled={view} id="singlesa" onChange={(value) => onChange('material_details', { [key]: value }, index + 1)} class="js-states form-control file-wrap-select">
-                                                                {Array.isArray(siteOptions[0]) &&
-                                                                    siteOptions[0].map((site) => (
-                                                                        <Select.Option key={site.site_id} value={site.site_id}>
-                                                                            {site.address}
-                                                                        </Select.Option>
-                                                                    )
-                                                                    )}
-                                                            </Select>
-                                                        </Form.Item>
+                                                            label="Select Site" 
+                                                            placeholder="Select Site"
+                                                            required={true}
+                                                            form={form}
+                                                            value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                                                if(site.site_id == formData.material_details[index + 1]?.project_site_id?.site_id || site.site_id == formData.material_details[index + 1]?.project_site_id) {
+                                                                    value = site.address
+                                                                }
+                                                                return value
+                                                            }, '') : ''}
+                                                            disabled={view || siteOptions[0]?.some(option => option.project_is_deleted === true)}
+                                                            filterFunc={filterSites} 
+                                                            callback={(value) => {
+                                                                onChange('material_details', { [key]: value }, index + 1)
+                                                            }}
+                                                            data={Array.isArray(siteOptions[0]) ? siteOptions[0] || [] : []}
+                                                            getMenuItems={getSiteMenuItem}
+                                                        />
                                                     </div>
                                                 </div>
                                             )
@@ -263,25 +258,6 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                         }
                                     }} style={{ marginLeft: '8px' }} />
                                 </div>
-
-                                {/* <div className="col-sm-4"> */}
-                                {/* </div> */}
-                                {/* {
-                                    !view && 
-                                    <MinusOutlined className="minus-wrap" onClick={async () => {
-                                        if (data.md_id) {
-                                            await handleRemoveDetail(data.md_id, index);
-                                        } else {
-                                            setFormData({
-                                                ...formData,
-                                                material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                            });
-                                        }
-                                        if (calculateAmount) {
-                                            calculateAmount();
-                                        }
-                                    }} style={{ marginLeft: '8px' }} />
-                                } */}
                             </div>
                         })
                     }

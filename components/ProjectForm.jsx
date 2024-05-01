@@ -2,7 +2,8 @@ import React from "react";
 import { Form, Input, Button, Select, Space } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { removeProjectSite } from "@/apis/apis/adminApis";
-
+import { filterProjectManager, getProjectManagerMenuItem } from "@/utility/filters";
+import SearchDropdown from "./SearchDropdown";
 function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData, repeatorData, edit }) {
     return (
         <Form onFinish={onFinish} form={form} layout="vertical"
@@ -10,17 +11,17 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
             wrapperCol={{ span: 16 }}
         >
             <div className="col-sm-4 mb-3">
-                    <div className="wrap-box mb-2">
-                        <Form.Item
-                            label="Customer Name"
-                            name="customer_name"
-                            className="vender-input"
-                            // rules={[{ required: true, message: 'Please enter customer name!' }]}
-                        >
-                            <Input onChange={({ target: { value } }) => onChange('customer_name', value)} />
-                        </Form.Item>
-                    </div>
+                <div className="wrap-box mb-2">
+                    <Form.Item
+                        label="Customer Name"
+                        name="customer_name"
+                        className="vender-input"
+                    // rules={[{ required: true, message: 'Please enter customer name!' }]}
+                    >
+                        <Input onChange={({ target: { value } }) => onChange('customer_name', value)} />
+                    </Form.Item>
                 </div>
+            </div>
             <div className="row">
                 <div className="col-lg-4 col-md-12">
                     <div className="wrap-box">
@@ -43,30 +44,43 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                             // disabled={edit}
                             rules={[{ required: true, message: 'Please enter your project number!' }]}
                         >
-                            <Input placeholder="ex.00854" 
-                            readOnly={edit}
-                            onChange={({ target: { value } }) => onChange('project_number', value)} />
+                            <Input placeholder="ex.00854"
+                                readOnly={edit}
+                                onChange={({ target: { value } }) => onChange('project_number', value)} />
                         </Form.Item>
                     </div>
                 </div>
             </div>
             <div className="row mb-4">
                 <div className="col-lg-4 col-md-12 shipment-caret">
-                    <div className="selectwrap bg-border-select">
-                        <Form.Item label="Project Manager" name="project_manager_id" initialValue="" 
-                        className="vender-input"
-                        rules={[{ required: true, message: 'Please choose project manager!' }]}
-                        >
-                            <Select onChange={(value) => onChange('project_manager_id', value)}>
-                                {Array.isArray(managers) &&
-                                    managers.map((manager) => (
-                                        <Option key={manager.id} value={manager.id}
-                                        >
-                                            {manager.first_name}
-                                        </Option>
-                                    ))}
-                            </Select>
-                        </Form.Item>
+                    <div className="selectwrap bg-border-select ns-field-set">
+                        <SearchDropdown
+                            placeholder="Select"
+                            name="project_manager_id"
+                            label="Project Manager"
+                            required={true}
+                            form={form}
+                              value={
+                                managers.length > 0
+                                  ? managers?.reduce((value, manager) => {
+                                      if (
+                                        manager.project_manager_id ===
+                                        formData.project_manager_id
+                                      ) {
+                                        value = manager.first_name;
+                                      }
+                                      return value;
+                                    }, "")
+                                  : ""
+                              }
+                            filterFunc={filterProjectManager}
+                            callback={(value) => {
+                                // vendorContactDetails(value);
+                                onChange('project_manager_id', value);
+                            }}
+                            data={managers}
+                            getMenuItems={getProjectManagerMenuItem}
+                        />
                     </div>
                 </div>
             </div>
@@ -115,19 +129,19 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                                                 label={upperKey}
                                                 name={key + (index + 1)}
                                                 rules={[{ required: true, message: `Please enter ${upperKey}` },
-                                                    key === 'address' && {
-                                                        validator(_, value) {
-                                                            const otherAddresses = formData.project_sites
-                                                                .filter((_, i) => i !== index + 1)
-                                                                .map((otherSite) => otherSite[key]);
-                        
-                                                            if (otherAddresses.includes(value)) {
-                                                                return Promise.reject(`${upperKey} must be unique.`);
-                                                            }
-                        
-                                                            return Promise.resolve();
-                                                        },
+                                                key === 'address' && {
+                                                    validator(_, value) {
+                                                        const otherAddresses = formData.project_sites
+                                                            .filter((_, i) => i !== index + 1)
+                                                            .map((otherSite) => otherSite[key]);
+
+                                                        if (otherAddresses.includes(value)) {
+                                                            return Promise.reject(`${upperKey} must be unique.`);
+                                                        }
+
+                                                        return Promise.resolve();
                                                     },
+                                                },
                                                 ]}
                                             >
                                                 <Input onChange={({ target: { value } }) => onChange('project_sites', { [key]: value }, index + 1)} placeholder={upperKey} />
@@ -165,12 +179,12 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                                 ...repeatorData
                             }]
                         });
-                        form.setFieldValue('state'+(formData.project_sites.length),'ON')
+                        form.setFieldValue('state' + (formData.project_sites.length), 'ON')
                     }} icon={<PlusOutlined />}>
                         <span >Add One More Site</span>
                     </Button>
                 </Form.Item>
-                
+
             </div>
             <Form.Item >
                 <button type="submit" className="create-ven-butt" loading>Submit</button>

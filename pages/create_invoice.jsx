@@ -10,6 +10,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import Subcontractor_invoice from "@/components/subcontractor_invoice";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import SearchDropdown from "@/components/SearchDropdown";
+import { filterInvoicePO, getInvoivePOMenuItem } from "@/utility/filters";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -54,15 +56,13 @@ const CreateInvoice = () => {
     };
 
     useEffect(() => {
-        if (po) {
-            const response = fetchPoNumbr(po)
-            response.then((res) => {
-                if (res?.data?.status) {
-                    setPoNumber([...res.data.data]);
-                }
-            })
-        }
-    }, [po])
+        const response = fetchPoNumbr()
+        response.then((res) => {
+            if (res?.data?.status) {
+                setPoNumber([...res.data.data]);
+            }
+        })
+    }, [])
 
     const fetchPoNumber = (id) => {
         const response = fetchPoNumbers(id)
@@ -149,7 +149,7 @@ const CreateInvoice = () => {
                                     onFinish={onFinish}
                                 >
                                     <div className="row mb-4">
-                                        <div className="col-lg-4 col-md-6">
+                                        {/* <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap react-select">
                                                 <div className="selectwrap add-dropdown-wrap shipment-border aligned-text">
                                                     <Form.Item
@@ -174,32 +174,24 @@ const CreateInvoice = () => {
                                                     </Form.Item>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
 
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap  shipment-caret invoice-select aligned-text">
-                                                <Form.Item
-                                                    label="Choose PO Number"
-                                                    name="po_number"
-                                                    class="bold-label"
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: "Please choose PO Number",
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Select placeholder="Select PO Number" id="create-invoice"
-                                                        class="js-states form-control file-wrap-select bold-select"
-                                                        onChange={(value) => fetchPoNumber(value)}
-                                                    >
-                                                        {poNumber.map((entry) => (
-                                                            <Select.Option key={entry.po_id} value={entry.po_id}>
-                                                                {entry.po_number}
-                                                            </Select.Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
+                                                <div className="ns-field-set ">
+                                                    <SearchDropdown
+                                                        name="po_number"
+                                                        label="Choose PO Number"
+                                                        required={true}
+                                                        form={form}
+                                                        filterFunc={filterInvoicePO}
+                                                        callback={(value) => {
+                                                            fetchPoNumber(value)
+                                                        }}
+                                                        data={poNumber}
+                                                        getMenuItems={getInvoivePOMenuItem}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -312,4 +304,3 @@ export default CreateInvoice;
 
 
 
- 

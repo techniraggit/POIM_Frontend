@@ -42,6 +42,7 @@ const CreateSubContractorPo = () => {
         email: '',
         delivery_address: '',
         quantity: 0,
+        vendor_name: '',
         material_details: [{ ...repeatorData }]
     });
     const router = useRouter();
