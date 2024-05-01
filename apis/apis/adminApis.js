@@ -3,7 +3,7 @@ import { Axios } from '../config/axiosConfig';
 
 export const fetchProjects = (data) => {
     // return Axios.get(`/api/admin/projects`);
-    return Axios.get(`/api/helping/get-projects-list?is_deleted=${data.is_deleted}`);
+    return Axios.get(`/api/helping/get-projects-list?is_deleted=${data?.is_deleted}`);
     // ?page=${currentPage}
 }
 
