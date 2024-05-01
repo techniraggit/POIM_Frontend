@@ -40,6 +40,7 @@ const Edit_Rental_Po = () => {
         phone: '',
         email: '',
         shipment_type: '',
+        vendor_name: '',
         material_details: []
     });
 
@@ -59,6 +60,7 @@ const Edit_Rental_Po = () => {
                         project_id: data.vendor_contact?.company.project_id,
                         vendor_contact_id: data.vendor_contact?.vendor_contact_id,
                         hst_amount: data.hst_amount,
+                        vendor_name: data.vendor_contact?.name,
                         total_amount: data.total_amount,
                         country: data.vendor_contact?.company.country,
                         state: data.vendor_contact?.company.state,
@@ -76,6 +78,7 @@ const Edit_Rental_Po = () => {
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
                     form.setFieldValue('vendor_id', data.vendor_contact?.company?.is_deleted ? data.vendor_contact?.company.company_name : data.vendor_contact?.company.vendor_id);
+                    form.setFieldValue('vendor_name', data.vendor_contact?.name);
                     form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                     form.setFieldValue('shipment_type', data.shipment_type);
                     form.setFieldValue('project_id', typeof data.project === 'object' ? data.project?.is_deleted ? data.project.name : data.project?.project_id : data.project);

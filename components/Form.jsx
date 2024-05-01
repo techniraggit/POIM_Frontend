@@ -146,6 +146,16 @@ function PoForm({
     const response = fetchVendorContacts(id);
     response.then((res) => {
       if (res?.data?.status) {
+        formData.company_name = res.data.vendor_company.company_name;
+        formData.address = res.data.vendor_company.address;
+        formData.state = res.data.vendor_company.state;
+        formData.country = res.data.vendor_company.country;
+        form.setFieldsValue({
+          company_name: res.data.vendor_company.company_name,
+        });
+        form.setFieldsValue({ address: res.data.vendor_company.address });
+        form.setFieldsValue({ state: res.data.vendor_company.state });
+        form.setFieldsValue({ country: res.data.vendor_company.country });
         setContactId([...res.data.vendors]);
       }
     });
@@ -155,25 +165,15 @@ function PoForm({
     const response = getVendorDetails(id);
     response.then((res) => {
       if (res.data?.status) {
-        formData.company_name = res.data.vendors.company.company_name;
         formData.email = res.data.vendors.email;
         formData.phone = "+1" + res.data.vendors.phone_number;
-        formData.address = res.data.vendors.company.address;
-        formData.state = res.data.vendors.company.state;
-        formData.country = res.data.vendors.company.country;
-
-        form.setFieldsValue({
-          company_name: res.data.vendors.company.company_name,
-        });
+        formData.vendor_name = res.data.vendors.name;
         form.setFieldsValue({ email: res.data.vendors.email });
         form.setFieldsValue({ phone: res.data.vendors.phone_number.slice(2) });
-        form.setFieldsValue({ address: res.data.vendors.company.address });
-        form.setFieldsValue({ state: res.data.vendors.company.state });
-        form.setFieldsValue({ country: res.data.vendors.company.country });
+        form.setFieldsValue({ vendor_name: res.data.vendors.name });
       }
     });
   };
-
   return (
     <>
       <div class="order-choose d-flex">
@@ -320,21 +320,20 @@ function PoForm({
         <div class="col-lg-4 col-md-6">
           <div class="wrap-box">
             <Form.Item
-              label="Company name"
-              name="company_name"
+              label="Vendor Name"
+              name="vendor_name"
               class="bold-label"
               rules={[
                 {
                   required: true,
-                  message: "Please Enter Company name",
+                  message: "Please Enter Vendor name",
                 },
               ]}
             >
               <Input
-                disabled
                 readOnly={view || edit}
                 onChange={({ target: { value } }) =>
-                  onChange("company_name", value)
+                  onChange("vendor_name", value)
                 }
               />
             </Form.Item>
@@ -355,7 +354,6 @@ function PoForm({
               ]}
             >
               <Input
-                disabled
                 readOnly={view || edit}
                 onChange={({ target: { value } }) => onChange("email", value)}
               />
@@ -366,10 +364,32 @@ function PoForm({
           <div class="wrap-box">
             <Form.Item label="Phone" name="phone" class="bold-label">
               <Input
-                disabled
                 addonBefore="+1"
                 readOnly={view || edit}
-                onChange={({ target: { value } }) => onChange("phone", value)}
+                onChange={({ target: { value } }) => onChange("phone", "+1" + value)}
+              />
+            </Form.Item>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="wrap-box">
+            <Form.Item
+              label="Company name"
+              name="company_name"
+              class="bold-label"
+              rules={[
+                {
+                  required: true,
+                  message: "Please Enter Company name",
+                },
+              ]}
+            >
+              <Input
+                disabled
+                readOnly={view || edit}
+                onChange={({ target: { value } }) =>
+                  onChange("company_name", value)
+                }
               />
             </Form.Item>
           </div>

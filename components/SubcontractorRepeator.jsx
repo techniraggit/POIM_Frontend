@@ -104,7 +104,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 required={true}
                                 form={form}
                                 value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
-                                    if(site.site_id == formData.material_details[0]?.project_site?.site_id || site.site_id == formData.material_details[0].project_site_id) {
+                                    if(site.site_id == formData.material_details[0]?.project_site_id?.site_id || site.site_id == formData.material_details[0].project_site_id) {
                                         value = site.address
                                     }
                                     return value
@@ -225,8 +225,8 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                             required={true}
                                                             form={form}
                                                             value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
-                                                                if(site.site_id == formData.material_details[index + 1]?.project_site?.site_id) {
-                                                                    value = formData.material_details[index + 1]?.project_site?.address
+                                                                if(site.site_id == formData.material_details[index + 1]?.project_site_id?.site_id || site.site_id == formData.material_details[index + 1]?.project_site_id) {
+                                                                    value = site.address
                                                                 }
                                                                 return value
                                                             }, '') : ''}

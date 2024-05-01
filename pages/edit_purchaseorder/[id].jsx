@@ -42,6 +42,7 @@ const EditMaterialPo = () => {
         address: '',
         phone: '',
         email: '',
+        vendor_name: '',
         material_details: [{ ...repeatorData }]
     });
 
@@ -66,6 +67,7 @@ const EditMaterialPo = () => {
                         amount: data.total_amount,
                         company_name: data.vendor_contact?.company.company_name,
                         vendor_id: data.vendor_contact?.company.vendor_id,
+                        vendor_name: data.vendor_contact?.name,
                         vendor_contact_id: data.vendor_contact?.vendor_contact_id,
                         hst_amount: data.hst_amount,
                         total_amount: data.total_amount,
@@ -86,6 +88,7 @@ const EditMaterialPo = () => {
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
                     form.setFieldValue('vendor_id', data.vendor_contact?.company?.is_deleted ? data.vendor_contact?.company.company_name : data.vendor_contact?.company.vendor_id);
+                    form.setFieldValue('vendor_name', data.vendor_contact?.name);
                     form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                     form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
                     form.setFieldValue('total_amount', data.total_amount.toLocaleString());
@@ -159,7 +162,7 @@ const EditMaterialPo = () => {
         })
     }
      const onChange = (name, value, index) => {
-        if(name==='shipment_type'){
+        if(name === 'shipment_type'){
             formData?.material_details.forEach((material, index) => {
                 form.setFieldValue('material_for' + (index), '')
                 formData.material_details[index].material_for = '';

@@ -39,6 +39,7 @@ const CreateMaterialPo = () => {
         address: '',
         phone: '',
         email: '',
+        vendor_name: '',
         material_details: [{ ...repeatorData }]
     });
 
