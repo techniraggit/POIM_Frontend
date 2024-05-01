@@ -286,7 +286,7 @@ function PoForm({
                   placeholder="Select"
                   name="vendor_contact_id"
                   label="Vendor Contact Person"
-                  required={true}
+                  required={false}
                   disabled={view || (edit && formData.status !== "pending")}
                   form={form}
                   value={
