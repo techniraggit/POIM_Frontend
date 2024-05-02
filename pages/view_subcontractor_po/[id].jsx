@@ -38,6 +38,7 @@ const ViewSubContractorPo = () => {
         shipment_type: '',
         delivery_address: '',
         quantity: 0,
+        vendor_name: '',
         material_details: []
     });
     const [isModalOpen, setIsModalOpen] = useState({
@@ -71,6 +72,7 @@ const ViewSubContractorPo = () => {
                         original_po_amount: data.total_amount,
                         company_name: data.vendor_contact.company.company_name,
                         vendor_id: data.vendor_contact.company.vendor_id,
+                        vendor_name: data.vendor_contact?.name,
                         vendor_contact_id: data.vendor_contact.vendor_contact_id,
                         hst_amount: data.hst_amount,
                         total_amount: data.total_amount,
@@ -98,6 +100,7 @@ const ViewSubContractorPo = () => {
                     form.setFieldValue('po_type', data.po_type);
                     form.setFieldValue('company_name', data.vendor_contact.company.company_name)
                     form.setFieldValue('vendor_id', data.vendor_contact?.company?.is_deleted ? data.vendor_contact?.company.company_name : data.vendor_contact?.company.vendor_id);
+                    form.setFieldValue('vendor_name', data.vendor_contact?.name);
                     form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
                     form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
                     form.setFieldValue('total_amount', data.total_amount.toLocaleString());

@@ -43,6 +43,7 @@ const ViewMaterialPo = () => {
         address: '',
         phone: '',
         email: '',
+        vendor_name: '',
         material_details: [{ ...repeatorData }]
     });
     const [isModalOpen, setIsModalOpen] = useState({
@@ -70,6 +71,7 @@ const ViewMaterialPo = () => {
                     // vendor_id: data.is_deleted ? data.vendor_contact?.company.vendor_id:data.vendor_contact?.company.company_name,
                     company_name: data.vendor_contact?.company.company_name,
                     vendor_id: data.vendor_contact?.company.vendor_id,
+                    vendor_name: data.vendor_contact?.name,
                     vendor_contact_id: data.vendor_contact?.vendor_contact_id,
                     hst_amount: data.hst_amount,
                     total_amount: data.total_amount,
@@ -91,6 +93,7 @@ const ViewMaterialPo = () => {
                 setHistory([...res.data.history_logs_data])
                 form.setFieldValue('po_type', data.po_type);
                 form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
+                form.setFieldValue('vendor_name', data.vendor_contact?.name);
                 form.setFieldValue('vendor_id', data.vendor_contact?.company?.is_deleted ? data.vendor_contact?.company.company_name : data.vendor_contact?.company.vendor_id);
                 form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
                 form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
