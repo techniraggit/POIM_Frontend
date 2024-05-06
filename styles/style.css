@@ -311,7 +311,7 @@ td {
     padding: 10px 16px;
 }
 
-.table-hover tbody tr:nth-child(even) td {
+.table-hover tbody tr:not(.light-blue):nth-child(even) td {
     background: #f1f2f3;
 }
 
