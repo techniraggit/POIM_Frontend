@@ -80,7 +80,7 @@ const SubcontractorReport = () => {
               fromDate={true}
               toDate={true}
               download={true}
-              status={true}
+              status={false}
               project_number={true}
               applyFilters={applyFilters}
               currentPage={currentPage}
