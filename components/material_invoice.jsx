@@ -35,6 +35,7 @@ const Material_invoice = ({ data }) => {
         state: '',
         address: '',
         phone: '',
+        vendor_name: '',
         email: '',
         material_details: [{ ...repeatorData }]
     });
@@ -62,6 +63,7 @@ const Material_invoice = ({ data }) => {
                 state: data.vendor_contact?.company.state,
                 address: data.vendor_contact?.company.address,
                 phone: data.vendor_contact?.phone_number,
+                vendor_name: data.vendor_contact?.name,
                 email: data.vendor_contact?.email,
                 shipment_type: data.shipment_type,
                 project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
@@ -75,6 +77,7 @@ const Material_invoice = ({ data }) => {
             form.setFieldValue('po_type', data.po_type);
             form.setFieldValue('company_name', data.vendor_contact?.company.company_name)
             form.setFieldValue('vendor_id', data.vendor_contact?.company.vendor_id);
+            form.setFieldValue('vendor_name', data.vendor_contact?.name);
             form.setFieldValue('vendor_contact_id', data.vendor_contact?.vendor_contact_id);
             form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
             form.setFieldValue('total_amount', data.total_amount.toLocaleString());

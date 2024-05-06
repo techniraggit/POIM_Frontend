@@ -26,6 +26,7 @@ const Subcontractor_invoice = ({data}) => {
         state: '',
         address: '',
         phone: '',
+        vendor_name: '',
         email: '',
         shipment_type: '',
         subcontractor_type: '',
@@ -56,6 +57,7 @@ const Subcontractor_invoice = ({data}) => {
                 total_amount: data.total_amount,
                 project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                 project_site_id: data.project_site,
+                vendor_name: data.vendor_contact?.name,
                 country: data.vendor_contact.company.country,
                 state: data.vendor_contact.company.state,
                 address: data.vendor_contact.company.address,
@@ -75,6 +77,7 @@ const Subcontractor_invoice = ({data}) => {
             form.setFieldValue('vendor_id', data.vendor_contact.company.vendor_id);
             form.setFieldValue('vendor_contact_id', data.vendor_contact.vendor_contact_id);
             form.setFieldValue('shipment_type', data.shipment_type);
+            form.setFieldValue('vendor_name', data.vendor_contact?.name);
             form.setFieldValue('hst_amount', (data.hst_amount).toLocaleString()) || 0;
             form.setFieldValue('total_amount', data.total_amount.toLocaleString());
             // form.setFieldValue('status', data.status);

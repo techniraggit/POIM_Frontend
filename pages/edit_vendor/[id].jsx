@@ -108,7 +108,7 @@ const VendorEdit = () => {
             ...formData,
             vendor_id: id,
             contact_info: formData.contact_info.map((info) => {
-                if(!info.phone_number.includes('+1')) {
+                if(info.phone_number && !info.phone_number.includes('+1')) {
                     info.phone_number = '+1' + info.phone_number;
                 }
                 return info
@@ -122,6 +122,7 @@ const VendorEdit = () => {
         })
         .catch((error)=>{
             message.error(error.response.data.message)
+            setIsModalOpen(false);
         })
     };
 

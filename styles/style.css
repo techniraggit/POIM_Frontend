@@ -7,12 +7,9 @@
     font-size: 20px;
 }
 
-tr.light-blue td {
+.light-blue {
     background-color: lightblue !important;
 }
-
-
-
 
 .wrap-box.dollor-inputs input {
     border: none !important;

@@ -14,6 +14,7 @@ const repeatorData = {
     name: '',
     phone_number: ''
 }
+
 const CreateVendor = () => {
     const [form] = Form.useForm();
     const router = useRouter();
@@ -28,10 +29,8 @@ const CreateVendor = () => {
     });
 
     const onFinish = () => {
-      
         createVendor({
             ...formData,
-            // phone_number: '+1' + formData.contact_info[0].phone_number,
             contact_info: formData.contact_info.map((info) => {
                 if(info.phone_number && !info.phone_number.includes('+1')) {
                     info.phone_number = '+1' + info.phone_number;
@@ -39,7 +38,6 @@ const CreateVendor = () => {
                 return info
             })
         }).then((response) => {
-           
             if(response.data?.status) {
                 message.success(response.data.message);
                 router.push('/vendor');
@@ -49,6 +47,7 @@ const CreateVendor = () => {
             message.error(error.response.data.message)
         })
     }
+
     const onChange = (name, value, index) => {
         if (name === 'contact_info') {
             const contactInfo = formData.contact_info[index];
@@ -94,5 +93,6 @@ const CreateVendor = () => {
         </>
     )
 }
+
 export { getServerSideProps }
 export default withAuth(['admin', 'project manager', 'accounting', 'site superintendent','project coordinator'])(CreateVendor)

@@ -95,7 +95,7 @@ const userReport = () => {
                   <tbody>
                     {Array.isArray(users) &&
                       users.map((user, index) => (
-                        <tr key={index}>
+                        <tr key={index} className={user.is_deleted ? 'light-blue' : ''}>
                           <td>{calculateStartingSerialNumber() + index}</td>
                           <td>{user.first_name}</td>
                           <td className="td-color">{user.last_name}</td>

@@ -211,6 +211,9 @@ const EditMaterialPo = () => {
                 setIsModalOpen(false);
                 setRefetch(true);
             }
+        }).catch((error) => {
+            message.error(error.response.data.message)
+            setIsModalOpen(false);
         })
     }
 
