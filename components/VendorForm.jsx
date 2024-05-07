@@ -159,7 +159,8 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                         <Form.Item
                                                             label={"Phone Number"}
                                                             name={key + index}
-                                                            rules={[ { required: true, message: 'Please enter your contact number!' },
+                                                            rules={[ 
+                                                                // { required: true, message: 'Please enter your contact number!' },
                                                             {
                                                               pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
                                                               message: 'Please enter a valid 10 digit phone number',
