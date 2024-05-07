@@ -171,7 +171,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                                         .filter((_, i) => i !== index + 1)
                                                                         .map((otherSite) => otherSite[key]);
                                                                     if (otherAddresses.includes(value)) {
-                                                                        return Promise.reject(`${upperKey} must be unique.`);
+                                                                        // return Promise.reject(`${upperKey} must be unique.`);
                                                                     }
 
                                                                     return Promise.resolve();
