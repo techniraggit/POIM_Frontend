@@ -320,7 +320,7 @@ function PoForm({
         <div class="col-lg-4 col-md-6">
           <div class="wrap-box">
             <Form.Item
-              label="Vendor Name"
+              label="Contact Person Name"
               name="vendor_name"
               class="bold-label"
               rules={[
