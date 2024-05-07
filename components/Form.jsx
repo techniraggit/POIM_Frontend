@@ -62,7 +62,7 @@ function PoForm({
         fetchSitesProject(form.getFieldValue("project_id"), index);
       });
     }
-    const response = fetchVendorContact();
+    const response = fetchVendorContact({ is_rejected: view || (edit && formData.status !== "pending") });
     response.then((res) => {
       if (res?.data?.status) {
         setVendors([...res.data.vendors]);
@@ -251,7 +251,7 @@ function PoForm({
                   required={true}
                   value={vendors?.reduce((value, vendor) => {
                     // console.log(vendor.vendor_id === formData.vendor_id ? vendor.company_name : "blank",'=========vendor==========');
-                    if (vendor.vendor_id) {
+                    if (vendor.vendor_id === formData.vendor_id ) {
                       value = vendor.company_name;
                     }
                     return value;

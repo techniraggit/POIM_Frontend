@@ -2,13 +2,11 @@
 import { Axios } from '../config/axiosConfig';
 
 export const fetchProjects = (data) => {
-    // return Axios.get(`/api/admin/projects`);
     return Axios.get(`/api/helping/get-projects-list?is_deleted=${data?.is_deleted}`);
-    // ?page=${currentPage}
 }
 
-export const fetchVendorContact = () => {
-    return Axios.get(`/api/helping/vendors-and-contacts`);
+export const fetchVendorContact = (data) => {
+    return Axios.get(`/api/helping/vendors-and-contacts?is_rejected=${data?.is_rejected}`);
 }
 
 export const fetchVendorContacts = (id) => {
