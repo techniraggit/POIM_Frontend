@@ -100,7 +100,7 @@ const purchaseOrderReport = () => {
                     {Array.isArray(rows) && rows.length > 0 ? (
                       rows.map((purchase, index) => {
                         return (
-                          <tr key={index}>
+                          <tr key={index} className={purchase.is_deleted ? 'light-blue' : ''}>
                             <td>{calculateStartingSerialNumber() + index}</td>
                             <td>{purchase.po_number}</td>
                             <td>{purchase.project?.project_no || "-"}</td>

@@ -15,6 +15,7 @@ export const getVendorMenuItem = (vendor, callback, setSearchValue, hideResults,
     return <MenuItem
         key={vendor.vendor_id}
         value={vendor.vendor_id}
+        className={vendor.status === 'pending' ? 'light-blue' : ''}
         onClick={() => {
             callback(vendor.vendor_id)
             setSearchValue(vendor.company_name);

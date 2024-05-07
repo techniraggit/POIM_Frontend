@@ -205,6 +205,8 @@ const ViewMaterialPo = () => {
                 setIsModalOpen(false);
                 setRefetch(true);
             }
+        }).catch((error) => {
+            message.error(error.response.data.message)
         })
     }
 
