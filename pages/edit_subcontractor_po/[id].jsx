@@ -169,7 +169,7 @@ const EditSubContractorPo = () => {
             material_details: formData.material_details.map((detail) => {
                 return {
                     ...detail,
-                    project_site_id: detail.project_site_id.site_id
+                    project_site_id: detail.project_site_id.site_id || detail.project_site_id
                 }
             }),
             original_po_amount : formData.subcontractor_type === 'new' ? undefined : formData.original_po_amount

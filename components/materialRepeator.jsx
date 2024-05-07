@@ -140,7 +140,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                                 form={form}
                                 value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
                                     if(site.site_id == formData.material_details[0]?.project_site?.site_id) {
-                                        value = formData.material_details[0]?.project_site?.address
+                                        value = site.address
                                     }
                                     return value
                                 }, '') : ''}
@@ -220,7 +220,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                                 form={form}
                                 value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
                                     if(site.site_id == formData.material_details[0]?.project_site?.site_id) {
-                                        value = formData.material_details[0]?.project_site?.address
+                                        value = site.address
                                     }
                                     return value
                                 }, '') : ''}

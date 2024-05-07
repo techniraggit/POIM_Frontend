@@ -174,7 +174,6 @@ function PoForm({
       }
     });
   };
-  console.log(formData)
   return (
     <>
       <div class="order-choose d-flex">

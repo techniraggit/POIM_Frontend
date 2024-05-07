@@ -70,7 +70,9 @@ const Edit_Rental_Po = () => {
                         shipment_type: data.shipment_type,
                         project_id: typeof data.project === 'object' ? data.project?.project_id : data.project,
                         material_details: data.material_details.map((details) => {
-                            return {description:details.description, start_date: details.date,end_date:details.end_date,amount:details.amount, project_site_id: details.project_site ,md_id:details.md_id}
+                            return {description:details.description, start_date: details.date,end_date:details.end_date,
+                                amount:details.amount,
+                                 project_site_id: details.project_site ,md_id:details.md_id}
                             // return {...details, project_site_id: details.project_site?.site_id, start_date: details.date}
                         }),
                         status: data.status
@@ -122,7 +124,7 @@ const Edit_Rental_Po = () => {
             material_details: formData.material_details.map((detail) => {
                 return {
                     ...detail,
-                    project_site_id: detail.project_site_id.site_id
+                    project_site_id: detail.project_site_id.site_id || detail.project_site_id
                 }
             })
         }).then((res) => {

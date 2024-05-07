@@ -41,7 +41,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                             label="Contact Person Name"
                             name="name"
                             className="vender-input"
-                            rules={[{ required: true, message: 'Please enter your contact person name!' }]}
+                            // rules={[{ required: true, message: 'Please enter your contact person name!' }]}
                         >
                             <Input
                                 value={formData.contact_info[0]?.name} onChange={({ target: { value } }) => onChange('contact_info', { name: value }, 0)} />
