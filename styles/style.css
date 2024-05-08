@@ -4249,6 +4249,18 @@ input#amount1 {
 .ant-form-item .ant-form-item-label >label {
     height: unset !important;
 }
+
+.heading {
+    color: #112F5C;
+    /* font-family: ui-sans-serif; */
+    font-size: 19px !important;
+    font-weight: 700 !important;
+}
+
+.select-default input::placeholder,.select-default input::-moz-input-placeholder ,.select-default input::-webkit-input-placeholder ,.select-default input::-ms-input-placeholder {
+    color: red !important;
+}
+  
 /* 25-04-2024*/
 /* responsive */
 @media (max-width: 1599px) {

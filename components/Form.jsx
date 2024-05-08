@@ -287,6 +287,7 @@ function PoForm({
                 <SearchDropdown
                   placeholder="Select"
                   name="vendor_contact_id"
+                  className="select-default"
                   label="Vendor Contact Person"
                   required={false}
                   disabled={view || (edit && formData.status !== "pending")}
