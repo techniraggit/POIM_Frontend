@@ -27,8 +27,12 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                 message.success(response.data.message);
                 formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
             }
+            form.setFieldValue(`date` + (index + 1),'')
+            form.setFieldValue('amount' + (index + 1),'')
+            form.setFieldValue(`project_site_id${index + 1}`,null)
         })
     }
+
     return (
         <div class="row">
             <div class="col-12 space-col-spc mb-3">
@@ -268,7 +272,8 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                     ...formData,
                                     material_details: [...formData.material_details, {
                                         ...repeatorData,
-                                        project_site_id: formData.material_details[0]?.project_site_id
+                                        project_site_id: formData.material_details[0]?.project_site_id ,
+                                      
                                     }]
                                 });
                             }} icon={<PlusOutlined />}>

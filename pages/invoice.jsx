@@ -114,9 +114,10 @@ const Invoice = () => {
                                                 <th className="hedaings-tb">PO Amount</th>
                                                 <th className="hedaings-tb td-color">PO Vendor</th>
                                                 <th className="hedaings-tb">PO Status</th>
+                                                <th className="hedaings-tb">Po Creator</th>
                                                 <th className="hedaings-tb">PM</th>
                                                 <th className="hedaings-tb">DM</th>
-                                                <th className="hedaings-tb">Po Creator</th>
+                                               
                                                 <th className="hedaings-tb">Action</th>
                                             </tr>
                                         </thead>
@@ -129,9 +130,10 @@ const Invoice = () => {
                                                     <td>{(invoice.purchase_order.total_amount).toLocaleString()}</td>
                                                     <td>{invoice.purchase_order.vendor_contact.name}</td>
                                                     <td>{invoice.purchase_order.status}</td>
+                                                    <td>{invoice.po_creator_approval_status}</td>
                                                     <td>{invoice.pm_approval_status}</td>
                                                     <td>{invoice.dm_approval_status}</td>
-                                                    <td>{invoice.po_creator_approval_status}</td>
+                                                   
                                                     <td>
                                                         <Link href={`/view-invoice/${invoice.invoice_id}`} className="me-1"><EyeFilled /></Link>
                                                         <Roles action="edit_invoice">
