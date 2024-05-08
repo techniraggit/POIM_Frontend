@@ -145,7 +145,7 @@ const CreateInvoice = () => {
 
                                 <Form
                                     name="antdForm"
-                                    className="mt-5"
+                                    // className="mt-5"
                                     form={form}
                                     onFinish={onFinish}
                                 >
@@ -176,7 +176,10 @@ const CreateInvoice = () => {
                                                 </div>
                                             </div>
                                         </div> */}
-
+                                        {/* <div className="heading mb-3">
+                                            <p>Create Invoice</p>
+                                        </div> */}
+                                        <div class="linewrap d-flex"><span class="d-block me-2">Create Invoice</span><hr/></div>
                                         <div className="col-lg-4 col-md-6">
                                             <div className="selectwrap  shipment-caret invoice-select aligned-text">
                                                 <div className="ns-field-set ">

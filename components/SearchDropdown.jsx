@@ -15,6 +15,7 @@ const SearchDropDown = ({
   getMenuItems,
   required,
   placeholder,
+  className
 }) => {
   const [searchValue, setSearchValue] = useState(undefined);
   const [searchResults, setSearchResults] = useState([]);
@@ -56,7 +57,7 @@ const SearchDropDown = ({
       <Form.Item
         label={label}
         name={name}
-        className="search-dropdown"
+        className={'search-dropdown ' + className}
         rules={
           required
             ? [
