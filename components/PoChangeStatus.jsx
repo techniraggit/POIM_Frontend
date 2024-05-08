@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/style.css';
 import { CloseOutlined } from '@ant-design/icons';
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType }) => {
+  const { user } = useGlobalContext();
   const handleCloseModal = () => {
     setIsModalOpen({
       modalStatus: false,
@@ -36,7 +38,6 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
   const removeCommas = (value) => {
     return value.replace(/,/g, '');
   };
-
   return (
     <>
       {isModalOpen.modalStatus && (
@@ -51,7 +52,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
               </p>
             </div>
             {
-              poType === 'subcontractor' && isModalOpen.action === 'approved' && <div class="projct-details notes">
+              poType === 'subcontractor' && isModalOpen.action === 'approved' && user.role !== 'project manager' && <div class="projct-details notes">
               <p class="detail-para1">CO Approved Amount</p>
               <input id='input-po'  type="text" 
               // value={form.co_approved_amount} 
@@ -78,6 +79,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
                     handleStatusChange(event, isModalOpen.action, form)
                 }}>{isModalOpen.action === 'approved'? 'Approve':'Reject'}</button>
             </div>
+            
           </form>
         </div>
       )}

@@ -250,7 +250,6 @@ function PoForm({
                   placeholder="Select"
                   required={true}
                   value={vendors?.reduce((value, vendor) => {
-                    // console.log(vendor.vendor_id === formData.vendor_id ? vendor.company_name : "blank",'=========vendor==========');
                     if (vendor.vendor_id === formData.vendor_id ) {
                       value = vendor.company_name;
                     }
