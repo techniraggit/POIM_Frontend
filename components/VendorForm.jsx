@@ -12,6 +12,9 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                     ...formData,
                     contact_info: [...formData.contact_info.slice(0, index + 1), ...formData.contact_info.slice(index + 1 + 1)]
                 });
+                form.setFieldValue('name' + index, "")
+                form.setFieldValue('phone_number' + index, "")
+                form.setFieldValue('email' + index, "")
             }
         })
     }
@@ -153,6 +156,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                 upperKey = key.split('_').map((key) => key.charAt(0).toUpperCase() + key.slice(1)).join(' ').replace('Id', '');
                                             }
                                             if (key === 'phone_number') {
+
                                                 return (
                                                     // <div className="col-sm-4">
                                                     <div key={key} className="wrap-box mb-0 col-lg-3 col-md-12">
