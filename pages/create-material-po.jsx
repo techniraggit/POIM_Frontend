@@ -6,7 +6,7 @@ import '../styles/style.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
-import { Form, Select, Button,message } from "antd";
+import { Form, Select, Button, message } from "antd";
 import PoForm from '../components/Form';
 
 const { Option } = Select;
@@ -80,6 +80,9 @@ const CreateMaterialPo = () => {
             })
     }
 
+   
+
+
     const calculateAmount = (quantity, unit_price, index) => {
         const amount = ((parseFloat(quantity) * parseFloat(unit_price))) || 0;
         const materialDetails = formData.material_details[index];
@@ -97,7 +100,7 @@ const CreateMaterialPo = () => {
     }
 
     const onChange = (name, value, index) => {
-        if(name === 'shipment_type') {
+        if (name === 'shipment_type') {
             formData?.material_details.forEach((material, index) => {
                 form.setFieldValue('material_for' + (index), '')
                 formData.material_details[index].material_for = '';
@@ -186,18 +189,18 @@ const CreateMaterialPo = () => {
                                         </div>
 
                                     </div>
-                                    
 
-                                        <PoForm 
-                                            formData={formData}
-                                            isNew={true}
-                                            form={form} 
-                                            onChange={onChange} 
-                                            onFinish={onFinish}
-                                            setFormData={setFormData} 
-                                            calculateAmount={calculateAmount} 
-                                        />
-                                    
+
+                                    <PoForm
+                                        formData={formData}
+                                        isNew={true}
+                                        form={form}
+                                        onChange={onChange}
+                                        onFinish={onFinish}
+                                        setFormData={setFormData}
+                                        calculateAmount={calculateAmount}
+                                    />
+
 
                                     <div className="po-wrap create-wrap-butt m-0">
                                         <Form.Item>

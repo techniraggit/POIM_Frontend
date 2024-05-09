@@ -28,6 +28,7 @@ const VendorEdit = () => {
         country: '',
         city:'',
         address: '',
+        postal_code:'',
         customer_name: '',
         contact_info: []
     })
@@ -41,6 +42,7 @@ const VendorEdit = () => {
                     setFormData({
                         status: data?.status,
                         company_name: data.company_name,
+                        postal_code: data.postal_code,
                         state: data.state,
                         country: data.country,
                         address: data.address,
@@ -60,6 +62,7 @@ const VendorEdit = () => {
                         })
                     })
                     form.setFieldValue('company_name', data.company_name);
+                    form.setFieldValue('postal_code', data.postal_code);
                     form.setFieldValue('state', data.state);
                     form.setFieldValue('country', data.country);
                     form.setFieldValue('city', data.city);

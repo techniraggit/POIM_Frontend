@@ -132,8 +132,7 @@ const Invoice = () => {
                                                     <td>{invoice.purchase_order.status}</td>
                                                     <td>{invoice.po_creator_approval_status}</td>
                                                     <td>{invoice.pm_approval_status}</td>
-                                                    <td>{invoice.dm_approval_status}</td>
-                                                   
+                                                    <td>{invoice.dm_approval_status}</td> 
                                                     <td>
                                                         <Link href={`/view-invoice/${invoice.invoice_id}`} className="me-1"><EyeFilled /></Link>
                                                         <Roles action="edit_invoice">

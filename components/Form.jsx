@@ -373,7 +373,7 @@ function PoForm({
             </Form.Item>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6">
+        {/* <div class="col-lg-4 col-md-6">
           <div class="wrap-box">
             <Form.Item
               label="Company name"
@@ -395,7 +395,7 @@ function PoForm({
               />
             </Form.Item>
           </div>
-        </div>
+        </div> */}
         <div class="col-lg-4 col-md-6">
           <div class="wrap-box mb-0">
             <Form.Item

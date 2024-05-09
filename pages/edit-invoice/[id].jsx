@@ -14,6 +14,7 @@ import Roles from "@/components/Roles";
 import { saveAs } from "file-saver";
 import useInvoice from "@/hooks/useInvoice";
 import ChangeStatus from "@/components/PoChangeStatus";
+import { event } from "react-ga";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -147,6 +148,17 @@ const EditInvoice = (view) => {
         })
     }
 
+    const openInvoiceInNewTab = (id) => {
+        downloadInvoice(id).then((res) => {
+            if (res?.data) {
+                const fileBlob = new Blob([res.data], { type: 'application/pdf' });
+                const fileURL = URL.createObjectURL(fileBlob);
+                window.open(fileURL, '_blank');
+            }
+        })
+    }
+   
+
     const handleDownload = (id) => {
         downloadInvoice(id).then((res) => {
             if (res?.data) {
@@ -155,7 +167,6 @@ const EditInvoice = (view) => {
             }
         })
     }
-
 
     return (
         <>
@@ -315,9 +326,12 @@ const EditInvoice = (view) => {
                                                     <div className="download-wrap d-flex gap-2 mb-4">
                                                         {
                                                             fileName ? <>
-                                                                <div className="download-fine-invoice">
+                                                                    <div className="download-fine-invoice" onClick={() => openInvoiceInNewTab(data.file_id)} style={{cursor:'pointer'}}>
+                                                                        {fileName} <DownloadOutlined onClick={(e) => { e.stopPropagation(); handleDownload(data.file_id); }}  />
+                                                                    </div>
+                                                                {/* <div className="download-fine-invoice">
                                                                     {fileName} <DownloadOutlined onClick={() => handleDownload(data.file_id)} />
-                                                                </div>
+                                                                </div> */}
                                                             </>
                                                                 :
                                                                 <Form.Item
@@ -338,7 +352,7 @@ const EditInvoice = (view) => {
                                                                 </Form.Item>
                                                         }
                                                         {
-                                                           (index > 0 || fileName)&& <MinusOutlined className="minus-wrap kt" onClick={() => {
+                                                            (index > 0 || fileName) && <MinusOutlined className="minus-wrap kt" onClick={() => {
                                                                 if (data.file_id) {
                                                                     removeInvoiceFile({ file_id: data.file_id }).then((res) => {
                                                                         if (res?.data?.status) {
@@ -398,13 +412,15 @@ const EditInvoice = (view) => {
                                     </Form.Item>
                                     {invoice.invoice_amount && invoice.invoice_amount !== 0 ? (
                                         <span className="error-msg" style={{ color: 'red', display: /^-?\d*\.?\d+$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
-                                            {invoice.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
+                                            {invoice.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : ''}
+                                            {/* {invoice.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'} */}
                                         </span>
                                     ) : ''}
 
                                     <Form.Item>
-                                        <Button 
-                                        disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit"
+                                        <Button
+                                            disabled={!(parseFloat(responseData?.total_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit"
+                                        // disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit"
                                         >
                                             Submit
                                         </Button>

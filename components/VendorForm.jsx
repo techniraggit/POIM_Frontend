@@ -144,6 +144,27 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         </Form.Item>
                     </div>
                 </div>
+                <div className="col-lg-4 col-md-12">
+                    <div className="wrap-box">
+                        <Form.Item
+                            label="Postal Code"
+                            name="postal_code"
+                            className="vender-input"
+                            rules={[
+                                { 
+                                    required: true, 
+                                    message: 'Please enter your Postal Code!' 
+                                },
+                                {
+                                    pattern: /^[A-Za-z0-9][0-9][A-Za-z]\s?[0-9][A-Za-z][0-9]$/,
+                                    message: 'Please enter a valid Postal Code following the pattern Alpha-Number-alpha-space-number-alpha-number!'
+                                }
+                            ]}
+                        >
+                            <Input value={formData.postal_code} onChange={({ target: { value } }) => onChange('postal_code', value)} />
+                        </Form.Item>
+                    </div>
+                </div>
                 <div className="create-another">
                     {
                         formData.contact_info.slice(1).map((contact, index) => {
