@@ -156,7 +156,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                     message: 'Please enter your Postal Code!' 
                                 },
                                 {
-                                    pattern: /^[A-Za-z0-9][0-9][A-Za-z]\s?[0-9][A-Za-z][0-9]$/,
+                                    pattern: /^[A-Za-z]\d[A-Za-z]\s\d[A-Za-z]\d$/,
                                     message: 'Please enter a valid Postal Code following the pattern Alpha-Number-alpha-space-number-alpha-number!'
                                 }
                             ]}
