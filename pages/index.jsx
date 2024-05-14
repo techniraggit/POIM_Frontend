@@ -32,8 +32,6 @@ const Login = ({ base_url }) => {
     useEffect(() => {
         const initialize = async () => {
             try {
-                await publicClientApplication.initialize();
-                console.log('MSAL initialized successfully');
                 if(isLoggedIn()) {
                     router.push('/dashboard');
                 }
@@ -47,6 +45,8 @@ const Login = ({ base_url }) => {
     const login = async () => {
         let interactionPromise;
         try {
+            await publicClientApplication.initialize();
+            console.log('MSAL initialized successfully');
             interactionPromise = publicClientApplication.loginPopup({
                 prompt: 'select_account',
                 scopes: msalConfig.scopes
@@ -57,20 +57,7 @@ const Login = ({ base_url }) => {
             setIsAuth(true);
         } catch(error) {
             console.log(error.name, error.message), '=============';
-            if (error.name === "UninitializedError") {
-                try {
-                    await publicClientApplication.initialize();
-                    console.log('MSAL initialized successfully');
-                    await publicClientApplication.loginPopup({
-                        prompt: 'select_account',
-                        scopes: msalConfig.scopes
-                    });
-                    
-                    setIsAuth(true);
-                } catch(initError) {
-                    message.error('SSO initialization failed');
-                }
-            } else if(error.name === 'BrowserAuthError') {
+            if(error.name === 'BrowserAuthError') {
                 message.error("Another Interaction in Progress");
                 if (interactionPromise && interactionPromise.cancel) {
                     interactionPromise.cancel();
