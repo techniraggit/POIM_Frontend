@@ -285,6 +285,7 @@ const EditInvoice = (view) => {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="linewrap d-flex"><span class="d-block me-2">Edit Invoice</span><hr/></div>
 
                                         <div className="col-lg-4 col-md-6">
                                             {/* <div className="selectwrap  shipment-caret aligned-text"> */}
@@ -412,15 +413,15 @@ const EditInvoice = (view) => {
                                     </Form.Item>
                                     {invoice.invoice_amount && invoice.invoice_amount !== 0 ? (
                                         <span className="error-msg" style={{ color: 'red', display: /^-?\d*\.?\d+$/.test(invoice.invoice_amount) && (parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) ? 'none' : 'block' }}>
-                                            {invoice.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : ''}
-                                            {/* {invoice.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'} */}
+                                            {/* {invoice.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : ''} */}
+                                            {invoice.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                         </span>
                                     ) : ''}
 
                                     <Form.Item>
                                         <Button
-                                            disabled={!(parseFloat(responseData?.total_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit"
-                                        // disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit"
+                                            // disabled={!(parseFloat(responseData?.total_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit"
+                                        disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(invoice?.invoice_amount || 0)) || (invoice?.invoice_amount && !/^-?\d*\.?\d+$/.test(invoice?.invoice_amount))} type="primary" htmlType="submit" id="btn-submit"
                                         >
                                             Submit
                                         </Button>

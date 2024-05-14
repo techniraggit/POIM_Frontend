@@ -92,9 +92,10 @@ const invoiceReport = () => {
                         <th className="hedaings-tb">PO Amount</th>
                         <th className="hedaings-tb td-color">PO Vendor</th>
                         <th className="hedaings-tb">PO Status</th>
+                        <th className="hedaings-tb">Po Creator</th>
                         <th className="hedaings-tb">PM</th>
                         <th className="hedaings-tb">DM</th>
-                        <th className="hedaings-tb">Po Creator</th>
+                       
                       </tr>
                     </thead>
                     <tbody>
@@ -112,9 +113,10 @@ const invoiceReport = () => {
                           </td>
                           <td>{invoice.purchase_order.vendor_contact.name}</td>
                           <td>{invoice.purchase_order.status}</td>
+                          <td>{invoice.po_creator_approval_status}</td>
                           <td>{invoice.pm_approval_status}</td>
                           <td>{invoice.dm_approval_status}</td>
-                          <td>{invoice.po_creator_approval_status}</td>
+                          
                         </tr>
                       ))}
                     </tbody>

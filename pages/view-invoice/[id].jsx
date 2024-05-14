@@ -222,7 +222,7 @@ const ViewInvoice = (view) => {
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="linewrap d-flex"><span class="d-block me-2">View Invoice</span><hr/></div>
                                         <div className="col-lg-4 col-md-6">
                                             {/* <div className="selectwrap  shipment-caret  aligned-text"> */}
                                             <div class={`selectwrap ${view || edit && formData.status !== 'pending' ? 'non-editable-dropdown' : ''} shipment-caret invoice-select  aligned-text`}>

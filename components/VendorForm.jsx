@@ -44,7 +44,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                             label="Contact Person Name"
                             name="name"
                             className="vender-input"
-                            // rules={[{ required: true, message: 'Please enter your contact person name!' }]}
+                        // rules={[{ required: true, message: 'Please enter your contact person name!' }]}
                         >
                             <Input
                                 value={formData.contact_info[0]?.name} onChange={({ target: { value } }) => onChange('contact_info', { name: value }, 0)} />
@@ -53,24 +53,24 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                 </div>
                 <div className="col-lg-4 col-md-12">
                     <div className="wrap-box">
-                    <Form.Item
-                          label="Contact No"
-                          name="phone_number"  // Add a name to link the input to the form values
-                          className="vender-input"
-                          rules={[
-                            // { required: true, message: 'Please enter your contact number!' },
-                            {
-                              pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
-                              message: 'Please enter a valid 10 digit phone number',
-                            },
-                           
-                          ]}
-                        
+                        <Form.Item
+                            label="Contact No"
+                            name="phone_number"  // Add a name to link the input to the form values
+                            className="vender-input"
+                            rules={[
+                                // { required: true, message: 'Please enter your contact number!' },
+                                {
+                                    pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
+                                    message: 'Please enter a valid 10 digit phone number',
+                                },
+
+                            ]}
+
                         >
                             <Input value={formData.contact_info[0]?.phone_number}
-                                onChange={({ target: { value } }) => 
-                                onChange('contact_info', { phone_number: value }, 0)
-                            }
+                                onChange={({ target: { value } }) =>
+                                    onChange('contact_info', { phone_number: value }, 0)
+                                }
                                 addonBefore="+1"
                             />
                         </Form.Item>
@@ -149,15 +149,15 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         <Form.Item
                             label="Postal Code"
                             name="postal_code"
-                            className="vender-input"
+                            className="vendor-input"
                             rules={[
-                                { 
-                                    required: true, 
-                                    message: 'Please enter your Postal Code!' 
+                                {
+                                    required: true,
+                                    message: 'Please enter your Postal Code!'
                                 },
                                 {
-                                    pattern: /^[A-Za-z0-9][0-9][A-Za-z]\s?[0-9][A-Za-z][0-9]$/,
-                                    message: 'Please enter a valid Postal Code following the pattern Alpha-Number-alpha-space-number-alpha-number!'
+                                    pattern: /^(?:[A-Z][0-9][A-Z]\s[0-9][A-Z][0-9]|[A-Z][0-9][A-Z])$/,
+                                    message: 'Postal code should be either Alpha-Number-alpha-space-number-alpha-number or Alpha-Number-alpha.'
                                 }
                             ]}
                         >
@@ -165,6 +165,33 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         </Form.Item>
                     </div>
                 </div>
+
+                {/* <div className="col-lg-4 col-md-12">
+                    <div className="wrap-box">
+                        <Form.Item
+                            label="Postal Code"
+                            name="postal_code"
+                            className="vender-input"
+                            rules={[
+                                { 
+                                    required: true, 
+                                    message: 'Please enter your Postal Code!' 
+                                },
+                                {
+                                    pattern: /^[A-Za-z]\d[A-Za-z]\s\d[A-Za-z]\d$/,
+                                    message: 'Please enter a valid Postal Code following the pattern Alpha-Number-alpha-space-number-alpha-number!'
+                                }
+                                // {
+                                //     pattern: /^[A-Z]\d[A-Z]\s\d[A-Z]\d$/,
+                                //     // pattern: /^[A-Za-z]\d[A-Za-z]\s\d[A-Za-z]\d$/,
+                                //     message: 'Please enter a valid Postal Code following the pattern Alpha-Number-alpha-space-number-alpha-number!'
+                                // }
+                            ]}
+                        >
+                            <Input value={formData.postal_code} onChange={({ target: { value } }) => onChange('postal_code', value)} />
+                        </Form.Item>
+                    </div>
+                </div> */}
                 <div className="create-another">
                     {
                         formData.contact_info.slice(1).map((contact, index) => {
@@ -184,24 +211,24 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                         <Form.Item
                                                             label={"Phone Number"}
                                                             name={key + index}
-                                                            rules={[ 
+                                                            rules={[
                                                                 // { required: true, message: 'Please enter your contact number!' },
-                                                            {
-                                                              pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
-                                                              message: 'Please enter a valid 10 digit phone number',
-                                                            },
-                                                            {
-                                                                validator(_, value) {
-                                                                    const otherAddresses = formData.contact_info
-                                                                        .filter((_, i) => i !== index + 1)
-                                                                        .map((otherSite) => otherSite[key]);
-                                                                    if (otherAddresses.includes(value)) {
-                                                                        // return Promise.reject(`${upperKey} must be unique.`);
-                                                                    }
-
-                                                                    return Promise.resolve();
+                                                                {
+                                                                    pattern: /^[0-9]{10}$/, // Pattern for +91XXXXXXXXXX or +1XXXXXXXXXX
+                                                                    message: 'Please enter a valid 10 digit phone number',
                                                                 },
-                                                            }
+                                                                {
+                                                                    validator(_, value) {
+                                                                        const otherAddresses = formData.contact_info
+                                                                            .filter((_, i) => i !== index + 1)
+                                                                            .map((otherSite) => otherSite[key]);
+                                                                        if (otherAddresses.includes(value)) {
+                                                                            // return Promise.reject(`${upperKey} must be unique.`);
+                                                                        }
+
+                                                                        return Promise.resolve();
+                                                                    },
+                                                                }
                                                             ]}
                                                         >
                                                             <Input
@@ -211,7 +238,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                                                                 onChange={({ target: { value, name } }) => {
                                                                     onChange('contact_info', { [key]: value }, index + 1)
                                                                 }
-                                                            }
+                                                                }
                                                             />
                                                         </Form.Item>
                                                     </div>
