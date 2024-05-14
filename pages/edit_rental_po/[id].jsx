@@ -11,6 +11,7 @@ import Roles from "@/components/Roles";
 import ChangeStatus from "@/components/PoChangeStatus";
 import PoForm from "@/components/Form";
 import withAuth from "@/components/PrivateRoute";
+import { roundToTwoDigits } from "@/utility/utilityFunctions";
 
 const { Option } = Select;
 
@@ -144,39 +145,32 @@ const Edit_Rental_Po = () => {
                 materialDetails[index][key] = value[key];
             });
 
-            setFormData({
-                ...formData,
-                material_details: [...materialDetails]
-            });
+            formData.material_details = [...materialDetails]
         } else {
-            setFormData({
-                ...formData,
-                [name]: value
-            });
+            formData[name] = value;
         }
         if (value.amount || name === 'amount') {
             handleRepeaterAmountChange();
         }
+        setFormData({
+            ...formData
+        })
     }
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
-            return total + parseFloat(item.amount);
+            return roundToTwoDigits(total + parseFloat(item.amount));
         }, 0);
 
         return totalAmount;
     };
 
     const handleRepeaterAmountChange = () => {
-
         const totalAmount = getTotalAmount()
-        setFormData({
-            ...formData,
-            hst_amount: totalAmount * 0.13,
-            total_amount: totalAmount * 0.13 + totalAmount
-        })
-        form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-        form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
+        formData.hst_amount = roundToTwoDigits(totalAmount * 0.13);
+        formData.total_amount = roundToTwoDigits(totalAmount * 0.13 + totalAmount);
+        form.setFieldsValue({ 'hst_amount': roundToTwoDigits((totalAmount * 0.13) || 0).toLocaleString() });
+        form.setFieldsValue({ 'total_amount': roundToTwoDigits((totalAmount * 0.13 + totalAmount) || 0).toLocaleString() });
     };
 
     const handleStatusChange = (event, action, data) => {

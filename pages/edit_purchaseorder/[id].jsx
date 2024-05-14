@@ -12,6 +12,7 @@ import moment from "moment";
 import Roles from "@/components/Roles";
 import ChangeStatus from "@/components/PoChangeStatus";
 import withAuth from "@/components/PrivateRoute";
+import { roundToTwoDigits } from "@/utility/utilityFunctions";
 
 const { Option } = Select;
 
@@ -125,7 +126,7 @@ const EditMaterialPo = () => {
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
-            return total + parseFloat(item.amount);
+            return roundToTwoDigits(total + parseFloat(item.amount));
         }, 0);
 
         return totalAmount || 0;
@@ -134,17 +135,17 @@ const EditMaterialPo = () => {
     const calculateAmount = (quantity, unit_price, index) => {
         const amount = (parseFloat(quantity) * parseFloat(unit_price)) || 0;
         const materialDetails = formData.material_details[index];
-        materialDetails.amount = amount;
-        form.setFieldValue('amount' + index, amount.toLocaleString())
+        materialDetails.amount = roundToTwoDigits(amount);
+        form.setFieldValue('amount' + index, roundToTwoDigits(amount).toLocaleString())
         formData.material_details[index] = {
             ...materialDetails
         };
         const totalAmount = getTotalAmount();
-        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
+        formData.total_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount);
+        formData.hst_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount);
         if (totalAmount > 0) {
-            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString()  || 0 });
+            form.setFieldsValue({ 'hst_amount': roundToTwoDigits((totalAmount * 0.13) || 0).toLocaleString() });
+            form.setFieldsValue({ 'total_amount': roundToTwoDigits((totalAmount * 0.13 + totalAmount)  || 0).toLocaleString() });
         }
     }
 

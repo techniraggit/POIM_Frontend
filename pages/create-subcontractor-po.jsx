@@ -9,6 +9,7 @@ import { createPO, getPoNumber } from "@/apis/apis/adminApis";
 import { Form, Select, Button, Input, message, InputNumber } from "antd";
 import PoForm from '../components/Form';
 import dayjs from "dayjs";
+import { roundToTwoDigits } from "@/utility/utilityFunctions";
 
 const { Option } = Select;
 
@@ -73,7 +74,7 @@ const CreateSubContractorPo = () => {
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
-            return total + parseFloat(item.amount);
+            return roundToTwoDigits(total + parseFloat(item.amount));
         }, 0);
 
         return totalAmount;
@@ -98,18 +99,18 @@ const CreateSubContractorPo = () => {
         //     formData.material_details[index].amount = amount;
         // }
         const totalAmount = getTotalAmount();
-        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
+        formData.total_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount);
+        formData.hst_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount);
         if (totalAmount > 0) {
-            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
+            form.setFieldsValue({ 'hst_amount': roundToTwoDigits9(totalAmount * 0.13) || 0 }.toLocaleString());
+            form.setFieldsValue({ 'total_amount': roundToTwoDigits((totalAmount * 0.13 + totalAmount) || 0).toLocaleString() });
         }
         if (totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {
-            form.setFieldValue('original_po_amount', (totalAmount * 0.13 + totalAmount).toLocaleString() || 0);
-            formData.original_po_amount = (totalAmount * 0.13) + totalAmount || 0
+            form.setFieldValue('original_po_amount', roundToTwoDigits((totalAmount * 0.13 + totalAmount) || 0).toLocaleString());
+            formData.original_po_amount = roundToTwoDigits((totalAmount * 0.13) + totalAmount || 0)
         } else {
-            form.setFieldValue('original_po_amount', originalAmount.current);
-            formData.original_po_amount = originalAmount.current
+            form.setFieldValue('original_po_amount', roundToTwoDigits(originalAmount.current));
+            formData.original_po_amount = roundToTwoDigits(originalAmount.current)
         }
     }
 
@@ -131,7 +132,7 @@ const CreateSubContractorPo = () => {
             formData[name] = value;
         }
         if (name === 'original_po_amount') {
-            originalAmount.current = value;
+            originalAmount.current = roundToTwoDigits(value);
         }
         setFormData({
             ...formData

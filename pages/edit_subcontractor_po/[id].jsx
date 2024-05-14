@@ -12,6 +12,7 @@ import ChangeStatus from "@/components/PoChangeStatus";
 import dayjs from "dayjs";
 import withAuth from "@/components/PrivateRoute";
 import Roles from "@/components/Roles";
+import { roundToTwoDigits } from "@/utility/utilityFunctions";
 
 const { Option } = Select;
 
@@ -125,42 +126,20 @@ const EditSubContractorPo = () => {
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
-            return total + parseFloat(item.amount);
+            return roundToTwoDigits(total + parseFloat(item.amount));
         }, 0);
 
         return totalAmount;
     };
     const handleRepeaterAmountChange = () => {
-
         const totalAmount = getTotalAmount()
-
-        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
-        setFormData({
-            ...formData,
-            // hst_amount: totalAmount * 0.13,
-            // total_amount: totalAmount * 0.13 + totalAmount
-        })
+        formData.total_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount);
+        formData.hst_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount);
         if(totalAmount > 0) {
-                    form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-                    form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
-                }
-        // form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-        // form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
+            form.setFieldsValue({ 'hst_amount': roundToTwoDigits((totalAmount * 0.13) || 0).toLocaleString() });
+            form.setFieldsValue({ 'total_amount': roundToTwoDigits((totalAmount * 0.13 + totalAmount) || 0).toLocaleString() });
+        }
     };
-
-    // const calculateAmount = (amount, index) => {
-    //     const totalAmount = getTotalAmount();
-    //     formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-    //     formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
-    //     if(totalAmount > 0) {
-    //         form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || 0 });
-    //         form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
-    //     }
-    //     setFormData({
-    //         ...formData
-    //     })
-    // }
 
     const onFinish = () => {
         updatePo({
@@ -192,7 +171,6 @@ const EditSubContractorPo = () => {
 
             if(value.amount) {
                 handleRepeaterAmountChange();
-                // calculateAmount();
             }
             formData.material_details[index] = {
                 ...materalDetails

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
 import { Form, Select, Button, message } from "antd";
 import PoForm from '../components/Form';
+import { roundToTwoDigits } from '../utility/utilityFunctions';
 
 const { Option } = Select;
 
@@ -80,9 +81,6 @@ const CreateMaterialPo = () => {
             })
     }
 
-   
-
-
     const calculateAmount = (quantity, unit_price, index) => {
         const amount = ((parseFloat(quantity) * parseFloat(unit_price))) || 0;
         const materialDetails = formData.material_details[index];
@@ -91,11 +89,11 @@ const CreateMaterialPo = () => {
             ...materialDetails
         };
         const totalAmount = getTotalAmount();
-        formData.total_amount = totalAmount > 0 ? (totalAmount * 0.13 + totalAmount) : formData.total_amount;
-        formData.hst_amount = totalAmount > 0 ? (totalAmount * 0.13) : formData.hst_amount;
+        formData.total_amount = roundToTwoDigits(totalAmount > 0 ? (totalAmount * 0.13 + totalAmount) : formData.total_amount);
+        formData.hst_amount = roundToTwoDigits(totalAmount > 0 ? (totalAmount * 0.13) : formData.hst_amount);
         if (totalAmount > 0) {
-            form.setFieldsValue({ 'hst_amount': ((totalAmount * 0.13)).toLocaleString() || 0 });
-            form.setFieldsValue({ 'total_amount': ((totalAmount * 0.13 + totalAmount)).toLocaleString() || 0 });
+            form.setFieldsValue({ 'hst_amount': roundToTwoDigits(((totalAmount * 0.13)) || 0).toLocaleString() });
+            form.setFieldsValue({ 'total_amount': roundToTwoDigits(((totalAmount * 0.13 + totalAmount)) || 0 ).toLocaleString()});
         }
     }
 
@@ -130,7 +128,7 @@ const CreateMaterialPo = () => {
     }
 
     formData?.material_details.forEach((data, index) => {
-        form.setFieldValue(('amount' + (index)), data.amount.toLocaleString())
+        form.setFieldValue(('amount' + (index)), roundToTwoDigits(data.amount).toLocaleString())
     })
 
     const handlePoTypeChange = (value) => {

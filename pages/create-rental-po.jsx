@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { createPO, getPoNumber } from "@/apis/apis/adminApis";
 import { Form, Select, Button,message } from "antd";
 import PoForm from '../components/Form';
+import { roundToTwoDigits } from "@/utility/utilityFunctions";
 
 const { Option } = Select;
 
@@ -57,7 +58,7 @@ const CreateRentalPo = () => {
 
     const getTotalAmount = () => {
         const totalAmount = formData.material_details.reduce((total, item) => {
-            return total + parseFloat(item.amount);
+            return roundToTwoDigits(total + parseFloat(item.amount));
         }, 0);
 
         return totalAmount;
@@ -77,16 +78,12 @@ const CreateRentalPo = () => {
     }
 
     const calculateAmount = (amount, index) => {
-       
-        // if(amount === 0 && index) {
-        //     formData.material_details[index].amount = amount;
-        // }
         let totalAmount = getTotalAmount() || 0;
-        formData.total_amount = totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount;
-        formData.hst_amount = totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount;
+        formData.total_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount);
+        formData.hst_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount);
         if (totalAmount > 0) {
-            form.setFieldsValue({ 'hst_amount': (totalAmount * 0.13).toLocaleString() || '0.00' });
-            form.setFieldsValue({ 'total_amount': (totalAmount * 0.13 + totalAmount).toLocaleString() || 0 });
+            form.setFieldsValue({ 'hst_amount': roundToTwoDigits((totalAmount * 0.13) || '0.00').toLocaleString() });
+            form.setFieldsValue({ 'total_amount': roundToTwoDigits((totalAmount * 0.13 + totalAmount) || 0).toLocaleString() });
         }
         setFormData({
             ...formData
