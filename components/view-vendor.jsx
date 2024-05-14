@@ -33,11 +33,10 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) =
   }, [vendor_id])
 
   useEffect(() => {
-    if(isModalOpen) {
-        document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
+    if (isModalOpen) {
+      document.querySelector(".wrapper-main").classList.add("hide-bg-wrap");
     }
   }, [isModalOpen]);
-
   return (
     <>
       {isModalOpen && (
@@ -66,14 +65,19 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) =
                   <p class="detail-para1">Contact No</p>
                   <p class="detail-para">{vendorcontact.phone_number || 'N/A'}</p>
                 </div>
-
               </div>
 
-              <div class="projct-details">
-                <p class="detail-para1">Address</p>
-                <p class="detail-para">{vendorData.address}</p>
+              <div class="pop-up-flex row justify-content-start">
+                <div class="projct-details col-sm-8">
+                  <p class="detail-para1">Address</p>
+                  <p class="detail-para">{vendorData.address}</p>
+                </div>
+                <div class="projct-details col-md-3">
+                  <p class="detail-para1">Postal Code</p>
+                  <p class="detail-para">{vendorData.postal_code || 'N/A'}</p>
+                </div>
               </div>
-
+              
               <div class="pop-up-flex row justify-content-start">
                 <div class="projct-details col-sm-8">
                   <p class="detail-para1">State / Province</p>
@@ -93,7 +97,7 @@ const View_Vendor = ({ vendor_id, isModalOpen, setIsModalOpen, clickedIndex }) =
   );
 };
 // export { getServerSideProps }
-export default withAuth(['admin','accounting','project manager','department manager',
-'director','site superintendent','project coordinator','marketing','health & safety','estimator','shop'])
-(View_Vendor)
+export default withAuth(['admin', 'accounting', 'project manager', 'department manager',
+  'director', 'site superintendent', 'project coordinator', 'marketing', 'health & safety', 'estimator', 'shop'])
+  (View_Vendor)
 // export default View_Vendor;

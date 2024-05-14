@@ -116,7 +116,7 @@ const CreateInvoice = () => {
                             <ul class="bg-colored-ul mb-4">
                                 <li class="bg-li-invoice">
                                     <PlusOutlined className="me-3" />
-                                    <span>Create Invoice</span>
+                                    <span>Create Invoice </span>
                                 </li>
 
                             </ul>
@@ -279,15 +279,15 @@ const CreateInvoice = () => {
                                                 // display: /^[0-9]*$/.test(formData.invoice_amount) 
                                                 && (parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) ? 'none' : 'block'
                                         }}>
-                                              {formData.invoice_amount && !/^-?\d*\.?\d+$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : ''}
-                                            {/* {formData.invoice_amount && !/^-?\d*\.?\d+$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'} */}
+                                              {/* {formData.invoice_amount && !/^-?\d*\.?\d+$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : ''} */}
+                                            {formData.invoice_amount && !/^-?\d*\.?\d+$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                         </span>
                                     ) : ''}
 
                                     <Form.Item>
                                         <Button
-                                         disabled={!(parseFloat(responseData?.total_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^-?\d*\.?\d+$/.test(formData?.invoice_amount))}
-                                            // disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^-?\d*\.?\d+$/.test(formData?.invoice_amount))}
+                                        //  disabled={!(parseFloat(responseData?.total_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^-?\d*\.?\d+$/.test(formData?.invoice_amount))}
+                                            disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^-?\d*\.?\d+$/.test(formData?.invoice_amount))}
                                             // disabled={!(parseFloat(responseData?.total_amount || 0) >= parseFloat(formData?.invoice_amount || 0)) || (formData.invoice_files.some(file => file.invoice_file?.type !== 'application/pdf' || !file.invoice_file)) || (formData?.invoice_amount && !/^[0-9]*$/.test(formData?.invoice_amount))}
                                             type="primary" htmlType="submit" id="btn-submit">
                                             Submit
