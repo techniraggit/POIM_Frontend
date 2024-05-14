@@ -20,7 +20,6 @@ const Login = ({ base_url }) => {
     const { setUser } = useGlobalContext();
     const [showForgotPasswordPopup, setShowForgotPasswordPopup] = useState(false);
     const [forgotPasswordErrors, setForgotPasswordErrors] = useState({});
-    const [isAuth, setIsAuth] = useState(false);
     const publicClientApplication = new PublicClientApplication({
         auth: msalConfig.auth,
         cache: msalConfig.cache,
@@ -30,35 +29,76 @@ const Login = ({ base_url }) => {
     const router = useRouter();
 
     useEffect(() => {
-        const initialize = async () => {
-            try {
-                if(isLoggedIn()) {
-                    router.push('/dashboard');
-                }
-              } catch (error) {
-                console.error('MSAL initialization failed:', error);
-              }
+        if(isLoggedIn()) {
+            router.push('/dashboard');
         }
-        initialize();
     }, []);
 
-    const login = async () => {
+    function acquireToken() {
+        const accounts = publicClientApplication.getAllAccounts();
+        if (accounts.length === 0) {
+            console.error("No active account available after login.");
+            return;
+        }
+        publicClientApplication.setActiveAccount(accounts[accounts.length - 1]);
+        publicClientApplication.acquireTokenSilent({
+            scopes: msalConfig.scopes
+        }).then(response => {
+            const accessToken = response.accessToken;
+            login(accessToken);
+        }).catch(error => {
+            console.error("Error acquiring token:", error);
+        });
+    }
+
+    const login = (token) => {
+        const response = ssoLogin({
+            client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
+            client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+            grant_type: "convert_token",
+            backend: 'azuread-oauth2',
+            token: token
+        })
+        response.then((response) => {
+            if(response.status === 200 && response?.data?.access_token) {
+                localStorage.setItem('access_token', response.data.access_token)
+                localStorage.setItem('refresh_token', response.data.refresh_token)
+                setUser({
+                    first_name: response.data.user_first_name,
+                    last_name: response.data.user_last_name,
+                    permissions: response.data.user_permissions,
+                    role: response.data.user_role
+                });
+                message.success('Login successful');
+                window.location = '/dashboard'
+            }
+        }).catch(error => {
+            message.error("Something went wrong");
+        })
+    }
+
+    const authHandler = async () => {
         let interactionPromise;
         try {
             await publicClientApplication.initialize();
             console.log('MSAL initialized successfully');
-            interactionPromise = publicClientApplication.loginPopup({
-                prompt: 'select_account',
-                scopes: msalConfig.scopes
-            });
-
-            await interactionPromise;
-            
-            setIsAuth(true);
+            const accounts = publicClientApplication.getAllAccounts();
+            if (accounts.length === 0) {
+                publicClientApplication.loginPopup({
+                    scopes: msalConfig.scopes,
+                    prompt: ''
+                }).then(response => {
+                    console.log(response, '==========')
+                    acquireToken();
+                }).catch(error => {
+                    console.error("Error signing in:", error);
+                });
+            } else {
+                acquireToken();
+            }
         } catch(error) {
-            console.log(error.name, error.message), '=============';
             if(error.name === 'BrowserAuthError') {
-                message.error("Another Interaction in Progress");
+                message.error("Something went wrong");
                 if (interactionPromise && interactionPromise.cancel) {
                     interactionPromise.cancel();
                     interactionPromise = null;
@@ -70,33 +110,6 @@ const Login = ({ base_url }) => {
             interactionPromise = null;
         }
     }
-
-    useEffect(() => {
-        const token = localStorage.getItem('access_token')
-        if(isAuth && token) {
-            const response = ssoLogin({
-                client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
-                client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
-                grant_type: "convert_token",
-                backend: 'azuread-oauth2',
-                token: token
-            })
-            response.then((response) => {
-                if(response.status === 200 && response?.data?.access_token) {
-                    localStorage.setItem('access_token', response.data.access_token)
-                    localStorage.setItem('refresh_token', response.data.refresh_token)
-                    setUser({
-                        first_name: response.data.user_first_name,
-                        last_name: response.data.user_last_name,
-                        permissions: response.data.user_permissions,
-                        role: response.data.user_role
-                    });
-                    message.success('Login successful');
-                    window.location = '/dashboard'
-                }
-            })
-        }
-    }, [isAuth]);
 
     const validateForm = () => {
         const errors = {};
@@ -240,7 +253,7 @@ const Login = ({ base_url }) => {
                                 <div className="col-md-12">
                                     <button onClick={(e) => {
                                         e.preventDefault()
-                                        login()
+                                        authHandler()
                                     }}>Login via Microsoft</button>
                                     <button type="submit" className="submit-btn">Login</button>
                                 </div>
