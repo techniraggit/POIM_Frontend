@@ -29,7 +29,7 @@ const Login = ({ base_url }) => {
     const router = useRouter();
 
     useEffect(() => {
-        if(isLoggedIn()) {
+        if (isLoggedIn()) {
             router.push('/dashboard');
         }
     }, []);
@@ -60,7 +60,7 @@ const Login = ({ base_url }) => {
             token: token
         })
         response.then((response) => {
-            if(response.status === 200 && response?.data?.access_token) {
+            if (response.status === 200 && response?.data?.access_token) {
                 localStorage.setItem('access_token', response.data.access_token)
                 localStorage.setItem('refresh_token', response.data.refresh_token)
                 setUser({
@@ -96,8 +96,8 @@ const Login = ({ base_url }) => {
             } else {
                 acquireToken();
             }
-        } catch(error) {
-            if(error.name === 'BrowserAuthError') {
+        } catch (error) {
+            if (error.name === 'BrowserAuthError') {
                 message.error("Something went wrong");
                 if (interactionPromise && interactionPromise.cancel) {
                     interactionPromise.cancel();
@@ -152,16 +152,16 @@ const Login = ({ base_url }) => {
         if (validateForgotPasswordForm()) {
             handlePopupClose();
             axios.post(`${base_url}/api/accounts/forget-password`, { email: forgotEmail })
-            .then((response) => {
-                if(response?.data?.status) {
-                    message.success(response.data?.message);
-                }
-                setforgotEmail('');
-            })
-            .catch((error) => {
-                setforgotEmail('');
-                message.error(error?.response?.data?.message)
-            })
+                .then((response) => {
+                    if (response?.data?.status) {
+                        message.success(response.data?.message);
+                    }
+                    setforgotEmail('');
+                })
+                .catch((error) => {
+                    setforgotEmail('');
+                    message.error(error?.response?.data?.message)
+                })
         } else {
             console.log('Forgot Password form validation failed');
         }
@@ -254,7 +254,7 @@ const Login = ({ base_url }) => {
                                     <button onClick={(e) => {
                                         e.preventDefault()
                                         authHandler()
-                                    }}>Login via Microsoft</button>
+                                    }}><img className="micro-img me-3" src="/images/microsoft.png" />Login via Microsoft</button>
                                     <button type="submit" className="submit-btn">Login</button>
                                 </div>
                             </form>
