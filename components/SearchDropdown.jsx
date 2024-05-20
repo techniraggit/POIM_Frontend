@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import { Form } from "antd";
 
 const SearchDropDown = ({
-  value,
+  defaultValue,
   form,
   label,
   name,
@@ -24,14 +24,14 @@ const SearchDropDown = ({
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
-    if(value) {
+    if(defaultValue) {
       setValid(true);
       setClicked(true);
     }
-  }, [value]);
+  }, [defaultValue]);
 
   useEffect(() => {
-    const filteredData = filterFunc(data, (typeof searchValue === "undefined" ? value : searchValue) || "", setValid);
+    const filteredData = filterFunc(data, (typeof searchValue === "undefined" ? defaultValue : searchValue) || "", setValid);
     setSearchResults(filteredData);
   }, [searchValue, data]);
 
@@ -63,7 +63,7 @@ const SearchDropDown = ({
             ? [
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if ((!value && !getFieldValue(name)) || !valid || !clicked) {
+                    if ((!defaultValue && !getFieldValue(name)) || !valid || !clicked) {
                       return Promise.reject("Please choose an option");
                     }
                     return Promise.resolve();
@@ -79,7 +79,7 @@ const SearchDropDown = ({
           className="dropdown-input"
           autoComplete="off"
           disabled={disabled || false}
-          value={typeof searchValue === "undefined" ? value : searchValue}
+          value={typeof searchValue === "undefined" ? defaultValue : searchValue}
           onFocus={() => setShowResults(true)}
           onBlur={() => setTimeout(() => hideResults(), 200)}
           onChange={(e) => {

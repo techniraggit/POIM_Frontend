@@ -27,9 +27,9 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                 message.success(response.data.message);
                 formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
             }
-            form.setFieldValue(`date` + (index + 1),'')
-            form.setFieldValue('amount' + (index + 1),'')
-            form.setFieldValue(`project_site_id${index + 1}`,null)
+            form.setFieldValue(`date` + (index + 1), '')
+            form.setFieldValue('amount' + (index + 1), '')
+            form.setFieldValue(`project_site_id${index + 1}`, null)
         })
     }
 
@@ -107,7 +107,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 placeholder="Select Site"
                                 required={true}
                                 form={form}
-                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                defaultValue={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
                                     if(site.site_id == formData.material_details[0]?.project_site_id?.site_id || site.site_id == formData.material_details[0].project_site_id) {
                                         value = site.address
                                     }
@@ -228,7 +228,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                                             placeholder="Select Site"
                                                             required={true}
                                                             form={form}
-                                                            value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                                            defaultValue={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
                                                                 if(site.site_id == formData.material_details[index + 1]?.project_site_id?.site_id || site.site_id == formData.material_details[index + 1]?.project_site_id) {
                                                                     value = site.address
                                                                 }
@@ -252,14 +252,19 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                 <div className="col-sm-4">
                                     <MinusOutlined className="minus-wrap" onClick={async () => {
                                         if (data.md_id) {
-                                        
                                             await handleRemoveDetail(data.md_id, index);
                                         } else {
-                                                formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
+                                            formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         }
                                         if (calculateAmount) {
                                             calculateAmount();
                                         }
+                                        form.setFieldValue(`date` + (index + 1), '')
+                                        form.setFieldValue('amount' + (index + 1), '')
+                                        form.setFieldValue(`project_site_id${index + 1}`, null)
+                                        setFormData({
+                                            ...formData
+                                        })
                                     }} style={{ marginLeft: '8px' }} />
                                 </div>
                             </div>
@@ -272,8 +277,7 @@ function SubcontractorRepeator({ onChange, siteOptions, formData, setFormData, f
                                     ...formData,
                                     material_details: [...formData.material_details, {
                                         ...repeatorData,
-                                        project_site_id: formData.material_details[0]?.project_site_id ,
-                                      
+                                        project_site_id: formData.material_details[0]?.project_site_id
                                     }]
                                 });
                             }} icon={<PlusOutlined />}>

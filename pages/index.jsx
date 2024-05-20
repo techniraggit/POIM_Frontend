@@ -88,7 +88,6 @@ const Login = ({ base_url }) => {
                     scopes: msalConfig.scopes,
                     prompt: ''
                 }).then(response => {
-                    console.log(response, '==========')
                     acquireToken();
                 }).catch(error => {
                     console.error("Error signing in:", error);

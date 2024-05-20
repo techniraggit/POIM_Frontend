@@ -85,9 +85,6 @@ const CreateRentalPo = () => {
             form.setFieldsValue({ 'hst_amount': roundToTwoDigits((totalAmount * 0.13) || '0.00').toLocaleString() });
             form.setFieldsValue({ 'total_amount': roundToTwoDigits((totalAmount * 0.13 + totalAmount) || 0).toLocaleString() });
         }
-        setFormData({
-            ...formData
-        })
     }
 
     const onChange = (name, value, index) => {
