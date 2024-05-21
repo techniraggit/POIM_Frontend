@@ -8,8 +8,9 @@ import { useRouter } from 'next/router';
 import { message } from 'antd';
 import { isLoggedIn } from "@/apis/apis/shared";
 import { useGlobalContext } from "@/app/Context/UserContext";
-import MicrosoftLogin from "react-microsoft-login";
 import { ssoLogin } from "@/apis/apis/adminApis";
+import { PublicClientApplication } from '@azure/msal-browser';
+import { msalConfig } from "@/utility/authConfig";
 
 const Login = ({ base_url }) => {
     const [email, setEmail] = useState('');
@@ -19,41 +20,95 @@ const Login = ({ base_url }) => {
     const { setUser } = useGlobalContext();
     const [showForgotPasswordPopup, setShowForgotPasswordPopup] = useState(false);
     const [forgotPasswordErrors, setForgotPasswordErrors] = useState({});
+    const publicClientApplication = new PublicClientApplication({
+        auth: msalConfig.auth,
+        cache: msalConfig.cache,
+        system: msalConfig.system
+    })
 
     const router = useRouter();
 
     useEffect(() => {
-        if(isLoggedIn()) {
+        if (isLoggedIn()) {
             router.push('/dashboard');
         }
-    }, [])
+    }, []);
 
-    const authHandler = async (err, data) => {
-        if(err) {
-            console.log(err)
-            message.error('Something went wrong! Try again later.');
-            return false;
+    function acquireToken() {
+        const accounts = publicClientApplication.getAllAccounts();
+        if (accounts.length === 0) {
+            console.error("No active account available after login.");
+            return;
         }
-        const response = await ssoLogin({
+        publicClientApplication.setActiveAccount(accounts[accounts.length - 1]);
+        publicClientApplication.acquireTokenSilent({
+            scopes: msalConfig.scopes
+        }).then(response => {
+            const accessToken = response.accessToken;
+            login(accessToken);
+        }).catch(error => {
+            console.error("Error acquiring token:", error);
+        });
+    }
+
+    const login = (token) => {
+        const response = ssoLogin({
             client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
             client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
             grant_type: "convert_token",
             backend: 'azuread-oauth2',
-            token: data.accessToken || data.access_token
+            token: token
         })
-        if(response.status === 200 && response?.data?.access_token) {
-            localStorage.setItem('access_token', response.data.access_token)
-            localStorage.setItem('refresh_token', response.data.refresh_token)
-            setUser({
-                first_name: response.data.user_first_name,
-                last_name: response.data.user_last_name,
-                permissions: response.data.user_permissions,
-                role: response.data.user_role
-            });
-            message.success('Login successful');
-            window.location = '/dashboard'
+        response.then((response) => {
+            if (response.status === 200 && response?.data?.access_token) {
+                localStorage.setItem('access_token', response.data.access_token)
+                localStorage.setItem('refresh_token', response.data.refresh_token)
+                setUser({
+                    first_name: response.data.user_first_name,
+                    last_name: response.data.user_last_name,
+                    permissions: response.data.user_permissions,
+                    role: response.data.user_role
+                });
+                message.success('Login successful');
+                window.location = '/dashboard'
+            }
+        }).catch(error => {
+            message.error("Something went wrong");
+        })
+    }
+
+    const authHandler = async () => {
+        let interactionPromise;
+        try {
+            await publicClientApplication.initialize();
+            console.log('MSAL initialized successfully');
+            const accounts = publicClientApplication.getAllAccounts();
+            if (accounts.length === 0) {
+                publicClientApplication.loginPopup({
+                    scopes: msalConfig.scopes,
+                    prompt: ''
+                }).then(response => {
+                    acquireToken();
+                }).catch(error => {
+                    console.error("Error signing in:", error);
+                });
+            } else {
+                acquireToken();
+            }
+        } catch (error) {
+            if (error.name === 'BrowserAuthError') {
+                message.error("Something went wrong");
+                if (interactionPromise && interactionPromise.cancel) {
+                    interactionPromise.cancel();
+                    interactionPromise = null;
+                }
+            } else {
+                message.error('Login failed:');
+            }
+        } finally {
+            interactionPromise = null;
         }
-    };
+    }
 
     const validateForm = () => {
         const errors = {};
@@ -96,16 +151,16 @@ const Login = ({ base_url }) => {
         if (validateForgotPasswordForm()) {
             handlePopupClose();
             axios.post(`${base_url}/api/accounts/forget-password`, { email: forgotEmail })
-            .then((response) => {
-                if(response?.data?.status) {
-                    message.success(response.data?.message);
-                }
-                setforgotEmail('');
-            })
-            .catch((error) => {
-                setforgotEmail('');
-                message.error(error?.response?.data?.message)
-            })
+                .then((response) => {
+                    if (response?.data?.status) {
+                        message.success(response.data?.message);
+                    }
+                    setforgotEmail('');
+                })
+                .catch((error) => {
+                    setforgotEmail('');
+                    message.error(error?.response?.data?.message)
+                })
         } else {
             console.log('Forgot Password form validation failed');
         }
@@ -195,7 +250,10 @@ const Login = ({ base_url }) => {
                                     )}
                                 </div>
                                 <div className="col-md-12">
-                                    <MicrosoftLogin tenantUrl={process.env.NEXT_PUBLIC_TENANT_URL} clientId={process.env.NEXT_PUBLIC_SSO_CLIENT_ID} redirectUri={process.env.NEXT_PUBLIC_SSO_REDIRECT_URL} authCallback={authHandler} />
+                                    <button onClick={(e) => {
+                                        e.preventDefault()
+                                        authHandler()
+                                    }}><img className="micro-img me-3" src="/images/microsoft.png" />Login via Microsoft</button>
                                     <button type="submit" className="submit-btn">Login</button>
                                 </div>
                             </form>

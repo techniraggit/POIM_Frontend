@@ -60,7 +60,7 @@ function ProjectForm({ form, onFinish, onChange, managers, formData, setFormData
                             label="Project Manager"
                             required={true}
                             form={form}
-                              value={
+                            defaultValue={
                                 managers.length > 0
                                   ? managers?.reduce((value, manager) => {
                                       if (

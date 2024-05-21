@@ -249,7 +249,7 @@ function PoForm({
                 <SearchDropdown
                   placeholder="Select"
                   required={true}
-                  value={vendors?.reduce((value, vendor) => {
+                  defaultValue={vendors?.reduce((value, vendor) => {
                     if (vendor.vendor_id === formData.vendor_id ) {
                       value = vendor.company_name;
                     }
@@ -291,7 +291,7 @@ function PoForm({
                   required={false}
                   disabled={view || (edit && formData.status !== "pending")}
                   form={form}
-                  value={
+                  defaultValue={
                     contactId.length > 0
                       ? contactId?.reduce((value, contact) => {
                           if (
@@ -537,7 +537,7 @@ function PoForm({
                   required={true}
                   form={form}
                   filterFunc={filterProjects}
-                  value={
+                  defaultValue={
                     Array.isArray(projects)
                       ? projects.reduce((value, project) => {
                           if (formData.project_id === project.project_id) {
