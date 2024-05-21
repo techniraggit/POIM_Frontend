@@ -102,7 +102,9 @@ const CreateSubContractorPo = () => {
         formData.total_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 + totalAmount : formData.total_amount);
         formData.hst_amount = roundToTwoDigits(totalAmount > 0 ? totalAmount * 0.13 : formData.hst_amount);
         if (totalAmount > 0) {
-            form.setFieldsValue({ 'hst_amount': roundToTwoDigits(totalAmount * 0.13) || 0 }.toLocaleString());
+            form.setFieldsValue({ 'hst_amount': roundToTwoDigits(totalAmount * 0.13) || 0 .toLocaleString()});
+
+            // form.setFieldsValue({ 'hst_amount': roundToTwoDigits(totalAmount * 0.13) || 0 }.toLocaleString());
             form.setFieldsValue({ 'total_amount': roundToTwoDigits((totalAmount * 0.13 + totalAmount) || 0).toLocaleString() });
         }
         if (totalAmount > 0 && (totalAmount * 0.13 + totalAmount) > parseFloat(formData.original_po_amount)) {

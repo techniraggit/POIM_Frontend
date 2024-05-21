@@ -4114,7 +4114,7 @@ button#xls-btn {
     background-color: #fff;
     padding: 25px 28px 8px;
     left: 50%;
-    position: absolute;
+    position: fixed;
     top: 25%;
 }
 
