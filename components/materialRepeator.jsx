@@ -142,7 +142,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                                 label="Select Site"
                                 required={true}
                                 form={form}
-                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                defaultValue={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
                                     if (site.site_id == formData.material_details[0]?.project_site?.site_id) {
                                         value = site.address
                                     }
@@ -222,7 +222,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                                 label="Select Site"
                                 required={true}
                                 form={form}
-                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                defaultValue={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
                                     if (site.site_id == formData.material_details[0]?.project_site?.site_id) {
                                         value = site.address
                                     }
@@ -363,7 +363,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                                                                 label="Select Site"
                                                                 required={true}
                                                                 form={form}
-                                                                value={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
+                                                                defaultValue={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
                                                                     if(site.site_id == formData.material_details[index + 1]?.project_site_id?.site_id || site.site_id == formData.material_details[index + 1]?.project_site_id) {
                                                                         value = site.address
                                                                     }
@@ -506,14 +506,14 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                                                 if (data.md_id) {
                                                     handleRemoveDetail(data.md_id, index);
                                                 } else {
-                                                    setFormData({
-                                                        ...formData,
-                                                        material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
-                                                    });
+                                                    formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                                 }
                                                 if (calculateAmount) {
                                                     calculateAmount(0, 0, index + 1)
                                                 }
+                                                setFormData({
+                                                    ...formData
+                                                })
                                             }}
                                             style={{ marginLeft: '8px' }} />
                                     </div>
