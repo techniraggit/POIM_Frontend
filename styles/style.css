@@ -897,7 +897,19 @@ button.ant-btn.ant-btn-default.vendor-search-butt:hover {
 
 .wrap-box input:focus {
     background-color: #F9F9FA;
-    border: none;
+    /* border: none; */
+}
+.wrap-box .ant-form-item-control-input-content .ant-input:focus {
+    border: 1px solid #70707054 !important;
+}
+.ant-input-number:focus, .ant-input-number:focus-within {
+    border: 1px solid #70707054 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+.ant-input-number:hover {
+    border: 1px solid #70707054 !important;
+
 }
 
 .wrap-box:nth-child(1),
@@ -3219,9 +3231,9 @@ button.ant-btn.ant-btn-default.save-Button:active {
 }
 
 .wrap-box.dollor-inputs input {
-    border: 1px solid #d9d9d9;
     border-start-start-radius: 3px;
     border-end-start-radius: 3px;
+    border: 1px solid #70707054 !important;
 }
 
 /* 25 jan work */
