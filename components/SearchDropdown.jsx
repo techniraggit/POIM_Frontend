@@ -28,6 +28,9 @@ const SearchDropDown = ({
       setValid(true);
       setClicked(true);
     }
+    if(defaultValue === "") {
+      setSearchValue(undefined);
+    }
   }, [defaultValue]);
 
   useEffect(() => {
@@ -51,6 +54,7 @@ const SearchDropDown = ({
   const hideResults = () => {
     setShowResults(false);
   };
+
 
   return (
     <>

@@ -137,6 +137,7 @@ function PoForm({
     if (reset) {
       form.setFieldValue("vendor_contact_id", "");
       form.setFieldValue("company_name", "");
+      form.setFieldValue("vendor_name", "");
       form.setFieldValue("email", "");
       form.setFieldValue("phone", "");
       form.setFieldValue("address", "");
@@ -174,7 +175,6 @@ function PoForm({
       }
     });
   };
-
   return (
     <>
       <div class="order-choose d-flex">
