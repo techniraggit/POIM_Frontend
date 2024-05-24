@@ -253,6 +253,8 @@ const EditInvoice = (view) => {
                                 )
                             }
                             <div className="choose-file">
+                            <div class="linewrap d-flex"><span class="d-block me-2">Edit Invoice</span><hr/></div>
+
                                 <Form
                                     name="antdForm"
                                     className="mt-5"
@@ -285,7 +287,6 @@ const EditInvoice = (view) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="linewrap d-flex"><span class="d-block me-2">Edit Invoice</span><hr/></div>
 
                                         <div className="col-lg-4 col-md-6">
                                             {/* <div className="selectwrap  shipment-caret aligned-text"> */}

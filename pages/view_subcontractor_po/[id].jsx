@@ -85,13 +85,13 @@ const ViewSubContractorPo = () => {
                         email: data.vendor_contact.email,
                         shipment_type: data.shipment_type || 'project related',
                         material_details: data.material_details.map((detail) => {
-                            return {description:detail.description,date:detail.date,amount:detail.amount,md_id:detail.md_id, project_site_id: detail?.project_site?.site_id }
+                            return { description: detail.description, date: detail.date, amount: detail.amount, md_id: detail.md_id, project_site_id: detail?.project_site?.site_id }
                         }),
                         // material_details: [...data.material_details],
                         status: data.status,
                         notes: data?.co_approved_amount,
                         signed_contract: data.signed_contract,
-                        co_amount:data.co_approved_amount[0]?.amount,
+                        co_amount: data.co_approved_amount[0]?.amount,
                         po_creator: res?.data?.po_creator
                     });
                     setHistory([...res.data.history_logs_data])
@@ -379,7 +379,11 @@ const ViewSubContractorPo = () => {
                                 </Form>
                             </div>
                             {formData.status === 'approved' && formData.po_creator && <>
-                                <p>Upload Contract File</p>
+                                {/* <p><b>Upload Contract File</b></p> */}
+                                <div class="linewrap d-flex">
+                                    <span class="d-block me-4">Upload Contract File</span>
+                                    <hr />
+                                </div>
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                     <Form.Item
                                         className="select-file-invoice"
@@ -394,7 +398,7 @@ const ViewSubContractorPo = () => {
                                     <Form.Item style={{
                                         marginLeft: '10px'
                                     }}>
-                                        <Button onClick={uploadContractFile} type="primary">
+                                        <Button onClick={uploadContractFile} type="primary" className="upload-btnn">
                                             Upload
                                         </Button>
                                     </Form.Item>
