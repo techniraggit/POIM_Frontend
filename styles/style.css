@@ -772,7 +772,7 @@ div#forspce {
     color: #112F5C;
     font-size: 17px;
     font-weight: 600;
-    width: 25%;
+    width: 30%;
 }
 
 div#w-small span {
@@ -3191,6 +3191,7 @@ button.ant-btn.ant-btn-primary.upload-btnn {
     justify-content: center;
     align-items: center;
     font-weight: 600;
+    height: 38px;
 }
 button.ant-btn.ant-btn-primary.upload-btnn:hover {
     background-color: #fc0000 !important;
