@@ -149,7 +149,7 @@ function VendorForm({ form, onFinish, onChange, setFormData, repeatorData, formD
                         <Form.Item
                             label="Postal Code"
                             name="postal_code"
-                            className="vendor-input"
+                            className="vender-input"
                             rules={[
                                 {
                                     required: true,
