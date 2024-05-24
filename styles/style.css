@@ -3179,12 +3179,22 @@ button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn:hove
 
 button.ant-btn.css-p7e5j5.ant-btn-default.file-btn {
     color: #1f1f1f !important;
-    border-color: 1px solid #1f1f1f !important;
+    border: 1px solid #1f1f1f !important;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+button.ant-btn.ant-btn-primary.upload-btnn {
+    background-color: #fc0000 !important;
+    padding: 6px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+button.ant-btn.ant-btn-primary.upload-btnn:hover {
+    background-color: #fc0000 !important;
+}
 button.ant-btn.css-dev-only-do-not-override-p7e5j5.ant-btn-default.file-btn {
     border: 1px solid #1f1f1f;
     color: #1f1f1f;
@@ -4146,7 +4156,9 @@ button#xls-btn {
 .wrap-box.dollor-inputs.no-number-rental .ant-input-number-input-wrap input {
     padding: 9px 12px;
     background-color: #F9F9FA;
+    border: 0px !important;
 }
+
 
 .wrap-box.dollor-inputs.no-number-rental .ant-input-number-input-wrap input:focus {
     outline: none !important;
