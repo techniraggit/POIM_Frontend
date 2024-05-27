@@ -133,6 +133,7 @@ const EditMaterialPo = () => {
     };
 
     const calculateAmount = (quantity, unit_price, index) => {
+        if (index >= 0 && index < formData.material_details.length) {
         const amount = (parseFloat(quantity) * parseFloat(unit_price)) || 0;
         const materialDetails = formData.material_details[index];
         materialDetails.amount = roundToTwoDigits(amount);
@@ -147,6 +148,7 @@ const EditMaterialPo = () => {
             form.setFieldsValue({ 'hst_amount': roundToTwoDigits((totalAmount * 0.13) || 0).toLocaleString() });
             form.setFieldsValue({ 'total_amount': roundToTwoDigits((totalAmount * 0.13 + totalAmount)  || 0).toLocaleString() });
         }
+    }
     }
 
     const onFinish = () => {
@@ -169,7 +171,7 @@ const EditMaterialPo = () => {
                 formData.material_details[index].material_for = '';
             })
         }
-        if (name === 'material_details') {
+        if (name === 'material_details' && index >= 0 && index < formData.material_details.length) {
             const materalDetails = formData.material_details[index];
             Object.keys(value).forEach((key) => {
                 materalDetails[key] = value[key];

@@ -84,10 +84,12 @@ const CreateMaterialPo = () => {
     const calculateAmount = (quantity, unit_price, index) => {
         const amount = ((parseFloat(quantity) * parseFloat(unit_price))) || 0;
         const materialDetails = formData.material_details[index];
-        materialDetails.amount = amount;
-        formData.material_details[index] = {
-            ...materialDetails
-        };
+        if(materialDetails) {
+            materialDetails.amount = amount;
+            formData.material_details[index] = {
+                ...materialDetails
+            };
+        }
         const totalAmount = getTotalAmount();
         formData.total_amount = roundToTwoDigits(totalAmount > 0 ? (totalAmount * 0.13 + totalAmount) : formData.total_amount);
         formData.hst_amount = roundToTwoDigits(totalAmount > 0 ? (totalAmount * 0.13) : formData.hst_amount);
