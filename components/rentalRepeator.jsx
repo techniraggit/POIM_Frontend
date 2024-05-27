@@ -61,10 +61,10 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                 message.success(response.data.message);
                 formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
             }
-            form.setFieldValue(`start_date` + (index + 1),'')
-            form.setFieldValue(`end_date` + (index + 1),'')
-            form.setFieldValue('amount' + (index + 1),'')
-            form.setFieldValue(`project_site_id${index + 1}`,'')
+            // form.setFieldValue(`start_date` + (index + 1),'')
+            // form.setFieldValue(`end_date` + (index + 1),'')
+            // form.setFieldValue('amount' + (index + 1),'')
+            // form.setFieldValue(`project_site_id${index + 1}`,'')
         })
     }
 
@@ -354,6 +354,10 @@ function RentalRepeator({ onChange, siteOptions, formData, setFormData, form, ed
                                         } else {
                                             formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                         }
+                                        form.setFieldValue(`start_date` + (index + 1),'')
+                                        form.setFieldValue(`end_date` + (index + 1),'')
+                                        form.setFieldValue('amount' + (index + 1),'')
+                                        form.setFieldValue(`project_site_id${index + 1}`,'')
                                         if (calculateAmount) {
                                             calculateAmount();
                                         }

@@ -18,19 +18,14 @@ const repeatorData = {
 }
 
 function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calculateAmount, view, form }) {
-
-    const handleRemoveDetail = (id, index) => {
-        updatematerialPo({ md_id: id }).then((response) => {
+    const handleRemoveDetail = async (id, index) => {
+        await  updatematerialPo({ md_id: id }).then((response) => {
             if (response?.data?.status) {
                 message.success(response.data.message);
                 setFormData({
                     ...formData,
                     material_details: [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                 });
-                form.setFieldValue(`quantity${index + 1}`, '')
-                form.setFieldValue(`unit_price${index + 1}`, '')
-                form.setFieldValue(`amount` + (index + 1), '')
-                form.setFieldValue(`project_site_id${index + 1}`, '')
             }
         })
     }
@@ -364,7 +359,7 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                                                                 required={true}
                                                                 form={form}
                                                                 defaultValue={Array.isArray(siteOptions[0]) ? siteOptions[0]?.reduce((value, site) => {
-                                                                    if(site.site_id == formData.material_details[index + 1]?.project_site_id?.site_id || site.site_id == formData.material_details[index + 1]?.project_site_id) {
+                                                                    if (site.site_id == formData.material_details[index + 1]?.project_site_id?.site_id || site.site_id == formData.material_details[index + 1]?.project_site_id) {
                                                                         value = site.address
                                                                     }
                                                                     return value
@@ -502,12 +497,16 @@ function MaterialRepeator({ onChange, siteOptions, formData, setFormData, calcul
                                 {
                                     !view && <div className="col-sm-4">
                                         <MinusOutlined className="minus-wrap"
-                                            onClick={() => {
+                                            onClick={async () => {
                                                 if (data.md_id) {
-                                                    handleRemoveDetail(data.md_id, index);
+                                                    await handleRemoveDetail(data.md_id, index);
                                                 } else {
                                                     formData.material_details = [...formData.material_details.slice(0, index + 1), ...formData.material_details.slice(index + 1 + 1)]
                                                 }
+                                                form.setFieldValue(`quantity${index + 1}`, '')
+                                                form.setFieldValue(`unit_price${index + 1}`, '')
+                                                form.setFieldValue(`amount` + (index + 1), '')
+                                                form.setFieldValue(`project_site_id${index + 1}`, '')
                                                 if (calculateAmount) {
                                                     calculateAmount(0, 0, index + 1)
                                                 }
