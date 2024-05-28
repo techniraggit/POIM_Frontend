@@ -395,13 +395,18 @@ const ViewSubContractorPo = () => {
                                             <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
                                         </Upload>
                                     </Form.Item>
+                                   
+                                </div>
+                                <div className="row mt-4">
+                                    <div className="col-md-12">
                                     <Form.Item style={{
-                                        marginLeft: '10px'
+                                        marginLeft: '0px'
                                     }}>
                                         <Button onClick={uploadContractFile} type="primary" className="upload-btnn">
                                             Upload
                                         </Button>
                                     </Form.Item>
+                                    </div>
                                 </div>
                             </>}
                             {formData.status === 'approved' && formData.po_creator && formData.signed_contract?.length > 0 && <div className="download-wrap d-flex" style={{

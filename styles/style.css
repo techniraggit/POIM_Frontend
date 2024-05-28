@@ -994,6 +994,9 @@ button.create-ven-butt:hover {
 form#ship-type {
     margin-bottom: 40px;
 }
+.selectwrap.react-select .ant-select .ant-select-selection-placeholder {
+    color: #000000;
+}
 
 .select2-container--default .select2-selection--single {
     border: 1px solid #70707054;
@@ -1024,7 +1027,9 @@ span.select2-dropdown.select2-dropdown--below {
     font-weight: 500;
     font-size: 16px;
 }
-
+.selectwrap.add-dropdown-wrap span.ant-select-selection-placeholder {
+    color: rgb(0 0 0) !important;
+}
 .select2-results__option:not(:last-child) {
     border-bottom: 1px solid rgb(112, 112, 112, 0.25);
 }
@@ -3595,6 +3600,10 @@ textarea#input-po1::placeholder {
     /* flex-direction: column; */
 }
 
+#input-po {
+    font-weight: 500;
+    color: #112f5c80 !important;
+}
 .approve-po-popup {
     box-shadow: 0px 3px 39px #00000021;
     width: 486px;
@@ -3621,10 +3630,12 @@ textarea#input-po1::placeholder {
     width: 442px;
 }
 
+
 .save-main {
     margin-top: 70px;
     text-align: center;
 }
+
 
 .vender-input label {
     margin-bottom: 11px;
@@ -3633,6 +3644,7 @@ textarea#input-po1::placeholder {
     color: #112F5C !important;
     opacity: 70% !important;
 }
+
 
 .vender-input input {
     border: 1px solid #70707054;
