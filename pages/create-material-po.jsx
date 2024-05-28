@@ -177,7 +177,7 @@ const CreateMaterialPo = () => {
                                                     >
                                                         <Select placeholder="Select PO Type" id="single1"
                                                             class="js-states form-control file-wrap-select bold-select"
-                                                            onChange={handlePoTypeChange} nge={handlePoTypeChange}
+                                                            onChange={handlePoTypeChange} 
                                                         >
                                                             <Option value="material">Material PO</Option>
                                                             <Option value="rental">Rental PO</Option>
