@@ -73,7 +73,7 @@ const ChangeStatus = ({ isModalOpen, setIsModalOpen, handleStatusChange, poType 
                 </div>
             </div>
 
-            <div className='approve'>
+            <div className='approve mt-4'>
                 <button className='button1' type="button" onClick={handleCloseModal}>Cancel</button>
                 <button className='button2' type="submit" onClick={(event) => {
                     handleStatusChange(event, isModalOpen.action, form)
