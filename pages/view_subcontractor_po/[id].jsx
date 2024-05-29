@@ -395,40 +395,41 @@ const ViewSubContractorPo = () => {
                                             <Button icon={<UploadOutlined />} className="file-btn" >Select File</Button>
                                         </Upload>
                                     </Form.Item>
-                                   
+
                                 </div>
-                                <div className="row mt-4">
+                                <div className="row mt-2">
                                     <div className="col-md-12">
-                                    <Form.Item style={{
-                                        marginLeft: '0px'
-                                    }}>
-                                        <Button onClick={uploadContractFile} type="primary" className="upload-btnn">
-                                            Upload
-                                        </Button>
-                                    </Form.Item>
+                                        <Form.Item style={{
+                                            marginLeft: '0px'
+                                        }}>
+                                            <Button onClick={uploadContractFile} type="primary" className="upload-btnn">
+                                                Upload
+                                            </Button>
+                                        </Form.Item>
                                     </div>
                                 </div>
                             </>}
                             {formData.status === 'approved' && formData.po_creator && formData.signed_contract?.length > 0 && <div className="download-wrap d-flex" style={{
-                                flexDirection: 'column', gap: 10, marginTop: 10
+                                gap: 8, marginTop: 10 , 
                             }}>
-                                {
-                                    formData.signed_contract.map((contract) => {
-                                        const split_file_name = contract.contract_file.split('/');
-                                        const fileName = split_file_name[split_file_name.length - 1];
-                                        return <div className="download-fine-invoice">
-                                            {fileName} <DownloadOutlined onClick={() => handleDownload(fileName, contract.contract_id)} />
-                                        </div>
-                                    })
-                                }
-                            </div>}
-                        </div>
-                        {history?.length > 0 && <Amendments history={history} />}
+                            {
+                                formData.signed_contract.map((contract) => {
+                                    const split_file_name = contract.contract_file.split('/');
+                                    const fileName = split_file_name[split_file_name.length - 1];
+                                    return <div className="download-fine-invoice">
+                                        {fileName} <DownloadOutlined onClick={() => handleDownload(fileName, contract.contract_id)} />
+                                    </div>
+                                })
+                            }
+                        </div>}
                     </div>
+                    {history?.length > 0 && <Amendments history={history} />}
                 </div>
             </div>
-            {isModalOpen && <ChangeStatus po_id={id} poType={"subcontractor"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
-            {isStatusModalOpen && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
+        </div >
+            { isModalOpen && <ChangeStatus po_id={id} poType={"subcontractor"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+}
+{ isStatusModalOpen && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} /> }
         </>
     );
 };
