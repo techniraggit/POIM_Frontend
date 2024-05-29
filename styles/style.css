@@ -4301,6 +4301,9 @@ input#amount1 {
 .select-default input::placeholder,.select-default input::-moz-input-placeholder ,.select-default input::-webkit-input-placeholder ,.select-default input::-ms-input-placeholder {
     color: red !important;
 }
+.download-wrap {
+    flex-wrap: wrap;
+}
   
 /* 25-04-2024*/
 /* responsive */
