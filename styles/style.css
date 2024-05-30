@@ -4304,6 +4304,9 @@ input#amount1 {
 .download-wrap {
     flex-wrap: wrap;
 }
+.rc-virtual-list-holder .ant-select-item-option-content {
+    font-weight: 600 !important;
+}
   
 /* 25-04-2024*/
 /* responsive */
