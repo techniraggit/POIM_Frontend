@@ -46,7 +46,7 @@ const ViewRentalPO = () => {
     });
     const [history, setHistory] = useState([])
     const [refetch, setRefetch] = useState(true);
-    const [isStatusModalOpen,setStatusModalOpen]=useState(false);
+    const [isStatusModalOpen, setStatusModalOpen] = useState(false);
 
     const handleIconClick = () => {
         setStatusModalOpen(true);
@@ -77,7 +77,7 @@ const ViewRentalPO = () => {
                         email: data.vendor_contact?.email,
                         shipment_type: data.shipment_type,
                         material_details: data.material_details.map((details) => {
-                            return {description:details.description, start_date: details.date,end_date:details.end_date,amount:details.amount, project_site_id: details.project_site?.site_id}
+                            return { description: details.description, start_date: details.date, end_date: details.end_date, amount: details.amount, project_site_id: details.project_site?.site_id }
                             // return {...details, project_site_id: details.project_site?.site_id, start_date: details.date}
                         }),
                         // material_details: data.material_details.map((details) => {
@@ -117,7 +117,7 @@ const ViewRentalPO = () => {
                         form.setFieldValue('project_id' + (index), material.project === 'object' ? material.project?.is_deleted ? material.project.name : material.project?.project_id : material.project)
                         // form.setFieldValue('project_id' + (index), material.project?.project_id)
                         form.setFieldValue('project_site_id' + (index), material.project_site?.site_id)
-                        if(index > 0) {
+                        if (index > 0) {
                             form.setFieldValue('start_date' + (index), material?.date)
                             form.setFieldValue('end_date' + (index), material?.end_date)
                         }
@@ -217,7 +217,7 @@ const ViewRentalPO = () => {
                                 </div>
                                 <div>
                                     {
-                                        (formData.status === 'approved'|| formData.status === 'rejected') && formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
+                                        (formData.status === 'approved' || formData.status === 'rejected') && formData.notes?.length > 0 && <button className="po-status-btn" onClick={() => handleIconClick()}>
                                             PO Status
                                         </button>
                                     }
@@ -282,8 +282,7 @@ const ViewRentalPO = () => {
             </div>
             {isModalOpen && <ChangeStatus po_id={id} poType={"rental"} handleStatusChange={handleStatusChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
             {/* {isModalOpen && <PoStatus setIsModalOpen={setIsModalOpen} />} */}
-            {isStatusModalOpen && <PoStatus isStatusMod
-            alOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
+            {isStatusModalOpen && <PoStatus isStatusModalOpen={isStatusModalOpen} data={formData.notes} setStatusModalOpen={setStatusModalOpen} />}
         </>
     )
 }
