@@ -66,10 +66,6 @@ function PoForm({
     response.then((res) => {
       if (res?.data?.status) {
         setVendors([...res.data.vendors]);
-        setFormData({
-          ...formData,
-          po_date: moment().format("YYYY-MM-DD"),
-        });
       }
     });
   }, []);
