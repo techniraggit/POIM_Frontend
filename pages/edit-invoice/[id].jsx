@@ -15,6 +15,7 @@ import { saveAs } from "file-saver";
 import useInvoice from "@/hooks/useInvoice";
 import ChangeStatus from "@/components/PoChangeStatus";
 import { event } from "react-ga";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -39,6 +40,7 @@ const EditInvoice = (view) => {
     const [form] = Form.useForm();
     const [thres, setThreshold] = useState()
     const [show, setshow] = useState(true)
+    const { user } = useGlobalContext();
 
     const onFinish = () => {
         const formData = new FormData();
@@ -409,6 +411,7 @@ const EditInvoice = (view) => {
                                                 onChange('invoice_amount', value)
                                             }}
                                             placeholder={`Please enter amount`}
+                                            disabled={!(user.role === 'admin' || user.role === 'accounting')}
                                         />
                                     </Form.Item>
                                     {invoice.invoice_amount && invoice.invoice_amount !== 0 ? (

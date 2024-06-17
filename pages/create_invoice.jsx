@@ -12,6 +12,7 @@ import Subcontractor_invoice from "@/components/subcontractor_invoice";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import SearchDropdown from "@/components/SearchDropdown";
 import { filterInvoicePO, getInvoivePOMenuItem } from "@/utility/filters";
+import { useGlobalContext } from "@/app/Context/UserContext";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -31,6 +32,7 @@ const CreateInvoice = () => {
         invoice_amount: '',
         invoice_files: [repeatorData]
     });
+    const { user } = useGlobalContext();
 
     const router = useRouter();
 
@@ -270,7 +272,9 @@ const CreateInvoice = () => {
                                             onChange={(value) => {
                                                 onChange('invoice_amount', value)
                                             }}
-                                            placeholder={`Please enter amount`} />
+                                            placeholder={`Please enter amount`} 
+                                            disabled={!(user.role === 'admin' || user.role === 'accounting')}
+                                            />
                                     </Form.Item>
                                     {formData.invoice_amount && formData.invoice_amount !== 0 ? (
                                         <span className="error-msg" style={{
