@@ -4276,7 +4276,9 @@ input#amount1 {
 .select-default input::placeholder,.select-default input::-moz-input-placeholder ,.select-default input::-webkit-input-placeholder ,.select-default input::-ms-input-placeholder {
     color: red !important;
 }
-  
+.ant-form-item.note-wrap.wrap-box.dollor-inputs.no-number-rental input {
+    color: #112f5c !important;
+}
 /* 25-04-2024*/
 /* responsive */
 @media (max-width: 1599px) {
