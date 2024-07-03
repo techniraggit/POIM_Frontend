@@ -277,6 +277,7 @@ const CreateInvoice = () => {
                                             />
                                     </Form.Item>
                                     {formData.invoice_amount && formData.invoice_amount !== 0 ? (
+                                        <>
                                         <span className="error-msg" style={{
                                             color: 'red',
                                             display: /^-?\d*\.?\d+$/.test(formData.invoice_amount)
@@ -286,7 +287,11 @@ const CreateInvoice = () => {
                                               {/* {formData.invoice_amount && !/^-?\d*\.?\d+$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : ''} */}
                                             {formData.invoice_amount && !/^-?\d*\.?\d+$/.test(formData.invoice_amount) ? 'Please Enter Positive Numbers only' : 'Invoice amount cannot be greater than PO amount'}
                                         </span>
+                                       
+                                        </>
+                                        
                                     ) : ''}
+                                    <p style={{textAlign:'center', color:'red', border:"1px solid #c9c9c9", maxWidth:'240px',margin:'0 0 0 auto', width:'100%',marginTop:'10px'}}>*Please Enter Amount Without HST</p>
 
                                     <Form.Item>
                                         <Button
