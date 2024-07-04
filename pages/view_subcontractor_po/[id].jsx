@@ -336,7 +336,7 @@ const ViewSubContractorPo = () => {
                                                 <div class="col-lg-4 col-md-6">
                                                     <div class="wrap-box">
                                                         <Form.Item
-                                                            label="Original PO Amount"
+                                                            label="Original PO Amount Without HST"
                                                             name="original_po_amount"
                                                             rules={[
                                                                 {
@@ -355,7 +355,7 @@ const ViewSubContractorPo = () => {
                                                 <div class="col-lg-4 col-md-6">
                                                     <div class="wrap-box">
                                                         <Form.Item
-                                                            label="Invoice Recieved Amount"
+                                                            label="Invoice Received Amount Without HST"
                                                             name="invoice_amount"
                                                             rules={[
                                                                 {
