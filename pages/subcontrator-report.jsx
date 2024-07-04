@@ -95,7 +95,7 @@ const SubcontractorReport = () => {
                       <th class="hedaings-tb">S. No</th>
                       <th class="hedaings-tb">Project No.</th>
                       <th class="hedaings-tb">PO No.</th>
-                      <th class="hedaings-tb">PO Amount</th>
+                      <th class="hedaings-tb">Original PO Amount</th>
                       <th class="hedaings-tb">CO Approved Amt</th>
                       <th class="hedaings-tb">Invoice Received Report</th>
                       <th class="hedaings-tb">Total Contract Amt </th>
@@ -115,13 +115,23 @@ const SubcontractorReport = () => {
                           <td>{po.project_number}</td>
                           <td>{po.po_number}</td>
                           <td>{po.po_amount?.toLocaleString()}</td>
+                          {/* <td>{po.po_amount ? `$${po.po_amount.toLocaleString()}` : '-'}</td> */}
                           <td>
+                            {/* <td>
+                              {po.COApprovedAmt
+                                ? po.COApprovedAmt.split("\n")
+                                  .map((amount) =>
+                                    `$${parseFloat(amount).toLocaleString()}`
+                                  )
+                                  .join(", ") || "-"
+                                : "-"}
+                            </td> */}
                             {po.COApprovedAmt
                               ? po.COApprovedAmt.split("\n")
                                   .map((amount) =>
                                     parseFloat(amount).toLocaleString()
                                   )
-                                  .join(" ,") || "-"
+                                  .join("; ") || "-"
                               : "-"}
                           </td>
                           <td style={{
@@ -129,7 +139,7 @@ const SubcontractorReport = () => {
                           }}>
                             {Object.keys(po.invoice_recieved_amount || {}).length > 0 ? <span onClick={() => {
                               setIsOpen(true);
-                              setAmountData({...po.invoice_recieved_amount});
+                              setAmountData({ ...po.invoice_recieved_amount });
                             }} className="custom-color">View Report</span> : '-'}
                           </td>
                           <td>{po.total_contract_amt?.toLocaleString()}</td>
@@ -185,14 +195,14 @@ const SubcontractorReport = () => {
         </div>
       </div>
       <div>
-          <button className="acc-btn" onClick={() => setIsOpen(!isOpen)}>Open PopUp</button>
-          {isOpen && (
-              <div className="popup">
-                  <div  className="acc-icon"><CloseOutlined onClick={() => setIsOpen(false)}/></div>
-                  <h5>Invoice Report</h5>
-                  <Accordian amounts={amountData} />
-              </div>
-          )}
+        <button className="acc-btn" onClick={() => setIsOpen(!isOpen)}>Open PopUp</button>
+        {isOpen && (
+          <div className="popup">
+            <div className="acc-icon"><CloseOutlined onClick={() => setIsOpen(false)} /></div>
+            <h5>Invoice Report</h5>
+            <Accordian amounts={amountData} />
+          </div>
+        )}
       </div>
     </>
   );
