@@ -272,7 +272,7 @@ const CreateInvoice = () => {
                                             onChange={(value) => {
                                                 onChange('invoice_amount', value)
                                             }}
-                                            placeholder={`Please enter amount`} 
+                                            placeholder={`Please enter amount without hst`} 
                                             disabled={!(user.role === 'admin' || user.role === 'accounting')}
                                             />
                                     </Form.Item>
